@@ -1,4 +1,4 @@
-﻿# Central model configuration. No model names are hardcoded anywhere in the code:
+# Central model configuration. No model names are hardcoded anywhere in the code:
 # every agent looks up its primary + fallback models here.
 #
 # Prices are USD per 1M tokens, read from the live NEAR AI catalogue
@@ -135,8 +135,8 @@ agents:
     timeout_s: 180
 
   investment:
-    primary: deepseek_v4_1_flash   # brief: "or a stronger reasoning model" -> evaluate claude_opus_5_5
-    fallbacks: [claude_sonnet_5_5]
+    primary: claude_sonnet_5_5     # 2026-11-09 owner: stronger model for the verdict/score (was deepseek_v4_1_flash, ~$0.02/run; now ~$0.16)
+    fallbacks: [deepseek_v4_1_flash]
     temperature: 0.2
     max_tokens: 20000
     reasoning_effort: medium

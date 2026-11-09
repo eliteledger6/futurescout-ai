@@ -37,6 +37,7 @@ X_WORST_CASE_USD = 0.30
 FIRST_RUN_MODEL_USD = 0.35
 FIRST_RUN_OPENALEX_USD = 0.04
 MARGIN = 1.2
+ALL_AGENTS = ("chief", "science", "risk", "market", "x", "patent", "timing", "scout", "investment")
 CHECK_URLS = ("https://api.openalex.org/", "https://cloud-api.near.ai/v1/models")
 WAIT_FOR_NETWORK_S = 3600
 
@@ -105,11 +106,19 @@ def main() -> int:
     ap.add_argument("--max-runs", type=int, default=50)
     ap.add_argument("--skip-fresh-hours", type=float, default=12.0, help="skip topics with a scored report younger than this")
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--topics", help="';'-separated topics to run instead of the automatic order")
+    ap.add_argument("--backup-topics", help="';'-separated topics to try when a topic does not get every agent")
+    ap.add_argument("--target-complete", type=int, default=0,
+                    help="with --backup-topics: stop once this many runs in this batch had every agent")
     args = ap.parse_args()
     quiet_network_logs()
     settings = get_settings()
     fresh = fresh_topics(settings, args.skip_fresh_hours)
-    topics = [t for t in topic_order(settings) if t.lower() not in fresh][: args.max_runs]
+    if args.topics:
+        topics = [t.strip() for t in args.topics.split(";") if t.strip()][: args.max_runs]
+    else:
+        topics = [t for t in topic_order(settings) if t.lower() not in fresh][: args.max_runs]
+    backups = [t.strip() for t in (args.backup_topics or "").split(";") if t.strip()]
     if fresh:
         print(f"skipping {len(fresh)} topic(s) with a scored report from the last {args.skip_fresh_hours:g} h: {sorted(fresh)}")
     print(f"{len(topics)} topics in order: {topics}")
@@ -178,12 +187,24 @@ def main() -> int:
                "openalex_remaining_today_usd": usage.get("openalex_remaining_usd")}
         if empty:
             continue
+        row["missing_agents"] = [a for a in ALL_AGENTS if a not in row["agents_run"]]
         done.append(row)
         with open(log_path, "a", encoding="utf-8") as fh:
             fh.write(json.dumps(row) + "\n")
         print(f"    done in {row['seconds']}s: score {row['score']}, agents {','.join(row['agents_run'])}; "
               f"models ${row['model_usd']:.3f}, OpenAlex ${row['openalex_usd']:.4f}, X ${row['x_usd']:.3f}, SerpApi {row['serpapi_searches']}"
               + (", sealed on NEAR" if row["sealed"] else ""))
+        if row["missing_agents"]:
+            print(f"    missing agents: {', '.join(row['missing_agents'])}")
+            if backups:
+                nxt = backups.pop(0)
+                print(f"    adding backup topic: {nxt}")
+                queue.append(nxt)
+        complete = sum(1 for d in done if not d["missing_agents"])
+        if args.target_complete and complete >= args.target_complete:
+            print(f"
+stop: {complete} complete report(s) reached the target")
+            break
         if usage.get("openalex_remaining_usd") is not None and usage["openalex_remaining_usd"] < worst["openalex"] * MARGIN:
             print("\nstop: OpenAlex's own daily allowance is nearly used up")
             break
