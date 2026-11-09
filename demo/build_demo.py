@@ -149,7 +149,7 @@ def scenes(rid: str, scout_rid: str | None, other: tuple[str, str, str] | None =
                          "Instead of only naming the big companies everyone knows, the Company Scout collects every company behind the evidence: "
                          "patent assignees, the employers of paper authors, and SEC filers. It matches them to the SEC ticker file, pulls their financials, "
                          "and scores smaller, growing, R&D-heavy names as possible next runners. A transparent heuristic, labelled as a forecast, never a recommendation.",
-                         url=f"{DASH}/runs/{scout_rid}", scroll_y=9040, optional=True))
+                         url=f"{DASH}/runs/{scout_rid}", scroll_y=9630, optional=True))
     if other:
         oid, otopic, osector = other
         out.append(Scene("08b_sector", f"Every technology sector · {otopic} ({osector})",
