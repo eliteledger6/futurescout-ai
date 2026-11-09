@@ -131,6 +131,7 @@ def main() -> int:
     ap.add_argument("--backup-topics", help="';'-separated topics to try when a topic does not get every agent")
     ap.add_argument("--wait-for-openalex-reset", action="store_true",
                     help="when OpenAlex's free daily allowance runs low, wait for its reset (00:00 UTC) instead of stopping")
+    ap.add_argument("--patent-source", choices=["serpapi", "epo"], help="patent source for every run (default: settings)")
     ap.add_argument("--margin", type=float, default=MARGIN, help="safety factor on the worst run cost seen (default 1.2)")
     ap.add_argument("--target-complete", type=int, default=0,
                     help="with --backup-topics: stop once this many runs in this batch had every agent")
@@ -173,14 +174,15 @@ def main() -> int:
         if left["openalex"] < worst["openalex"] * margin:
             print(f"\nstop: OpenAlex budget left ${left['openalex']:.4f} < next run estimate ${worst['openalex'] * margin:.4f}")
             break
-        patents_live = left["serpapi"] >= PATENT_SEARCHES_PER_TOPIC
+        patents_live = args.patent_source == "epo" or left["serpapi"] >= PATENT_SEARCHES_PER_TOPIC
         use_x = left["x"] >= X_WORST_CASE_USD
         print(f"\n[{i}] {topic}  (patents {'live' if patents_live else 'cache only'}, X {'on' if use_x else 'off'}; "
               f"left: models ${left['model']:.2f}, OpenAlex ${left['openalex']:.3f}, X ${left['x']:.2f}, SerpApi {left['serpapi']})")
         started = time.time()
         try:
             out = service.execute(topic, settings, news=False, use_x=use_x, patents_live=patents_live,
-                                  patent_search_budget=left["serpapi"] if patents_live else 0, warn=lambda m: None)
+                                  patent_search_budget=left["serpapi"] if patents_live else 0, warn=lambda m: None,
+                                  patent_source=args.patent_source)
             usage = out.usage or {}
         except ConfigError as exc:
             print(f"    stopped: {exc}")

@@ -82,6 +82,7 @@ def execute(
     sector: Optional[str] = None,
     patents_live: Optional[bool] = None,          # override SERPAPI_CACHE_ONLY for this run
     patent_search_budget: Optional[int] = None,   # hard ceiling on SerpApi searches for this run
+    patent_source: Optional[str] = None,          # "serpapi" | "epo"; None = settings.patent_source
     news: bool = True,
     use_x: bool = True,
     from_year: Optional[int] = None,
@@ -118,7 +119,10 @@ def execute(
         warn("WARNING: ALPHA_VANTAGE_API_KEY is not set; the price & timing risk check will not run.")
     patent_client = None      # SerpApi (Google Patents) first, EPO OPS if configured instead
     creds = settings.epo_credentials()
-    if settings.serpapi_key_value():
+    source = (patent_source or settings.patent_source or "serpapi").lower()
+    if source == "epo" and creds:
+        patent_client = EpoOpsClient(*creds)
+    elif settings.serpapi_key_value():
         cache_only = settings.serpapi_cache_only if patents_live is None else not patents_live
         patent_client = SerpApiPatentsClient(settings.serpapi_key_value() or "", cache_only=cache_only, max_searches=patent_search_budget)
     elif creds:
