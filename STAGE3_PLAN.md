@@ -1,10 +1,24 @@
-# Stage 3 plan: small real trades through NEAR Intents (NOT STARTED)
+# Stage 3 plan: small real trades through NEAR Intents (BUILT, SWITCHED OFF, no trade made)
 
-Status: **plan only**. Nothing here is built or switched on. Stages 1-2 (paper funds, dry-run quotes) are live.
-Real trades need the owner's written go-ahead (see "Go-ahead" at the end). Written 2026-11-09.
+Status 2026-11-09 evening: the owner gave the go-ahead for a first proof trade (about 5 USD + 0.5 NEAR, agent on a
+strong model, visible UI). Step C is built and mock-tested; shadow mode has run (real quotes, nothing sent).
+`trading_enabled` is false and no fund account is connected, so nothing can be sent yet. See "Where it stands" below.
 
 This is engineering planning, not investment advice. Real money can be lost through price moves, bugs, fees or the
 token issuer. Start with an amount you could lose completely without it mattering.
+
+## Where it stands (2026-11-09 evening)
+
+- Built: `app/fund/live.py` (limits, executor, shadow fill), `app/agents/trader` (Claude Opus 5.5 on NEAR AI Cloud),
+  `scripts/fund_trade.py` (status / propose / approve / reject / resume / stop / start), `/api/trading` and the
+  read-only `/trading` page. 14 tests with a fake chain and a fake 1Click.
+- Shadow run: Opus proposed MRVLon; the real dry quote passed every check ("would receive 0.70 MRVLon for $100").
+  An earlier GOOGLon proposal was refused by the price check (quote 3.0% above a 3-day-old close); the band now
+  widens with the age of the close (3% + 1.5% per extra day, max 8%).
+- **Blocker for the 5 USD budget: the market refuses swaps that small ("No liquidity available").** Dry quotes on
+  2026-11-09: 8 USD works for INTCon, NVDAon, GOOGLon, QQQon; MSFTon, MRVLon, SPYon need about 30 USD. So the first
+  real trade needs a cap of about 10 USD (owner's decision; the cap is still 5 USD in config).
+- Still not verified: the owner's eligibility for Ondo tokens, and how a holding is sold again.
 
 ## What was verified (2026-11-09)
 

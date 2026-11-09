@@ -1,4 +1,4 @@
-import type { ApiConfig, FundListItem, Job, Portfolio, TopicFund, Radar, RunDetail, RunSummary, Sector, Treasury, Verification, WatchStatus } from "./types";
+import type { ApiConfig, FundListItem, Job, Portfolio, TopicFund, Trading, Radar, RunDetail, RunSummary, Sector, Treasury, Verification, WatchStatus } from "./types";
 
 // Empty (default) = same origin: Next proxies /api/* to the FastAPI server (API_INTERNAL_URL, see next.config.mjs).
 // Set NEXT_PUBLIC_API_URL to talk to an API directly, e.g. http://127.0.0.1:8001 for a second dev server.
@@ -25,6 +25,7 @@ export const api = {
   portfolio: () => get<Portfolio>("/api/portfolio"),
   treasury: () => get<Treasury>("/api/treasury"),
   funds: () => get<{ funds: FundListItem[]; disclaimer: string }>("/api/funds"),
+  trading: () => get<Trading>("/api/trading"),
   fund: (slug: string) => get<TopicFund>(`/api/funds/${encodeURIComponent(slug)}`),
   async start(topic: string, question?: string): Promise<Job> {
     const res = await fetch(`${API_URL}/api/runs`, {

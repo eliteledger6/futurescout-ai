@@ -8,6 +8,7 @@ const LINKS = [
   { href: "/radar", label: "Radar" },
   { href: "/market", label: "Market" },
   { href: "/funds", label: "Funds" },
+  { href: "/trading", label: "Trading" },
   { href: "/portfolio", label: "Portfolio" },
   { href: "/research", label: "New research" },
   { href: "/about", label: "How it works" },

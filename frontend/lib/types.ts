@@ -280,3 +280,21 @@ export interface FundDecision { at: string; run_id: string; report_date: string;
 export interface TopicFund { topic: string; slug: string; sector: string | null; created_at: string; start_cash_usd: number; cash_usd: number;
   holdings: FundHolding[]; decisions: FundDecision[]; history: FundValuePoint[]; benchmark: string; benchmark_start_date: string | null;
   updated_at: string | null; notes: string[]; summary: FundSummary; disclaimer: string }
+
+/* ---- stage 3: live-trading test + shadow mode (read-only view) */
+export interface TradeQuote { amountInUsd?: string; amountOutUsd?: string; amountOutFormatted?: string; depositAddress?: string; quotedAt?: string; dry?: boolean }
+export interface TradeProposal {
+  id: string; created_at: string; mode: "live" | "shadow"; side: "buy" | "hold"; topic: string; ticker: string; symbol: string; usd: number;
+  rationale: string; risks: string[]; confidence: string; model: string | null; model_cost_usd: number;
+  ref_close: number | null; ref_close_date: string | null; dry_quote: TradeQuote | null; quote: TradeQuote | null; status: string;
+  deposit_tx: string | null; result: { status?: string; amountOutFormatted?: string; amountOutUsd?: string } | null; error: string | null;
+  history: { at: string; status: string; note: string }[]; sha256: string | null; chain: { explorer_url?: string } | null;
+}
+export interface Trading {
+  network: string; account: string | null; key_configured: boolean; trading_enabled: boolean; kill_switch: boolean;
+  limits: { max_trade_usd: number; max_day_usd: number; max_total_usd: number; price_band_pct: number; max_cost_pct: number; shadow_budget_usd: number };
+  spent: { live_total_usd: number; live_today_usd: number; shadow_filled_usd: number };
+  balances: { account: string; near: number | null; usdc: number | null; holdings: { symbol: string; ticker: string; quantity: number; value_usd: number | null }[]; errors: string[] } | null;
+  allowlist: { ticker: string; symbol: string; topic: string; band: string | null; score: number | null; price: number | null }[];
+  proposals: TradeProposal[]; explorer_tx: string; approval: string; disclaimer: string;
+}

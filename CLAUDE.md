@@ -14,8 +14,15 @@ Rules that always apply:
 - Not a trading bot: no real trades, no return promises, no wallet access for agents, no automated X actions.
   Owner decision 2026-11-09: topic funds stages 1-2 are approved: PAPER funds per topic with a rule-based decision
   agent that may decide when/how much to invest *in the simulation*, plus NEAR Intents 1Click DRY-RUN quotes (no signing,
-  no deposits). Stage 3 (small real trades, owner approves each, per-trade/daily caps, kill switch, owner-held key in
-  `.env`) needs the owner's explicit written go-ahead first; Claude never places trades or handles that key.
+  no deposits).
+  Owner decision 2026-11-09 (later the same day), stage 3 go-ahead, exactly this scope: a DEDICATED NEAR mainnet
+  account holding about 5 USD of USDC + 0.5 NEAR; a trading agent on a strong model proposes ONE buy from the
+  price-checked Ondo allowlist; the owner approves each trade in their own terminal
+  (`scripts\fund_trade.py approve <id>`, typed confirmation); limits live in `backend/config/funds.yaml` -> `live`
+  (currently 5 USD per trade / per day / in total, `trading_enabled: false`); a read-only `/trading` page shows it;
+  shadow mode (real quotes, nothing sent) may use a larger pretend budget.
+  Claude NEVER: runs `approve`, sets `trading_enabled: true`, raises a cap, or reads/types the mainnet key. Any cap
+  change needs the owner's words in chat first. Selling, auto-approval and more budget each need a new written yes.
 - Say "mock-tested" vs "run live" honestly; never call a feature complete without a test.
 - Do not push, make the repo public, post on X, submit to the hackathon or spend on mainnet without the owner's explicit yes.
 - Update `PROJECT_STATUS.md` after each phase.
