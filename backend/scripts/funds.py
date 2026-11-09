@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import argparse
 import sys
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -50,6 +51,7 @@ def main() -> int:
     ap.add_argument("--topic")
     ap.add_argument("--no-seal", action="store_true")
     ap.add_argument("--max-price-requests", type=int, default=10)
+    ap.add_argument("--seal-missing", action="store_true", help="only fingerprint decisions that are not sealed yet")
     ap.add_argument("--out-dir", help="write funds here instead of runs/funds (for a trial run)")
     args = ap.parse_args()
     funds_dir = Path(args.out_dir) if args.out_dir else FUNDS_DIR
@@ -61,6 +63,25 @@ def main() -> int:
     creds = None if args.no_seal else s.near_testnet_credentials()
     recorder = NearRecorder(*creds) if creds else None
     now = datetime.now(timezone.utc)
+
+    if args.seal_missing:
+        from app.fund import list_funds
+        if not recorder:
+            print("no testnet credentials")
+            return 1
+        for fund in list_funds(funds_dir):
+            for n, d in enumerate(fund.decisions, start=1):
+                if d.chain or not d.sha256:
+                    continue
+                try:
+                    d.chain = recorder.record_fund_decision(f"fund_{fund.slug}_{n}", {"sha256": d.sha256, "topic": fund.topic[:120],
+                                                            "run_id": d.run_id, "at": d.at.isoformat(), "band": d.band}).as_dict()
+                    print(f"{fund.topic}: decision {n} sealed")
+                    time.sleep(8)   # the public testnet RPC rate-limits bursts (HTTP 429)
+                except NearRecordError as exc:
+                    print(f"{fund.topic}: decision {n} NOT sealed ({str(exc)[:100]})")
+            save_fund(fund, funds_dir)
+        return 0
 
     reports = latest_reports(_default_store(s), args.topic)
     print(f"{len(reports)} topic(s) with a scored report")

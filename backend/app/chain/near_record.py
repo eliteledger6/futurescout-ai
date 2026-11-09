@@ -122,10 +122,12 @@ class NearRecorder:
         deposit = self._deposit()
         try:
             return self._signer("set", args, deposit)
-        except NearRecordError:
-            if deposit == STORAGE_DEPOSIT_YOCTO:
+        except NearRecordError as exc:
+            # Pay the deposit only when the CONTRACT refused for lack of storage. Never on network errors: a dropped
+            # response may hide a write that went through, and retrying with a deposit paid twice (seen live 2026-11-09).
+            if deposit == STORAGE_DEPOSIT_YOCTO or not re.search(r"(?i)storage|not enough balance|attached deposit", str(exc)):
                 raise
-            return self._signer("set", args, STORAGE_DEPOSIT_YOCTO)   # refused without a deposit: pay it once
+            return self._signer("set", args, STORAGE_DEPOSIT_YOCTO)
 
     def _deposit(self) -> int:
         """0 when the account's prepaid SocialDB storage covers the write (only gas is paid), else the full deposit.
@@ -142,8 +144,8 @@ class NearRecorder:
             payload = self._http.post(self.rpc, json=body).json()
             info = json.loads(bytes(payload["result"]["result"]).decode() or "null") or {}
             return 0 if int(info.get("available_bytes", 0)) >= FREE_BYTES_NEEDED else STORAGE_DEPOSIT_YOCTO
-        except Exception:  # noqa: BLE001  (fall back to paying the deposit)
-            return STORAGE_DEPOSIT_YOCTO
+        except Exception:  # noqa: BLE001  (check unavailable: try without a deposit; a storage refusal is retried with one)
+            return 0
 
     # ---- write --------------------------------------------------------------
     def _sign_with_py_near(self, method: str, args: dict, deposit: int) -> str:

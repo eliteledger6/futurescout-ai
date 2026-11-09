@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import subprocess
+import time
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -54,11 +55,16 @@ def main() -> int:
             rep = ResearchReport.model_validate(row.report_json)
             if not rep.patent or rep.patent.ytd is not None or not rep.patent.terms:
                 continue
-            try:
-                m = patent_ytd(epo, rep.patent.terms, today)
-            except SourceError as exc:
-                print(f"{rep.topic}: EPO error {exc.message[:120]}")
-                continue
+            m = None
+            for attempt in range(4):            # EPO fair use: back off and retry when it says "too fast"
+                try:
+                    m = patent_ytd(epo, rep.patent.terms, today)
+                    break
+                except SourceError as exc:
+                    wait = 20 * (attempt + 1)
+                    print(f"{rep.topic}: EPO refused ({exc.message[:60]}); retrying in {wait}s")
+                    time.sleep(wait)
+            time.sleep(3)
             if m is None:
                 continue
             serp = any(src.source_name.startswith("Google Patents") for src in rep.patent.sources)

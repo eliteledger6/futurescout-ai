@@ -147,4 +147,29 @@ def test_deposit_is_skipped_while_prepaid_storage_lasts():
     assert NearRecorder(ACCOUNT, KEY, http=rpc(331_572))._deposit() == 0
     assert NearRecorder(ACCOUNT, KEY, http=rpc(1_000))._deposit() == STORAGE_DEPOSIT_YOCTO
     broken = httpx.Client(transport=httpx.MockTransport(lambda r: httpx.Response(500, text="x")))
-    assert NearRecorder(ACCOUNT, KEY, http=broken)._deposit() == STORAGE_DEPOSIT_YOCTO
+    assert NearRecorder(ACCOUNT, KEY, http=broken)._deposit() == 0   # unknown: try free first
+
+
+def test_network_error_is_not_retried_with_a_deposit_but_storage_refusal_is():
+    import httpx
+    from app.chain.near_record import STORAGE_DEPOSIT_YOCTO, NearRecorder, NearRecordError
+    free = httpx.Client(transport=httpx.MockTransport(lambda r: httpx.Response(200, json={"result": {"result": list(b'{"available_bytes": 99999}')}})))
+    for err, expect in (("RpcNotAvailableError: RPC not available", None), ("Not enough storage balance", STORAGE_DEPOSIT_YOCTO)):
+        rec = NearRecorder(ACCOUNT, KEY, http=free)
+        calls = []
+
+        def signer(method, args, deposit, err=err):
+            calls.append(deposit)
+            if deposit == 0:
+                raise NearRecordError(err)
+            return "tx"
+        rec._signer = signer
+        if expect is None:
+            try:
+                rec._set({})
+                raise AssertionError("should raise")
+            except NearRecordError:
+                pass
+            assert calls == [0]
+        else:
+            assert rec._set({}) == "tx" and calls == [0, STORAGE_DEPOSIT_YOCTO]

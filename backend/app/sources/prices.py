@@ -14,6 +14,7 @@ Prices are cached on disk for 12 hours to protect the daily quota. The key is re
 from __future__ import annotations
 
 import json
+import re
 import time
 from dataclasses import dataclass
 from datetime import date, datetime, timezone
@@ -49,6 +50,10 @@ def parse_daily(payload: object, symbol: str) -> list[Bar]:
             text = str(payload[k])
             if k == "Error Message":
                 raise SourceError(SOURCE, f"{symbol}: symbol not found or invalid request")
+            # Alpha Vantage quotes the caller's API key in some notices ("We have detected your API key as ..."):
+            # never pass that text on. Found live 2026-11-09 in saved reports; the key is masked here at the source.
+            text = re.sub(r"(?i)(api ?key (?:as|is|:)?\s*)[A-Z0-9]{8,}", r"\1***", text)
+            text = re.sub(r"\b[A-Z0-9]{16}\b", "***", text)
             raise SourceError(SOURCE, f"{symbol}: Alpha Vantage limit or notice: {text[:160]}", retryable=True)
     series = payload.get("Time Series (Daily)")
     if not isinstance(series, dict):
