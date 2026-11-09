@@ -91,7 +91,8 @@ The dashboard talks to the API through its own origin (`/api/*` is proxied by Ne
 |---|---|---|
 | **On your laptop** | backend: `python scripts\serve.py` · frontend: `npm run dev` → http://localhost:3000 | you |
 | **Same Wi-Fi** (phone, a friend next to you) | `python scripts\serve.py --host 0.0.0.0` and `npm run dev -- -H 0.0.0.0`, then open `http://<your-PC-IP>:3000` | people on your network |
-| **Temporary public link** (for a demo call or judges, no account needed) | keep both servers running, install [cloudflared](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/) and run `cloudflared tunnel --url http://localhost:3000`; it prints an `https://….trycloudflare.com` address that works while the command runs | anyone with the link |
+| **Temporary public link, nothing to install** | keep both servers running and, in a new terminal, run `ssh -R 80:localhost:3000 nokey@localhost.run` (type `yes` the first time). It prints an `https://….lhr.life` address; share it. Works while that terminal stays open; the address changes each time | anyone with the link |
+| **Temporary public link, steadier** | `winget install Cloudflare.cloudflared`, then `cloudflared tunnel --url http://localhost:3000`; it prints an `https://….trycloudflare.com` address that works while the command runs | anyone with the link |
 | **One command with Docker** | `docker compose up --build` (reads keys from `.env`; without a database it serves `backend/runs`, or the sample reports when there are none) → http://localhost:3000 | you, or a server you own |
 | **Always-on hosting** | frontend on Vercel (import the repo, root `frontend`, set `API_INTERNAL_URL` to your API's URL); API on Render/Railway/Fly (Python service, start command `python scripts/serve.py --host 0.0.0.0 --port $PORT`, env vars from `.env.example`). Keys live in the host's environment settings, never in the repo | the public |
 
