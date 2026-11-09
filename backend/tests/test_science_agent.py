@@ -96,7 +96,9 @@ def test_paper_search_defaults_to_last_three_years_and_explicit_year_overrides()
     default = agent.run("chiplet", use_llm=False)
     override = agent.run("chiplet", from_year=2021, use_llm=False)
     assert default.from_year == 2023 and override.from_year == 2021
-    assert seen_filters == ["from_publication_date:2023-01-01", "from_publication_date:2021-01-01"]
+    searches = [f for f in seen_filters if "title_and_abstract.search" not in (f or "")]   # drop the year-to-date counts
+    assert searches == ["from_publication_date:2023-01-01", "from_publication_date:2021-01-01"]
+    assert default.ytd is not None and default.ytd.cutoff == "10-09"     # NOW = 2026-11-08 minus the 30-day indexing lag
 
 
 def test_no_papers_means_no_model_call_and_no_findings():

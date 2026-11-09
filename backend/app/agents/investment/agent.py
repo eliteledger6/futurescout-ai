@@ -144,6 +144,11 @@ class InvestmentAgent:
             metrics = (f"OpenAlex works with the exact topic phrase in title/abstract: {science.publication_counts}. "
                        f"Research Acceleration {a.previous_year}->{a.last_full_year}: "
                        f"{a.previous_year_count}->{a.last_full_year_count} (YoY {a.yoy_growth_pct}%). Basis: {a.basis}")
+        if science and science.ytd:
+            y = science.ytd
+            metrics += (f"\nThis year so far (1 Jan-{y.cutoff}): {y.previous_year} {y.previous_count} -> {y.year} {y.count} "
+                        f"({y.growth_pct}%, trend: {y.trend or 'base too small'}). Use this to say whether momentum is still "
+                        f"building or fading in the current year; the full-year figure alone cannot show that.")
         dims = "\n".join(f"- {k}: {d.label}" for k, d in self.scoring.dimensions.items())
         user = (
             f"Topic: {topic}\n" + (f"User question: {question}\n" if question else "")

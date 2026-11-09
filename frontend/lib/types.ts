@@ -119,6 +119,7 @@ export interface Report {
     status: string; coverage_note: string; sources: Source[]; findings: Finding[];
     publication_counts: Record<string, number>;
     acceleration: { previous_year: number; previous_year_count: number; last_full_year: number; last_full_year_count: number; yoy_growth_pct: number | null; basis: string } | null;
+    ytd?: Ytd | null;
     emerging_directions: string[]; open_problems: string[]; limitations: string[];
   } | null;
   risk: {
@@ -188,10 +189,15 @@ export interface Acceleration {
 
 export interface Sector { key: string; name: string; hints: string; discovery_queries: string[]; topics: number; companies: number }
 
+export interface Ytd { year: number; previous_year: number; cutoff: string; count: number; previous_count: number;
+  growth_pct: number | null; trend: "rising" | "flat" | "cooling" | null; basis: string }
+
 export interface TopicSignal {
   topic: string;
   sector: string;
-  heat_basis?: "papers+patents" | "papers only" | "patents only" | null;
+  heat_basis?: string | null;
+  paper_ytd?: Ytd | null;
+  trend?: "rising" | "flat" | "cooling" | null;
   terms: string[];
   paper_counts: Record<string, number>;
   paper_acceleration: Acceleration | null;

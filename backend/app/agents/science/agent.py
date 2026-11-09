@@ -17,7 +17,7 @@ from pathlib import Path
 from typing import Callable, Optional
 
 from app.agents.retrieval import collect_papers, dedupe, format_papers  # noqa: F401  (re-exported)
-from app.agents.science.metrics import compute_acceleration
+from app.agents.science.metrics import compute_acceleration, ytd_from_client
 from app.graph.citation_guard import apply_citation_guard
 from app.models.router import ModelRouter, ModelRouterError
 from app.schemas.common import AgentError, SourceRecord
@@ -76,6 +76,7 @@ class ScienceAgent:
             sources=records,
             publication_counts=counts,
             acceleration=compute_acceleration(counts, current_year, phrase=clean_phrase(topic)),
+            ytd=self._ytd(topic, errors),
             errors=errors,
             coverage_note=(
                 "Based on titles, metadata and abstracts only. No full text was read. "
@@ -128,6 +129,15 @@ class ScienceAgent:
         self, queries: list[str], from_year: Optional[int], max_papers: int, errors: list[AgentError]
     ) -> list[SourceRecord]:
         return collect_papers(self.name, self.openalex, self.arxiv, queries, from_year, max_papers, errors)
+
+    def _ytd(self, topic: str, errors: list[AgentError]):  # noqa: ANN202
+        if not self.openalex:
+            return None
+        try:
+            return ytd_from_client(self.openalex, clean_phrase(topic), self._now().date())
+        except SourceError as exc:
+            errors.append(AgentError(agent=self.name, source=exc.source, message=f"year-to-date count: {exc.message}", recoverable=exc.retryable))
+            return None
 
     def _counts(self, topic: str, start_year: int, errors: list[AgentError]) -> dict[int, int]:
         if not self.openalex:

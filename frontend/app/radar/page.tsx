@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ErrorNotice, Loading } from "@/components/ui";
 import { api, fmtDate } from "@/lib/api";
-import type { Radar, Sector, TopicSignal } from "@/lib/types";
+import type { Radar, Sector, TopicSignal, Ytd } from "@/lib/types";
 
 // Source errors come from the API verbatim; show a short reader-friendly version (full text in the tooltip).
 const friendlyError = (e: string) => {
@@ -63,7 +63,7 @@ export default function RadarPage() {
               <div className="radar-grid">
                 <div className="table-wrap">
                   <table className="table radar-table">
-                    <thead><tr><th>#</th><th>Topic</th><th>Heat</th><th className="num">Papers</th><th className="num">Patents</th>{radar.topics.some((t) => Object.keys(t.filer_counts).length) && <th className="num">SEC filers</th>}</tr></thead>
+                    <thead><tr><th>#</th><th>Topic</th><th>Heat</th><th className="num">Papers</th><th className="num">This year so far</th><th className="num">Patents</th>{radar.topics.some((t) => Object.keys(t.filer_counts).length) && <th className="num">SEC filers</th>}</tr></thead>
                     <tbody>
                       {radar.topics.filter((t) => sector === null || (t.sector ?? "semiconductors") === sector).map((t) => {
                         const pa = t.paper_acceleration, pt = t.patent_acceleration;
@@ -79,10 +79,11 @@ export default function RadarPage() {
                                 <div className="track" style={{ flex: 1 }}>
                                   <div className={`bar ${(t.heat ?? 0) < 0 ? "bar-neg" : ""}`} style={{ width: `${Math.min(100, Math.abs(t.heat ?? 0) / maxHeat * 100)}%` }} />
                                 </div>
-                                <span className="mono small" style={{ width: 52, textAlign: "right" }} title={t.heat_basis ?? undefined}>{pct(t.heat)}{t.heat_basis === "papers only" ? <span className="muted" title="patents not counted for this topic: heat is paper growth alone">*</span> : null}</span>
+                                <span className="mono small" style={{ width: 52, textAlign: "right" }} title={t.heat_basis ?? undefined}>{pct(t.heat)}{t.heat_basis && !t.heat_basis.includes("patents") ? <span className="muted" title="patents not counted for this topic: heat uses papers only">*</span> : null}</span>
                               </div>
                             </td>
                             <td className="num">{pa ? <>{pa.previous_year_count} → {pa.last_full_year_count}<div className="small muted">{pct(pa.yoy_growth_pct)}</div></> : "–"}</td>
+                            <td className="num">{t.paper_ytd ? <>{t.paper_ytd.previous_count} → {t.paper_ytd.count}<div className="small"><TrendChip t={t.paper_ytd} /></div></> : "–"}</td>
                             <td className="num">{pt ? <>{pt.previous_year_count} → {pt.last_full_year_count}<div className="small muted">{pct(pt.yoy_growth_pct)}</div></> : "–"}</td>
                             {Object.keys(t.filer_counts).length > 0 && <td className="num">{lastYear ? t.filer_counts[String(lastYear)] ?? "–" : "–"}</td>}
                           </tr>
@@ -99,6 +100,16 @@ export default function RadarPage() {
         </div>
       </section>
     </>
+  );
+}
+
+function TrendChip({ t }: { t: Ytd }) {
+  const label = t.trend ?? "small base";
+  const colour = t.trend === "rising" ? "var(--accent)" : t.trend === "cooling" ? "var(--l-danger)" : "var(--muted)";
+  return (
+    <span className="mono" style={{ color: colour, fontSize: 11 }} title={t.basis}>
+      {pct(t.growth_pct)} · {label}
+    </span>
   );
 }
 

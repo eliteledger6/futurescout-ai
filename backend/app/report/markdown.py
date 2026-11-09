@@ -156,6 +156,10 @@ def render_markdown(report: ResearchReport) -> str:
         if s.acceleration:
             a = s.acceleration
             out.append(f"Research Acceleration {a.previous_year}->{a.last_full_year}: {a.previous_year_count} -> {a.last_full_year_count} ({a.yoy_growth_pct}% YoY). {a.basis}")
+        if s.ytd:
+            y = s.ytd
+            out.append(f"This year so far (1 Jan to {y.cutoff}): {y.previous_year} {y.previous_count} -> {y.year} {y.count} "
+                       f"({y.growth_pct}%, trend: {y.trend or 'base too small to call'}). {y.basis}")
         out.append("")
         for f in s.findings:
             out += _finding_block(f, sources)

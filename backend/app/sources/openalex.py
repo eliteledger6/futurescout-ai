@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import re
 import time
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from typing import Callable, Optional
 
 import httpx
@@ -159,6 +159,16 @@ class OpenAlexClient:
                 freq[name] = freq.get(name, 0) + 1
                 ids.setdefault(name, []).append(wid)
         return freq, ids
+
+    def count_between(self, query: str, start: date, end: date) -> int:
+        """Works whose TITLE OR ABSTRACT contains the exact phrase, published between two dates (inclusive)."""
+        phrase = clean_phrase(query)
+        if not phrase:
+            return 0
+        data = self._get("/works", {"per-page": 1, "select": "id",
+                                    "filter": f'title_and_abstract.search:"{phrase}",from_publication_date:{start.isoformat()},'
+                                              f"to_publication_date:{end.isoformat()}"})
+        return int((data.get("meta") or {}).get("count") or 0)
 
     def count_by_year(self, query: str, start_year: int) -> dict[int, int]:
         """Works per publication year whose TITLE OR ABSTRACT contains the exact phrase `query`.

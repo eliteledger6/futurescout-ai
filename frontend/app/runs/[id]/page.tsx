@@ -482,6 +482,16 @@ function ActivitySection({ report }: { report: Report }) {
                 <div className="stat-label">Research Acceleration {a.previous_year} → {a.last_full_year} ({a.previous_year_count} → {a.last_full_year_count} works)</div>
               </div>
             )}
+            {s.ytd && (
+              <div style={{ marginTop: 22 }}>
+                <div className="stat-value" style={{ fontSize: 40, color: s.ytd.trend === "cooling" ? "var(--l-danger)" : s.ytd.trend === "rising" ? "var(--accent)" : undefined }}>
+                  {s.ytd.growth_pct !== null ? `${s.ytd.growth_pct > 0 ? "+" : ""}${s.ytd.growth_pct}%` : "–"}
+                  <span className="small muted" style={{ fontFamily: "var(--font-body)", letterSpacing: 0, marginLeft: 10 }}>{s.ytd.trend ?? "base too small to call"}</span>
+                </div>
+                <div className="stat-label">This year so far: {s.ytd.count} works by {s.ytd.cutoff} {s.ytd.year} vs {s.ytd.previous_count} by the same date in {s.ytd.previous_year}</div>
+                <p className="small muted" style={{ margin: "8px 0 0" }}>{s.ytd.basis}</p>
+              </div>
+            )}
             <p className="small muted" style={{ marginTop: 20 }}>{a?.basis} Research activity is not commercial success.</p>
           </div>
           <div style={{ background: "transparent" }}>

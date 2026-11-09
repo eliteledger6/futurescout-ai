@@ -53,6 +53,9 @@ def build_verdict(report: ResearchReport) -> dict:
         elevated = sum(1 for m in timing if m.timing_risk == "elevated")
         if elevated and elevated >= len(timing) / 2:
             qualifiers.append(f"the related stocks have already run hard ({elevated} of {len(timing)} show elevated timing risk)")
+    ytd_q = report.science.ytd if report.science else None
+    if ytd_q and ytd_q.trend == "cooling":
+        qualifiers.append(f"research is cooling this year ({ytd_q.growth_pct:+.0f}% vs the same dates last year)")
     if score and score.confidence.value == "low":
         qualifiers.append("low confidence: the evidence is thin")
 
@@ -65,6 +68,10 @@ def build_verdict(report: ResearchReport) -> dict:
     sci = report.science.acceleration if report.science else None
     if sci and sci.yoy_growth_pct is not None:
         why.append(f"Papers {sci.previous_year}→{sci.last_full_year}: {sci.previous_year_count}→{sci.last_full_year_count} ({sci.yoy_growth_pct:+.0f}%)")
+    ytd = report.science.ytd if report.science else None
+    if ytd and ytd.growth_pct is not None:
+        why.append(f"So far in {ytd.year} (to {ytd.cutoff}): {ytd.count} papers vs {ytd.previous_count} by the same date in "
+                   f"{ytd.previous_year} ({ytd.growth_pct:+.0f}%, {ytd.trend or 'base too small to call'})")
     pat = report.patent.acceleration if report.patent else None
     if pat and pat.yoy_growth_pct is not None:
         why.append(f"Patent publications {pat.previous_year}→{pat.last_full_year}: {pat.previous_year_count}→{pat.last_full_year_count} ({pat.yoy_growth_pct:+.0f}%)")
