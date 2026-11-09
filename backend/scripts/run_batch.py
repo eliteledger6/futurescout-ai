@@ -79,12 +79,14 @@ def fresh_topics(settings, hours: float) -> set[str]:  # noqa: ANN001
 
 
 def openalex_allowance_left(settings) -> "float | None":  # noqa: ANN001
-    """OpenAlex's own remaining daily allowance in USD (one ~$0.001 request), or None if unknown."""
+    """OpenAlex's remaining free daily allowance plus prepaid credit in USD (one tiny request), or None if unknown."""
     from app.sources.openalex import OpenAlexClient
     try:
         client = OpenAlexClient(settings.openalex_key_value())
         client._get("/works", {"per-page": 1, "select": "id", "filter": "publication_year:2025"})
-        return client.remaining_usd
+        if client.remaining_usd is None:
+            return None
+        return client.remaining_usd + (client.prepaid_remaining_usd or 0.0)   # free daily + prepaid credit
     except Exception:  # noqa: BLE001
         return None
 

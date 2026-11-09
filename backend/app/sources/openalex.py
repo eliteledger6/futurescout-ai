@@ -122,7 +122,8 @@ class OpenAlexClient:
         self._now = now
         self.requests = 0
         self.cost_usd = 0.0                   # summed from OpenAlex's own x-ratelimit-cost-usd header
-        self.remaining_usd: Optional[float] = None
+        self.remaining_usd: Optional[float] = None          # free daily allowance left
+        self.prepaid_remaining_usd: Optional[float] = None  # prepaid credit the owner bought (separate header)
 
     def _get(self, path: str, params: dict) -> dict:
         params = dict(params)
@@ -137,6 +138,8 @@ class OpenAlexClient:
             self.cost_usd = round(self.cost_usd + float(response.headers.get("x-ratelimit-cost-usd") or 0), 6)
             if response.headers.get("x-ratelimit-remaining-usd") is not None:
                 self.remaining_usd = float(response.headers["x-ratelimit-remaining-usd"])
+            if response.headers.get("x-ratelimit-prepaid-remaining-usd") is not None:
+                self.prepaid_remaining_usd = float(response.headers["x-ratelimit-prepaid-remaining-usd"])
         except (TypeError, ValueError):
             pass
         try:
