@@ -152,3 +152,13 @@ def test_funds_api_lists_and_details(verdict, tmp_path):
     det = c.get("/api/funds/fixture-tech").json()
     assert det["summary"]["holdings"] == 5 and det["decisions"][0]["band"] == "building"
     assert c.get("/api/funds/..%2Fsecret").status_code == 404
+
+
+def test_unpriced_companies_wait_and_trigger_a_price_review(verdict):
+    f = new_fund("Fixture tech", None, CFG, NOW)
+    d = decide(f, "run1", report(), FakeBook({k: v for k, v in PRICES.items() if k != "SMOL"}), CFG, NOW, "first")
+    assert d.waiting_for_price == ["SMOL"] and any("SMOL" in r for r in d.reasons)
+    assert needs_decision(f, "run1", NOW + timedelta(hours=2), CFG) is None
+    assert "price review" in needs_decision(f, "run1", NOW + timedelta(days=1), CFG)
+    d2 = decide(f, "run1", report(), FakeBook(PRICES), CFG, NOW + timedelta(days=1), "price review")
+    assert d2.waiting_for_price == [] and any(t.ticker == "SMOL" and t.side == "buy" for t in d2.trades)

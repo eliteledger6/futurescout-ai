@@ -50,7 +50,9 @@ def main() -> int:
     ap.add_argument("--topic")
     ap.add_argument("--no-seal", action="store_true")
     ap.add_argument("--max-price-requests", type=int, default=10)
+    ap.add_argument("--out-dir", help="write funds here instead of runs/funds (for a trial run)")
     args = ap.parse_args()
+    funds_dir = Path(args.out_dir) if args.out_dir else FUNDS_DIR
     s = get_settings()
     cfg = load_fund_config()
     prices = AlphaVantageClient(s.alpha_vantage_key_value()) if s.alpha_vantage_key_value() else None
@@ -63,7 +65,7 @@ def main() -> int:
     reports = latest_reports(_default_store(s), args.topic)
     print(f"{len(reports)} topic(s) with a scored report")
     for run_id, report in reports:
-        path = FUNDS_DIR / f"{slug_of(report.topic)}.json"
+        path = funds_dir / f"{slug_of(report.topic)}.json"
         fund = load_fund(path)
         why = needs_decision(fund, run_id, now, cfg)
         if fund is None:
@@ -88,7 +90,7 @@ def main() -> int:
         print(f"   value ${fund.value():,.2f} ({fund.summary()['return_pct']:+.2f}%), {len(fund.holdings)} holdings; "
               f"NEAR Intents: {stats['available']}/{stats['checked']} tradable, {stats['quoted']} dry quote(s)"
               + (f"; errors: {stats['errors'][:1]}" if stats["errors"] else ""))
-        save_fund(fund, FUNDS_DIR)
+        save_fund(fund, funds_dir)
     if book.notes:
         print("price notes:", "; ".join(book.notes[:6]))
     print(f"Alpha Vantage requests: {book.requests}; 1Click requests: {intents.requests}")

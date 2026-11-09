@@ -1,0 +1,30 @@
+/* Topic funds (simulation) */
+.fund-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+.fund-card { display: grid; gap: 12px; padding: 20px; border: 1px solid var(--line-strong); border-radius: 14px; background: var(--surface);
+  color: inherit; text-decoration: none; transition: border-color .15s, transform .15s; }
+.fund-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.fund-card h3 { margin: 0; font-size: 18px; line-height: 1.25; }
+.fund-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.fund-big { font-family: var(--font-mono); font-size: 26px; }
+.tier-bar { display: flex; gap: 2px; height: 12px; border-radius: 6px; overflow: hidden; background: var(--surface-2); }
+.tier-bar > span { display: block; height: 100%; transition: width .8s cubic-bezier(.2,.8,.2,1); }
+.tier-low { background: #3987e6; }
+.tier-medium { background: #c98a1f; }
+.tier-high { background: #d4486a; }
+.tier-cash { background: var(--surface-2); }
+.tier-dot { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.tier-legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: var(--text-2); }
+.band-pill { text-transform: capitalize; }
+.fund-spark { width: 100%; height: 44px; display: block; }
+.fund-spark .fund-line { fill: none; stroke: var(--accent); stroke-width: 2; }
+.fund-spark .bench-line { fill: none; stroke: var(--text-2); stroke-width: 1.5; stroke-dasharray: 3 3; }
+.timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.timeline > li { border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; background: var(--surface); }
+.timeline .reasons { margin: 10px 0 0; padding-left: 18px; color: var(--text-2); font-size: 14px; }
+.timeline .reasons li { margin: 3px 0; }
+.trade-buy { color: var(--accent); }
+.trade-sell { color: var(--l-danger); }
+.route-yes { color: var(--accent); }
+.route-no { color: var(--text-2); }
+.fund-chart { width: 100%; height: 180px; display: block; }
+@media (prefers-reduced-motion: reduce) { .tier-bar > span, .fund-card { transition: none; } }

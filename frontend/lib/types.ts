@@ -259,3 +259,23 @@ export interface Treasury {
 }
 
 export interface Job { id: string; topic: string; status: "running" | "done" | "failed"; run_id: string | null; error: string | null; elapsed_s: number }
+
+/* ---- topic funds (SIMULATION, stages 1-2) */
+export interface FundValuePoint { day: string; value_usd: number; benchmark_value_usd: number | null }
+export interface FundSummary {
+  value_usd: number; return_pct: number; cash_usd: number; invested_pct: number; tiers_usd: Record<string, number>;
+  holdings: number; benchmark_return_pct: number | null; decisions: number; last_band: string | null;
+  last_score: number | null; last_decision_at: string | null; tradable_via_intents: number;
+}
+export interface FundListItem extends FundSummary { topic: string; slug: string; sector: string | null; updated_at: string | null; history: FundValuePoint[] }
+export interface TokenRoute { available: boolean; symbol: string | null; asset_id: string | null; blockchain: string | null; token_price_usd: number | null; checked_at: string; note: string }
+export interface QuoteCheck { amount_in_usd: number; amount_out_usd: number | null; amount_out: string | null; cost_pct: number | null; time_estimate_s: number | null; quoted_at: string; error: string | null }
+export interface FundHolding { ticker: string; company: string; tier: string; shares: number; cost_usd: number; last_close: number | null; last_date: string | null;
+  timing_risk: string | null; why: string; route: TokenRoute | null; quote: QuoteCheck | null; value_usd: number; return_pct: number | null }
+export interface FundTrade { day: string; ticker: string; tier: string; side: "buy" | "sell"; shares: number; price: number; usd: number; fee_usd: number }
+export interface FundDecision { at: string; run_id: string; report_date: string; band: string; score: number | null; previous_score: number | null;
+  target_invested_pct: number; tier_targets_usd: Record<string, number>; staged_tiers: string[]; waiting_for_price?: string[]; trades: FundTrade[]; reasons: string[];
+  value_before_usd: number; sha256: string | null; chain: { tx_hash?: string | null; explorer_url?: string; key?: string } | null }
+export interface TopicFund { topic: string; slug: string; sector: string | null; created_at: string; start_cash_usd: number; cash_usd: number;
+  holdings: FundHolding[]; decisions: FundDecision[]; history: FundValuePoint[]; benchmark: string; benchmark_start_date: string | null;
+  updated_at: string | null; notes: string[]; summary: FundSummary; disclaimer: string }

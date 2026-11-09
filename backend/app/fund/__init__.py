@@ -119,6 +119,7 @@ class Decision(BaseModel):
     target_invested_pct: float
     tier_targets_usd: dict[str, float] = Field(default_factory=dict)
     staged_tiers: list[str] = Field(default_factory=list)
+    waiting_for_price: list[str] = Field(default_factory=list)   # basket companies left out: no daily close yet
     trades: list[Trade] = Field(default_factory=list)
     reasons: list[str] = Field(default_factory=list)
     value_before_usd: float
@@ -298,6 +299,8 @@ def needs_decision(fund: Optional[TopicFund], run_id: str, now: datetime, cfg: F
         return "a newer report is available"
     if last.staged_tiers and now - last.at >= timedelta(days=cfg.review_days):
         return f"staged entry review ({cfg.review_days} days after the last decision)"
+    if last.waiting_for_price and now - last.at >= timedelta(days=1):
+        return f"price review: {len(last.waiting_for_price)} company(ies) were waiting for a daily close"
     return None
 
 
@@ -328,12 +331,16 @@ def decide(fund: TopicFund, run_id: str, report: ResearchReport, book: PriceBook
 
     basket = build_basket(report, cfg)
     priced: list[tuple[Candidate, Bar]] = []
+    waiting: list[str] = []
     for c in basket:
         bar = book.close_on_or_before(c.ticker, today)
         if bar:
             priced.append((c, bar))
         else:
-            reasons.append(f"{c.ticker} left out: no daily close available yet.")
+            waiting.append(c.ticker)
+    if waiting:
+        reasons.append(f"Left out for now, no daily close yet (free price plan: 25 lookups a day): {', '.join(waiting)}. "
+                       "Reviewed again after the next price update.")
     tiers_present = [k for k in cfg.tiers if any(c.tier == k for c, _ in priced)]
     weight_sum = sum(cfg.tiers[k].weight for k in tiers_present)
     for k in cfg.tiers:
@@ -409,7 +416,7 @@ def decide(fund: TopicFund, run_id: str, report: ResearchReport, book: PriceBook
 
     d = Decision(at=now, run_id=run_id, report_date=report.generated_at.date().isoformat(), band=band, score=score,
                  previous_score=prev_score, target_invested_pct=round(exposure * 100, 1), tier_targets_usd=tier_targets,
-                 staged_tiers=staged, trades=trades, reasons=reasons, value_before_usd=value)
+                 staged_tiers=staged, waiting_for_price=waiting, trades=trades, reasons=reasons, value_before_usd=value)
     d.sha256 = _digest(d)
     fund.decisions.append(d)
     if fund.benchmark_start_close is None:          # the benchmark starts when the fund first decides

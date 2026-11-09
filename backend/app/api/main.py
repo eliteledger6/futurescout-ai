@@ -260,7 +260,7 @@ def create_app(
         """Topic funds (SIMULATION, stages 1-2). Built and updated by scripts/funds.py; read-only here."""
         items = [{"topic": f.topic, "slug": f.slug, "sector": f.sector, "updated_at": f.updated_at.isoformat() if f.updated_at else None,
                   "history": [h.model_dump() for h in f.history[-60:]], **f.summary()} for f in list_funds(funds_dir)]
-        items.sort(key=lambda x: -(x["value_usd"] or 0))
+        items.sort(key=lambda x: -(x["last_score"] if x["last_score"] is not None else -1))   # strongest research first
         return {"funds": items, "label": "simulation", "disclaimer": FUND_DISCLAIMER}
 
     @app.get("/api/funds/{slug}")
