@@ -3,15 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+// Six tabs. "New research" is a button on the Reports page; the older paper portfolio is linked from Funds.
 const LINKS = [
-  { href: "/", label: "Reports" },
-  { href: "/radar", label: "Radar" },
-  { href: "/market", label: "Market" },
-  { href: "/funds", label: "Funds" },
-  { href: "/trading", label: "Trading" },
-  { href: "/portfolio", label: "Portfolio" },
-  { href: "/research", label: "New research" },
-  { href: "/about", label: "How it works" },
+  { href: "/", label: "Reports", also: ["/runs", "/research"] },
+  { href: "/radar", label: "Radar", also: [] },
+  { href: "/funds", label: "Funds", also: ["/portfolio"] },
+  { href: "/trading", label: "Trading", also: [] },
+  { href: "/market", label: "Market", also: [] },
+  { href: "/about", label: "How it works", also: [] },
 ];
 
 export function NavLinks() {
@@ -19,7 +18,7 @@ export function NavLinks() {
   return (
     <nav className="nav" aria-label="Main">
       {LINKS.map((l) => {
-        const active = l.href === "/" ? path === "/" || path.startsWith("/runs") : path.startsWith(l.href);
+        const active = (l.href === "/" ? path === "/" : path.startsWith(l.href)) || l.also.some((a) => path.startsWith(a));
         return (
           <Link key={l.href} href={l.href} className={active ? "active" : undefined}>
             {l.label}
