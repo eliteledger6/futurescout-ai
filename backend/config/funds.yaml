@@ -41,6 +41,8 @@ intents:
 # These caps are the owner's; Claude must not raise them without the owner saying so in writing.
 live:
   trading_enabled: true       # master switch; the owner turns it on for the first trade
+  route: confidential          # owner 2026-11-09: trade like near.com (signed order from the private balance); "wallet" = old route
+  signed_route_enabled: false  # SECOND switch for that route. Built, not yet run for real. Only the owner turns it on.
   pay_with: near               # owner 2026-11-09: pay with NEAR directly (no USDC needed); "usdc" also works
   max_trade_usd: 25.0
   max_day_usd: 35.0

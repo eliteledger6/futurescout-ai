@@ -38,6 +38,11 @@ token issuer. Start with an amount you could lose completely without it matterin
   balance IS the Confidential Intents balance of wrongowl2563.near; confidential-route dry quotes work (GOOGLon and
   INTCon from 10 USD, MSFTon / METAon / MRVLon from 30 USD at that moment). near.com's flat 20 USD minimum is an
   app rule on top of per-token liquidity. Not built: signing and submitting a swap order on that route.
+- Built and switched OFF (2026-11-09 late): `app/fund/signed_exec.py`, the signed-order step on the private route. It logs in,
+  checks the private balance, takes a real quote, asks the service for the order and VERIFIES it (exactly one transfer of
+  the approved amount to the quote's address, from this account) before signing; submits once. Needs
+  `live.signed_route_enabled: true` plus every existing guard. Never run for real: generating and submitting an order on the
+  private route is untested. `intents_probe.py --login --order TICKER` shows that order and its safety check without signing.
 - Lesson: check the deadline the service RETURNS, and never send a second trade while one is unresolved.
 - Also found: rpc.mainnet.near.org and rpc.testnet.near.org are deprecated (HTTP 429); both replaced with FastNEAR.
 

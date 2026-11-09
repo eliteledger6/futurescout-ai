@@ -27,6 +27,7 @@ from app.config import get_settings  # noqa: E402
 from app.fund import load_fund_config, tradable_tokens  # noqa: E402
 from app.fund.intents_signed import SignedIntents  # noqa: E402
 from app.fund.live import rpc_view  # noqa: E402
+from app.fund.signed_exec import verify_order  # noqa: E402
 
 SIZES = (10, 20, 30)
 
@@ -119,6 +120,26 @@ def main() -> int:
                   "https://partners.near-intents.org and put it in .env as ONECLICK_API_KEY, then run this again.")
         else:
             table("CONFIDENTIAL_INTENTS", session["accessToken"])
+            if args.order:
+                from datetime import datetime, timezone
+                c = next((x for x in cands if x["ticker"].upper() == args.order.upper()), None)
+                try:
+                    q = api.quote(route="CONFIDENTIAL_INTENTS", pay_asset=near, dest_asset=c["asset_id"], amount_units=units(args.usd), account=creds[0],
+                                  dry=False, session_token=session["accessToken"])
+                    order = api.unsigned_order(q["depositAddress"], creds[0])
+                except (RuntimeError, TypeError) as exc:
+                    print(f"\nprivate-route real quote / order refused: {exc}")
+                    return 1
+                msg = json.loads(order["payload"]["message"])
+                problems = verify_order(order, account=creds[0], deposit_address=q["depositAddress"], pay_asset=near, units=units(args.usd),
+                                        allowed_recipients=cfg.live.order_recipients, now=datetime.now(timezone.utc))
+                print(f"\nUNSIGNED private-route order for ${args.usd:.2f} of {c['symbol']}. Not signed, not submitted; it expires unused.")
+                print(f"  quote: {q.get('amountInFormatted')} NEAR -> {q.get('amountOutFormatted')} {c['symbol']}, estimate {q.get('timeEstimate')} s, "
+                      f"service deadline {q.get('deadline')}")
+                print(f"  order: addressed to {order['payload'].get('recipient')}; fields {sorted(order['payload'])}; message fields {sorted(msg)}")
+                print(f"  actions: {json.dumps(msg.get('intents'))[:400]}")
+                print("  safety check of this order: " + ("PASSES (it is exactly one transfer of the quoted amount to the quote's address)" if not problems
+                                                         else "WOULD BE REFUSED: " + "; ".join(problems)))
     return 0
 
 

@@ -31,6 +31,8 @@ from app.agents.trader.agent import Candidate, allocate, decide  # noqa: E402
 from app.chain import NearRecorder, NearRecordError  # noqa: E402
 from app.config import get_settings  # noqa: E402
 from app.fund import load_fund_config, tradable_tokens as fund_tradable_tokens  # noqa: E402
+from app.fund.intents_signed import SignedIntents  # noqa: E402
+from app.fund.signed_exec import SignedExecutor, submit_signed_order  # noqa: E402
 from app.fund.live import (Executor, MainnetSigner, OneClickLive, Proposal, check_limits, fingerprint, load_state,  # noqa: E402
                            new_id, read_balances, save_state, shadow_portfolio)
 from app.models.config import load_model_config  # noqa: E402
@@ -213,22 +215,43 @@ def seal(s, p: Proposal) -> None:  # noqa: ANN001
         print(f"  (record not sealed: {str(exc)[:100]})")
 
 
+def rpc_view_salt(cfg):  # noqa: ANN001,ANN201
+    from app.fund.live import rpc_view
+    return rpc_view(httpx.Client(timeout=30), cfg.live.rpc, cfg.live.intents_contract, "current_salt", {})
+
+
 def cmd_approve(s, cfg, pid: str) -> int:  # noqa: ANN001
     state = load_state(STATE)
     p = state.get(pid)
     if p is None or p.mode != "live" or p.status != "proposed":
         print("no live proposal in status 'proposed' with that id")
         return 1
-    ex = make_executor(s, cfg, with_signer=True)
+    signed_route = cfg.live.route == "confidential"
+    creds = s.fund_mainnet_credentials()
+    ex = make_executor(s, cfg, with_signer=not signed_route)
     now = datetime.now(timezone.utc)
     blocked = check_limits(state, p, cfg.live, kill_switch=ex.kill_switch(), now=now)
-    if ex.signer is None:
+    if not creds:
+        blocked.append("FUND_MAINNET_ACCOUNT_ID / FUND_MAINNET_PRIVATE_KEY are not set in .env")
+    if signed_route:
+        api_key = s.oneclick_api_key.get_secret_value().strip() if s.oneclick_api_key else None
+        if not cfg.live.signed_route_enabled:
+            blocked.append("the signed-order route is built but switched off (live.signed_route_enabled is false in config\\funds.yaml)")
+        if not api_key:
+            blocked.append("ONECLICK_API_KEY is not set in .env (the private route needs the partner API key)")
+        if creds and not blocked:
+            http = httpx.Client(timeout=40)
+            ex = SignedExecutor(cfg.live, STATE, SignedIntents(cfg.intents.api, api_key=api_key), ex.oneclick, account=creds[0], private_key=creds[1],
+                                salt_reader=lambda: str(rpc_view_salt(cfg)),
+                                submitter=lambda order, key: submit_signed_order(http, cfg.intents.api, api_key, order, key))
+    elif ex.signer is None:
         blocked.append("FUND_MAINNET_ACCOUNT_ID / FUND_MAINNET_PRIVATE_KEY are not set in .env")
     if blocked:
         print("cannot execute:\n  - " + "\n  - ".join(blocked))
         return 1
     coin = "NEAR" if cfg.live.pay_with == "near" else "USDC"
-    print(f"REAL MONEY. About to send ${p.usd:.2f} of {coin} from {ex.signer.account_id} (NEAR mainnet) to buy {p.symbol}.")
+    source = "the PRIVATE balance (near.com route, signed order)" if signed_route else "the wallet"
+    print(f"REAL MONEY. About to pay ${p.usd:.2f} of {coin} from {source} of {creds[0]} (NEAR mainnet) to buy {p.symbol}.")
     print(f"  agent's reason: {p.rationale}")
     typed = input(f"Type  APPROVE {p.id}  to go ahead (anything else cancels): ").strip()
     if typed != f"APPROVE {p.id}":

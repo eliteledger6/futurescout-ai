@@ -23,7 +23,9 @@ Rules that always apply:
   shadow mode (real quotes, nothing sent) may use a larger pretend budget.
   Claude NEVER: runs `approve` or `intents_probe.py --login` (both sign with the owner's key), sets `trading_enabled: true`,
   turns the kill switch off, raises a cap, or reads/types the mainnet key. Real trades got stuck on 2026-11-09 (see
-  STAGE3_PLAN.md): no further real trade until those resolve and the owner says so. Any cap
+  STAGE3_PLAN.md): no further real trade until those resolve and the owner says so.
+  The near.com-style route (signed order from the private balance, `app/fund/signed_exec.py`) is built and OFF:
+  `live.signed_route_enabled: false`. Only the owner sets it to true; Claude never does, and never signs. Any cap
   change needs the owner's words in chat first. Selling, auto-approval and more budget each need a new written yes.
 - Say "mock-tested" vs "run live" honestly; never call a feature complete without a test.
 - Do not push, make the repo public, post on X, submit to the hackathon or spend on mainnet without the owner's explicit yes.
