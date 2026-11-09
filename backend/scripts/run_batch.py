@@ -20,8 +20,10 @@ import argparse
 import json
 import sys
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
+
+import httpx
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
@@ -35,6 +37,44 @@ X_WORST_CASE_USD = 0.30
 FIRST_RUN_MODEL_USD = 0.35
 FIRST_RUN_OPENALEX_USD = 0.04
 MARGIN = 1.2
+CHECK_URLS = ("https://api.openalex.org/", "https://cloud-api.near.ai/v1/models")
+WAIT_FOR_NETWORK_S = 3600
+
+
+def online() -> bool:
+    """True when the two services every run needs answer at all (any HTTP status means the network is up)."""
+    try:
+        with httpx.Client(timeout=10.0) as c:
+            for u in CHECK_URLS:
+                c.get(u)
+        return True
+    except httpx.HTTPError:
+        return False
+
+
+def wait_until_online() -> bool:
+    if online():
+        return True
+    print("    network is down: waiting (checking every minute, up to 60 minutes)...")
+    deadline = time.time() + WAIT_FOR_NETWORK_S
+    while time.time() < deadline:
+        time.sleep(60)
+        if online():
+            print("    network is back")
+            return True
+    return False
+
+
+def fresh_topics(settings, hours: float) -> set[str]:  # noqa: ANN001
+    """Topics with a scored report younger than `hours` (they are not regenerated again)."""
+    if hours <= 0:
+        return set()
+    cutoff = datetime.now(timezone.utc) - timedelta(hours=hours)
+    out = set()
+    for row in _default_store(settings).list(limit=200):
+        if row.get("score") is not None and datetime.fromisoformat(row["generated_at"]) >= cutoff:
+            out.add(row["topic"].lower())
+    return out
 
 
 def topic_order(settings) -> list[str]:  # noqa: ANN001
@@ -63,11 +103,15 @@ def main() -> int:
     ap.add_argument("--x-usd", type=float, required=True)
     ap.add_argument("--serpapi-searches", type=int, required=True)
     ap.add_argument("--max-runs", type=int, default=50)
+    ap.add_argument("--skip-fresh-hours", type=float, default=12.0, help="skip topics with a scored report younger than this")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
     quiet_network_logs()
     settings = get_settings()
-    topics = topic_order(settings)[: args.max_runs]
+    fresh = fresh_topics(settings, args.skip_fresh_hours)
+    topics = [t for t in topic_order(settings) if t.lower() not in fresh][: args.max_runs]
+    if fresh:
+        print(f"skipping {len(fresh)} topic(s) with a scored report from the last {args.skip_fresh_hours:g} h: {sorted(fresh)}")
     print(f"{len(topics)} topics in order: {topics}")
     if args.dry_run:
         return 0
@@ -76,7 +120,15 @@ def main() -> int:
     worst = {"model": FIRST_RUN_MODEL_USD, "openalex": FIRST_RUN_OPENALEX_USD}
     log_path = service.RUNS_DIR / f"batch_{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}.jsonl"
     done = []
-    for i, topic in enumerate(topics, 1):
+    queue = list(topics)
+    retried: set[str] = set()
+    i = 0
+    while queue:
+        topic = queue.pop(0)
+        i += 1
+        if not wait_until_online():
+            print("\nstop: the network stayed down for an hour")
+            break
         if left["model"] < worst["model"] * MARGIN:
             print(f"\nstop: model budget left ${left['model']:.3f} < next run estimate ${worst['model'] * MARGIN:.3f}")
             break
@@ -100,6 +152,19 @@ def main() -> int:
             usage = {"model_usd": worst["model"], "openalex_usd": worst["openalex"], "x_usd": X_WORST_CASE_USD if use_x else 0,
                      "serpapi_searches": PATENT_SEARCHES_PER_TOPIC if patents_live else 0}
             out = None
+        empty = out is not None and not out.report.agents_run
+        if empty:
+            # nothing analysed (network or provider outage): do not count it as a report; retry the topic once
+            print("    no agent produced output (network or provider problem): not counted"
+                  + ("; will retry after the connection check" if topic not in retried else "; skipped"))
+            if out.run_id:
+                import subprocess
+                subprocess.run([sys.executable, str(Path(__file__).with_name("quarantine_runs.py")), "--run", out.run_id],
+                               cwd=Path(__file__).resolve().parents[1])
+            if topic not in retried:
+                retried.add(topic)
+                queue.insert(0, topic)
+            time.sleep(30)
         left["model"] -= usage.get("model_usd", 0)
         left["openalex"] -= usage.get("openalex_usd", 0)
         left["x"] -= usage.get("x_usd", 0)
@@ -111,6 +176,8 @@ def main() -> int:
                "agents_run": out.report.agents_run if out else [], "sealed": bool(out and out.report.chain_record),
                **{k: usage.get(k, 0) for k in ("model_usd", "openalex_usd", "x_usd", "serpapi_searches")},
                "openalex_remaining_today_usd": usage.get("openalex_remaining_usd")}
+        if empty:
+            continue
         done.append(row)
         with open(log_path, "a", encoding="utf-8") as fh:
             fh.write(json.dumps(row) + "\n")
