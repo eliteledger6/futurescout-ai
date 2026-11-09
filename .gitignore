@@ -1,0 +1,32 @@
+# Secrets: never commit these
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+*.egg-info/
+
+# Generated research runs (may contain fetched third-party content)
+backend/runs/
+# Cached API responses (SerpApi patent searches); third-party content
+backend/cache/
+
+# Node (frontend, later phases)
+node_modules/
+.next/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Demo video build output (large binaries / screenshots)
+demo/build/
+demo/*.mp4
+demo/*.srt

@@ -1,0 +1,151 @@
+﻿# Central model configuration. No model names are hardcoded anywhere in the code:
+# every agent looks up its primary + fallback models here.
+#
+# Prices are USD per 1M tokens, read from the live NEAR AI catalogue
+# (GET https://cloud-api.near.ai/v1/models) on the date below.
+# Re-check with:  python scripts/list_models.py
+# Feature flags (structured_outputs / json_mode) are what the catalogue ADVERTISES.
+# They are not proof the model behaves well; use scripts/eval_models.py (later phase).
+#
+# Aliases (left column under "models") are free names used by the "agents" section.
+
+prices_verified_on: "2026-11-08"
+prices_source: "https://cloud-api.near.ai/v1/models"
+
+models:
+  qwen3_8_27b:
+    id: "Qwen/Qwen3.8-27B"
+    input_per_m: 0.04
+    output_per_m: 1.35
+    cache_read_per_m: 0.018
+    context_length: 262144
+    structured_outputs: true
+    json_mode: false
+    reasoning: true
+
+  deepseek_v4_1_flash:
+    id: "deepseek/deepseek-v4.1-flash"
+    input_per_m: 0.30
+    output_per_m: 1.20
+    cache_read_per_m: 0.006
+    context_length: 1048576
+    structured_outputs: false
+    json_mode: true
+    reasoning: true
+
+  qwen3_6_35b_a3b:
+    id: "Qwen/Qwen3.6-35B-A3B-FP8"
+    input_per_m: 0.17
+    output_per_m: 1.10
+    cache_read_per_m: 0.056
+    context_length: 262144
+    structured_outputs: true
+    json_mode: true
+    reasoning: true
+
+  glm_5_3:
+    id: "z-ai/glm-5.3"
+    input_per_m: 1.80
+    output_per_m: 5.75
+    cache_read_per_m: 0.45
+    context_length: 1048576
+    structured_outputs: false   # catalogue lists tools + reasoning only
+    json_mode: false
+    reasoning: true
+
+  glm_5_3_flash:
+    id: "z-ai/glm-5.3-flash"
+    input_per_m: 0.08
+    output_per_m: 0.50
+    cache_read_per_m: 0.012
+    context_length: 1048576
+    structured_outputs: true
+    json_mode: true
+    reasoning: true
+
+  claude_sonnet_5_5:
+    id: "anthropic/claude-sonnet-5-5"
+    input_per_m: 2.00
+    output_per_m: 10.00
+    cache_read_per_m: 0.10
+    context_length: 1000000
+    structured_outputs: true
+    json_mode: false
+    reasoning: true
+
+  claude_opus_5_5:
+    id: "anthropic/claude-opus-5-5"
+    input_per_m: 4.00
+    output_per_m: 20.00
+    cache_read_per_m: 0.20
+    context_length: 1000000
+    structured_outputs: true
+    json_mode: false
+    reasoning: true
+
+# Initial assignments follow the candidates in the project brief.
+# They are starting points to be compared, not fixed choices.
+agents:
+  chief:
+    primary: qwen3_8_27b
+    fallbacks: [glm_5_3_flash]
+    temperature: 0.2
+    max_tokens: 6000
+    reasoning_effort: low
+    timeout_s: 120
+
+  science:
+    primary: deepseek_v4_1_flash
+    fallbacks: [qwen3_8_27b]
+    temperature: 0.2
+    max_tokens: 16000
+    reasoning_effort: low
+    timeout_s: 180
+
+  patent:
+    primary: qwen3_6_35b_a3b
+    fallbacks: [qwen3_8_27b]
+    temperature: 0.2
+    max_tokens: 12000
+    reasoning_effort: low
+    timeout_s: 120
+
+  market:
+    primary: glm_5_3            # brief's candidate; has no JSON/structured flag -> compare with glm_5_3_flash
+    fallbacks: [glm_5_3_flash]
+    temperature: 0.2
+    max_tokens: 12000
+    reasoning_effort: low
+    timeout_s: 150
+
+  x:
+    primary: glm_5_3_flash
+    fallbacks: [qwen3_8_27b]
+    temperature: 0.2
+    max_tokens: 12000
+    reasoning_effort: low
+    timeout_s: 90
+
+  risk:
+    primary: claude_sonnet_5_5  # different model family on purpose: more independent from the others
+    fallbacks: [glm_5_3_flash]
+    temperature: 0.3
+    max_tokens: 16000
+    reasoning_effort: medium
+    timeout_s: 180
+
+  investment:
+    primary: deepseek_v4_1_flash   # brief: "or a stronger reasoning model" -> evaluate claude_opus_5_5
+    fallbacks: [claude_sonnet_5_5]
+    temperature: 0.2
+    max_tokens: 20000
+    reasoning_effort: medium
+    timeout_s: 240
+
+  timing:                    # price/timing explanation (Risk agent); numbers are computed by code
+    primary: glm_5_3_flash
+    fallbacks: [qwen3_8_27b]
+    temperature: 0.1
+    max_tokens: 8000
+    reasoning_effort: low
+    timeout_s: 90

@@ -1,0 +1,11 @@
+{
+  "_comment": "SYNTHETIC FIXTURE for automated tests. Counts are invented.",
+  "meta": {"count": 4},
+  "results": [],
+  "group_by": [
+    {"key": "2026", "key_display_name": "2026", "count": 50},
+    {"key": "2025", "key_display_name": "2025", "count": 150},
+    {"key": "2024", "key_display_name": "2024", "count": 100},
+    {"key": "2019", "key_display_name": "2019", "count": 7}
+  ]
+}

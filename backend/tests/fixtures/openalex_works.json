@@ -1,0 +1,45 @@
+{
+  "_comment": "SYNTHETIC FIXTURE for automated tests. Not real papers. Shape mimics the OpenAlex /works response.",
+  "meta": {"count": 3},
+  "results": [
+    {
+      "id": "https://openalex.org/W0000000001",
+      "doi": "https://doi.org/10.0000/fixture.001",
+      "display_name": "FIXTURE PAPER A: Synthetic study of chiplet interconnect bandwidth",
+      "publication_year": 2025,
+      "publication_date": "2025-03-14",
+      "type": "article",
+      "cited_by_count": 12,
+      "authorships": [{"author": {"display_name": "Fixture Author One"}}, {"author": {"display_name": "Fixture Author Two"}}],
+      "primary_location": {"landing_page_url": "https://example.test/a", "source": {"display_name": "Journal of Fixture Engineering"}},
+      "open_access": {"oa_url": "https://example.test/a.pdf"},
+      "abstract_inverted_index": {"We": [0], "report": [1], "a": [2], "synthetic": [3], "interconnect": [4], "reaching": [5], "fixture": [6], "bandwidth": [7], "targets.": [8]}
+    },
+    {
+      "id": "https://openalex.org/W0000000002",
+      "doi": null,
+      "display_name": "FIXTURE PAPER B: Preprint without a DOI",
+      "publication_year": 2026,
+      "publication_date": "2026-01-20",
+      "type": "preprint",
+      "cited_by_count": 0,
+      "authorships": [{"author": {"display_name": "Fixture Author Three"}}],
+      "primary_location": {"landing_page_url": "https://example.test/b", "source": null},
+      "open_access": {"oa_url": null},
+      "abstract_inverted_index": null
+    },
+    {
+      "id": "https://openalex.org/W0000000003",
+      "doi": null,
+      "display_name": "FIXTURE PAPER C: Only an OpenAlex id",
+      "publication_year": 2024,
+      "publication_date": "2024-07-01",
+      "type": "article",
+      "cited_by_count": 3,
+      "authorships": [],
+      "primary_location": null,
+      "open_access": null,
+      "abstract_inverted_index": {"Short": [0], "synthetic": [1], "abstract.": [2]}
+    }
+  ]
+}

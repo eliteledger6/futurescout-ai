@@ -1,0 +1,399 @@
+# Topics watched by the Hot-Topic Radar (scripts/run_radar.py) and watch mode (scripts/watch.py).
+# `terms` are matched literally in paper/patent titles and abstracts and in X posts; keep them specific.
+# `sector` must be a key from sectors.yaml. Entries with `found_by: x watch` were proposed by the Chief model
+# from real posts (`evidence` = post ids); `found_by: paper scout` were found from growing paper keywords
+# (`evidence` = OpenAlex work ids). Both can be removed by hand at any time. The file is rewritten by the watcher.
+
+topics:
+- name: high bandwidth memory
+  sector: semiconductors
+  terms:
+  - high bandwidth memory
+  - HBM
+- name: co-packaged optics
+  sector: semiconductors
+  terms:
+  - co-packaged optics
+  - CPO
+- name: chiplet
+  sector: semiconductors
+  terms:
+  - chiplet
+  - chiplets
+- name: silicon photonics
+  sector: semiconductors
+  terms:
+  - silicon photonics
+  - photonic integrated circuit
+- name: gallium nitride
+  sector: semiconductors
+  terms:
+  - gallium nitride
+  - GaN transistor
+  - GaN power
+- name: glass core substrate
+  sector: semiconductors
+  terms:
+  - glass core substrate
+  - glass substrate packaging
+- name: backside power delivery
+  sector: semiconductors
+  terms:
+  - backside power delivery
+  - backside power
+- name: compute-in-memory
+  sector: semiconductors
+  terms:
+  - compute-in-memory
+  - computing-in-memory
+- name: 3d dram
+  sector: semiconductors
+  terms:
+  - 3d dram
+  - 3D stacked DRAM
+  - DRAM stacking
+  found_by: x watch
+  evidence:
+  - src_22bf0159a3
+  added_on: '2026-11-08'
+- name: high bandwidth compute (hbc)
+  sector: semiconductors
+  terms:
+  - high bandwidth compute (hbc)
+  - HBC
+  - High Bandwidth Compute
+  - Qualcomm HBC
+  found_by: x watch
+  evidence:
+  - src_0891ce5c64
+  added_on: '2026-11-08'
+- name: diamond wafer for chip cooling
+  sector: semiconductors
+  terms:
+  - diamond wafer for chip cooling
+  - diamond wafer
+  - single-crystal diamond
+  - diamond thermal substrate
+  found_by: x watch
+  evidence:
+  - src_5284d67397
+  added_on: '2026-11-08'
+- name: mixture of experts
+  sector: ai_software
+  terms:
+  - mixture of experts
+  - mixture-of-experts
+  - MoE model
+- name: retrieval-augmented generation
+  sector: ai_software
+  terms:
+  - retrieval-augmented generation
+  - retrieval augmented generation
+  - RAG
+- name: AI agents
+  sector: ai_software
+  terms:
+  - AI agents
+  - LLM agents
+  - agentic AI
+- name: speculative decoding
+  sector: ai_software
+  terms:
+  - speculative decoding
+- name: humanoid robot
+  sector: robotics_autonomy
+  terms:
+  - humanoid robot
+  - humanoid robots
+- name: vision-language-action model
+  sector: robotics_autonomy
+  terms:
+  - vision-language-action
+  - VLA model
+  - robot foundation model
+- name: end-to-end autonomous driving
+  sector: robotics_autonomy
+  terms:
+  - end-to-end autonomous driving
+  - end-to-end driving
+- name: quantum error correction
+  sector: quantum
+  terms:
+  - quantum error correction
+  - surface code
+  - logical qubit
+- name: neutral atom quantum computing
+  sector: quantum
+  terms:
+  - neutral atom quantum
+  - neutral-atom qubit
+  - Rydberg atom array
+- name: photonic quantum computing
+  sector: quantum
+  terms:
+  - photonic quantum computing
+  - photonic qubit
+- name: solid-state battery
+  sector: energy
+  terms:
+  - solid-state battery
+  - solid state battery
+  - all-solid-state battery
+- name: sodium-ion battery
+  sector: energy
+  terms:
+  - sodium-ion battery
+  - sodium ion battery
+  - Na-ion battery
+- name: perovskite solar cell
+  sector: energy
+  terms:
+  - perovskite solar cell
+  - perovskite photovoltaic
+  - perovskite tandem
+- name: small modular reactor
+  sector: energy
+  terms:
+  - small modular reactor
+  - SMR reactor
+- name: direct-to-cell satellite
+  sector: space_comms
+  terms:
+  - direct-to-cell
+  - direct to cell satellite
+  - direct-to-device satellite
+- name: optical inter-satellite link
+  sector: space_comms
+  terms:
+  - optical inter-satellite link
+  - laser inter-satellite
+  - free-space optical communication satellite
+- name: 6G
+  sector: space_comms
+  terms:
+  - 6G network
+  - 6G wireless
+  - sixth generation wireless
+- name: AI drug discovery
+  sector: biotech_tools
+  terms:
+  - AI drug discovery
+  - machine learning drug discovery
+  - generative drug design
+- name: base editing
+  sector: biotech_tools
+  terms:
+  - base editing
+  - base editor
+  - prime editing
+- name: brain-computer interface
+  sector: biotech_tools
+  terms:
+  - brain-computer interface
+  - brain computer interface
+  - BCI implant
+- name: post-quantum cryptography
+  sector: cybersecurity
+  terms:
+  - post-quantum cryptography
+  - post quantum cryptography
+  - PQC
+- name: zero-knowledge proof
+  sector: cybersecurity
+  terms:
+  - zero-knowledge proof
+  - zero knowledge proof
+  - zk-SNARK
+- name: confidential computing
+  sector: cybersecurity
+  terms:
+  - confidential computing
+  - trusted execution environment
+- name: microLED display
+  sector: xr_devices
+  terms:
+  - microLED
+  - micro-LED display
+  - micro LED display
+- name: augmented reality glasses
+  sector: xr_devices
+  terms:
+  - augmented reality glasses
+  - AR glasses
+  - smart glasses
+- name: waveguide display
+  sector: xr_devices
+  terms:
+  - waveguide display
+  - optical waveguide AR
+  - diffractive waveguide
+- name: large language model inference
+  sector: semiconductors
+  terms:
+  - large language model inference
+  found_by: paper scout
+  evidence:
+  - https://openalex.org/W4415137654
+  - https://openalex.org/W4406032994
+  - https://openalex.org/W4409963643
+  added_on: '2026-11-09'
+- name: vision-language models
+  sector: semiconductors
+  terms:
+  - vision-language models
+  found_by: paper scout
+  evidence:
+  - https://openalex.org/W4410202262
+  - https://openalex.org/W4416060568
+  - https://openalex.org/W4416095924
+  added_on: '2026-11-09'
+- name: model compression
+  sector: semiconductors
+  terms:
+  - model compression
+  found_by: paper scout
+  evidence:
+  - https://openalex.org/W4408529725
+  - https://openalex.org/W4416234289
+  - https://openalex.org/W4407881031
+  added_on: '2026-11-09'
+- name: mathematical reasoning
+  sector: ai_software
+  terms:
+  - mathematical reasoning
+  found_by: paper scout
+  evidence:
+  - https://openalex.org/W4414939355
+  - https://openalex.org/W4414281281
+  - https://openalex.org/W4417006854
+  added_on: '2026-11-09'
+- name: data curation
+  sector: ai_software
+  terms:
+  - data curation
+  found_by: paper scout
+  evidence:
+  - https://openalex.org/W4362515116
+  - https://openalex.org/W4409092337
+  - https://openalex.org/W7125135101
+  added_on: '2026-11-09'
+- name: inference efficiency
+  sector: ai_software
+  terms:
+  - inference efficiency
+  found_by: paper scout
+  evidence:
+  - https://openalex.org/W4414939355
+  - https://openalex.org/W4416036482
+  - https://openalex.org/W7165385035
+  added_on: '2026-11-09'
+- name: supervised fine-tuning
+  sector: ai_software
+  terms:
+  - supervised fine-tuning
+  found_by: paper scout
+  evidence:
+  - https://openalex.org/W4416053382
+  - https://openalex.org/W4417252869
+  - https://openalex.org/W4416296080
+  added_on: '2026-11-09'
+- name: robotic manipulation
+  sector: robotics_autonomy
+  terms:
+  - robotic manipulation
+  found_by: paper scout
+  evidence:
+  - https://openalex.org/W4414674749
+  - https://openalex.org/W4415276858
+  - https://openalex.org/W4417100212
+  added_on: '2026-11-09'
+- name: world models
+  sector: robotics_autonomy
+  terms:
+  - world models
+  found_by: paper scout
+  evidence:
+  - https://openalex.org/W4417261359
+  - https://openalex.org/W4406191642
+  - https://openalex.org/W4412722243
+  added_on: '2026-11-09'
+- name: robot control
+  sector: robotics_autonomy
+  terms:
+  - robot control
+  found_by: paper scout
+  evidence:
+  - https://openalex.org/W7130552073
+  - https://openalex.org/W4409015946
+  - https://openalex.org/W7126180855
+  added_on: '2026-11-09'
+- name: green hydrogen
+  sector: energy
+  terms:
+  - green hydrogen
+  found_by: paper scout
+  evidence:
+  - https://openalex.org/W4406341213
+  - https://openalex.org/W4406374649
+  - https://openalex.org/W4407087511
+  added_on: '2026-11-09'
+- name: hydrogen storage
+  sector: energy
+  terms:
+  - hydrogen storage
+  found_by: paper scout
+  evidence:
+  - https://openalex.org/W4406341213
+  - https://openalex.org/W4408167357
+  - https://openalex.org/W4406526271
+  added_on: '2026-11-09'
+- name: grid-scale energy storage
+  sector: energy
+  terms:
+  - grid-scale energy storage
+  found_by: paper scout
+  evidence:
+  - https://openalex.org/W4409197646
+  - https://openalex.org/W4411868061
+  - https://openalex.org/W4411495697
+  added_on: '2026-11-09'
+- name: flexible antenna
+  sector: space_comms
+  terms:
+  - flexible antenna
+  found_by: paper scout
+  evidence:
+  - https://openalex.org/W4408934948
+  - https://openalex.org/W4415124218
+  - https://openalex.org/W4406948532
+  added_on: '2026-11-09'
+- name: artificial intelligence in healthcare
+  sector: biotech_tools
+  terms:
+  - artificial intelligence in healthcare
+  found_by: paper scout
+  evidence:
+  - https://openalex.org/W4414413410
+  - https://openalex.org/W4406081553
+  - https://openalex.org/W4407173730
+  added_on: '2026-11-09'
+- name: data poisoning
+  sector: cybersecurity
+  terms:
+  - data poisoning
+  found_by: paper scout
+  evidence:
+  - https://openalex.org/W4410638774
+  - https://openalex.org/W4406302454
+  - https://openalex.org/W4407070057
+  added_on: '2026-11-09'
+- name: oled displays
+  sector: xr_devices
+  terms:
+  - oled displays
+  found_by: paper scout
+  evidence:
+  - https://openalex.org/W4414422258
+  - https://openalex.org/W4409061193
+  - https://openalex.org/W7118329343
+  added_on: '2026-11-09'

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SYNTHETIC FIXTURE: shape of an arXiv API error feed. -->
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <entry>
+    <id>http://arxiv.org/api/errors#incorrect_id_format_for_fixture</id>
+    <title>Error</title>
+    <summary>fixture: malformed query</summary>
+  </entry>
+</feed>

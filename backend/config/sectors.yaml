@@ -1,0 +1,60 @@
+# Technology sectors FUTURESCOUT watches. Each topic in topics.yaml and each company in companies.yaml
+# belongs to one sector. The radar ranks topics across all sectors; the dashboard groups them by sector.
+#
+# `discovery_queries` are the broad searches the paper scout (app/radar/discovery.py) runs against OpenAlex to
+# find *new* fast-growing topics in the sector: it collects the keywords of recent papers, keeps the ones that are
+# not already topics, and counts papers per year for each candidate. Only phrases with enough papers (MIN_BASE)
+# and real year-over-year growth are proposed, each with the ids of the works that carried the keyword.
+#
+# `exclude` lists word stems that mark a keyword as off-sector for the paper scout (quantum queries also pull in
+# cosmology papers, satellite queries pull in agriculture); a candidate containing any of them is skipped.
+#
+# `hints` are plain-language pointers given to the Chief model so its search queries fit the sector. They are
+# not facts and never appear in reports.
+
+sectors:
+  - key: semiconductors
+    name: Semiconductors & AI hardware
+    exclude: ['ethic', 'bias', 'health', 'agricultur']
+    discovery_queries: ["semiconductor device", "advanced packaging", "AI accelerator hardware", "memory technology"]
+    hints: "process nodes, packaging, interconnect, memory, thermal and power limits, foundry and equipment supply"
+  - key: ai_software
+    name: AI models & software
+    exclude: ['ethic', 'bias', 'health', 'education', 'agricultur']
+    discovery_queries: ["large language model", "AI agents", "machine learning inference", "foundation model"]
+    hints: "model architecture, training and inference cost, agents and tooling, evaluation, safety, open vs closed models"
+  - key: robotics_autonomy
+    name: Robotics & autonomy
+    exclude: ['ethic', 'bias', 'health']
+    discovery_queries: ["humanoid robot", "autonomous driving", "robot learning", "warehouse automation"]
+    hints: "actuators and sensors, learning from demonstration, safety certification, fleet economics, deployment scale"
+  - key: quantum
+    name: Quantum computing
+    exclude: ['cosmic', 'cosmolog', 'baryon', 'galax', 'dark matter', 'dark energy', 'gravitational', 'interatomic', 'black hole', 'hubble', 'neutrino', 'cmb', 'lensing', 'supernova', 'redshift', 'planck']
+    discovery_queries: ["quantum computing", "quantum error correction", "quantum sensing"]
+    hints: "qubit modality, error rates and correction, coherence, scaling, cryogenics, useful applications"
+  - key: energy
+    name: Energy & storage
+    exclude: ['ethic', 'policy', 'poverty']
+    discovery_queries: ["battery technology", "solar cell", "grid energy storage", "nuclear reactor"]
+    hints: "energy density, cycle life, materials supply, cost per kWh, grid integration, regulation and permitting"
+  - key: space_comms
+    name: Space & connectivity
+    exclude: ['agricultur', 'crop', 'food', 'soil', 'forest', 'privacy']
+    discovery_queries: ["satellite communication", "low earth orbit", "6G wireless", "launch vehicle"]
+    hints: "spectrum, launch cost, constellation economics, ground segment, regulation, direct-to-device"
+  - key: biotech_tools
+    name: Biotech & health tech
+    exclude: ['ethic', 'bias', 'policy', 'education', 'multi-agent']
+    discovery_queries: ["AI drug discovery", "gene editing", "brain-computer interface", "medical imaging AI"]
+    hints: "clinical validation, regulatory path, reimbursement, manufacturing, data and privacy"
+  - key: cybersecurity
+    name: Cybersecurity & cryptography
+    exclude: ['ethic', 'governance', 'education', 'safety']
+    discovery_queries: ["post-quantum cryptography", "zero-knowledge proof", "confidential computing", "cyber threat detection"]
+    hints: "standards and migration timelines, performance overhead, adoption by cloud providers, attack surface"
+  - key: xr_devices
+    name: XR & displays
+    exclude: ['ethic', 'health', 'education']
+    discovery_queries: ["augmented reality glasses", "microLED display", "spatial computing", "waveguide display"]
+    hints: "optics and display efficiency, battery and weight, content ecosystem, consumer vs enterprise demand"

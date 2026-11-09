@@ -1,0 +1,32 @@
+# Technology Opportunity Score: configuration (any technology sector).
+#
+# IMPORTANT: these weights are INITIAL ASSUMPTIONS chosen for transparency. They are not
+# fitted to data and the score is not a validated predictor of stock performance.
+# Weights of the 8 positive dimensions must sum to 1.0.
+#
+# How the score is computed (see app/scoring/engine.py):
+#   1. A model rates each dimension 0-5 and MUST cite findings; no cited evidence => the
+#      dimension counts as "missing", never as zero.
+#   2. base = sum(weight * rating/5) over evidenced dimensions / sum(weight of those) * 100
+#   3. risk adjustment: risk rating r (0-5, 5 = severe) reduces the score by max_penalty * r/5
+#   4. coverage = share of total weight that has evidence. If coverage is below
+#      min_coverage_to_report the score is shown only as "indicative, not comparable".
+
+dimensions:
+  research_momentum:      {label: "Research Momentum",      weight: 0.15}
+  patent_momentum:        {label: "Patent Momentum",        weight: 0.10}
+  technical_feasibility:  {label: "Technical Feasibility",  weight: 0.15}
+  commercial_readiness:   {label: "Commercial Readiness",   weight: 0.15}
+  customer_adoption:      {label: "Customer Adoption",      weight: 0.10}
+  industry_investment:    {label: "Industry Investment",    weight: 0.10}
+  competitive_position:   {label: "Competitive Position",   weight: 0.10}
+  supply_chain_readiness: {label: "Supply-Chain Readiness", weight: 0.15}
+
+risk_adjustment:
+  label: "Risk Adjustment"
+  max_penalty: 0.30
+
+min_coverage_to_report: 0.5      # below this the score is labelled indicative only
+confidence_thresholds:           # coverage needed for each confidence level
+  medium: 0.6
+  high: 0.85

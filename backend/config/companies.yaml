@@ -1,0 +1,86 @@
+# Companies the Market agent checks in SEC EDGAR filings, grouped by sector (keys from sectors.yaml).
+#
+# Only US-listed companies that file with the SEC can be read here. CIK numbers are NOT stored:
+# they are looked up at run time from the SEC's company_tickers.json, and a ticker the SEC file
+# does not contain is reported as an error (never guessed). A research run reads only the companies
+# of the topic's sector (plus whatever the SEC full-text discovery finds); the Company Scout treats
+# every company on this list as an "incumbent" and ranks the others as emerging candidates.
+#
+# Foreign filers (TSM, ASML, ASX, HIMX...) report on Form 20-F. Companies that do not file with the SEC
+# (SK hynix, Samsung, most Japanese/European/Chinese names) are deliberately absent.
+#
+# Edit freely: add or remove rows. `segment` is a plain description shown to the model.
+
+companies:
+  # ---- semiconductors & AI hardware
+  - {ticker: MU,   sector: semiconductors, name: "Micron Technology",          segment: "memory (DRAM, HBM, NAND)"}
+  - {ticker: NVDA, sector: semiconductors, name: "NVIDIA",                     segment: "AI accelerators / GPUs"}
+  - {ticker: AMD,  sector: semiconductors, name: "Advanced Micro Devices",     segment: "CPUs, GPUs, AI accelerators"}
+  - {ticker: INTC, sector: semiconductors, name: "Intel",                      segment: "CPUs, foundry, advanced packaging"}
+  - {ticker: AVGO, sector: semiconductors, name: "Broadcom",                   segment: "networking, custom AI silicon"}
+  - {ticker: MRVL, sector: semiconductors, name: "Marvell Technology",         segment: "data-center interconnect, custom silicon"}
+  - {ticker: QCOM, sector: semiconductors, name: "Qualcomm",                   segment: "mobile and edge processors"}
+  - {ticker: TSM,  sector: semiconductors, name: "Taiwan Semiconductor Manufacturing", segment: "foundry, advanced packaging"}
+  - {ticker: ASML, sector: semiconductors, name: "ASML Holding",               segment: "lithography equipment"}
+  - {ticker: AMAT, sector: semiconductors, name: "Applied Materials",          segment: "wafer fabrication equipment"}
+  - {ticker: LRCX, sector: semiconductors, name: "Lam Research",               segment: "etch and deposition equipment"}
+  - {ticker: KLAC, sector: semiconductors, name: "KLA",                        segment: "inspection and metrology equipment"}
+  # ---- AI models & software
+  - {ticker: MSFT, sector: ai_software, name: "Microsoft",                  segment: "cloud AI platform, models, copilots"}
+  - {ticker: GOOGL, sector: ai_software, name: "Alphabet",                  segment: "foundation models, cloud AI, search"}
+  - {ticker: META, sector: ai_software, name: "Meta Platforms",             segment: "open foundation models, AI infrastructure"}
+  - {ticker: AMZN, sector: ai_software, name: "Amazon",                     segment: "cloud AI services and custom AI chips"}
+  - {ticker: ORCL, sector: ai_software, name: "Oracle",                     segment: "cloud infrastructure for AI training"}
+  - {ticker: PLTR, sector: ai_software, name: "Palantir Technologies",      segment: "AI platforms for enterprises and government"}
+  - {ticker: CRM,  sector: ai_software, name: "Salesforce",                 segment: "enterprise AI agents and software"}
+  - {ticker: SNOW, sector: ai_software, name: "Snowflake",                  segment: "data cloud and AI workloads"}
+  # ---- robotics & autonomy
+  - {ticker: TSLA, sector: robotics_autonomy, name: "Tesla",                segment: "autonomous driving, humanoid robot programme"}
+  - {ticker: ISRG, sector: robotics_autonomy, name: "Intuitive Surgical",   segment: "surgical robotics"}
+  - {ticker: TER,  sector: robotics_autonomy, name: "Teradyne",             segment: "industrial and collaborative robots, test equipment"}
+  - {ticker: ROK,  sector: robotics_autonomy, name: "Rockwell Automation",  segment: "industrial automation"}
+  - {ticker: MBLY, sector: robotics_autonomy, name: "Mobileye Global",      segment: "driver assistance and autonomous driving systems"}
+  - {ticker: SYM,  sector: robotics_autonomy, name: "Symbotic",             segment: "warehouse automation robots"}
+  # ---- quantum
+  - {ticker: IONQ, sector: quantum, name: "IonQ",                           segment: "trapped-ion quantum computers"}
+  - {ticker: RGTI, sector: quantum, name: "Rigetti Computing",              segment: "superconducting quantum computers"}
+  - {ticker: QBTS, sector: quantum, name: "D-Wave Quantum",                 segment: "annealing and gate-model quantum systems"}
+  - {ticker: IBM,  sector: quantum, name: "International Business Machines", segment: "superconducting quantum systems, hybrid cloud"}
+  - {ticker: HON,  sector: quantum, name: "Honeywell International",        segment: "trapped-ion quantum (Quantinuum stake), industrial tech"}
+  # ---- energy & storage
+  - {ticker: ENPH, sector: energy, name: "Enphase Energy",                  segment: "solar microinverters and home batteries"}
+  - {ticker: FSLR, sector: energy, name: "First Solar",                     segment: "thin-film solar modules"}
+  - {ticker: QS,   sector: energy, name: "QuantumScape",                    segment: "solid-state battery development"}
+  - {ticker: SLDP, sector: energy, name: "Solid Power",                     segment: "solid-state battery electrolytes"}
+  - {ticker: FLNC, sector: energy, name: "Fluence Energy",                  segment: "grid-scale energy storage"}
+  - {ticker: SMR,  sector: energy, name: "NuScale Power",                   segment: "small modular reactors"}
+  - {ticker: OKLO, sector: energy, name: "Oklo",                            segment: "advanced fission reactors"}
+  - {ticker: GEV,  sector: energy, name: "GE Vernova",                      segment: "grid, wind, gas and nuclear equipment"}
+  # ---- space & connectivity
+  - {ticker: ASTS, sector: space_comms, name: "AST SpaceMobile",            segment: "direct-to-cell satellite broadband"}
+  - {ticker: RKLB, sector: space_comms, name: "Rocket Lab",                 segment: "launch vehicles and spacecraft"}
+  - {ticker: IRDM, sector: space_comms, name: "Iridium Communications",     segment: "satellite voice and data"}
+  - {ticker: VSAT, sector: space_comms, name: "Viasat",                     segment: "satellite broadband"}
+  - {ticker: GSAT, sector: space_comms, name: "Globalstar",                 segment: "satellite connectivity for devices"}
+  - {ticker: PL,   sector: space_comms, name: "Planet Labs",                segment: "earth-observation satellites"}
+  # ---- biotech & health tech
+  - {ticker: RXRX, sector: biotech_tools, name: "Recursion Pharmaceuticals", segment: "AI-driven drug discovery"}
+  - {ticker: SDGR, sector: biotech_tools, name: "Schrodinger",              segment: "computational drug discovery software"}
+  - {ticker: CRSP, sector: biotech_tools, name: "CRISPR Therapeutics",      segment: "gene editing therapies"}
+  - {ticker: NTLA, sector: biotech_tools, name: "Intellia Therapeutics",    segment: "in vivo gene editing"}
+  - {ticker: BEAM, sector: biotech_tools, name: "Beam Therapeutics",        segment: "base editing"}
+  - {ticker: TXG,  sector: biotech_tools, name: "10x Genomics",             segment: "single-cell and spatial biology tools"}
+  - {ticker: ILMN, sector: biotech_tools, name: "Illumina",                 segment: "DNA sequencing instruments"}
+  # ---- cybersecurity & cryptography
+  - {ticker: CRWD, sector: cybersecurity, name: "CrowdStrike Holdings",     segment: "endpoint and cloud security platform"}
+  - {ticker: PANW, sector: cybersecurity, name: "Palo Alto Networks",       segment: "network and cloud security"}
+  - {ticker: ZS,   sector: cybersecurity, name: "Zscaler",                  segment: "zero-trust cloud security"}
+  - {ticker: NET,  sector: cybersecurity, name: "Cloudflare",               segment: "edge network, security, post-quantum TLS"}
+  - {ticker: FTNT, sector: cybersecurity, name: "Fortinet",                 segment: "network security appliances"}
+  - {ticker: OKTA, sector: cybersecurity, name: "Okta",                     segment: "identity and access management"}
+  # ---- XR & displays
+  - {ticker: AAPL, sector: xr_devices, name: "Apple",                       segment: "spatial computing headset, devices"}
+  - {ticker: SNAP, sector: xr_devices, name: "Snap",                        segment: "AR glasses and AR platform"}
+  - {ticker: KOPN, sector: xr_devices, name: "Kopin",                       segment: "microdisplays for headsets"}
+  - {ticker: VUZI, sector: xr_devices, name: "Vuzix",                       segment: "smart glasses and waveguides"}
+  - {ticker: HIMX, sector: xr_devices, name: "Himax Technologies",          segment: "display drivers and AR optics (20-F filer)"}

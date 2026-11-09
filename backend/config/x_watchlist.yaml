@@ -1,0 +1,932 @@
+# X watchlist for the X Intelligence agent (read-only; the agent never follows, likes or posts).
+# Only `approved` accounts are searched. `suggested` = found by the agent from real posts, awaiting
+# a decision. `auto_manage: true` lets the agent add high-scoring suggestions and remove accounts IT added
+# that stayed silent; accounts with approved_by: owner are never removed automatically.
+# Every change is logged under `changes`. Edit freely; the file is rewritten by the agent.
+
+auto_manage: false
+auto_add_min_score: 6.0
+auto_remove_after_days: 90
+max_accounts: 60
+suggested:
+- handle: SemiconductorsX
+  id: '731152829289762816'
+  name: Semiconductor Insider
+  score: 20.75
+  posts_on_topic: 8
+  followers: 17697
+  verified_type: blue
+  flags: []
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/SemiconductorsX/status/2118609398910300162
+  - https://x.com/SemiconductorsX/status/2119317942424961270
+  - https://x.com/SemiconductorsX/status/2117586556253077743
+  suggested_on: '2026-11-08'
+  description: Semiconductor Insider • Independent news & analysis on AI Hardware, Semiconductors & Electronics | Supply chains,
+    fabs & market insights.
+- handle: MojoTricks
+  id: '1480746975435771905'
+  name: MojoTrick
+  score: 6.94
+  posts_on_topic: 3
+  followers: 27360
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/MojoTricks/status/2118700445854228743
+  - https://x.com/MojoTricks/status/2118007221061931332
+  - https://x.com/MojoTricks/status/2118007051578441934
+  suggested_on: '2026-11-08'
+  description: Curating the latest in AI, semiconductors, EVs & global tech breakthroughs | Not affiliated with any brand
+- handle: eeNewsEurope
+  id: '515325247'
+  name: eeNews Europe
+  score: 6.34
+  posts_on_topic: 1
+  followers: 6865
+  verified_type: blue
+  flags: []
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/eeNewsEurope/status/2118674900655198274
+  suggested_on: '2026-11-08'
+  description: eeNews Europe is an online publication that brings news, analysis, product and design information to the electronics
+    engineering community
+- handle: csidetrader
+  id: '468530937'
+  name: Seaside Trader
+  score: 6.25
+  posts_on_topic: 3
+  followers: 5673
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/csidetrader/status/2118346503844475097
+  - https://x.com/csidetrader/status/2118346716550184962
+  - https://x.com/csidetrader/status/2118346345165607142
+  suggested_on: '2026-11-08'
+  description: Commodities and futures trader for over 25 years. Commercial real estate owner/manager and Trustee/MM. "Doom
+    and Gloom sells. Don't be their client."
+- handle: VisiveAI
+  id: '1280738015300579328'
+  name: VisiveAI
+  score: 5.95
+  posts_on_topic: 1
+  followers: 2789
+  verified_type: blue
+  flags: []
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/VisiveAI/status/2117467020761735677
+  suggested_on: '2026-11-08'
+  description: 'Visive Inc offer rapid #AI powered Business #Automation for #Business . We reply & engage actively. Share
+    your thoughts.'
+- handle: feyermusic
+  id: '97974627'
+  name: Scott Feyer
+  score: 5.81
+  posts_on_topic: 1
+  followers: 2045
+  verified_type: blue
+  flags: []
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/feyermusic/status/2118525777193074792
+  suggested_on: '2026-11-08'
+  description: Value in the left hand, trend in the right, cash flow in between.
+- handle: G2AIStack
+  id: '2046564624561262592'
+  name: G2AI
+  score: 5.73
+  posts_on_topic: 1
+  followers: 1685
+  verified_type: blue
+  flags: []
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/G2AIStack/status/2116970465386188958
+  suggested_on: '2026-11-08'
+  description: G2AI tracks the US-China(G2) AI stack
+- handle: TheETFTracker
+  id: '1785044104612622336'
+  name: ETF Tracker
+  score: 5.33
+  posts_on_topic: 2
+  followers: 67532
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/TheETFTracker/status/2117749461573054868
+  - https://x.com/TheETFTracker/status/2118125892316938674
+  suggested_on: '2026-11-08'
+  description: Developing conviction and understanding for retail audiences interesting in the ETF industries products, issuers
+    and results.
+- handle: Maverick_LV
+  id: '41134086'
+  name: Michael Anderson
+  score: 3.89
+  posts_on_topic: 2
+  followers: 2444
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/Maverick_LV/status/2118676570160370102
+  - https://x.com/Maverick_LV/status/2118685043984068692
+  suggested_on: '2026-11-08'
+  description: After our in-depth November analysis, we've selected 5 U.S. stocks worth watching. Let's track their performance
+    together on WhatsApp!
+- handle: TradexWhisperer
+  id: '485550903'
+  name: Trade Whisperer
+  score: 3.66
+  posts_on_topic: 1
+  followers: 145111
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/TradexWhisperer/status/2118215286512030083
+  suggested_on: '2026-11-08'
+  description: Published $MU Bargain Thesis at $62. $PLTR $21. $RKLB $10. $SNDK $214. Memory Engineer. Data Scientist. Founder
+    of Blue Pink Candles. Masters 🎓 @UofIllinois
+- handle: UsArmyspoof_
+  id: '2024772890978332672'
+  name: US Army
+  score: 3.13
+  posts_on_topic: 1
+  followers: 42202
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/UsArmyspoof_/status/2119082928588329429
+  suggested_on: '2026-11-08'
+  description: Unofficial Commentary Page America·Leadership. World Politics Facts| Analysis |Updates
+- handle: Tickertalk1
+  id: '1892783720949829632'
+  name: Chris and the Markets
+  score: 2.38
+  posts_on_topic: 1
+  followers: 7538
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/Tickertalk1/status/2117846115186020773
+  suggested_on: '2026-11-08'
+  description: Stock Picker Since 2010 Real Stock Market Analysis & Research $MU $SNDK $AMD $DELL $HPE $VOO AI Investor |
+    Researcher | Teacher I make the market simple for all
+- handle: DharmveerDas2
+  id: '713335592281448448'
+  name: Edward Sinclair
+  score: 1.95
+  posts_on_topic: 1
+  followers: 2849
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/DharmveerDas2/status/2118684944776184222
+  suggested_on: '2026-11-08'
+  description: Track the U.S. stock market in real time, focusing on fundamentals, industry trends, and market dynamics to
+    capture key opportunities and risks.
+- handle: TechWithMsMary
+  id: '160647985'
+  name: Technicals with Ms. Mary
+  score: 1.83
+  posts_on_topic: 1
+  followers: 2156
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/TechWithMsMary/status/2117345751483511242
+  suggested_on: '2026-11-08'
+  description: Engineer | MBA | Investor since 2012 | Independent Stock Analyst | Not financial advice
+- handle: realmoneyjarman
+  id: '1236833069719605248'
+  name: realsamjarman
+  score: 1.64
+  posts_on_topic: 1
+  followers: 1394
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/realmoneyjarman/status/2117434838513078591
+  suggested_on: '2026-11-08'
+  description: Sharing insights on stocks, smart money moves, and lifestyle 🤑 — helping you profit in the stock market! I’ll
+    be sharing my personal stock trading experiences
+- handle: ada_lawren
+  id: '776658223248052224'
+  name: Lawren ADA
+  score: 1.52
+  posts_on_topic: 1
+  followers: 1043
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/ada_lawren/status/2117729550130139236
+  suggested_on: '2026-11-08'
+  description: A trading journey for my thoughts maybe
+- handle: MechEconomy
+  id: '1342485549525987330'
+  name: Machine Economy
+  score: 1.18
+  posts_on_topic: 1
+  followers: 481
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/MechEconomy/status/2117344450582028316
+  suggested_on: '2026-11-08'
+  description: Tracking who owns the robots, power & compute. Deep-dive supply chain & unit economics across AI, robotics
+    & energy. By Brendan O'Connor — tech & infra analyst
+- handle: quantumboomnow
+  id: '1962246440975052800'
+  name: quantumBOOM.ai
+  score: 1.16
+  posts_on_topic: 1
+  followers: 454
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/quantumboomnow/status/2118084437154177230
+  suggested_on: '2026-11-08'
+  description: Everything about frontier technologies (semi, AI, quantum compute) AI researchers and hedge fund quants would
+    care about.
+- handle: MacDermidAlpha
+  id: '210654886'
+  name: MacDermid Alpha Electronics Solutions
+  score: 0.8
+  posts_on_topic: 1
+  followers: 629
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/MacDermidAlpha/status/2118001351409975473
+  suggested_on: '2026-11-08'
+  description: MacDermid Alpha brings together the world’s best innovation and technical service to the electronics and surface
+    finishing industries.
+- handle: JayhoonJeo30271
+  id: '1885934855554506752'
+  name: Buo
+  score: 0.51
+  posts_on_topic: 1
+  followers: 102
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/JayhoonJeo30271/status/2117559309781660102
+  suggested_on: '2026-11-08'
+  description: prop desk Quant/PM CFA Proactively identifying emerging market themes through quant-driven analysis to deconstruct
+    structural narratives and build theme indices
+- handle: KyzenNetwork
+  id: '2099366096876838917'
+  name: Kyzen Network
+  score: 0.36
+  posts_on_topic: 1
+  followers: 72
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/KyzenNetwork/status/2118712336114429985
+  suggested_on: '2026-11-08'
+  description: 'Tokenized intelligence, backed by chip equity. Meet kSYNTHETICS, powered by $KYZN on #ROBINHOOD.'
+- handle: 3manu_12
+  id: '851936544'
+  name: Faye Bell
+  score: 0.13
+  posts_on_topic: 1
+  followers: 43
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/3manu_12/status/2118254479761895742
+  suggested_on: '2026-11-08'
+  description: Live up to every passion, and make the most of every sunny day.
+- handle: SystemMargin
+  id: '1498004978555838470'
+  name: System Margin
+  score: -0.25
+  posts_on_topic: 1
+  followers: 56
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/SystemMargin/status/2118840922356011241
+  suggested_on: '2026-11-08'
+  description: Risk-first process. Constraints and bottlenecks in energy, AI and critical metals. Process over narrative.
+- handle: chengli_ry
+  id: '574527126'
+  name: Cheng Lee
+  score: -0.46
+  posts_on_topic: 1
+  followers: 11
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/chengli_ry/status/2118369751332168152
+  suggested_on: '2026-11-08'
+  description: Founder, Ranyi Technology | https://t.co/dQHG8XGxSZ - AI Agent Infrastructure | Cloud Agent, eMemory, Codetainer
+    and Embedding Farm
+- handle: eyeseeworldnews
+  id: '2072797892729782272'
+  name: EYESeeWorldNews
+  score: -0.72
+  posts_on_topic: 1
+  followers: 19
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/eyeseeworldnews/status/2117915008931660228
+  suggested_on: '2026-11-08'
+  description: Smart World News Aggregation Service and Market Analysis tools 🌐 Made with ❤️ for curious minds. I give you
+    tools to "Sense the pulse of the World" 📉📊
+- handle: Marlon1B2t
+  id: '2105726409847267328'
+  name: Joe
+  score: -0.92
+  posts_on_topic: 1
+  followers: 12
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/Marlon1B2t/status/2117275620791251240
+  suggested_on: '2026-11-08'
+  description: building & benchmarking frontier AI agents, inference systems, and autonomous coding loops. tracking token
+    velocity across labs.
+- handle: _orhea
+  id: '1260291054684733441'
+  name: sensitive
+  score: -0.96
+  posts_on_topic: 1
+  followers: 11
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/_orhea/status/2117259475354837193
+  suggested_on: '2026-11-08'
+  description: I enjoy traveling and mountaineering. Meditation and yoga bring me a sense of stillness. I also enjoy observing
+    blockchain technology.
+- handle: PtOStudio
+  id: '2117181232585064448'
+  name: Past the Obvious
+  score: -1.5
+  posts_on_topic: 1
+  followers: 0
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/PtOStudio/status/2117217461515034886
+  suggested_on: '2026-11-08'
+  description: One Question. A Bigger Picture. Documentary stories about AI, science, and technology.
+- handle: AIBottomLine
+  id: '2000134016058707968'
+  name: AI Bottom Line
+  score: -1.5
+  posts_on_topic: 1
+  followers: 0
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/AIBottomLine/status/2119305589981315283
+  suggested_on: '2026-11-08'
+  description: AI news and what it means for your money, job or business. Real numbers. One clear take. No hype. Weekdays
+    + a science find every Friday.
+- handle: DRomback
+  id: '557729980'
+  name: Dennis Romback
+  score: -3.2
+  posts_on_topic: 1
+  followers: 201
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  - empty profile description
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/DRomback/status/2118358992208490500
+  suggested_on: '2026-11-08'
+  description: ''
+- handle: TheCrowdWisdom
+  id: '2081280093712744448'
+  name: TheCrowdWisdom
+  score: -3.55
+  posts_on_topic: 1
+  followers: 89
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  - fewer than 1000 followers
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/TheCrowdWisdom/status/2118037247266320459
+  suggested_on: '2026-11-08'
+  description: Financial markets are noisy. We fix that. The world's best traders, aggregated into one voice. Research & education.
+    Not financial advice. Trading involves risk
+- handle: mik_cab
+  id: '1473010940'
+  name: Michael Cabreros
+  score: -3.93
+  posts_on_topic: 1
+  followers: 37
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  - fewer than 1000 followers
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/mik_cab/status/2118752205478207675
+  suggested_on: '2026-11-08'
+  description: Buying at the peak or missing out on an opportunity—these are essential lessons in investing. Forgive your
+    past self, for at the time, you made the best decisio
+- handle: CoreyDBlackwell
+  id: '1423371956598894596'
+  name: Corey Blackwell
+  score: -4.35
+  posts_on_topic: 1
+  followers: 14
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  - empty profile description
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/CoreyDBlackwell/status/2118081764325544179
+  suggested_on: '2026-11-08'
+  description: ''
+- handle: deysira06401348
+  id: '710443079992475648'
+  name: Max Anderson
+  score: -4.65
+  posts_on_topic: 1
+  followers: 7
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  - fewer than 1000 followers
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/deysira06401348/status/2118527516428370096
+  suggested_on: '2026-11-08'
+  description: Stocks worth watching. Markets worth understanding. Ideas worth discussing. 📊
+- handle: MarketAtlasDesk
+  id: '2102148249498931200'
+  name: Market Atlas
+  score: -4.66
+  posts_on_topic: 1
+  followers: 22
+  verified_type: none
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  - fewer than 1000 followers
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/MarketAtlasDesk/status/2117668896929132992
+  suggested_on: '2026-11-08'
+  description: 🇺🇸 US • 🇮🇳 India • 🇨🇦 Canada Equity research • Earnings • Valuation • Markets Independent market research &
+    insights. Not financial advice.
+- handle: snow_trades
+  id: '1710019638006865920'
+  name: SnowTrades
+  score: -5.3
+  posts_on_topic: 1
+  followers: 5
+  verified_type: none
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  - fewer than 1000 followers
+  topics:
+  - high bandwidth memory
+  evidence:
+  - https://x.com/snow_trades/status/2118404412188016785
+  suggested_on: '2026-11-08'
+  description: If it was easy everyone would have done it.
+candidates:
+- handle: MicronTech
+  group: company
+  expected: Micron Technology
+- handle: SKhynix
+  group: company
+  expected: SK hynix
+- handle: SamsungDSGlobal
+  group: company
+  expected: Samsung Semiconductor
+- handle: nvidia
+  group: company
+  expected: NVIDIA
+- handle: AMD
+  group: company
+  expected: AMD
+- handle: intel
+  group: company
+  expected: Intel
+- handle: Broadcom
+  group: company
+  expected: Broadcom
+- handle: MarvellTech
+  group: company
+  expected: Marvell Technology
+- handle: TSMC
+  group: company
+  expected: TSMC
+- handle: ASMLcompany
+  group: company
+  expected: ASML
+- handle: Applied4Tech
+  group: company
+  expected: Applied Materials
+- handle: LamResearch
+  group: company
+  expected: Lam Research
+- handle: KLAcorp
+  group: company
+  expected: KLA
+- handle: JEDEC
+  group: standards
+  expected: JEDEC
+- handle: SEMIconnects
+  group: standards
+  expected: SEMI
+- handle: imec_int
+  group: standards
+  expected: imec
+- handle: SemiEngineering
+  group: press
+  expected: Semiconductor Engineering
+- handle: eetimes
+  group: press
+  expected: EE Times
+- handle: TechInsightsInc
+  group: press
+  expected: TechInsights
+- handle: rambusinc
+  group: company
+  expected: Rambus
+- handle: AmkorTechnology
+  group: company
+  expected: Amkor Technology
+- handle: OntoInnovation
+  group: company
+  expected: Onto Innovation
+- handle: Teradyneinc
+  group: company
+  expected: Teradyne
+- handle: FormFactorInc
+  group: company
+  expected: FormFactor
+- handle: Veeco
+  group: company
+  expected: Veeco Instruments
+- handle: KulickeandSoffa
+  group: company
+  expected: Kulicke & Soffa
+- handle: Arm
+  group: company
+  expected: Arm
+- handle: Cadence
+  group: company
+  expected: Cadence Design Systems
+- handle: Synopsys
+  group: company
+  expected: Synopsys
+- handle: GlobalFoundries
+  group: company
+  expected: GlobalFoundries
+- handle: Qualcomm
+  group: company
+  expected: Qualcomm
+- handle: SEMIconex
+  group: standards
+  expected: SEMI
+- handle: hotchipsorg
+  group: standards
+  expected: Hot Chips conference
+- handle: IEEESpectrum
+  group: press
+  expected: IEEE Spectrum
+- handle: TrendForce
+  group: press
+  expected: TrendForce
+- handle: CounterPointTR
+  group: press
+  expected: Counterpoint Research
+- handle: SemiAnalysis_
+  group: press
+  expected: SemiAnalysis
+- handle: ServeTheHome
+  group: press
+  expected: ServeTheHome
+- handle: tomshardware
+  group: press
+  expected: Tom's Hardware
+- handle: TechTechPotato
+  group: press
+  expected: TechTechPotato (Ian Cutress)
+- handle: JonPeddie
+  group: analyst
+  expected: Jon Peddie Research
+approved_on: '2026-11-08'
+approved:
+- handle: MicronTech
+  id: '19037711'
+  group: company
+  name: Micron Technology
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: SKhynix
+  id: '1621371257634824192'
+  group: company
+  name: SK hynix
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: SamsungDSGlobal
+  id: '1441295237788278787'
+  group: company
+  name: Samsung Semiconductor
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: nvidia
+  id: '61559439'
+  group: company
+  name: NVIDIA
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: AMD
+  id: '14861876'
+  group: company
+  name: AMD
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: intel
+  id: '2803191'
+  group: company
+  name: Intel
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: Broadcom
+  id: '338504881'
+  group: company
+  name: Broadcom
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: MarvellTech
+  id: '68501906'
+  group: company
+  name: Marvell Technology
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: ASMLcompany
+  id: '80513844'
+  group: company
+  name: ASML
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: Applied4Tech
+  id: '64784531'
+  group: company
+  name: Applied Materials
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: LamResearch
+  id: '16686919'
+  group: company
+  name: Lam Research
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: KLAcorp
+  id: '297676668'
+  group: company
+  name: KLA
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: JEDEC
+  id: '15279914'
+  group: standards
+  name: JEDEC
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: imec_int
+  id: '9325912'
+  group: standards
+  name: imec
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: SemiEngineering
+  id: '1920720745'
+  group: press
+  name: Semiconductor Engineering
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: eetimes
+  id: '111645972'
+  group: press
+  name: EE Times
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: techinsightsinc
+  id: '109280298'
+  group: press
+  name: TechInsights
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: rambusinc
+  id: '19615847'
+  group: company
+  name: Rambus
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: AmkorTechnology
+  id: '16019063'
+  group: company
+  name: Amkor Technology
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: Teradyneinc
+  id: '48026449'
+  group: company
+  name: Teradyne
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: FormFactorInc
+  id: '1912444903'
+  group: company
+  name: FormFactor
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: Veeco
+  id: '334866422'
+  group: company
+  name: Veeco Instruments
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: Arm
+  id: '31263739'
+  group: company
+  name: Arm
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: Cadence
+  id: '18793792'
+  group: company
+  name: Cadence Design Systems
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: Synopsys
+  id: '17427993'
+  group: company
+  name: Synopsys
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: GlobalFoundries
+  id: '23286736'
+  group: company
+  name: GlobalFoundries
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: Qualcomm
+  id: '84623395'
+  group: company
+  name: Qualcomm
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: SEMIconex
+  id: '28643230'
+  group: standards
+  name: SEMI
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: hotchipsorg
+  id: '258826361'
+  group: standards
+  name: Hot Chips
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: IEEESpectrum
+  id: '15825547'
+  group: press
+  name: IEEE Spectrum
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: trendforce
+  id: '201153042'
+  group: press
+  name: TrendForce
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: CounterPointTR
+  id: '1704052634'
+  group: press
+  name: Counterpoint Research
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: SemiAnalysis_
+  id: '1745106082790318080'
+  group: press
+  name: SemiAnalysis
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: ServeTheHome
+  id: '259018328'
+  group: press
+  name: ServeTheHome
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: tomshardware
+  id: '17064514'
+  group: press
+  name: Tom's Hardware
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: TechTechPotato
+  id: '1250931835732987904'
+  group: analyst
+  name: TechTechPotato (Ian Cutress)
+  approved_by: owner
+  first_checked: '2026-11-08'
+- handle: jonpeddie
+  id: '14941140'
+  group: analyst
+  name: Jon Peddie Research
+  approved_by: owner
+  first_checked: '2026-11-08'
+changes: []
