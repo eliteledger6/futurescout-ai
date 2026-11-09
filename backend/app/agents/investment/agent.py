@@ -175,7 +175,7 @@ class InvestmentAgent:
             + (f"\n  Not SEC-listed names also seen (no financials; private or foreign): "
                + ", ".join(f"{u.name} ({u.patents} patents, {u.papers} papers)" for u in scout.unlisted[:6])
                if scout and scout.unlisted else "")
-            + f"\n\nScoring dimension keys (rate each, plus 'risk_adjustment'):\n{dims}\n- {RISK_KEY}: Risk Adjustment (5 = severe risk)"
+            + f"\n\nScoring dimension keys (rate each, plus 'risk_adjustment'):\n{dims}\n- {RISK_KEY}: Risk Adjustment (0-5 on the RISK SCALE in your instructions; 5 = severe risk)"
         )
         messages = [
             {"role": "system", "content": _PROMPT_PATH.read_text(encoding="utf-8")},

@@ -95,3 +95,13 @@ def test_chief_review_failure_means_no_extra_round():
     router, _ = make_router(lambda n, kw: status_error(openai.BadRequestError, 400, "no"))
     review, errors = ChiefAgent(router).review("HBM", fallback_plan("HBM"), None, None, agents_not_run=[])
     assert review.sufficient and review.extra_science_queries == [] and errors
+
+
+def test_investment_prompt_has_anchored_risk_scale():
+    # 2026-11-09: without anchors the model gave risk 4 to all 8 live topics (a flat 24% cut).
+    from app.agents.investment.agent import _PROMPT_PATH
+    text = _PROMPT_PATH.read_text(encoding="utf-8")
+    assert "RISK SCALE" in text
+    for level in range(6):
+        assert f"- {level} = " in text, f"risk level {level} has no description"
+    assert "Do not default to the same level" in text

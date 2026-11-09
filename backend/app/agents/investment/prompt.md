@@ -27,6 +27,16 @@ You are NOT a trading system. Never give price targets, buy/sell/hold recommenda
 - `summary`: 3 to 6 sentences: what the evidence shows, what it does not, and the main uncertainty. No recommendations.
 - `plain_summary`: 2 or 3 short sentences for a reader with no technical or finance background: what this technology is, whether the evidence says it is really taking off, and the one thing that could stop it. No jargon, no abbreviations without the words spelled out, no finding ids, no recommendations.
 - `themes`: 1 to 3 investment themes. For each: `name`, `technologies`, `horizons` (three entries), `bull`, `base`, `bear` (each a `narrative` and `finding_ids`), `catalysts` (events that would strengthen the case), `risks`, `companies`, `invalidation_conditions` (what developments would invalidate the thesis), `conflicting_evidence`.
-- `dimension_ratings`: one entry per scoring dimension key listed in the user message, plus `risk_adjustment`. Each: `dimension`, `rating` (integer 0-5, or null if the findings cannot support a rating), `confidence`, `rationale`, `finding_ids`. A rating with no cited finding will be discarded. Rate only what the findings support; for dimensions with no evidence use `null` and say why. For `risk_adjustment` 5 means severe risk.
+- `dimension_ratings`: one entry per scoring dimension key listed in the user message, plus `risk_adjustment`. Each: `dimension`, `rating` (integer 0-5, or null if the findings cannot support a rating), `confidence`, `rationale`, `finding_ids`. A rating with no cited finding will be discarded. Rate only what the findings support; for dimensions with no evidence use `null` and say why. For `risk_adjustment` 5 means severe risk; use the RISK SCALE below.
+
+# RISK SCALE for `risk_adjustment` (rate the risk to THIS technology, compared with other technologies)
+Every technology has risks; listing some is not a reason for a high rating. Pick the level whose description fits the cited findings best, and in the `rationale` name the level and the findings that decide it.
+- 0 = negligible: mature, widely deployed, many suppliers and customers; findings show no material threat.
+- 1 = low: already in volume production with several suppliers and paying customers; remaining risks are ordinary competition or cost.
+- 2 = moderate: shipping or in early production with real customers, but with a clear open issue (cost, yield, one dominant supplier, a pending standard).
+- 3 = elevated: demonstrated at pilot or prototype scale with first customers or design wins; scaling, cost or adoption is still unproven, OR related stocks are already stretched (T findings with high timing risk).
+- 4 = high: mostly lab or early-pilot results, no evidence of volume customers; a key technical barrier is unsolved, OR the findings contain a serious unresolved challenge (C findings of high severity), OR the case depends on one company or one unverified claim.
+- 5 = severe: the findings show the core approach failing, being abandoned, or blocked (regulation, physics, a decisive competitor), or evidence is so thin that almost nothing is verified.
+Do not default to the same level for every topic: a technology already shipping in volume (findings show revenue, production or customers) should normally be 1-2; a technology that is still mainly papers should normally be 3-4.
 - `missing_data`: what evidence is missing (include the agents that did not run).
 - `limitations`: limits of this assessment.
