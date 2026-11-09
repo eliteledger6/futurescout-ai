@@ -12,6 +12,16 @@ MIN_YTD_BASE = 20      # fewer papers than this in last year's window: growth is
 TREND_BAND_PCT = 10.0  # within +/-10% = flat
 
 
+def describe_phrases(phrase: "Optional[str | list[str]]") -> str:
+    """'the exact phrase "x"' or 'any of the exact phrases "x", "y"' (for basis texts)."""
+    if not phrase:
+        return ""
+    items = [phrase] if isinstance(phrase, str) else [p for p in phrase if p]
+    if len(items) == 1:
+        return f'the exact phrase "{items[0]}"'
+    return "any of the exact phrases " + ", ".join(f'"{p}"' for p in items)
+
+
 def ytd_window(today: date, lag_days: int = LAG_DAYS) -> Optional[tuple[date, date, date, date]]:
     """(this-year start, this-year cutoff, last-year start, last-year cutoff), or None early in January."""
     cutoff = today - timedelta(days=lag_days)
@@ -24,7 +34,7 @@ def ytd_window(today: date, lag_days: int = LAG_DAYS) -> Optional[tuple[date, da
     return date(cutoff.year, 1, 1), cutoff, date(cutoff.year - 1, 1, 1), prev_cutoff
 
 
-def compute_ytd(count: int, previous_count: int, cutoff: date, phrase: Optional[str] = None) -> YtdMetric:
+def compute_ytd(count: int, previous_count: int, cutoff: date, phrase: "Optional[str | list[str]]" = None) -> YtdMetric:
     growth = round((count - previous_count) / previous_count * 100, 1) if previous_count > 0 else None
     trend = None
     if growth is not None and previous_count >= MIN_YTD_BASE:
@@ -32,13 +42,13 @@ def compute_ytd(count: int, previous_count: int, cutoff: date, phrase: Optional[
     return YtdMetric(
         year=cutoff.year, previous_year=cutoff.year - 1, cutoff=cutoff.strftime("%m-%d"), count=count,
         previous_count=previous_count, growth_pct=growth, trend=trend,
-        basis=(f'OpenAlex works{" with the exact phrase " + repr(phrase) + " in title or abstract" if phrase else ""} published '
+        basis=(f'OpenAlex works{" with " + describe_phrases(phrase) + " in title or abstract" if phrase else ""} published '
                f"1 Jan–{cutoff.strftime('%d %b')} {cutoff.year} vs the same dates in {cutoff.year - 1}. The last {LAG_DAYS} days "
                f"are left out of both years because new papers take weeks to be indexed."),
     )
 
 
-def ytd_from_client(openalex, phrase: str, today: date) -> Optional[YtdMetric]:  # noqa: ANN001
+def ytd_from_client(openalex, phrase: "str | list[str]", today: date) -> Optional[YtdMetric]:  # noqa: ANN001
     """Two count requests (this year's window and last year's). None when not applicable or unsupported."""
     win = ytd_window(today)
     if win is None or not hasattr(openalex, "count_between"):
@@ -48,7 +58,7 @@ def ytd_from_client(openalex, phrase: str, today: date) -> Optional[YtdMetric]: 
 
 
 def compute_acceleration(
-    counts: dict[int, int], current_year: int, phrase: Optional[str] = None
+    counts: dict[int, int], current_year: int, phrase: "Optional[str | list[str]]" = None
 ) -> Optional[AccelerationMetric]:
     """Year-over-year change between the two most recent COMPLETE calendar years.
 
@@ -64,9 +74,11 @@ def compute_acceleration(
     kwargs = {}
     if phrase:
         kwargs["basis"] = (
-            f'OpenAlex works whose title or abstract contains the exact phrase "{phrase}", per '
-            "publication year. Synonyms and abbreviations are not counted, and the number is not "
-            "normalised for overall growth in publishing. The current (partial) year is excluded."
+            f"OpenAlex works whose title or abstract contains {describe_phrases(phrase)}, per publication year "
+            "(singular and plural forms match; each work counted once). "
+            + ("Synonyms and abbreviations are not counted. " if isinstance(phrase, str) or len(phrase) == 1 else
+               "The synonyms and abbreviations were kept only after an AI check of sampled papers. ")
+            + "The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
         )
     return AccelerationMetric(
         last_full_year=last,

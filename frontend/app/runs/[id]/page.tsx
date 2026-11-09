@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { api, fmtDate, fmtUsd } from "@/lib/api";
-import type { CompanySignal, Finding, Label, Report, RunDetail, Source, Theme, Verdict } from "@/lib/types";
+import type { CountingBasis, CompanySignal, Finding, Label, Report, RunDetail, Source, Theme, Verdict } from "@/lib/types";
 import { ConfidencePill, ErrorNotice, LABEL_HELP, LabelBadge, Loading } from "@/components/ui";
 import { NearBadge } from "@/components/NearBadge";
 import { AgentFlow } from "@/components/AgentFlow";
@@ -490,7 +490,9 @@ function ActivitySection({ report }: { report: Report }) {
         <div className="grid grid-2" style={{ background: "transparent", border: 0, gap: 32 }}>
           <div style={{ background: "transparent" }}>
             <h2 className="h2">Research activity</h2>
-            <p className="sub">OpenAlex works per publication year containing the exact topic phrase in title or abstract.</p>
+            <p className="sub">{s.counting?.phrases?.length
+              ? <>OpenAlex works per publication year whose title or abstract contains any of: {s.counting.phrases.map((p) => <span key={p} className="pill" style={{ margin: "0 4px 4px 0" }}>{p}</span>)}</>
+              : "OpenAlex works per publication year containing the exact topic phrase in title or abstract."}</p>
             {a && (
               <div style={{ marginTop: 24 }}>
                 <div className="stat-value" style={{ fontSize: 56 }}>{a.yoy_growth_pct !== null ? `${a.yoy_growth_pct > 0 ? "+" : ""}${a.yoy_growth_pct}%` : "–"}</div>
@@ -508,13 +510,15 @@ function ActivitySection({ report }: { report: Report }) {
               </div>
             )}
             <p className="small muted" style={{ marginTop: 20 }}>{a?.basis} Research activity is not commercial success.</p>
+            {s.counting && <CountingCheck c={s.counting} />}
           </div>
           <div style={{ background: "transparent" }}>
             <div className="cols" role="img" aria-label={`Works per year: ${entries.map(([y, c]) => `${y}: ${c}`).join(", ")}`}>
               {entries.map(([y, c]) => (
-                <div className="col" key={y}>
-                  <div className="col-tip">{y}: {c} works{y === thisYear ? " (partial year)" : ""}</div>
-                  <div className={`col-bar ${y === thisYear ? "partial" : ""}`} style={{ height: `${(c / max) * 100}%` }} />
+                <div className="col" key={y} tabIndex={0} aria-label={`${y}: ${c} works${y === thisYear ? " (partial year)" : ""}`}>
+                  <div className={`col-bar ${y === thisYear ? "partial" : ""}`} style={{ height: `${(c / max) * 100}%` }}>
+                    <div className="col-tip">{y}: {c.toLocaleString()} works{y === thisYear ? " (partial year)" : ""}</div>
+                  </div>
                 </div>
               ))}
             </div>
@@ -528,6 +532,37 @@ function ActivitySection({ report }: { report: Report }) {
         </div>
       </div>
     </section>
+  );
+}
+
+/* Which phrases were counted and how the AI relevance check went (synonyms are kept only when sampled papers fit). */
+function CountingCheck({ c }: { c: CountingBasis }) {
+  const pct = c.precision_pct;
+  return (
+    <details style={{ marginTop: 14 }}>
+      <summary className="small" style={{ cursor: "pointer" }}>
+        How papers were counted{pct != null && <> · AI check: <b>{Math.round(pct)}%</b> of {c.precision_sampled} sampled papers on-topic</>}
+      </summary>
+      <p className="small muted" style={{ margin: "8px 0" }}>
+        Synonyms and abbreviations were suggested by AI and then tested: for each phrase, a random sample of matching papers was
+        read (title and abstract) and the phrase was kept only if most were really about this topic. Counts are OpenAlex&apos;s; the
+        relevance judgement is AI interpretation.
+      </p>
+      <div className="table-wrap">
+        <table className="table">
+          <thead><tr><th>Phrase</th><th>From</th><th className="num">Papers (3 yrs)</th><th className="num">On-topic in sample</th><th>Counted?</th></tr></thead>
+          <tbody>{c.checks.map((k) => (
+            <tr key={k.phrase}>
+              <td>{k.phrase}</td>
+              <td className="small muted">{k.source === "topic" ? "topic name" : k.source === "config" ? "topic list" : "AI suggestion"}</td>
+              <td className="num">{k.matches.toLocaleString()}</td>
+              <td className="num">{k.sampled ? `${k.relevant}/${k.sampled}` : "–"}</td>
+              <td className="small">{k.kept ? <span className="pill pill-on">counted</span> : <span className="muted" title={k.reason}>not counted</span>}</td>
+            </tr>
+          ))}</tbody>
+        </table>
+      </div>
+    </details>
   );
 }
 

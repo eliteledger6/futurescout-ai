@@ -120,6 +120,7 @@ export interface Report {
     publication_counts: Record<string, number>;
     acceleration: { previous_year: number; previous_year_count: number; last_full_year: number; last_full_year_count: number; yoy_growth_pct: number | null; basis: string } | null;
     ytd?: Ytd | null;
+    counting?: CountingBasis | null;
     emerging_directions: string[]; open_problems: string[]; limitations: string[];
   } | null;
   risk: {
@@ -189,6 +190,8 @@ export interface Acceleration {
 
 export interface Sector { key: string; name: string; hints: string; discovery_queries: string[]; topics: number; companies: number }
 
+export interface PhraseCheck { phrase: string; source: "topic" | "config" | "ai_suggested"; matches: number; sampled: number; relevant: number; kept: boolean; reason: string }
+export interface CountingBasis { phrases: string[]; checks: PhraseCheck[]; precision_sampled: number; precision_relevant: number; precision_pct: number | null; note: string }
 export interface Ytd { year: number; previous_year: number; cutoff: string; count: number; previous_count: number;
   growth_pct: number | null; trend: "rising" | "flat" | "cooling" | null; basis: string }
 

@@ -157,12 +157,15 @@ def compute_radar(
         sig = TopicSignal(topic=t.name, terms=t.terms, sector=t.sector)
         if openalex:
             try:
-                sig.paper_counts = openalex.count_by_year(t.name, start)
-                sig.paper_acceleration = compute_acceleration(sig.paper_counts, year, phrase=t.name)
+                from app.agents.science.phrases import load_cached
+                basis = load_cached(t.name)      # phrases a research run checked (synonyms kept after an AI sample check)
+                phrases = basis.phrases if basis and basis.phrases else t.name
+                sig.paper_counts = openalex.count_by_year(phrases, start)
+                sig.paper_acceleration = compute_acceleration(sig.paper_counts, year, phrase=phrases)
             except SourceError as exc:
                 sig.errors.append(f"papers: {exc.message}")
             try:
-                sig.paper_ytd = ytd_from_client(openalex, t.name, now().date())
+                sig.paper_ytd = ytd_from_client(openalex, phrases, now().date())
                 sig.trend = sig.paper_ytd.trend if sig.paper_ytd else None
             except SourceError as exc:
                 sig.errors.append(f"papers (year to date): {exc.message}")

@@ -47,6 +47,17 @@ def clean_phrase(text: str) -> str:
     return re.sub(r"\s+", " ", re.sub(r'[",|:]', " ", text)).strip()
 
 
+def phrase_filter(query: "str | list[str]") -> str:
+    """`title_and_abstract.search:"a"|"b"`: works whose title or abstract contains ANY of the exact phrases.
+
+    OpenAlex stems words inside a phrase, so "AI agent" and "AI agents" already match the same works; a work that
+    matches several phrases is counted once. Returns "" when no usable phrase is left.
+    """
+    items = [query] if isinstance(query, str) else list(query)
+    phrases = list(dict.fromkeys(p for p in (clean_phrase(x) for x in items) if p))
+    return "title_and_abstract.search:" + "|".join(f'"{p}"' for p in phrases) if phrases else ""
+
+
 def _bare_doi(doi: Optional[str]) -> Optional[str]:
     if not doi:
         return None
@@ -170,29 +181,46 @@ class OpenAlexClient:
                 ids.setdefault(name, []).append(wid)
         return freq, ids
 
-    def count_between(self, query: str, start: date, end: date) -> int:
-        """Works whose TITLE OR ABSTRACT contains the exact phrase, published between two dates (inclusive)."""
-        phrase = clean_phrase(query)
-        if not phrase:
+    def count_between(self, query: "str | list[str]", start: date, end: date) -> int:
+        """Works whose TITLE OR ABSTRACT contains the exact phrase (or any of the phrases), published between two dates."""
+        flt = phrase_filter(query)
+        if not flt:
             return 0
         data = self._get("/works", {"per-page": 1, "select": "id",
-                                    "filter": f'title_and_abstract.search:"{phrase}",from_publication_date:{start.isoformat()},'
+                                    "filter": f"{flt},from_publication_date:{start.isoformat()},"
                                               f"to_publication_date:{end.isoformat()}"})
         return int((data.get("meta") or {}).get("count") or 0)
 
-    def count_by_year(self, query: str, start_year: int) -> dict[int, int]:
-        """Works per publication year whose TITLE OR ABSTRACT contains the exact phrase `query`.
+    def sample_works(self, query: "str | list[str]", n: int, *, from_date: date, to_date: Optional[date] = None,
+                     seed: int = 7) -> list[dict]:
+        """A random sample of matching works as {id, title, abstract (first ~80 words)}, for relevance checks."""
+        flt = phrase_filter(query)
+        if not flt:
+            return []
+        flt += f",from_publication_date:{from_date.isoformat()}" + (f",to_publication_date:{to_date.isoformat()}" if to_date else "")
+        data = self._get("/works", {"filter": flt, "sample": max(1, min(n, 50)), "seed": seed, "per-page": max(1, min(n, 50)),
+                                    "select": "id,display_name,abstract_inverted_index"})
+        out = []
+        for w in data.get("results", []):
+            title = (w.get("display_name") or "").strip()
+            if not title:
+                continue
+            abstract = " ".join((reconstruct_abstract(w.get("abstract_inverted_index")) or "").split()[:80])
+            out.append({"id": str(w.get("id") or ""), "title": title[:300], "abstract": abstract})
+        return out
+
+    def count_by_year(self, query: "str | list[str]", start_year: int) -> dict[int, int]:
+        """Works per publication year whose TITLE OR ABSTRACT contains the exact phrase `query` (or any of a list).
 
         Measured on 2026-11-08 for "high bandwidth memory": plain `search=` matched ~50x more
         works than the quoted phrase (any mention of the words), so it is not used for counting.
         """
-        phrase = clean_phrase(query)
-        if not phrase:
+        flt = phrase_filter(query)
+        if not flt:
             return {}
         data = self._get(
             "/works",
-            {"group_by": "publication_year",
-             "filter": f'title_and_abstract.search:"{phrase}",from_publication_date:{start_year}-01-01'},
+            {"group_by": "publication_year", "filter": f"{flt},from_publication_date:{start_year}-01-01"},
         )
         counts: dict[int, int] = {}
         for group in data.get("group_by", []):

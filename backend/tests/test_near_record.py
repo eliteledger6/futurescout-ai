@@ -58,6 +58,7 @@ def test_fingerprint_is_stable_across_schema_additions(report):
         old_style["investment"]["draft"].pop("plain_summary", None)
     for m in ((old_style.get("timing") or {}).get("metrics") or []):
         m.pop("closes", None)
+    (old_style.get("science") or {}).pop("counting", None)          # added 2026-11-09
     for part in ("science", "risk", "market", "x", "patent", "timing"):
         for src in ((old_style.get(part) or {}).get("sources") or []):
             src.pop("affiliations", None)

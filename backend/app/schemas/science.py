@@ -50,6 +50,36 @@ class YtdMetric(BaseModel):
     basis: str = ""
 
 
+class PhraseCheck(BaseModel):
+    """One candidate search phrase and the AI relevance check of a random sample of the works it matches."""
+
+    phrase: str
+    source: Literal["topic", "config", "ai_suggested"]
+    matches: int = 0                 # works matching this phrase alone (last 3 years)
+    sampled: int = 0
+    relevant: int = 0
+    kept: bool = False
+    reason: str = ""
+
+
+class CountingBasis(BaseModel):
+    """Which phrases the paper counts use and how well the matches fit the topic (added 2026-11-09).
+
+    The phrases are chosen by code from the topic name, configured terms and AI-suggested synonyms or
+    abbreviations; each one is kept only if an AI check of a random sample of its matching works finds most of them
+    on-topic. The final precision sample estimates how many counted works are really about the topic. All counts
+    come from OpenAlex; the AI only judges relevance (ai_interpretation).
+    """
+
+    phrases: list[str] = Field(default_factory=list)
+    checks: list[PhraseCheck] = Field(default_factory=list)
+    precision_sampled: int = 0
+    precision_relevant: int = 0
+    precision_pct: Optional[float] = None
+    llm_alias: Optional[str] = None
+    note: str = ""
+
+
 class ScienceResult(BaseModel):
     topic: str
     from_year: Optional[int] = None  # earliest publication year searched for papers
@@ -63,6 +93,7 @@ class ScienceResult(BaseModel):
     publication_counts: dict[int, int] = Field(default_factory=dict)
     acceleration: Optional[AccelerationMetric] = None
     ytd: Optional[YtdMetric] = None   # same-period comparison inside the current year (added 2026-11-09)
+    counting: Optional[CountingBasis] = None   # phrases + AI relevance check behind the counts (added 2026-11-09)
     errors: list[AgentError] = Field(default_factory=list)
     guard_issues: list[dict] = Field(default_factory=list)
     llm_alias: Optional[str] = None

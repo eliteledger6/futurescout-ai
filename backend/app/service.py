@@ -133,6 +133,7 @@ def execute(
         topic, router=router,
         openalex=openalex,
         arxiv=ArxivClient(http=http),
+        phrase_check=True,
         edgar=edgar, gdelt=gdelt, discovery=discovery, facts=facts, x_client=x_client, epo=patent_client, prices=prices,
         question=question, sector=sector, from_year=from_year, max_papers=max_papers,
     )

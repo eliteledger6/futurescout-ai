@@ -38,7 +38,7 @@ def test_health_and_config_say_what_is_enabled_and_leak_nothing(file_store):
     assert client.get("/api/health").json() == {"ok": True, "store": "files"}
     cfg = client.get("/api/config").json()
     assert cfg["run_api_enabled"] is False and cfg["store"] == "files"
-    assert set(cfg["agents"]) == {"chief", "science", "risk", "market", "x", "patent", "timing", "investment"}
+    assert set(cfg["agents"]) == {"chief", "science", "risk", "market", "x", "patent", "timing", "investment", "relevance"}
     assert cfg["agents_not_built"] == [] and "not investment advice" in cfg["disclaimer"]
     assert "near_ai_api_key" not in client.get("/api/config").text.lower()
 

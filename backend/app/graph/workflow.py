@@ -232,6 +232,7 @@ def run_research(
     scout: Optional[CompanyScout] = None,
     sector: Optional[str] = None,
     now: Callable[[], datetime] = lambda: datetime.now(timezone.utc),
+    phrase_check: bool = False,      # synonyms + AI relevance check behind paper counts (live runs turn it on)
 ) -> ResearchReport:
     # The topic's sector (from config/topics.yaml unless given) steers the Chief's queries and which configured
     # companies the Market agent reads. Unknown topics run as plain "technology".
@@ -257,7 +258,7 @@ def run_research(
         patent_agent = PatentAgent(router, epo, now=now)
     deps = Deps(
         chief=ChiefAgent(router),
-        science=ScienceAgent(router, openalex, arxiv, now=now),
+        science=ScienceAgent(router, openalex, arxiv, now=now, use_phrase_check=phrase_check),
         risk=RiskAgent(router, openalex, arxiv, now=now),
         investment=InvestmentAgent(router, now=now),
         market=market_agent,

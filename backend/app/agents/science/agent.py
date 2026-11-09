@@ -18,6 +18,7 @@ from typing import Callable, Optional
 
 from app.agents.retrieval import collect_papers, dedupe, format_papers  # noqa: F401  (re-exported)
 from app.agents.science.metrics import compute_acceleration, ytd_from_client
+from app.agents.science.phrases import build_counting_basis
 from app.graph.citation_guard import apply_citation_guard
 from app.models.router import ModelRouter, ModelRouterError
 from app.schemas.common import AgentError, SourceRecord
@@ -43,8 +44,10 @@ class ScienceAgent:
         arxiv: Optional[ArxivClient] = None,
         *,
         now: Callable[[], datetime] = lambda: datetime.now(timezone.utc),
+        use_phrase_check: bool = False,
     ) -> None:
         self.router = router
+        self.use_phrase_check = use_phrase_check
         self.openalex = openalex
         self.arxiv = arxiv
         self._now = now
@@ -66,7 +69,9 @@ class ScienceAgent:
         from_year = from_year if from_year is not None else current_year - DEFAULT_LOOKBACK_YEARS
 
         records = self._collect(queries, from_year, max_papers, errors)
-        counts = self._counts(topic, current_year - 6, errors)
+        counting = self._counting(topic) if records else None
+        phrases = counting.phrases if counting and counting.phrases else clean_phrase(topic)
+        counts = self._counts(phrases, current_year - 6, errors)
         registry = {r.id: r for r in records}
 
         result = ScienceResult(
@@ -75,8 +80,9 @@ class ScienceAgent:
             status="no_data",
             sources=records,
             publication_counts=counts,
-            acceleration=compute_acceleration(counts, current_year, phrase=clean_phrase(topic)),
-            ytd=self._ytd(topic, errors),
+            acceleration=compute_acceleration(counts, current_year, phrase=phrases),
+            ytd=self._ytd(phrases, errors),
+            counting=counting,
             errors=errors,
             coverage_note=(
                 "Based on titles, metadata and abstracts only. No full text was read. "
@@ -130,16 +136,26 @@ class ScienceAgent:
     ) -> list[SourceRecord]:
         return collect_papers(self.name, self.openalex, self.arxiv, queries, from_year, max_papers, errors)
 
-    def _ytd(self, topic: str, errors: list[AgentError]):  # noqa: ANN202
+    def _counting(self, topic: str):  # noqa: ANN202
+        """Synonyms/abbreviations checked by AI on sampled papers (None: fall back to the exact topic phrase)."""
+        if not self.openalex or self.router is None or not self.use_phrase_check:
+            return None
+        try:
+            return build_counting_basis(self.openalex, self.router, topic, now=self._now)
+        except Exception as exc:  # noqa: BLE001  (counting must not fail the agent)
+            log.warning("phrase check failed: %s", type(exc).__name__)
+            return None
+
+    def _ytd(self, phrases, errors: list[AgentError]):  # noqa: ANN001,ANN202
         if not self.openalex:
             return None
         try:
-            return ytd_from_client(self.openalex, clean_phrase(topic), self._now().date())
+            return ytd_from_client(self.openalex, phrases, self._now().date())
         except SourceError as exc:
             errors.append(AgentError(agent=self.name, source=exc.source, message=f"year-to-date count: {exc.message}", recoverable=exc.retryable))
             return None
 
-    def _counts(self, topic: str, start_year: int, errors: list[AgentError]) -> dict[int, int]:
+    def _counts(self, topic, start_year: int, errors: list[AgentError]) -> dict[int, int]:  # noqa: ANN001
         if not self.openalex:
             return {}
         try:
