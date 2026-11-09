@@ -3,6 +3,8 @@
   python scripts\\rescore.py --run <id>            re-score one saved run
   python scripts\\rescore.py --run <id> --reseal   ...and record the new fingerprint on NEAR testnet
 
+--recount also redoes the paper counts with the synonym/AI-relevance phrase check (2026-11-09) before re-scoring.
+
 Use after a scoring-prompt change (e.g. the 2026-11-09 risk scale) so an existing report reflects it without
 re-collecting papers, patents, filings or prices. Costs one Investment-agent model call (about $0.02); the call is
 added to the report's usage as "investment (rescore)". The evidence (findings and sources) is unchanged. The old
@@ -32,6 +34,8 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--run", required=True)
     ap.add_argument("--reseal", action="store_true")
+    ap.add_argument("--recount", action="store_true",
+                    help="first redo the paper counts with the synonym/AI-relevance phrase check (OpenAlex, ~$0.02)")
     args = ap.parse_args()
     s = get_settings()
 
@@ -53,6 +57,25 @@ def main() -> int:
         return 1
 
     router = ModelRouter(load_model_config(), s)
+    if args.recount and report.science:
+        from datetime import datetime, timezone
+        from app.agents.science.metrics import compute_acceleration, ytd_from_client
+        from app.agents.science.phrases import build_counting_basis
+        from app.sources.openalex import OpenAlexClient
+        oa = OpenAlexClient(s.openalex_key_value())
+        basis = build_counting_basis(oa, router, report.topic)
+        if basis is None or not basis.phrases:
+            print(f"{report.topic}: phrase check failed; report left unchanged")
+            return 1
+        year = datetime.now(timezone.utc).year
+        sci = report.science
+        before = (sci.acceleration.last_full_year_count if sci.acceleration else None)
+        sci.counting = basis
+        sci.publication_counts = oa.count_by_year(basis.phrases, year - 6)
+        sci.acceleration = compute_acceleration(sci.publication_counts, year, phrase=basis.phrases)
+        sci.ytd = ytd_from_client(oa, basis.phrases, datetime.now(timezone.utc).date())
+        print(f"{report.topic}: counted phrases {basis.phrases}; last full year {before} -> "
+              f"{sci.acceleration.last_full_year_count if sci.acceleration else None} works; OpenAlex ${oa.cost_usd:.3f}")
     old = report.investment.score if report.investment else None
     result = InvestmentAgent(router).run(
         report.topic, report.science, report.risk, agents_not_run=report.agents_not_run, question=report.question,

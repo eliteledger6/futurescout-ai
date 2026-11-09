@@ -35,7 +35,7 @@ from app.radar import load_radar, load_sectors  # noqa: E402
 PATENT_SEARCHES_PER_TOPIC = 6
 X_WORST_CASE_USD = 0.30
 FIRST_RUN_MODEL_USD = 0.35
-FIRST_RUN_OPENALEX_USD = 0.04
+FIRST_RUN_OPENALEX_USD = 0.06   # 0.04 + ~0.02 for the phrase check (2026-11-09)
 MARGIN = 1.2
 ALL_AGENTS = ("chief", "science", "risk", "market", "x", "patent", "timing", "scout", "investment")
 CHECK_URLS = ("https://api.openalex.org/", "https://cloud-api.near.ai/v1/models")
@@ -78,6 +78,25 @@ def fresh_topics(settings, hours: float) -> set[str]:  # noqa: ANN001
     return out
 
 
+def openalex_allowance_left(settings) -> "float | None":  # noqa: ANN001
+    """OpenAlex's own remaining daily allowance in USD (one ~$0.001 request), or None if unknown."""
+    from app.sources.openalex import OpenAlexClient
+    try:
+        client = OpenAlexClient(settings.openalex_key_value())
+        client._get("/works", {"per-page": 1, "select": "id", "filter": "publication_year:2025"})
+        return client.remaining_usd
+    except Exception:  # noqa: BLE001
+        return None
+
+
+def sleep_until_openalex_reset() -> None:
+    now = datetime.now(timezone.utc)
+    nxt = (now + timedelta(days=1)).replace(hour=0, minute=10, second=0, microsecond=0)
+    print(f"    OpenAlex's free daily allowance is nearly used up; waiting until {nxt:%Y-%m-%d %H:%M} UTC "
+          f"(its reset; Alpha Vantage's daily price limit resets too)", flush=True)
+    time.sleep(max(60.0, (nxt - now).total_seconds()))
+
+
 def topic_order(settings) -> list[str]:  # noqa: ANN001
     seen: list[str] = []
 
@@ -108,9 +127,13 @@ def main() -> int:
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--topics", help="';'-separated topics to run instead of the automatic order")
     ap.add_argument("--backup-topics", help="';'-separated topics to try when a topic does not get every agent")
+    ap.add_argument("--wait-for-openalex-reset", action="store_true",
+                    help="when OpenAlex's free daily allowance runs low, wait for its reset (00:00 UTC) instead of stopping")
+    ap.add_argument("--margin", type=float, default=MARGIN, help="safety factor on the worst run cost seen (default 1.2)")
     ap.add_argument("--target-complete", type=int, default=0,
                     help="with --backup-topics: stop once this many runs in this batch had every agent")
     args = ap.parse_args()
+    margin = args.margin
     quiet_network_logs()
     settings = get_settings()
     fresh = fresh_topics(settings, args.skip_fresh_hours)
@@ -138,11 +161,15 @@ def main() -> int:
         if not wait_until_online():
             print("\nstop: the network stayed down for an hour")
             break
-        if left["model"] < worst["model"] * MARGIN:
-            print(f"\nstop: model budget left ${left['model']:.3f} < next run estimate ${worst['model'] * MARGIN:.3f}")
+        if left["model"] < worst["model"] * margin:
+            print(f"\nstop: model budget left ${left['model']:.3f} < next run estimate ${worst['model'] * margin:.3f}")
             break
-        if left["openalex"] < worst["openalex"] * MARGIN:
-            print(f"\nstop: OpenAlex budget left ${left['openalex']:.4f} < next run estimate ${worst['openalex'] * MARGIN:.4f}")
+        if args.wait_for_openalex_reset:
+            allowance = openalex_allowance_left(settings)
+            if allowance is not None and allowance < worst["openalex"] * margin:
+                sleep_until_openalex_reset()
+        if left["openalex"] < worst["openalex"] * margin:
+            print(f"\nstop: OpenAlex budget left ${left['openalex']:.4f} < next run estimate ${worst['openalex'] * margin:.4f}")
             break
         patents_live = left["serpapi"] >= PATENT_SEARCHES_PER_TOPIC
         use_x = left["x"] >= X_WORST_CASE_USD
@@ -204,7 +231,8 @@ def main() -> int:
         if args.target_complete and complete >= args.target_complete:
             print(f"\nstop: {complete} complete report(s) reached the target")
             break
-        if usage.get("openalex_remaining_usd") is not None and usage["openalex_remaining_usd"] < worst["openalex"] * MARGIN:
+        if (usage.get("openalex_remaining_usd") is not None and usage["openalex_remaining_usd"] < worst["openalex"] * margin
+                and not args.wait_for_openalex_reset):
             print("\nstop: OpenAlex's own daily allowance is nearly used up")
             break
 
