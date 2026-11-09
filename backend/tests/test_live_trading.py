@@ -1,0 +1,266 @@
+"""Stage 3 live-trading module: every limit and the single-send guarantee, with a fake chain and a fake 1Click."""
+
+import json
+from datetime import datetime, timedelta, timezone
+from types import SimpleNamespace as NS
+
+import httpx
+import pytest
+
+from app.agents.trader import agent as trader
+from app.fund.live import (Executor, LiveConfig, OneClickLive, Proposal, TradingState, check_limits, check_quote, load_state,
+                           read_balances, save_state)
+
+NOW = datetime(2026, 11, 10, 9, tzinfo=timezone.utc)
+ACCOUNT = "fund-test.near"
+
+
+def proposal(usd=5.0, mode="live", status="proposed", close=50.0) -> Proposal:
+    p = Proposal(id="abc1234567", created_at=NOW, mode=mode, topic="chiplet", ticker="INTC", symbol="INTCon",
+                 asset_id="nep141:bnb-0xintc.omdep.near", usd=usd, ref_close=close, ref_close_date="2026-11-09")
+    p.status = status
+    return p
+
+
+def quote_payload(usd=5.0, out_tokens="0.0995", out_usd=None, deposit="depo1234"):
+    return {"quote": {"amountIn": str(int(usd * 1e6)), "amountInFormatted": str(usd), "amountInUsd": str(usd),
+                      "amountOut": "1", "amountOutFormatted": out_tokens, "amountOutUsd": str(out_usd if out_usd is not None else usd * 0.992),
+                      "minAmountOut": "1", "timeEstimate": 10, "depositAddress": deposit, "deadline": "2026-11-10T10:00:00Z"},
+            "correlationId": "c-1"}
+
+
+class FakeChain:
+    """Fake NEAR RPC (views) + fake signer (calls)."""
+
+    def __init__(self, usdc_units=5_000_000, registered=True, fail_transfer=False):
+        self.usdc_units, self.registered, self.fail_transfer = usdc_units, registered, fail_transfer
+        self.calls = []
+        self.account_id = ACCOUNT
+
+    def rpc(self, req: httpx.Request) -> httpx.Response:
+        body = json.loads(req.read())
+        method = body["params"].get("method_name")
+        if body["params"]["request_type"] == "view_account":
+            return httpx.Response(200, json={"result": {"amount": str(5 * 10 ** 23)}})
+        val = {"ft_balance_of": str(self.usdc_units), "storage_balance_of": {"total": "1"} if self.registered else None,
+               "mt_batch_balance_of": ["100000000000000000"]}[method]
+        return httpx.Response(200, json={"result": {"result": list(json.dumps(val).encode())}})
+
+    def call(self, contract, method, args, gas, deposit):
+        self.calls.append((method, args, deposit))
+        if method == "ft_transfer" and self.fail_transfer:
+            raise RuntimeError("network dropped")
+        return f"tx-{method}"
+
+
+def make(tmp_path, chain, *, cfg=None, quote=None, statuses=("PENDING_DEPOSIT", "PROCESSING", "SUCCESS"), kill=False):
+    cfg = cfg or LiveConfig(trading_enabled=True, poll_seconds=0.0)
+    seen = {"quotes": [], "status": 0}
+
+    def oneclick(req: httpx.Request) -> httpx.Response:
+        if req.url.path == "/v0/quote":
+            body = json.loads(req.read())
+            seen["quotes"].append(body)
+            return httpx.Response(201, json=quote or quote_payload())
+        if req.url.path == "/v0/status":
+            st = statuses[min(seen["status"], len(statuses) - 1)]
+            seen["status"] += 1
+            return httpx.Response(200, json={"status": st, "swapDetails": {"amountOutFormatted": "0.0995", "amountOutUsd": "4.96"}})
+        return httpx.Response(200, json={})
+    oc = OneClickLive("https://oc.test", http=httpx.Client(transport=httpx.MockTransport(oneclick)))
+    state_path = tmp_path / "trading" / "state.json"
+    ex = Executor(cfg, state_path, oc, pay_asset="nep141:usdc", signer=chain, http=httpx.Client(transport=httpx.MockTransport(chain.rpc)),
+                  now=lambda: NOW, sleep=lambda s: None)
+    if kill:
+        ex.kill_file.parent.mkdir(parents=True, exist_ok=True)
+        ex.kill_file.write_text("stop")
+    return ex, seen, state_path
+
+
+def test_limits_block_everything_that_should_be_blocked():
+    cfg = LiveConfig(trading_enabled=True)
+    st = TradingState()
+    assert check_limits(st, proposal(5), cfg, kill_switch=False, now=NOW) == []
+    assert "kill switch" in check_limits(st, proposal(5), cfg, kill_switch=True, now=NOW)[0]
+    assert "trading_enabled" in check_limits(st, proposal(5), LiveConfig(), kill_switch=False, now=NOW)[0]
+    assert "per-trade cap" in " ".join(check_limits(st, proposal(5.01), cfg, kill_switch=False, now=NOW))
+    assert "below the minimum" in check_limits(st, proposal(0.5), cfg, kill_switch=False, now=NOW)[0]
+    done = proposal(3, status="success")
+    done.mark("executing", now=NOW)
+    done.status = "success"
+    st.proposals.append(done)
+    msgs = " ".join(check_limits(st, proposal(3), cfg, kill_switch=False, now=NOW))
+    assert "daily cap" in msgs and "total cap" in msgs
+    sell = proposal(1)
+    sell.side = "sell"
+    assert "only buys" in " ".join(check_limits(TradingState(), sell, cfg, kill_switch=False, now=NOW))
+
+
+def test_quote_checks_price_band_cost_and_amount():
+    cfg = LiveConfig()
+    q = quote_payload()["quote"]
+    assert check_quote(q, proposal(5, close=50.0), cfg, NOW) == []                 # 5 / 0.0995 = $50.25
+    assert "away from the stock" in " ".join(check_quote(q, proposal(5, close=60.0), cfg, NOW))
+    from app.fund.live import price_band
+    assert price_band(cfg, "2026-11-09", NOW) == 3.0 and price_band(cfg, "2026-11-07", NOW) == 6.0     # Friday close on a Monday... 3 days
+    assert price_band(cfg, "2026-10-01", NOW) == 8.0 and price_band(cfg, None, NOW) == 8.0
+    stale = proposal(5, close=48.0)                                                # 4.7% away
+    assert check_quote(q, stale, cfg, NOW) != []
+    stale.ref_close_date = "2026-11-07"
+    assert check_quote(q, stale, cfg, NOW) == []
+    assert "cost" in " ".join(check_quote(quote_payload(out_usd=4.80)["quote"], proposal(5), cfg))
+    assert "not the approved" in " ".join(check_quote(quote_payload(usd=9.0)["quote"], proposal(5), cfg))
+    assert check_quote({}, proposal(5), cfg) == ["quote is missing amounts"]
+    assert "no reference close" in " ".join(check_quote(q, proposal(5, close=None), cfg))
+
+
+def test_happy_path_sends_once_and_records_everything(tmp_path):
+    chain = FakeChain()
+    ex, seen, path = make(tmp_path, chain)
+    st, p = TradingState(), proposal(status="approved")
+    st.proposals.append(p)
+    ex.execute(st, p)
+    assert p.status == "success" and p.deposit_tx == "tx-ft_transfer" and p.sha256
+    assert [c[0] for c in chain.calls] == ["ft_transfer"]
+    assert chain.calls[0][1] == {"receiver_id": "depo1234", "amount": "5000000"} and chain.calls[0][2] == 1
+    body = seen["quotes"][0]
+    assert body["dry"] is False and body["recipient"] == ACCOUNT and body["refundTo"] == ACCOUNT and body["recipientType"] == "INTENTS"
+    assert [e.status for e in p.history][:2] == ["executing", "deposited"]
+    assert load_state(path).get(p.id).status == "success"
+    # a finished or already-sent proposal can never be sent again
+    with pytest.raises(RuntimeError, match="never sent twice"):
+        ex.execute(st, p)
+    assert len(chain.calls) == 1
+
+
+def test_unregistered_deposit_address_is_registered_first(tmp_path):
+    chain = FakeChain(registered=False)
+    ex, _, _ = make(tmp_path, chain)
+    st, p = TradingState(), proposal(status="approved")
+    ex.execute(st, p)
+    assert [c[0] for c in chain.calls] == ["storage_deposit", "ft_transfer"]
+
+
+def test_nothing_is_sent_when_a_check_fails(tmp_path):
+    for kwargs, match in (({"kill": True}, "kill switch"), ({"cfg": LiveConfig(trading_enabled=False)}, "trading_enabled"),
+                          ({"quote": quote_payload(out_tokens="0.05")}, "away from the stock"),
+                          ({"quote": quote_payload(deposit=None)}, "no deposit address")):
+        chain = FakeChain()
+        ex, _, _ = make(tmp_path / match.replace(" ", "_"), chain, **kwargs)     # own folder: the STOP file must not leak
+        st, p = TradingState(), proposal(status="approved")
+        with pytest.raises(RuntimeError, match=match):
+            ex.execute(st, p)
+        assert chain.calls == []
+    chain = FakeChain(usdc_units=1_000_000)                              # not enough USDC
+    ex, _, _ = make(tmp_path / "poor", chain)
+    with pytest.raises(RuntimeError, match="less than"):
+        ex.execute(TradingState(), proposal(status="approved"))
+    assert chain.calls == []
+    ex, _, _ = make(tmp_path / "rest", FakeChain())
+    with pytest.raises(RuntimeError, match="not 'approved'"):            # owner approval is required
+        ex.execute(TradingState(), proposal(status="proposed"))
+    ex.signer = None
+    with pytest.raises(RuntimeError, match="not set"):
+        ex.execute(TradingState(), proposal(status="approved"))
+
+
+def test_ambiguous_transfer_error_is_never_retried(tmp_path):
+    chain = FakeChain(fail_transfer=True)
+    ex, _, _ = make(tmp_path, chain)
+    st, p = TradingState(), proposal(status="approved")
+    st.proposals.append(p)
+    with pytest.raises(RuntimeError, match="never approve again"):
+        ex.execute(st, p)
+    assert p.status == "deposited" and st.spent("live") == 5.0           # counts against the caps until resolved
+    with pytest.raises(RuntimeError):
+        ex.execute(st, p)
+    assert [c[0] for c in chain.calls] == ["ft_transfer"]                # one attempt only
+
+
+def test_refund_is_recorded_and_frees_the_budget(tmp_path):
+    chain = FakeChain()
+    ex, _, _ = make(tmp_path, chain, statuses=("PROCESSING", "REFUNDED"))
+    st, p = TradingState(), proposal(status="approved")
+    st.proposals.append(p)
+    ex.execute(st, p)
+    assert p.status == "refunded" and p.result["status"] == "REFUNDED" and st.spent("live") == 0.0
+
+
+def test_shadow_fill_uses_a_dry_quote_and_no_signer(tmp_path):
+    ex, seen, _ = make(tmp_path, FakeChain())
+    ex.signer = None
+    st, p = TradingState(), proposal(usd=5.0, mode="shadow")
+    st.proposals.append(p)
+    ex.shadow_fill(st, p)
+    assert p.status == "shadow_filled" and seen["quotes"][0]["dry"] is True and "nothing was sent" in p.history[-1].note
+    with pytest.raises(RuntimeError):
+        ex.execute(st, p)                                                # a shadow proposal can never go live
+
+
+def test_balances_are_read_without_a_key():
+    chain = FakeChain()
+    bal = read_balances(httpx.Client(transport=httpx.MockTransport(chain.rpc)), LiveConfig(), ACCOUNT,
+                        [{"asset_id": "nep141:x", "symbol": "INTCon", "ticker": "INTC", "decimals": 18, "price": 56.0}])
+    assert bal["near"] == 0.5 and bal["usdc"] == 5.0 and bal["holdings"] == [{"symbol": "INTCon", "ticker": "INTC", "quantity": 0.1, "value_usd": 5.6}]
+
+
+def test_state_roundtrip(tmp_path):
+    st = TradingState(proposals=[proposal()])
+    save_state(st, tmp_path / "s.json")
+    assert load_state(tmp_path / "s.json").get("abc1").ticker == "INTC"
+
+
+# ---------------------------------------------------------------- trading agent (model output is checked by code)
+class FakeRouter:
+    def __init__(self, decision):
+        self.decision, self.calls = decision, 0
+
+    def complete(self, agent, messages, response_model=None):
+        self.calls += 1
+        assert agent == "trader" and "CANDIDATES" in messages[1]["content"]
+        return NS(parsed=trader.TraderDecision(**self.decision), llm_alias="claude_opus_5_5")
+
+    def usage_summary(self):
+        return [{"agent": "trader", "cost_usd": 0.03}]
+
+
+CANDS = [trader.Candidate(ticker="INTC", symbol="INTCon", asset_id="a1", topic="chiplet", quotable=True, quote_cost_pct=0.8),
+         trader.Candidate(ticker="MSFT", symbol="MSFTon", asset_id="a2", topic="AI agents", quotable=False)]
+
+
+def test_trader_buy_is_accepted_only_inside_the_rules():
+    ok = trader.decide(FakeRouter({"action": "buy", "ticker": "intc", "usd": 5, "rationale": "r", "confidence": "high"}), CANDS, budget_usd=5, min_usd=1)
+    assert ok.candidate.ticker == "INTC" and ok.decision.usd == 5.0 and ok.decision.confidence == "medium" and ok.cost_usd == 0.03
+    sized = trader.decide(FakeRouter({"action": "buy", "ticker": "INTC", "usd": 2}), CANDS, budget_usd=5, min_usd=1)
+    assert sized.decision.usd == 5.0 and "quote-tested size" in sized.notes[0]       # the size is fixed by code, not the model
+    for bad in ({"action": "buy", "ticker": "MSFT", "usd": 5}, {"action": "buy", "ticker": "TSLA", "usd": 5},
+                {"action": "buy", "ticker": "INTC", "usd": 50}, {"action": "buy", "ticker": "INTC", "usd": None}):
+        res = trader.decide(FakeRouter(bad), CANDS, budget_usd=5, min_usd=1)
+        assert res.decision.action == "hold" and res.candidate is None and "rejected by code" in res.decision.rationale
+    hold = trader.decide(FakeRouter({"action": "hold", "rationale": "weak evidence"}), CANDS, budget_usd=5, min_usd=1)
+    assert hold.decision.action == "hold" and hold.candidate is None
+
+
+def test_trader_is_not_called_when_nothing_is_quotable():
+    r = FakeRouter({"action": "buy", "ticker": "MSFT", "usd": 5})
+    res = trader.decide(r, [CANDS[1]], budget_usd=5, min_usd=1)
+    assert res.decision.action == "hold" and r.calls == 0
+
+
+def test_trading_api_is_read_only_and_leaks_no_key(tmp_path):
+    from fastapi.testclient import TestClient
+
+    from app.api.main import create_app
+    from app.config import Settings
+    st = TradingState(proposals=[proposal(mode="shadow")])
+    save_state(st, tmp_path / "trading" / "state.json")
+    s = Settings(_env_file=None, fund_mainnet_private_key="ed25519:SECRETSECRETSECRET")      # key without an account: nothing is read
+    app = create_app(s, store=NS(list=lambda limit=50: [], get=lambda i: None), funds_dir=tmp_path / "funds",
+                     trading_dir=tmp_path / "trading", portfolio_path=tmp_path / "pf.json", ledger=NS())
+    c = TestClient(app)
+    r = c.get("/api/trading")
+    body = r.json()
+    assert r.status_code == 200 and body["trading_enabled"] is False and body["key_configured"] is False and body["balances"] is None
+    assert body["limits"]["max_total_usd"] == 5.0 and body["proposals"][0]["symbol"] == "INTCon"
+    assert "SECRET" not in r.text
+    assert c.post("/api/trading").status_code == 405 and c.post("/api/trading/approve").status_code in (404, 405)

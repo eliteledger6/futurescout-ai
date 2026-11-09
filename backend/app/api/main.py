@@ -37,7 +37,8 @@ from app.chain.near_record import SOCIALDB_TESTNET, TESTNET_RPC
 from app.config import ConfigError, Settings, get_settings
 from app.graph.workflow import AGENTS_NOT_BUILT
 from app.models.config import load_model_config
-from app.fund import DISCLAIMER as FUND_DISCLAIMER, fund_payload, list_funds, load_fund
+from app.fund import DISCLAIMER as FUND_DISCLAIMER, fund_payload, list_funds, load_fund, load_fund_config, tradable_tokens
+from app.fund.live import DISCLAIMER as LIVE_DISCLAIMER, load_state as load_trading_state, read_balances
 from app.portfolio import load_portfolio, portfolio_payload, save_portfolio, sync_from_store
 from app.radar import load_radar
 from app.treasury import default_balance_reader, treasury_report
@@ -106,6 +107,7 @@ def create_app(
     balance_reader: Optional[Callable[[str], dict]] = None,
     portfolio_path: Optional[Path] = None,
     funds_dir: Optional[Path] = None,
+    trading_dir: Optional[Path] = None,
 ) -> FastAPI:
     settings = settings or get_settings()
     read_onchain = chain_reader or _read_testnet
@@ -114,6 +116,7 @@ def create_app(
         ledger = DbLedger(store._sessions) if isinstance(store, DbStore) else FileLedger(service.RUNS_DIR / "purchases.json")
     portfolio_path = portfolio_path or (service.RUNS_DIR / "portfolio.json")
     funds_dir = funds_dir or (service.RUNS_DIR / "funds")
+    trading_dir = trading_dir or (service.RUNS_DIR / "trading")
     balances = balance_reader if balance_reader is not None else default_balance_reader()
     jobs: dict[str, Job] = {}
     lock = threading.Lock()
@@ -271,6 +274,44 @@ def create_app(
         if f is None:
             raise HTTPException(status_code=404, detail="fund not found")
         return fund_payload(f)
+
+    trading_cache: dict = {}
+
+    @app.get("/api/trading")
+    def trading() -> dict:
+        """Stage 3 live-trading test + shadow mode: READ-ONLY view (limits, balances, proposals). Trades are approved
+        only from the owner's terminal (scripts/fund_trade.py approve); nothing here can move money or shows a key."""
+        cfg = load_fund_config()
+        lv = cfg.live
+        state = load_trading_state(trading_dir / "state.json")
+        tokens = tradable_tokens(funds_dir)
+        account = (settings.fund_mainnet_account_id or "").strip() or None
+        balances = None
+        if account:
+            hit = trading_cache.get(account)
+            if hit and time.time() - hit[0] < 60:
+                balances = hit[1]
+            else:
+                try:
+                    balances = read_balances(httpx.Client(timeout=20.0), lv, account, tokens)
+                except Exception as exc:  # noqa: BLE001
+                    balances = {"account": account, "near": None, "usdc": None, "holdings": [], "errors": [type(exc).__name__]}
+                trading_cache[account] = (time.time(), balances)
+        today = datetime.now(timezone.utc).date().isoformat()
+        return {
+            "network": "NEAR mainnet (NEAR Intents has no testnet)", "account": account,
+            "key_configured": settings.fund_mainnet_credentials() is not None,
+            "trading_enabled": lv.trading_enabled, "kill_switch": (trading_dir / "STOP").exists(),
+            "limits": {"max_trade_usd": lv.max_trade_usd, "max_day_usd": lv.max_day_usd, "max_total_usd": lv.max_total_usd,
+                       "price_band_pct": lv.price_band_pct, "max_cost_pct": lv.max_cost_pct, "shadow_budget_usd": lv.shadow_budget_usd},
+            "spent": {"live_total_usd": state.spent("live"), "live_today_usd": state.spent("live", today),
+                      "shadow_filled_usd": round(sum(p.usd for p in state.proposals if p.mode == "shadow" and p.status == "shadow_filled"), 2)},
+            "balances": balances,
+            "allowlist": [{k: t[k] for k in ("ticker", "symbol", "topic", "band", "score", "price")} for t in tokens],
+            "proposals": [p.model_dump(mode="json") for p in reversed(state.proposals[-60:])],
+            "explorer_tx": lv.explorer_tx, "approval": "owner's terminal only: python scripts\\fund_trade.py approve <id>",
+            "disclaimer": LIVE_DISCLAIMER,
+        }
 
     balance_cache: dict = {}
 

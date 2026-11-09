@@ -34,3 +34,19 @@ intents:
   pay_decimals: 6
   quote_account: intents.near  # placeholder recipient required by the quote format; dry quotes send nothing
   price_tolerance_pct: 15      # a token only counts as a stock's tokenized version if its price is this close
+
+# Stage 3: small REAL trades (owner go-ahead 2026-11-09: about 5 USD + 0.5 NEAR in a dedicated mainnet account).
+# Nothing can be sent while trading_enabled is false. Only `python scripts\fund_trade.py approve <id>` sends money.
+# These caps are the owner's; Claude must not raise them without the owner saying so in writing.
+live:
+  trading_enabled: false       # master switch; the owner turns it on for the first trade
+  max_trade_usd: 5.0
+  max_day_usd: 5.0
+  max_total_usd: 5.0           # the whole real-money budget, ever
+  min_trade_usd: 1.0
+  price_band_pct: 3.0          # quoted token price must be this close to the stock's last close (close <= 1 day old)
+  band_per_stale_day_pct: 1.5  # +1.5% per extra day of age of that close (Friday's close on a Monday: 6%)
+  max_band_pct: 8.0            # never wider than this
+  max_cost_pct: 2.0            # refuse quotes that cost more than this
+  slippage_bps: 100
+  shadow_budget_usd: 1000.0    # pretend money for shadow mode (real quotes, nothing sent)

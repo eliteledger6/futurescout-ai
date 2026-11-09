@@ -34,6 +34,7 @@ from pydantic import BaseModel, Field
 
 from app.config import CONFIG_DIR
 from app.fund.intents import OneClickClient, QuoteCheck, TokenRoute
+from app.fund.live import LiveConfig
 from app.report.verdict import build_verdict
 from app.schemas.research import ResearchReport
 from app.sources.base import SourceError
@@ -72,6 +73,7 @@ class FundConfig(BaseModel):
     review_days: int = 7
     fee_pct: float = 0.30
     intents: IntentsConfig
+    live: LiveConfig = LiveConfig()
 
 
 def load_fund_config(path: Optional[Path] = None) -> FundConfig:
@@ -484,3 +486,22 @@ def fund_payload(fund: TopicFund) -> dict:
         raw["value_usd"] = h.value_usd
         raw["return_pct"] = round((h.value_usd / h.cost_usd - 1) * 100, 2) if h.cost_usd else None
     return {**data, "summary": fund.summary(), "label": "simulation", "disclaimer": DISCLAIMER}
+
+
+def tradable_tokens(funds_dir: Path) -> list[dict]:
+    """Allowlist for live/shadow trading: fund holdings whose tokenized version passed the symbol + price check.
+
+    One row per ticker (from the fund with the highest report score), strongest topic first."""
+    best: dict[str, dict] = {}
+    for f in list_funds(funds_dir):
+        last = f.decisions[-1] if f.decisions else None
+        for h in f.holdings:
+            if not (h.route and h.route.available and h.route.asset_id):
+                continue
+            row = {"ticker": h.ticker, "symbol": h.route.symbol, "asset_id": h.route.asset_id, "decimals": 18,
+                   "price": h.route.token_price_usd, "topic": f.topic, "band": last.band if last else None,
+                   "score": last.score if last else None, "tier": h.tier, "why": h.why, "stretch": h.timing_risk,
+                   "last_close": h.last_close, "last_close_date": h.last_date}
+            if h.ticker not in best or (row["score"] or 0) > (best[h.ticker]["score"] or 0):
+                best[h.ticker] = row
+    return sorted(best.values(), key=lambda r: -(r["score"] or 0))

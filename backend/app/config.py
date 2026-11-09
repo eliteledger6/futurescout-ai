@@ -68,6 +68,17 @@ class Settings(BaseSettings):
         key = self.near_testnet_private_key.get_secret_value().strip() if self.near_testnet_private_key else ""
         return (acc, key) if acc and key else None
 
+    # Stage 3 live-trading test (owner go-ahead 2026-11-09): a DEDICATED, tiny NEAR MAINNET account. The key is used
+    # only by scripts/fund_trade.py approve (run by the owner) and is never logged, stored or returned by the API.
+    fund_mainnet_account_id: Optional[str] = None
+    fund_mainnet_private_key: Optional[SecretStr] = None
+    oneclick_api_key: Optional[SecretStr] = None      # optional NEAR Intents partner key (avoids the extra 0.25% fee)
+
+    def fund_mainnet_credentials(self) -> Optional[tuple[str, str]]:
+        acc = (self.fund_mainnet_account_id or "").strip()
+        key = self.fund_mainnet_private_key.get_secret_value().strip() if self.fund_mainnet_private_key else ""
+        return (acc, key) if acc and key else None
+
     # Report marketplace (NEAR testnet): buyers pay the seller account (NEAR_TESTNET_ACCOUNT_ID) per report.
     report_price_near: float = 0.1
     # Paper portfolio (a SIMULATION: no money moves). Each sealed report "buys" its top Company Scout candidates
