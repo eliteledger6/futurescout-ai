@@ -20,6 +20,22 @@ token issuer. Start with an amount you could lose completely without it matterin
   real trade needs a cap of about 10 USD. **The owner raised the cap to 10 USD on 2026-11-09** (per trade, per day and in total).
 - Still not verified: the owner's eligibility for Ondo tokens, and how a holding is sold again.
 
+## Live test result (2026-11-09 night): the wallet route got stuck
+
+- Two real buys of GOOGLon were approved by the owner and sent: 10 USD (2.82 NEAR, 13:58 UTC) and 25 USD (6.93 NEAR,
+  14:55 UTC), paid from the wallet to 1Click deposit addresses (depositType ORIGIN_CHAIN, recipientType INTENTS).
+- Both stayed PROCESSING. The NEAR sits, wrapped, in the swap service's per-swap holding accounts inside intents.near
+  (checked on chain). The service replaced the requested 30-minute deadline with its own, 2026-11-12. Kill switch ON.
+  References for support (https://t.me/near_intents): deposit addresses dbd82b56...a8a6 and 8db1fe33...931f.
+- The owner's manual swaps inside near.com were instant. They are not on the public chain or the public explorer,
+  and the near.com balance was never visible on intents.near: near.com appears to use the private "Confidential
+  Intents" layer with a signed order from an internal balance.
+- Built since, QUOTES ONLY (`app/fund/intents_signed.py`, `scripts/intents_probe.py`): dry quotes on the internal
+  route, a real quote + the unsigned order the service generates, and an owner-run login (signs an EMPTY order) that
+  reads private balances and quotes the confidential route. There is no submit function.
+- Lesson: check the deadline the service RETURNS, and never send a second trade while one is unresolved.
+- Also found: rpc.mainnet.near.org and rpc.testnet.near.org are deprecated (HTTP 429); both replaced with FastNEAR.
+
 ## What was verified (2026-11-09)
 
 - NEAR Intents lists 28 Ondo tokens on BNB Chain (`GET /v0/tokens?ondoTokens=true`, also the bridge list):
