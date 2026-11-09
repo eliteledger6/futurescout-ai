@@ -11,6 +11,8 @@ import { AgentFlow } from "@/components/AgentFlow";
 import { ReportToc } from "@/components/ReportToc";
 import { Reveal, ScoreGauge } from "@/components/motion";
 import { agentStats } from "@/lib/agents";
+import { ReportVisual } from "@/components/ReportVisual";
+import "../../report-visual.css";
 
 const HORIZON_NAME: Record<string, string> = { near_0_12m: "0-12 months", medium_1_3y: "1-3 years", long_3_5y: "3-5 years" };
 
@@ -69,7 +71,7 @@ function ReportView({ data }: { data: RunDetail }) {
             </div>
             <span className="small muted">{simple ? "The verdict, the score, the companies and the risks. Switch to the full report for every finding and source." : "Every section, finding and source."}</span>
           </div>
-          <VerdictCard v={data.verdict} />
+          {!simple && <VerdictCard v={data.verdict} />}
         </div>
       </section>
 
@@ -88,12 +90,13 @@ function ReportView({ data }: { data: RunDetail }) {
 
       {simple ? (
         <>
-          {r.investment?.score && <ScoreSection report={r} />}
-          {r.scout && (r.scout.candidates.length > 0 || r.scout.unlisted.length > 0) && <ScoutSection report={r} sources={sources} />}
-          {r.timing && r.timing.metrics.length > 0 ? <TimingSection report={r} /> : <TimingEmpty />}
-          <section className="section" style={{ paddingTop: 0 }}>
+          <section className="section" style={{ paddingTop: 8 }}>
             <div className="container">
-              <button className="btn btn-ghost" onClick={() => choose("full")}>Open the full report: evidence, sources, themes, costs →</button>
+              <ReportVisual report={r} verdict={data.verdict} sources={sources} />
+              {!(r.timing && r.timing.metrics.length > 0) && <div style={{ marginTop: 22 }}><TimingEmptyNote /></div>}
+              <div style={{ marginTop: 28 }}>
+                <button className="btn btn-ghost" onClick={() => choose("full")}>Read the full report: every finding, source and cost →</button>
+              </div>
             </div>
           </section>
         </>
@@ -186,17 +189,12 @@ function VerdictCard({ v }: { v?: Verdict }) {
 }
 
 /* ---------------------------------------------------------------- price & timing: empty state */
-function TimingEmpty() {
+function TimingEmptyNote() {
   return (
-    <section className="section" id="timing">
-      <div className="container">
-        <div className="notice small">
-          <strong style={{ color: "var(--text)" }}>Price &amp; timing risk: not run for this report.</strong> It needs a free Alpha Vantage key
-          (<span className="mono">ALPHA_VANTAGE_API_KEY</span> in <span className="mono">.env</span>). When present, this section shows each related stock&apos;s
-          last 100 days, how far it has already run, and a timing-risk level (elevated / moderate / subdued). It is a risk input: it never says when to buy.
-        </div>
-      </div>
-    </section>
+    <div className="notice small">
+      <strong style={{ color: "var(--text)" }}>No price check for this report.</strong> Price charts need the Alpha Vantage key and its free daily
+      allowance (25 requests); this run had none left. Newer runs of the topic may have them.
+    </div>
   );
 }
 
