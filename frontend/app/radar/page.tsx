@@ -38,8 +38,8 @@ export default function RadarPage() {
         <div className="container">
           <div className="eyebrow">Hot-topic radar</div>
           <h1 className="display" style={{ fontSize: "clamp(40px, 6vw, 76px)" }}>Where research and patents are <span className="gradient-text">heating up</span></h1>
-          <p className="lede">A topic gets hot in papers and patent filings before it shows up in company reports. The radar ranks topics by the growth of both,
-            counted by code. It measures activity, not investment merit.</p>
+          <p className="lede">A topic gets hot in papers and patent filings before it shows up in company reports. The radar ranks topics by the growth of both.
+            It measures activity, not investment merit.</p>
         </div>
       </section>
 
@@ -49,7 +49,7 @@ export default function RadarPage() {
            : radar === null ? <Loading lines={5} /> : (
             <>
               <div className="row small muted" style={{ justifyContent: "space-between" }}>
-                <span>Computed {fmtDate(radar.generated_at)} · {radar.topics.length} topics across {sectorKeys.length} sectors · no model involved</span>
+                <span>Computed {fmtDate(radar.generated_at)} · {radar.topics.length} topics across {sectorKeys.length} sectors</span>
                 <span>Heat = average of paper growth and patent growth, {radar.topics[0]?.paper_acceleration?.previous_year} → {radar.topics[0]?.paper_acceleration?.last_full_year}</span>
               </div>
               <div className="tabs" role="tablist" aria-label="Sector">

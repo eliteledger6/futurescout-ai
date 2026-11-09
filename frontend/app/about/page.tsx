@@ -7,8 +7,8 @@ import type { Label } from "@/lib/types";
 const LABELS: Label[] = ["verified_fact", "ai_interpretation", "forecast", "unverified_claim", "assumption"];
 
 const RULES = [
-  ["seal", "Sources only from real APIs", "Every URL in a report comes from an API response, never from a model's memory. Invented source ids are removed by code."],
-  ["shield", "Quotes are checked by code", "A 'verified fact' must quote its source word for word. Headlines and X posts can never verify a fact."],
+  ["seal", "Sources only from real APIs", "Every URL in a report comes from an API response, never from a model's memory. Invented source ids are removed."],
+  ["shield", "Quotes are checked", "A 'verified fact' must quote its source word for word. Headlines and X posts can never verify a fact."],
   ["swords", "A second agent argues back", "The Risk agent searches independently for limits and failures, then challenges specific findings."],
   ["pulse", "Risk, not trading", "Price run-up is measured as a risk. No buy or sell signals, no price targets, no promised returns."],
 ] as const;
@@ -20,7 +20,7 @@ export default function About() {
         <div className="aurora" aria-hidden="true" />
         <div className="container">
           <div className="eyebrow">How it works</div>
-          <h1 className="display" style={{ fontSize: "clamp(40px, 6vw, 76px)" }}>Eight agents, <span className="gradient-text">one rule: show the evidence</span></h1>
+          <h1 className="display" style={{ fontSize: "clamp(40px, 6vw, 76px)" }}>Nine agents, <span className="gradient-text">one rule: show the evidence</span></h1>
           <p className="lede">A hot technology shows up first in research papers and patent filings, then in company reports. FUTURESCOUT measures all three, argues the other side, and tells you which companies the evidence points to, and how much of the move may already be priced in.</p>
         </div>
       </section>

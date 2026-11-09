@@ -26,12 +26,10 @@ Early development. Only the pieces below exist and are tested. Nothing else is c
 | Company discovery: SEC full-text search finds every filer whose reports mention the topic, including small companies not on the configured list; marked "discovered" and read like the others | Built, tested, run live (HBM: 34 companies found) |
 | Company fundamentals from SEC XBRL (revenue, growth, R&D intensity, size class by revenue) and 8-K press-release exhibits | Built, tested, run live |
 | Paper portfolio (simulation, dashboard `/portfolio`): each sealed report "buys" its top scout candidates with pretend money at the first close after the report date and tracks them against the SOXX ETF; derived from NEAR-fingerprinted reports so it cannot be backdated; no money moves, not advice | Built and tested (2026-11-09); positions recorded live, pricing needs a free Alpha Vantage key |
-| Treasury (`/api/treasury`, panel on `/market`): testnet NEAR earned from report sales and the seller's on-chain balance against what the runs cost in models and X data | Built, tested, live (2026-11-09) |
 | Company Scout: every company behind the evidence (patent assignees, paper authors' employers, SEC filers), matched to the SEC ticker file, sized from XBRL, ranked by a transparent "next-runner" heuristic that favours smaller, growing, R&D-heavy names; incumbents listed separately; a forecast label, not a recommendation | Built and tested (2026-11-09); first live run 2026-11-09 |
 | Retraction flags (OpenAlex) honoured by the citation guard; X post engagement recorded | Built, tested |
 | Price & timing risk (part of the Risk agent): run-up, distance from 50-day average, volatility and drawdown over ~100 trading days for the companies whose filings mention the topic; rule-based level elevated / moderate / subdued. A risk input, never a buy/sell signal | Built and tested with fixtures; needs a free Alpha Vantage key; not yet run live |
 | Watch mode (`scripts/watch.py --loop`): scans the approved X accounts every 2 hours, spots rising topics, refreshes the radar, and starts a full research run when a topic is hot and has no fresh report (capped per day); each run is sealed on NEAR and listed for sale; every decision is logged and shown on the dashboard | Built and tested with fakes; first live cycle 2026-11-09 |
-| Report marketplace on NEAR testnet: summaries free, full reports unlock after a NEAR payment to the platform's account, verified on-chain; demo buyer bot pays and verifies the report fingerprint | Built, tested, and run live on testnet (2026-11-08: payment, verification, sale note and fingerprint match, 3 real transactions) |
 | NEAR Protocol testnet record: each report's SHA-256 fingerprint is stored in SocialDB on testnet, and the dashboard re-checks it ("unchanged since recorded") | Built, tested and written live on testnet |
 
 ## Problem
@@ -41,7 +39,6 @@ Technology investment research mixes verifiable facts, rumours and hype. FUTURES
 ## How NEAR is used
 
 - All agents call models from the **NEAR AI Cloud** catalogue through its OpenAI-compatible API (`https://cloud-api.near.ai/v1`). Each agent has its own configurable model in `backend/config/model_config.yaml`.
-- FUTURESCOUT is an agent that **earns**: other agents (or people) pay it NEAR for full research reports. The payment is a native NEAR transfer on testnet; the API reads the transaction from the chain before unlocking the report (`scripts/buyer_bot.py` is a demo buyer).
 - After each run, the report's SHA-256 fingerprint is stored on **NEAR testnet** (SocialDB contract `v1.social08.testnet`). Anyone can recompute a report's fingerprint and compare it with the on-chain value, so a report cannot be quietly edited after publication. Testnet only; no trading, no transfers, and the research agents never touch the key.
 
 ## Try it
@@ -67,10 +64,8 @@ python scripts\serve.py           # terminal 1, backend folder: API on http://12
 #   terminal 2, frontend folder (needs Node.js LTS): npm install  then  npm run dev
 #   see: the dashboard at http://localhost:3000 (saved reports, scores, evidence with sources)
 python scripts\watch.py --once          # see: one autonomous cycle (X scan -> radar -> research trigger), logged to runs\watch_state.json
-# report market on NEAR testnet (needs the seller and buyer testnet accounts from .env.example):
+# NEAR testnet seal (needs the testnet account from .env.example):
 python scripts\near_record_report.py --latest   # see: the newest report's fingerprint recorded on NEAR testnet
-python scripts\buyer_bot.py --dry-run           # see: which report a buyer bot would buy and the price
-python scripts\buyer_bot.py                     # see: the bot pays 0.1 testnet NEAR, the API verifies it on-chain, report unlocks
 python scripts\tamper_demo.py                   # see: a sealed report verifies MATCH; change one word in memory -> MISMATCH (nothing saved)
 python scripts\discover_topics.py --dry-run     # see: the paper scout propose new fast-growing topics per sector (nothing added)
 # no keys at all? `python scripts\serve.py` + the dashboard still work: with no runs and no database the API serves

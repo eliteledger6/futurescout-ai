@@ -183,15 +183,6 @@ class NearRecorder:
         return ChainRecord("testnet", self.contract, self.account_id, key, digest, tx or None,
                            EXPLORER_TX.format(tx=tx) if tx else EXPLORER_ACCOUNT.format(account=self.account_id))
 
-    def record_sale(self, run_key: str, buyer: str, tx_hash: str, amount_yocto: int) -> ChainRecord:
-        """Public note that `buyer` bought the report (payment tx referenced). Written by the seller."""
-        key = record_key(run_key)
-        value = {"buyer": buyer, "payment_tx": tx_hash, "amount_yocto": str(amount_yocto), "network": "testnet"}
-        args = {"data": {self.account_id: {APP_KEY: {"sales": {key: {re.sub(r'[^A-Za-z0-9_-]', '_', buyer): value}}}}}}
-        tx = self._set(args)
-        return ChainRecord("testnet", self.contract, self.account_id, f"sales/{key}/{buyer}", tx_hash, tx or None,
-                           EXPLORER_TX.format(tx=tx) if tx else EXPLORER_ACCOUNT.format(account=self.account_id))
-
     def record_fund_decision(self, key: str, value: dict) -> ChainRecord:
         """Fingerprint of one topic-fund decision (paper simulation), under <account>/futurescout/funds/<key>."""
         k = record_key(key)
@@ -229,3 +220,20 @@ def verify(report: ResearchReport, onchain: Optional[dict]) -> dict:
         return {"status": "not_recorded", "sha256": digest}
     return {"status": "match" if onchain.get("sha256") == digest else "MISMATCH",
             "sha256": digest, "onchain_sha256": onchain.get("sha256")}
+
+
+def read_balance(http: httpx.Client, rpc: str, account_id: str) -> dict:
+    """view_account on NEAR testnet -> {'available_near', 'locked_near', 'storage_bytes'}. Read-only, no key."""
+    check_testnet(account_id, rpc)
+    body = {"jsonrpc": "2.0", "id": "fs-bal", "method": "query",
+            "params": {"request_type": "view_account", "finality": "final", "account_id": account_id}}
+    try:
+        payload: Any = http.post(rpc, json=body, timeout=30).json()
+    except (httpx.HTTPError, ValueError) as exc:
+        raise NearRecordError(f"could not read the balance from NEAR testnet ({type(exc).__name__})") from None
+    if "error" in payload or "result" not in payload:
+        raise NearRecordError(f"NEAR RPC error: {str(payload.get('error', payload))[:200]}")
+    res = payload["result"]
+    return {"available_near": round(int(res.get("amount", "0")) / 10 ** 24, 4),
+            "locked_near": round(int(res.get("locked", "0")) / 10 ** 24, 4),
+            "storage_bytes": int(res.get("storage_usage", 0))}

@@ -79,23 +79,12 @@ class Settings(BaseSettings):
         key = self.fund_mainnet_private_key.get_secret_value().strip() if self.fund_mainnet_private_key else ""
         return (acc, key) if acc and key else None
 
-    # Report marketplace (NEAR testnet): buyers pay the seller account (NEAR_TESTNET_ACCOUNT_ID) per report.
-    report_price_near: float = 0.1
     # Paper portfolio (a SIMULATION: no money moves). Each sealed report "buys" its top Company Scout candidates
     # with a fixed pretend notional, priced at the first close on/after the report date (Alpha Vantage daily data).
     portfolio_notional_usd: float = 10_000.0
     portfolio_positions_per_report: int = 3
     portfolio_benchmark: str = "SOXX"          # ETF ticker compared over the same dates ("" = none)
     portfolio_max_price_requests: int = 20     # Alpha Vantage free plan: 25 requests/day
-    # Demo buyer bot (a SEPARATE testnet account; never the seller's)
-    buyer_testnet_account_id: Optional[str] = None
-    buyer_testnet_private_key: Optional[SecretStr] = None
-
-    def buyer_credentials(self) -> Optional[tuple[str, str]]:
-        acc = (self.buyer_testnet_account_id or "").strip()
-        key = self.buyer_testnet_private_key.get_secret_value().strip() if self.buyer_testnet_private_key else ""
-        return (acc, key) if acc and key else None
-
     # Watch mode (scripts/watch.py): how often the X accounts are scanned and how much may be spent.
     watch_x_interval_minutes: int = 120
     watch_max_runs_per_day: int = 2             # full research runs the watcher may start per day

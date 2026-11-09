@@ -74,13 +74,14 @@ SCENES = [
     Scene("02_radar", "01", "Hot-topic radar", [
         ("The radar tracks 54 topics across nine technology sectors.", "The radar tracks fifty-four topics across nine technology sectors."),
         ("It ranks them by counting research papers and patent filings: year over year, and this year so far.", None),
-        ("No model, no opinion.", None),
+        ("So you can see which topics are heating up right now.", None),
     ]),
     Scene("03_agents", "02", "The agent team", [
         ("Each topic gets a full research run.", None),
         ("A chief agent plans. Science, risk, market, patent and X agents work in parallel, on real papers, patents, SEC filings and posts.",
          "A chief agent plans. Science, risk, market, patent and X agents work in parallel, on real papers, patents, S E C filings and posts."),
-        ("Then the risk agent argues the other side.", None),
+        ("An AI check keeps the paper counts on topic, and the risk agent argues the other side.",
+         "An A I check keeps the paper counts on topic, and the risk agent argues the other side."),
     ]),
     Scene("04_report", "03", "A research report", [
         ("Here is the report on high bandwidth memory.", None),
@@ -98,19 +99,13 @@ SCENES = [
         ("The full report opens everything up.", None),
         ("The agent trace shows which agents ran, on which model, and at what cost.", None),
         ("Every finding carries a label, and the exact quote from its source.", None),
-        ("A citation guard, written in code, downgrades anything unsupported.", None),
+        ("A citation guard downgrades anything a source does not support.", None),
     ]),
     Scene("07_seal", "06", "Sealed on NEAR", [
         ("Each report's fingerprint is sealed on NEAR testnet, and re-checked on every page load.", None),
         ("Change one word, and the seal breaks.", None),
     ], tail=2.4),
-    Scene("08_market", "07", "Report market", [
-        ("Reports are also for sale.", None),
-        ("Summaries are free. The full evidence unlocks after a 0.1 NEAR payment, verified on chain.",
-         "Summaries are free. The full evidence unlocks after a zero point one NEAR payment, verified on chain."),
-        ("A buyer bot has already made a real purchase on testnet.", None),
-    ]),
-    Scene("09_funds", "08", "Topic funds · simulation", [
+    Scene("09_funds", "07", "Topic funds · simulation", [
         ("Finally, each topic gets a paper fund, split into low, medium and high risk companies.", None),
         ("A rule-based agent sizes it by the verdict and the confidence, and every decision is sealed on NEAR.", None),
         ("It is a simulation: no money moves.", None),
@@ -373,8 +368,8 @@ def closing_card(t: float, dur: float) -> Image.Image:
             "Agent team on NEAR AI Cloud models: chief, science, risk,",
             "market, X, patent, price timing, company scout, investment",
             "Real sources: OpenAlex, arXiv, EPO patents, SEC EDGAR, X",
-            "Citation guard, score and confidence computed in code",
-            "Report fingerprints and payments on NEAR testnet",
+            "Every quote checked against its source",
+            "Reports and fund decisions sealed on NEAR",
             "54 topics, 9 sectors, 15 topics with full reports",
         ]),
         (1010, "SIMULATED OR LIMITED", (255, 196, 110), [
@@ -471,8 +466,9 @@ async def rec_agents(k: Take) -> None:
     await k.until(k.sent[1] + span * 0.92)
     await b.hover("g.node", text="X", seconds=0.5)
     await k.until(k.sent[2] - 0.1)
-    if not await b.hover("g.node", text="challenge", seconds=0.7):
-        await b.hover("g.node", text="risk", index=1, seconds=0.7)
+    await b.hover("g.node", text="science", seconds=0.6)
+    await k.until(k.sent[2] + (k.dur - k.sent[2]) * 0.5)
+    await b.hover("g.node", text="risk", seconds=0.7)
 
 
 async def rec_report(k: Take) -> None:
@@ -536,9 +532,11 @@ async def rec_evidence(k: Take) -> None:
     r = await b.rect("button.tab", text="unverified claim")
     if r and 60 < r[1] < 680:
         k.cut()
-        await b.click("button.tab", text="unverified claim", seconds=0.8)
+        await b.click("button.tab", text="x signals", seconds=0.6)          # posts are never verified facts: this view has findings
+        await asyncio.sleep(0.3)
+        await b.click("button.tab", text="unverified claim", seconds=0.6)
         await asyncio.sleep(0.5)
-        for agent in ("x signals", "risk challenges", "market", "patents"):       # Science may have none: find an agent that does
+        for agent in ("risk", "market", "patents"):       # Science may have none: find an agent that does
             if await b.rect(".finding", 0):
                 break
             await b.click("button.tab", text=agent, seconds=0.45)
@@ -551,22 +549,6 @@ async def rec_seal(k: Take) -> None:
     await b.scroll_to(0, 1.0)
     await k.hl(await b.rect("a.pill.pill-on"), seconds=k.dur - 1.3, pad=7)
     await b.hover("a.pill.pill-on", seconds=0.9)
-
-
-async def rec_market(k: Take) -> None:
-    b = k.b
-    await b.scroll_to(430, 1.2)
-    await k.hl(await b.rect(".stats"), seconds=max(1.6, k.sent[1] - 1.4), pad=6)
-    await k.until(k.sent[1] - 0.2)
-    r = await b.rect_text("How a bot buys a report")
-    if r:
-        await b.scroll_to(await b.scroll_y() + r[1] - 150, 1.1)
-        await k.hl(await b.rect(".panel", text="How a bot buys"), seconds=max(2.5, k.sent[2] - k.sent[1] - 1.6), pad=6)
-        await b.move_mouse(420, 330, 0.8)
-    await k.until(k.sent[2] - 1.0)
-    await b.scroll_to_el(".treasury", 1.1, offset=120)
-    await k.hl(await b.rect(".treasury"), seconds=3.0, pad=6)
-    await b.hover(".treasury .stats", seconds=0.8)
 
 
 async def rec_funds(k: Take) -> None:
@@ -654,7 +636,6 @@ def build_pieces(scenes: list[Scene], rid: str, tamper_lines: list[str]) -> list
     pieces += [Piece(s["07_seal"], "07_badge", "rec", dur=seal_rec, prep=nothing, action=rec_seal),
                Piece(s["07_seal"], "07_tamper", "card", dur=s["07_seal"].dur - seal_rec,
                      card=terminal_card(tamper_lines, "python scripts\\tamper_demo.py --run " + rid[:8] + "…"))]
-    pieces.append(Piece(s["08_market"], "08_market", "rec", dur=s["08_market"].dur, prep=goto(f"{DASH}/market", 2.0), action=rec_market))
     pieces.append(Piece(s["09_funds"], "09_funds", "rec", dur=s["09_funds"].dur, prep=goto(f"{DASH}/funds", 2.0), action=rec_funds))
     pieces.append(Piece(s["10_close"], "10_close", "card", dur=s["10_close"].dur, card=closing_card))
     pieces = [p for p in pieces if p.scene in scenes]

@@ -12,18 +12,18 @@ const POS: Record<AgentKey, [number, number]> = {
   chief: [14, 275],
   science: [242, 95], risk: [242, 185], market: [242, 275], x: [242, 365], patent: [242, 455],
   review: [470, 275],
-  challenge: [698, 185], timing: [698, 275], scout: [698, 365],
+  timing: [698, 230], scout: [698, 320],
   investment: [918, 275],
   near: [918, 415],
 };
 const EDGES: [AgentKey, AgentKey][] = [
   ["chief", "science"], ["chief", "risk"], ["chief", "market"], ["chief", "x"], ["chief", "patent"],
   ["science", "review"], ["risk", "review"], ["market", "review"], ["x", "review"], ["patent", "review"],
-  ["review", "challenge"], ["review", "timing"], ["review", "scout"],
-  ["challenge", "investment"], ["timing", "investment"], ["scout", "investment"],
+  ["review", "timing"], ["review", "scout"],
+  ["timing", "investment"], ["scout", "investment"],
   ["investment", "near"],
 ];
-const ORDER: AgentKey[][] = [["chief"], ["science", "risk", "market", "x", "patent"], ["review"], ["challenge", "timing", "scout"], ["investment"], ["near"]];
+const ORDER: AgentKey[][] = [["chief"], ["science", "risk", "market", "x", "patent"], ["review"], ["timing", "scout"], ["investment"], ["near"]];
 
 function edgePath(a: AgentKey, b: AgentKey): string {
   const [ax, ay] = POS[a], [bx, by] = POS[b];
@@ -50,7 +50,7 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
     <div className="flow">
       <div className="flow-canvas">
         <svg className="flow-svg" viewBox="0 0 1110 505" role="img"
-             aria-label="Agent network: Chief plans; Science, Risk, Market, X and Patent research in parallel; Chief reviews; Risk challenges and checks price timing while the Company scout finds the companies behind the patents and papers; Investment writes the report; the fingerprint is recorded on NEAR.">
+             aria-label="Agent network: Chief plans; Science, Risk, Market, X and Patent research in parallel; Chief reviews; price timing is checked while the Company scout finds the companies behind the patents and papers; Investment writes the report; the fingerprint is recorded on NEAR.">
           <defs>
             <radialGradient id="nodeGlow" cx="50%" cy="50%" r="60%">
               <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.28" />
@@ -58,7 +58,7 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
             </radialGradient>
           </defs>
           {/* stage labels */}
-          {[["Plan", 103], ["Research in parallel", 331], ["Review", 559], ["Challenge & scout", 787], ["Write & seal", 1007]].map(([t, x]) => (
+          {[["Plan", 103], ["Research in parallel", 331], ["Review", 559], ["Timing & scout", 787], ["Write & seal", 1007]].map(([t, x]) => (
             <text key={t} x={x} y={14} className="flow-stage" textAnchor="middle">{t}</text>
           ))}
           {/* edges */}

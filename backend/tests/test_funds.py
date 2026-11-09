@@ -145,7 +145,7 @@ def test_funds_api_lists_and_details(verdict, tmp_path):
     decide(f, "run1", report(), FakeBook(PRICES), CFG, NOW, "first")
     save_fund(f, tmp_path)
     app = create_app(Settings(_env_file=None), store=NS(list=lambda limit=50: [], get=lambda i: None), funds_dir=tmp_path,
-                     portfolio_path=tmp_path / "pf.json", ledger=NS())
+                     portfolio_path=tmp_path / "pf.json")
     c = TestClient(app)
     lst = c.get("/api/funds").json()
     assert lst["label"] == "simulation" and lst["funds"][0]["slug"] == "fixture-tech"

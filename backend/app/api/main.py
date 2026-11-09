@@ -28,10 +28,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 from app import service
-from app.api.market import DbLedger, FileLedger, Ledger, market_router
 from app.api.store import DbStore, FileStore, ReportStore, summarize
-from app.chain.near_record import NearRecorder
-from app.chain.payments import VerifiedPayment, verify_payment
 from app.chain import NearRecordError, read_record, report_digest, verify
 from app.chain.near_record import SOCIALDB_TESTNET, TESTNET_RPC
 from app.config import ConfigError, Settings, get_settings
@@ -41,7 +38,6 @@ from app.fund import DISCLAIMER as FUND_DISCLAIMER, fund_payload, list_funds, lo
 from app.fund.live import DISCLAIMER as LIVE_DISCLAIMER, load_state as load_trading_state, read_balances, shadow_portfolio
 from app.portfolio import load_portfolio, portfolio_payload, save_portfolio, sync_from_store
 from app.radar import load_radar
-from app.treasury import default_balance_reader, treasury_report
 from app.watch import load_state as load_watch_state
 from app.report.markdown import DISCLAIMER
 from app.report.verdict import build_verdict
@@ -101,10 +97,6 @@ def create_app(
     store: Optional[ReportStore] = None,
     runner: Optional[Callable[[RunRequest, Settings], str]] = None,
     chain_reader: Optional[Callable[[str, str, str], Optional[dict]]] = None,
-    ledger: Optional[Ledger] = None,
-    payment_verifier: Optional[Callable[[str, str, str, float], VerifiedPayment]] = None,
-    sale_recorder: Optional[Callable[[], Optional[NearRecorder]]] = None,
-    balance_reader: Optional[Callable[[str], dict]] = None,
     portfolio_path: Optional[Path] = None,
     funds_dir: Optional[Path] = None,
     trading_dir: Optional[Path] = None,
@@ -112,12 +104,9 @@ def create_app(
     settings = settings or get_settings()
     read_onchain = chain_reader or _read_testnet
     store = store or _default_store(settings)
-    if ledger is None:
-        ledger = DbLedger(store._sessions) if isinstance(store, DbStore) else FileLedger(service.RUNS_DIR / "purchases.json")
     portfolio_path = portfolio_path or (service.RUNS_DIR / "portfolio.json")
     funds_dir = funds_dir or (service.RUNS_DIR / "funds")
     trading_dir = trading_dir or (service.RUNS_DIR / "trading")
-    balances = balance_reader if balance_reader is not None else default_balance_reader()
     jobs: dict[str, Job] = {}
     lock = threading.Lock()
 
@@ -315,24 +304,4 @@ def create_app(
             "disclaimer": LIVE_DISCLAIMER,
         }
 
-    balance_cache: dict = {}
-
-    def cached_balance(account: str) -> dict:
-        """The on-chain balance read is slow-ish (public RPC); remember it for two minutes."""
-        hit = balance_cache.get(account)
-        if hit and time.time() - hit[0] < 120:
-            return hit[1]
-        value = balances(account)
-        balance_cache[account] = (time.time(), value)
-        return value
-
-    @app.get("/api/treasury")
-    def treasury() -> dict:
-        """Earned (report sales, testnet NEAR) versus spent (model + X costs of every saved run)."""
-        seller = (settings.near_testnet_account_id or "").strip() or None
-        return treasury_report(seller=seller, runs=store.list(limit=200), purchases_for=ledger.purchases,
-                               price_near=settings.report_price_near, balance_reader=cached_balance)
-
-    app.include_router(market_router(settings, store, ledger, verifier=payment_verifier or verify_payment,
-                                     recorder_factory=sale_recorder))
     return app

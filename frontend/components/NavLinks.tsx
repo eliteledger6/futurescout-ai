@@ -3,13 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-// Six tabs. "New research" is a button on the Reports page; the older paper portfolio is linked from Funds.
+// Five tabs. "New research" is a button on the Reports page; the older paper portfolio is linked from Funds.
 const LINKS = [
   { href: "/", label: "Reports", also: ["/runs", "/research"] },
   { href: "/radar", label: "Radar", also: [] },
   { href: "/funds", label: "Funds", also: ["/portfolio"] },
   { href: "/trading", label: "Trading", also: [] },
-  { href: "/market", label: "Market", also: [] },
   { href: "/about", label: "How it works", also: [] },
 ];
 

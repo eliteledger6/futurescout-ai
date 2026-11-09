@@ -2,7 +2,7 @@
 import type { Report } from "./types";
 
 export type AgentKey =
-  | "chief" | "science" | "risk" | "market" | "x" | "patent" | "review" | "challenge" | "timing" | "scout" | "investment" | "near";
+  | "chief" | "science" | "risk" | "market" | "x" | "patent" | "review" | "timing" | "scout" | "investment" | "near";
 
 export interface AgentInfo {
   key: AgentKey;
@@ -23,8 +23,8 @@ export const AGENTS: Record<AgentKey, AgentInfo> = {
     detail: "Finds recent papers and preprints, counts papers per year (Research Acceleration) and writes cited findings.",
     sources: "OpenAlex · arXiv" },
   risk: { key: "risk", name: "Risk", role: "Argues against", icon: "shield", prefix: "R", modelKey: "risk",
-    detail: "Searches independently for limits, failures, cost and reliability problems, and flags hype.",
-    sources: "OpenAlex · arXiv" },
+    detail: "Searches independently for limits, failures, cost and reliability problems and flags hype. After the Chief review it also challenges specific findings: thin samples, simulations, preprints, overstated labels.",
+    sources: "OpenAlex · arXiv · the other agents' findings" },
   market: { key: "market", name: "Market", role: "Reads company filings", icon: "building", prefix: "M", modelKey: "market",
     detail: "Reads the latest SEC annual and quarterly reports of the topic's sector companies and keeps verbatim passages that mention the topic.",
     sources: "SEC EDGAR · news headlines" },
@@ -37,14 +37,11 @@ export const AGENTS: Record<AgentKey, AgentInfo> = {
   review: { key: "review", name: "Chief review", role: "Checks for gaps", icon: "search", modelKey: "chief",
     detail: "Looks at everything gathered, names what is missing and may order one extra paper search (bounded).",
     sources: "The agents' findings" },
-  challenge: { key: "challenge", name: "Risk challenge", role: "Attacks the findings", icon: "swords", prefix: "C", modelKey: "risk",
-    detail: "Challenges specific Science findings: thin samples, simulations, preprints, overstated labels.",
-    sources: "The Science findings and their papers" },
   timing: { key: "timing", name: "Price & timing", role: "Run-up risk", icon: "pulse", prefix: "T", modelKey: "timing",
     detail: "Computes how far the related stocks have already moved and labels timing risk by fixed rules. A risk input, never a buy signal.",
     sources: "Alpha Vantage daily prices" },
   scout: { key: "scout", name: "Company scout", role: "Finds the next runners", icon: "radar", prefix: "K",
-    detail: "Collects every company named as a patent assignee, as a paper author's employer or in an SEC filing on the topic, matches them to the SEC's ticker file, pulls their XBRL financials and scores smaller, growing, R&D-heavy names with a transparent heuristic. Code only, no model.",
+    detail: "Collects every company named as a patent assignee, as a paper author's employer or in an SEC filing on the topic, matches them to the SEC's ticker file, pulls their XBRL financials and scores smaller, growing, R&D-heavy names with a transparent heuristic.",
     sources: "Patent assignees · OpenAlex affiliations · SEC EDGAR + XBRL" },
   investment: { key: "investment", name: "Investment", role: "Writes the report", icon: "doc", modelKey: "investment",
     detail: "Builds themes for 0-12 months, 1-3 years and 3-5 years, bull/base/bear cases and the explainable score. Every statement must cite findings.",
@@ -80,12 +77,11 @@ export function agentStats(r: Report): Record<AgentKey, AgentRunStat> {
     chief: { state: ran("chief") ? "ran" : "partial", cost: cost("chief"), models: models("chief"),
              note: r.plan ? `${r.plan.key_questions?.length ?? 0} key questions` : undefined },
     science: st("science", r.science),
-    risk: { ...st("risk", r.risk), findings: r.risk?.findings.length },
+    risk: { ...st("risk", r.risk), findings: r.risk ? r.risk.findings.length + r.risk.challenges.length : undefined },
     market: st("market", r.market),
     x: { ...st("x", r.x), cost: cost("x") + (xData?.cost_usd ?? 0) },
     patent: st("patent", r.patent),
     review: { state: ran("chief") ? "ran" : "partial", note: "gap review" },
-    challenge: { state: r.risk?.challenges.length ? "ran" : r.risk ? "partial" : "off", findings: r.risk?.challenges.length },
     timing: st("timing", r.timing),
     scout: { state: ran("scout") ? "ran" : r.scout ? "partial" : "off", findings: r.scout?.findings.length,
              note: r.scout ? `${r.scout.candidates.length} candidates · ${r.scout.unlisted.length} not SEC-listed` : undefined },

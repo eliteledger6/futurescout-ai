@@ -10,7 +10,7 @@ from typing import Iterable, Optional
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.db.models import ErrorRow, FindingRow, Purchase, Run, Source, Usage
+from app.db.models import ErrorRow, FindingRow, Run, Source, Usage
 from app.schemas.common import Finding, SourceRecord
 from app.schemas.research import ResearchReport
 
@@ -85,27 +85,6 @@ def save_report(session: Session, report: ResearchReport, markdown: Optional[str
 def load_report(session: Session, run_id: str) -> Optional[ResearchReport]:
     run = session.get(Run, run_id)
     return ResearchReport.model_validate(run.report_json) if run else None
-
-
-def has_access(session: Session, run_id: str, buyer: str) -> bool:
-    return session.scalar(select(Purchase.id).where(Purchase.run_id == run_id, Purchase.buyer_account == buyer).limit(1)) is not None
-
-
-def tx_already_used(session: Session, tx_hash: str) -> bool:
-    return session.scalar(select(Purchase.id).where(Purchase.tx_hash == tx_hash).limit(1)) is not None
-
-
-def record_purchase(session: Session, *, run_id: str, buyer: str, seller: str, tx_hash: str, amount_yocto: int,
-                    purchased_at: datetime, sale_record: Optional[dict] = None) -> Purchase:
-    p = Purchase(run_id=run_id, buyer_account=buyer, seller_account=seller, tx_hash=tx_hash, amount_yocto=str(amount_yocto),
-                 network="testnet", purchased_at=purchased_at, sale_record=sale_record)
-    session.add(p)
-    session.flush()
-    return p
-
-
-def purchases_for(session: Session, run_id: str) -> list[Purchase]:
-    return list(session.scalars(select(Purchase).where(Purchase.run_id == run_id).order_by(Purchase.purchased_at)))
 
 
 @dataclass

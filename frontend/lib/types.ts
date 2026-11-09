@@ -252,15 +252,6 @@ export interface Portfolio {
   summary: { positions: number; open: number; pending: number; invested_usd: number; value_usd: number; return_pct: number | null;
              benchmark_return_pct: number | null; best: string | null; worst: string | null; reports: number };
 }
-export interface Treasury {
-  network: string; seller_account: string | null; price_near: number; earned_near: number; sales: number; spent_usd: number; runs: number;
-  avg_cost_per_run_usd: number | null; balance: { available_near: number; locked_near: number; storage_bytes: number } | null; balance_error: string | null;
-  near_usd_reference: number | null; sales_per_report_to_break_even: number | null;
-  per_run: { run_id: string; topic: string; generated_at: string; cost_usd: number | null; sales: number; earned_near: number }[];
-  recent_sales: { run_id: string; topic: string; buyer: string; amount_near: number; tx_hash: string; purchased_at: string | null; explorer_url: string }[];
-  generated_at: string; note: string;
-}
-
 export interface Job { id: string; topic: string; status: "running" | "done" | "failed"; run_id: string | null; error: string | null; elapsed_s: number }
 
 /* ---- topic funds (SIMULATION, stages 1-2) */

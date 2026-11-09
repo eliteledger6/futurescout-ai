@@ -9,7 +9,7 @@ const LABEL_TEXT: Record<Label, string> = {
 };
 
 export const LABEL_HELP: Record<Label, string> = {
-  verified_fact: "A quoted passage in a cited source supports it (checked by code).",
+  verified_fact: "A quoted passage in a cited source supports it (the quote is checked).",
   ai_interpretation: "The AI's reading or comparison of the evidence.",
   forecast: "A prediction about the future.",
   assumption: "Taken as given; no supporting evidence cited.",

@@ -267,7 +267,7 @@ def test_trading_api_is_read_only_and_leaks_no_key(tmp_path):
     save_state(st, tmp_path / "trading" / "state.json")
     s = Settings(_env_file=None, fund_mainnet_private_key="ed25519:SECRETSECRETSECRET")      # key without an account: nothing is read
     app = create_app(s, store=NS(list=lambda limit=50: [], get=lambda i: None), funds_dir=tmp_path / "funds",
-                     trading_dir=tmp_path / "trading", portfolio_path=tmp_path / "pf.json", ledger=NS())
+                     trading_dir=tmp_path / "trading", portfolio_path=tmp_path / "pf.json")
     c = TestClient(app)
     r = c.get("/api/trading")
     body = r.json()

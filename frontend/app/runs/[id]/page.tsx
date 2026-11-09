@@ -368,13 +368,15 @@ function ThemesSection({ themes }: { themes: Theme[] }) {
 }
 
 /* ---------------------------------------------------------------- evidence */
-type Group = "science" | "risk" | "challenges" | "market" | "x" | "patent" | "timing";
+type Group = "science" | "risk" | "market" | "x" | "patent" | "timing";
 
 function EvidenceSection({ report, sources }: { report: Report; sources: Map<string, Source> }) {
   const groups: { key: Group; name: string; items: { f: Finding; extra?: string }[] }[] = [
     { key: "science", name: "Science", items: (report.science?.findings ?? []).map((f) => ({ f })) },
-    { key: "risk", name: "Risk", items: (report.risk?.findings ?? []).map((f) => ({ f })) },
-    { key: "challenges", name: "Risk challenges", items: (report.risk?.challenges ?? []).map((c) => ({ f: c.finding, extra: `challenges ${c.target_finding_ids.join(", ") || "general"} · severity ${c.severity}` })) },
+    { key: "risk", name: "Risk", items: [
+      ...(report.risk?.findings ?? []).map((f) => ({ f })),
+      ...(report.risk?.challenges ?? []).map((c) => ({ f: c.finding, extra: `challenges ${c.target_finding_ids.join(", ") || "general"} · severity ${c.severity}` })),
+    ] },
     { key: "market", name: "Market", items: (report.market?.findings ?? []).map((f) => ({ f })) },
     { key: "x", name: "X signals", items: (report.x?.findings ?? []).map((f) => ({ f })) },
     { key: "patent", name: "Patents", items: (report.patent?.findings ?? []).map((f) => ({ f })) },
@@ -385,7 +387,7 @@ function EvidenceSection({ report, sources }: { report: Report; sources: Map<str
 
   // Finding links (#S1, #R2, #C3, #M4) elsewhere on the page: open the right tab, then scroll to it.
   useEffect(() => {
-    const prefix: Record<string, Group> = { S: "science", R: "risk", C: "challenges", M: "market", X: "x", P: "patent", T: "timing" };
+    const prefix: Record<string, Group> = { S: "science", R: "risk", C: "risk", M: "market", X: "x", P: "patent", T: "timing" };
     function open() {
       const fid = decodeURIComponent(window.location.hash.slice(1));
       const target = prefix[fid.charAt(0)];
@@ -789,7 +791,7 @@ function ScoutSection({ report, sources }: { report: Report; sources: Map<string
       <div className="container stack">
         <div className="section-head">
           <div>
-            <div className="eyebrow">Company scout · code only, no model</div>
+            <div className="eyebrow">Company scout</div>
             <h2 className="h2" style={{ marginTop: 10 }}>Emerging companies behind the evidence</h2>
             <p className="sub">Every company named as a patent assignee, as a paper author&apos;s employer or in an SEC filing on this topic, matched to the SEC ticker file (never guessed)
               and sized from its own XBRL financials. The <strong>next-runner score</strong> is a transparent heuristic that favours smaller, growing, R&amp;D-heavy names with evidence from more than one place.
@@ -828,7 +830,7 @@ function TimingSection({ report }: { report: Report }) {
     <section className="section" id="timing">
       <div className="container stack">
         <h2 className="h2">Price &amp; timing risk</h2>
-        <p className="sub">Part of the Risk agent. How far the theme&apos;s stocks have already moved, computed by code from the last ~100 daily closes.
+        <p className="sub">Part of the Risk agent. How far the theme&apos;s stocks have already moved, computed from the last ~100 daily closes.
           <strong>Elevated</strong> means much of the story may already be in the price; <strong>subdued</strong> means the stock has been weak lately.
           It is a risk input, <strong>not</strong> a buy or sell signal and not an entry point; past prices do not predict future prices.</p>
         <div className="table-wrap">

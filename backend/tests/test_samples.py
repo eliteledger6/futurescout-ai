@@ -17,15 +17,13 @@ def test_store_falls_back_to_samples_when_runs_is_empty(tmp_path, monkeypatch):
     (samples / "report_sample1.json").write_text(fixture_report().model_dump_json(), encoding="utf-8")
     monkeypatch.setattr(api_main.service, "RUNS_DIR", runs)
     monkeypatch.setattr(api_main, "SAMPLES_DIR", samples)
-    client = TestClient(create_app(Settings(_env_file=None, near_ai_api_key="k"), portfolio_path=tmp_path / "p.json",
-                                   balance_reader=lambda a: {"available_near": 0, "locked_near": 0, "storage_bytes": 0}))
+    client = TestClient(create_app(Settings(_env_file=None, near_ai_api_key="k"), portfolio_path=tmp_path / "p.json"))
     rows = client.get("/api/runs").json()
     assert [r["id"] for r in rows] == ["report_sample1"] and rows[0]["topic"] == "chiplet interconnect"
     assert client.get("/api/runs/report_sample1").json()["report"]["topic"] == "chiplet interconnect"
     # once a real run exists, the samples step aside
     (runs / "report_real.json").write_text(fixture_report("real topic").model_dump_json(), encoding="utf-8")
-    client2 = TestClient(create_app(Settings(_env_file=None, near_ai_api_key="k"), portfolio_path=tmp_path / "p2.json",
-                                    balance_reader=lambda a: {"available_near": 0, "locked_near": 0, "storage_bytes": 0}))
+    client2 = TestClient(create_app(Settings(_env_file=None, near_ai_api_key="k"), portfolio_path=tmp_path / "p2.json"))
     assert [r["topic"] for r in client2.get("/api/runs").json()] == ["real topic"]
 
 

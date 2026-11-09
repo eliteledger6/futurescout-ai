@@ -109,21 +109,6 @@ class Usage(Base):
     run: Mapped[Run] = relationship(back_populates="usage")
 
 
-class Purchase(Base):
-    """A report bought by a NEAR account: the on-chain payment that unlocked it."""
-    __tablename__ = "purchases"
-    __table_args__ = (UniqueConstraint("tx_hash", name="uq_purchases_tx_hash"),)   # one payment unlocks one report once
-
-    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    run_id: Mapped[str] = mapped_column(ForeignKey("runs.id", ondelete="CASCADE"), index=True)
-    buyer_account: Mapped[str] = mapped_column(String(64), index=True)
-    seller_account: Mapped[str] = mapped_column(String(64))
-    tx_hash: Mapped[str] = mapped_column(String(64))
-    amount_yocto: Mapped[str] = mapped_column(String(40))           # exact integer as text (too big for int columns)
-    network: Mapped[str] = mapped_column(String(16), default="testnet")
-    purchased_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
-    sale_record: Mapped[Optional[dict]] = mapped_column(Json)       # seller's on-chain sale note, if written
-
 
 class ErrorRow(Base):
     __tablename__ = "errors"

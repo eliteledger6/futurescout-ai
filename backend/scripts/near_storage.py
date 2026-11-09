@@ -23,7 +23,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from app.chain import NearRecorder, NearRecordError  # noqa: E402
 from app.chain.near_record import SOCIALDB_TESTNET, TESTNET_RPC  # noqa: E402
 from app.config import get_settings  # noqa: E402
-from app.treasury import read_balance  # noqa: E402
+from app.chain.near_record import read_balance  # noqa: E402
 
 YOCTO_PER_BYTE = 10**19   # NEAR storage price: 1 NEAR per 100 kB
 

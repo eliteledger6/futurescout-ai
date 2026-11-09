@@ -1,4 +1,4 @@
-"""Paper portfolio (SIMULATION) and treasury tests. Prices, reports, purchases and the NEAR balance are all
+"""Paper portfolio (SIMULATION) and testnet balance tests. Prices, reports and the NEAR balance are all
 FIXTURES / fakes; nothing leaves the machine."""
 
 from datetime import date, datetime, timedelta, timezone
@@ -15,7 +15,7 @@ from app.schemas.research import ResearchReport
 from app.schemas.scout import CompanySignal, ScoutResult
 from app.sources.base import RateLimiter
 from app.sources.prices import AlphaVantageClient, Bar
-from app.treasury import read_balance, treasury_report
+from app.chain.near_record import read_balance
 from tests.test_price_timing import payload
 
 NOW = datetime(2026, 11, 8, 12, tzinfo=timezone.utc)
@@ -98,23 +98,6 @@ def test_update_prices_respects_the_request_budget_and_tracks_a_benchmark(tmp_pa
     assert again.positions[0].return_pct == 20.0 and again.benchmark.return_pct == 5.0 and again.kind == "simulation"
 
 
-def test_treasury_adds_up_sales_and_costs_and_survives_a_dead_rpc():
-    runs = [{"id": "r1", "topic": "hbm", "generated_at": "2026-11-08T10:00:00+00:00", "total_cost_usd": 0.233},
-            {"id": "r2", "topic": "cpo", "generated_at": "2026-11-09T10:00:00+00:00", "total_cost_usd": 0.206}]
-    purchases = {"r1": [{"buyer_account": "buyer.testnet", "tx_hash": "Tx1", "amount_yocto": str(10**23), "purchased_at": "2026-11-08T15:00:00+00:00"}]}
-    t = treasury_report(seller="seller.testnet", runs=runs, purchases_for=lambda rid: purchases.get(rid, []), price_near=0.1,
-                        balance_reader=lambda a: {"available_near": 2.3, "locked_near": 0.0, "storage_bytes": 1}, near_usd=2.0)
-    assert t["earned_near"] == 0.1 and t["sales"] == 1 and t["spent_usd"] == 0.439 and t["runs"] == 2
-    assert t["balance"]["available_near"] == 2.3 and t["recent_sales"][0]["explorer_url"].endswith("/txns/Tx1")
-    assert t["per_run"][0]["sales"] == 1 and t["per_run"][1]["earned_near"] == 0
-    assert t["sales_per_report_to_break_even"] == round(0.2195 / 0.2, 1)
-
-    def dead(_account):
-        raise NearRecordError("rpc down (fixture)")
-    t2 = treasury_report(seller="seller.testnet", runs=runs, purchases_for=lambda rid: [], price_near=0.1, balance_reader=dead)
-    assert t2["balance"] is None and "rpc down" in t2["balance_error"] and t2["earned_near"] == 0
-
-
 def test_read_balance_is_a_plain_view_and_refuses_mainnet():
     def handler(request: httpx.Request) -> httpx.Response:
         body = request.read().decode()
@@ -130,17 +113,16 @@ def test_read_balance_is_a_plain_view_and_refuses_mainnet():
         raise AssertionError("mainnet must be refused")
 
 
-def test_api_portfolio_and_treasury_routes(tmp_path):
+def test_api_portfolio_route_and_no_report_selling_routes(tmp_path):
     runs = tmp_path / "runs"
     runs.mkdir()
     (runs / "report_fixture1.json").write_text(report(day=NOW).model_dump_json(), encoding="utf-8")
     app = create_app(Settings(_env_file=None, near_ai_api_key="k", near_testnet_account_id="seller.testnet"), store=FileStore(runs),
-                     balance_reader=lambda a: {"available_near": 1.0, "locked_near": 0.0, "storage_bytes": 0},
                      portfolio_path=tmp_path / "portfolio.json")
     client = TestClient(app)
     pf = client.get("/api/portfolio").json()
     assert pf["label"] == "simulation" and pf["summary"]["positions"] == 3 and pf["summary"]["pending"] == 3
     assert pf["positions"][0]["ticker"] == "GLSS" and pf["prices_configured"] is False and "No money moves" in pf["disclaimer"]
     assert (tmp_path / "portfolio.json").is_file()
-    t = client.get("/api/treasury").json()
-    assert t["runs"] == 1 and t["spent_usd"] == 0.2 and t["earned_near"] == 0 and t["balance"]["available_near"] == 1.0
+    for gone in ("/api/treasury", "/api/market"):                       # report selling was removed on 2026-11-10
+        assert client.get(gone).status_code == 404
