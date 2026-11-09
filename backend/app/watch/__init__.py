@@ -29,7 +29,9 @@ from app.config import BACKEND_DIR, Settings
 from app.models.router import ModelRouter, ModelRouterError
 from app.radar import DEFAULT_SECTOR, load_sectors, Radar, TopicConfig, compute_radar, load_radar, load_topics, save_radar
 from app.schemas.common import SourceRecord
+from app.agents.x import watchlist as wl
 from app.sources.base import SourceError
+from app.sources.x import mentioned_handles, suggestion_from_user
 
 log = logging.getLogger("futurescout.watch")
 STATE_PATH = BACKEND_DIR / "runs" / "watch_state.json"
@@ -66,6 +68,17 @@ class WatchState(BaseModel):
     events: list[dict] = Field(default_factory=list)
     mention_history: list[dict] = Field(default_factory=list)          # {at, mentions}
     last_paper_discovery_at: Optional[datetime] = None                 # paper scout (keywords of recent papers) last run
+    x_spend: dict[str, float] = Field(default_factory=dict)            # YYYY-MM-DD -> estimated X spend (USD)
+    x_discovered_topics: list[dict] = Field(default_factory=list)      # {at, topic}: account searches done for new topics
+
+    def x_spent_today(self, now: datetime) -> float:
+        return self.x_spend.get(now.date().isoformat(), 0.0)
+
+    def add_x_spend(self, now: datetime, usd: float) -> None:
+        day = now.date().isoformat()
+        self.x_spend[day] = round(self.x_spend.get(day, 0.0) + usd, 4)
+        for d in sorted(self.x_spend)[:-14]:
+            del self.x_spend[d]
 
     def log(self, kind: str, detail: str, now: datetime, **extra: Any) -> None:
         self.events.append({"at": now.isoformat(), "kind": kind, "detail": detail, **extra})
@@ -185,10 +198,12 @@ class Watcher:
         report_ages: Optional[Callable[[], dict[str, datetime]]] = None,  # topic -> newest report time
         state_path: Path = STATE_PATH,
         topics_file: Optional[Path] = None,
+        watchlist_path: Optional[Path] = None,       # x_watchlist.yaml; None = do not manage the X account list
         now: Callable[[], datetime] = lambda: datetime.now(timezone.utc),
     ) -> None:
         self.s = settings
         self.x, self.accounts, self.router = x_client, accounts, router
+        self.watchlist_path = watchlist_path
         self.openalex, self.patents_cached, self.patents_live_factory, self.filers = openalex, patents_cached, patents_live_factory, filers
         self.run_research = run_research
         self.report_ages = report_ages or (lambda: {})
@@ -200,11 +215,20 @@ class Watcher:
         if self.x is None or not self.accounts:
             state.log("scan", "skipped: X not configured or no approved accounts", now)
             return None
+        if self.watchlist_path is not None:          # the agent may have added accounts since the last cycle
+            self.accounts = [a["handle"] for a in wl.load(self.watchlist_path)["approved"]] or self.accounts
+        budget = self.s.watch_x_daily_budget_usd
+        if state.x_spent_today(now) >= budget:
+            state.log("scan", f"skipped: today's X budget of ${budget:.2f} is used (${state.x_spent_today(now):.2f})", now)
+            return None
+        before = self.x.usage.cost_usd
         try:
-            posts = self.x.recent_from_accounts(self.accounts, max_posts=50, since_id=state.last_post_id)
+            posts = self.x.recent_from_accounts(self.accounts, max_posts=self.s.watch_x_max_posts, since_id=state.last_post_id)
         except SourceError as exc:
             state.log("scan", f"X scan failed: {exc.message}", now)
             return None
+        state.add_x_spend(now, self.x.usage.cost_usd - before)
+        self.grow_from_mentions(state, posts)
         topics = load_topics(self.topics_file)
         mentions = count_mentions(posts, topics)
         new_topics = scout_new_topics(self.router, posts, topics, sectors=self._sector_keys()) if posts else []
@@ -216,6 +240,67 @@ class Watcher:
         state.log("scan", f"{len(posts)} new post(s) from {len(self.accounts)} accounts; topics mentioned: {mentions or 'none'}"
                   + (f"; new topics proposed: {[n['topic'] for n in new_topics]}" if new_topics else ""), now, posts=len(posts), mentions=mentions)
         return Scan(now, len(posts), newest, mentions, new_topics, cost)
+
+    def grow_from_mentions(self, state: WatchState, posts: list[SourceRecord]) -> list[str]:
+        """Accounts that several watched accounts keep @mentioning are looked up and, if they qualify, added."""
+        if self.watchlist_path is None or self.x is None:
+            return []
+        now = self._now()
+        data = wl.load(self.watchlist_path)
+        watched = {a["handle"].lower() for a in data["approved"]}
+        to_check = wl.record_endorsements(data, mentioned_handles(posts, watched), today=now.date())
+        to_check = to_check[: max(0, self.s.watch_x_endorse_lookups_per_scan)]
+        if to_check and state.x_spent_today(now) < self.s.watch_x_daily_budget_usd:
+            before = self.x.usage.cost_usd
+            try:
+                users, _missing = self.x.lookup_users(to_check)
+            except SourceError as exc:
+                users = []
+                state.log("accounts", f"profile lookup failed: {exc.message}", now)
+            state.add_x_spend(now, self.x.usage.cost_usd - before)
+            wl.record_suggestions(data, [suggestion_from_user(u, reason="mentioned by watched accounts") for u in users],
+                                  "mentioned by watched accounts", today=now.date())
+        changes = wl.auto_manage(data, today=now.date())
+        wl.save(data, self.watchlist_path)
+        for c in changes:
+            state.log("accounts", c, now)
+        return changes
+
+    def discover_accounts_for(self, state: WatchState, topics: list[dict]) -> list[str]:
+        """For newly added topics: search X for who posts about them and let the watchlist rules add the best."""
+        if self.watchlist_path is None or self.x is None or not topics:
+            return []
+        now = self._now()
+        day = now.date().isoformat()
+        done_today = sum(1 for d in state.x_discovered_topics if d["at"][:10] == day)
+        changes: list[str] = []
+        for t in topics:
+            if done_today >= self.s.watch_x_discovery_topics_per_day:
+                state.log("accounts", f"account search for '{t['topic']}' postponed: {self.s.watch_x_discovery_topics_per_day} per day", now)
+                continue
+            if state.x_spent_today(now) >= self.s.watch_x_daily_budget_usd:
+                state.log("accounts", f"account search for '{t['topic']}' postponed: today's X budget is used", now)
+                break
+            data = wl.load(self.watchlist_path)
+            exclude = {a["handle"].lower() for a in data["approved"]}
+            before = self.x.usage.cost_usd
+            try:
+                found = self.x.discover_accounts(t.get("terms") or [t["topic"]], exclude=exclude, max_posts=50)
+            except SourceError as exc:
+                state.log("accounts", f"account search for '{t['topic']}' failed: {exc.message}", now)
+                continue
+            state.add_x_spend(now, self.x.usage.cost_usd - before)
+            wl.record_suggestions(data, found, t["topic"], today=now.date())
+            added = wl.auto_manage(data, today=now.date())
+            wl.save(data, self.watchlist_path)
+            state.x_discovered_topics.append({"at": now.isoformat(), "topic": t["topic"]})
+            done_today += 1
+            state.log("accounts", f"new topic '{t['topic']}': {len(found)} account(s) found posting about it"
+                      + (f"; {len(added)} added" if added else "; none qualified (verified, no caution flags, score)"), now)
+            for c in added:
+                state.log("accounts", c, now)
+            changes += added
+        return changes
 
     def _sector_keys(self) -> list[str]:
         try:
@@ -256,8 +341,11 @@ class Watcher:
         added = add_topics(scan.new_topics, self.topics_file) if scan and scan.new_topics else []
         if added:
             state.log("topics", f"added to the radar from X posts: {added}", now, topics=added)
-        self.paper_discovery(state)
+        paper_added = self.paper_discovery(state)
         topics = load_topics(self.topics_file)
+        new_names = {*added, *paper_added}
+        if new_names:
+            self.discover_accounts_for(state, [{"topic": t.name, "terms": t.terms} for t in topics if t.name in new_names])
         # patents: cache for everyone; a live count only for a new topic, within the weekly allowance
         live_for: set[str] = set()
         if self.patents_live_factory:

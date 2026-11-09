@@ -24,6 +24,7 @@ import httpx  # noqa: E402
 
 from app import service  # noqa: E402
 from app.agents.x import load_watchlist  # noqa: E402
+from app.agents.x import watchlist as wl  # noqa: E402
 from app.config import get_settings, quiet_network_logs  # noqa: E402
 from app.models.config import load_model_config  # noqa: E402
 from app.models.router import ModelRouter  # noqa: E402
@@ -83,7 +84,7 @@ def build_watcher(research: bool) -> Watcher:
     return Watcher(s, x_client=x_client, accounts=[a.handle for a in load_watchlist()], router=router,
                    openalex=OpenAlexClient(s.openalex_key_value(), http=http) if s.openalex_key_value() else None,
                    patents_cached=patents_cached, patents_live_factory=patents_live, filers=filers,
-                   run_research=run if research else None, report_ages=report_ages)
+                   run_research=run if research else None, report_ages=report_ages, watchlist_path=wl.WATCHLIST_PATH)
 
 
 def main() -> int:

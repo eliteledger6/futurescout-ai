@@ -90,6 +90,11 @@ class Settings(BaseSettings):
     watch_x_mentions_threshold: int = 3         # or this many posts about it in one scan
     watch_new_patent_topics_per_week: int = 2   # new topics allowed a live patent count per week (quota)
     watch_paper_discovery_days: int = 7         # how often the paper scout looks for new growing topics per sector (0 = off)
+    # X reading (owner 2026-11-09: read more, grow the account list automatically). Every post read costs ~$0.005.
+    watch_x_max_posts: int = 100                # newest posts read per scan from the watched accounts
+    watch_x_daily_budget_usd: float = 3.0       # stop X reading for the day once this much was spent (0 = no X calls)
+    watch_x_discovery_topics_per_day: int = 3   # new topics per day that get an account search on X (~$0.25 each)
+    watch_x_endorse_lookups_per_scan: int = 10  # profiles looked up for handles that watched accounts keep @mentioning ($0.01 each)
 
     # X API (read-only). Pay-per-use: billed per post / user returned.
     x_bearer_token: Optional[SecretStr] = None

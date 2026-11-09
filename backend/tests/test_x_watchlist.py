@@ -93,4 +93,6 @@ def test_auto_manage_adds_clean_high_scores_and_removes_only_silent_agent_picks(
 
 def test_real_watchlist_file_loads_with_defaults():
     data = wl.load()
-    assert data["auto_manage"] is False and len(data["approved"]) == 37
+    # owner decision 2026-11-09: the agent manages the list itself, verified accounts only, stricter score
+    assert data["auto_manage"] is True and data["require_verified"] is True and data["auto_add_min_score"] >= 8.0
+    assert sum(1 for a in data["approved"] if a.get("approved_by", "owner") == "owner") == 37

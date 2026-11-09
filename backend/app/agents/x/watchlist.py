@@ -23,7 +23,11 @@ from app.config import CONFIG_DIR
 from app.sources.x import AccountSuggestion
 
 WATCHLIST_PATH = CONFIG_DIR / "x_watchlist.yaml"
-DEFAULTS = {"auto_manage": False, "auto_add_min_score": 6.0, "auto_remove_after_days": 90, "max_accounts": 60}
+DEFAULTS = {"auto_manage": False, "auto_add_min_score": 8.0, "auto_remove_after_days": 90, "max_accounts": 60,
+            "require_verified": True, "endorse_min_watchers": 2}
+ENDORSE_POINTS = 2.0      # per distinct watched account that @mentioned the handle
+ENDORSE_MAX = 6.0
+ENDORSE_WINDOW_DAYS = 60  # mentions older than this stop counting
 
 
 def load(path: Path = WATCHLIST_PATH) -> dict[str, Any]:
@@ -33,7 +37,53 @@ def load(path: Path = WATCHLIST_PATH) -> dict[str, Any]:
     data.setdefault("approved", [])
     data.setdefault("suggested", [])
     data.setdefault("changes", [])
+    data.setdefault("endorsements", {})
     return data
+
+
+def record_endorsements(data: dict[str, Any], mentions: dict[str, set[str]], today: Optional[date] = None) -> list[str]:
+    """Remember which watched accounts @mentioned which handles. Returns handles now endorsed by enough watchers
+    (`endorse_min_watchers`) that are neither watched nor suggested yet: worth a profile lookup."""
+    today = today or datetime.now(timezone.utc).date()
+    store: dict[str, dict] = data["endorsements"]
+    for h, by in mentions.items():
+        row = store.setdefault(h, {"by": [], "last": today.isoformat()})
+        row["by"] = sorted({*row.get("by", []), *by})
+        row["last"] = today.isoformat()
+    cutoff = today - timedelta(days=ENDORSE_WINDOW_DAYS)
+    for h in [h for h, r in store.items() if date.fromisoformat(str(r.get("last"))) < cutoff]:
+        del store[h]
+    known = {a["handle"].lower() for a in data["approved"]} | {s["handle"].lower() for s in data["suggested"]}
+    need = int(data.get("endorse_min_watchers") or 2)
+    return sorted((h for h, r in store.items() if h not in known and len(r.get("by", [])) >= need),
+                  key=lambda h: -len(store[h]["by"]))
+
+
+VERIFIED_TYPES = {"blue", "business", "government"}   # X sends verified_type "none" for unverified accounts
+
+
+def qualifies(data: dict[str, Any], s: dict) -> tuple[bool, float, str]:
+    """The agent's add rule (owner 2026-11-09): verified, no caution flags, score at least `auto_add_min_score`
+    (endorsements by watched accounts included), and real substance: 2+ on-topic posts, a senior role, a mention by
+    a watched account, or a business badge. One post plus a paid tick or a government badge is not enough."""
+    vt = str(s.get("verified_type") or "").lower()
+    if data.get("require_verified", True) and vt not in VERIFIED_TYPES:
+        return False, 0.0, f"not verified ({vt or 'no badge'})"
+    if s.get("flags"):
+        return False, 0.0, "caution flags: " + "; ".join(s["flags"])
+    bonus = endorsement_bonus(data, s["handle"])
+    effective = float(s.get("score") or 0) + bonus
+    if effective < float(data["auto_add_min_score"]):
+        return False, effective, f"score {effective:.1f} below {data['auto_add_min_score']}"
+    substance = int(s.get("posts_on_topic") or 0) >= 2 or bool(s.get("role")) or bonus > 0 or vt == "business"
+    if not substance:
+        return False, effective, "one post and a badge only (needs 2+ topic posts, a senior role, a mention by a watched account, or a business badge)"
+    return True, effective, "ok"
+
+
+def endorsement_bonus(data: dict[str, Any], handle: str) -> float:
+    by = (data.get("endorsements") or {}).get(handle.lower(), {}).get("by", [])
+    return min(ENDORSE_MAX, ENDORSE_POINTS * len(by))
 
 
 def save(data: dict[str, Any], path: Path = WATCHLIST_PATH) -> None:
@@ -62,7 +112,7 @@ def record_suggestions(data: dict[str, Any], suggestions: list[AccountSuggestion
                "followers": s.followers, "verified_type": s.verified_type, "flags": list(s.flags),
                "topics": sorted({topic, *existing.get(s.handle.lower(), {}).get("topics", [])}),
                "evidence": s.sample_post_urls[:3], "suggested_on": today.isoformat(),
-               "description": s.description[:160]}
+               "description": s.description[:160], "role": s.role}
         if s.handle.lower() in existing:
             if s.score > float(existing[s.handle.lower()].get("score") or 0):
                 existing[s.handle.lower()].update(row)
@@ -93,14 +143,21 @@ def auto_manage(data: dict[str, Any], today: Optional[date] = None) -> list[str]
     for s in list(data["suggested"]):
         if s["handle"].lower() in approved or len(data["approved"]) >= data["max_accounts"]:
             continue
-        if s.get("flags") or float(s.get("score") or 0) < float(data["auto_add_min_score"]):
+        ok, effective, _why = qualifies(data, s)
+        if not ok:
             continue
         data["approved"].append({"handle": s["handle"], "id": s["id"], "group": "agent", "name": s["name"],
                                  "approved_by": "agent", "added_on": today.isoformat(), "topics": s.get("topics", []),
-                                 "first_checked": today.isoformat()})
+                                 "first_checked": today.isoformat(),
+                                 # kept so the rules can be re-applied later without another X lookup
+                                 "verified_type": s.get("verified_type"), "followers": s.get("followers"), "role": s.get("role"),
+                                 "posts_on_topic": s.get("posts_on_topic"), "score": s.get("score"), "flags": list(s.get("flags") or [])})
         data["suggested"].remove(s)
         approved.add(s["handle"].lower())
-        changes.append(f"added @{s['handle']} (score {s['score']}, {s['posts_on_topic']} on-topic posts, {s.get('followers')} followers)")
+        endorsed = (data.get("endorsements") or {}).get(s["handle"].lower(), {}).get("by", [])
+        changes.append(f"added @{s['handle']} (score {effective:.1f}, {s.get('verified_type')} verified, {s.get('followers')} followers"
+                       + (f", {s['role']}" if s.get("role") else "") + (f", {s['posts_on_topic']} on-topic posts" if s.get("posts_on_topic") else "")
+                       + (f", mentioned by @{', @'.join(endorsed[:3])}" if endorsed else "") + ")")
     # remove (agent-added only)
     cutoff = today - timedelta(days=int(data["auto_remove_after_days"]))
     for a in list(data["approved"]):

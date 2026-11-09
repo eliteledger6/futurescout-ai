@@ -4,28 +4,11 @@
 # that stayed silent; accounts with approved_by: owner are never removed automatically.
 # Every change is logged under `changes`. Edit freely; the file is rewritten by the agent.
 
-auto_manage: false
-auto_add_min_score: 6.0
+auto_manage: true
+auto_add_min_score: 8.0
 auto_remove_after_days: 90
-max_accounts: 60
+max_accounts: 200
 suggested:
-- handle: SemiconductorsX
-  id: '731152829289762816'
-  name: Semiconductor Insider
-  score: 20.75
-  posts_on_topic: 8
-  followers: 17697
-  verified_type: blue
-  flags: []
-  topics:
-  - high bandwidth memory
-  evidence:
-  - https://x.com/SemiconductorsX/status/2118609398910300162
-  - https://x.com/SemiconductorsX/status/2119317942424961270
-  - https://x.com/SemiconductorsX/status/2117586556253077743
-  suggested_on: '2026-11-08'
-  description: Semiconductor Insider • Independent news & analysis on AI Hardware, Semiconductors & Electronics | Supply chains,
-    fabs & market insights.
 - handle: MojoTricks
   id: '1480746975435771905'
   name: MojoTrick
@@ -43,21 +26,6 @@ suggested:
   - https://x.com/MojoTricks/status/2118007051578441934
   suggested_on: '2026-11-08'
   description: Curating the latest in AI, semiconductors, EVs & global tech breakthroughs | Not affiliated with any brand
-- handle: eeNewsEurope
-  id: '515325247'
-  name: eeNews Europe
-  score: 6.34
-  posts_on_topic: 1
-  followers: 6865
-  verified_type: blue
-  flags: []
-  topics:
-  - high bandwidth memory
-  evidence:
-  - https://x.com/eeNewsEurope/status/2118674900655198274
-  suggested_on: '2026-11-08'
-  description: eeNews Europe is an online publication that brings news, analysis, product and design information to the electronics
-    engineering community
 - handle: csidetrader
   id: '468530937'
   name: Seaside Trader
@@ -281,19 +249,23 @@ suggested:
 - handle: quantumboomnow
   id: '1962246440975052800'
   name: quantumBOOM.ai
-  score: 1.16
-  posts_on_topic: 1
-  followers: 454
+  score: 5.16
+  posts_on_topic: 3
+  followers: 456
   verified_type: blue
   flags:
   - fewer than 1000 followers
   topics:
   - high bandwidth memory
+  - quantum error correction
   evidence:
-  - https://x.com/quantumboomnow/status/2118084437154177230
-  suggested_on: '2026-11-08'
+  - https://x.com/quantumboomnow/status/2117798018732736813
+  - https://x.com/quantumboomnow/status/2117456541313892502
+  - https://x.com/quantumboomnow/status/2118808093962178745
+  suggested_on: '2026-11-09'
   description: Everything about frontier technologies (semi, AI, quantum compute) AI researchers and hedge fund quants would
     care about.
+  role: null
 - handle: MacDermidAlpha
   id: '210654886'
   name: MacDermid Alpha Electronics Solutions
@@ -581,6 +553,4677 @@ suggested:
   - https://x.com/snow_trades/status/2118404412188016785
   suggested_on: '2026-11-08'
   description: If it was easy everyone would have done it.
+- handle: CannaCatMeme
+  id: '2082971207239098368'
+  name: CannaCat
+  score: 5.95
+  posts_on_topic: 1
+  followers: 2794
+  verified_type: blue
+  flags: []
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/CannaCatMeme/status/2118570939940249875
+  suggested_on: '2026-11-09'
+  description: 'NFT: https://t.co/pMSmyhCcow SHOPIFY: https://t.co/ySexjGCIoH COPYCAT: https://t.co/mB6W722c2x PONS: https://t.co/VaQA4t9mIV'
+  role: null
+- handle: hotfixjobs
+  id: '2030851943489495040'
+  name: Hotfix Jobs
+  score: 5.91
+  posts_on_topic: 1
+  followers: 2578
+  verified_type: blue
+  flags: []
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/hotfixjobs/status/2117316474377576849
+  suggested_on: '2026-11-09'
+  description: The hiring system built for agents. Jobs, applications, interviews and offers. All run from Claude or ChatGPT.
+  role: null
+- handle: thanhhuyenweb3
+  id: '1652505017641996289'
+  name: Thanh Huyền
+  score: 5.77
+  posts_on_topic: 1
+  followers: 5940
+  verified_type: none
+  flags: []
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/thanhhuyenweb3/status/2117825581404598350
+  suggested_on: '2026-11-09'
+  description: Web3 Enthusiast | Content Creator | Sharing alpha gems & community-driven projects DM for partnership / Ambassador
+  role: null
+- handle: dataquestindia
+  id: '44111067'
+  name: Dataquest
+  score: 5.67
+  posts_on_topic: 1
+  followers: 4714
+  verified_type: none
+  flags: []
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/dataquestindia/status/2118575766523060647
+  suggested_on: '2026-11-09'
+  description: India's largest IT publication
+  role: null
+- handle: NanotechPapers
+  id: '130343557'
+  name: Nanotechnology Papers
+  score: 5.66
+  posts_on_topic: 1
+  followers: 4519
+  verified_type: none
+  flags: []
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/NanotechPapers/status/2117556580518420957
+  suggested_on: '2026-11-09'
+  description: 'New Nanotechnology Papers papers from https://t.co/SW9JBMzPYT: quantum dots, wires, wells, spintronics. Thank
+    you to arXiv for use of its open access interopera'
+  role: null
+- handle: liranzoai
+  id: '2185248551'
+  name: liranzo.ai
+  score: 5.57
+  posts_on_topic: 1
+  followers: 1163
+  verified_type: blue
+  flags: []
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/liranzoai/status/2117451707000979492
+  suggested_on: '2026-11-09'
+  description: 🚀 All-in-One AI Creative Platform | Video • Images • Music • Voice • UGC | Multiple AI Models, One Platform
+    | Create • Automate • Monetize.
+  role: null
+- handle: flexitube
+  id: '947440448'
+  name: flexi
+  score: 4.21
+  posts_on_topic: 3
+  followers: 51
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/flexitube/status/2119158548282155111
+  - https://x.com/flexitube/status/2118073506688913503
+  - https://x.com/flexitube/status/2118434809722622245
+  suggested_on: '2026-11-09'
+  description: https://t.co/JZWw0fJWNi backward forecasts
+  role: null
+- handle: agenticgeni
+  id: '2067625770953080832'
+  name: Agentic Geni
+  score: 3.96
+  posts_on_topic: 5
+  followers: 29
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  - empty profile description
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/agenticgeni/status/2118901373827973155
+  - https://x.com/agenticgeni/status/2118810788785979768
+  - https://x.com/agenticgeni/status/2118221958693453991
+  suggested_on: '2026-11-09'
+  description: ''
+  role: null
+- handle: Ventureburn
+  id: '270246051'
+  name: Ventureburn
+  score: 2.74
+  posts_on_topic: 1
+  followers: 17387
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/Ventureburn/status/2119416149071041012
+  suggested_on: '2026-11-09'
+  description: Your source for global trends in crypto, AI, startups & VC. The official Twitter account of https://t.co/dcHdxg2k8R.
+  role: null
+- handle: mdali97982
+  id: '1603302127232634880'
+  name: jiray.base.eth 🟦🍌
+  score: 2.5
+  posts_on_topic: 1
+  followers: 9966
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/mdali97982/status/2117794578397032543
+  suggested_on: '2026-11-09'
+  description: Exploring Crypto | NFTs | Web3 | @base OG 🟦
+  role: null
+- handle: BottleneckFindr
+  id: '1674792088062525454'
+  name: Bottleneck Investor
+  score: 2.0
+  posts_on_topic: 1
+  followers: 3144
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/BottleneckFindr/status/2117353979621347794
+  suggested_on: '2026-11-09'
+  description: No BS. No regurgitating other users AI slop. Long on asymmetric bottlenecks. Swing trading overreactions. DM
+    me ur thesis! Nothing I post is financial advice!
+  role: null
+- handle: NewsRamp_Alerts
+  id: '167432266'
+  name: NewsRamp
+  score: 1.88
+  posts_on_topic: 1
+  followers: 2423
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/NewsRamp_Alerts/status/2119241958770004256
+  suggested_on: '2026-11-09'
+  description: We curate press release newswire content to enhance discoverability and engagement. Visit https://t.co/sU28qMJt0C
+    (and search company name) for full stories.
+  role: null
+- handle: chris_uk2026
+  id: '2025223970350370816'
+  name: ChrisUK2026
+  score: 1.67
+  posts_on_topic: 2
+  followers: 47
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/chris_uk2026/status/2118313414468530540
+  - https://x.com/chris_uk2026/status/2117570230536847444
+  suggested_on: '2026-11-09'
+  description: Focusing on technology, cyber criminals. Cybercrime cyber security and the latest Apple Google Microsoft Tech
+    Hardware mobile AI news
+  role: null
+- handle: Fact_Me_Now
+  id: '1685512702578331648'
+  name: Fact Me Now
+  score: 1.59
+  posts_on_topic: 1
+  followers: 1228
+  verified_type: blue
+  flags:
+  - empty profile description
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/Fact_Me_Now/status/2118662573339910262
+  suggested_on: '2026-11-09'
+  description: ''
+  role: null
+- handle: TheArthiAI
+  id: '2009320756346540032'
+  name: The Arthi AI Collective
+  score: 1.36
+  posts_on_topic: 1
+  followers: 73
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/TheArthiAI/status/2117629552331735461
+  suggested_on: '2026-11-09'
+  description: I help you make sense of AI. 📍Chennai, India 🇮🇳 ✨ 10k+ followers (LinkedIn, Instagram, Medium, YouTube) 🎤 Speaker
+    | Educator | Creator | Founder
+  role: Founder
+- handle: TheFluxLedger
+  id: '741680094079377408'
+  name: FluxLedger
+  score: 1.3
+  posts_on_topic: 1
+  followers: 1990
+  verified_type: none
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/TheFluxLedger/status/2118664793695670597
+  suggested_on: '2026-11-09'
+  description: Crypto & Web3 Media News • Alpha • Airdrops • Projects Collabs & Promotions → DM Ambassador @inter_link
+  role: null
+- handle: MunnaDomainer
+  id: '1363397481371893761'
+  name: SI Munna
+  score: 1.19
+  posts_on_topic: 1
+  followers: 1532
+  verified_type: none
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/MunnaDomainer/status/2119336116814024829
+  suggested_on: '2026-11-09'
+  description: 'I turn the idea into the #Domain name; #BrandNaming expert. Buy | Sell | Broker | Invest Email: simunna007@gmail.com'
+  role: null
+- handle: LLLMagentic
+  id: '2109296783687864322'
+  name: AI LLM
+  score: 3.17
+  posts_on_topic: 2
+  followers: 471
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - AI agents
+  - vision-language-action model
+  evidence:
+  - https://x.com/LLLMagentic/status/2118385310031597662
+  - https://x.com/LLLMagentic/status/2118385210148483529
+  suggested_on: '2026-11-09'
+  description: All things AI, Agentic and updated development in this world race towards dominance in AI.
+  role: null
+- handle: TechThought_org
+  id: '1010938256144420864'
+  name: TechThought.org
+  score: 1.11
+  posts_on_topic: 1
+  followers: 412
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/TechThought_org/status/2117316365715484896
+  suggested_on: '2026-11-09'
+  description: '#ThinkTank for NextGen Technology, thought leadership, multidisciplinary #Research & the latest in Tech: #AI
+    #AGI #MultiAgent #RSI #Tokenomics #HPC #Quant++'
+  role: null
+- handle: _aicentral
+  id: '1654982826251415553'
+  name: AI Central - Tutorials for ChatGPT, Claude & AI
+  score: 0.93
+  posts_on_topic: 1
+  followers: 268
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/_aicentral/status/2118969286320411040
+  suggested_on: '2026-11-09'
+  description: 🔗 https://t.co/i0aCzbmVw7 – Join 300,000+ people learning AI with our curated reviews every week Subscribe
+    and receive a $41 Gift 🎁
+  role: null
+- handle: scilightpress
+  id: '1602831936501604352'
+  name: Scilight Science
+  score: 0.77
+  posts_on_topic: 1
+  followers: 187
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/scilightpress/status/2118505976878006662
+  suggested_on: '2026-11-09'
+  description: Scilight Press is a value-driven publishing house dedicated to disseminating high-quality research output worldwide.
+  role: null
+- handle: neil_adc
+  id: '1281587478462263297'
+  name: Neil Ryan 🪄 Creative Webflow Magician
+  score: 0.66
+  posts_on_topic: 1
+  followers: 454
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/neil_adc/status/2119434303264461051
+  suggested_on: '2026-11-09'
+  description: 🇵🇭| Webflow Dev | Aiding startups enhance online presence with impactful designs & scalable @webflow Building
+    @alabdesignco
+  role: null
+- handle: MartinDaya3
+  id: '1565728856555737088'
+  name: Mario
+  score: 0.34
+  posts_on_topic: 1
+  followers: 69
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/MartinDaya3/status/2119281541486719097
+  suggested_on: '2026-11-09'
+  description: தமிழன் 🖤
+  role: null
+- handle: Cybernorseab
+  id: '2038590672697995264'
+  name: Cybernorse
+  score: -0.18
+  posts_on_topic: 1
+  followers: 21
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/Cybernorseab/status/2119132418108199040
+  suggested_on: '2026-11-09'
+  description: 'Cybernorse AB offer 3S: robust Security, tailored Solutions, comprehensive Services and to drive digital growth
+    securely.'
+  role: null
+- handle: quint_india
+  id: '1504057880475222019'
+  name: Quint Consulting Services
+  score: -0.74
+  posts_on_topic: 1
+  followers: 18
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/quint_india/status/2118243982778236979
+  suggested_on: '2026-11-09'
+  description: '30+ years driving global digital transformation. Connect people, tech, leadership for successful international
+    change. #DigitalTransformation #GlobalExperience'
+  role: null
+- handle: honestlykhaleel
+  id: '2044379564751699968'
+  name: MOHAMMED ABDUL KHALEEL
+  score: -0.8
+  posts_on_topic: 1
+  followers: 16
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/honestlykhaleel/status/2118647857674867052
+  suggested_on: '2026-11-09'
+  description: Finding the best AI tools so you don't have to. Free tools, hidden gems & deals worth stealing.
+  role: null
+- handle: VinobaM1
+  id: '1514425816918409220'
+  name: Vinoba M
+  score: -0.85
+  posts_on_topic: 1
+  followers: 14
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/VinobaM1/status/2119275235996221890
+  suggested_on: '2026-11-09'
+  description: Works @HPE From Chennai, India. Long Bike rides, movies and music makes my life complete 💯
+  role: null
+- handle: gmbbriefcasecom
+  id: '1850061114626932737'
+  name: GMB Briefcase - GMB Management Tool
+  score: -0.89
+  posts_on_topic: 1
+  followers: 13
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/gmbbriefcasecom/status/2118294270163747127
+  suggested_on: '2026-11-09'
+  description: All-in-one GBP Management for SMBs & Agencies 🚀 Save 5+ hours/week | Boost local rankings | Scale your local
+    SEO 📧 DM for demo → https://t.co/tbok3AXdxT
+  role: null
+- handle: TownmediaLabs
+  id: '1631202370280476672'
+  name: TML | AI Agency
+  score: -1.2
+  posts_on_topic: 1
+  followers: 2
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/TownmediaLabs/status/2119582576298078591
+  suggested_on: '2026-11-09'
+  description: AI agency 🤖 Daily AI tools, launches, tutorials & prompts you can actually use. Building the AI community.
+    DM for collabs & sponsorships.
+  role: null
+- handle: BBestSoftwares
+  id: '1817415895209140224'
+  name: Better Best Software Solutions
+  score: -1.52
+  posts_on_topic: 1
+  followers: 3
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/BBestSoftwares/status/2118904531538845882
+  suggested_on: '2026-11-09'
+  description: We at Better Best Software Solutions provide extensive 5+ years of expertise in chatbot development, generative
+    AI Applications and Automation.
+  role: null
+- handle: ThiruPhDAI
+  id: '2105143544000483328'
+  name: Thiru AI Researcher
+  score: -1.52
+  posts_on_topic: 1
+  followers: 3
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/ThiruPhDAI/status/2119256599391015238
+  suggested_on: '2026-11-09'
+  description: Thirumurugan M AI Technical Architect | PhD Scholar (AI & Data Science) Generative AI | LLMs | RAG | Agentic
+    AI | MLOps | AWS | Azure | GCP 14+ Years
+  role: null
+- handle: hyzhao23805
+  id: '1812478537418641408'
+  name: Haoyu Zhao
+  score: -1.7
+  posts_on_topic: 1
+  followers: 2
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/hyzhao23805/status/2117553820301717664
+  suggested_on: '2026-11-09'
+  description: PhD Student @ UCL AI Centre | Researching LLM Agents, Continual Learning & Recursive Self-Improvement
+  role: null
+- handle: ItsFutun
+  id: '1943608636602773504'
+  name: Futun
+  score: -2.0
+  posts_on_topic: 1
+  followers: 0
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/ItsFutun/status/2119381279749857473
+  suggested_on: '2026-11-09'
+  description: Tech, student life & career insights.
+  role: null
+- handle: tillmantino
+  id: '1196753154'
+  name: InfoFina.com
+  score: -3.94
+  posts_on_topic: 1
+  followers: 116
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  - empty profile description
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/tillmantino/status/2119410060002800031
+  suggested_on: '2026-11-09'
+  description: ''
+  role: null
+- handle: raghub23
+  id: '2081693789211725824'
+  name: Raghu
+  score: -6.0
+  posts_on_topic: 1
+  followers: 0
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  - empty profile description
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/raghub23/status/2118668290688204872
+  suggested_on: '2026-11-09'
+  description: ''
+  role: null
+- handle: sksinghdev2
+  id: '1849857539963486217'
+  name: Santosh Kumar
+  score: -6.0
+  posts_on_topic: 1
+  followers: 0
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  - empty profile description
+  topics:
+  - AI agents
+  evidence:
+  - https://x.com/sksinghdev2/status/2118598428980859179
+  suggested_on: '2026-11-09'
+  description: ''
+  role: null
+- handle: trossenrobotics
+  id: '8935932'
+  name: Trossen Robotics
+  score: 5.74
+  posts_on_topic: 1
+  followers: 5434
+  verified_type: none
+  flags: []
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/trossenrobotics/status/2117633584685109385
+  suggested_on: '2026-11-09'
+  description: Your Physical AI Partner
+  role: null
+- handle: Ishant23April
+  id: '1816175349778243584'
+  name: Ishant
+  score: 5.5
+  posts_on_topic: 1
+  followers: 1009
+  verified_type: blue
+  flags: []
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/Ishant23April/status/2117435194504306880
+  suggested_on: '2026-11-09'
+  description: 2x Intern | Software Engineer
+  role: null
+- handle: muskan_kalra24
+  id: '1034155709779271680'
+  name: Muskan Kalra
+  score: 4.48
+  posts_on_topic: 1
+  followers: 9464
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/muskan_kalra24/status/2117996502077632794
+  suggested_on: '2026-11-09'
+  description: Physical Ai and Crypto | ex Head of Ecosystem @vana | ex Head of Devrel at @0xPolygon Labs | Views are my own..
+  role: Head of Ecosystem
+- handle: Weihang404
+  id: '1381592044120928261'
+  name: Weihang Guo ✈️ CoRL
+  score: 3.3
+  posts_on_topic: 2
+  followers: 628
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/Weihang404/status/2119202143420690744
+  - https://x.com/Weihang404/status/2118942866340741244
+  suggested_on: '2026-11-09'
+  description: 'PhD @RiceCompSci #robotics #worldmodels #videogeneration Seeking internships Spring / Fall 2027. DM me Views
+    are my own'
+  role: null
+- handle: MichaelBlazik
+  id: '712184484410597376'
+  name: Michael Blažík
+  score: 1.89
+  posts_on_topic: 1
+  followers: 246
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/MichaelBlazik/status/2118360072044855302
+  suggested_on: '2026-11-09'
+  description: CEO and co-founder at https://t.co/onHNngEVtp We build AI that predicts human behavior under pressure
+  role: CEO
+- handle: hermanndelcampo
+  id: '2801721366'
+  name: Hermann del Campo
+  score: 1.83
+  posts_on_topic: 1
+  followers: 213
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/hermanndelcampo/status/2117894124732809671
+  suggested_on: '2026-11-09'
+  description: Founder @raiva + @Voidgap. AI Researching and try to evidence based AI. No hype BS. Architecture beats Model
+    Black Boxes.
+  role: Founder
+- handle: bearbaba168
+  id: '1663147559345623040'
+  name: Bearπ² .ink | ETHGas ⛽
+  score: 1.51
+  posts_on_topic: 1
+  followers: 3212
+  verified_type: none
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/bearbaba168/status/2118938890052718911
+  suggested_on: '2026-11-09'
+  description: '#Airdrop #BTC #ETH #BNB 🌸🌸🌸 #Holder #Trader with #MetaverseBrowser #Gnoma $FAN Maxi (🧙‍♂️,🧙‍♂️) KGeN 🧙,⛺(🧙,🧙)
+    | @MorphLayer'
+  role: null
+- handle: IJspI
+  id: '1328852733915508743'
+  name: 𝒥𝓈𝓅
+  score: 1.38
+  posts_on_topic: 1
+  followers: 767
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/IJspI/status/2118021542231585029
+  suggested_on: '2026-11-09'
+  description: 🈴 🈴
+  role: null
+- handle: airoa_org
+  id: '1897667191811760129'
+  name: AI Robot Association (AIRoA)
+  score: 1.33
+  posts_on_topic: 1
+  followers: 679
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/airoa_org/status/2118735166466081066
+  suggested_on: '2026-11-09'
+  description: The AI Robot Association (AIRoA) creates open platforms for AI and robotics.
+  role: null
+- handle: carlosearias
+  id: '59834142'
+  name: Carlos Arias
+  score: 1.19
+  posts_on_topic: 1
+  followers: 490
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/carlosearias/status/2117656401426202942
+  suggested_on: '2026-11-09'
+  description: Senior Software Engineer
+  role: null
+- handle: robotics247
+  id: '1346191502528143364'
+  name: Robotics247
+  score: 0.93
+  posts_on_topic: 1
+  followers: 844
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/robotics247/status/2117981638042763700
+  suggested_on: '2026-11-09'
+  description: A B2B news site covering real-world robot applications in manufacturing, supply chain, and other sectors.
+  role: null
+- handle: RichGriese
+  id: '36185541'
+  name: Rich Griese
+  score: 0.87
+  posts_on_topic: 1
+  followers: 234
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/RichGriese/status/2117602330321322441
+  suggested_on: '2026-11-09'
+  description: Music, meditation & more... https://t.co/N1yNDXGWm4
+  role: null
+- handle: paisi_ai
+  id: '2078545837307600898'
+  name: Physical AI Safety Institute
+  score: 0.84
+  posts_on_topic: 1
+  followers: 220
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/paisi_ai/status/2117765999747633501
+  suggested_on: '2026-11-09'
+  description: Growing the field working on interpretability, alignment, and control for robot foundation models. Fellowships,
+    workshops, courses. Get involved!
+  role: null
+- handle: Oahid2178
+  id: '2042160959637139456'
+  name: Oahid
+  score: 0.8
+  posts_on_topic: 1
+  followers: 635
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/Oahid2178/status/2117469040746872883
+  suggested_on: '2026-11-09'
+  description: Building in web3 | Exploring decentralized tech
+  role: null
+- handle: W30259893
+  id: '1239748103126650881'
+  name: Weichen FAN
+  score: 0.8
+  posts_on_topic: 1
+  followers: 201
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/W30259893/status/2118528821301575715
+  suggested_on: '2026-11-09'
+  description: Ph.D. Student, MMLab@NTU, Nanyang Technological University
+  role: null
+- handle: iCleanAI
+  id: '2095946293034266624'
+  name: Hekate
+  score: 0.78
+  posts_on_topic: 1
+  followers: 189
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/iCleanAI/status/2117326559782797749
+  suggested_on: '2026-11-09'
+  description: News, useful tools & practical tips.
+  role: null
+- handle: owainthorp
+  id: '2085739313677975552'
+  name: Owain Thorp
+  score: 0.67
+  posts_on_topic: 1
+  followers: 149
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/owainthorp/status/2118662869680275812
+  suggested_on: '2026-11-09'
+  description: Techically a member of staff @Machenta_
+  role: null
+- handle: kdnbmb
+  id: '2077873241406791680'
+  name: Intius
+  score: 0.62
+  posts_on_topic: 1
+  followers: 132
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/kdnbmb/status/2117883112692539627
+  suggested_on: '2026-11-09'
+  description: '- Independent ML researcher - Testing AI models. DMs are open for anything'
+  role: null
+- handle: spectrumwebco
+  id: '2091400184265863168'
+  name: Spectrum Web Co
+  score: 0.1
+  posts_on_topic: 1
+  followers: 40
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/spectrumwebco/status/2117473291451637972
+  suggested_on: '2026-11-09'
+  description: Spectrum Web Co is our high-impact software development agency specialising in secure, scalable dApps and cloud-native
+    infrastructure. We build with precision.
+  role: null
+- handle: decodedbyvik
+  id: '1916660978'
+  name: Vik
+  score: -0.01
+  posts_on_topic: 1
+  followers: 31
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/decodedbyvik/status/2119502840523813316
+  suggested_on: '2026-11-09'
+  description: I write about insurtech, healthtech, consumer tech, and AI
+  role: null
+- handle: just_dan_inge
+  id: '247770609'
+  name: Dan Inge
+  score: -0.05
+  posts_on_topic: 1
+  followers: 28
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/just_dan_inge/status/2118034860912894390
+  suggested_on: '2026-11-09'
+  description: Building robots @vernerobotics
+  role: null
+- handle: extrapolatorai
+  id: '1835583596574502912'
+  name: Extrapolator AI
+  score: -0.1
+  posts_on_topic: 1
+  followers: 25
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/extrapolatorai/status/2118801067412787274
+  suggested_on: '2026-11-09'
+  description: 'Exploring the frontier of Artificial Intelligence: news, models, articles, tutorials & insights that shape
+    tomorrow. https://t.co/OcuwkeQv5R'
+  role: null
+- handle: M_Surazhsky
+  id: '1941795693581987840'
+  name: Michael Surazhsky
+  score: -0.3
+  posts_on_topic: 1
+  followers: 16
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/M_Surazhsky/status/2117641015515308066
+  suggested_on: '2026-11-09'
+  description: I work on AI that works in the physical world, to make it better.
+  role: null
+- handle: LOLML_GmbH
+  id: '1930662494810562560'
+  name: LOLML
+  score: -0.52
+  posts_on_topic: 1
+  followers: 30
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/LOLML_GmbH/status/2117210372382093509
+  suggested_on: '2026-11-09'
+  description: AI & Data Science Lab. We design and develop bespoke AI/ML solutions to solve your hardest business problems.
+  role: null
+- handle: ce_bin49926
+  id: '1813034782982356992'
+  name: Bince
+  score: -0.64
+  posts_on_topic: 1
+  followers: 23
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/ce_bin49926/status/2118329123151995299
+  suggested_on: '2026-11-09'
+  description: Phd in Computer Science @ Zhejiang University
+  role: null
+- handle: shihan_zh
+  id: '1922802369370390529'
+  name: shihanzh
+  score: -0.7
+  posts_on_topic: 1
+  followers: 20
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/shihan_zh/status/2118809385711624516
+  suggested_on: '2026-11-09'
+  description: CS Ph.D. @icaroslab
+  role: null
+- handle: thetrendlab02
+  id: '2091223583280525312'
+  name: The Trend Lab
+  score: -0.8
+  posts_on_topic: 1
+  followers: 16
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/thetrendlab02/status/2117622400648933570
+  suggested_on: '2026-11-09'
+  description: Understand What Comes Next.
+  role: null
+- handle: embodiedaiwatch
+  id: '2108503421775134720'
+  name: Embodied AI Watch
+  score: -0.82
+  posts_on_topic: 1
+  followers: 15
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/embodiedaiwatch/status/2119686224030159276
+  suggested_on: '2026-11-09'
+  description: Tracking the latest breakthroughs in Robotics & Embodied AI — VLA models, humanoids, world models & robot learning.
+  role: null
+- handle: AIooze
+  id: '2104690616172941314'
+  name: AIooze
+  score: -1.22
+  posts_on_topic: 1
+  followers: 6
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/AIooze/status/2117742900268445734
+  suggested_on: '2026-11-09'
+  description: Intelligence in Motion. Daily AI news, plain-English explainers and an AI tool directory for beginners to experts.
+  role: null
+- handle: jack_ben10981
+  id: '2036757783928848385'
+  name: Jack Bennett
+  score: -1.52
+  posts_on_topic: 1
+  followers: 3
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/jack_ben10981/status/2119490613578232038
+  suggested_on: '2026-11-09'
+  description: Creator economy & side hustle mentor. Teaching you to build income streams and design your dream lifestyle.
+    💼💰
+  role: null
+- handle: OwG8SrwelZ3013
+  id: '1859120106741395456'
+  name: Bobby
+  score: -2.0
+  posts_on_topic: 1
+  followers: 0
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/OwG8SrwelZ3013/status/2118648658870821034
+  suggested_on: '2026-11-09'
+  description: あらゆる業界のあらゆる最新情報をお届けします。
+  role: null
+- handle: Robot_AIsignals
+  id: '1918405750658940928'
+  name: The Embodied Era
+  score: -3.69
+  posts_on_topic: 1
+  followers: 65
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  - fewer than 1000 followers
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/Robot_AIsignals/status/2118760580874215844
+  suggested_on: '2026-11-09'
+  description: 20+ Years in Tech. Covering All things Physical AI | Robotics AI | Embodied AI Economics
+  role: null
+- handle: neo_logos_
+  id: '2094779202318860288'
+  name: The Frontier | Tech & News
+  score: -3.91
+  posts_on_topic: 1
+  followers: 39
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  - fewer than 1000 followers
+  topics:
+  - vision-language-action model
+  evidence:
+  - https://x.com/neo_logos_/status/2117791896957255928
+  suggested_on: '2026-11-09'
+  description: Frontier-tech intelligence for investors, builders and operators. Main themes ✨ AI 🤖 Robotics ⚛️ Quantum 🧬
+    Biotech 🛡️ Cybersecurity
+  role: null
+- handle: YouSolidLedger
+  id: '976853333574144001'
+  name: SolidLedger Studio
+  score: 6.79
+  posts_on_topic: 6
+  followers: 193
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  - fewer than 1000 followers
+  topics:
+  - quantum error correction
+  evidence:
+  - https://x.com/YouSolidLedger/status/2118371688383500746
+  - https://x.com/YouSolidLedger/status/2118826109647155333
+  - https://x.com/YouSolidLedger/status/2118371709346623518
+  suggested_on: '2026-11-09'
+  description: 'DAO Community #AI #Blockchain #ML #QuantumComputing for Business #PoweredByAragon SOLIDSTOCK Token- $SSTO'
+  role: null
+- handle: barronsonline
+  id: '20449296'
+  name: Barron's
+  score: 6.61
+  posts_on_topic: 1
+  followers: 408689
+  verified_type: business
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - quantum error correction
+  evidence:
+  - https://x.com/barronsonline/status/2118313131290108174
+  suggested_on: '2026-11-09'
+  description: The world's premier investing publication since 1921. For customer support, visit https://t.co/HkyUtq6BNr
+  role: null
+- handle: financespotnews
+  id: '1627439165246783489'
+  name: Finance Spot
+  score: 5.88
+  posts_on_topic: 1
+  followers: 2423
+  verified_type: blue
+  flags: []
+  topics:
+  - quantum error correction
+  evidence:
+  - https://x.com/financespotnews/status/2118363106237677860
+  suggested_on: '2026-11-09'
+  description: News source delivering unbiased coverage of all things finance. (NOT FINANCIAL ADVICE.)
+  role: null
+- handle: Cult_Of_Token
+  id: '112778517'
+  name: Hajer Al Qassimi
+  score: 5.84
+  posts_on_topic: 1
+  followers: 2209
+  verified_type: blue
+  flags: []
+  topics:
+  - quantum error correction
+  evidence:
+  - https://x.com/Cult_Of_Token/status/2118391255394570652
+  suggested_on: '2026-11-09'
+  description: Throw me to the wolves, & I'll come back leading the pack. Chief Digital & Data Officer
+  role: null
+- handle: kannagoldsun
+  id: '45096093'
+  name: Kannan Subbiah
+  score: 5.75
+  posts_on_topic: 1
+  followers: 1786
+  verified_type: blue
+  flags: []
+  topics:
+  - quantum error correction
+  evidence:
+  - https://x.com/kannagoldsun/status/2117784318647161288
+  suggested_on: '2026-11-09'
+  description: Fractional CxO | Cyber Resilience | IT Governance | Data Protection | Independent Director
+  role: null
+- handle: JoKiddo
+  id: '32754740'
+  name: Jo Pihl ✨⚡️
+  score: 5.64
+  posts_on_topic: 1
+  followers: 1388
+  verified_type: blue
+  flags: []
+  topics:
+  - quantum error correction
+  evidence:
+  - https://x.com/JoKiddo/status/2118340346757484953
+  suggested_on: '2026-11-09'
+  description: “If you want your children to be intelligent, read them fairy tales. If you want them to be more intelligent,
+    read them more fairy tales.” Albert Einstein
+  role: null
+- handle: PipelineWire
+  id: '27183959'
+  name: Pipeline
+  score: 5.43
+  posts_on_topic: 1
+  followers: 2686
+  verified_type: none
+  flags: []
+  topics:
+  - quantum error correction
+  evidence:
+  - https://x.com/PipelineWire/status/2118696203684544687
+  suggested_on: '2026-11-09'
+  description: A global publication focused on technology for service providers.
+  role: null
+- handle: jreuben1
+  id: '18364654'
+  name: (((JReuben1)))
+  score: 5.36
+  posts_on_topic: 1
+  followers: 2267
+  verified_type: none
+  flags: []
+  topics:
+  - quantum error correction
+  evidence:
+  - https://x.com/jreuben1/status/2119071855445147870
+  suggested_on: '2026-11-09'
+  description: 'AI, CUDA HPC, JAX / PyTorch, Claude, Rust, MLIR, Software Architecture, 3D-QSAR, 3D shape analysis: MSc. Bioinformatics,
+    Grad Dip Biotech, BSc Comp Sci'
+  role: null
+- handle: noMukh
+  id: '1415832938072084480'
+  name: mukh
+  score: 5.05
+  posts_on_topic: 1
+  followers: 1125
+  verified_type: none
+  flags: []
+  topics:
+  - quantum error correction
+  evidence:
+  - https://x.com/noMukh/status/2119265471250022469
+  suggested_on: '2026-11-09'
+  description: local cat colony feeder
+  role: null
+- handle: TheFrankzy
+  id: '1445660613879812100'
+  name: frankzy
+  score: 4.03
+  posts_on_topic: 2
+  followers: 3382
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - quantum error correction
+  evidence:
+  - https://x.com/TheFrankzy/status/2119452287995089370
+  - https://x.com/TheFrankzy/status/2117895397473480885
+  suggested_on: '2026-11-09'
+  description: 37 / Crypto / Stocks / Finance
+  role: null
+- handle: AIStockSavvy
+  id: '72858967'
+  name: Hardik Shah
+  score: 3.14
+  posts_on_topic: 1
+  followers: 43455
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - quantum error correction
+  evidence:
+  - https://x.com/AIStockSavvy/status/2118327657486041188
+  suggested_on: '2026-11-09'
+  description: Breaking US stock news, earnings & analyst calls, AI-powered | Trade on facts, not hype | Turn on 🔔 so you
+    never miss a move | NFA
+  role: null
+- handle: simantavers
+  id: '2087903628371931136'
+  name: Simantavers
+  score: 3.55
+  posts_on_topic: 2
+  followers: 112
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - 6G
+  - quantum error correction
+  evidence:
+  - https://x.com/simantavers/status/2118941890821378230
+  - https://x.com/simantavers/status/2118942165489557796
+  suggested_on: '2026-11-09'
+  description: Associate Professor of Physics | Exploring AI, Quantum Science & Technology | Founder, https://t.co/VTM4GzvWRp
+    | Writing Quantum India Brief
+  role: Founder
+- handle: drmikemyers
+  id: '1432465841728200705'
+  name: Drmikemyers
+  score: 1.32
+  posts_on_topic: 1
+  followers: 656
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - quantum error correction
+  evidence:
+  - https://x.com/drmikemyers/status/2119395887503806721
+  suggested_on: '2026-11-09'
+  description: AI and Quantum Commercialization Strategy and Development | Business Development | Corporate Change | Executive
+    Leadership |
+  role: null
+- handle: jbhall56
+  id: '21424048'
+  name: 'Jeff Hall - PCI Guru - #StandWithUkraine'
+  score: 0.97
+  posts_on_topic: 1
+  followers: 933
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - quantum error correction
+  evidence:
+  - https://x.com/jbhall56/status/2119546550883922207
+  suggested_on: '2026-11-09'
+  description: PCI QSA, vCISO and all around devil's advocate. Been in IT and security for a very long time. Maybe too long.
+  role: null
+- handle: _i_B_i_
+  id: '1632091370918739969'
+  name: BarQ
+  score: 0.88
+  posts_on_topic: 1
+  followers: 240
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - quantum error correction
+  evidence:
+  - https://x.com/_i_B_i_/status/2119436462953214219
+  suggested_on: '2026-11-09'
+  description: My time is coming … $QTC $XEL $BTC
+  role: null
+- handle: StatMechanics
+  id: '83308930'
+  name: Statistical Mechanics Papers
+  score: 0.61
+  posts_on_topic: 1
+  followers: 404
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - quantum error correction
+  evidence:
+  - https://x.com/StatMechanics/status/2118048129245155809
+  suggested_on: '2026-11-09'
+  description: 'New Statistical Mechanics papers from https://t.co/703QRodm6E: phase transitions, thermodynamics. Thank you
+    to arXiv for use of its open access interoperability'
+  role: null
+- handle: SlimAssiliX
+  id: '2072669962624253952'
+  name: Simo
+  score: 0.46
+  posts_on_topic: 1
+  followers: 92
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - quantum error correction
+  evidence:
+  - https://x.com/SlimAssiliX/status/2119415676565614816
+  suggested_on: '2026-11-09'
+  description: AI, proven, not promised
+  role: null
+- handle: awais_khawar
+  id: '833285666'
+  name: Awais Khawar, PhD | 2x books | AI/Cloud Expert
+  score: 0.11
+  posts_on_topic: 1
+  followers: 129
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - quantum error correction
+  evidence:
+  - https://x.com/awais_khawar/status/2118855963557896676
+  suggested_on: '2026-11-09'
+  description: Helping enterprises build agentic AI systems (AWS 3x | Azure 3x | Google AgentSpace & ADK | CrewAI | LangGraph
+    | 5G | WiFi)
+  role: null
+- handle: QuantumxlabsISR
+  id: '1997365117579849728'
+  name: QuantumX Labs
+  score: -0.02
+  posts_on_topic: 1
+  followers: 30
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - quantum error correction
+  evidence:
+  - https://x.com/QuantumxlabsISR/status/2118014630643511752
+  suggested_on: '2026-11-09'
+  description: Multi-disciplinary, multi spectrum quantum technology company.
+  role: null
+- handle: underthechart
+  id: '1718295299989409792'
+  name: Underchart
+  score: -0.84
+  posts_on_topic: 2
+  followers: 455
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  - fewer than 1000 followers
+  topics:
+  - quantum error correction
+  evidence:
+  - https://x.com/underthechart/status/2118327841536307399
+  - https://x.com/underthechart/status/2118329940718334344
+  suggested_on: '2026-11-09'
+  description: Earnings and press releases from U.S. companies, scored by fixed rules and posted shortly after they come out.
+    Not investment advice.
+  role: null
+- handle: QuicklyQuantum
+  id: '2074269281307803648'
+  name: Quickly Quantum
+  score: -0.89
+  posts_on_topic: 1
+  followers: 13
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - quantum error correction
+  evidence:
+  - https://x.com/QuicklyQuantum/status/2118753244151169115
+  suggested_on: '2026-11-09'
+  description: Quantum computing news you don't need a physics degree to follow. A new briefing every morning, with a Hype
+    Check on every big claim. AI-voiced, human-built.
+  role: null
+- handle: quantumsystmhub
+  id: '2070038718849929216'
+  name: Quantum System Hub
+  score: -2.0
+  posts_on_topic: 1
+  followers: 0
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - quantum error correction
+  evidence:
+  - https://x.com/quantumsystmhub/status/2119052257303879976
+  suggested_on: '2026-11-09'
+  description: ⚛️ Quantum System Hub | Making quantum computing simple. Explore qubits, quantum AI, hardware, cybersecurity,
+    breakthroughs & the future of computing.
+  role: null
+- handle: Thoughtjungle
+  id: '1726085017745682432'
+  name: Thought Jungle
+  score: -2.0
+  posts_on_topic: 1
+  followers: 1
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - quantum error correction
+  evidence:
+  - https://x.com/Thoughtjungle/status/2119445185717293067
+  suggested_on: '2026-11-09'
+  description: A Little Perspective Everyday.
+  role: null
+- handle: KnechtAlfons
+  id: '1488604075109371911'
+  name: Javo67
+  score: -3.49
+  posts_on_topic: 1
+  followers: 325
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  - empty profile description
+  topics:
+  - quantum error correction
+  evidence:
+  - https://x.com/KnechtAlfons/status/2117632894898450697
+  suggested_on: '2026-11-09'
+  description: ''
+  role: null
+- handle: _DukDolan
+  id: '1820552584840855552'
+  name: Duk Dolan
+  score: -3.66
+  posts_on_topic: 1
+  followers: 218
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  - empty profile description
+  topics:
+  - quantum error correction
+  evidence:
+  - https://x.com/_DukDolan/status/2118872452721951178
+  suggested_on: '2026-11-09'
+  description: ''
+  role: null
+- handle: reader_spice
+  id: '4131946607'
+  name: Reader Spice
+  score: -4.44
+  posts_on_topic: 1
+  followers: 36
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  - empty profile description
+  topics:
+  - quantum error correction
+  evidence:
+  - https://x.com/reader_spice/status/2118890974810124650
+  suggested_on: '2026-11-09'
+  description: ''
+  role: null
+- handle: NDTVProfit
+  id: '420943164'
+  name: .
+  score: 6.99
+  posts_on_topic: 1
+  followers: 973216
+  verified_type: business
+  flags:
+  - empty profile description
+  topics:
+  - grid-scale energy storage
+  evidence:
+  - https://x.com/NDTVProfit/status/2117906595770470680
+  suggested_on: '2026-11-09'
+  description: ''
+  role: null
+- handle: hajipurrajesh
+  id: '3366611599'
+  name: Rajesh Kumar Thakur
+  score: 5.98
+  posts_on_topic: 1
+  followers: 3009
+  verified_type: blue
+  flags: []
+  topics:
+  - grid-scale energy storage
+  evidence:
+  - https://x.com/hajipurrajesh/status/2117925276445495350
+  suggested_on: '2026-11-09'
+  description: Journalist @newindianexpress, Delhi, covering BJP, Ministry of Railway,S&T,ShivSena , PMO, Parliament, RSS
+    & RJD Email:rajesh.thakur@newindianexpress.com
+  role: null
+- handle: KKMtweet
+  id: '1022847109848915968'
+  name: KK Mishra
+  score: 5.78
+  posts_on_topic: 1
+  followers: 1901
+  verified_type: blue
+  flags: []
+  topics:
+  - grid-scale energy storage
+  evidence:
+  - https://x.com/KKMtweet/status/2117973890853138855
+  suggested_on: '2026-11-09'
+  description: Civil Services | Public Finance & Policy, Energy, Culture | Runner, Trekker, Non Fiction | Personal Account
+    |
+  role: null
+- handle: takeonedigital
+  id: '960887833983668224'
+  name: Take One
+  score: 5.75
+  posts_on_topic: 1
+  followers: 5585
+  verified_type: none
+  flags: []
+  topics:
+  - grid-scale energy storage
+  evidence:
+  - https://x.com/takeonedigital/status/2117931520212013494
+  suggested_on: '2026-11-09'
+  description: '• News & Entertainment from India to the world • Focus on #Jammu #Kashmir & #Ladakh • Take One Channel goes
+    digital'
+  role: null
+- handle: np_nationpress
+  id: '1863119742057304064'
+  name: NationPress
+  score: 5.62
+  posts_on_topic: 1
+  followers: 1325
+  verified_type: blue
+  flags: []
+  topics:
+  - grid-scale energy storage
+  evidence:
+  - https://x.com/np_nationpress/status/2118028190405001451
+  suggested_on: '2026-11-09'
+  description: NationPress brings you the latest breaking news, in-depth coverage, and updates on India news, global news,
+    politics, business, sports, and entertainment.
+  role: null
+- handle: CBCPoonch
+  id: '1493879716394139655'
+  name: Central Bureau of Communication, Poonch(J&K)
+  score: 2.83
+  posts_on_topic: 2
+  followers: 677
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - grid-scale energy storage
+  evidence:
+  - https://x.com/CBCPoonch/status/2117950811196342445
+  - https://x.com/CBCPoonch/status/2117951409392140380
+  suggested_on: '2026-11-09'
+  description: Official account of Central Bureau of Communication, Ministry of Information & Broadcasting, Govt. of India,
+    Poonch(J&K)
+  role: null
+- handle: MeAmitMishra
+  id: '1309447226758819842'
+  name: Amit Mishra
+  score: 2.41
+  posts_on_topic: 1
+  followers: 8189
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - grid-scale energy storage
+  evidence:
+  - https://x.com/MeAmitMishra/status/2117938050982658397
+  suggested_on: '2026-11-09'
+  description: India | Tech | Travel | Energy Sector | Investor | IITK Alumnus | Stock tweets for discussion, no reco | Not
+    sebi reg | Not financial advisor | RT ≠endorsement
+  role: null
+- handle: AnilkrTiwaribjp
+  id: '1941112688769409025'
+  name: Anil Kumar Tiwari
+  score: 0.98
+  posts_on_topic: 1
+  followers: 96
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - grid-scale energy storage
+  evidence:
+  - https://x.com/AnilkrTiwaribjp/status/2118000140950880423
+  suggested_on: '2026-11-09'
+  description: Official Account ™️ State President, Bharatiya Janata Party, Andaman and Nicobar Islands
+  role: President
+- handle: CBC_Smg
+  id: '1276391689511288832'
+  name: Central Bureau of Communication, Shivamogga
+  score: 0.79
+  posts_on_topic: 1
+  followers: 623
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - grid-scale energy storage
+  evidence:
+  - https://x.com/CBC_Smg/status/2117921958994248051
+  suggested_on: '2026-11-09'
+  description: CBC Shivamogga is one of the units of @CBC_Bengaluru, Ministry of I&B, Govt. of India, engaged in inter-personal
+    communication in villages on Union Govt.Progms
+  role: null
+- handle: CBCSolapur
+  id: '1250364983059218432'
+  name: केंद्रीय संचार ब्यूरो, सोलापूर, महाराष्ट्र
+  score: 0.59
+  posts_on_topic: 1
+  followers: 390
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - grid-scale energy storage
+  evidence:
+  - https://x.com/CBCSolapur/status/2117926263553937589
+  suggested_on: '2026-11-09'
+  description: 'The Official account of Central Bureau of Communication, Solapur (Maharashtra) @MIB_India Govt of India (Jurisdiction:
+    Solapur, Satara, Latur & Dharashiv)'
+  role: null
+- handle: ChiragVarna
+  id: '1222884001938952194'
+  name: Chirag Varna (Modi Ka Parivar)
+  score: 0.5
+  posts_on_topic: 1
+  followers: 99
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - grid-scale energy storage
+  evidence:
+  - https://x.com/ChiragVarna/status/2118014857979281560
+  suggested_on: '2026-11-09'
+  description: '• Mission: #ViksitBharat @ 2047 • Selfless Supporter, Follower and Believer of ''Shri @narendramodi Ji'' •
+    Researcher'
+  role: null
+- handle: RaghaavMD
+  id: '1523913000742227968'
+  name: Eric Singh
+  score: 0.47
+  posts_on_topic: 1
+  followers: 297
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - grid-scale energy storage
+  evidence:
+  - https://x.com/RaghaavMD/status/2118304480152236535
+  suggested_on: '2026-11-09'
+  description: Dharma & Motherland. Savarkarite dalit. A trained boxer and learning Krav Maga now. I support small but strong
+    state...industrialization...and urbanization
+  role: null
+- handle: Shahjahan_Ahmd
+  id: '151452814'
+  name: Shahjahan | The Truth
+  score: 0.22
+  posts_on_topic: 1
+  followers: 53
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - grid-scale energy storage
+  evidence:
+  - https://x.com/Shahjahan_Ahmd/status/2118088684348252638
+  suggested_on: '2026-11-09'
+  description: 16 years on X. Finally using my voice to expose the truth. Indian in Dubai watching the Motherland's democracy
+    from afar. No PR, just raw facts. 🇮🇳
+  role: null
+- handle: Factss_4u
+  id: '1026090776349089793'
+  name: Facts4U
+  score: -0.22
+  posts_on_topic: 1
+  followers: 60
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - grid-scale energy storage
+  evidence:
+  - https://x.com/Factss_4u/status/2117950788618367086
+  suggested_on: '2026-11-09'
+  description: Follow for more amazing facts 🖋️
+  role: null
+- handle: esgtimes_in
+  id: '1718937510896869376'
+  name: ESG TIMES
+  score: -0.34
+  posts_on_topic: 1
+  followers: 46
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - grid-scale energy storage
+  evidence:
+  - https://x.com/esgtimes_in/status/2119667040541872309
+  suggested_on: '2026-11-09'
+  description: ESG TIMES - India's First dedicated News Portal for ESG (Environmental, Social & Governance) updates! We cover
+    the entire spectrum of ESG. editorial@esgtimes.in
+  role: null
+- handle: BusinessBytes1
+  id: '1452206252721852418'
+  name: THEBUSINESSBYTES.COM
+  score: -0.35
+  posts_on_topic: 1
+  followers: 45
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - grid-scale energy storage
+  evidence:
+  - https://x.com/BusinessBytes1/status/2117968381852955051
+  suggested_on: '2026-11-09'
+  description: A news portal dedicated to delivering positive and engaging business stories, while also covering a diverse
+    range of news segments.
+  role: null
+- handle: media_TFP
+  id: '1954167570036363264'
+  name: The Fortune Post
+  score: -0.9
+  posts_on_topic: 1
+  followers: 4
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - grid-scale energy storage
+  evidence:
+  - https://x.com/media_TFP/status/2117981095631482902
+  suggested_on: '2026-11-09'
+  description: independent journalism, global affairs, technology and the latest news.
+  role: null
+- handle: BureauDehr49119
+  id: '1704798582178709504'
+  name: Cental Bureau Communication, Dehradun
+  score: -1.1
+  posts_on_topic: 1
+  followers: 8
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - grid-scale energy storage
+  evidence:
+  - https://x.com/BureauDehr49119/status/2117923764927348780
+  suggested_on: '2026-11-09'
+  description: A regional office of @CBC_MIB under @MIB_India in Uttarakhand. It undertakes various activities to aware the
+    masses of the schemes of Govt. of India.
+  role: null
+- handle: RisingIndiaHQ
+  id: '2111440928762380288'
+  name: Rising India
+  score: -3.79
+  posts_on_topic: 1
+  followers: 51
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  - fewer than 1000 followers
+  topics:
+  - grid-scale energy storage
+  evidence:
+  - https://x.com/RisingIndiaHQ/status/2117913883541131771
+  suggested_on: '2026-11-09'
+  description: India business, markets and economy -- first and fast. Broker research charts, hard data and big-name interviews.
+  role: null
+- handle: VoiceOfGPNews
+  id: '2114285820949700608'
+  name: VoiceOfGP | Governance & Policy
+  score: -5.7
+  posts_on_topic: 1
+  followers: 2
+  verified_type: none
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  - fewer than 1000 followers
+  topics:
+  - grid-scale energy storage
+  evidence:
+  - https://x.com/VoiceOfGPNews/status/2117938287197421892
+  suggested_on: '2026-11-09'
+  description: Straight from the source. RBI, SEBI, Government & Defence news in plain English. Every story verified against
+    official sources. Not investment advice.
+  role: null
+- handle: barath2s
+  id: '2095260677090983936'
+  name: barath
+  score: -6.0
+  posts_on_topic: 1
+  followers: 0
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  - empty profile description
+  topics:
+  - grid-scale energy storage
+  evidence:
+  - https://x.com/barath2s/status/2118019983657808232
+  suggested_on: '2026-11-09'
+  description: ''
+  role: null
+- handle: RADHAKRISHeehr
+  id: '2110222796962111488'
+  name: RADHAKRISHNAN P
+  score: -6.0
+  posts_on_topic: 1
+  followers: 1
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  - empty profile description
+  topics:
+  - grid-scale energy storage
+  evidence:
+  - https://x.com/RADHAKRISHeehr/status/2118024345012629833
+  suggested_on: '2026-11-09'
+  description: ''
+  role: null
+- handle: HawaiianRipper
+  id: '1712520759342694400'
+  name: Hawaiian WarriQr
+  score: 5.56
+  posts_on_topic: 1
+  followers: 3606
+  verified_type: none
+  flags: []
+  topics:
+  - 6G
+  evidence:
+  - https://x.com/HawaiianRipper/status/2118137613098037702
+  suggested_on: '2026-11-09'
+  description: “No one is more hated than the one who tells the truth” Plato
+  role: null
+- handle: TimestechBuzz
+  id: '781439070098460672'
+  name: TimesTech Buzz
+  score: 5.04
+  posts_on_topic: 1
+  followers: 1088
+  verified_type: none
+  flags: []
+  topics:
+  - 6G
+  evidence:
+  - https://x.com/TimestechBuzz/status/2118292319527195036
+  suggested_on: '2026-11-09'
+  description: Get In-depth analyses, new products and technology, latest trends from core electronics, IoT applications &
+    innovations, emerging wireless technologies and more
+  role: null
+- handle: michaelsikand
+  id: '3007206859'
+  name: Michael Sikand
+  score: 3.63
+  posts_on_topic: 1
+  followers: 134311
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - 6G
+  evidence:
+  - https://x.com/michaelsikand/status/2118041642439770501
+  suggested_on: '2026-11-09'
+  description: Investor & Entrepreneur || $50M AUM On @joinautopilot || Forbes 30u30 || Prev exit to @morningbrew
+  role: null
+- handle: SBull64482
+  id: '2028677864321921024'
+  name: Narayanan S | Power Bull ®
+  score: 3.11
+  posts_on_topic: 1
+  followers: 4078
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - 6G
+  evidence:
+  - https://x.com/SBull64482/status/2118576760325607780
+  suggested_on: '2026-11-09'
+  description: SEBI RA INH200001483 | USA - https://t.co/tL6KMVPjoH | Entrepreneur | AI Archt | PB founder | Value Investor
+    | Investments are subject to markt risk | Patriot
+  role: founder
+- handle: qihanblmg
+  id: '2100385329824116736'
+  name: Zen
+  score: 1.68
+  posts_on_topic: 1
+  followers: 1513
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - 6G
+  evidence:
+  - https://x.com/qihanblmg/status/2119643031754146123
+  suggested_on: '2026-11-09'
+  description: I test AI tools so you don't have to. Daily AI news, filtered. Signal, not noise.
+  role: null
+- handle: Zest328117
+  id: '1986095639789498369'
+  name: Zest
+  score: 1.66
+  posts_on_topic: 1
+  followers: 1432
+  verified_type: blue
+  flags:
+  - empty profile description
+  topics:
+  - 6G
+  evidence:
+  - https://x.com/Zest328117/status/2118252409311174887
+  suggested_on: '2026-11-09'
+  description: ''
+  role: null
+- handle: NewsTongueX
+  id: '2052402572120453125'
+  name: NewsTongue
+  score: 1.53
+  posts_on_topic: 1
+  followers: 1070
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - 6G
+  evidence:
+  - https://x.com/NewsTongueX/status/2117488717954728410
+  suggested_on: '2026-11-09'
+  description: 'The Tongue of News - Your daily news feed 📰 Telegram: https://t.co/TU7qbzqROA Youtube: https://t.co/ytrBXo42yI'
+  role: null
+- handle: Matans8442
+  id: '1692701428567990272'
+  name: Matan Sheskin
+  score: 1.51
+  posts_on_topic: 1
+  followers: 1020
+  verified_type: blue
+  flags:
+  - empty profile description
+  topics:
+  - 6G
+  evidence:
+  - https://x.com/Matans8442/status/2119228811329900611
+  suggested_on: '2026-11-09'
+  description: ''
+  role: null
+- handle: Tinuniversee
+  id: '1842420044476850176'
+  name: T.I.N.NETWORK NEWS AGENCY
+  score: 0.28
+  posts_on_topic: 1
+  followers: 192
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - 6G
+  evidence:
+  - https://x.com/Tinuniversee/status/2118054719868613058
+  suggested_on: '2026-11-09'
+  description: Defence, Politics & National Security Military Affairs | Geopolitics | Strategy From Ground Zero to Power Corridors
+    Sharp. Credible. Unfiltered.
+  role: null
+- handle: ijcrsupdate
+  id: '2102590356076498944'
+  name: IJCRS UPATE
+  score: -2.0
+  posts_on_topic: 1
+  followers: 0
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - 6G
+  evidence:
+  - https://x.com/ijcrsupdate/status/2119588278273744991
+  suggested_on: '2026-11-09'
+  description: International Journal of Robotics and Control Systems (IJRCS) Scopus Q1 • CiteScore 5.5 Peer-reviewed, open-access
+    research journal
+  role: null
+- handle: kerrybwalker
+  id: '109230632'
+  name: Kerry Walker
+  score: -3.27
+  posts_on_topic: 1
+  followers: 170
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  - fewer than 1000 followers
+  topics:
+  - 6G
+  evidence:
+  - https://x.com/kerrybwalker/status/2118082610249523568
+  suggested_on: '2026-11-09'
+  description: A dad who loves random stuff, tinkering in the garage. Proud investor in Savic Motorcycles, Australia’s own
+    EV motorcycle manufacturer.
+  role: null
+- handle: Jules687211
+  id: '1652723343445970947'
+  name: Li
+  score: -3.59
+  posts_on_topic: 1
+  followers: 81
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  - empty profile description
+  topics:
+  - 6G
+  evidence:
+  - https://x.com/Jules687211/status/2119122837298364699
+  suggested_on: '2026-11-09'
+  description: ''
+  role: null
+- handle: 6Jaime9Earith3
+  id: '2117558584536141824'
+  name: JaimeEarith
+  score: -6.0
+  posts_on_topic: 1
+  followers: 0
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  - empty profile description
+  topics:
+  - 6G
+  evidence:
+  - https://x.com/6Jaime9Earith3/status/2118807247870726264
+  suggested_on: '2026-11-09'
+  description: ''
+  role: null
+- handle: LordHodler
+  id: '2801692272'
+  name: Maz
+  score: 10.63
+  posts_on_topic: 6
+  followers: 134
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - base editing
+  evidence:
+  - https://x.com/LordHodler/status/2119094028545163534
+  - https://x.com/LordHodler/status/2118938822977143002
+  - https://x.com/LordHodler/status/2117289276572373176
+  suggested_on: '2026-11-09'
+  description: $PRME only
+  role: null
+- handle: C_G_S
+  id: '20198534'
+  name: Genetics and Society
+  score: 5.98
+  posts_on_topic: 1
+  followers: 9643
+  verified_type: none
+  flags: []
+  topics:
+  - base editing
+  evidence:
+  - https://x.com/C_G_S/status/2117614977724920236
+  suggested_on: '2026-11-09'
+  description: 'Center for Genetics and Society, encouraging responsible uses & effective societal governance of human #genetics
+    & reproductive technologies #biopolitics'
+  role: null
+- handle: Inside_PM
+  id: '2445528445'
+  name: Inside Precision Medicine
+  score: 5.74
+  posts_on_topic: 1
+  followers: 5506
+  verified_type: none
+  flags: []
+  topics:
+  - base editing
+  evidence:
+  - https://x.com/Inside_PM/status/2118012391719854493
+  suggested_on: '2026-11-09'
+  description: Exclusive news, features, and analysis on the research, tools, regulations, and applications driving precision
+    medicine. From the publisher of @GENBio
+  role: null
+- handle: Transactivator
+  id: '829414459680686083'
+  name: Eric N. Olson
+  score: 5.68
+  posts_on_topic: 1
+  followers: 4784
+  verified_type: none
+  flags: []
+  topics:
+  - base editing
+  evidence:
+  - https://x.com/Transactivator/status/2117643296285794304
+  suggested_on: '2026-11-09'
+  description: Lover of muscle, music and mountains
+  role: null
+- handle: PatentPulse
+  id: '1656731774678888450'
+  name: Interesting Patents
+  score: 5.58
+  posts_on_topic: 1
+  followers: 1191
+  verified_type: blue
+  flags: []
+  topics:
+  - base editing
+  evidence:
+  - https://x.com/PatentPulse/status/2117802837446939072
+  suggested_on: '2026-11-09'
+  description: Immerse yourself in the world of pioneering inventions with our curated collection of the most interesting
+    and innovative recently published patent apps.
+  role: null
+- handle: mogeladze1
+  id: '2676025951'
+  name: David -mogeladze
+  score: 5.48
+  posts_on_topic: 1
+  followers: 3004
+  verified_type: none
+  flags: []
+  topics:
+  - base editing
+  evidence:
+  - https://x.com/mogeladze1/status/2118469858107015414
+  suggested_on: '2026-11-09'
+  description: realmadrid microsoft news and apple news And ANd i love sushi 🍣 🇪🇸 Georgia 🇬🇪 🥟🍕🍞🍟iI am from Georgia and my
+    country is occupied by Russia. 🇬🇪❤️🇬🇪
+  role: null
+- handle: gglinskii
+  id: '3291683682'
+  name: Dr. Gennadi Glinsky, MD, Ph.D.
+  score: 5.29
+  posts_on_topic: 1
+  followers: 1952
+  verified_type: none
+  flags: []
+  topics:
+  - base editing
+  evidence:
+  - https://x.com/gglinskii/status/2118851697837777370
+  suggested_on: '2026-11-09'
+  description: Posts are my own immediate personal reflections on current events or views expressed by others. Retired. Professor,
+    Translational and Functional Genomics.
+  role: null
+- handle: RNAiAnalyst
+  id: '409194010'
+  name: Dirk Haussecker
+  score: 2.85
+  posts_on_topic: 1
+  followers: 22501
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - base editing
+  evidence:
+  - https://x.com/RNAiAnalyst/status/2118828681141592144
+  suggested_on: '2026-11-09'
+  description: Biotech trader/investor with a focus on nucleic acid-based and -targeted biotech. Fiercely independent. https://t.co/dfLqOuH7Uh
+  role: null
+- handle: Biotech_Spain
+  id: '2445298345'
+  name: Biotech-Spain.com
+  score: 1.66
+  posts_on_topic: 1
+  followers: 4600
+  verified_type: none
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - base editing
+  evidence:
+  - https://x.com/Biotech_Spain/status/2118326682901741814
+  suggested_on: '2026-11-09'
+  description: 'Portal web Biotecnológico: últimas #notícias y #directorio de empresas referentes en #Biotecnología #Salud
+    #MedioAmbiente #Investigación y mucho más! 🔬'
+  role: null
+- handle: CraigAGoodman1
+  id: '1114280851741663233'
+  name: Craig A. Goodman
+  score: 1.62
+  posts_on_topic: 1
+  followers: 4140
+  verified_type: none
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - base editing
+  evidence:
+  - https://x.com/CraigAGoodman1/status/2117350518830047333
+  suggested_on: '2026-11-09'
+  description: Senior Scientist that investigates the molecular mechanisms that regulate skeletal muscle mass and function
+    in health and in various disease states
+  role: null
+- handle: CrweWorld
+  id: '3318510966'
+  name: Crwe World
+  score: 1.41
+  posts_on_topic: 1
+  followers: 2580
+  verified_type: none
+  flags:
+  - empty profile description
+  topics:
+  - base editing
+  evidence:
+  - https://x.com/CrweWorld/status/2117601826430443525
+  suggested_on: '2026-11-09'
+  description: ''
+  role: null
+- handle: zhu_peixin
+  id: '1216446661335101446'
+  name: Peixin Zhu
+  score: 1.23
+  posts_on_topic: 1
+  followers: 539
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - base editing
+  evidence:
+  - https://x.com/zhu_peixin/status/2119411630933172314
+  suggested_on: '2026-11-09'
+  description: TSLA; PLTR;
+  role: null
+- handle: Michael_W_Deem
+  id: '1593708307541270529'
+  name: Michael W. Deem
+  score: 1.04
+  posts_on_topic: 1
+  followers: 345
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - base editing
+  evidence:
+  - https://x.com/Michael_W_Deem/status/2118796987445219543
+  suggested_on: '2026-11-09'
+  description: Michael W. Deem is an American engineer, scientist, inventor, and entrepreneur. https://t.co/7NnngestND, https://t.co/daMi6qONJw,
+    https://t.co/FJZxI3WktD, https
+  role: null
+- handle: DrMcPharma
+  id: '1671688732909477888'
+  name: DrMcPharma
+  score: 0.87
+  posts_on_topic: 1
+  followers: 234
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - base editing
+  evidence:
+  - https://x.com/DrMcPharma/status/2118500223823511768
+  suggested_on: '2026-11-09'
+  description: Clinician-Scientist 🩻🔬🦠🧫💊@Spotify Podcaster 🎙️ @YouTube Creator 📺 Only Health Matters ❤️‍🩹
+  role: null
+- handle: ZVeryn96103
+  id: '2035736076153978880'
+  name: Phlynx
+  score: 0.8
+  posts_on_topic: 1
+  followers: 626
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - base editing
+  evidence:
+  - https://x.com/ZVeryn96103/status/2117506874610442750
+  suggested_on: '2026-11-09'
+  description: Schizotypal Bipolar Chuunibyou
+  role: null
+- handle: polaris_mrc
+  id: '935470082238529541'
+  name: Polaris Market Research & Consulting
+  score: 0.49
+  posts_on_topic: 1
+  followers: 311
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - base editing
+  evidence:
+  - https://x.com/polaris_mrc/status/2117517502439936189
+  suggested_on: '2026-11-09'
+  description: 'Turn market data into confident decisions. Polaris Market Research delivers insights & consulting to help
+    you grow. #MarketResearch #Consulting'
+  role: null
+- handle: MWBionetworks
+  id: '1659225691802705921'
+  name: MWBionetworks
+  score: 0.15
+  posts_on_topic: 1
+  followers: 142
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - base editing
+  evidence:
+  - https://x.com/MWBionetworks/status/2118185041008234787
+  suggested_on: '2026-11-09'
+  description: '#LifeScience news, jobs events: #Illinois #Indiana #Iowa #Kansas #Michigan #Minnesota #Missouri #Ohio #Wisconsin.
+    Part of @BiotechNetworks, We Connect #Biotech.'
+  role: null
+- handle: LifeMedJournal
+  id: '1430539343945469953'
+  name: Life Medicine
+  score: -0.25
+  posts_on_topic: 1
+  followers: 56
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - base editing
+  evidence:
+  - https://x.com/LifeMedJournal/status/2118535824098861089
+  suggested_on: '2026-11-09'
+  description: Life Medicine is a fully open access, peer-reviewed journal that aims to accelerate the translation of life
+    science research from bench to bedside.
+  role: null
+- handle: 2026Adv12990
+  id: '2084251782470131712'
+  name: Plant Science
+  score: -0.54
+  posts_on_topic: 1
+  followers: 29
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - base editing
+  evidence:
+  - https://x.com/2026Adv12990/status/2117601335852097732
+  suggested_on: '2026-11-09'
+  description: Welcome to the 3rd World Congress on Advances in Plant Science and Plant Biology (Adv. PSPB 2027), to be held
+    on July 12–13, 2027, in Paris, France.
+  role: null
+- handle: Clinicore70471
+  id: '1749901829188538368'
+  name: immortal_kris
+  score: -0.72
+  posts_on_topic: 1
+  followers: 19
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - base editing
+  evidence:
+  - https://x.com/Clinicore70471/status/2117842531467543031
+  suggested_on: '2026-11-09'
+  description: scientist, inventor, and business owner who cracks jokes at the lunacy we see every day.
+  role: null
+- handle: tothemoongod
+  id: '1701440198087716865'
+  name: OptimusPrime
+  score: -0.72
+  posts_on_topic: 1
+  followers: 19
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - base editing
+  evidence:
+  - https://x.com/tothemoongod/status/2117852156371878216
+  suggested_on: '2026-11-09'
+  description: covering all things gene editing. specifically $PRME and its limitless potential
+  role: null
+- handle: holleazyai
+  id: '1757223224973103104'
+  name: Holleazy
+  score: -1.22
+  posts_on_topic: 1
+  followers: 6
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - base editing
+  evidence:
+  - https://x.com/holleazyai/status/2117640446046351703
+  suggested_on: '2026-11-09'
+  description: Powered by @bot, monitored by @holleazy Road to working with @spacex
+  role: null
+- handle: PixelBioGmbH
+  id: '1739472518241533952'
+  name: PixelBiosciences GmbH
+  score: -1.4
+  posts_on_topic: 1
+  followers: 4
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - base editing
+  evidence:
+  - https://x.com/PixelBioGmbH/status/2118223801901355047
+  suggested_on: '2026-11-09'
+  description: PixelBiosciences GmbH，provide salt-free sgRNA, HPLC-grade sgRNA, and fluorescently labeled sgRNA, and pegRNAs.
+  role: null
+- handle: MediaPavilionHQ
+  id: '2070793269974319104'
+  name: MediaPavilion
+  score: -1.5
+  posts_on_topic: 1
+  followers: 0
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - base editing
+  evidence:
+  - https://x.com/MediaPavilionHQ/status/2119092528708235508
+  suggested_on: '2026-11-09'
+  description: 🌍 Global News & Insight 🎙️ Analysis • 🎥 Podcasts 🤖 Creative Storytelling & AI-Powered Media ✨ Discover. Learn.
+    Be Inspired.
+  role: null
+- handle: GlobalAgNews
+  id: '2067194672137879552'
+  name: Global Agriculture
+  score: -1.7
+  posts_on_topic: 1
+  followers: 2
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - base editing
+  evidence:
+  - https://x.com/GlobalAgNews/status/2117287812437561431
+  suggested_on: '2026-11-09'
+  description: Global Agriculture is an international magazine and a news platform.
+  role: null
+- handle: merlin8121
+  id: '845756611'
+  name: Horacio
+  score: -1.96
+  posts_on_topic: 2
+  followers: 35
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  - empty profile description
+  topics:
+  - base editing
+  evidence:
+  - https://x.com/merlin8121/status/2117604879749284031
+  - https://x.com/merlin8121/status/2117251684334186867
+  suggested_on: '2026-11-09'
+  description: ''
+  role: null
+- handle: GENErationHopee
+  id: '2110437865809174528'
+  name: GENEration Hope
+  score: -2.0
+  posts_on_topic: 1
+  followers: 0
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - base editing
+  evidence:
+  - https://x.com/GENErationHopee/status/2117672168070787289
+  suggested_on: '2026-11-09'
+  description: Documentary, interviews, explainers & news on rare disease, genetic medicine, AI and care. By Ron Kleiman,
+    rare-disease dad & filmmaker. Weekly on YouTube.
+  role: null
+- handle: diversitynews
+  id: '18495064'
+  name: DiversityNews
+  score: 5.63
+  posts_on_topic: 1
+  followers: 4264
+  verified_type: none
+  flags: []
+  topics:
+  - post-quantum cryptography
+  evidence:
+  - https://x.com/diversitynews/status/2119184410255716673
+  suggested_on: '2026-11-09'
+  description: Career Communications Group is the publisher of US Black Engineer, Hispanic Engineer, and Women of Color magazines.
+  role: null
+- handle: ComputerPapers
+  id: '135746708'
+  name: Software Engineering Papers
+  score: 5.42
+  posts_on_topic: 1
+  followers: 2632
+  verified_type: none
+  flags: []
+  topics:
+  - post-quantum cryptography
+  evidence:
+  - https://x.com/ComputerPapers/status/2118855915034038555
+  suggested_on: '2026-11-09'
+  description: 'New Software Engineering papers from https://t.co/vxDuY4St9Z: design tools, software metrics. Thank you to
+    arXiv for use of its open access interoperability.'
+  role: null
+- handle: ALGO_BRO
+  id: '1783849777630699520'
+  name: ALGO_BRO
+  score: 5.38
+  posts_on_topic: 1
+  followers: 2393
+  verified_type: none
+  flags: []
+  topics:
+  - post-quantum cryptography
+  evidence:
+  - https://x.com/ALGO_BRO/status/2119259507847012724
+  suggested_on: '2026-11-09'
+  description: I like A̸lgorand $ALGO. IYKYK Bro, IMHO 🌍🇺🇸⚡️🚀🌎🇺🇸⚡️🚀🌎🇺🇸⚡️🚀🌎🇺🇸⚡️🚀🌎🇺🇸⚡️🚀🌎🇺🇸⚡️🚀🌎🇺🇸⚡️🚀🌎🇺🇸⚡️🚀🌎🇺🇸⚡️🚀🌎🇺🇸
+  role: null
+- handle: Hispaniceng
+  id: '24252335'
+  name: Hispanic Engineer & IT magazine
+  score: 5.3
+  posts_on_topic: 1
+  followers: 1989
+  verified_type: none
+  flags: []
+  topics:
+  - post-quantum cryptography
+  evidence:
+  - https://x.com/Hispaniceng/status/2118837136547865080
+  suggested_on: '2026-11-09'
+  description: Career Communications Group publishes Hispanic Engineer & IT Magazine. This is our twitter feed.
+  role: null
+- handle: devops_chat
+  id: '3241502880'
+  name: DevOpsChat
+  score: 5.23
+  posts_on_topic: 1
+  followers: 1686
+  verified_type: none
+  flags: []
+  topics:
+  - post-quantum cryptography
+  evidence:
+  - https://x.com/devops_chat/status/2117633462563995899
+  suggested_on: '2026-11-09'
+  description: We integrate people that love DevOps! A powerful community to develop and levelling your skills, collaborate
+    with your ideas and integrate with code lovers.
+  role: null
+- handle: UEFIForum
+  id: '1093953789520801792'
+  name: UEFI Forum
+  score: 5.01
+  posts_on_topic: 1
+  followers: 1025
+  verified_type: none
+  flags: []
+  topics:
+  - post-quantum cryptography
+  evidence:
+  - https://x.com/UEFIForum/status/2118129587477717090
+  suggested_on: '2026-11-09'
+  description: The UEFI Forum advances globally-adopted firmware specifications through enhanced security to the evolution
+    of devices, firmware and operating systems.
+  role: null
+- handle: perkinscr97
+  id: '241493729'
+  name: Christopher Perkins 🦅🌎⚓️NYC
+  score: 4.63
+  posts_on_topic: 1
+  followers: 13455
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - post-quantum cryptography
+  evidence:
+  - https://x.com/perkinscr97/status/2119498048481222723
+  suggested_on: '2026-11-09'
+  description: Head of Franklin Crypto | @usmc vet | Crypto Investor & Inventor | @CFTC GMAC | @bitsandbips. Not investment
+    advice. U.S. audience only.
+  role: Head of Franklin
+- handle: iewney
+  id: '241828061'
+  name: Justin
+  score: 3.11
+  posts_on_topic: 1
+  followers: 4105
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - post-quantum cryptography
+  evidence:
+  - https://x.com/iewney/status/2117982421509619994
+  suggested_on: '2026-11-09'
+  description: Product Strategy @TikTok_US. Ex-Principal PgM @Meta & @Amazon. 1 x founder. Investor in $IONQ $OKLO
+  role: founder
+- handle: FredMartinezST
+  id: '1258754784225607681'
+  name: Fred Martinez
+  score: 1.95
+  posts_on_topic: 1
+  followers: 2826
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - post-quantum cryptography
+  evidence:
+  - https://x.com/FredMartinezST/status/2118007207056883763
+  suggested_on: '2026-11-09'
+  description: Infrastructure investor. Lifting the veil on the future of finance 🏦 Explaining the future of financial infrastructure
+    in plain English⚡
+  role: null
+- handle: eshard
+  id: '3293298475'
+  name: eShard | Hardware & Software Security
+  score: 1.77
+  posts_on_topic: 1
+  followers: 1868
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - post-quantum cryptography
+  evidence:
+  - https://x.com/eshard/status/2117663940427571275
+  suggested_on: '2026-11-09'
+  description: Security investigations for critical missions, from hardware to software.
+  role: null
+- handle: idoLapaj
+  id: '2040870224963284992'
+  name: idoLa
+  score: 1.14
+  posts_on_topic: 1
+  followers: 437
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - post-quantum cryptography
+  evidence:
+  - https://x.com/idoLapaj/status/2118717265222983825
+  suggested_on: '2026-11-09'
+  description: あいどらas @Iconocl4sm_ / @cave_jpn MOD $Maxis Everything I say is just an idol’s nonsense and NFA
+  role: null
+- handle: forgepointcap
+  id: '991000643962683392'
+  name: Forgepoint Capital
+  score: 0.96
+  posts_on_topic: 1
+  followers: 906
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - post-quantum cryptography
+  evidence:
+  - https://x.com/forgepointcap/status/2117992163107557396
+  suggested_on: '2026-11-09'
+  description: From first call to exit, we back exceptional entrepreneurs tackling the biggest challenges in cybersecurity,
+    AI, and infrastructure software.
+  role: null
+- handle: Iluvatar626
+  id: '1002063298521640962'
+  name: Regedit
+  score: 0.93
+  posts_on_topic: 1
+  followers: 851
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - post-quantum cryptography
+  evidence:
+  - https://x.com/Iluvatar626/status/2118185999809265912
+  suggested_on: '2026-11-09'
+  description: 🇵🇪Lucía 🐁 web dev | Pentester (eJPTv2 ) | AI artist / enthusiast | web 3 enthusiast
+  role: null
+- handle: AshishJanghel13
+  id: '1486621293512253441'
+  name: Ashish Janghel
+  score: 0.71
+  posts_on_topic: 1
+  followers: 51
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - post-quantum cryptography
+  evidence:
+  - https://x.com/AshishJanghel13/status/2117513138493087912
+  suggested_on: '2026-11-09'
+  description: Founder @quant_zen QuantZen™ - Post-Quantum cybersecurity platform
+  role: Founder
+- handle: ecfirst
+  id: '117521092'
+  name: ecfirst
+  score: 0.35
+  posts_on_topic: 1
+  followers: 225
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - post-quantum cryptography
+  evidence:
+  - https://x.com/ecfirst/status/2118075623314997456
+  suggested_on: '2026-11-09'
+  description: '#Compliance and #cybersecurity services. More @ https://t.co/cOx1f7SPb2.'
+  role: null
+- handle: QuEdXPvtLtd
+  id: '1849773426288017408'
+  name: QuEdX
+  score: 0.0
+  posts_on_topic: 1
+  followers: 101
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - post-quantum cryptography
+  evidence:
+  - https://x.com/QuEdXPvtLtd/status/2119663023405089032
+  suggested_on: '2026-11-09'
+  description: 'QuEdX: Training & Certification in Quantum, IT & Emerging Tech, empowering learners and professionals to excel
+    and innovate.'
+  role: null
+- handle: quant_zen
+  id: '1682751558575079426'
+  name: QuantZen™
+  score: -0.12
+  posts_on_topic: 1
+  followers: 76
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - post-quantum cryptography
+  evidence:
+  - https://x.com/quant_zen/status/2117512154857500992
+  suggested_on: '2026-11-09'
+  description: PQC Encryption Layer for the Centralised and Decentralised Financial Institutions
+  role: null
+- handle: project_q_2024
+  id: '1978797212831539202'
+  name: PROJECT-Q Community
+  score: -0.33
+  posts_on_topic: 1
+  followers: 47
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - post-quantum cryptography
+  evidence:
+  - https://x.com/project_q_2024/status/2119410859609031001
+  suggested_on: '2026-11-09'
+  description: Global quantum research collective driving open-source innovation, simulations, and breakthroughs. For students,
+    researchers, and future pioneers.
+  role: null
+- handle: Saraphonix
+  id: '521271263'
+  name: Sara Marie
+  score: -0.46
+  posts_on_topic: 1
+  followers: 35
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - post-quantum cryptography
+  evidence:
+  - https://x.com/Saraphonix/status/2118433226192535902
+  suggested_on: '2026-11-09'
+  description: 💌Write to me in direct message "short hair girl" and you will receive a hot GIFT from hot Rebel😏😘 Follow and
+    RT for more 🩶 👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇
+  role: null
+- handle: PolarischainHQ
+  id: '2108021465614532608'
+  name: PolarisChain
+  score: -1.2
+  posts_on_topic: 1
+  followers: 2
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - post-quantum cryptography
+  evidence:
+  - https://x.com/PolarischainHQ/status/2119065334854603082
+  suggested_on: '2026-11-09'
+  description: Post-Quantum Blockchain. Secured from Genesis. Built for Financial Settlement, Real-World Assets & Trust Infrastructure.
+  role: null
+- handle: lecodevv
+  id: '2043588719010054144'
+  name: Manuel Echepares (lecodev)
+  score: -1.66
+  posts_on_topic: 2
+  followers: 22
+  verified_type: none
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  - fewer than 1000 followers
+  topics:
+  - post-quantum cryptography
+  evidence:
+  - https://x.com/lecodevv/status/2117595891288658125
+  - https://x.com/lecodevv/status/2117382844108435848
+  suggested_on: '2026-11-09'
+  description: Founder & Creator of NEXUS-Q | Post-Quantum Cryptography in Rust | ML-KEM • ML-DSA
+  role: Founder
+- handle: rtupinamba
+  id: '32599676'
+  name: Regina Tupinambá
+  score: -2.0
+  posts_on_topic: 1
+  followers: 992
+  verified_type: none
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  - fewer than 1000 followers
+  topics:
+  - post-quantum cryptography
+  evidence:
+  - https://x.com/rtupinamba/status/2118786725149282491
+  suggested_on: '2026-11-09'
+  description: CCO – Chief Content Officer CryptoID e CEO Insania Publicidade https://t.co/SJxPJvqmtd https://t.co/sJJeQQF7Rs
+  role: Chief Content Officer
+- handle: lecodevvvv
+  id: '2107411157866672128'
+  name: lecodev
+  score: -2.0
+  posts_on_topic: 1
+  followers: 1
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - post-quantum cryptography
+  evidence:
+  - https://x.com/lecodevvvv/status/2117382992528060722
+  suggested_on: '2026-11-09'
+  description: Sotware, Infrastructure & Backend Engineer
+  role: null
+- handle: stygiascore
+  id: '1896348460808347648'
+  name: StygiaScore
+  score: -4.7
+  posts_on_topic: 1
+  followers: 20
+  verified_type: none
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  - fewer than 1000 followers
+  topics:
+  - post-quantum cryptography
+  evidence:
+  - https://x.com/stygiascore/status/2118809086758175056
+  suggested_on: '2026-11-09'
+  description: ¡Hola a todos! 👋 Hoy quiero hablarles sobre el fascinante mundo del SEO en la web3. 🚀 Me encuentro investigando
+    cómo optimizar la visibilidad de los proyectos
+  role: null
+- handle: mehdish61858024
+  id: '1675932029676912640'
+  name: mehdi sharif
+  score: -4.82
+  posts_on_topic: 1
+  followers: 15
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  - empty profile description
+  topics:
+  - post-quantum cryptography
+  evidence:
+  - https://x.com/mehdish61858024/status/2118656938938601538
+  suggested_on: '2026-11-09'
+  description: ''
+  role: null
+- handle: pcquest
+  id: '36588455'
+  name: PCQuest
+  score: 5.83
+  posts_on_topic: 1
+  followers: 6833
+  verified_type: none
+  flags: []
+  topics:
+  - oled displays
+  evidence:
+  - https://x.com/pcquest/status/2118612381991686644
+  suggested_on: '2026-11-09'
+  description: 'WELCOME to PCQuest India''s Top Technology Magazine Brand IT News, Gaming, Gadgets Reviews & Insights for
+    Professional Gamers Established in 1987 #PCQuest'
+  role: null
+- handle: vesarosim
+  id: '398908119'
+  name: Vesaro
+  score: 5.77
+  posts_on_topic: 1
+  followers: 1868
+  verified_type: blue
+  flags: []
+  topics:
+  - oled displays
+  evidence:
+  - https://x.com/vesarosim/status/2118011643397357760
+  suggested_on: '2026-11-09'
+  description: We design & manufacture world-class industry-leading simulation systems for home, professional race driver
+    training and commercial entertainment.
+  role: null
+- handle: ai_with_shah
+  id: '1501126399486140416'
+  name: Shah
+  score: 5.76
+  posts_on_topic: 1
+  followers: 1820
+  verified_type: blue
+  flags: []
+  topics:
+  - oled displays
+  evidence:
+  - https://x.com/ai_with_shah/status/2117671147290423698
+  suggested_on: '2026-11-09'
+  description: AI Visual Creator | Tech Enthusiast  🎮 | Cinematic & Fashion AI Art 🎨 Grok Imagine • Midjourney • Seedance
+    DM for collabs / custom work 📥
+  role: null
+- handle: BandwidthBlog
+  id: '36488520'
+  name: Bandwidth Blog
+  score: 5.76
+  posts_on_topic: 1
+  followers: 5691
+  verified_type: none
+  flags: []
+  topics:
+  - oled displays
+  evidence:
+  - https://x.com/BandwidthBlog/status/2117632900023693690
+  suggested_on: '2026-11-09'
+  description: Breaking tech news, gadget reviews, incisive opinions, and industry insight.
+  role: null
+- handle: Loewe
+  id: '155485125'
+  name: Loewe
+  score: 5.4
+  posts_on_topic: 1
+  followers: 2536
+  verified_type: none
+  flags: []
+  topics:
+  - oled displays
+  evidence:
+  - https://x.com/Loewe/status/2119482606886568172
+  suggested_on: '2026-11-09'
+  description: 'We create a world of home living and exceptional entertainment - inviting you to experience the true feeling
+    of home every day. #HomeOfExcellence'
+  role: null
+- handle: LordsiVR
+  id: '864800025574072321'
+  name: Lordsi VR
+  score: 5.2
+  posts_on_topic: 1
+  followers: 1572
+  verified_type: none
+  flags: []
+  topics:
+  - oled displays
+  evidence:
+  - https://x.com/LordsiVR/status/2119085821399826726
+  suggested_on: '2026-11-09'
+  description: VR & Tech Creator 🥽⚡ News, Reviews, YouTube + Live 🎥 Business - ContactLordsi@gmail.com
+  role: null
+- handle: WigettaGaming
+  id: '917066587559079936'
+  name: Wigetta ✨🏳️‍🌈
+  score: 5.19
+  posts_on_topic: 1
+  followers: 1544
+  verified_type: none
+  flags: []
+  topics:
+  - oled displays
+  evidence:
+  - https://x.com/WigettaGaming/status/2118831809232355493
+  suggested_on: '2026-11-09'
+  description: 20 | He/Him | 🏳️‍🌈 Gay | I like tech and gaming, and sometimes I like tweeting too
+  role: null
+- handle: JavaidUsama
+  id: '1473582985'
+  name: Usama Javaid 🇵🇸
+  score: 5.11
+  posts_on_topic: 1
+  followers: 1294
+  verified_type: none
+  flags: []
+  topics:
+  - oled displays
+  evidence:
+  - https://x.com/JavaidUsama/status/2119019611446235410
+  suggested_on: '2026-11-09'
+  description: Pursuing Indie game dev. Biggest Steam Deck fan. HDR nut, Coffee enjoyer. Currently in Bachelor of Cognitive
+    Science, Concentration in Cognition and Computation
+  role: null
+- handle: reece_us
+  id: '3263627471'
+  name: reece
+  score: 1.48
+  posts_on_topic: 1
+  followers: 956
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - oled displays
+  evidence:
+  - https://x.com/reece_us/status/2119491463956627540
+  suggested_on: '2026-11-09'
+  description: always using extremely unnecessary adverbs
+  role: null
+- handle: dailytechonx
+  id: '1744740925593776128'
+  name: The Daily Tech Feed
+  score: 1.43
+  posts_on_topic: 1
+  followers: 857
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - oled displays
+  evidence:
+  - https://x.com/dailytechonx/status/2117977306236903499
+  suggested_on: '2026-11-09'
+  description: Fresh tech news and in-depth coverage of the Apple and Google universe. Get the scoop on new product releases,
+    software update and much more...
+  role: null
+- handle: TextileValue
+  id: '705094488'
+  name: TEXTILE VALUE CHAIN™
+  score: 1.27
+  posts_on_topic: 1
+  followers: 1862
+  verified_type: none
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  topics:
+  - oled displays
+  evidence:
+  - https://x.com/TextileValue/status/2117925123219140864
+  suggested_on: '2026-11-09'
+  description: PRINT & DIGITAL TRADE MEDIA...!!!
+  role: null
+- handle: Bettybronxton
+  id: '1518918443021524992'
+  name: Paper
+  score: 1.2
+  posts_on_topic: 1
+  followers: 501
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - oled displays
+  evidence:
+  - https://x.com/Bettybronxton/status/2118525808545505282
+  suggested_on: '2026-11-09'
+  description: Skydweller - Starship type nigga - Cyber security expert - Abolish 3 letter orgs
+  role: null
+- handle: iTDfeed
+  id: '197752374'
+  name: iThinkDifferent - Tech News and Guides
+  score: 1.19
+  posts_on_topic: 1
+  followers: 485
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - oled displays
+  evidence:
+  - https://x.com/iTDfeed/status/2117628634143883639
+  suggested_on: '2026-11-09'
+  description: Official iThinkDifferent Account - all things different about Apple, Microsoft, Google, and the Internet
+  role: null
+- handle: borntoFLY11135
+  id: '1524050692444405761'
+  name: ANONYMOUS™️ 𝕏🔪 🩸
+  score: 1.12
+  posts_on_topic: 1
+  followers: 420
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - oled displays
+  evidence:
+  - https://x.com/borntoFLY11135/status/2118151519661129900
+  suggested_on: '2026-11-09'
+  description: just a tech enthusiast. Also reporting on other things I like. @phonefuturist unpaid employee | digital privacy
+    advocate | Adblock is king 👑 | SKG 🆙 🔝
+  role: null
+- handle: techamericaofcl
+  id: '1871946053223587840'
+  name: TechAmerica
+  score: 1.05
+  posts_on_topic: 1
+  followers: 351
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - oled displays
+  evidence:
+  - https://x.com/techamericaofcl/status/2119505170774245760
+  suggested_on: '2026-11-09'
+  description: https://t.co/2zT4MhCjQ2 provides news and analysis on technology, specifically focusing on founders and startup
+    teams.
+  role: null
+- handle: Theunis_VR
+  id: '756899822'
+  name: Theunis van Rensburg
+  score: 1.0
+  posts_on_topic: 1
+  followers: 991
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - oled displays
+  evidence:
+  - https://x.com/Theunis_VR/status/2117949988563263948
+  suggested_on: '2026-11-09'
+  description: Tech junkie. Data scientist. Sport lover. Bearded nerd.
+  role: null
+- handle: TheAppleDrop
+  id: '1945134528730689537'
+  name: AppleDrop
+  score: 0.99
+  posts_on_topic: 1
+  followers: 310
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - oled displays
+  evidence:
+  - https://x.com/TheAppleDrop/status/2117661645409550716
+  suggested_on: '2026-11-09'
+  description: Apple news. Leaks. Quick takes. DM for collab. Follow to stay ahead
+  role: null
+- handle: techfryerr
+  id: '1445250390782398465'
+  name: Samarth Arora
+  score: 0.91
+  posts_on_topic: 1
+  followers: 258
+  verified_type: blue
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - oled displays
+  evidence:
+  - https://x.com/techfryerr/status/2117927545383649289
+  suggested_on: '2026-11-09'
+  description: Covering smartphones & AI Clean. Unbiased. Future-ready. ⚡Daily Tech News & Trends
+  role: null
+- handle: aldersonaj
+  id: '1058316496340992000'
+  name: Alex Alderson
+  score: 0.88
+  posts_on_topic: 1
+  followers: 754
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - oled displays
+  evidence:
+  - https://x.com/aldersonaj/status/2117573196194947182
+  suggested_on: '2026-11-09'
+  description: Tech Writer and English Translator @nbc_net
+  role: null
+- handle: techbrieflycom
+  id: '1209995637615452170'
+  name: TechBriefly.com
+  score: 0.55
+  posts_on_topic: 1
+  followers: 356
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - oled displays
+  evidence:
+  - https://x.com/techbrieflycom/status/2117300892806291827
+  suggested_on: '2026-11-09'
+  description: latest news in tech, business, science and geek world
+  role: null
+- handle: ashokpandian
+  id: '42950816'
+  name: Ashok Pandian
+  score: 0.3
+  posts_on_topic: 1
+  followers: 199
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - oled displays
+  evidence:
+  - https://x.com/ashokpandian/status/2117590769162952998
+  suggested_on: '2026-11-09'
+  description: Tech Analyst/Columnist - INDULGE, TNIE | Eye Care Specialist | Watch expert
+  role: null
+- handle: techsportskeeda
+  id: '2084173396691288065'
+  name: TechSK
+  score: -0.38
+  posts_on_topic: 1
+  followers: 42
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - oled displays
+  evidence:
+  - https://x.com/techsportskeeda/status/2117673474663804988
+  suggested_on: '2026-11-09'
+  description: Your ultimate destination for the latest in tech! From breaking mobile and laptop news to in-depth reviews
+    and wearable updates. Stay updated!!!
+  role: null
+- handle: KalpeshRaj92069
+  id: '1745386844945268736'
+  name: Kalpesh Rajput
+  score: -1.05
+  posts_on_topic: 1
+  followers: 9
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - oled displays
+  evidence:
+  - https://x.com/KalpeshRaj92069/status/2118192709567734047
+  suggested_on: '2026-11-09'
+  description: 🚀 Driving Online Visibility & Business Growth | 📊 Electronics Industry Specialist | Passionate About Market
+    Insights, Innovation & Tech-Driven Strategies
+  role: null
+- handle: Othman_NJB
+  id: '2101078042458386433'
+  name: Othman Najib
+  score: -2.0
+  posts_on_topic: 1
+  followers: 1
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - oled displays
+  evidence:
+  - https://x.com/Othman_NJB/status/2117351696087077332
+  suggested_on: '2026-11-09'
+  description: In a rapidly changing world, discover how cutting-edge architecture and advanced technological innovations
+    are shaping a human-centered ecosystem.
+  role: null
+- handle: allybraundiary
+  id: '2041469468799344640'
+  name: Ally Braun | Buying Guides
+  score: -2.0
+  posts_on_topic: 1
+  followers: 0
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - oled displays
+  evidence:
+  - https://x.com/allybraundiary/status/2118327722514710905
+  suggested_on: '2026-11-09'
+  description: Product researcher. What's actually worth buying — real comparisons, no fluff. New guide every week ↓
+  role: null
+- handle: ShinojJarvis
+  id: '2749263642'
+  name: Prince yadav
+  score: -2.0
+  posts_on_topic: 1
+  followers: 1
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  topics:
+  - oled displays
+  evidence:
+  - https://x.com/ShinojJarvis/status/2119495697540223192
+  suggested_on: '2026-11-09'
+  description: ui guru
+  role: null
+- handle: ticker_report
+  id: '2024844455485001728'
+  name: Ticker Report
+  score: -3.33
+  posts_on_topic: 1
+  followers: 148
+  verified_type: blue
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  - fewer than 1000 followers
+  topics:
+  - oled displays
+  evidence:
+  - https://x.com/ticker_report/status/2119055979190903261
+  suggested_on: '2026-11-09'
+  description: Stock updates, news, price movement in real-time, in easy readable format.
+  role: null
+- handle: ytcreator_in
+  id: '2013981421979967488'
+  name: YT Creator
+  score: -5.7
+  posts_on_topic: 1
+  followers: 2
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  - empty profile description
+  topics:
+  - oled displays
+  evidence:
+  - https://x.com/ytcreator_in/status/2118235872034164770
+  suggested_on: '2026-11-09'
+  description: ''
+  role: null
+- handle: krishna__72
+  id: '1618597794356555776'
+  name: krishna Thakur
+  score: -6.0
+  posts_on_topic: 1
+  followers: 0
+  verified_type: none
+  flags:
+  - fewer than 1000 followers
+  - empty profile description
+  topics:
+  - oled displays
+  evidence:
+  - https://x.com/krishna__72/status/2117728768798400739
+  suggested_on: '2026-11-09'
+  description: ''
+  role: null
+- handle: eeNewsEurope
+  id: '515325247'
+  name: eeNews Europe
+  flags: []
+  verified_type: blue
+  followers: 6865
+  score: 6.3
+  posts_on_topic: 1
+  role: null
+  topics:
+  - high bandwidth memory
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 6.3 below 8.0'
+- handle: machinelearnflx
+  id: '4820804277'
+  name: Machine Learning FLX
+  flags: []
+  verified_type: blue
+  followers: 170730
+  score: 7.7
+  posts_on_topic: 1
+  role: null
+  topics:
+  - AI agents
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 7.7 below 8.0'
+- handle: dez_blanchfield
+  id: '34181507'
+  name: Sociaall Inc.
+  flags: []
+  verified_type: none
+  followers: 172262
+  score: 7.2
+  posts_on_topic: 1
+  role: null
+  topics:
+  - AI agents
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: not verified (none)'
+- handle: 0xRicker
+  id: '1991548234058330113'
+  name: Ricker
+  flags: []
+  verified_type: blue
+  followers: 11790
+  score: 6.6
+  posts_on_topic: 1
+  role: null
+  topics:
+  - AI agents
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 6.6 below 8.0'
+- handle: Lance_Edelman
+  id: '2800599859'
+  name: Lance Edelman
+  flags: []
+  verified_type: blue
+  followers: 4243
+  score: 6.1
+  posts_on_topic: 1
+  role: null
+  topics:
+  - AI agents
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 6.1 below 8.0'
+- handle: Techmeme
+  id: '817386'
+  name: Techmeme
+  flags: []
+  verified_type: blue
+  followers: 427504
+  score: 8.1
+  posts_on_topic: 1
+  role: null
+  topics:
+  - vision-language-action model
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: one post and a paid badge only (needs 2+ topic posts, a senior role, a mention by a watched account,
+    or an organisation badge)'
+- handle: chr1sa
+  id: '17595439'
+  name: Chris Anderson (in Bay Area)
+  flags: []
+  verified_type: blue
+  followers: 176273
+  score: 7.8
+  posts_on_topic: 1
+  role: null
+  topics:
+  - vision-language-action model
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 7.8 below 8.0'
+- handle: Romka2x
+  id: '1747103855056166912'
+  name: 🇺🇸 Roman R 🇺🇸
+  flags: []
+  verified_type: blue
+  followers: 1621
+  score: 7.7
+  posts_on_topic: 2
+  role: null
+  topics:
+  - vision-language-action model
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 7.7 below 8.0'
+- handle: OWW
+  id: '255642463'
+  name: Robotics Papers
+  flags: []
+  verified_type: none
+  followers: 2907
+  score: 7.5
+  posts_on_topic: 2
+  role: null
+  topics:
+  - vision-language-action model
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: not verified (none)'
+- handle: CyberRobooo
+  id: '1610480598321168384'
+  name: CyberRobo
+  flags: []
+  verified_type: blue
+  followers: 41025
+  score: 7.1
+  posts_on_topic: 1
+  role: null
+  topics:
+  - vision-language-action model
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 7.1 below 8.0'
+- handle: Decoded08
+  id: '2468696821'
+  name: Decoded
+  flags: []
+  verified_type: blue
+  followers: 2787
+  score: 7.0
+  posts_on_topic: 1
+  role: FOUNDER
+  topics:
+  - vision-language-action model
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 7.0 below 8.0'
+- handle: techniahqrobot
+  id: '1444821703415242760'
+  name: Techniahqrobot | humanoid robots
+  flags: []
+  verified_type: blue
+  followers: 19216
+  score: 6.8
+  posts_on_topic: 1
+  role: null
+  topics:
+  - vision-language-action model
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 6.8 below 8.0'
+- handle: liuziwei7
+  id: '957685323198164992'
+  name: Ziwei Liu
+  flags: []
+  verified_type: blue
+  followers: 13669
+  score: 6.6
+  posts_on_topic: 1
+  role: null
+  topics:
+  - vision-language-action model
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 6.6 below 8.0'
+- handle: johnkoetsier
+  id: '1253661'
+  name: John Koetsier
+  flags: []
+  verified_type: none
+  followers: 39866
+  score: 6.6
+  posts_on_topic: 1
+  role: null
+  topics:
+  - vision-language-action model
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: not verified (none)'
+- handle: preskill
+  id: '207256884'
+  name: John Preskill
+  flags: []
+  verified_type: blue
+  followers: 345674
+  score: 8.0
+  posts_on_topic: 1
+  role: null
+  topics:
+  - quantum error correction
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: one post and a paid badge only (needs 2+ topic posts, a senior role, a mention by a watched account,
+    or an organisation badge)'
+- handle: gp_pulipaka
+  id: '4263007693'
+  name: Dr. Ganapathi Pulipaka 🇺🇸
+  flags: []
+  verified_type: blue
+  followers: 148380
+  score: 7.7
+  posts_on_topic: 1
+  role: null
+  topics:
+  - quantum error correction
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 7.7 below 8.0'
+- handle: QuantumStateX
+  id: '1687442525143912449'
+  name: QuantumX
+  flags: []
+  verified_type: blue
+  followers: 1253
+  score: 7.6
+  posts_on_topic: 2
+  role: null
+  topics:
+  - quantum error correction
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 7.6 below 8.0'
+- handle: Scholarshipps
+  id: '983436290451525633'
+  name: Scholarships and Jobs in Europe, US, Canada, AU...
+  flags: []
+  verified_type: blue
+  followers: 83093
+  score: 7.4
+  posts_on_topic: 1
+  role: null
+  topics:
+  - quantum error correction
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 7.4 below 8.0'
+- handle: QuantumDaily
+  id: '1092933627732623360'
+  name: The Quantum Insider
+  flags: []
+  verified_type: blue
+  followers: 25438
+  score: 6.9
+  posts_on_topic: 1
+  role: null
+  topics:
+  - quantum error correction
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 6.9 below 8.0'
+- handle: scitechgirl
+  id: '1997429568404377601'
+  name: SciTech Girl
+  flags: []
+  verified_type: blue
+  followers: 23463
+  score: 6.9
+  posts_on_topic: 1
+  role: null
+  topics:
+  - quantum error correction
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 6.9 below 8.0'
+- handle: Amandasatiro07
+  id: '1825386407189237760'
+  name: Amandasatiro
+  flags: []
+  verified_type: blue
+  followers: 7678
+  score: 6.4
+  posts_on_topic: 1
+  role: null
+  topics:
+  - quantum error correction
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 6.4 below 8.0'
+- handle: thatoptometrist
+  id: '1475027981424865280'
+  name: Mark™️
+  flags: []
+  verified_type: blue
+  followers: 7171
+  score: 6.4
+  posts_on_topic: 1
+  role: null
+  topics:
+  - quantum error correction
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 6.4 below 8.0'
+- handle: QuantumPapers
+  id: '136501409'
+  name: Quantum Physics Papers
+  flags: []
+  verified_type: none
+  followers: 15725
+  score: 6.2
+  posts_on_topic: 1
+  role: null
+  topics:
+  - quantum error correction
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: not verified (none)'
+- handle: the_hindu
+  id: '20751449'
+  name: The Hindu
+  flags: []
+  verified_type: blue
+  followers: 8429293
+  score: 9.4
+  posts_on_topic: 1
+  role: null
+  topics:
+  - grid-scale energy storage
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: one post and a paid badge only (needs 2+ topic posts, a senior role, a mention by a watched account,
+    or an organisation badge)'
+- handle: IndiaToday
+  id: '19897138'
+  name: IndiaToday
+  flags: []
+  verified_type: blue
+  followers: 6277976
+  score: 9.3
+  posts_on_topic: 1
+  role: null
+  topics:
+  - grid-scale energy storage
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: one post and a paid badge only (needs 2+ topic posts, a senior role, a mention by a watched account,
+    or an organisation badge)'
+- handle: EconomicTimes
+  id: '39743812'
+  name: Economic Times
+  flags: []
+  verified_type: blue
+  followers: 4309449
+  score: 9.1
+  posts_on_topic: 1
+  role: null
+  topics:
+  - grid-scale energy storage
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: one post and a paid badge only (needs 2+ topic posts, a senior role, a mention by a watched account,
+    or an organisation badge)'
+- handle: ETNOWlive
+  id: '225012752'
+  name: ET NOW
+  flags: []
+  verified_type: blue
+  followers: 869010
+  score: 8.4
+  posts_on_topic: 1
+  role: null
+  topics:
+  - grid-scale energy storage
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: one post and a paid badge only (needs 2+ topic posts, a senior role, a mention by a watched account,
+    or an organisation badge)'
+- handle: GreaterKashmir
+  id: '582941136'
+  name: Greater Kashmir
+  flags: []
+  verified_type: blue
+  followers: 559120
+  score: 8.2
+  posts_on_topic: 1
+  role: null
+  topics:
+  - grid-scale energy storage
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: one post and a paid badge only (needs 2+ topic posts, a senior role, a mention by a watched account,
+    or an organisation badge)'
+- handle: DDIndialive
+  id: '718368960903847936'
+  name: DD India
+  flags: []
+  verified_type: blue
+  followers: 107960
+  score: 7.5
+  posts_on_topic: 1
+  role: null
+  topics:
+  - grid-scale energy storage
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 7.5 below 8.0'
+- handle: c_aashish
+  id: '83182871'
+  name: Aashish Chandorkar
+  flags: []
+  verified_type: blue
+  followers: 73316
+  score: 7.4
+  posts_on_topic: 1
+  role: null
+  topics:
+  - grid-scale energy storage
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 7.4 below 8.0'
+- handle: TheQuietSensei
+  id: '1053245333579255808'
+  name: Common Sensei
+  flags: []
+  verified_type: blue
+  followers: 59145
+  score: 7.3
+  posts_on_topic: 1
+  role: null
+  topics:
+  - grid-scale energy storage
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 7.3 below 8.0'
+- handle: CBCRajouri
+  id: '1249581119931994112'
+  name: Central Bureau of Communication, Rajouri (J&K)
+  flags: []
+  verified_type: none
+  followers: 1264
+  score: 7.1
+  posts_on_topic: 2
+  role: null
+  topics:
+  - grid-scale energy storage
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: not verified (none)'
+- handle: india_plus_
+  id: '1973984508232806400'
+  name: India Plus
+  flags: []
+  verified_type: blue
+  followers: 30564
+  score: 7.0
+  posts_on_topic: 1
+  role: null
+  topics:
+  - grid-scale energy storage
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 7.0 below 8.0'
+- handle: alphaaffairsf2f
+  id: '3113911373'
+  name: alphaaffairsf2f
+  flags: []
+  verified_type: blue
+  followers: 18513
+  score: 6.8
+  posts_on_topic: 1
+  role: null
+  topics:
+  - grid-scale energy storage
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 6.8 below 8.0'
+- handle: dayalugurubjp
+  id: '783196991782318080'
+  name: Dr. Dayashankar Mishra 'Dayalu'
+  flags: []
+  verified_type: blue
+  followers: 18228
+  score: 6.8
+  posts_on_topic: 1
+  role: null
+  topics:
+  - grid-scale energy storage
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 6.8 below 8.0'
+- handle: Prabinmen
+  id: '2833299887'
+  name: PM
+  flags: []
+  verified_type: blue
+  followers: 17683
+  score: 6.8
+  posts_on_topic: 1
+  role: null
+  topics:
+  - grid-scale energy storage
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 6.8 below 8.0'
+- handle: PsuWatch
+  id: '1004022363002818561'
+  name: PSUWatch
+  flags: []
+  verified_type: blue
+  followers: 9788
+  score: 6.5
+  posts_on_topic: 1
+  role: null
+  topics:
+  - grid-scale energy storage
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 6.5 below 8.0'
+- handle: aseemmanchanda
+  id: '89475731'
+  name: Aseem Manchanda
+  flags: []
+  verified_type: blue
+  followers: 9381
+  score: 6.5
+  posts_on_topic: 1
+  role: null
+  topics:
+  - grid-scale energy storage
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 6.5 below 8.0'
+- handle: bhagwantkhuba
+  id: '702634714'
+  name: Bhagwanth Khuba
+  flags: []
+  verified_type: none
+  followers: 22970
+  score: 6.4
+  posts_on_topic: 1
+  role: null
+  topics:
+  - grid-scale energy storage
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: not verified (none)'
+- handle: SUDHIRb9661
+  id: '1842931906293497856'
+  name: SUDHIR
+  flags: []
+  verified_type: blue
+  followers: 6452
+  score: 6.3
+  posts_on_topic: 1
+  role: null
+  topics:
+  - grid-scale energy storage
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 6.3 below 8.0'
+- handle: governancenow
+  id: '86106315'
+  name: Governance Now
+  flags: []
+  verified_type: none
+  followers: 11985
+  score: 6.1
+  posts_on_topic: 1
+  role: null
+  topics:
+  - grid-scale energy storage
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: not verified (none)'
+- handle: PIB_India
+  id: '231033118'
+  name: PIB India
+  flags: []
+  verified_type: blue
+  followers: 3148557
+  score: 9.0
+  posts_on_topic: 1
+  role: null
+  topics:
+  - 6G
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: one post and a paid badge only (needs 2+ topic posts, a senior role, a mention by a watched account,
+    or an organisation badge)'
+- handle: marinaj4q
+  id: '1557872001427148803'
+  name: Mmir
+  flags: []
+  verified_type: blue
+  followers: 51307
+  score: 7.2
+  posts_on_topic: 1
+  role: null
+  topics:
+  - 6G
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 7.2 below 8.0'
+- handle: Finsee_main
+  id: '1653727125759721472'
+  name: Finsee
+  flags: []
+  verified_type: blue
+  followers: 12009
+  score: 6.6
+  posts_on_topic: 1
+  role: null
+  topics:
+  - 6G
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 6.6 below 8.0'
+- handle: skathire
+  id: '635833627'
+  name: Sek Kathiresan MD
+  flags: []
+  verified_type: blue
+  followers: 30495
+  score: 9.0
+  posts_on_topic: 1
+  role: null
+  topics:
+  - base editing
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: one post and a paid badge only (needs 2+ topic posts, a senior role, a mention by a watched account,
+    or an organisation badge)'
+- handle: singularityhub
+  id: '15249166'
+  name: Singularity Hub
+  flags: []
+  verified_type: blue
+  followers: 110303
+  score: 7.5
+  posts_on_topic: 1
+  role: null
+  topics:
+  - base editing
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 7.5 below 8.0'
+- handle: ahier
+  id: '18244332'
+  name: Brian Ahier
+  flags: []
+  verified_type: blue
+  followers: 52613
+  score: 7.2
+  posts_on_topic: 1
+  role: null
+  topics:
+  - base editing
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 7.2 below 8.0'
+- handle: MolecularCell
+  id: '1345385060'
+  name: Molecular Cell
+  flags: []
+  verified_type: none
+  followers: 151081
+  score: 7.2
+  posts_on_topic: 1
+  role: null
+  topics:
+  - base editing
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: not verified (none)'
+- handle: RevvityLifeSci
+  id: '50076223'
+  name: Revvity for Life Sciences
+  flags: []
+  verified_type: blue
+  followers: 20531
+  score: 6.8
+  posts_on_topic: 1
+  role: null
+  topics:
+  - base editing
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 6.8 below 8.0'
+- handle: idtdna
+  id: '28173220'
+  name: Integrated DNA Technologies
+  flags: []
+  verified_type: blue
+  followers: 13363
+  score: 6.6
+  posts_on_topic: 1
+  role: null
+  topics:
+  - base editing
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 6.6 below 8.0'
+- handle: NaturePlants
+  id: '2444052414'
+  name: Nature Plants
+  flags: []
+  verified_type: none
+  followers: 39619
+  score: 6.6
+  posts_on_topic: 1
+  role: null
+  topics:
+  - base editing
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: not verified (none)'
+- handle: SimbokeSarah
+  id: '1363108375123255299'
+  name: Sarah, D.Sc 🐣
+  flags: []
+  verified_type: none
+  followers: 29521
+  score: 6.5
+  posts_on_topic: 1
+  role: null
+  topics:
+  - base editing
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: not verified (none)'
+- handle: ChEnected
+  id: '95439667'
+  name: American Institute of Chemical Engineers (AIChE)
+  flags: []
+  verified_type: none
+  followers: 22431
+  score: 6.3
+  posts_on_topic: 1
+  role: null
+  topics:
+  - base editing
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: not verified (none)'
+- handle: RZubiranS
+  id: '243364384'
+  name: Rafael Zubirán
+  flags: []
+  verified_type: blue
+  followers: 5772
+  score: 6.3
+  posts_on_topic: 1
+  role: null
+  topics:
+  - base editing
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 6.3 below 8.0'
+- handle: BioinfoAdv
+  id: '1377623691278876682'
+  name: Bioinformatics Advances
+  flags: []
+  verified_type: blue
+  followers: 5170
+  score: 6.2
+  posts_on_topic: 1
+  role: null
+  topics:
+  - base editing
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 6.2 below 8.0'
+- handle: srqstockpicker
+  id: '30820266'
+  name: Boaty McBoatface
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  verified_type: blue
+  followers: 4746
+  score: 6.2
+  posts_on_topic: 1
+  role: null
+  topics:
+  - base editing
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: caution flags: trading-tip, promotional or parody wording in the profile'
+- handle: ShorterLab
+  id: '474088050'
+  name: ShorterLab
+  flags: []
+  verified_type: none
+  followers: 12938
+  score: 6.1
+  posts_on_topic: 1
+  role: null
+  topics:
+  - base editing
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: not verified (none)'
+- handle: nabil125125125
+  id: '1856562223172472832'
+  name: Nabil_islaM
+  flags: []
+  verified_type: none
+  followers: 2744
+  score: 19.4
+  posts_on_topic: 8
+  role: null
+  topics:
+  - post-quantum cryptography
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: not verified (none)'
+- handle: ThalesDigiSec
+  id: '17103069'
+  name: Thales Cyber and Digital
+  flags: []
+  verified_type: none
+  followers: 19271
+  score: 8.3
+  posts_on_topic: 2
+  role: null
+  topics:
+  - post-quantum cryptography
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: not verified (none)'
+- handle: ThejesterVerse
+  id: '1862103657455435776'
+  name: The jester verse
+  flags:
+  - trading-tip, promotional or parody wording in the profile
+  verified_type: blue
+  followers: 2790
+  score: 8.0
+  posts_on_topic: 2
+  role: null
+  topics:
+  - post-quantum cryptography
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: caution flags: trading-tip, promotional or parody wording in the profile'
+- handle: WOCTechnology
+  id: '24245696'
+  name: Women of Color Magazine & Conference
+  flags: []
+  verified_type: none
+  followers: 2770
+  score: 7.4
+  posts_on_topic: 2
+  role: null
+  topics:
+  - post-quantum cryptography
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: not verified (none)'
+- handle: QuantSecXYZ
+  id: '1493680968095383558'
+  name: QuantSec
+  flags: []
+  verified_type: none
+  followers: 22171
+  score: 6.3
+  posts_on_topic: 1
+  role: null
+  topics:
+  - post-quantum cryptography
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: not verified (none)'
+- handle: Ronald_vanLoon
+  id: '555031989'
+  name: Ronald van Loon
+  flags: []
+  verified_type: blue
+  followers: 357508
+  score: 8.1
+  posts_on_topic: 1
+  role: null
+  topics:
+  - oled displays
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: one post and a paid badge only (needs 2+ topic posts, a senior role, a mention by a watched account,
+    or an organisation badge)'
+- handle: PrameyaEnglish
+  id: '1189773941302124544'
+  name: Prameya English
+  flags: []
+  verified_type: blue
+  followers: 1572
+  score: 7.7
+  posts_on_topic: 2
+  role: null
+  topics:
+  - oled displays
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 7.7 below 8.0'
+- handle: craigapplecom
+  id: '1362860562359734277'
+  name: Federighi’s Assistant
+  flags: []
+  verified_type: none
+  followers: 2129
+  score: 7.3
+  posts_on_topic: 2
+  role: null
+  topics:
+  - oled displays
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: not verified (none)'
+- handle: BLU_Products
+  id: '161771384'
+  name: BLU Products
+  flags: []
+  verified_type: blue
+  followers: 31301
+  score: 7.0
+  posts_on_topic: 1
+  role: null
+  topics:
+  - oled displays
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 7.0 below 8.0'
+- handle: PragativadiNews
+  id: '3227904038'
+  name: Pragativadi
+  flags: []
+  verified_type: blue
+  followers: 25218
+  score: 6.9
+  posts_on_topic: 1
+  role: null
+  topics:
+  - oled displays
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 6.9 below 8.0'
+- handle: HimanshiTech
+  id: '1582340767699173376'
+  name: Himanshi 👸
+  flags: []
+  verified_type: blue
+  followers: 18609
+  score: 6.8
+  posts_on_topic: 1
+  role: null
+  topics:
+  - oled displays
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 6.8 below 8.0'
+- handle: NyongesaSande
+  id: '236264187'
+  name: Nyongesa Sande
+  flags: []
+  verified_type: none
+  followers: 27033
+  score: 6.4
+  posts_on_topic: 1
+  role: null
+  topics:
+  - oled displays
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: not verified (none)'
+- handle: gadgetbytenepal
+  id: '1264990284'
+  name: Gadgetbyte
+  flags: []
+  verified_type: none
+  followers: 21769
+  score: 6.3
+  posts_on_topic: 1
+  role: null
+  topics:
+  - oled displays
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: not verified (none)'
+- handle: bobbymorris280
+  id: '1444645474489749510'
+  name: Bobby
+  flags: []
+  verified_type: blue
+  followers: 5452
+  score: 6.2
+  posts_on_topic: 1
+  role: null
+  topics:
+  - oled displays
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 6.2 below 8.0'
+- handle: TechieUltimatum
+  id: '1970531672765665280'
+  name: Tech Ultimatum
+  flags: []
+  verified_type: blue
+  followers: 4821
+  score: 6.2
+  posts_on_topic: 1
+  role: null
+  topics:
+  - oled displays
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 6.2 below 8.0'
+- handle: PaidFreeDroid
+  id: '1484352290'
+  name: PaidFreeDroid
+  flags: []
+  verified_type: blue
+  followers: 3301
+  score: 6.0
+  posts_on_topic: 1
+  role: null
+  topics:
+  - oled displays
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: score 6.0 below 8.0'
+- handle: nitin_gadkari
+  id: '97217966'
+  name: Nitin Gadkari
+  flags: []
+  verified_type: government
+  followers: 15457786
+  score: 12.2
+  posts_on_topic: 1
+  role: null
+  topics:
+  - grid-scale energy storage
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: one post and a badge only (needs 2+ topic posts, a senior role, a mention by a watched account,
+    or a business badge)'
+- handle: MIB_India
+  id: '920488039'
+  name: Ministry of Information and Broadcasting
+  flags: []
+  verified_type: government
+  followers: 2194282
+  score: 11.3
+  posts_on_topic: 1
+  role: null
+  topics:
+  - grid-scale energy storage
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: one post and a badge only (needs 2+ topic posts, a senior role, a mention by a watched account,
+    or a business badge)'
+- handle: kishanreddybjp
+  id: '160509668'
+  name: G Kishan Reddy
+  flags: []
+  verified_type: government
+  followers: 396306
+  score: 10.6
+  posts_on_topic: 1
+  role: null
+  topics:
+  - grid-scale energy storage
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: one post and a badge only (needs 2+ topic posts, a senior role, a mention by a watched account,
+    or a business badge)'
+- handle: IndiaInGuate
+  id: '1694885089'
+  name: India in Guatemala
+  flags: []
+  verified_type: government
+  followers: 27742
+  score: 9.4
+  posts_on_topic: 1
+  role: null
+  topics:
+  - grid-scale energy storage
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: one post and a badge only (needs 2+ topic posts, a senior role, a mention by a watched account,
+    or a business badge)'
+- handle: PIBDehradun
+  id: '921296037632868353'
+  name: PIB in Uttarakhand
+  flags: []
+  verified_type: government
+  followers: 18150
+  score: 9.3
+  posts_on_topic: 1
+  role: null
+  topics:
+  - grid-scale energy storage
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: one post and a badge only (needs 2+ topic posts, a senior role, a mention by a watched account,
+    or a business badge)'
+- handle: CISACyber
+  id: '18066440'
+  name: CISA Cyber
+  flags: []
+  verified_type: government
+  followers: 311951
+  score: 10.5
+  posts_on_topic: 1
+  role: null
+  topics:
+  - post-quantum cryptography
+  evidence: []
+  suggested_on: '2026-11-09'
+  description: ''
+  rechecked: '2026-11-09: one post and a badge only (needs 2+ topic posts, a senior role, a mention by a watched account,
+    or a business badge)'
 candidates:
 - handle: MicronTech
   group: company
@@ -929,4 +5572,325 @@ approved:
   name: Jon Peddie Research
   approved_by: owner
   first_checked: '2026-11-08'
-changes: []
+- handle: SemiconductorsX
+  id: '731152829289762816'
+  group: agent
+  name: Semiconductor Insider
+  approved_by: agent
+  added_on: '2026-11-09'
+  topics:
+  - high bandwidth memory
+  first_checked: '2026-11-09'
+- handle: KirkDBorne
+  id: '534563976'
+  group: agent
+  name: Kirk Borne
+  approved_by: agent
+  added_on: '2026-11-09'
+  topics:
+  - AI agents
+  first_checked: '2026-11-09'
+- handle: kyleichan
+  id: '210702531'
+  group: agent
+  name: Kyle Chan
+  approved_by: agent
+  added_on: '2026-11-09'
+  topics:
+  - vision-language-action model
+  first_checked: '2026-11-09'
+- handle: thePandaily
+  id: '870221240929140736'
+  group: agent
+  name: Pandaily
+  approved_by: agent
+  added_on: '2026-11-09'
+  topics:
+  - vision-language-action model
+  first_checked: '2026-11-09'
+- handle: HPCwire
+  id: '26057108'
+  group: agent
+  name: HPCwire
+  approved_by: agent
+  added_on: '2026-11-09'
+  topics:
+  - quantum error correction
+  first_checked: '2026-11-09'
+- handle: WarGuy_
+  id: '1305505802'
+  group: agent
+  name: Ahmad Shah Mohibi
+  approved_by: agent
+  added_on: '2026-11-09'
+  topics:
+  - quantum error correction
+  first_checked: '2026-11-09'
+- handle: PIBKohima
+  id: '1222048032771829762'
+  group: agent
+  name: PIB in Nagaland
+  approved_by: agent
+  added_on: '2026-11-09'
+  topics:
+  - grid-scale energy storage
+  first_checked: '2026-11-09'
+- handle: robvank
+  id: '53898323'
+  group: agent
+  name: Rob van Kranenburg
+  approved_by: agent
+  added_on: '2026-11-09'
+  topics:
+  - 6G
+  first_checked: '2026-11-09'
+- handle: LifeboatHQ
+  id: '21558596'
+  group: agent
+  name: Lifeboat Foundation
+  approved_by: agent
+  added_on: '2026-11-09'
+  topics:
+  - base editing
+  first_checked: '2026-11-09'
+- handle: zhaoweiasu
+  id: '191281008'
+  group: agent
+  name: Wei Zhao
+  approved_by: agent
+  added_on: '2026-11-09'
+  topics:
+  - base editing
+  first_checked: '2026-11-09'
+- handle: BlackEngineer
+  id: '24244100'
+  group: agent
+  name: BEYA STEM
+  approved_by: agent
+  added_on: '2026-11-09'
+  topics:
+  - post-quantum cryptography
+  first_checked: '2026-11-09'
+- handle: ShapesXR
+  id: '713766476881215488'
+  group: agent
+  name: ShapesXR
+  approved_by: agent
+  added_on: '2026-11-09'
+  topics:
+  - oled displays
+  first_checked: '2026-11-09'
+- handle: engadget
+  id: '14372486'
+  group: agent
+  name: Engadget
+  approved_by: agent
+  added_on: '2026-11-09'
+  topics:
+  - oled displays
+  first_checked: '2026-11-09'
+- handle: Gadgets360
+  id: '43077446'
+  group: agent
+  name: Gadgets 360
+  approved_by: agent
+  added_on: '2026-11-09'
+  topics:
+  - oled displays
+  first_checked: '2026-11-09'
+changes:
+- date: '2026-11-09'
+  change: 'owner: auto_manage on, verified accounts only, up to 200 accounts; roles and @mentions by watched accounts count'
+- date: '2026-11-09'
+  change: added @SemiconductorsX (score 20.8, blue verified, 17697 followers, 8 on-topic posts)
+- date: '2026-11-09'
+  change: added @eeNewsEurope (score 6.3, blue verified, 6865 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @KirkDBorne (score 14.2, blue verified, 496495 followers, Founder, 3 on-topic posts)
+- date: '2026-11-09'
+  change: added @machinelearnflx (score 7.7, blue verified, 170730 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @dez_blanchfield (score 7.2, none verified, 172262 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @0xRicker (score 6.6, blue verified, 11790 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @Lance_Edelman (score 6.1, blue verified, 4243 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @kyleichan (score 9.2, blue verified, 52497 followers, Fellow, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @thePandaily (score 8.6, blue verified, 12171 followers, Founder, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @Techmeme (score 8.1, blue verified, 427504 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @chr1sa (score 7.8, blue verified, 176273 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @Romka2x (score 7.7, blue verified, 1621 followers, 2 on-topic posts)
+- date: '2026-11-09'
+  change: added @OWW (score 7.5, none verified, 2907 followers, 2 on-topic posts)
+- date: '2026-11-09'
+  change: added @CyberRobooo (score 7.1, blue verified, 41025 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @Decoded08 (score 7.0, blue verified, 2787 followers, FOUNDER, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @techniahqrobot (score 6.8, blue verified, 19216 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @liuziwei7 (score 6.6, blue verified, 13669 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @johnkoetsier (score 6.6, none verified, 39866 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @HPCwire (score 9.4, business verified, 22881 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @WarGuy_ (score 8.5, blue verified, 10797 followers, Founder, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @preskill (score 8.0, blue verified, 345674 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @gp_pulipaka (score 7.7, blue verified, 148380 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @QuantumStateX (score 7.6, blue verified, 1253 followers, 2 on-topic posts)
+- date: '2026-11-09'
+  change: added @Scholarshipps (score 7.4, blue verified, 83093 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @QuantumDaily (score 6.9, blue verified, 25438 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @scitechgirl (score 6.9, blue verified, 23463 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @Amandasatiro07 (score 6.4, blue verified, 7678 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @thatoptometrist (score 6.4, blue verified, 7171 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @QuantumPapers (score 6.2, none verified, 15725 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @nitin_gadkari (score 12.2, government verified, 15457786 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @MIB_India (score 11.3, government verified, 2194282 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @kishanreddybjp (score 10.6, government verified, 396306 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @PIBKohima (score 10.6, government verified, 3717 followers, 2 on-topic posts)
+- date: '2026-11-09'
+  change: added @IndiaInGuate (score 9.4, government verified, 27742 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @the_hindu (score 9.4, blue verified, 8429293 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @IndiaToday (score 9.3, blue verified, 6277976 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @PIBDehradun (score 9.3, government verified, 18150 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @EconomicTimes (score 9.1, blue verified, 4309449 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @ETNOWlive (score 8.4, blue verified, 869010 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @GreaterKashmir (score 8.2, blue verified, 559120 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @DDIndialive (score 7.5, blue verified, 107960 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @c_aashish (score 7.4, blue verified, 73316 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @TheQuietSensei (score 7.3, blue verified, 59145 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @CBCRajouri (score 7.1, none verified, 1264 followers, 2 on-topic posts)
+- date: '2026-11-09'
+  change: added @india_plus_ (score 7.0, blue verified, 30564 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @alphaaffairsf2f (score 6.8, blue verified, 18513 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @dayalugurubjp (score 6.8, blue verified, 18228 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @Prabinmen (score 6.8, blue verified, 17683 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @PsuWatch (score 6.5, blue verified, 9788 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @aseemmanchanda (score 6.5, blue verified, 9381 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @bhagwantkhuba (score 6.4, none verified, 22970 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @SUDHIRb9661 (score 6.3, blue verified, 6452 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @governancenow (score 6.1, none verified, 11985 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @PIB_India (score 9.0, blue verified, 3148557 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @robvank (score 8.7, blue verified, 17059 followers, 2 on-topic posts)
+- date: '2026-11-09'
+  change: added @marinaj4q (score 7.2, blue verified, 51307 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @Finsee_main (score 6.6, blue verified, 12009 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @LifeboatHQ (score 9.0, blue verified, 32194 followers, 2 on-topic posts)
+- date: '2026-11-09'
+  change: added @skathire (score 9.0, blue verified, 30495 followers, SVP, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @zhaoweiasu (score 8.4, blue verified, 7449 followers, 2 on-topic posts)
+- date: '2026-11-09'
+  change: added @singularityhub (score 7.5, blue verified, 110303 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @ahier (score 7.2, blue verified, 52613 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @MolecularCell (score 7.2, none verified, 151081 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @RevvityLifeSci (score 6.8, blue verified, 20531 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @idtdna (score 6.6, blue verified, 13363 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @NaturePlants (score 6.6, none verified, 39619 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @SimbokeSarah (score 6.5, none verified, 29521 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @ChEnected (score 6.3, none verified, 22431 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @RZubiranS (score 6.3, blue verified, 5772 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @BioinfoAdv (score 6.2, blue verified, 5170 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @srqstockpicker (score 6.2, blue verified, 4746 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @ShorterLab (score 6.1, none verified, 12938 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @nabil125125125 (score 19.4, none verified, 2744 followers, 8 on-topic posts)
+- date: '2026-11-09'
+  change: added @CISACyber (score 10.5, government verified, 311951 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @BlackEngineer (score 8.3, blue verified, 6165 followers, 2 on-topic posts)
+- date: '2026-11-09'
+  change: added @ThalesDigiSec (score 8.3, none verified, 19271 followers, 2 on-topic posts)
+- date: '2026-11-09'
+  change: added @ThejesterVerse (score 8.0, blue verified, 2790 followers, 2 on-topic posts)
+- date: '2026-11-09'
+  change: added @WOCTechnology (score 7.4, none verified, 2770 followers, 2 on-topic posts)
+- date: '2026-11-09'
+  change: added @QuantSecXYZ (score 6.3, none verified, 22171 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @ShapesXR (score 12.3, blue verified, 6300 followers, 4 on-topic posts)
+- date: '2026-11-09'
+  change: added @engadget (score 11.6, business verified, 3655078 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @Gadgets360 (score 10.6, business verified, 356755 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @Ronald_vanLoon (score 8.1, blue verified, 357508 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @PrameyaEnglish (score 7.7, blue verified, 1572 followers, 2 on-topic posts)
+- date: '2026-11-09'
+  change: added @craigapplecom (score 7.3, none verified, 2129 followers, 2 on-topic posts)
+- date: '2026-11-09'
+  change: added @BLU_Products (score 7.0, blue verified, 31301 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @PragativadiNews (score 6.9, blue verified, 25218 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @HimanshiTech (score 6.8, blue verified, 18609 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @NyongesaSande (score 6.4, none verified, 27033 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @gadgetbytenepal (score 6.3, none verified, 21769 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @bobbymorris280 (score 6.2, blue verified, 5452 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @TechieUltimatum (score 6.2, blue verified, 4821 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: added @PaidFreeDroid (score 6.0, blue verified, 3301 followers, 1 on-topic posts)
+- date: '2026-11-09'
+  change: 're-check under stricter rules: 73 agent-added account(s) moved back to suggested'
+- date: '2026-11-09'
+  change: 're-check under stricter rules: 6 agent-added account(s) moved back to suggested'
+require_verified: true
+endorse_min_watchers: 2
+endorsements: {}

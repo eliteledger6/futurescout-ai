@@ -35,7 +35,7 @@ from app.agents.x import watchlist as wl
 log = logging.getLogger("futurescout.x")
 
 _PROMPT_PATH = Path(__file__).with_name("prompt.md")
-MAX_POSTS = 30          # ~$0.15 per run at $0.005 per post read
+MAX_POSTS = 50          # ~$0.25 per run at $0.005 per post read (owner 2026-11-09: read more)
 MAX_SUGGESTIONS = 10    # suggestions shown in a report
 POST_CHARS = 600
 _SIGNAL_LABELS = {Label.UNVERIFIED_CLAIM, Label.AI_INTERPRETATION}

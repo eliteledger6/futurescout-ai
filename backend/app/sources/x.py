@@ -185,7 +185,7 @@ class XClient:
                 s = by_author[u["id"]] = AccountSuggestion(
                     handle=u["username"], id=str(u["id"]), name=u.get("name", ""), description=" ".join((u.get("description") or "").split()),
                     verified_type=u.get("verified_type"), followers=(u.get("public_metrics") or {}).get("followers_count"),
-                    posts_on_topic=0, engagement=0, sample_post_urls=[])
+                    posts_on_topic=0, engagement=0, sample_post_urls=[], role=exec_role(u.get("description") or ""))
             s.posts_on_topic += 1
             s.engagement += sum(int(m.get(k) or 0) for k in ("like_count", "retweet_count", "reply_count", "quote_count"))
             if len(s.sample_post_urls) < 3:
@@ -257,6 +257,7 @@ class AccountSuggestion:
     sample_post_urls: list[str]
     score: float = 0.0
     flags: list[str] = field(default_factory=list)   # reasons for caution, shown to the owner
+    role: Optional[str] = None                        # senior role found in the bio (CEO, CTO, VP, founder...)
 
 
 # Words typical of stock-tip, trading-signal and parody accounts. First live discovery run (HBM, 2026-11-08)
@@ -264,15 +265,65 @@ class AccountSuggestion:
 # these are flagged (shown to the owner, never auto-added) and pushed down the ranking.
 PROMO_WORDS = ("signal", "alert", "options", "100x", "pump", "airdrop", "crypto", "forex", "discord", "telegram", "join my",
                "trader", "trading", "trade ", "trades", "stocks", "stock ", "ticker", "etf", "markets", "invest", "portfolio",
-               "swing", "calls", "puts", "spoof", "parody", "fan account", "not affiliated", "memes")
+               "swing", "calls", "puts", "spoof", "parody", "fan account", "not affiliated", "memes",
+               "stockpick", "picker", "giveaway", "free droid", "apk", "jester")
+
+
+# Senior roles in a profile bio. A CEO/CTO/VP/founder posting about a technology is usually closer to the work than
+# a commentator; matched on whole words, case-insensitive.
+EXEC_ROLE_RE = re.compile(
+    r"\b(ceo|cto|coo|cfo|cso|cpo|chief [a-z]+ officer|chief scientist|co-?founder|founder|president|"
+    r"vice president|svp|evp|vp|head of [a-z]+|managing director|general manager|fellow)\b", re.I)
+
+
+def exec_role(description: str) -> Optional[str]:
+    m = EXEC_ROLE_RE.search(description or "")
+    return m.group(1) if m else None
 
 
 def suggestion_score(s: AccountSuggestion) -> float:
     """Transparent ranking: on-topic posts, whether X marks it as an organisation (a paid blue tick counts
-    little), reach, minus a penalty per caution flag."""
+    little), reach, a senior role in the bio, minus a penalty per caution flag. Endorsement by watched accounts
+    (@mentions) is added later by the watchlist rules (watchlist.endorsement_bonus), from fresher data."""
     badge = {"business": 3.0, "government": 3.0, "blue": 0.5}.get(s.verified_type or "", 0.0)
     reach = math.log10(max(s.followers or 0, 1))
-    return round(s.posts_on_topic * 2.0 + badge + reach - 4.0 * len(s.flags), 2)
+    role = (2.0 if (s.followers or 0) >= 5000 else 1.0) if s.role else 0.0
+    return round(s.posts_on_topic * 2.0 + badge + reach + role - 4.0 * len(s.flags), 2)
+
+
+MENTION_RE = re.compile(r"(?<![A-Za-z0-9_])@([A-Za-z0-9_]{1,15})\b")
+
+
+def mentioned_handles(records: list[SourceRecord], watched: set[str]) -> dict[str, set[str]]:
+    """{mentioned handle (lower case): {watched authors who @mentioned it}}, from posts already read (no cost).
+    Self-mentions and mentions of accounts already watched are left out."""
+    out: dict[str, set[str]] = {}
+    for r in records:
+        author = (r.authors[0] if r.authors else "").lstrip("@").lower()
+        if author not in watched:
+            continue
+        for h in MENTION_RE.findall(r.abstract or ""):
+            h = h.lower()
+            if h == author or h in watched:
+                continue
+            out.setdefault(h, set()).add(author)
+    return out
+
+
+def suggestion_from_user(u: "XUser", *, reason: str, min_followers: int = 1000) -> AccountSuggestion:
+    """An AccountSuggestion for a looked-up user (e.g. one that watched accounts keep mentioning)."""
+    s = AccountSuggestion(handle=u.username, id=u.id, name=u.name, description=" ".join((u.description or "").split()),
+                          verified_type=u.verified_type, followers=u.followers, posts_on_topic=0, engagement=0,
+                          sample_post_urls=[], role=exec_role(u.description or ""))
+    text = f"{s.handle} {s.name} {s.description}".lower()
+    if any(w in text for w in PROMO_WORDS):
+        s.flags.append("trading-tip, promotional or parody wording in the profile")
+    if (s.followers or 0) < min_followers:
+        s.flags.append(f"fewer than {min_followers} followers")
+    if not s.description:
+        s.flags.append("empty profile description")
+    s.score = suggestion_score(s)
+    return s
 
 
 def build_topic_query(keywords: list[str]) -> str:

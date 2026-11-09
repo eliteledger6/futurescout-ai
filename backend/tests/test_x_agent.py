@@ -153,8 +153,13 @@ def test_x_failure_is_recorded_and_not_hidden():
 
 def test_real_watchlist_file_has_only_lookup_confirmed_entries():
     approved = load_watchlist()
-    assert len(approved) == 37 and all(a.id.isdigit() for a in approved)
-    assert len({a.handle.lower() for a in approved}) == 37   # no duplicates
+    from app.agents.x import watchlist as wl
+    rows = wl.load()["approved"]
+    owner = [r for r in rows if r.get("approved_by", "owner") == "owner"]
+    assert len(owner) == 37                                       # the owner's 37; the agent adds its own on top
+    assert all(r.get("approved_by") == "agent" for r in rows if r not in owner)
+    assert all(a.id.isdigit() for a in approved)                  # every id came from an X lookup or search
+    assert len({a.handle.lower() for a in approved}) == len(approved)   # no duplicates
     assert {"TSMC", "SEMIconnects", "OntoInnovation", "KulickeandSoffa"}.isdisjoint({a.handle for a in approved})  # not found on X: never added
     # the combined query for all approved accounts must fit X's limit
     from app.sources.x import build_watchlist_query
