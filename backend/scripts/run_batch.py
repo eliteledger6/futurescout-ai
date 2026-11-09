@@ -32,7 +32,7 @@ from app.api.main import _default_store  # noqa: E402
 from app.config import ConfigError, get_settings, quiet_network_logs  # noqa: E402
 from app.radar import load_radar, load_sectors  # noqa: E402
 
-PATENT_SEARCHES_PER_TOPIC = 6
+PATENT_SEARCHES_PER_TOPIC = 8   # 6 + 2 for the year-to-date comparison (2026-11-09)
 X_WORST_CASE_USD = 0.30
 FIRST_RUN_MODEL_USD = 0.35
 FIRST_RUN_OPENALEX_USD = 0.06   # 0.04 + ~0.02 for the phrase check (2026-11-09)

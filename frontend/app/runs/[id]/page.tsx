@@ -689,11 +689,21 @@ function PatentActivitySection({ report }: { report: Report }) {
         <div className="grid grid-2" style={{ background: "transparent", border: 0, gap: 32 }}>
           <div style={{ background: "transparent" }}>
             <h2 className="h2">Patent activity</h2>
-            <p className="sub">Worldwide patent publications per year (EPO) mentioning: {p.terms.join(", ")}.</p>
+            <p className="sub">Worldwide patent publications per year mentioning: {p.terms.join(", ")}.</p>
             {a && (
               <div style={{ marginTop: 24 }}>
                 <div className="stat-value" style={{ fontSize: 56 }}>{a.yoy_growth_pct !== null ? `${a.yoy_growth_pct > 0 ? "+" : ""}${a.yoy_growth_pct}%` : "–"}</div>
                 <div className="stat-label">Patent Acceleration {a.previous_year} → {a.last_full_year} ({a.previous_year_count} → {a.last_full_year_count} publications)</div>
+              </div>
+            )}
+            {p.ytd && (
+              <div style={{ marginTop: 22 }}>
+                <div className="stat-value" style={{ fontSize: 40, color: p.ytd.trend === "cooling" ? "var(--l-danger)" : p.ytd.trend === "rising" ? "var(--accent)" : undefined }}>
+                  {p.ytd.growth_pct !== null ? `${p.ytd.growth_pct > 0 ? "+" : ""}${p.ytd.growth_pct}%` : "–"}
+                  <span className="small muted" style={{ fontFamily: "var(--font-body)", letterSpacing: 0, marginLeft: 10 }}>{p.ytd.trend ?? "base too small to call"}</span>
+                </div>
+                <div className="stat-label">This year so far: {p.ytd.count} publications by {p.ytd.cutoff} {p.ytd.year} vs {p.ytd.previous_count} by the same date in {p.ytd.previous_year}</div>
+                <p className="small muted" style={{ margin: "8px 0 0" }}>{p.ytd.basis}</p>
               </div>
             )}
             {p.top_applicants.length > 0 && (

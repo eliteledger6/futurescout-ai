@@ -160,3 +160,12 @@ def test_run_research_script_keeps_files_when_database_is_unreachable(capsys):
     assert "could not save" in out and "pw-FIXTURE-secret" not in out
     assert script.save_to_database(Settings(_env_file=None), report, "md") is None
     assert "DATABASE_URL not set" in capsys.readouterr().out
+
+
+def test_nul_characters_are_stripped_before_saving():
+    from app.schemas.research import ResearchReport, strip_control_chars
+    rep = ResearchReport(topic="6G\x00 junk", question="a\x07b\tc\nd")
+    clean = strip_control_chars(rep)
+    assert clean.topic == "6G junk" and clean.question == "ab\tc\nd"
+    ok = ResearchReport(topic="fine")
+    assert strip_control_chars(ok) is ok

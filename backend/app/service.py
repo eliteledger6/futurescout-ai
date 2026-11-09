@@ -17,7 +17,7 @@ from app.graph.workflow import run_research
 from app.models.config import load_model_config
 from app.models.router import ModelRouter
 from app.report import render_markdown
-from app.schemas.research import ResearchReport
+from app.schemas.research import ResearchReport, strip_control_chars
 from app.sources.arxiv import ArxivClient
 from app.sources.base import SourceError
 from app.sources.edgar import EdgarClient
@@ -142,6 +142,7 @@ def execute(
         question=question, sector=sector, from_year=from_year, max_papers=max_papers,
     )
 
+    report = strip_control_chars(report)      # PostgreSQL refuses \x00 (binary junk in some SEC excerpts)
     runs_dir.mkdir(exist_ok=True)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     md_path, json_path = runs_dir / f"report_{stamp}.md", runs_dir / f"report_{stamp}.json"

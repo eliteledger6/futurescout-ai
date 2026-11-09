@@ -20,7 +20,7 @@ from typing import Callable, Optional
 import yaml
 from pydantic import BaseModel, Field
 
-from app.agents.science.metrics import compute_acceleration, ytd_from_client
+from app.agents.science.metrics import patent_ytd, compute_acceleration, ytd_from_client
 from app.config import BACKEND_DIR, CONFIG_DIR
 from app.schemas.science import AccelerationMetric, YtdMetric
 from app.sources.base import SourceError
@@ -63,6 +63,7 @@ class TopicSignal(BaseModel):
     heat: Optional[float] = None       # average of the available YoY growth rates (%): papers and patents, or papers alone
     heat_basis: Optional[str] = None   # which growth rates went into heat, e.g. "papers 2025 + papers YTD + patents 2025"
     paper_ytd: Optional[YtdMetric] = None   # papers 1 Jan-cutoff this year vs the same dates last year
+    patent_ytd: Optional[YtdMetric] = None  # patents, same window (added 2026-11-09)
     trend: Optional[str] = None        # rising | flat | cooling (from paper_ytd); None when the base is too small
     small_base: bool = False           # fewer than MIN_BASE papers or patents in the earlier year: growth is noise
     rank: Optional[int] = None         # only topics with a heat value and a sufficient base are ranked
@@ -108,7 +109,7 @@ def sector_of_topic(topic: str, topics: Optional[list[TopicConfig]] = None) -> O
 
 
 def _heat_parts(paper: Optional[AccelerationMetric], patent: Optional[AccelerationMetric],
-                ytd: Optional[YtdMetric] = None) -> list[tuple[str, float]]:
+                ytd: Optional[YtdMetric] = None, patent_ytd: Optional[YtdMetric] = None) -> list[tuple[str, float]]:
     parts: list[tuple[str, float]] = []
     if paper is not None and paper.yoy_growth_pct is not None:
         parts.append((f"papers {paper.last_full_year}", paper.yoy_growth_pct))
@@ -116,20 +117,22 @@ def _heat_parts(paper: Optional[AccelerationMetric], patent: Optional[Accelerati
         parts.append(("papers YTD", ytd.growth_pct))
     if patent is not None and patent.yoy_growth_pct is not None:
         parts.append((f"patents {patent.last_full_year}", patent.yoy_growth_pct))
+    if patent_ytd is not None and patent_ytd.growth_pct is not None and patent_ytd.trend is not None:
+        parts.append(("patents YTD", patent_ytd.growth_pct))
     return parts
 
 
 def heat_of(paper: Optional[AccelerationMetric], patent: Optional[AccelerationMetric],
-            ytd: Optional[YtdMetric] = None) -> Optional[float]:
+            ytd: Optional[YtdMetric] = None, patent_ytd: Optional[YtdMetric] = None) -> Optional[float]:
     """Average of the growth rates that exist: last full year's papers, this year's papers so far (same dates as last
     year), and last full year's patents. A topic that was hot in 2025 but is fading in 2026 loses heat right away."""
-    parts = _heat_parts(paper, patent, ytd)
+    parts = _heat_parts(paper, patent, ytd, patent_ytd)
     return round(sum(v for _, v in parts) / len(parts), 1) if parts else None
 
 
 def heat_basis_of(paper: Optional[AccelerationMetric], patent: Optional[AccelerationMetric],
-                  ytd: Optional[YtdMetric] = None) -> Optional[str]:
-    parts = _heat_parts(paper, patent, ytd)
+                  ytd: Optional[YtdMetric] = None, patent_ytd: Optional[YtdMetric] = None) -> Optional[str]:
+    parts = _heat_parts(paper, patent, ytd, patent_ytd)
     return " + ".join(n for n, _ in parts) if parts else None
 
 
@@ -177,6 +180,7 @@ def compute_radar(
                     sig.patent_acceleration.basis = (
                         f"Patent publications per year with any of {t.terms} in title or abstract "
                         f"({getattr(patents, 'SOURCE', 'patent source')}). Recent years undercounted by publication delay.")
+                sig.patent_ytd = patent_ytd(patents, t.terms, now().date())
             except SourceError as exc:
                 sig.errors.append(f"patents: {exc.message}")
         if filers:
@@ -184,8 +188,8 @@ def compute_radar(
                 sig.filer_counts = filers.count_filers_by_year(t.name, start)
             except SourceError as exc:
                 sig.errors.append(f"filers: {exc.message}")
-        sig.heat = heat_of(sig.paper_acceleration, sig.patent_acceleration, sig.paper_ytd)
-        sig.heat_basis = heat_basis_of(sig.paper_acceleration, sig.patent_acceleration, sig.paper_ytd)
+        sig.heat = heat_of(sig.paper_acceleration, sig.patent_acceleration, sig.paper_ytd, sig.patent_ytd)
+        sig.heat_basis = heat_basis_of(sig.paper_acceleration, sig.patent_acceleration, sig.paper_ytd, sig.patent_ytd)
         sig.small_base = any(a is not None and a.previous_year_count < MIN_BASE
                              for a in (sig.paper_acceleration, sig.patent_acceleration))
         out.append(sig)

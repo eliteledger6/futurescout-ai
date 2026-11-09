@@ -188,3 +188,25 @@ class ResearchReport(BaseModel):
     total_cost_usd: float = 0.0
     chain_record: Optional[dict] = None  # NEAR testnet fingerprint record (excluded from the fingerprint itself)
     errors: list[AgentError] = Field(default_factory=list)
+
+
+def strip_control_chars(report: "ResearchReport") -> "ResearchReport":
+    """Remove NUL and other C0 control characters (except tab/newline/CR) from every string.
+
+    Found live 2026-11-09: a 6G SEC filing excerpt carried binary junk incl. \u0000, which PostgreSQL JSONB refuses,
+    so the run was silently not saved to the database. Applied before sealing so the fingerprint matches what is stored.
+    """
+    import re as _re
+    bad = _re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f]")
+
+    def clean(v):  # noqa: ANN001,ANN202
+        if isinstance(v, str):
+            return bad.sub("", v)
+        if isinstance(v, list):
+            return [clean(x) for x in v]
+        if isinstance(v, dict):
+            return {k: clean(x) for k, x in v.items()}
+        return v
+    data = report.model_dump(mode="json")
+    cleaned = clean(data)
+    return report if cleaned == data else ResearchReport.model_validate(cleaned)

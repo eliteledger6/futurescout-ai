@@ -7,7 +7,7 @@ from typing import Literal, Optional
 from pydantic import BaseModel, Field
 
 from app.schemas.common import AgentError, Finding, FindingDraft, SourceRecord
-from app.schemas.science import AccelerationMetric
+from app.schemas.science import AccelerationMetric, YtdMetric
 
 
 class PatentReport(BaseModel):
@@ -25,6 +25,7 @@ class PatentResult(BaseModel):
     total_matches: Optional[int] = None                       # publications matching since from_year
     publication_counts: dict[int, int] = Field(default_factory=dict)
     acceleration: Optional[AccelerationMetric] = None          # Patent Acceleration (code-computed)
+    ytd: Optional[YtdMetric] = None   # this year so far vs the same dates last year (added 2026-11-09; digest ignores None)
     top_applicants: list[tuple[str, int]] = Field(default_factory=list)  # among retrieved documents
     sources: list[SourceRecord] = Field(default_factory=list)
     source_usage: dict = Field(default_factory=dict)          # e.g. SerpApi searches used / cache hits

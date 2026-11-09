@@ -44,8 +44,8 @@ class Settings(BaseSettings):
     # report "patent search paused" for topics that are not cached. For saving quota before a demo.
     serpapi_cache_only: bool = False
     # Which patent source a run uses when both are configured: "serpapi" (Google Patents, paid quota) or "epo"
-    # (EPO OPS, free ~4 GB/week; live-verified 2026-11-09). Default keeps SerpApi first.
-    patent_source: str = "serpapi"
+    # (EPO OPS, free ~4 GB/week; live-verified 2026-11-09).
+    patent_source: str = "epo"     # owner 2026-11-09: EPO first (free); falls back to SerpApi when EPO keys are missing
 
     def serpapi_key_value(self) -> Optional[str]:
         return self.serpapi_api_key.get_secret_value().strip() or None if self.serpapi_api_key else None

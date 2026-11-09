@@ -22,7 +22,7 @@ from __future__ import annotations
 import base64
 import re
 import time
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from typing import Any, Callable, Optional
 
 import httpx
@@ -195,6 +195,17 @@ class EpoOpsClient:
                 return 0, []
             raise
         return total, docs
+
+    def count_between(self, terms: list[str], start: date, end: date) -> int:
+        """Publications with publication date in [start, end] (one cheap 1-result request)."""
+        cql = f'{phrase_query(terms)} AND pd within "{start:%Y%m%d} {end:%Y%m%d}"'
+        try:
+            total, _ = parse_biblio(self._search(cql, 1, 1), self._now())
+        except SourceError as exc:
+            if exc.status != 404:
+                raise
+            total = 0
+        return total
 
     def count_by_year(self, terms: list[str], start_year: int) -> dict[int, int]:
         """Publications per publication year (one cheap 1-result request per year)."""

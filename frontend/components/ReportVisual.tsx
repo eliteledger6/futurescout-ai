@@ -93,7 +93,7 @@ function MiniBars({ counts, partialFrom }: { counts: Record<string, number>; par
 
 function Tiles({ r, findings, sources }: { r: Report; findings: number; sources: number }) {
   const year = new Date(r.generated_at).getFullYear();
-  const a = r.science?.acceleration, y = r.science?.ytd, pa = r.patent?.acceleration;
+  const a = r.science?.acceleration, y = r.science?.ytd, pa = r.patent?.acceleration, py = r.patent?.ytd;
   const risk = r.investment?.score?.risk_rating ?? null;
   const cov = r.investment?.score?.coverage ?? null;
   const cands = (r.scout?.candidates ?? []).filter((c) => !c.off_sector);
@@ -109,7 +109,8 @@ function Tiles({ r, findings, sources }: { r: Report; findings: number; sources:
       <div className="rv-tile">
         <div className="rv-tile-label">Patent growth</div>
         <div className="rv-tile-value">{pa?.yoy_growth_pct != null ? <CountUp value={Math.abs(pa.yoy_growth_pct)} prefix={pa.yoy_growth_pct >= 0 ? "+" : "−"} suffix="%" /> : "–"}</div>
-        <div className="rv-tile-sub">{pa ? `publications ${pa.previous_year}→${pa.last_full_year}` : "patents not counted for this run"}</div>
+        <div className="rv-tile-sub">{pa ? `publications ${pa.previous_year}→${pa.last_full_year}` : "patents not counted for this run"}
+          {py && <> · <span style={{ color: py.trend === "rising" ? "var(--accent)" : py.trend === "cooling" ? "var(--l-danger)" : "var(--text-2)" }}>{py.year} so far {pct(py.growth_pct)} {py.trend ?? ""}</span></>}</div>
         {r.patent && Object.keys(r.patent.publication_counts).length > 0 && <MiniBars counts={r.patent.publication_counts} partialFrom={year - 1} />}
       </div>
       <div className="rv-tile">

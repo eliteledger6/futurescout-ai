@@ -96,7 +96,7 @@ def test_errors_never_contain_the_key(tmp_path):
     assert "SERPAPI_API_KEY" in str(info.value) and KEY not in str(info.value)
 
 
-def test_patent_agent_runs_on_serpapi_within_six_searches(tmp_path):
+def test_patent_agent_runs_on_serpapi_within_eight_searches(tmp_path):
     reply = {"findings": [{"claim": "A Fixture Memory Co application describes thermal vias in stacked memory.",
                            "label": "verified_fact", "confidence": "low", "source_ids": [parse_results(PAYLOAD, NOW)[1][0].id],
                            "supporting_excerpt": "A stacked memory device includes a base die and thermal vias"}],
@@ -106,5 +106,6 @@ def test_patent_agent_runs_on_serpapi_within_six_searches(tmp_path):
     res = PatentAgent(router, c, now=lambda: NOW).run("stacked memory")
     assert res.status == "ok" and res.findings[0].label == Label.VERIFIED_FACT
     assert res.acceleration.yoy_growth_pct == 66.7          # 90 -> 150 (2024 -> 2025)
-    assert res.source_usage["searches_used"] == 6 and c.searches_used <= 6   # 5 years + 1 search
+    assert res.source_usage["searches_used"] == 8 and c.searches_used <= 8   # 5 years + 2 year-to-date + 1 search
+    assert res.ytd is not None and res.ytd.basis.startswith("Google Patents")
     assert "Google Patents (SerpApi)" in res.coverage_note

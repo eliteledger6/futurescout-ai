@@ -133,3 +133,18 @@ def test_api_verify_endpoint_detects_tampering(tmp_path, report):
     tampered.investment.draft.summary = "Edited after the fact."
     (tmp_path / "report_20261108T000000Z.json").write_text(tampered.model_dump_json(), encoding="utf-8")
     assert client.get("/api/runs/report_20261108T000000Z/verify").json()["status"] == "MISMATCH"
+
+
+def test_deposit_is_skipped_while_prepaid_storage_lasts():
+    import httpx
+    from app.chain.near_record import STORAGE_DEPOSIT_YOCTO, NearRecorder
+
+    def rpc(free):
+        def handler(req):
+            body = json.dumps({"used_bytes": 100, "available_bytes": free}).encode()
+            return httpx.Response(200, json={"result": {"result": list(body)}})
+        return httpx.Client(transport=httpx.MockTransport(handler))
+    assert NearRecorder(ACCOUNT, KEY, http=rpc(331_572))._deposit() == 0
+    assert NearRecorder(ACCOUNT, KEY, http=rpc(1_000))._deposit() == STORAGE_DEPOSIT_YOCTO
+    broken = httpx.Client(transport=httpx.MockTransport(lambda r: httpx.Response(500, text="x")))
+    assert NearRecorder(ACCOUNT, KEY, http=broken)._deposit() == STORAGE_DEPOSIT_YOCTO

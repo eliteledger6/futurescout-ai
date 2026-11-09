@@ -19,7 +19,7 @@ from pathlib import Path
 from typing import Callable, Optional
 
 from app.agents.market.agent import clean_keywords
-from app.agents.science.metrics import compute_acceleration
+from app.agents.science.metrics import compute_acceleration, patent_ytd
 from app.graph.citation_guard import apply_citation_guard
 from app.models.router import ModelRouter, ModelRouterError
 from app.schemas.common import AgentError, SourceRecord
@@ -91,6 +91,10 @@ class PatentAgent:
         except SourceError as exc:
             result.errors.append(AgentError(agent=self.name, source=exc.source, message=f"counts: {exc.message}", recoverable=exc.retryable))
         try:
+            result.ytd = patent_ytd(self.client, terms, self._now().date())
+        except SourceError as exc:
+            result.errors.append(AgentError(agent=self.name, source=exc.source, message=f"year-to-date count: {exc.message}", recoverable=exc.retryable))
+        try:
             result.total_matches, docs = self.client.search(terms, from_year=year - LOOKBACK_YEARS, max_results=max_results)
         except SourceError as exc:
             result.errors.append(AgentError(agent=self.name, source=exc.source, message=exc.message, recoverable=exc.retryable))
@@ -115,7 +119,10 @@ class PatentAgent:
             {"role": "user", "content": (
                 f"Topic: {topic}\nSearch terms: {', '.join(terms)}\nToday's date: {self._now().date().isoformat()}\n"
                 f"Publications per year (computed by code): {counts_line}\n"
-                f"Most frequent first applicants among the {len(docs)} retrieved publications (computed by code): {apps_line}\n\n"
+                + (f"This year so far (computed by code): {result.ytd.count} publications by {result.ytd.cutoff} {result.ytd.year} vs "
+                   f"{result.ytd.previous_count} by the same date in {result.ytd.previous_year} ({result.ytd.growth_pct}%)\n"
+                   if result.ytd else "")
+                + f"Most frequent first applicants among the {len(docs)} retrieved publications (computed by code): {apps_line}\n\n"
                 f"Patent publications ({len(docs)} most recent of {result.total_matches} since {year - LOOKBACK_YEARS}):\n\n"
                 f"{format_patents(docs)}"
             )},

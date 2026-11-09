@@ -140,6 +140,7 @@ export interface Report {
     status: string; coverage_note: string; terms: string[]; total_matches: number | null;
     publication_counts: Record<string, number>;
     acceleration: { previous_year: number; previous_year_count: number; last_full_year: number; last_full_year_count: number; yoy_growth_pct: number | null; basis: string } | null;
+    ytd?: Ytd | null;
     top_applicants: [string, number][];
     sources: Source[]; findings: Finding[]; limitations: string[];
   } | null;

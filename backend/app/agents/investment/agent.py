@@ -167,6 +167,9 @@ class InvestmentAgent:
             + (f"\nPatent publications per year (computed by code): {patent.publication_counts}; Patent Acceleration "
                f"{patent.acceleration.previous_year}->{patent.acceleration.last_full_year}: {patent.acceleration.yoy_growth_pct}% "
                f"(recent years undercounted by publication delay)" if patent and patent.acceleration else "")
+            + (f"\nPatents this year so far (computed by code): {patent.ytd.count} by {patent.ytd.cutoff} {patent.ytd.year} vs "
+               f"{patent.ytd.previous_count} by the same date in {patent.ytd.previous_year} ({patent.ytd.growth_pct}%, "
+               f"trend {patent.ytd.trend or 'base too small'})" if patent and patent.ytd else "")
             + f"\n\nPRICE & TIMING RISK findings (code-computed metrics over ~100 trading days; risk input only, never a buy/sell signal):\n{format_findings(timing_findings, titles)}"
             + ("\n" + "\n".join(f"  {m.ticker}: timing risk {m.timing_risk} ({'; '.join(m.reasons)})" for m in timing.metrics)
                if timing and timing.metrics else "")

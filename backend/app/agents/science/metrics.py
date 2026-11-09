@@ -88,3 +88,17 @@ def compute_acceleration(
         yoy_growth_pct=growth,
         **kwargs,
     )
+
+
+def patent_ytd(client, terms: list[str], today: date) -> Optional[YtdMetric]:  # noqa: ANN001
+    """Patent publications 1 Jan -> cutoff this year vs the same dates last year (same LAG_DAYS as papers)."""
+    win = ytd_window(today)
+    if win is None or not hasattr(client, "count_between"):
+        return None
+    s1, e1, s0, e0 = win
+    m = compute_ytd(client.count_between(terms, s1, e1), client.count_between(terms, s0, e0), e1)
+    src = getattr(client, "SOURCE", "Patent")
+    m.basis = (f"{src} patent publications matching any of {terms} published 1 Jan–{e1:%d %b} {e1.year} vs the same dates in "
+               f"{e1.year - 1}. The last {LAG_DAYS} days are left out of both years because new publications take weeks to be "
+               "indexed. Applications and grants count; one invention can appear several times.")
+    return m

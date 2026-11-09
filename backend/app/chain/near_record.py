@@ -32,6 +32,7 @@ APP_KEY = "futurescout"
 # live 2026-11-08); 0.1 testnet NEAR covers the account's initial storage balance and many records.
 STORAGE_DEPOSIT_YOCTO = 10**23
 GAS = 50 * 10**12                # 50 TGas
+FREE_BYTES_NEEDED = 5_000        # prepaid storage that must remain before a write skips the deposit
 EXPLORER_TX = "https://testnet.nearblocks.io/txns/{tx}"
 EXPLORER_ACCOUNT = "https://testnet.nearblocks.io/address/{account}"
 
@@ -114,7 +115,35 @@ class NearRecorder:
         self.account_id, self.rpc, self.contract = account_id, rpc, contract
         self._key = private_key
         self._http = http or httpx.Client(timeout=30.0)
+        self._real_signer = signer is None
         self._signer = signer or self._sign_with_py_near
+
+    def _set(self, args: dict) -> str:
+        deposit = self._deposit()
+        try:
+            return self._signer("set", args, deposit)
+        except NearRecordError:
+            if deposit == STORAGE_DEPOSIT_YOCTO:
+                raise
+            return self._signer("set", args, STORAGE_DEPOSIT_YOCTO)   # refused without a deposit: pay it once
+
+    def _deposit(self) -> int:
+        """0 when the account's prepaid SocialDB storage covers the write (only gas is paid), else the full deposit.
+
+        Checked live 2026-11-09: futurescoutai.testnet had ~331k free bytes prepaid; a record uses a few hundred.
+        """
+        if not self._real_signer:
+            return STORAGE_DEPOSIT_YOCTO
+        try:
+            args = base64.b64encode(json.dumps({"account_id": self.account_id}).encode()).decode()
+            body = {"jsonrpc": "2.0", "id": "fs", "method": "query",
+                    "params": {"request_type": "call_function", "finality": "final", "account_id": self.contract,
+                               "method_name": "get_account_storage", "args_base64": args}}
+            payload = self._http.post(self.rpc, json=body).json()
+            info = json.loads(bytes(payload["result"]["result"]).decode() or "null") or {}
+            return 0 if int(info.get("available_bytes", 0)) >= FREE_BYTES_NEEDED else STORAGE_DEPOSIT_YOCTO
+        except Exception:  # noqa: BLE001  (fall back to paying the deposit)
+            return STORAGE_DEPOSIT_YOCTO
 
     # ---- write --------------------------------------------------------------
     def _sign_with_py_near(self, method: str, args: dict, deposit: int) -> str:
@@ -147,7 +176,7 @@ class NearRecorder:
         value = {"sha256": digest, "topic": report.topic[:120], "generated_at": report.generated_at.isoformat(),
                  "agents_run": ",".join(report.agents_run)}
         args = {"data": {self.account_id: {APP_KEY: {"reports": {key: value}}}}}
-        tx = self._signer("set", args, STORAGE_DEPOSIT_YOCTO)
+        tx = self._set(args)
         return ChainRecord("testnet", self.contract, self.account_id, key, digest, tx or None,
                            EXPLORER_TX.format(tx=tx) if tx else EXPLORER_ACCOUNT.format(account=self.account_id))
 
@@ -156,7 +185,7 @@ class NearRecorder:
         key = record_key(run_key)
         value = {"buyer": buyer, "payment_tx": tx_hash, "amount_yocto": str(amount_yocto), "network": "testnet"}
         args = {"data": {self.account_id: {APP_KEY: {"sales": {key: {re.sub(r'[^A-Za-z0-9_-]', '_', buyer): value}}}}}}
-        tx = self._signer("set", args, STORAGE_DEPOSIT_YOCTO)
+        tx = self._set(args)
         return ChainRecord("testnet", self.contract, self.account_id, f"sales/{key}/{buyer}", tx_hash, tx or None,
                            EXPLORER_TX.format(tx=tx) if tx else EXPLORER_ACCOUNT.format(account=self.account_id))
 
@@ -164,7 +193,7 @@ class NearRecorder:
         """Fingerprint of one topic-fund decision (paper simulation), under <account>/futurescout/funds/<key>."""
         k = record_key(key)
         args = {"data": {self.account_id: {APP_KEY: {"funds": {k: value}}}}}
-        tx = self._signer("set", args, STORAGE_DEPOSIT_YOCTO)
+        tx = self._set(args)
         return ChainRecord("testnet", self.contract, self.account_id, f"funds/{k}", str(value.get("sha256", "")), tx or None,
                            EXPLORER_TX.format(tx=tx) if tx else EXPLORER_ACCOUNT.format(account=self.account_id))
 

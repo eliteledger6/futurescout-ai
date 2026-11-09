@@ -19,7 +19,7 @@ from __future__ import annotations
 import hashlib
 import json
 import time
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Callable, Optional
 
@@ -155,6 +155,11 @@ class SerpApiPatentsClient:
             params["after"] = f"publication:{from_year}0101"
         total, docs = parse_results(self._get(params), self._now())
         return total, docs[:max_results]
+
+    def count_between(self, terms: list[str], start: date, end: date) -> int:
+        """Publications with publication date in [start, end] (one search, or a cache hit)."""
+        params = {"q": build_query(terms), "num": 10, "after": f"publication:{start:%Y%m%d}", "before": f"publication:{end:%Y%m%d}"}
+        return parse_results(self._get(params), self._now())[0]
 
     def count_by_year(self, terms: list[str], start_year: int) -> dict[int, int]:
         q = build_query(terms)

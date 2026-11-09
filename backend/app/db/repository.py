@@ -32,6 +32,10 @@ def _all_sources(report: ResearchReport) -> Iterable[SourceRecord]:
 
 def save_report(session: Session, report: ResearchReport, markdown: Optional[str] = None) -> str:
     """Store one run and everything in it. Returns the new run id. Caller commits."""
+    from app.schemas.research import strip_control_chars
+    report = strip_control_chars(report)
+    if markdown:
+        markdown = markdown.replace("\x00", "")
     run_id = str(uuid.uuid4())
     score = report.investment.score if report.investment else None
     run = Run(
