@@ -202,8 +202,7 @@ def main() -> int:
                 queue.append(nxt)
         complete = sum(1 for d in done if not d["missing_agents"])
         if args.target_complete and complete >= args.target_complete:
-            print(f"
-stop: {complete} complete report(s) reached the target")
+            print(f"\nstop: {complete} complete report(s) reached the target")
             break
         if usage.get("openalex_remaining_usd") is not None and usage["openalex_remaining_usd"] < worst["openalex"] * MARGIN:
             print("\nstop: OpenAlex's own daily allowance is nearly used up")
