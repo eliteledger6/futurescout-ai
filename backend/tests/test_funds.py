@@ -118,7 +118,7 @@ def test_route_needs_symbol_and_price_match_and_dry_quote_parses():
         sent.append(req.read())
         return httpx.Response(201, json={"quote": {"amountInUsd": "100.0", "amountOutUsd": "99.5", "amountOutFormatted": "0.98",
                                                    "timeEstimate": 10}, "correlationId": "c1"})
-    client = OneClickClient("https://x.test", http=httpx.Client(transport=httpx.MockTransport(handler)), now=lambda: NOW)
+    client = OneClickClient("https://x.test", http=httpx.Client(transport=httpx.MockTransport(handler)), now=lambda: NOW, bridge_rpc=None)
     assert client.route_for("BIG1", 100.0, 15).available
     r2 = client.route_for("BIG2", 50.0, 15)
     assert not r2.available and "unrelated" in r2.note                  # same symbol, wrong price: not the stock
@@ -162,3 +162,31 @@ def test_unpriced_companies_wait_and_trigger_a_price_review(verdict):
     assert "price review" in needs_decision(f, "run1", NOW + timedelta(days=1), CFG)
     d2 = decide(f, "run1", report(), FakeBook(PRICES), CFG, NOW + timedelta(days=1), "price review")
     assert d2.waiting_for_price == [] and any(t.ticker == "SMOL" and t.side == "buy" for t in d2.trades)
+
+
+def test_bridge_listed_stock_token_needs_a_matching_quoted_price():
+    """Ondo-style tokens are only in the bridge list (no prices): the price implied by a dry quote must match the stock."""
+    bridge = {"result": {"tokens": [
+        {"asset_name": "MIDAon", "intents_token_id": "nep141:bnb-0xmida.omdep.near", "defuse_asset_identifier": "eth:56:0xmida"},
+        {"asset_name": "SMOLon", "intents_token_id": "nep141:bnb-0xsmol.omdep.near", "defuse_asset_identifier": "eth:56:0xsmol"}]}}
+    bodies = []
+
+    def handler(req):
+        if req.url.path == "/v0/tokens":
+            return httpx.Response(200, json=[])
+        if req.url.host == "bridge.test":
+            return httpx.Response(200, json=bridge)
+        body = req.read().decode()
+        bodies.append(body)
+        out = "5.0" if "0xmida" in body else "0.001"          # $100 -> 5 MIDAon ($20, matches) / 0.001 SMOLon ($100,000, unrelated)
+        return httpx.Response(201, json={"quote": {"amountInUsd": "100.0", "amountOutUsd": "99.0", "amountOutFormatted": out}})
+    client = OneClickClient("https://x.test", http=httpx.Client(transport=httpx.MockTransport(handler)), now=lambda: NOW,
+                            bridge_rpc="https://bridge.test/rpc")
+    assert not client.route_for("MIDA", 20.0, 15).available          # no pay asset configured: cannot verify the price, so not claimed
+    client.pay = ("nep141:usdc", 6, "intents.near")
+    ok = client.route_for("MIDA", 20.0, 15)
+    assert ok.available and ok.symbol == "MIDAon" and ok.blockchain == "BNB Chain" and ok.token_price_usd == 20.0
+    bad = client.route_for("SMOL", 5.0, 15)
+    assert not bad.available and "unrelated" in bad.note
+    assert not client.route_for("BIG2", 50.0, 15).available          # in neither list
+    assert bodies and all('"dry":true' in b.replace(" ", "") for b in bodies)   # only ever dry quotes

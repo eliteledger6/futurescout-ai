@@ -3,10 +3,16 @@
 A dry quote (`"dry": true`) returns what a swap would give right now without reserving anything, creating a deposit
 address or sending funds. No key or JWT is needed for it. This module never builds, signs or submits a transaction.
 
-A holding counts as tradable via NEAR Intents only if the public token list has a token whose symbol is a known
+A holding counts as tradable via NEAR Intents only if a token list has a token whose symbol is a known
 tokenized-stock form of the ticker (e.g. NVDA, NVDAon, NVDAx, bNVDA) AND whose USD price is within a tolerance of the
-stock's last close (guards against unrelated tokens that share a symbol). Checked live on 2026-11-09: the public list
-(216 tokens) had no tokenized stocks, so holdings show "no NEAR Intents route yet" until one appears.
+stock's last close (guards against unrelated tokens that share a symbol).
+
+Two public lists are read (live check 2026-11-09):
+  * 1Click  GET /v0/tokens (216 tokens, with prices): no tokenized stocks;
+  * the NEAR Intents bridge RPC `supported_tokens` (250 tokens, no prices): 28 Ondo tokens on BNB Chain, e.g. NVDAon,
+    MRVLon, INTCon, MSFTon, GOOGLon, METAon, TSLAon, SPYon. They are quotable through 1Click by their
+    `intents_token_id`; for these the price check uses the price implied by a small dry-run quote.
+Ondo restricts who may hold these tokens (non-US, eligibility checks); a quote says nothing about eligibility.
 """
 
 from __future__ import annotations
@@ -54,8 +60,12 @@ def symbol_forms(ticker: str) -> set[str]:
 
 class OneClickClient:
     def __init__(self, api: str, *, http: Optional[httpx.Client] = None,
-                 now: Callable[[], datetime] = lambda: datetime.now(timezone.utc)) -> None:
+                 now: Callable[[], datetime] = lambda: datetime.now(timezone.utc),
+                 bridge_rpc: Optional[str] = "https://bridge.chaindefuser.com/rpc") -> None:
         self.api = api.rstrip("/")
+        self.bridge_rpc = bridge_rpc
+        self._bridge: Optional[list[dict]] = None
+        self.pay: Optional[tuple[str, int, str]] = None   # (pay asset, decimals, quote account): enables price checks by dry quote
         self._http = http or httpx.Client(timeout=30.0)
         self._now = now
         self._tokens: Optional[list[dict]] = None
@@ -77,12 +87,51 @@ class OneClickClient:
         self._tokens, self._tokens_at = data, time.time()
         return data
 
+    def bridge_tokens(self) -> list[dict]:
+        """Tokens of the NEAR Intents bridge (no prices). Empty on any error: the bridge list is a bonus, not required."""
+        if self._bridge is None:
+            self._bridge = []
+            if self.bridge_rpc:
+                try:
+                    r = self._http.post(self.bridge_rpc, json={"id": 1, "jsonrpc": "2.0", "method": "supported_tokens", "params": [{}]})
+                    self.requests += 1
+                    toks = ((r.json() or {}).get("result") or {}).get("tokens") or []
+                    self._bridge = [t for t in toks if isinstance(t, dict) and t.get("asset_name") and t.get("intents_token_id")]
+                except (httpx.HTTPError, ValueError, AttributeError):
+                    self._bridge = []
+        return self._bridge
+
+    def _bridge_route(self, ticker: str, last_close: Optional[float], tolerance_pct: float) -> Optional[TokenRoute]:
+        now = self._now()
+        forms = symbol_forms(ticker)
+        cands = [t for t in self.bridge_tokens() if str(t["asset_name"]).upper() in forms]
+        if not cands or not self.pay or not last_close:
+            return None
+        t = cands[0]
+        chain = {"eth:56": "BNB Chain", "eth:1": "Ethereum", "eth:8453": "Base"}.get(str(t.get("defuse_asset_identifier", "")).rsplit(":", 1)[0], "bridged")
+        q = self.dry_quote(self.pay[0], self.pay[1], t["intents_token_id"], 100.0, self.pay[2])
+        try:
+            implied = q.amount_in_usd / float(q.amount_out) if q.amount_out and not q.error else None
+        except (TypeError, ValueError, ZeroDivisionError):
+            implied = None
+        if implied and abs(implied / last_close - 1) * 100 <= tolerance_pct:
+            return TokenRoute(available=True, symbol=t["asset_name"], asset_id=t["intents_token_id"], blockchain=chain,
+                              token_price_usd=round(implied, 4), checked_at=now,
+                              note="listed by the NEAR Intents bridge; the price implied by a dry-run quote matches the stock")
+        return TokenRoute(available=False, symbol=t["asset_name"], asset_id=t["intents_token_id"], blockchain=chain,
+                          token_price_usd=round(implied, 4) if implied else None, checked_at=now,
+                          note=("listed by the NEAR Intents bridge, but no quote could be obtained right now" if not implied else
+                                "a token with this symbol is listed but its quoted price does not match the stock: treated as unrelated"))
+
     def route_for(self, ticker: str, last_close: Optional[float], tolerance_pct: float) -> TokenRoute:
         now = self._now()
         forms = symbol_forms(ticker)
         matches = [t for t in self.tokens() if str(t.get("symbol", "")).upper() in forms]
         if not matches:
-            return TokenRoute(available=False, checked_at=now, note="no tokenized version in the public NEAR Intents token list")
+            bridged = self._bridge_route(ticker, last_close, tolerance_pct)
+            if bridged is not None:
+                return bridged
+            return TokenRoute(available=False, checked_at=now, note="no tokenized version in the public NEAR Intents token lists")
         for t in matches:
             price = t.get("price")
             if last_close and price and abs(float(price) / last_close - 1) * 100 <= tolerance_pct:

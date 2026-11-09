@@ -30,3 +30,4 @@ Thumbs.db
 demo/build/
 demo/*.mp4
 demo/*.srt
+demo/build_v4/

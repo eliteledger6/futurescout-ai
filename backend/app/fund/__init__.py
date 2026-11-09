@@ -451,6 +451,7 @@ def mark_to_market(fund: TopicFund, book: PriceBook, now: datetime) -> None:
 def check_routes(fund: TopicFund, client: OneClickClient, cfg: FundConfig) -> dict:
     """Stage 2: is each holding tradable via NEAR Intents? If yes, a real dry-run quote for its current value."""
     stats = {"checked": 0, "available": 0, "quoted": 0, "errors": []}
+    client.pay = (cfg.intents.pay_asset, cfg.intents.pay_decimals, cfg.intents.quote_account)
     for h in fund.holdings:
         try:
             h.route = client.route_for(h.ticker, h.last_close, cfg.intents.price_tolerance_pct)

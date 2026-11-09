@@ -26,7 +26,8 @@ min_trade_share: 0.02          # ignore rebalancing trades smaller than 2% of th
 review_days: 7                 # with a staged entry still open, review again after this many days
 fee_pct: 0.30                  # ASSUMED cost per trade (swap fee + slippage), close to the real 1Click dry quotes
 
-# Stage 2: NEAR Intents 1Click dry-run quotes (public API, no key, nothing is sent)
+# Stage 2: NEAR Intents 1Click dry-run quotes (public API, no key, nothing is sent). Tokenized stocks (Ondo, on BNB
+# Chain) are found in the bridge token list and price-checked with a $100 dry quote (see app/fund/intents.py).
 intents:
   api: https://1click.chaindefuser.com
   pay_asset: "nep141:17208628f84f5d6ad33f0da3bbbeb27ffcb398eac501a31bd6ad2011e36133a1"   # USDC on NEAR
