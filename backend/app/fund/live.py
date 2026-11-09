@@ -64,7 +64,7 @@ class LiveConfig(BaseModel):
     deadline_minutes: int = 30
     poll_seconds: float = 5.0
     poll_timeout_seconds: float = 600.0
-    shadow_budget_usd: float = 1000.0
+    shadow_budget_usd: float = 10000.0
     explorer_tx: str = "https://nearblocks.io/txns/{tx}"
 
 
@@ -401,7 +401,7 @@ class Executor:
             p.sha256 = fingerprint(p)
             save_state(state, self.state_path)
             return p
-        problems = check_quote(q, p, self.cfg, self._now())
+        problems = [m for m in check_quote(q, p, self.cfg, self._now()) if "cost" not in m]   # shadow: no cost cap (owner's choice)
         p.quote = q
         if problems:
             p.error = "; ".join(problems)
@@ -512,3 +512,32 @@ class Executor:
             waited += self.cfg.poll_seconds
         save_state(state, self.state_path)
         raise RuntimeError("the swap did not finish within the polling window; funds are with 1Click or being refunded. Run resume later.")
+
+
+def shadow_portfolio(state: TradingState, prices: dict[str, float], budget: float) -> dict:
+    """Pretend positions built from shadow fills: quantity and cost per token, valued at the given token prices."""
+    rows: dict[str, dict] = {}
+    for p in state.proposals:
+        if p.mode != "shadow" or p.status != "shadow_filled" or not p.quote:
+            continue
+        try:
+            qty = float(p.quote.get("amountOutFormatted") or 0)
+        except (TypeError, ValueError):
+            qty = 0.0
+        r = rows.setdefault(p.symbol, {"symbol": p.symbol, "ticker": p.ticker, "topic": p.topic, "quantity": 0.0, "cost_usd": 0.0, "orders": 0})
+        r["quantity"] += qty
+        r["cost_usd"] += p.usd
+        r["orders"] += 1
+    out, invested, value = [], 0.0, 0.0
+    for r in rows.values():
+        px = prices.get(r["symbol"])
+        r["quantity"] = round(r["quantity"], 6)
+        r["cost_usd"] = round(r["cost_usd"], 2)
+        r["value_usd"] = round(r["quantity"] * px, 2) if px else None
+        r["change_pct"] = round((r["value_usd"] / r["cost_usd"] - 1) * 100, 2) if px and r["cost_usd"] else None
+        invested += r["cost_usd"]
+        value += r["value_usd"] if r["value_usd"] is not None else r["cost_usd"]
+        out.append(r)
+    out.sort(key=lambda r: -r["cost_usd"])
+    cash = round(budget - invested, 2)
+    return {"budget_usd": budget, "invested_usd": round(invested, 2), "cash_usd": cash, "value_usd": round(value + cash, 2), "positions": out}

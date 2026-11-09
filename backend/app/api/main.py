@@ -38,7 +38,7 @@ from app.config import ConfigError, Settings, get_settings
 from app.graph.workflow import AGENTS_NOT_BUILT
 from app.models.config import load_model_config
 from app.fund import DISCLAIMER as FUND_DISCLAIMER, fund_payload, list_funds, load_fund, load_fund_config, tradable_tokens
-from app.fund.live import DISCLAIMER as LIVE_DISCLAIMER, load_state as load_trading_state, read_balances
+from app.fund.live import DISCLAIMER as LIVE_DISCLAIMER, load_state as load_trading_state, read_balances, shadow_portfolio
 from app.portfolio import load_portfolio, portfolio_payload, save_portfolio, sync_from_store
 from app.radar import load_radar
 from app.treasury import default_balance_reader, treasury_report
@@ -307,6 +307,8 @@ def create_app(
             "spent": {"live_total_usd": state.spent("live"), "live_today_usd": state.spent("live", today),
                       "shadow_filled_usd": round(sum(p.usd for p in state.proposals if p.mode == "shadow" and p.status == "shadow_filled"), 2)},
             "balances": balances,
+            "shadow_portfolio": shadow_portfolio(state, {t["symbol"]: t["price"] for t in tokens if t.get("price")}, lv.shadow_budget_usd),
+            "pay_with": lv.pay_with,
             "allowlist": [{k: t[k] for k in ("ticker", "symbol", "topic", "band", "score", "price")} for t in tokens],
             "proposals": [p.model_dump(mode="json") for p in reversed(state.proposals[-60:])],
             "explorer_tx": lv.explorer_tx, "approval": "owner's terminal only: python scripts\\fund_trade.py approve <id>",

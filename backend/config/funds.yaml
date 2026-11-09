@@ -50,4 +50,4 @@ live:
   max_band_pct: 8.0            # never wider than this
   max_cost_pct: 2.0            # refuse quotes that cost more than this
   slippage_bps: 100
-  shadow_budget_usd: 1000.0    # pretend money for shadow mode (real quotes, nothing sent)
+  shadow_budget_usd: 10000.0   # pretend money for shadow mode (owner 2026-11-09: the agent may use all of it, sizes are its choice)

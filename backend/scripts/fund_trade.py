@@ -2,7 +2,7 @@
 
   python scripts\\fund_trade.py status                 limits, kill switch, account balances (read-only)
   python scripts\\fund_trade.py propose                the trading agent proposes ONE live buy (nothing is sent)
-  python scripts\\fund_trade.py propose --shadow --usd 100   shadow mode: real quote, pretend money, filled at once
+  python scripts\\fund_trade.py propose --shadow      shadow mode: the agent spreads the pretend budget (real quotes, nothing sent)
   python scripts\\fund_trade.py list                   proposals and their status
   python scripts\\fund_trade.py approve <id>           OWNER APPROVAL: executes that one live buy (asks you to confirm)
   python scripts\\fund_trade.py reject <id>
@@ -27,12 +27,12 @@ import httpx
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from app import service  # noqa: E402
-from app.agents.trader.agent import Candidate, decide  # noqa: E402
+from app.agents.trader.agent import Candidate, allocate, decide  # noqa: E402
 from app.chain import NearRecorder, NearRecordError  # noqa: E402
 from app.config import get_settings  # noqa: E402
 from app.fund import load_fund_config, tradable_tokens as fund_tradable_tokens  # noqa: E402
 from app.fund.live import (Executor, MainnetSigner, OneClickLive, Proposal, check_limits, fingerprint, load_state,  # noqa: E402
-                           new_id, read_balances, save_state)
+                           new_id, read_balances, save_state, shadow_portfolio)
 from app.models.config import load_model_config  # noqa: E402
 from app.models.router import ModelRouter  # noqa: E402
 
@@ -81,7 +81,60 @@ def cmd_status(s, cfg) -> int:  # noqa: ANN001
     return 0
 
 
+def cmd_shadow(s, cfg, usd: float | None) -> int:  # noqa: ANN001
+    """Shadow mode: the agent spreads the pretend budget as it sees fit; every order gets a real dry quote; nothing is sent."""
+    state = load_state(STATE)
+    lv = cfg.live
+    ex = make_executor(s, cfg, with_signer=False)
+    now = datetime.now(timezone.utc)
+    toks = tradable_tokens()
+    if not toks:
+        print("no tradable token in the funds; run scripts\\funds.py first")
+        return 1
+    pf = shadow_portfolio(state, {t["symbol"]: t["price"] for t in toks if t.get("price")}, lv.shadow_budget_usd)
+    budget = min(usd, pf["cash_usd"]) if usd else pf["cash_usd"]
+    if budget < 1:
+        print(f"the shadow budget is fully used (${pf['invested_usd']:,.2f} of ${lv.shadow_budget_usd:,.2f} placed)")
+        return 0
+    account = (s.fund_mainnet_account_id or "intents.near").strip() or "intents.near"
+    cands = []
+    for t in toks:
+        c = Candidate(ticker=t["ticker"], symbol=t["symbol"], asset_id=t["asset_id"], topic=t["topic"], verdict_band=t["band"], score=t["score"],
+                      tier=t["tier"], why=t["why"], price_stretch=t["stretch"], last_close=t["last_close"], last_close_date=t["last_close_date"], quotable=True)
+        try:
+            q = ex.dry_quote(c.asset_id, min(1000.0, budget), account)
+            c.quote_cost_pct = round((float(q["amountInUsd"]) - float(q["amountOutUsd"])) / float(q["amountInUsd"]) * 100, 2)
+        except (RuntimeError, KeyError, ValueError, httpx.HTTPError) as exc:
+            c.note = str(exc)[:120]
+        cands.append(c)
+    res = allocate(ModelRouter(load_model_config(), s), cands, budget_usd=budget, holdings=pf["positions"])
+    for n in res.notes:
+        print("  note:", n)
+    print(f"\nSHADOW PLAN by {res.model} (${res.cost_usd:.3f}): {res.plan.summary}")
+    if not res.orders:
+        p = Proposal(id=new_id(), created_at=now, mode="shadow", side="hold", topic="", ticker="", symbol="", asset_id="", usd=0.0,
+                     rationale=res.plan.summary, risks=res.plan.risks, confidence=res.plan.confidence, model=res.model, model_cost_usd=res.cost_usd)
+        p.mark("hold", "the agent kept the shadow budget in cash", now)
+        p.sha256 = fingerprint(p)
+        state.proposals.append(p)
+        save_state(state, STATE)
+        return 0
+    for i, (c, amount, reason) in enumerate(res.orders):
+        p = Proposal(id=new_id(), created_at=now, mode="shadow", topic=c.topic, ticker=c.ticker, symbol=c.symbol, asset_id=c.asset_id, usd=amount,
+                     rationale=reason or res.plan.summary, risks=res.plan.risks, confidence=res.plan.confidence, model=res.model,
+                     model_cost_usd=res.cost_usd if i == 0 else 0.0, ref_close=c.last_close, ref_close_date=c.last_close_date)
+        p.mark("proposed", f"shadow plan: ${amount:,.2f} of {c.symbol}", now)
+        state.proposals.append(p)
+        ex.shadow_fill(state, p, account=account)
+        print(f"  {p.status:13} ${amount:9,.2f} {c.symbol:8} {p.history[-1].note[:110]}")
+    pf = shadow_portfolio(load_state(STATE), {t["symbol"]: t["price"] for t in toks if t.get("price")}, lv.shadow_budget_usd)
+    print(f"shadow portfolio: ${pf['invested_usd']:,.2f} placed, ${pf['cash_usd']:,.2f} cash, of ${pf['budget_usd']:,.2f}")
+    return 0
+
+
 def cmd_propose(s, cfg, shadow: bool, usd: float | None) -> int:  # noqa: ANN001
+    if shadow:
+        return cmd_shadow(s, cfg, usd)
     state = load_state(STATE)
     lv = cfg.live
     ex = make_executor(s, cfg, with_signer=False)

@@ -32,3 +32,5 @@
 .tr-risks { margin: 0; padding-left: 18px; color: var(--text-2); font-size: 14px; }
 .tr-log { margin: 0; padding-left: 18px; font-size: 13px; color: var(--text-2); }
 @media (prefers-reduced-motion: reduce) { .tr-light, .tr-step.now .dot { animation: none !important; } }
+.tr-alloc { display: flex; gap: 2px; height: 14px; border-radius: 7px; overflow: hidden; background: var(--surface-2); }
+.tr-alloc > span { display: block; height: 100%; }

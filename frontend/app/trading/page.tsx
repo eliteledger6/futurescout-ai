@@ -52,7 +52,7 @@ export default function TradingPage() {
               <Reveal>
                 <div className="stats">
                   <div className="stat"><div className="stat-value">{usd(t.spent.live_total_usd)}<span className="muted" style={{ fontSize: 22 }}> / {usd(t.limits.max_total_usd, 0)}</span></div><div className="stat-label">real money used, of the total cap</div></div>
-                  <div className="stat"><div className="stat-value">{t.balances?.usdc != null ? usd(t.balances.usdc) : "–"}</div><div className="stat-label">USDC in the fund account{t.balances?.near != null ? ` · ${t.balances.near} NEAR for fees` : ""}</div></div>
+                  <div className="stat"><div className="stat-value">{t.pay_with === "near" ? (t.balances?.near != null ? `${t.balances.near} Ⓝ` : "–") : t.balances?.usdc != null ? usd(t.balances.usdc) : "–"}</div><div className="stat-label">{t.pay_with === "near" ? "trades are paid in NEAR" : "USDC in the fund account"}{t.balances?.near != null ? ` · ${t.balances.near} NEAR in the account` : ""}</div></div>
                   <div className="stat"><div className="stat-value">{usd(t.spent.shadow_filled_usd, 0)}<span className="muted" style={{ fontSize: 22 }}> / {usd(t.limits.shadow_budget_usd, 0)}</span></div><div className="stat-label">shadow mode: pretend money placed at real quotes</div></div>
                   <div className="stat"><div className="stat-value">{t.allowlist.length}</div><div className="stat-label">tokenized stocks the agent may choose from</div></div>
                 </div>
@@ -63,6 +63,8 @@ export default function TradingPage() {
                   <b>Held now (real):</b> {t.balances.holdings.map((h) => `${h.quantity} ${h.symbol}${h.value_usd != null ? ` (about ${usd(h.value_usd)})` : ""}`).join(" · ")}
                 </div>
               )}
+
+              <ShadowPortfolio t={t} />
 
               <h2 className="h2" style={{ marginBottom: 0 }}>Proposals</h2>
               <p className="sub" style={{ marginTop: 0 }}>Newest first. <span className="pill tr-pill-live">real</span> uses the fund account; <span className="pill tr-pill-shadow">shadow</span> sends nothing.</p>
@@ -102,6 +104,50 @@ export default function TradingPage() {
         </div>
       </section>
     </>
+  );
+}
+
+/* Shadow portfolio: what the agent did with the pretend budget (real quotes at the time of each order). */
+function ShadowPortfolio({ t }: { t: Trading }) {
+  const pf = t.shadow_portfolio;
+  if (!pf || pf.positions.length === 0) return null;
+  const colours = ["#3987e6", "#00ec97", "#c98a1f", "#d4486a", "#8ea3ff", "#7fd1c8", "#e0a030"];
+  return (
+    <div className="tr-card shadow">
+      <div className="tr-head">
+        <h3 className="tr-title">Shadow portfolio <span className="muted small">pretend money · real quotes · nothing sent</span></h3>
+        <div className="pills"><span className="pill tr-pill-shadow">shadow</span></div>
+      </div>
+      <div className="tr-kv">
+        <div><div className="k">Pretend budget</div><div className="v">{usd(pf.budget_usd, 0)}</div></div>
+        <div><div className="k">Placed by the agent</div><div className="v">{usd(pf.invested_usd, 0)}</div></div>
+        <div><div className="k">Kept as cash</div><div className="v">{usd(pf.cash_usd, 0)}</div></div>
+        <div><div className="k">Value now</div><div className="v">{usd(pf.value_usd, 0)}</div></div>
+      </div>
+      <div className="tr-alloc" role="img" aria-label={pf.positions.map((p) => `${p.symbol} $${Math.round(p.cost_usd)}`).join(", ") + `, cash $${Math.round(pf.cash_usd)}`}>
+        {pf.positions.map((p, i) => <span key={p.symbol} style={{ width: `${(p.cost_usd / pf.budget_usd) * 100}%`, background: colours[i % colours.length] }} title={`${p.symbol}: ${usd(p.cost_usd, 0)}`} />)}
+      </div>
+      <div className="table-wrap">
+        <table className="table">
+          <thead><tr><th>Token</th><th>Topic</th><th className="num">Pretend cost</th><th className="num">Share of budget</th><th className="num">Quantity</th><th className="num">Value now</th><th className="num">Change</th></tr></thead>
+          <tbody>
+            {pf.positions.map((p, i) => (
+              <tr key={p.symbol}>
+                <td><i className="tier-dot" style={{ display: "inline-block", width: 10, height: 10, borderRadius: 3, marginRight: 6, background: colours[i % colours.length] }} />{p.symbol} <span className="muted mono small">{p.ticker}</span></td>
+                <td className="small">{p.topic}</td>
+                <td className="num">{usd(p.cost_usd, 0)}</td>
+                <td className="num">{((p.cost_usd / pf.budget_usd) * 100).toFixed(0)}%</td>
+                <td className="num">{p.quantity.toFixed(4)}</td>
+                <td className="num">{usd(p.value_usd, 0)}</td>
+                <td className="num" style={{ color: p.change_pct == null ? undefined : p.change_pct >= 0 ? "var(--accent)" : "var(--l-danger)" }}>{p.change_pct == null ? "–" : `${p.change_pct > 0 ? "+" : ""}${p.change_pct.toFixed(2)}%`}</td>
+              </tr>
+            ))}
+            <tr><td>Cash</td><td className="small muted">kept by the agent</td><td className="num">{usd(pf.cash_usd, 0)}</td><td className="num">{((pf.cash_usd / pf.budget_usd) * 100).toFixed(0)}%</td><td /><td className="num">{usd(pf.cash_usd, 0)}</td><td /></tr>
+          </tbody>
+        </table>
+      </div>
+      <p className="small muted" style={{ margin: 0 }}>The agent chooses every size itself. &quot;Value now&quot; uses the token prices from the last fund update, so it starts a little below cost: that gap is the quoted trading cost.</p>
+    </div>
   );
 }
 

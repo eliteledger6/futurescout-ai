@@ -297,4 +297,7 @@ export interface Trading {
   balances: { account: string; near: number | null; usdc: number | null; holdings: { symbol: string; ticker: string; quantity: number; value_usd: number | null }[]; errors: string[] } | null;
   allowlist: { ticker: string; symbol: string; topic: string; band: string | null; score: number | null; price: number | null }[];
   proposals: TradeProposal[]; explorer_tx: string; approval: string; disclaimer: string;
+  pay_with: string;
+  shadow_portfolio: { budget_usd: number; invested_usd: number; cash_usd: number; value_usd: number;
+    positions: { symbol: string; ticker: string; topic: string; quantity: number; cost_usd: number; orders: number; value_usd: number | null; change_pct: number | null }[] };
 }

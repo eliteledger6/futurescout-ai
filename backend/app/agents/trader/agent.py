@@ -95,3 +95,72 @@ def decide(router: ModelRouter, candidates: list[Candidate], *, budget_usd: floa
     d.usd = round(float(budget_usd), 2)      # the size is the owner's cap and the size the quotes were tested at
     out.candidate = cand
     return out
+
+
+# ------------------------------------------------------------------ shadow mode: the agent spreads a pretend budget
+_SHADOW_PROMPT = Path(__file__).with_name("prompt_shadow.md")
+
+
+class TraderOrder(BaseModel):
+    ticker: str
+    usd: float
+    reason: str = ""
+
+
+class TraderPlan(BaseModel):
+    orders: list[TraderOrder] = Field(default_factory=list)
+    summary: str = ""
+    risks: list[str] = Field(default_factory=list)
+    confidence: Literal["low", "medium", "high"] = "low"
+
+
+class PlanResult(BaseModel):
+    plan: TraderPlan
+    orders: list[tuple[Candidate, float, str]] = Field(default_factory=list)   # validated: (candidate, usd, reason)
+    model: Optional[str] = None
+    cost_usd: float = 0.0
+    notes: list[str] = Field(default_factory=list)
+
+
+def allocate(router: ModelRouter, candidates: list[Candidate], *, budget_usd: float, holdings: Optional[list[dict]] = None) -> PlanResult:
+    """Shadow mode only: the model decides sizes freely; code keeps it to the candidate list and inside the budget."""
+    if not candidates or budget_usd <= 0:
+        return PlanResult(plan=TraderPlan(summary="Nothing to allocate."), notes=["no candidates or no budget; the model was not called"])
+    listing = [{"ticker": c.ticker, "token": c.symbol, "topic": c.topic, "report_verdict": c.verdict_band, "report_score": c.score,
+                "company_size_risk": c.tier, "why_in_fund": c.why, "price_stretch": c.price_stretch or "unknown",
+                "quote_cost_pct": c.quote_cost_pct} for c in candidates]
+    messages = [
+        {"role": "system", "content": _SHADOW_PROMPT.read_text(encoding="utf-8")},
+        {"role": "user", "content": f"Pretend budget available: ${budget_usd:,.2f}.\n\nAlready held in the shadow portfolio: "
+                                    f"{json.dumps(holdings or [])}\n\nCANDIDATES:\n{json.dumps(listing, indent=1)}"},
+    ]
+    try:
+        reply = router.complete(AGENT, messages, response_model=TraderPlan)
+    except ModelRouterError as exc:
+        return PlanResult(plan=TraderPlan(summary="The trading model did not answer, so nothing is allocated."), notes=[f"model error: {str(exc)[:160]}"])
+    plan: TraderPlan = reply.parsed  # type: ignore[assignment]
+    cost = sum(u.get("cost_usd", 0.0) for u in router.usage_summary() if u.get("agent") == AGENT)
+    out = PlanResult(plan=plan, model=reply.llm_alias, cost_usd=round(cost, 6))
+    if plan.confidence == "high":
+        plan.confidence = "medium"
+    by = {c.ticker.upper(): c for c in candidates}
+    seen: set[str] = set()
+    valid: list[tuple[Candidate, float, str]] = []
+    for o in plan.orders:
+        t = (o.ticker or "").upper()
+        if t not in by:
+            out.notes.append(f"order for '{o.ticker}' dropped: not a candidate")
+        elif t in seen:
+            out.notes.append(f"second order for {t} dropped: one order per ticker")
+        elif not (o.usd and o.usd > 0):
+            out.notes.append(f"order for {t} dropped: no positive amount")
+        else:
+            seen.add(t)
+            valid.append((by[t], float(o.usd), o.reason))
+    total = sum(u for _, u, _ in valid)
+    if total > budget_usd + 0.005:                       # never more pretend money than there is: scale every order down
+        k = budget_usd / total
+        valid = [(c, u * k, r) for c, u, r in valid]
+        out.notes.append(f"orders added up to ${total:,.2f}; scaled to the ${budget_usd:,.2f} available")
+    out.orders = [(c, round(u, 2), r) for c, u, r in valid if round(u, 2) > 0]
+    return out

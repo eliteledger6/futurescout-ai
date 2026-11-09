@@ -317,3 +317,44 @@ def test_shadow_quote_in_near_mode(tmp_path):
     st, p = TradingState(), proposal(mode="shadow")
     ex.shadow_fill(st, p)
     assert p.status == "shadow_filled" and seen["quotes"][0]["originAsset"] == "nep141:wrap.near" and seen["quotes"][0]["dry"] is True
+
+
+# ---------------------------------------------------------------- shadow allocation (sizes are the agent's choice)
+class PlanRouter:
+    def __init__(self, plan):
+        self.plan = plan
+
+    def complete(self, agent, messages, response_model=None):
+        assert "Pretend budget available: $10,000.00" in messages[1]["content"]
+        return NS(parsed=trader.TraderPlan(**self.plan), llm_alias="claude_opus_5_5")
+
+    def usage_summary(self):
+        return [{"agent": "trader", "cost_usd": 0.04}]
+
+
+def test_shadow_allocation_is_free_in_size_but_stays_in_list_and_budget():
+    plan = {"orders": [{"ticker": "INTC", "usd": 2500, "reason": "a"}, {"ticker": "msft", "usd": 4000, "reason": "b"},
+                       {"ticker": "TSLA", "usd": 900}, {"ticker": "INTC", "usd": 10}, {"ticker": "MSFT", "usd": -5}],
+            "summary": "s", "confidence": "high"}
+    res = trader.allocate(PlanRouter(plan), CANDS, budget_usd=10000)
+    assert [(c.ticker, u) for c, u, _ in res.orders] == [("INTC", 2500.0), ("MSFT", 4000.0)] and res.plan.confidence == "medium"
+    assert len(res.notes) == 3                                        # TSLA not a candidate, duplicate INTC, the duplicate MSFT
+    over = trader.allocate(PlanRouter({"orders": [{"ticker": "INTC", "usd": 9000}, {"ticker": "MSFT", "usd": 6000}]}), CANDS, budget_usd=10000)
+    assert [u for _, u, _ in over.orders] == [6000.0, 4000.0] and "scaled" in over.notes[0]
+    assert trader.allocate(PlanRouter({}), [], budget_usd=10000).orders == []
+
+
+def test_shadow_portfolio_adds_up_fills():
+    from app.fund.live import shadow_portfolio
+    st = TradingState()
+    for usd, out in ((2500.0, "44.0"), (1500.0, "26.0")):
+        p = proposal(usd=usd, mode="shadow")
+        p.quote = {"amountOutFormatted": out}
+        p.status = "shadow_filled"
+        st.proposals.append(p)
+    st.proposals.append(proposal(usd=999.0, mode="shadow", status="failed"))
+    pf = shadow_portfolio(st, {"INTCon": 58.0}, 10000.0)
+    assert pf["invested_usd"] == 4000.0 and pf["cash_usd"] == 6000.0
+    assert pf["positions"] == [{"symbol": "INTCon", "ticker": "INTC", "topic": "chiplet", "quantity": 70.0, "cost_usd": 4000.0, "orders": 2,
+                                "value_usd": 4060.0, "change_pct": 1.5}]
+    assert pf["value_usd"] == 10060.0
