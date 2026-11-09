@@ -101,7 +101,10 @@ def build_verdict(report: ResearchReport) -> dict:
         mid = next((h for h in draft.themes[0].horizons if h.horizon.value == "medium_1_3y"), None)
         if mid:
             horizon = _first_sentence(mid.assessment)
-    plain = draft.plain_summary or " ".join(s + "." for s in draft.summary.replace("; ", ". ").split(". ")[:2] if s).strip()
+    # older reports have no plain_summary: show only the opening sentence of the technical summary, kept short
+    plain = draft.plain_summary or _first_sentence(draft.summary)
+    if len(plain) > 320:
+        plain = plain[:317].rsplit(" ", 1)[0] + "…"
 
     return {
         "available": True,
