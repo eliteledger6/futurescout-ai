@@ -103,7 +103,7 @@ def main() -> int:
         except (RuntimeError, ValueError, httpx.HTTPError) as exc:
             print(f"login failed: {str(exc)[:300]}")
             return 1
-        print(f"logged in (session valid about {session.get('expiresIn')} s; nonce time used: {session['nonce_time']})")
+        print(f"logged in (session valid about {session.get('expiresIn')} s)")
         try:
             bal = api.balances(session["accessToken"])
             by = {t["assetId"]: t for t in toks}
@@ -114,7 +114,11 @@ def main() -> int:
                 print(f"  {t.get('symbol', b.get('tokenId'))}: {qty:.6f}" + (f"  (about ${qty * float(t['price']):.2f})" if t.get("price") else ""))
         except RuntimeError as exc:
             print(f"balances refused: {exc}")
-        table("CONFIDENTIAL_INTENTS", session["accessToken"])
+        if not key:
+            print("\nconfidential-route quotes need a partner API key as well as this login: get a free one at "
+                  "https://partners.near-intents.org and put it in .env as ONECLICK_API_KEY, then run this again.")
+        else:
+            table("CONFIDENTIAL_INTENTS", session["accessToken"])
     return 0
 
 

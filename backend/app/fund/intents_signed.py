@@ -13,8 +13,10 @@ What this module can do, none of which moves funds:
 What it cannot do: sign or submit a swap order. Building that is a separate, explicit decision.
 
 Formats were taken from the service's own answers and docs on 2026-11-09:
-  * nonce (32 bytes) = magic 5628f6c6 | version 00 | 4-byte salt (intents.near `current_salt`) | u64 LE time in
-    nanoseconds | 15 random bytes. In generated swap orders that time is the order deadline.
+  * nonce (32 bytes) = magic 5628f6c6 | version 00 | 4-byte salt (intents.near `current_salt`) | u64 LE DEADLINE in
+    nanoseconds | 15 bytes. The contract requires the order's deadline <= that deadline and not expired. For a login
+    the 15 bytes are "timestamped" (official SDK, expirable-nonce.ts): i64 LE creation time in ns + 7 random bytes;
+    the login endpoint rejects a creation time more than a few minutes off. Verified with a throwaway account.
   * NEP-413: signature = ed25519( sha256( borsh(u32 2^31+413) + borsh{message: string, nonce: [u8;32],
     recipient: string, callback_url: Option<string>} ) ).
 """
@@ -42,6 +44,12 @@ def versioned_nonce(salt_hex: str, when: datetime, rand: Optional[bytes] = None)
     if len(rand) != 15 or len(bytes.fromhex(salt_hex)) != 4:
         raise ValueError("nonce needs a 4-byte salt and 15 random bytes")
     return NONCE_MAGIC + b"\x00" + bytes.fromhex(salt_hex) + struct.pack("<Q", int(when.timestamp() * 1_000_000_000)) + rand
+
+
+def timestamped_random(start: datetime, rand: Optional[bytes] = None) -> bytes:
+    """The SDK's createTimestampedNonceBytes: creation time (ms precision, as ns) in the first 8 of the 15 bytes."""
+    rand = os.urandom(7) if rand is None else rand
+    return struct.pack("<q", int(start.timestamp() * 1000) * 1_000_000) + rand
 
 
 def _borsh_str(s: str) -> bytes:
@@ -91,7 +99,11 @@ class SignedIntents:
 
     def quote(self, *, route: str, pay_asset: str, dest_asset: str, amount_units: int, account: str, dry: bool = True,
               session_token: Optional[str] = None, slippage_bps: int = 100) -> dict:
-        """A quote on one route. Raises RuntimeError with the service's message when refused."""
+        """A quote on one route. Raises RuntimeError with the service's message when refused.
+
+        Confidential quotes need BOTH a partner API key (X-API-Key) and the user's session token (Authorization: Bearer).
+        Seen live 2026-11-09: with the session token but no API key the service answers "Invalid token", because it
+        then reads the Authorization header as a partner token."""
         if route not in ROUTES:
             raise ValueError(f"unknown route {route}")
         body = {"dry": dry, "swapType": "EXACT_INPUT", "slippageTolerance": slippage_bps, "originAsset": pay_asset, "depositType": route,
@@ -122,21 +134,19 @@ class SignedIntents:
 
     # ---- login (needs the account key; signs an EMPTY order)
     def login(self, account: str, private_key: str, salt_hex: str) -> dict:
-        """Session token for the account's private balances. Tries the two plausible nonce times; a failed try is harmless."""
-        errors = []
-        for label, minutes in (("now", 0), ("deadline", 5)):
-            deadline = self._now() + timedelta(minutes=5)
-            nonce = versioned_nonce(salt_hex, self._now() + timedelta(minutes=minutes))
-            message = login_message(account, deadline)
-            public_key, signature = sign_nep413(private_key, message, nonce)
-            signed = {"standard": "nep413", "payload": {"message": message, "nonce": base64.b64encode(nonce).decode(), "recipient": VERIFIER},
-                      "public_key": public_key, "signature": signature}
-            r = self._http.post(f"{self.api}/v0/auth/authenticate", json={"signedData": signed}, headers=self._key_header)
-            data = r.json() if r.headers.get("content-type", "").startswith("application/json") else {}
-            if r.status_code < 300 and data.get("accessToken"):
-                return {"accessToken": data["accessToken"], "expiresIn": data.get("expiresIn"), "nonce_time": label, "public_key": public_key}
-            errors.append(f"{label}: {str(data.get('message') or r.status_code)[:120]}")
-        raise RuntimeError("login refused (" + "; ".join(errors) + ")")
+        """Session token for the account's private balances, from ONE signed empty order. A refusal is harmless."""
+        start = self._now()
+        deadline = (start + timedelta(minutes=5)).replace(microsecond=0)
+        nonce = versioned_nonce(salt_hex, deadline, timestamped_random(start))
+        message = login_message(account, deadline)
+        public_key, signature = sign_nep413(private_key, message, nonce)
+        signed = {"standard": "nep413", "payload": {"message": message, "nonce": base64.b64encode(nonce).decode(), "recipient": VERIFIER},
+                  "public_key": public_key, "signature": signature}
+        r = self._http.post(f"{self.api}/v0/auth/authenticate", json={"signedData": signed}, headers=self._key_header)
+        data = r.json() if r.headers.get("content-type", "").startswith("application/json") else {}
+        if r.status_code < 300 and data.get("accessToken"):
+            return {"accessToken": data["accessToken"], "expiresIn": data.get("expiresIn"), "public_key": public_key}
+        raise RuntimeError(f"login refused ({str(data.get('message') or r.status_code)[:160]})")
 
     def balances(self, session_token: str) -> list[dict]:
         r = self._http.get(f"{self.api}/v0/account/balances", headers={**self._key_header, "Authorization": f"Bearer {session_token}"})

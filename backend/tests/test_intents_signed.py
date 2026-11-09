@@ -49,23 +49,24 @@ def client(handler):
     return si.SignedIntents("https://oc.test", http=httpx.Client(transport=httpx.MockTransport(handler)), now=lambda: NOW)
 
 
-def test_login_signs_only_an_empty_order_and_retries_the_other_nonce_time():
+def test_login_signs_only_an_empty_order_with_the_sdk_nonce_layout():
     seen = []
 
     def handler(req):
-        body = json.loads(req.read())
-        seen.append(body)
-        if len(seen) == 1:
-            return httpx.Response(401, json={"message": "timestamp validation failed"})
-        return httpx.Response(200, json={"accessToken": "tok-abc", "refreshToken": "r", "expiresIn": 3600})
+        seen.append(json.loads(req.read()))
+        return httpx.Response(200, json={"accessToken": "tok-abc", "refreshToken": "r", "expiresIn": 900})
     out = client(handler).login("fund-test.near", KEY, "252812b3")
-    assert out["accessToken"] == "tok-abc" and out["nonce_time"] == "deadline" and len(seen) == 2
-    for body in seen:
-        sd = body["signedData"]
-        assert sd["standard"] == "nep413" and sd["payload"]["recipient"] == "intents.near"
-        assert json.loads(sd["payload"]["message"])["intents"] == []                # nothing but the ownership proof is ever signed
-        assert len(base64.b64decode(sd["payload"]["nonce"])) == 32 and sd["signature"].startswith("ed25519:")
-        assert KEY.split(":")[1] not in json.dumps(body)                            # the private key never goes on the wire
+    assert out["accessToken"] == "tok-abc" and len(seen) == 1                       # exactly one signature per login
+    sd = seen[0]["signedData"]
+    msg = json.loads(sd["payload"]["message"])
+    assert sd["standard"] == "nep413" and sd["payload"]["recipient"] == "intents.near"
+    assert msg["intents"] == [] and msg["signer_id"] == "fund-test.near"             # only the ownership proof is ever signed
+    nonce = base64.b64decode(sd["payload"]["nonce"])
+    deadline_ns = struct.unpack("<Q", nonce[9:17])[0]
+    created_ns = struct.unpack("<q", nonce[17:25])[0]
+    assert deadline_ns == int(datetime(2026, 11, 9, 15, 5, tzinfo=timezone.utc).timestamp()) * 10 ** 9      # = the message deadline (now + 5 min)
+    assert msg["deadline"] == "2026-11-09T15:05:00.000Z" and created_ns == int(NOW.timestamp()) * 10 ** 9     # creation time = now
+    assert sd["signature"].startswith("ed25519:") and KEY.split(":")[1] not in json.dumps(seen[0])           # the private key never goes on the wire
     with pytest.raises(RuntimeError, match="login refused"):
         client(lambda r: httpx.Response(401, json={"message": "signature verification failed"})).login("fund-test.near", KEY, "252812b3")
 
