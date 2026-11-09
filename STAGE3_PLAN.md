@@ -1,0 +1,87 @@
+# Stage 3 plan: small real trades through NEAR Intents (NOT STARTED)
+
+Status: **plan only**. Nothing here is built or switched on. Stages 1-2 (paper funds, dry-run quotes) are live.
+Real trades need the owner's written go-ahead (see "Go-ahead" at the end). Written 2026-11-09.
+
+This is engineering planning, not investment advice. Real money can be lost through price moves, bugs, fees or the
+token issuer. Start with an amount you could lose completely without it mattering.
+
+## What was verified (2026-11-09)
+
+- NEAR Intents lists 28 Ondo tokens on BNB Chain (`GET /v0/tokens?ondoTokens=true`, also the bridge list):
+  stocks NVDA, MSFT, GOOGL, META, AMZN, AAPL, TSLA, INTC, MRVL, HOOD, CRCL; the rest are ETFs and funds.
+- Dry-run quotes from USDC on NEAR work; quoted cost 0.4-1.4% per trade.
+- 10 of the 52 paper-fund holdings have a token (MSFT, GOOGL, META, INTC, MRVL). The other 42 do not, including
+  every small company, and Micron, AMD, KLA, Cisco.
+- From the 1Click docs: a real swap is `POST /v0/quote` with `dry: false` -> send the pay asset to the returned
+  `depositAddress` -> `GET /v0/status` until `SUCCESS` or `REFUNDED`. There is **no testnet**; the docs say to test
+  with small amounts. Without an API key every real quote pays an extra 0.25% fee.
+- **Not verified:** whether the owner's account is eligible to hold Ondo tokens (Ondo is for eligible non-US
+  holders), and exactly how a balance held inside NEAR Intents is sold again (the docs describe a signed-intent flow).
+
+## What stage 3 is, and is not
+
+- IS: a **separate, small, dedicated mainnet account** that buys a few Ondo stock tokens for the topics that have
+  them, only after the owner approves each trade, within hard caps.
+- IS NOT: an autonomous trading bot, a copy of the full paper funds (only ~20% of holdings can be bought), or
+  anything that touches the owner's main wallet.
+
+## Steps
+
+### A. Owner checks, no code (do these first; any "no" stops the plan)
+1. On near.com, confirm your country and account are allowed to buy Ondo stocks, and read their terms.
+2. Buy about $5 of one token (e.g. SPYon) by hand in near.com, then sell it. This proves eligibility and shows
+   the real costs and how selling works, before any code exists.
+3. Decide the test budget (suggested: $50 total) and which 1-2 topics to start with (suggested: AI agents, chiplet).
+
+### B. Wallet set-up (owner does it; Claude never sees the key)
+4. Create a NEW mainnet account used for nothing else (example name: `futurescout-fund.near`).
+5. Fund it with the test budget in USDC plus about 1 NEAR for fees. The account balance is the maximum loss.
+6. Put its key in `backend\.env` yourself (`FUND_MAINNET_ACCOUNT_ID`, `FUND_MAINNET_PRIVATE_KEY`). Never in chat,
+   never in git. Optional: get a free 1Click partner API key to avoid the 0.25% fee.
+
+### C. Code (Claude builds, mock-tested first; no live call until D)
+7. `app/fund/executor.py`: the only module allowed to send funds. Flow per trade: fresh quote -> safety checks ->
+   send USDC to the deposit address -> poll status -> record the result.
+8. Hard limits, checked in code before every send, all configurable in `config/funds.yaml`:
+   - `trading_enabled: false` by default, plus a kill-switch file that stops everything at once;
+   - allowlist: only Ondo tokens that pass the symbol + price check;
+   - max per trade (suggested $10), max per day ($25), max total ever deposited ($50);
+   - quote price within 3% of the stock's last close, max slippage 1%, quote not older than 60 seconds;
+   - buys only at first; selling added after step A2 shows how it works.
+9. Approval queue: the decision agent only *proposes* trades. Each proposal waits until the owner runs
+   `python scripts\fund_trade.py approve <id>` on this laptop. No approval through the website (the site can be
+   shared by link; a web button could be clicked by anyone).
+10. Records: every proposal, approval, quote, transaction hash and final status is stored and fingerprinted on
+    NEAR (same sealing as reports). Refunds and failures are recorded too.
+11. Dashboard: a "Live (real money)" section on the fund page, clearly separate from the paper fund, read-only.
+12. Tests: executor fully mock-tested (limits, kill switch, refund, failed status, double-send protection).
+    One week of "shadow mode": real quotes, proposals and approvals, but the send step is skipped and logged.
+
+### D. First live trade (owner runs every command)
+13. Owner sets `trading_enabled: true`, approves ONE $5 buy, and watches it complete or refund.
+14. Review together: cost vs quote, time taken, records. Fix anything odd before a second trade.
+15. Only then: allow the remaining budget, still one approval per trade.
+
+### E. Later, only if D went well (each needs a new yes)
+- Selling and rebalancing; small auto-approved trades under a low cap; one account per topic.
+
+## What Claude will and will not do
+
+- Will: write and test the code, explain each command, review results with you.
+- Will not: place, approve or trigger any trade; type, read or handle the wallet key; move funds; raise a limit
+  without your instruction; tell you which stocks to buy or when.
+
+## Open risks to accept before starting
+
+- Eligibility or terms may rule this out entirely (step A1).
+- Tokens depend on Ondo as issuer and on BNB Chain; they are not the shares themselves.
+- Selling is unverified until step A2. Do not buy more than you are willing to leave stuck.
+- Costs of 0.4-1.4% each way mean small trades lose money to fees.
+- Tax and reporting duties are yours; ask a professional if unsure.
+
+## Go-ahead
+
+To start step C, the owner writes in chat: which topics, the total budget, the per-trade and per-day caps, and that
+steps A1-A2 are done. Claude then updates `CLAUDE.md` with exactly those limits and builds C. Step D needs a second
+explicit yes.
