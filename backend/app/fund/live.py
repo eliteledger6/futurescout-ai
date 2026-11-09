@@ -45,7 +45,7 @@ SPENT = {"executing", "deposited", "success"}          # statuses that count aga
 # ------------------------------------------------------------------ config
 class LiveConfig(BaseModel):
     trading_enabled: bool = False
-    rpc: str = "https://rpc.mainnet.near.org"
+    rpc: str = "https://free.rpc.fastnear.com"     # rpc.mainnet.near.org is deprecated and rate-limits (HTTP 429, seen 2026-11-09)
     usdc_contract: str = "17208628f84f5d6ad33f0da3bbbeb27ffcb398eac501a31bd6ad2011e36133a1"
     usdc_decimals: int = 6
     pay_with: str = "near"               # "near" (native NEAR, owner's choice 2026-11-09) or "usdc"
@@ -235,7 +235,9 @@ def read_balances(http: httpx.Client, cfg: LiveConfig, account: str, tokens: lis
         if "result" in res:
             out["near"] = round(int(res["result"].get("amount", "0")) / 1e24, 4)
         else:
-            out["errors"].append("account not found on mainnet")
+            err = str(res.get("error") or "")
+            out["errors"].append("account not found on mainnet" if "does not exist" in err or "UNKNOWN_ACCOUNT" in err
+                                 else f"the NEAR server did not answer the balance request ({err[:80] or 'no result'})")
             return out
     except (httpx.HTTPError, ValueError) as exc:
         out["errors"].append(f"NEAR balance: {type(exc).__name__}")
