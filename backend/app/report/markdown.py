@@ -256,7 +256,9 @@ def render_markdown(report: ResearchReport) -> str:
             growth = f"{f['revenue_growth_pct']:+.1f}%" if f.get("revenue_growth_pct") is not None else "n/a"
             rnd = f"{f['rnd_intensity_pct']:.1f}%" if f.get("rnd_intensity_pct") is not None else "n/a"
             score = f"**{s.next_runner_score:.0f}**" if s.next_runner_score is not None else "–"
-            return f"| {s.name} ({s.ticker or 'not SEC-listed'}) | {s.patents} | {s.papers} | {s.filings} | {size} | {growth} | {rnd} | {score} |"
+            tag = f" · {s.industry}" if s.industry else ""
+            tag += " · OUTSIDE TECHNOLOGY: mentions likely boilerplate" if s.off_sector else ""
+            return f"| {s.name} ({s.ticker or 'not SEC-listed'}){tag} | {s.patents} | {s.papers} | {s.filings} | {size} | {growth} | {rnd} | {score} |"
         header = ["| Company | Patents | Papers | Filings | Size (revenue, latest FY) | Revenue growth | R&D / revenue | Next-runner score |",
                   "|---|---|---|---|---|---|---|---|"]
         if sc.candidates:

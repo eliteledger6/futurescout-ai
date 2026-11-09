@@ -580,6 +580,8 @@ function ScoutSection({ report, sources }: { report: Report; sources: Map<string
       <tr className={open === c.name ? "on" : ""} onClick={() => setOpen(open === c.name ? null : c.name)} style={{ cursor: "pointer" }}>
         <td className="mono">{rank ?? "–"}</td>
         <td><strong>{c.name}</strong> <span className="muted mono small">{c.ticker ?? "not SEC-listed"}</span>
+          {c.off_sector && <span className="pill" style={{ marginLeft: 6, color: "var(--l-unverified)", borderColor: "var(--l-unverified)" }} title="SEC industry code outside technology: topic mentions are usually risk-factor boilerplate">outside tech</span>}
+          {c.industry && <div className="small muted">{c.industry}</div>}
           {c.aliases.length > 1 && <div className="small muted">also seen as: {c.aliases.filter((a) => a !== c.name).slice(0, 3).join(", ")}</div>}</td>
         <td className="num">{c.patents || "–"}</td>
         <td className="num">{c.papers || "–"}</td>

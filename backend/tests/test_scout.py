@@ -48,6 +48,10 @@ def sec_clients(facts_for=(1234567, 2222222)):
         url = str(request.url)
         if url.endswith("company_tickers.json"):
             return httpx.Response(200, json=TICKERS)
+        if "/submissions/CIK0003333333.json" in url:      # Applied Fixture Materials is... a bank, per its SEC record
+            return httpx.Response(200, json={"sic": "6022", "sicDescription": "State Commercial Banks", "filings": {"recent": {}}})
+        if "/submissions/CIK0002222222.json" in url:
+            return httpx.Response(200, json={"sic": "3674", "sicDescription": "Semiconductors & Related Devices", "filings": {"recent": {}}})
         for cik in facts_for:
             if f"CIK{cik:010d}.json" in url:
                 return httpx.Response(200, json=e.FACTS)
@@ -126,12 +130,17 @@ def test_scout_merges_names_matches_sec_pulls_facts_and_ranks_outsiders_first():
     assert glass.fundamentals["size_class"] == "small" and glass.next_runner_score == 18 + 8 + 15 + 10 + 10
     applied = next(c for c in res.candidates if c.ticker == "APLD")
     assert applied.filings == 2 and applied.fundamentals is None and "no XBRL facts" in applied.fundamentals_error
+    # SEC industry: a bank that mentions the topic is demoted, labelled, listed last and gets no K finding
+    assert applied.sic == "6022" and applied.industry == "State Commercial Banks" and applied.off_sector
+    assert applied.next_runner_score == max(0, 20 + 5 - 25) and any("boilerplate" in r for r in applied.score_reasons)
+    assert glass.industry == "Semiconductors & Related Devices" and not glass.off_sector
+    assert res.candidates[-1].ticker == "APLD" and all("Applied" not in f.claim for f in res.findings)
     assert [c.ticker for c in res.incumbents] == ["FIXT"] and res.incumbents[0].patents == 1 and res.incumbents[0].filings == 1
     assert [u.name for u in res.unlisted] == ["Shinfix Glass Kabushiki Kaisha"] and res.unlisted[0].patents == 1 and res.unlisted[0].papers == 1
     assert all("University" not in c.name for c in [*res.candidates, *res.unlisted])
     assert res.lookups == 2                                           # GLSS and APLD; FIXT already had fundamentals
     # findings the Investment agent may cite: K ids, code label, real source ids only
-    assert [f.fid for f in res.findings] == ["K1", "K2"]
+    assert [f.fid for f in res.findings] == ["K1"]                    # the bank gets no finding
     k1 = res.findings[0]
     assert k1.label == Label.AI_INTERPRETATION and k1.companies == ["Glassfix Photonics Inc"]
     assert set(k1.source_ids) == {s.id for s in patents.sources[:2]} | {science.sources[0].id}

@@ -209,6 +209,20 @@ class EdgarClient:
             raise SourceError(SOURCE, f"ticker {ticker!r} not found in the SEC ticker file (company may not file with the SEC)")
         return found
 
+    def industry(self, cik: int) -> tuple[Optional[str], Optional[str]]:
+        """(SIC code, SIC description) from the company's SEC submissions record; (None, None) if absent. Cached."""
+        cache = getattr(self, "_industry", None)
+        if cache is None:
+            cache = self._industry = {}
+        if cik not in cache:
+            try:
+                data = self._get(SUBMISSIONS_URL.format(cik=cik)).json()
+            except ValueError:
+                raise SourceError(SOURCE, "submissions file was not valid JSON") from None
+            sic = str(data.get("sic") or "").strip() or None
+            cache[cik] = (sic, (str(data.get("sicDescription") or "").strip() or None) if isinstance(data, dict) else (None, None))
+        return cache[cik]
+
     def recent_filings(
         self, ticker: str, *, forms: tuple[str, ...] = DEFAULT_FORMS, since: Optional[str] = None, limit: int = 5,
     ) -> list[SourceRecord]:

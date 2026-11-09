@@ -32,6 +32,9 @@ class CompanySignal(BaseModel):
     filing_source_ids: list[str] = Field(default_factory=list)
     fundamentals: Optional[dict] = None         # SEC XBRL (code-computed); None when not available
     fundamentals_error: Optional[str] = None
+    sic: Optional[str] = None                   # SEC industry code from the company's submissions record
+    industry: Optional[str] = None              # its description, e.g. "Semiconductors & Related Devices"
+    off_sector: bool = False                    # finance / insurance / retail etc.: topic mentions are usually risk-factor boilerplate
     next_runner_score: Optional[float] = None   # 0-100 heuristic (forecast), only for SEC-listed companies
     score_reasons: list[str] = Field(default_factory=list)
     signal_types: int = 0                       # how many of patents / papers / filings are non-zero

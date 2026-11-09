@@ -32,6 +32,13 @@ from app.sources.sec_facts import SecFactsClient
 log = logging.getLogger("futurescout.scout")
 
 MAX_LOOKUPS = 15          # SEC XBRL requests per run (fundamentals for matched companies)
+# SEC SIC code prefixes for industries where a technology keyword in a filing is almost always risk-factor or
+# vendor boilerplate rather than the company's own work: agriculture/mining (01-14), food/textiles/paper (20-27),
+# transport (40-47), wholesale/retail (50-59), finance/insurance/real estate (60-67), hotels/personal services (70-72),
+# amusement, health services, education, social services (79-83). Technology, manufacturing (28-39), communications
+# (48), utilities (49), business services/software (73) and engineering/R&D (87) stay in.
+NON_TECH_SIC_PREFIXES = tuple(f"{n:02d}" for n in [*range(1, 15), *range(20, 28), *range(40, 48), *range(50, 60), *range(60, 68),
+                                                   70, 72, 75, 76, 78, 79, 80, 82, 83, 86, 88, 89])
 MAX_CANDIDATES = 12
 MAX_UNLISTED = 10
 MAX_FINDINGS = 6
@@ -114,6 +121,11 @@ def next_runner_score(sig: CompanySignal) -> tuple[float, list[str]]:
         p = min(20, 15 + 5 * (sig.filings - 1))
         pts += p
         why.append(f"{sig.filings} SEC report(s) mentioning the topic (+{p})")
+    if sig.off_sector:
+        pts -= 25
+        why.append(f"filer outside technology ({sig.industry or 'SIC ' + str(sig.sic)}): topic mentions are usually risk-factor boilerplate (-25)")
+    elif sig.signal_types == 1 and sig.filings and not sig.patents and not sig.papers:
+        why.append("evidence is SEC filing mentions only: check that they are not risk-factor boilerplate (+0)")
     f = sig.fundamentals or {}
     size = f.get("size_class")
     if size in ("micro", "small"):
@@ -138,12 +150,13 @@ def next_runner_score(sig: CompanySignal) -> tuple[float, list[str]]:
             pts += 10; why.append(f"R&D {r:.0f}% of revenue (+10)")
         elif r >= 8:
             pts += 5; why.append(f"R&D {r:.0f}% of revenue (+5)")
-    return min(100.0, round(pts, 1)), why
+    return max(0.0, min(100.0, round(pts, 1))), why
 
 
 BASIS = ("Next-runner score (0-100, heuristic): patents as assignee up to 25, company-affiliated papers up to 15, "
          "SEC reports mentioning the topic up to 20, revenue size micro/small +15 or mid +10, revenue growth up to +10, "
-         "R&D intensity up to +10. Counts come from the sources this run retrieved, so they measure attention in this "
+         "R&D intensity up to +10; filers whose SEC industry code is outside technology (banks, insurers, retailers...) "
+         "lose 25 and are listed last, because their mentions are usually risk-factor boilerplate. Counts come from the sources this run retrieved, so they measure attention in this "
          "sample, not the whole market. The score is a forecast-labelled heuristic, not a recommendation.")
 
 
@@ -263,10 +276,23 @@ class CompanyScout:
         elif listed:
             result.limitations.append("SEC XBRL client not configured: no revenue or R&D figures; size-based points were not awarded.")
 
+        # -------------------------------------------------------------- industry (SEC SIC code): demote off-sector filers
+        if self.edgar is not None:
+            looked = 0
+            for sig in listed:
+                if sig.incumbent or sig.cik is None or looked >= self.max_lookups:
+                    continue
+                try:
+                    sig.sic, sig.industry = self.edgar.industry(sig.cik)
+                except SourceError as exc:
+                    result.errors.append(AgentError(agent=self.name, source=exc.source, message=f"{sig.ticker}: industry: {exc.message}", recoverable=exc.retryable))
+                looked += 1
+                sig.off_sector = bool(sig.sic and sig.sic[:2] in NON_TECH_SIC_PREFIXES)
+
         # -------------------------------------------------------------- score and split
         for sig in listed:
             sig.next_runner_score, sig.score_reasons = next_runner_score(sig)
-        result.candidates = sorted([s for s in listed if not s.incumbent], key=lambda s: -(s.next_runner_score or 0))[:MAX_CANDIDATES]
+        result.candidates = sorted([s for s in listed if not s.incumbent], key=lambda s: (s.off_sector, -(s.next_runner_score or 0)))[:MAX_CANDIDATES]
         result.incumbents = sorted([s for s in listed if s.incumbent], key=lambda s: -(s.next_runner_score or 0))
         result.unlisted = sorted([s for s in merged.values() if not s.sec_listed],
                                  key=lambda s: -(s.patents + s.papers + s.filings))[:MAX_UNLISTED]
@@ -288,7 +314,7 @@ class CompanyScout:
     # ------------------------------------------------------------------ findings for the Investment agent
     def _findings(self, topic: str, candidates: list[CompanySignal]) -> list[Finding]:
         out: list[Finding] = []
-        for i, s in enumerate(candidates[:MAX_FINDINGS], 1):
+        for i, s in enumerate([c for c in candidates if not c.off_sector][:MAX_FINDINGS], 1):
             f = s.fundamentals or {}
             parts = []
             if s.patents:

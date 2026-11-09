@@ -103,6 +103,7 @@ export interface CompanySignal {
   name: string; aliases: string[]; ticker: string | null; cik: number | null; sec_listed: boolean; incumbent: boolean;
   patents: number; patent_source_ids: string[]; papers: number; paper_source_ids: string[]; filings: number; filing_source_ids: string[];
   fundamentals: CompanyCheck["fundamentals"]; fundamentals_error: string | null;
+  sic?: string | null; industry?: string | null; off_sector?: boolean;
   next_runner_score: number | null; score_reasons: string[]; signal_types: number;
 }
 
