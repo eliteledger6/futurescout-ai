@@ -99,6 +99,7 @@ class SerpApiPatentsClient:
         limiter: Optional[RateLimiter] = None,
         cache_dir: Optional[Path] = CACHE_DIR,
         cache_only: bool = False,
+        max_searches: Optional[int] = None,     # hard ceiling on billed searches for this client (None = no ceiling)
         sleep: Callable[[float], None] = time.sleep,
         clock: Callable[[], float] = time.time,
         now: Callable[[], datetime] = lambda: datetime.now(timezone.utc),
@@ -107,6 +108,7 @@ class SerpApiPatentsClient:
             raise SourceError(SOURCE, "SERPAPI_API_KEY is not set")
         self._key = api_key
         self.cache_only = cache_only
+        self.max_searches = max_searches
         self._http = http or httpx.Client(timeout=60.0)
         self._limiter = limiter or RateLimiter(1.0)
         self._cache_dir = cache_dir
@@ -128,6 +130,8 @@ class SerpApiPatentsClient:
         if self.cache_only:
             raise SourceError(SOURCE, "patent search is paused to save the SerpApi quota (SERPAPI_CACHE_ONLY=true) "
                                       "and this query is not in the local cache")
+        if self.max_searches is not None and self.searches_used >= self.max_searches:
+            raise SourceError(SOURCE, f"patent search budget for this run reached ({self.max_searches} searches); not searched")
         r = get_with_retry(
             self._http, API, source=SOURCE, params={**params, "engine": "google_patents", "api_key": self._key},
             secrets=[self._key], sleep=self._sleep, before_request=self._limiter.wait, max_attempts=2,

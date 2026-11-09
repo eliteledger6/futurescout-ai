@@ -40,6 +40,7 @@ class RunOutcome:
     md_path: Path
     json_path: Path
     run_id: Optional[str]  # database id, None if not saved
+    usage: Optional[dict] = None   # per-source usage of this run: openalex_usd, serpapi_searches, x_usd, model_usd
 
 
 def save_to_database(settings: Settings, report: ResearchReport, markdown: str, warn: Callable[[str], None]) -> Optional[str]:
@@ -79,6 +80,8 @@ def execute(
     *,
     question: Optional[str] = None,
     sector: Optional[str] = None,
+    patents_live: Optional[bool] = None,          # override SERPAPI_CACHE_ONLY for this run
+    patent_search_budget: Optional[int] = None,   # hard ceiling on SerpApi searches for this run
     news: bool = True,
     use_x: bool = True,
     from_year: Optional[int] = None,
@@ -116,7 +119,8 @@ def execute(
     patent_client = None      # SerpApi (Google Patents) first, EPO OPS if configured instead
     creds = settings.epo_credentials()
     if settings.serpapi_key_value():
-        patent_client = SerpApiPatentsClient(settings.serpapi_key_value() or "", cache_only=settings.serpapi_cache_only)
+        cache_only = settings.serpapi_cache_only if patents_live is None else not patents_live
+        patent_client = SerpApiPatentsClient(settings.serpapi_key_value() or "", cache_only=cache_only, max_searches=patent_search_budget)
     elif creds:
         patent_client = EpoOpsClient(*creds)
     else:
@@ -124,9 +128,10 @@ def execute(
 
     http = httpx.Client(timeout=30.0, headers={"User-Agent": settings.http_user_agent}, follow_redirects=True)
     router = ModelRouter(load_model_config(), settings)
+    openalex = OpenAlexClient(settings.openalex_key_value(), http=http)
     report = run_research(
         topic, router=router,
-        openalex=OpenAlexClient(settings.openalex_key_value(), http=http),
+        openalex=openalex,
         arxiv=ArxivClient(http=http),
         edgar=edgar, gdelt=gdelt, discovery=discovery, facts=facts, x_client=x_client, epo=patent_client, prices=prices,
         question=question, sector=sector, from_year=from_year, max_papers=max_papers,
@@ -141,4 +146,8 @@ def execute(
     md_path.write_text(markdown, encoding="utf-8")
     json_path.write_text(report.model_dump_json(indent=2), encoding="utf-8")
     run_id = save_to_database(settings, report, markdown, warn) if save_db else None
-    return RunOutcome(report, markdown, md_path, json_path, run_id)
+    x_usd = sum(u.get("cost_usd", 0.0) for u in report.usage if u.get("agent") == "x (data)")
+    usage = {"openalex_usd": openalex.cost_usd, "openalex_requests": openalex.requests, "openalex_remaining_usd": openalex.remaining_usd,
+             "serpapi_searches": getattr(patent_client, "searches_used", 0) if patent_client else 0,
+             "x_usd": round(x_usd, 4), "model_usd": round(report.total_cost_usd - x_usd, 6)}
+    return RunOutcome(report, markdown, md_path, json_path, run_id, usage)

@@ -109,6 +109,9 @@ class OpenAlexClient:
         )
         self._sleep = sleep
         self._now = now
+        self.requests = 0
+        self.cost_usd = 0.0                   # summed from OpenAlex's own x-ratelimit-cost-usd header
+        self.remaining_usd: Optional[float] = None
 
     def _get(self, path: str, params: dict) -> dict:
         params = dict(params)
@@ -118,6 +121,13 @@ class OpenAlexClient:
             self._http, f"{BASE_URL}{path}", source="OpenAlex", params=params,
             secrets=[self.api_key], status_hints=_HINTS, sleep=self._sleep,
         )
+        self.requests += 1
+        try:
+            self.cost_usd = round(self.cost_usd + float(response.headers.get("x-ratelimit-cost-usd") or 0), 6)
+            if response.headers.get("x-ratelimit-remaining-usd") is not None:
+                self.remaining_usd = float(response.headers["x-ratelimit-remaining-usd"])
+        except (TypeError, ValueError):
+            pass
         try:
             return response.json()
         except ValueError:
