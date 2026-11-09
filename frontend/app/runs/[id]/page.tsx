@@ -56,6 +56,7 @@ function ReportView({ data }: { data: RunDetail }) {
             {r.agents_not_run.map((a) => <span key={a} className="pill" title="No analysed evidence from this agent">{a}: not run</span>)}
           </div>
           <div className="pills" style={{ marginTop: 10 }}><NearBadge runId={data.summary.id} /></div>
+          <OtherRuns topic={r.topic} id={data.summary.id} />
         </div>
       </section>
 
@@ -137,6 +138,22 @@ function ReportView({ data }: { data: RunDetail }) {
         </>
       )}
     </>
+  );
+}
+
+/* ---------------------------------------------------------------- other runs of the same topic */
+function OtherRuns({ topic, id }: { topic: string; id: string }) {
+  const [others, setOthers] = useState<{ id: string; generated_at: string; score: number | null }[]>([]);
+  useEffect(() => {
+    api.runs().then((rows) => setOthers(rows.filter((x) => x.topic.toLowerCase() === topic.toLowerCase() && x.id !== id)
+      .sort((a, b) => b.generated_at.localeCompare(a.generated_at)))).catch(() => setOthers([]));
+  }, [topic, id]);
+  if (!others.length) return null;
+  return (
+    <div className="earlier-runs small muted" style={{ marginTop: 12 }}>
+      <span>Other runs of this topic:</span>
+      {others.map((o) => <Link key={o.id} className="pill" href={`/runs/${o.id}`}>{fmtDate(o.generated_at)}{o.score !== null ? ` · ${Math.round(o.score)}` : ""}</Link>)}
+    </div>
   );
 }
 

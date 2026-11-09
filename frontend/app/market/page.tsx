@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ErrorNotice, Loading } from "@/components/ui";
 import { TreasuryPanel } from "@/components/TreasuryPanel";
+import { latestPerTopic } from "@/lib/runs";
 import { API_URL, fmtDate } from "@/lib/api";
 
 interface Teaser {
@@ -48,7 +49,7 @@ export default function MarketPage() {
           {error ? <ErrorNotice error={error} /> : market === null ? <Loading lines={4} /> : (
             <>
               <div className="stats">
-                <div className="stat"><div className="stat-value">{market.reports.length}</div><div className="stat-label">reports for sale</div></div>
+                <div className="stat"><div className="stat-value">{latestPerTopic(market.reports).length}</div><div className="stat-label">reports for sale (newest per topic)</div></div>
                 <div className="stat"><div className="stat-value">{market.price_near}</div><div className="stat-label">NEAR per report (testnet)</div></div>
                 <div className="stat"><div className="stat-value">{Object.values(counts).reduce((a, b) => a + b, 0)}</div><div className="stat-label">purchases recorded</div></div>
                 <div className="stat"><div className="stat-value" style={{ fontSize: 22, wordBreak: "break-all" }}>{market.seller_account ?? "not configured"}</div><div className="stat-label">seller account</div></div>
@@ -73,7 +74,7 @@ export default function MarketPage() {
               </div>
 
               <div className="grid grid-2">
-                {market.reports.map((r) => <Listing key={r.id} r={r} buyer={buyer} purchases={counts[r.id] ?? 0} />)}
+                {latestPerTopic(market.reports).map((g) => <Listing key={g.latest.id} r={g.latest} buyer={buyer} purchases={counts[g.latest.id] ?? 0} />)}
               </div>
             </>
           )}

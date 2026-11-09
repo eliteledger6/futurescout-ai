@@ -435,3 +435,15 @@ a.card:hover { box-shadow: 0 12px 40px -18px color-mix(in srgb, var(--accent) 45
 .stretch-track { position: relative; height: 6px; border-radius: 3px; background: linear-gradient(90deg, var(--l-interp), var(--surface-2) 50%, var(--l-unverified)); }
 .stretch-dot { position: absolute; top: -4px; width: 14px; height: 14px; border-radius: 50%; background: var(--text); transform: translateX(-50%); border: 2px solid var(--bg); }
 .stretch-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--muted); margin-top: 6px; }
+
+/* ---------- cleaner home (2026-11-09): compact hero, sector chips, topic cards ---------- */
+.hero-compact { padding: 96px 0 64px; }
+.hero-compact .lede { max-width: 760px; margin-left: auto; margin-right: auto; }
+@media (max-width: 640px) { .hero-compact { padding: 64px 0 44px; } }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { background: transparent; border: 1px solid var(--line-strong); color: var(--text-2); border-radius: 999px; padding: 6px 14px;
+  font-size: 13px; cursor: pointer; font-family: var(--font-body); text-transform: capitalize; }
+.chip:hover { color: var(--text); border-color: var(--text-2); }
+.chip.on { background: var(--text); color: #000; border-color: var(--text); }
+.topic-card .card-kicker span:first-child { text-transform: capitalize; }
+.earlier-runs { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }

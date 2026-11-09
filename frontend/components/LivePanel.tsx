@@ -6,7 +6,9 @@ import { useEffect, useState } from "react";
 import { api, fmtDate } from "@/lib/api";
 import type { WatchStatus } from "@/lib/types";
 
-const KIND_LABEL: Record<string, string> = { scan: "X scan", radar: "Radar", topics: "New topic", trigger: "Triggered", run: "Research run", skip: "Held back" };
+const KIND_LABEL: Record<string, string> = { scan: "X scan", radar: "Radar", topics: "New topic", trigger: "Triggered", run: "Research run", skip: "Held back", accounts: "X accounts" };
+// one line per added account would crowd out the decisions; the per-topic summary lines are kept
+const shown = (e: { kind: string; detail: string }) => !(e.kind === "accounts" && e.detail.startsWith("added @"));
 
 function ago(iso: string): string {
   const mins = Math.max(0, Math.round((Date.now() - new Date(iso).getTime()) / 60000));
@@ -61,7 +63,7 @@ export function LivePanel() {
           <div>
             <div className="eyebrow" style={{ fontSize: 11 }}>Decision log</div>
             <ol className="live-log">
-              {w.events.slice(0, 8).map((e, i) => (
+              {w.events.filter(shown).slice(0, 8).map((e, i) => (
                 <li key={i} className={`k-${e.kind}`}>
                   <span className="live-kind">{KIND_LABEL[e.kind] ?? e.kind}</span>
                   <span className="live-detail">{e.detail}</span>
