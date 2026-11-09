@@ -32,8 +32,8 @@ def quote_payload(usd=5.0, out_tokens="0.0995", out_usd=None, deposit="depo1234"
 class FakeChain:
     """Fake NEAR RPC (views) + fake signer (calls)."""
 
-    def __init__(self, usdc_units=5_000_000, registered=True, fail_transfer=False):
-        self.usdc_units, self.registered, self.fail_transfer = usdc_units, registered, fail_transfer
+    def __init__(self, usdc_units=5_000_000, registered=True, fail_transfer=False, near_yocto=5 * 10 ** 23):
+        self.usdc_units, self.registered, self.fail_transfer, self.near_yocto = usdc_units, registered, fail_transfer, near_yocto
         self.calls = []
         self.account_id = ACCOUNT
 
@@ -41,10 +41,16 @@ class FakeChain:
         body = json.loads(req.read())
         method = body["params"].get("method_name")
         if body["params"]["request_type"] == "view_account":
-            return httpx.Response(200, json={"result": {"amount": str(5 * 10 ** 23)}})
+            return httpx.Response(200, json={"result": {"amount": str(self.near_yocto)}})
         val = {"ft_balance_of": str(self.usdc_units), "storage_balance_of": {"total": "1"} if self.registered else None,
                "mt_batch_balance_of": ["100000000000000000"]}[method]
         return httpx.Response(200, json={"result": {"result": list(json.dumps(val).encode())}})
+
+    def transfer(self, receiver, amount_yocto):
+        self.calls.append(("transfer", {"receiver": receiver, "amount": amount_yocto}, amount_yocto))
+        if self.fail_transfer:
+            raise RuntimeError("network dropped")
+        return "tx-transfer"
 
     def call(self, contract, method, args, gas, deposit):
         self.calls.append((method, args, deposit))
@@ -54,14 +60,19 @@ class FakeChain:
 
 
 def make(tmp_path, chain, *, cfg=None, quote=None, statuses=("PENDING_DEPOSIT", "PROCESSING", "SUCCESS"), kill=False):
-    cfg = cfg or LiveConfig(trading_enabled=True, poll_seconds=0.0)
+    cfg = cfg or LiveConfig(trading_enabled=True, poll_seconds=0.0, pay_with="usdc")
     seen = {"quotes": [], "status": 0}
 
     def oneclick(req: httpx.Request) -> httpx.Response:
+        if req.url.path == "/v0/tokens":
+            return httpx.Response(200, json=[{"assetId": "nep141:wrap.near", "price": 4.0}])
         if req.url.path == "/v0/quote":
             body = json.loads(req.read())
             seen["quotes"].append(body)
-            return httpx.Response(201, json=quote or quote_payload())
+            reply = quote or quote_payload()
+            if quote is None:
+                reply["quote"]["amountIn"] = body["amount"]          # a real quote echoes the amount it was asked for
+            return httpx.Response(201, json=reply)
         if req.url.path == "/v0/status":
             st = statuses[min(seen["status"], len(statuses) - 1)]
             seen["status"] += 1
@@ -69,7 +80,7 @@ def make(tmp_path, chain, *, cfg=None, quote=None, statuses=("PENDING_DEPOSIT", 
         return httpx.Response(200, json={})
     oc = OneClickLive("https://oc.test", http=httpx.Client(transport=httpx.MockTransport(oneclick)))
     state_path = tmp_path / "trading" / "state.json"
-    ex = Executor(cfg, state_path, oc, pay_asset="nep141:usdc", signer=chain, http=httpx.Client(transport=httpx.MockTransport(chain.rpc)),
+    ex = Executor(cfg, state_path, oc, pay_asset="nep141:wrap.near" if cfg.pay_with == "near" else "nep141:usdc", signer=chain, http=httpx.Client(transport=httpx.MockTransport(chain.rpc)),
                   now=lambda: NOW, sleep=lambda s: None)
     if kill:
         ex.kill_file.parent.mkdir(parents=True, exist_ok=True)
@@ -142,7 +153,7 @@ def test_unregistered_deposit_address_is_registered_first(tmp_path):
 
 
 def test_nothing_is_sent_when_a_check_fails(tmp_path):
-    for kwargs, match in (({"kill": True}, "kill switch"), ({"cfg": LiveConfig(trading_enabled=False)}, "trading_enabled"),
+    for kwargs, match in (({"kill": True}, "kill switch"), ({"cfg": LiveConfig(trading_enabled=False, pay_with="usdc")}, "trading_enabled"),
                           ({"quote": quote_payload(out_tokens="0.05")}, "away from the stock"),
                           ({"quote": quote_payload(deposit=None)}, "no deposit address")):
         chain = FakeChain()
@@ -264,3 +275,45 @@ def test_trading_api_is_read_only_and_leaks_no_key(tmp_path):
     assert body["limits"]["max_total_usd"] == 10.0 and body["proposals"][0]["symbol"] == "INTCon"
     assert "SECRET" not in r.text
     assert c.post("/api/trading").status_code == 405 and c.post("/api/trading/approve").status_code in (404, 405)
+
+
+# ---------------------------------------------------------------- paying with NEAR (the owner's choice)
+NEAR_CFG = dict(trading_enabled=True, poll_seconds=0.0, pay_with="near")
+
+
+def test_near_payment_is_one_plain_transfer_sized_from_the_price(tmp_path):
+    chain = FakeChain(near_yocto=5 * 10 ** 24)
+    ex, seen, _ = make(tmp_path, chain, cfg=LiveConfig(**NEAR_CFG))
+    st, p = TradingState(), proposal(status="approved")
+    st.proposals.append(p)
+    ex.execute(st, p)
+    units = int(5.0 / 4.0 * 10 ** 24)                                     # $5 at $4 per NEAR = 1.25 NEAR
+    assert p.status == "success" and p.deposit_tx == "tx-transfer"
+    assert chain.calls == [("transfer", {"receiver": "depo1234", "amount": units}, units)]      # no storage call, no token call
+    body = seen["quotes"][0]
+    assert body["originAsset"] == "nep141:wrap.near" and body["amount"] == str(units) and body["dry"] is False
+    assert "NEAR sent" in " ".join(e.note for e in p.history)
+
+
+def test_near_payment_keeps_a_fee_reserve_and_never_retries(tmp_path):
+    chain = FakeChain(near_yocto=int(1.27 * 10 ** 24))                    # needs 1.25 + 0.05 reserve
+    ex, _, _ = make(tmp_path / "low", chain, cfg=LiveConfig(**NEAR_CFG))
+    with pytest.raises(RuntimeError, match="kept for fees"):
+        ex.execute(TradingState(), proposal(status="approved"))
+    assert chain.calls == []
+    chain = FakeChain(near_yocto=5 * 10 ** 24, fail_transfer=True)
+    ex, _, _ = make(tmp_path / "drop", chain, cfg=LiveConfig(**NEAR_CFG))
+    st, p = TradingState(), proposal(status="approved")
+    with pytest.raises(RuntimeError, match="never approve again"):
+        ex.execute(st, p)
+    with pytest.raises(RuntimeError):
+        ex.execute(st, p)
+    assert len(chain.calls) == 1 and p.status == "deposited"
+
+
+def test_shadow_quote_in_near_mode(tmp_path):
+    ex, seen, _ = make(tmp_path, FakeChain(), cfg=LiveConfig(**NEAR_CFG))
+    ex.signer = None
+    st, p = TradingState(), proposal(mode="shadow")
+    ex.shadow_fill(st, p)
+    assert p.status == "shadow_filled" and seen["quotes"][0]["originAsset"] == "nep141:wrap.near" and seen["quotes"][0]["dry"] is True

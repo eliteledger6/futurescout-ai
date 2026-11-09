@@ -48,6 +48,9 @@ class LiveConfig(BaseModel):
     rpc: str = "https://rpc.mainnet.near.org"
     usdc_contract: str = "17208628f84f5d6ad33f0da3bbbeb27ffcb398eac501a31bd6ad2011e36133a1"
     usdc_decimals: int = 6
+    pay_with: str = "near"               # "near" (native NEAR, owner's choice 2026-11-09) or "usdc"
+    near_asset_id: str = "nep141:wrap.near"   # how 1Click names NEAR; a plain NEAR transfer to the deposit address pays it
+    near_reserve: float = 0.05           # NEAR always left in the account for fees
     intents_contract: str = "intents.near"
     max_trade_usd: float = 5.0
     max_day_usd: float = 5.0
@@ -281,6 +284,27 @@ class MainnetSigner:
                 tx = res
             return str(tx or "")
 
+        return self._run(go)
+
+    def transfer(self, receiver: str, amount_yocto: int) -> str:
+        """Plain NEAR transfer (how a NEAR-paid 1Click swap is funded)."""
+        from py_near.account import Account
+
+        async def go() -> str:
+            acc = Account(self.account_id, self._key, rpc_addr=self.rpc)
+            await acc.startup()
+            res = await acc.send_money(receiver, amount_yocto)
+            status = getattr(res, "status", None)
+            if isinstance(status, dict) and "Failure" in status:
+                raise RuntimeError(f"transfer failed on chain: {str(status['Failure'])[:200]}")
+            tx = getattr(getattr(res, "transaction", None), "hash", None) or getattr(res, "transaction_hash", None)
+            if isinstance(res, str):
+                tx = res
+            return str(tx or "")
+
+        return self._run(go)
+
+    def _run(self, go) -> str:  # noqa: ANN001
         if sys.platform == "win32":
             asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
         try:
@@ -318,6 +342,14 @@ class OneClickLive:
         out["dry"] = dry
         return out
 
+    def price_usd(self, asset_id: str) -> float:
+        """USD price of an asset from the public 1Click token list (used to size a NEAR payment for a USD amount)."""
+        r = self._http.get(f"{self.api}/v0/tokens", headers=self._headers)
+        for t in r.json() if r.status_code == 200 else []:
+            if t.get("assetId") == asset_id and t.get("price"):
+                return float(t["price"])
+        raise RuntimeError(f"no price for {asset_id} in the 1Click token list")
+
     def submit_deposit(self, deposit_address: str, tx_hash: str) -> None:
         try:
             self._http.post(f"{self.api}/v0/deposit/submit", json={"txHash": tx_hash, "depositAddress": deposit_address}, headers=self._headers)
@@ -343,13 +375,26 @@ class Executor:
     def kill_switch(self) -> bool:
         return self.kill_file.exists()
 
+    @property
+    def pays_near(self) -> bool:
+        return self.cfg.pay_with == "near"
+
+    def pay_units(self, usd: float) -> int:
+        """Smallest units of the pay asset worth `usd` (NEAR: sized from the 1Click price; USDC: 1:1)."""
+        if self.pays_near:
+            return int(usd / self.oneclick.price_usd(self.cfg.near_asset_id) * 10 ** 24)
+        return int(round(usd * 10 ** self.cfg.usdc_decimals))
+
+    def dry_quote(self, asset_id: str, usd: float, account: str) -> dict:
+        return self.oneclick.quote(dry=True, pay_asset=self.pay_asset, dest_asset=asset_id, amount_units=self.pay_units(usd), account=account,
+                                   slippage_bps=self.cfg.slippage_bps, deadline=self._now() + timedelta(minutes=10))
+
     # ---- shadow: a real dry quote, nothing sent
     def shadow_fill(self, state: TradingState, p: Proposal, account: str = "intents.near") -> Proposal:
         if p.mode != "shadow" or p.status != "proposed":
             raise RuntimeError("only a fresh shadow proposal can be shadow-filled")
         try:
-            q = self.oneclick.quote(dry=True, pay_asset=self.pay_asset, dest_asset=p.asset_id, amount_units=int(round(p.usd * 10 ** self.cfg.usdc_decimals)),
-                                    account=account, slippage_bps=self.cfg.slippage_bps, deadline=self._now() + timedelta(minutes=10))
+            q = self.dry_quote(p.asset_id, p.usd, account)
         except (RuntimeError, httpx.HTTPError) as exc:
             p.error = str(exc)[:200]
             p.mark("failed", "shadow: no quote (" + p.error + ")", self._now())
@@ -379,10 +424,19 @@ class Executor:
         blocked = check_limits(state, p, self.cfg, kill_switch=self.kill_switch(), now=self._now())
         if blocked:
             raise RuntimeError("blocked by limits: " + "; ".join(blocked))
-        units = int(round(p.usd * 10 ** self.cfg.usdc_decimals))
-        have = int(rpc_view(self._http, self.cfg.rpc, self.cfg.usdc_contract, "ft_balance_of", {"account_id": self.signer.account_id}) or 0)
-        if have < units:
-            raise RuntimeError(f"the account holds {have / 10 ** self.cfg.usdc_decimals:.2f} USDC, less than the ${p.usd:.2f} needed")
+        units = self.pay_units(p.usd)
+        if self.pays_near:
+            body = {"jsonrpc": "2.0", "id": "fs", "method": "query",
+                    "params": {"request_type": "view_account", "finality": "final", "account_id": self.signer.account_id}}
+            have = int(((self._http.post(self.cfg.rpc, json=body, timeout=30).json().get("result") or {}).get("amount")) or 0)
+            need = units + int(self.cfg.near_reserve * 10 ** 24)
+            if have < need:
+                raise RuntimeError(f"the account holds {have / 1e24:.3f} NEAR, less than the {need / 1e24:.3f} NEAR needed "
+                                   f"(${p.usd:.2f} of NEAR plus {self.cfg.near_reserve} NEAR kept for fees)")
+        else:
+            have = int(rpc_view(self._http, self.cfg.rpc, self.cfg.usdc_contract, "ft_balance_of", {"account_id": self.signer.account_id}) or 0)
+            if have < units:
+                raise RuntimeError(f"the account holds {have / 10 ** self.cfg.usdc_decimals:.2f} USDC, less than the ${p.usd:.2f} needed")
         q = self.oneclick.quote(dry=False, pay_asset=self.pay_asset, dest_asset=p.asset_id, amount_units=units, account=self.signer.account_id,
                                 slippage_bps=self.cfg.slippage_bps, deadline=self._now() + timedelta(minutes=self.cfg.deadline_minutes))
         problems = check_quote(q, p, self.cfg, self._now())
@@ -399,27 +453,32 @@ class Executor:
 
         # Point of no return: record first, then send exactly once.
         p.quote, p.deposit_address = q, q["depositAddress"]
-        p.mark("executing", f"real quote accepted; sending ${p.usd:.2f} USDC to the 1Click deposit address", self._now())
+        coin = "NEAR" if self.pays_near else "USDC"
+        p.mark("executing", f"real quote accepted; sending ${p.usd:.2f} of {coin} to the 1Click deposit address", self._now())
         save_state(state, self.state_path)
-        try:        # preparation: no USDC moves here, so a failure is a clean "failed"
-            registered = rpc_view(self._http, self.cfg.rpc, self.cfg.usdc_contract, "storage_balance_of", {"account_id": p.deposit_address})
-            if not registered:
-                self.signer.call(self.cfg.usdc_contract, "storage_deposit", {"account_id": p.deposit_address, "registration_only": True},
-                                 30 * 10 ** 12, 1_250_000_000_000_000_000_000)
-        except Exception as exc:  # noqa: BLE001
-            p.error = f"could not prepare the deposit address: {str(exc)[:240]}"
-            p.mark("failed", "no USDC was sent: " + p.error, self._now())
-            save_state(state, self.state_path)
-            raise RuntimeError(p.error + " (no USDC was sent)") from None
+        if not self.pays_near:
+            try:        # preparation: no USDC moves here, so a failure is a clean "failed"
+                registered = rpc_view(self._http, self.cfg.rpc, self.cfg.usdc_contract, "storage_balance_of", {"account_id": p.deposit_address})
+                if not registered:
+                    self.signer.call(self.cfg.usdc_contract, "storage_deposit", {"account_id": p.deposit_address, "registration_only": True},
+                                     30 * 10 ** 12, 1_250_000_000_000_000_000_000)
+            except Exception as exc:  # noqa: BLE001
+                p.error = f"could not prepare the deposit address: {str(exc)[:240]}"
+                p.mark("failed", "no USDC was sent: " + p.error, self._now())
+                save_state(state, self.state_path)
+                raise RuntimeError(p.error + " (no USDC was sent)") from None
         try:
-            tx = self.signer.call(self.cfg.usdc_contract, "ft_transfer", {"receiver_id": p.deposit_address, "amount": str(units)}, 30 * 10 ** 12, 1)
+            if self.pays_near:
+                tx = self.signer.transfer(p.deposit_address, units)
+            else:
+                tx = self.signer.call(self.cfg.usdc_contract, "ft_transfer", {"receiver_id": p.deposit_address, "amount": str(units)}, 30 * 10 ** 12, 1)
         except Exception as exc:  # noqa: BLE001
             p.error = f"send step raised: {str(exc)[:240]}"
             p.mark("deposited", "the transfer may or may not have gone through; check with resume before anything else", self._now())
             save_state(state, self.state_path)
             raise RuntimeError(p.error + " (status kept as 'deposited': run resume, never approve again)") from None
         p.deposit_tx = tx or None
-        p.mark("deposited", f"USDC sent, tx {tx}", self._now())
+        p.mark("deposited", f"{coin} sent, tx {tx}", self._now())
         save_state(state, self.state_path)
         if tx:
             self.oneclick.submit_deposit(p.deposit_address, tx)

@@ -50,7 +50,8 @@ def make_executor(s, cfg, *, with_signer: bool) -> Executor:  # noqa: ANN001
     creds = s.fund_mainnet_credentials()
     if with_signer and creds:
         signer = MainnetSigner(creds[0], creds[1], cfg.live.rpc)
-    return Executor(cfg.live, STATE, OneClickLive(cfg.intents.api, api_key=key or None), pay_asset=cfg.intents.pay_asset, signer=signer)
+    pay = cfg.live.near_asset_id if cfg.live.pay_with == "near" else cfg.intents.pay_asset
+    return Executor(cfg.live, STATE, OneClickLive(cfg.intents.api, api_key=key or None), pay_asset=pay, signer=signer)
 
 
 def cmd_status(s, cfg) -> int:  # noqa: ANN001
@@ -65,7 +66,14 @@ def cmd_status(s, cfg) -> int:  # noqa: ANN001
         print("account: not configured (FUND_MAINNET_ACCOUNT_ID / FUND_MAINNET_PRIVATE_KEY in .env)")
         return 0
     bal = read_balances(httpx.Client(timeout=30), lv, creds[0], tradable_tokens())
-    print(f"account: {bal['account']}   NEAR {bal['near']}   USDC {bal['usdc']}")
+    print(f"account: {bal['account']}   NEAR {bal['near']}   USDC {bal['usdc']}   (trades are paid in {'NEAR' if lv.pay_with == 'near' else 'USDC'})")
+    if lv.pay_with == "near" and bal["near"] is not None:
+        try:
+            px = ex.oneclick.price_usd(lv.near_asset_id)
+            print(f"   NEAR is about ${px:.2f}: the balance is worth about ${bal['near'] * px:.2f}; a ${lv.max_trade_usd:.0f} trade needs about "
+                  f"{lv.max_trade_usd / px + lv.near_reserve:.2f} NEAR including the fee reserve")
+        except Exception:  # noqa: BLE001
+            pass
     for h in bal["holdings"]:
         print(f"   holds {h['quantity']} {h['symbol']} (about ${h['value_usd']})")
     for e in bal["errors"]:
@@ -97,8 +105,7 @@ def cmd_propose(s, cfg, shadow: bool, usd: float | None) -> int:  # noqa: ANN001
         c = Candidate(ticker=t["ticker"], symbol=t["symbol"], asset_id=t["asset_id"], topic=t["topic"], verdict_band=t["band"], score=t["score"],
                       tier=t["tier"], why=t["why"], price_stretch=t["stretch"], last_close=t["last_close"], last_close_date=t["last_close_date"])
         try:
-            q = ex.oneclick.quote(dry=True, pay_asset=cfg.intents.pay_asset, dest_asset=c.asset_id, amount_units=int(round(budget * 10 ** lv.usdc_decimals)),
-                                  account=account, slippage_bps=lv.slippage_bps, deadline=now + timedelta(minutes=10))
+            q = ex.dry_quote(c.asset_id, budget, account)
             c.dry_quote, c.quotable = q, True
             c.quote_cost_pct = round((float(q["amountInUsd"]) - float(q["amountOutUsd"])) / float(q["amountInUsd"]) * 100, 2)
         except (RuntimeError, KeyError, ValueError, httpx.HTTPError) as exc:
@@ -167,7 +174,8 @@ def cmd_approve(s, cfg, pid: str) -> int:  # noqa: ANN001
     if blocked:
         print("cannot execute:\n  - " + "\n  - ".join(blocked))
         return 1
-    print(f"REAL MONEY. About to send ${p.usd:.2f} USDC from {ex.signer.account_id} (NEAR mainnet) to buy {p.symbol}.")
+    coin = "NEAR" if cfg.live.pay_with == "near" else "USDC"
+    print(f"REAL MONEY. About to send ${p.usd:.2f} of {coin} from {ex.signer.account_id} (NEAR mainnet) to buy {p.symbol}.")
     print(f"  agent's reason: {p.rationale}")
     typed = input(f"Type  APPROVE {p.id}  to go ahead (anything else cancels): ").strip()
     if typed != f"APPROVE {p.id}":
