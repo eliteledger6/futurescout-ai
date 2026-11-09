@@ -105,15 +105,17 @@ SCENES = [
         ("Each report's fingerprint is sealed on NEAR testnet, and re-checked on every page load.", None),
         ("Change one word, and the seal breaks.", None),
     ], tail=2.4),
-    Scene("09_funds", "07", "Topic funds · simulation", [
-        ("Finally, each topic gets a paper fund, split into low, medium and high risk companies.", None),
-        ("A rule-based agent sizes it by the verdict and the confidence, and every decision is sealed on NEAR.", None),
-        ("It is a simulation: no money moves.", None),
+    Scene("09_funds", "07", "Funds and trading", [
+        ("Each topic gets a paper fund, split into low, medium and high risk companies.", None),
+        ("A trading agent on a strong model then picks tokenized stocks to buy through NEAR Intents.", None),
+        ("Safety checks run first, and the owner approves every real order.", None),
+        ("In shadow mode it has placed 6,600 pretend dollars at real quotes, and explains each choice.",
+         "In shadow mode it has placed six thousand six hundred pretend dollars at real quotes, and explains each choice."),
     ]),
     Scene("10_close", "", "", [
         ("FUTURESCOUT AI: evidence-first technology research.", "Future Scout A I: evidence-first technology research."),
         ("Models on NEAR AI Cloud, reports sealed on NEAR.", "Models on NEAR A I Cloud, reports sealed on NEAR."),
-        ("Testnet only, and not financial advice.", None),
+        ("Research information, not financial advice.", None),
     ], tail=2.2),
 ]
 
@@ -378,7 +380,7 @@ def closing_card(t: float, dur: float) -> Image.Image:
             "Testnet tokens have no value",
             "Stock prices: free plan, 25 lookups a day",
             "Research activity is not commercial success",
-            "Real trading through NEAR Intents: shown separately",
+            "Real trades: tiny budget, owner approves each one",
         ]),
     ]
     for ci, (x, head, colour, rows) in enumerate(cols):
@@ -392,7 +394,7 @@ def closing_card(t: float, dur: float) -> Image.Image:
         for i, row in enumerate(rows):
             ar = ease((t - (t0 + 0.25 + i * 0.1)) / 0.4)
             d.text((x + 34, 440 + i * 56), row, font=font(27, "regular"), fill=rgba(INK, ar), anchor="lm")
-    rise(d, (W / 2, 880), "Testnet only   ·   Not financial advice   ·   Built for the NEAR hackathon", font(28, "semibold"), INK, t, 1.9)
+    rise(d, (W / 2, 880), "Research information   ·   Not financial advice   ·   Built for the NEAR hackathon", font(28, "semibold"), INK, t, 1.9)
     return img
 
 
@@ -553,30 +555,32 @@ async def rec_seal(k: Take) -> None:
 
 async def rec_funds(k: Take) -> None:
     b = k.b
-    await b.scroll_to(470, 1.2)
-    await k.hl(await b.rect(".tier-legend"), seconds=2.4, pad=8)
+    await b.scroll_to(430, 1.2)
+    await k.hl(await b.rect(".tier-legend"), seconds=2.2, pad=8)
     await b.hover("a.fund-card", 0, seconds=0.7)
     await asyncio.sleep(0.4)
-    await b.hover("a.fund-card", 1, seconds=0.6)
-    await k.until(k.sent[0] + (k.sent[1] - k.sent[0]) * 0.55)
-    await b.click("a.fund-card", text="high bandwidth memory", seconds=0.8)
-    await asyncio.sleep(1.6)
-    await k.hl(await b.rect(".tier-bar"), seconds=1.8, pad=8)
-    await k.until(k.sent[1] - 0.3)
+    await b.hover("a.fund-card", 2, seconds=0.7)
+    await k.until(k.sent[1] - 1.5)
     k.cut()
-    r = await b.rect("h2", text="holdings")
-    if r:
-        await b.scroll_to(await b.scroll_y() + r[1] - 90, 1.1)
-    await k.until(k.sent[1] + (k.sent[2] - k.sent[1]) * 0.42)
-    r = await b.rect("h2", text="decision log")
-    if r:
-        await b.scroll_to(await b.scroll_y() + r[1] - 90, 1.1)
-    await k.hl(await b.rect_text("sealed on NEAR testnet"), seconds=2.6, pad=8)
-    await b.hover(".timeline > li", seconds=0.7)
-    await k.until(k.sent[2] - 0.9)
+    await b.click("a.tab", text="trading agent", seconds=0.7)       # same area, second sub-tab
+    await asyncio.sleep(1.2)
+    await b.scroll_to_el(".tp-pipe", 0.9, offset=370)
+    await k.until(k.sent[1] + 0.2)
+    await k.hl(await b.rect(".tp-pipe"), seconds=max(2.0, k.sent[2] - k.sent[1] - 0.6), pad=10)
+    await b.hover(".tp-name", text="trading agent", seconds=0.7)
+    await k.until(k.sent[2] + 0.1)
+    span = k.sent[3] - k.sent[2] - 1.4
+    for i, name in enumerate(["safety checks", "owner", "near intents"]):
+        await k.until(k.sent[2] + 0.1 + span * i / 3)
+        await b.hover(".tp-name", text=name, seconds=0.6)
+    await k.until(k.sent[3] - 1.2)
     k.cut()
-    await b.scroll_to(0, 1.0)
-    await k.hl(await b.rect_text("pretend money"), seconds=3.0, pad=8)
+    await b.scroll_to_el(".sp-grid", 1.1, offset=210)
+    await k.until(k.sent[3] + 0.2)
+    await k.hl(await b.rect(".sp-grid"), seconds=3.2, pad=12)
+    await b.hover(".sp-row", 0, seconds=0.7)
+    await k.until(k.sent[3] + (k.dur - k.sent[3]) * 0.6)
+    await b.hover(".tr-agent", 1, seconds=0.8)
 
 
 # ============================================================================= pieces (shots) of the timeline
@@ -754,9 +758,9 @@ def draw_caption(d: ImageDraw.ImageDraw, sc: Scene, t: float) -> None:
         bw = max(d.textlength(ln, font=f) for ln in lines) + 68
         bh = lh * len(lines) + 30
         x0, y0 = (W - bw) / 2, H - 56 - bh
-        d.rounded_rectangle((x0, y0, x0 + bw, y0 + bh), radius=16, fill=(4, 6, 6, int(250 * a)), outline=(46, 54, 51, int(255 * a)), width=2)
         for i, ln in enumerate(lines):
-            d.text((W / 2, y0 + 15 + lh * i + lh / 2), ln, font=f, fill=rgba((255, 255, 255), a), anchor="mm")
+            d.text((W / 2, y0 + 15 + lh * i + lh / 2), ln, font=f, fill=rgba((255, 255, 255), a), anchor="mm",
+                   stroke_width=7, stroke_fill=(0, 0, 0, int(245 * a)))
         return
 
 

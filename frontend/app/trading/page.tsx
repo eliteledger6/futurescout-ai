@@ -1,6 +1,7 @@
 "use client";
 
 // Trading: an agent pipeline you can watch. READ-ONLY: a trade is approved only in the owner's terminal.
+import { FundTabs } from "@/components/FundTabs";
 import "./trading.css";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { CountUp, Reveal } from "@/components/motion";
@@ -50,6 +51,7 @@ export default function TradingPage() {
 
       <section className="section" style={{ paddingTop: 28 }}>
         <div className="container stack">
+          <FundTabs active="trading" />
           {error ? <ErrorNotice error={error} /> : !t ? <Loading lines={5} /> : (
             <>
               <Pipeline p={current} />

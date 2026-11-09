@@ -20,7 +20,7 @@ export default function About() {
         <div className="aurora" aria-hidden="true" />
         <div className="container">
           <div className="eyebrow">How it works</div>
-          <h1 className="display" style={{ fontSize: "clamp(40px, 6vw, 76px)" }}>Nine agents, <span className="gradient-text">one rule: show the evidence</span></h1>
+          <h1 className="display" style={{ fontSize: "clamp(40px, 6vw, 76px)" }}>A team of agents, <span className="gradient-text">one rule: show the evidence</span></h1>
           <p className="lede">A hot technology shows up first in research papers and patent filings, then in company reports. FUTURESCOUT measures all three, argues the other side, and tells you which companies the evidence points to, and how much of the move may already be priced in.</p>
         </div>
       </section>

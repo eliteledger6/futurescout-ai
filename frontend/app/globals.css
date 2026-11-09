@@ -66,6 +66,7 @@ a:hover { color: var(--accent); }
 .topbar-right { margin-left: auto; display: flex; align-items: center; gap: 10px; padding-left: 16px; border-left: 1px solid var(--line); }
 @media (max-width: 900px) { .nav a { padding: 0 14px; } .topbar-right { display: none; } .nav { overflow-x: auto; scrollbar-width: none; } .nav::-webkit-scrollbar { display: none; } }
 @media (max-width: 720px) { .nav a { padding: 0 12px; } }
+@media (max-width: 520px) { .nav a { padding: 0 9px; font-size: 13px; white-space: nowrap; } }
 @media (max-width: 520px) {
   .brand { padding-right: 12px; }
   .brand span { display: none; }            /* logo only on phones */
@@ -287,7 +288,13 @@ a.card:hover { background: var(--surface); color: var(--text); }
   background: var(--bg); color: var(--text); font-size: 13px; cursor: pointer; font-family: var(--font-body); }
 .flow-chip.active { border-color: var(--accent); color: var(--accent); }
 .flow-chip.off, .flow-chip.not_run { color: var(--muted); border-style: dashed; }
-@media (max-width: 760px) { .flow-canvas { display: none; } .flow-list { display: block; } }
+.flow-swipe { display: none; }
+/* phones: keep the real network diagram and let it scroll sideways (the old numbered list stays hidden) */
+@media (max-width: 760px) {
+  .flow-canvas { overflow-x: auto; padding: 18px 12px 4px; -webkit-overflow-scrolling: touch; }
+  .flow-svg { width: 900px; max-width: none; }
+  .flow-swipe { display: block; padding: 12px 16px 0; font-size: 12px; color: var(--muted); }
+}
 
 /* ===================================================================== polish */
 .hero::after {            /* soft mint glow behind the headline */

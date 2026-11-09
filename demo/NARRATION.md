@@ -1,6 +1,6 @@
 # FUTURESCOUT AI: demo narration
 
-Video: `futurescout_hackathon_demo.mp4` · 2:13 · 1920x1080 · 30 fps. Voice: Microsoft David Desktop (Windows text-to-speech).
+Video: `futurescout_hackathon_demo.mp4` · 2:20 · 1920x1080 · 30 fps. Voice: Microsoft David Desktop (Windows text-to-speech).
 
 Every app shot is a live recording of the running dashboard. Cards, titles, captions, highlight rings, the mouse pointer, narration and music are added by `demo/make_video.py`.
 
@@ -13,5 +13,5 @@ Every app shot is a live recording of the running dashboard. Cards, titles, capt
 | 1:06 | 04 Companies and price check | It names the companies behind the evidence, including smaller ones. And it checks whether their share prices have already run: a risk check, never a buy signal. |
 | 1:17 | 05 Evidence you can check | The full report opens everything up. The agent trace shows which agents ran, on which model, and at what cost. Every finding carries a label, and the exact quote from its source. A citation guard downgrades anything a source does not support. |
 | 1:33 | 06 Sealed on NEAR | Each report's fingerprint is sealed on NEAR testnet, and re-checked on every page load. Change one word, and the seal breaks. |
-| 1:44 | 07 Topic funds · simulation | Finally, each topic gets a paper fund, split into low, medium and high risk companies. A rule-based agent sizes it by the verdict and the confidence, and every decision is sealed on NEAR. It is a simulation: no money moves. |
-| 2:00 | Close | FUTURESCOUT AI: evidence-first technology research. Models on NEAR AI Cloud, reports sealed on NEAR. Testnet only, and not financial advice. |
+| 1:44 | 07 Funds and trading | Each topic gets a paper fund, split into low, medium and high risk companies. A trading agent on a strong model then picks tokenized stocks to buy through NEAR Intents. Safety checks run first, and the owner approves every real order. In shadow mode it has placed 6,600 pretend dollars at real quotes, and explains each choice. |
+| 2:07 | Close | FUTURESCOUT AI: evidence-first technology research. Models on NEAR AI Cloud, reports sealed on NEAR. Research information, not financial advice. |

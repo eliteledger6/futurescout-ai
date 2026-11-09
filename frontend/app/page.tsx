@@ -74,7 +74,7 @@ export default function Home() {
       <section className="section" style={{ paddingTop: 16 }}>
         <div className="container stack">
           <LivePanel />
-          <p className="small muted" style={{ margin: 0 }}>How the nine agents work together, step by step: <Link href="/about" style={{ color: "var(--accent)" }}>How it works →</Link></p>
+          <p className="small muted" style={{ margin: 0 }}>How the agents work together, step by step: <Link href="/about" style={{ color: "var(--accent)" }}>How it works →</Link></p>
         </div>
       </section>
     </>

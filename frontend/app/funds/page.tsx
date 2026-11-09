@@ -4,6 +4,7 @@ import "./funds.css";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { TierBar, TierLegend, ValueLine, pct, tone, usd } from "@/components/FundBits";
+import { FundTabs } from "@/components/FundTabs";
 import { Reveal } from "@/components/motion";
 import { ErrorNotice, Loading } from "@/components/ui";
 import { api, fmtDate } from "@/lib/api";
@@ -30,6 +31,7 @@ export default function FundsPage() {
 
       <section className="section">
         <div className="container stack">
+          <FundTabs active="funds" />
           {error ? <ErrorNotice error={error} /> : !funds ? <Loading lines={4} /> : funds.length === 0 ? (
             <div className="notice">No topic funds yet. In the backend folder run <span className="mono">python scripts\funds.py</span>.</div>
           ) : (
