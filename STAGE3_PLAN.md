@@ -33,6 +33,11 @@ token issuer. Start with an amount you could lose completely without it matterin
 - Built since, QUOTES ONLY (`app/fund/intents_signed.py`, `scripts/intents_probe.py`): dry quotes on the internal
   route, a real quote + the unsigned order the service generates, and an owner-run login (signs an EMPTY order) that
   reads private balances and quotes the confidential route. There is no submit function.
+- CONFIRMED by the owner's login run (2026-11-09, `intents_probe.py --login`, with a partner API key in .env): the
+  wallet key opens a session; the private balance is 8.6 wNEAR (the amount near.com shows), so the near.com
+  balance IS the Confidential Intents balance of wrongowl2563.near; confidential-route dry quotes work (GOOGLon and
+  INTCon from 10 USD, MSFTon / METAon / MRVLon from 30 USD at that moment). near.com's flat 20 USD minimum is an
+  app rule on top of per-token liquidity. Not built: signing and submitting a swap order on that route.
 - Lesson: check the deadline the service RETURNS, and never send a second trade while one is unresolved.
 - Also found: rpc.mainnet.near.org and rpc.testnet.near.org are deprecated (HTTP 429); both replaced with FastNEAR.
 
