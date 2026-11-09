@@ -25,7 +25,7 @@ import httpx
 
 from app.schemas.research import ResearchReport
 
-TESTNET_RPC = "https://rpc.testnet.near.org"
+TESTNET_RPC = "https://rpc.testnet.fastnear.com"   # rpc.testnet.near.org is deprecated and rate-limits (HTTP 429, 2026-11-09)
 SOCIALDB_TESTNET = "v1.social08.testnet"
 APP_KEY = "futurescout"
 # SocialDB refused 0.01 NEAR on the first write ("attached deposit is less than the minimum storage balance",

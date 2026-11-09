@@ -42,9 +42,9 @@ intents:
 live:
   trading_enabled: true       # master switch; the owner turns it on for the first trade
   pay_with: near               # owner 2026-11-09: pay with NEAR directly (no USDC needed); "usdc" also works
-  max_trade_usd: 20.0
-  max_day_usd: 30.0
-  max_total_usd: 30.0          # the whole real-money budget, ever (owner 2026-11-09: "just try 20usd" on top of the $10 already sent)
+  max_trade_usd: 25.0
+  max_day_usd: 35.0
+  max_total_usd: 35.0          # the whole real-money budget, ever (owner 2026-11-09: per-trade cap 25 on top of the $10 already sent)
   min_trade_usd: 1.0
   price_band_pct: 3.0          # quoted token price must be this close to the stock's last close (close <= 1 day old)
   band_per_stale_day_pct: 1.5  # +1.5% per extra day of age of that close (Friday's close on a Monday: 6%)
