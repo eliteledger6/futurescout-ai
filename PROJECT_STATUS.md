@@ -137,6 +137,7 @@ Design choices that matter:
 2. ~~Get NEAR AI credit and do the first live run~~ Done 2026-11-08 (see "Verified live"). ~~Rotate the OpenAlex API key~~ Done by the owner 2026-11-08.
    **Next: X Intelligence agent.** The owner has X API credit (2026-11-08). Before building: the owner puts `X_BEARER_TOKEN` in `.env`; candidate accounts are looked up through the X API (never invented) and the owner approves the watchlist. Posts stay "social signals", never `verified_fact`; read-only, no posting/liking/following.
    Remaining human-only hackathon steps: record the demo video (script: `demo/DEMO_SCRIPT.md`; automatic fallback: `demo/futurescout_demo.mp4` built by `python demo\build_demo.py` on 2026-11-09), make the repo public, post on X, submit (each needs your explicit yes). LICENSE (MIT, "FUTURESCOUT AI contributors") added 2026-11-08.
+   Demo video part 1 built 2026-11-10: `demo/futurescout_hackathon_demo.mp4` (2:25, 1920x1080, 30 fps, real screen recording of the running app, Windows text-to-speech narration, captions in `.srt`, script in `demo/NARRATION.md`), made by `python demo/make_video.py`. It covers research, reports, seal, market and paper funds with scoring v2. The real-trading scene is deliberately NOT in it (owner decision: record it after the stuck swaps are resolved, then join the two).
 3. Retry GDELT later: `python scripts\demo_news.py --query "high bandwidth memory" --timespan 1month`.
 
 When you have NEAR AI credit and `NEAR_AI_API_KEY` in `.env`:

@@ -84,10 +84,11 @@ SCENES = [
     ]),
     Scene("04_report", "03", "A research report", [
         ("Here is the report on high bandwidth memory.", None),
-        ("The verdict: building, with a score of 59.", "The verdict: building, with a score of fifty-nine."),
+        ("The verdict: strong momentum, with an opportunity score of 72.", "The verdict: strong momentum, with an opportunity score of seventy-two."),
+        ("But confidence is only 47%. Risk lowers confidence, not the score.",
+         "But confidence is only forty-seven percent. Risk lowers confidence, not the score."),
         ("Research is up 108% this year so far, and patents 81%.",
          "Research is up one hundred and eight percent this year so far, and patents eighty-one percent."),
-        ("Every number is computed by code, from cited evidence.", None),
     ]),
     Scene("05_companies", "04", "Companies and price check", [
         ("It names the companies behind the evidence, including smaller ones.", None),
@@ -111,7 +112,7 @@ SCENES = [
     ]),
     Scene("09_funds", "08", "Topic funds · simulation", [
         ("Finally, each topic gets a paper fund, split into low, medium and high risk companies.", None),
-        ("A rule-based agent decides how much to invest, and every decision is sealed on NEAR.", None),
+        ("A rule-based agent sizes it by the verdict and the confidence, and every decision is sealed on NEAR.", None),
         ("It is a simulation: no money moves.", None),
     ]),
     Scene("10_close", "", "", [
@@ -192,19 +193,26 @@ def read_trimmed(path: Path) -> array.array:
     return a[max(0, i - keep): min(len(a), j + keep)]
 
 
+def wav_path(sc: Scene, k: int) -> Path:
+    import hashlib
+    text = sc.lines[k][1] or sc.lines[k][0]
+    return AUDIO / f"{sc.key}_{k}_{hashlib.sha1(text.encode()).hexdigest()[:8]}.wav"
+
+
 def build_narration(scenes: list[Scene], reuse: bool) -> Path:
     items = []
     for sc in scenes:
         for k, (cap, say) in enumerate(sc.lines):
-            items.append((say or cap, AUDIO / f"{sc.key}_{k}.wav"))
-    if not (reuse and all(p.exists() for _, p in items)):
-        synthesize(items)
+            items.append((say or cap, wav_path(sc, k)))
+    missing = [(t, p) for t, p in items if not p.exists()]
+    if missing:
+        synthesize(missing)
     clips = {p: read_trimmed(p) for _, p in items}
     t = 0.0
     for sc in scenes:
         sc.start, sc.sent, local = t, [], LEAD
         for k in range(len(sc.lines)):
-            d = len(clips[AUDIO / f"{sc.key}_{k}.wav"]) / SR
+            d = len(clips[wav_path(sc, k)]) / SR
             sc.sent.append((local, local + d))
             local += d + GAP
         sc.dur = round(local - GAP + sc.tail, 3)
@@ -212,7 +220,7 @@ def build_narration(scenes: list[Scene], reuse: bool) -> Path:
     total = array.array("h", bytes(2 * int(math.ceil(t * SR)) + 2 * SR))
     for sc in scenes:
         for k, (s0, _) in enumerate(sc.sent):
-            clip = clips[AUDIO / f"{sc.key}_{k}.wav"]
+            clip = clips[wav_path(sc, k)]
             off = int((sc.start + s0) * SR)
             total[off: off + len(clip)] = clip
     out = AUDIO / "narration.wav"
@@ -365,17 +373,17 @@ def closing_card(t: float, dur: float) -> Image.Image:
             "Agent team on NEAR AI Cloud models: chief, science, risk,",
             "market, X, patent, price timing, company scout, investment",
             "Real sources: OpenAlex, arXiv, EPO patents, SEC EDGAR, X",
-            "Citation guard and scoring in code, not in a prompt",
+            "Citation guard, score and confidence computed in code",
             "Report fingerprints and payments on NEAR testnet",
             "54 topics, 9 sectors, 15 topics with full reports",
         ]),
         (1010, "SIMULATED OR LIMITED", (255, 196, 110), [
             "Topic funds and the portfolio use pretend money",
-            "NEAR Intents: dry-run quotes only (Ondo tokens",
-            "cover 10 of 52 fund holdings); nothing is traded",
+            "Scores are heuristics: no topic reaches 70% confidence",
             "Testnet tokens have no value",
             "Stock prices: free plan, 25 lookups a day",
             "Research activity is not commercial success",
+            "Real trading through NEAR Intents: shown separately",
         ]),
     ]
     for ci, (x, head, colour, rows) in enumerate(cols):
@@ -409,6 +417,16 @@ class Take:
         if rect and -50 < rect[1] < 720 and rect[2] > 2:
             x, y, w, h = rect
             self.hls.append({"t0": self.b.now(), "t1": min(self.dur, self.b.now() + seconds), "rect": [x - pad, y - pad, w + 2 * pad, h + 2 * pad]})
+
+
+def _cut(self: Take) -> None:
+    """End every highlight now (call before scrolling: highlights are drawn at fixed screen positions)."""
+    now = self.b.now()
+    for h in self.hls:
+        h["t1"] = min(h["t1"], now)
+
+
+Take.cut = _cut  # def cut(self)
 
 
 async def rec_home(k: Take) -> None:
@@ -460,22 +478,25 @@ async def rec_agents(k: Take) -> None:
 async def rec_report(k: Take) -> None:
     b = k.b
     await k.until(k.sent[1] - 0.1)
-    await k.hl(await b.rect(".rv-gauge") or await b.rect(".rv-banner"), seconds=min(3.0, k.sent[2] - k.sent[1] - 1.3), pad=10)
+    await k.hl(await b.rect(".rv-gauge") or await b.rect(".rv-banner"), seconds=min(3.0, k.sent[2] - k.sent[1] - 1.2), pad=10)
     await b.hover(".rv-headline", seconds=0.8)
-    await k.until(k.sent[2] - 1.35)
-    await b.scroll_to_el(".rv-tiles", 1.15, offset=150)
+    await k.until(k.sent[2] - 1.25)
+    await b.scroll_to_el(".rv-tiles", 1.1, offset=150)
     await k.until(k.sent[2] + 0.1)
-    half = (k.sent[3] - k.sent[2]) / 2
+    conf = await b.rect_text("Confidence", root=".rv-tiles")
+    tile = await b.rect(".rv-tile", 3)
+    await k.hl(tile or conf, seconds=max(2.4, k.sent[3] - k.sent[2] - 0.5))
+    await b.hover(".rv-tile", 3, seconds=0.7)
+    await k.until(k.sent[3] + 0.1)
+    half = (k.sent[4] - k.sent[3] - 1.4) / 2
     await k.hl(await b.rect(".rv-tile", 0), seconds=half + 0.2)
     await b.hover(".rv-tile", 0, seconds=0.6)
-    await k.until(k.sent[2] + half)
+    await k.until(k.sent[3] + half)
     await k.hl(await b.rect(".rv-tile", 1), seconds=half)
     await b.hover(".rv-tile", 1, seconds=0.6)
-    await k.until(k.sent[3] - 0.2)
-    await b.scroll_to_el(".rv-bars", 1.2, offset=190)
-    for i in (0, 3, 6):
-        await b.hover(".rv-bar-row", i, seconds=0.55)
-        await asyncio.sleep(0.35)
+    await k.until(k.dur - 1.6)
+    await b.scroll_to_el(".rv-bars", 1.1, offset=190)
+    await b.hover(".rv-bar-row", 3, seconds=0.5)
 
 
 async def rec_companies(k: Take) -> None:
@@ -514,8 +535,14 @@ async def rec_evidence(k: Take) -> None:
     await k.until(k.sent[3] + 0.3)
     r = await b.rect("button.tab", text="unverified claim")
     if r and 60 < r[1] < 680:
+        k.cut()
         await b.click("button.tab", text="unverified claim", seconds=0.8)
-        await asyncio.sleep(0.8)
+        await asyncio.sleep(0.5)
+        for agent in ("x signals", "risk challenges", "market", "patents"):       # Science may have none: find an agent that does
+            if await b.rect(".finding", 0):
+                break
+            await b.click("button.tab", text=agent, seconds=0.45)
+            await asyncio.sleep(0.45)
         await k.hl(await b.rect(".finding", 0), seconds=2.2, pad=10)
 
 
@@ -554,6 +581,7 @@ async def rec_funds(k: Take) -> None:
     await asyncio.sleep(1.6)
     await k.hl(await b.rect(".tier-bar"), seconds=1.8, pad=8)
     await k.until(k.sent[1] - 0.3)
+    k.cut()
     r = await b.rect("h2", text="holdings")
     if r:
         await b.scroll_to(await b.scroll_y() + r[1] - 90, 1.1)
@@ -564,6 +592,7 @@ async def rec_funds(k: Take) -> None:
     await k.hl(await b.rect_text("sealed on NEAR testnet"), seconds=2.6, pad=8)
     await b.hover(".timeline > li", seconds=0.7)
     await k.until(k.sent[2] - 0.9)
+    k.cut()
     await b.scroll_to(0, 1.0)
     await k.hl(await b.rect_text("pretend money"), seconds=3.0, pad=8)
 
