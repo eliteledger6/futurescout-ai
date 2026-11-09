@@ -17,7 +17,7 @@ token issuer. Start with an amount you could lose completely without it matterin
   widens with the age of the close (3% + 1.5% per extra day, max 8%).
 - **Blocker for the 5 USD budget: the market refuses swaps that small ("No liquidity available").** Dry quotes on
   2026-11-09: 8 USD works for INTCon, NVDAon, GOOGLon, QQQon; MSFTon, MRVLon, SPYon need about 30 USD. So the first
-  real trade needs a cap of about 10 USD (owner's decision; the cap is still 5 USD in config).
+  real trade needs a cap of about 10 USD. **The owner raised the cap to 10 USD on 2026-11-09** (per trade, per day and in total).
 - Still not verified: the owner's eligibility for Ondo tokens, and how a holding is sold again.
 
 ## What was verified (2026-11-09)

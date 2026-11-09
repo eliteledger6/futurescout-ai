@@ -261,6 +261,6 @@ def test_trading_api_is_read_only_and_leaks_no_key(tmp_path):
     r = c.get("/api/trading")
     body = r.json()
     assert r.status_code == 200 and body["trading_enabled"] is False and body["key_configured"] is False and body["balances"] is None
-    assert body["limits"]["max_total_usd"] == 5.0 and body["proposals"][0]["symbol"] == "INTCon"
+    assert body["limits"]["max_total_usd"] == 10.0 and body["proposals"][0]["symbol"] == "INTCon"
     assert "SECRET" not in r.text
     assert c.post("/api/trading").status_code == 405 and c.post("/api/trading/approve").status_code in (404, 405)

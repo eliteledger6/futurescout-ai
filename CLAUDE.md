@@ -16,10 +16,10 @@ Rules that always apply:
   agent that may decide when/how much to invest *in the simulation*, plus NEAR Intents 1Click DRY-RUN quotes (no signing,
   no deposits).
   Owner decision 2026-11-09 (later the same day), stage 3 go-ahead, exactly this scope: a DEDICATED NEAR mainnet
-  account holding about 5 USD of USDC + 0.5 NEAR; a trading agent on a strong model proposes ONE buy from the
+  account holding about 10 USD of USDC + 0.5 NEAR; a trading agent on a strong model proposes ONE buy from the
   price-checked Ondo allowlist; the owner approves each trade in their own terminal
   (`scripts\fund_trade.py approve <id>`, typed confirmation); limits live in `backend/config/funds.yaml` -> `live`
-  (currently 5 USD per trade / per day / in total, `trading_enabled: false`); a read-only `/trading` page shows it;
+  (10 USD per trade / per day / in total, raised from 5 by the owner on 2026-11-09 because the market refuses smaller swaps; `trading_enabled: false`); a read-only `/trading` page shows it;
   shadow mode (real quotes, nothing sent) may use a larger pretend budget.
   Claude NEVER: runs `approve`, sets `trading_enabled: true`, raises a cap, or reads/types the mainnet key. Any cap
   change needs the owner's words in chat first. Selling, auto-approval and more budget each need a new written yes.

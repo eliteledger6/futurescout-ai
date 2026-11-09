@@ -190,7 +190,7 @@ def cmd_approve(s, cfg, pid: str) -> int:  # noqa: ANN001
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("command", choices=["status", "propose", "list", "approve", "reject", "resume", "stop", "start"])
+    ap.add_argument("command", choices=["status", "propose", "list", "approve", "reject", "resume", "stop", "start", "register-usdc"])
     ap.add_argument("id", nargs="?")
     ap.add_argument("--shadow", action="store_true")
     ap.add_argument("--usd", type=float)
@@ -205,6 +205,26 @@ def main() -> int:
     if args.command == "list":
         for p in load_state(STATE).proposals[-30:]:
             print(f"{p.id}  {p.created_at:%m-%d %H:%M}  {p.mode:6} {p.status:13} {p.side:4} ${p.usd:7.2f} {p.symbol:8} {p.rationale[:70]}")
+        return 0
+    if args.command == "register-usdc":
+        ex = make_executor(s, cfg, with_signer=True)
+        if ex.signer is None:
+            print("FUND_MAINNET_ACCOUNT_ID / FUND_MAINNET_PRIVATE_KEY are not set in .env")
+            return 1
+        from app.fund.live import rpc_view
+        acc = ex.signer.account_id
+        if rpc_view(httpx.Client(timeout=30), cfg.live.rpc, cfg.live.usdc_contract, "storage_balance_of", {"account_id": acc}):
+            print(f"{acc} can already hold USDC; nothing to do")
+            return 0
+        if input(f"Register {acc} to hold USDC on NEAR mainnet? Costs 0.00125 NEAR. Type YES: ").strip() != "YES":
+            print("cancelled")
+            return 1
+        try:
+            tx = ex.signer.call(cfg.live.usdc_contract, "storage_deposit", {"account_id": acc, "registration_only": True}, 30 * 10 ** 12, 1_250_000_000_000_000_000_000)
+        except RuntimeError as exc:
+            print(f"failed: {exc}")
+            return 1
+        print("registered; the account can now receive USDC.", cfg.live.explorer_tx.format(tx=tx) if tx else "")
         return 0
     if args.command == "stop":
         stop.write_text("trading stopped by the owner\n", encoding="utf-8")
