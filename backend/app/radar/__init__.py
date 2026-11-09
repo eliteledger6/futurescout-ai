@@ -173,7 +173,12 @@ def save_radar(radar: Radar, path: Path = RADAR_FILE) -> Path:
     return path
 
 
+SAMPLE_RADAR_FILE = BACKEND_DIR / "samples" / "radar.json"   # shipped with the repo for fresh clones
+
+
 def load_radar(path: Path = RADAR_FILE) -> Optional[Radar]:
     if not path.is_file():
-        return None
+        path = SAMPLE_RADAR_FILE if path == RADAR_FILE and SAMPLE_RADAR_FILE.is_file() else path
+        if not path.is_file():
+            return None
     return Radar.model_validate(json.loads(path.read_text(encoding="utf-8")))

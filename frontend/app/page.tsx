@@ -128,7 +128,7 @@ function RunCard({ run }: { run: RunSummary }) {
   const score = run.score ?? 0;
   return (
     <Link className="card" href={`/runs/${run.id}`} onMouseMove={glow} style={{ height: "100%" }}>
-      <div className="card-kicker"><span>{fmtDate(run.generated_at)}</span></div>
+      <div className="card-kicker"><span>{fmtDate(run.generated_at)}</span>{run.sector && <><span>·</span><span>{run.sector.replace(/_/g, " ")}</span></>}</div>
       <div className="row" style={{ alignItems: "flex-start", flexWrap: "nowrap" }}>
         <div className="card-title" style={{ flex: 1 }}>{run.topic}</div>
         {run.score !== null && (

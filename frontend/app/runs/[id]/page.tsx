@@ -42,7 +42,7 @@ function ReportView({ data }: { data: RunDetail }) {
       <section className="hero" style={{ padding: "72px 0 56px", textAlign: "left" }}>
         <div className="aurora" aria-hidden="true" />
         <div className="container">
-          <div className="row small muted"><Link href="/">← Reports</Link><span>·</span><span>{fmtDate(r.generated_at)}</span></div>
+          <div className="row small muted"><Link href="/">← Reports</Link><span>·</span><span>{fmtDate(r.generated_at)}</span>{r.sector && <><span>·</span><span className="pill">{r.sector.replace(/_/g, " ")}</span></>}</div>
           <h1 className="display" style={{ fontSize: "clamp(40px, 6vw, 72px)", margin: "16px 0 14px", maxWidth: "none" }}>{r.topic}</h1>
           {r.question && <p className="lede" style={{ margin: 0 }}>Question: {r.question}</p>}
           <div className="pills" style={{ marginTop: 20 }}>

@@ -136,6 +136,13 @@ Bugs found by tests/live runs and fixed (do not regress): model failure lost fro
 - Rules kept: names only from retrieved sources; SEC matching needs every identity token of the SEC title present in the found name (legal forms stripped); a single short token ("ON") never matches; universities/institutes are excluded; unmatched names are shown as "not SEC-listed", never guessed; the score is a heuristic labelled forecast in the UI and the K findings are `ai_interpretation` (code-computed). Not advice.
 - Limits: counts cover only the documents the run retrieved; patent assignees come from the cached SerpApi results while `SERPAPI_CACHE_ONLY=true`; companies that do not file with the SEC (Samsung, SK hynix, most Japanese/European names) have no financials.
 
+## 7l. Added 2026-11-09 (evening): hackathon readiness
+
+- **Git**: the folder was never a repository. `git init -b main` + first commit `c3e0147` (183 files; `.env`, `runs/`, `cache/`, `node_modules`, `.next`, demo build excluded; `.gitattributes` normalises line endings). Repo-local git identity set to the project account (eliteledger6). Pushing / making it public is the owner's call.
+- **Samples for fresh clones**: `backend/samples/` holds three real sealed reports (HBM 295751e8, CPO 0bc26a1c, backside power 77fc7104) + `radar.json`, exported by `scripts/export_samples.py`. `_default_store` serves them when there is no DB and `runs/` has no reports; `load_radar` falls back to `samples/radar.json`. Test `tests/test_samples.py` also checks every shipped sample is sealed. Re-export after notable runs.
+- **Tamper demo**: `scripts/tamper_demo.py [--run id]` reads the on-chain fingerprint, shows MATCH, edits one word in memory, shows MISMATCH; writes nothing.
+- README gained "What is unfinished"; `next build` passes (9 routes); dashboard shows the sector on report cards and report pages.
+
 ## 7k. Added 2026-11-09: whole technology sector + paper scout (owner: "don't focus on semicon")
 
 - `config/sectors.yaml` (9 sectors: semiconductors, ai_software, robotics_autonomy, quantum, energy, space_comms, biotech_tools, cybersecurity, xr_devices) with `discovery_queries` (paper scout) and `hints` (given to the Chief). `topics.yaml` entries carry `sector` (37 seed topics, 3–4 per new sector); `companies.yaml` carries `sector` (64 SEC filers; tickers resolve against the SEC file at run time, never guessed).

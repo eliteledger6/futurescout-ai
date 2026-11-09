@@ -100,7 +100,16 @@ def scout_report_id() -> str | None:
     return None
 
 
-def scenes(rid: str, scout_rid: str | None) -> list[Scene]:
+def other_sector_report_id() -> tuple[str, str, str] | None:
+    """Newest report outside semiconductors: (run id, topic, sector), to show the platform is not chip-only."""
+    for r in get_json("/api/runs"):
+        sec = r.get("sector")
+        if sec and sec != "semiconductors":
+            return r["id"], r["topic"], sec.replace("_", " ")
+    return None
+
+
+def scenes(rid: str, scout_rid: str | None, other: tuple[str, str, str] | None = None) -> list[Scene]:
     rep = f"{DASH}/runs/{rid}"
     out = [
         Scene("01_home", "FUTURESCOUT AI · multi-agent semiconductor research",
@@ -141,11 +150,22 @@ def scenes(rid: str, scout_rid: str | None) -> list[Scene]:
                          "patent assignees, the employers of paper authors, and SEC filers. It matches them to the SEC ticker file, pulls their financials, "
                          "and scores smaller, growing, R&D-heavy names as possible next runners. A transparent heuristic, labelled as a forecast, never a recommendation.",
                          url=f"{DASH}/runs/{scout_rid}", scroll_y=9040, optional=True))
+    if other:
+        oid, otopic, osector = other
+        out.append(Scene("08b_sector", f"Every technology sector · {otopic} ({osector})",
+                         f"It is not only about chips. The radar watches nine technology sectors, from AI software and robotics to quantum, energy, "
+                         f"space, biotech, cybersecurity and X R, and the same agents ran on {otopic}: each run reads the companies of its own sector "
+                         f"and finds the ones behind the evidence.",
+                         url=f"{DASH}/runs/{oid}", scroll_y=0, optional=True))
     out += [
         Scene("09_near", "Sealed on NEAR testnet · fingerprint stored on chain, re-checked live",
               "Sealing means the report's SHA-256 fingerprint is written to NEAR SocialDB on testnet. "
               "Anyone can recompute it and compare it with the chain, so a report cannot be quietly edited after the fact.",
               card="near"),
+        Scene("09b_tamper", "Tamper check · change one word and the seal breaks",
+              "Here is the proof. The stored report matches the fingerprint on chain. Change a single word of the summary, and the fingerprint no longer "
+              "matches. The dashboard runs this check on every page load, so an edited report is caught at once.",
+              card="tamper", optional=True),
         Scene("10_market", "Report market · summaries free, full evidence after a NEAR payment",
               "FUTURESCOUT is an agent that earns. Summaries and scores are free; the full evidence unlocks after a payment of zero point one NEAR to its account. "
               "The API reads the transfer from the chain before unlocking.",
@@ -318,6 +338,36 @@ def buyer_card(run_id: str) -> Image.Image:
     return img
 
 
+def tamper_card(run_id: str) -> Image.Image:
+    """Terminal-style card with the real output of scripts/tamper_demo.py (reads the chain; writes nothing)."""
+    backend = ROOT.parent / "backend"
+    out = subprocess.run([sys.executable, "scripts/tamper_demo.py", "--run", run_id], cwd=backend, capture_output=True, text=True,
+                         encoding="utf-8", errors="replace", timeout=180, env={**os.environ, "PYTHONIOENCODING": "utf-8"})
+    lines = [l.rstrip() for l in (out.stdout or out.stderr).splitlines() if l.strip()]
+    if not any("MISMATCH" in l for l in lines):
+        raise RuntimeError("tamper demo did not produce a MISMATCH line")
+    img = Image.new("RGB", (W, H), (6, 8, 8))
+    d = ImageDraw.Draw(img)
+    d.rounded_rectangle((60, 50, W - 60, H - 50), radius=14, fill=(12, 14, 14), outline=(40, 46, 44))
+    for i, c in enumerate(((255, 95, 86), (255, 189, 46), (39, 201, 63))):
+        d.ellipse((84 + i * 22, 70, 96 + i * 22, 82), fill=c)
+    d.text((160, 66), "backend  —  python scripts\\tamper_demo.py", fill=(130, 140, 136), font=font(16, mono=True))
+    y = 108
+    d.text((90, y), "> python scripts\\tamper_demo.py", fill=(0, 236, 151), font=font(19, mono=True)); y += 34
+    for l in lines[:16]:
+        colour = (220, 224, 222)
+        if l.strip().startswith("-> match"):
+            colour = (0, 236, 151)
+        elif "MISMATCH" in l:
+            colour = (255, 110, 100)
+        elif l.startswith(("1)", "2)")):
+            colour = (240, 243, 242)
+        d.text((90, y), l[:112], fill=colour, font=font(17 if len(l) > 95 else 18, mono=True)); y += 27
+        if y > H - 90:
+            break
+    return img
+
+
 def closing_card() -> Image.Image:
     img = Image.new("RGB", (W, H), (4, 6, 6))
     glow = Image.new("RGB", (W, H), (4, 6, 6))
@@ -330,7 +380,7 @@ def closing_card() -> Image.Image:
     sub = "Find the next hot technology. Show the evidence."
     d.text(((W - d.textlength(sub, font=f2)) / 2, 270), sub, fill=(0, 236, 151), font=f2)
     rows = ["Models on NEAR AI Cloud  ·  Reports sealed on NEAR testnet  ·  Sold for NEAR, verified on chain",
-            "Eight agents  ·  Labelled claims with sources  ·  Company Scout  ·  Autonomous watch  ·  Paper portfolio",
+            "Eight agents  ·  Nine technology sectors  ·  Company Scout  ·  Autonomous watch  ·  Paper portfolio",
             "Testnet only  ·  Not financial advice  ·  MIT licence"]
     f3 = font(22)
     y = 360
@@ -451,9 +501,10 @@ def main() -> int:
 
     rid = bought_report_id()
     scout_rid = scout_report_id()
-    scs = scenes(rid, scout_rid)
+    other = other_sector_report_id()
+    scs = scenes(rid, scout_rid, other)
     chrome = find_chrome()
-    print(f"bought report {rid}; scout report {scout_rid}; {len(scs)} scenes; chrome: {chrome}")
+    print(f"bought report {rid}; scout report {scout_rid}; other sector {other}; {len(scs)} scenes; chrome: {chrome}")
 
     # ---- frames: one base image per scene, then one image per subtitle chunk
     bases: list[tuple[Scene, Image.Image]] = []
@@ -463,6 +514,8 @@ def main() -> int:
                 img = buyer_card(rid)
             elif sc.card == "near":
                 img = near_card(rid)
+            elif sc.card == "tamper":
+                img = tamper_card(rid)
             elif sc.card == "closing":
                 img = closing_card()
             else:

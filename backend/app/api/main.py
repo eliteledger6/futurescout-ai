@@ -76,6 +76,9 @@ def _read_testnet(account: str, key: str, contract: str) -> Optional[dict]:
         return read_record(http, TESTNET_RPC, contract, account, key)
 
 
+SAMPLES_DIR = service.BACKEND_DIR / "samples"   # real past runs shipped with the repo (scripts/export_samples.py)
+
+
 def _default_store(settings: Settings) -> ReportStore:
     url = settings.database_url_value()
     if url:
@@ -83,6 +86,9 @@ def _default_store(settings: Settings) -> ReportStore:
             return DbStore(url)
         except Exception as exc:  # noqa: BLE001
             log.warning("database unavailable (%s); serving report files instead", type(exc).__name__)
+    if not list(service.RUNS_DIR.glob("report_*.json")) and list(SAMPLES_DIR.glob("report_*.json")):
+        log.info("no runs yet: serving the sample reports in %s", SAMPLES_DIR)
+        return FileStore(SAMPLES_DIR)
     return FileStore(service.RUNS_DIR)
 
 

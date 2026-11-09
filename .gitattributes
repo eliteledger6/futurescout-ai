@@ -1,0 +1,5 @@
+# Normalise line endings: store LF in the repo, check out as the platform default.
+* text=auto
+*.png binary
+*.jpg binary
+*.mp4 binary

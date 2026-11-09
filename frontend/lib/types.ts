@@ -7,6 +7,7 @@ export interface RunSummary {
   id: string;
   topic: string;
   question: string | null;
+  sector?: string | null;
   generated_at: string;
   agents_run: string[];
   agents_not_run: string[];
@@ -108,6 +109,7 @@ export interface CompanySignal {
 export interface Report {
   topic: string;
   question: string | null;
+  sector?: string | null;
   generated_at: string;
   agents_run: string[];
   agents_not_run: string[];

@@ -71,6 +71,10 @@ python scripts\watch.py --once          # see: one autonomous cycle (X scan -> r
 python scripts\near_record_report.py --latest   # see: the newest report's fingerprint recorded on NEAR testnet
 python scripts\buyer_bot.py --dry-run           # see: which report a buyer bot would buy and the price
 python scripts\buyer_bot.py                     # see: the bot pays 0.1 testnet NEAR, the API verifies it on-chain, report unlocks
+python scripts\tamper_demo.py                   # see: a sealed report verifies MATCH; change one word in memory -> MISMATCH (nothing saved)
+python scripts\discover_topics.py --dry-run     # see: the paper scout propose new fast-growing topics per sector (nothing added)
+# no keys at all? `python scripts\serve.py` + the dashboard still work: with no runs and no database the API serves
+# the three real, sealed sample reports and the radar in backend\samples (exported with scripts\export_samples.py)
 # optional database (needs PostgreSQL and DATABASE_URL in .env):
 python -m alembic upgrade head    # create the tables
 python scripts\db_check.py        # see: connection status and saved runs
@@ -96,6 +100,17 @@ demo/                              demo video script (DEMO_SCRIPT.md) and build_
 backend/tests/                     tests (fixtures are synthetic and labelled)
 PROJECT_STATUS.md                  detailed phase status
 ```
+
+## What is unfinished (honest list, 2026-11-09)
+
+- **Price & timing risk and the paper portfolio have never run with live prices**: both need a free Alpha Vantage key (`ALPHA_VANTAGE_API_KEY`). Portfolio positions are recorded but stay "pending".
+- **Patent counts are served from cache** (`SERPAPI_CACHE_ONLY=true`) to save the owner's 100-search quota; topics without cached data say "patents: not counted yet" and their radar heat is paper growth alone (marked *). The EPO OPS alternative is built but awaits key approval.
+- **X signals cover semiconductors only**: the 37 approved accounts are chip companies, bodies and press. Other sectors get X signals once the owner approves accounts found by `scripts\x_discover.py`.
+- **GDELT news** has refused requests from the development network (HTTP 429); the Market agent runs without headlines.
+- **Watch mode and the paper scout run only while the owner's laptop is on**; no hosted deployment.
+- **No custom NEAR contract**: records use SocialDB and payments are native transfers verified by reading the chain (near-sdk-js refuses Windows; Rust not installed). Testnet only; mainnet is refused in code.
+- **Score weights are initial assumptions**, not fitted to outcomes; the Company Scout's next-runner score is a transparent heuristic.
+- The dashboard has been checked in a browser at desktop and phone widths, not by a designer.
 
 ## Limits
 
