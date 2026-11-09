@@ -411,3 +411,27 @@ a.card:hover { box-shadow: 0 12px 40px -18px color-mix(in srgb, var(--accent) 45
 /* Company scout: expandable rows */
 .detail-row td { background: color-mix(in srgb, var(--accent) 4%, var(--bg)); border-top: 0; }
 .score-chip .label { font-size: 13px; font-weight: 600; padding: 3px 10px; }
+
+/* ---------- verdict card ---------- */
+.verdict { position: relative; border: 1px solid var(--line-strong); border-radius: var(--radius); padding: 26px 28px; background: var(--surface); display: grid; gap: 16px; overflow: hidden; }
+.verdict::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 5px; background: var(--verdict, var(--text-2)); }
+.verdict-strong { --verdict: var(--accent); }
+.verdict-building { --verdict: var(--l-interp); }
+.verdict-early { --verdict: var(--l-forecast); }
+.verdict-weak { --verdict: var(--l-danger); }
+.verdict-insufficient { --verdict: var(--muted); }
+.verdict-head { display: flex; justify-content: space-between; gap: 20px; align-items: flex-start; flex-wrap: wrap; }
+.verdict-score { text-align: right; min-width: 120px; }
+.verdict-score span { display: block; font-family: var(--font-display); font-weight: 300; font-size: 54px; line-height: 1; letter-spacing: -0.03em; color: var(--verdict, var(--text)); }
+.verdict-score small { display: block; color: var(--muted); font-size: 12px; margin-top: 6px; }
+.verdict-plain { font-size: 18px; line-height: 1.55; color: var(--text); margin: 0; max-width: 900px; }
+.verdict-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.verdict-grid ul { margin: 0; padding-left: 18px; color: var(--text-2); font-size: 14px; line-height: 1.5; }
+.verdict-grid li + li { margin-top: 6px; }
+@media (max-width: 860px) { .verdict-grid { grid-template-columns: 1fr; } }
+
+/* ---------- price stretch meter + sparkline ---------- */
+.stretch { min-width: 140px; }
+.stretch-track { position: relative; height: 6px; border-radius: 3px; background: linear-gradient(90deg, var(--l-interp), var(--surface-2) 50%, var(--l-unverified)); }
+.stretch-dot { position: absolute; top: -4px; width: 14px; height: 14px; border-radius: 50%; background: var(--text); transform: translateX(-50%); border: 2px solid var(--bg); }
+.stretch-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--muted); margin-top: 6px; }

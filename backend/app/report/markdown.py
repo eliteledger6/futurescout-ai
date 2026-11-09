@@ -80,6 +80,24 @@ def render_markdown(report: ResearchReport) -> str:
 
     inv = report.investment
     draft = inv.draft if inv else None
+    from app.report.verdict import build_verdict
+    v = build_verdict(report)
+    out += ["## Verdict (forecast, computed from the report)"]
+    if v.get("available"):
+        out += [f"**{v['headline']}**" + (f" — score {v['score']}" if v.get('score') is not None else "") + f", confidence {v['confidence']}."]
+        if v.get("qualifiers"):
+            out.append("Qualifiers: " + "; ".join(v["qualifiers"]) + ".")
+        if v.get("plain"):
+            out += ["", v["plain"]]
+        if v.get("why"):
+            out += ["", "Why:"] + _bullets(v["why"])
+        if v.get("watch"):
+            out += ["", "Watch out for:"] + _bullets(v["watch"])
+        if v.get("change"):
+            out += ["", "What would change this view:"] + _bullets(v["change"])
+    else:
+        out.append(v["headline"])
+    out += ["", f"_{v['disclaimer']}_", ""]
     out += ["## Summary"]
     out += [draft.summary if draft else "_No assessment was generated (see errors below)._", ""]
 

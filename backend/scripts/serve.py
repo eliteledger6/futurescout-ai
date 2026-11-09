@@ -25,15 +25,16 @@ def main() -> int:
 
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--port", type=int, default=8000)
+    ap.add_argument("--host", default="127.0.0.1", help="127.0.0.1 = this computer only (default); 0.0.0.0 = reachable from the network / a container")
     args = ap.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(name)s: %(message)s")
     quiet_network_logs()
     settings = get_settings()
     app = create_app(settings)
-    print(f"FUTURESCOUT AI API on http://127.0.0.1:{args.port}  (API docs: http://127.0.0.1:{args.port}/docs)")
+    print(f"FUTURESCOUT AI API on http://{args.host}:{args.port}  (API docs: http://{args.host}:{args.port}/docs)")
     print(f"New runs from the dashboard: {'ENABLED' if settings.enable_run_api else 'off (set ENABLE_RUN_API=true in .env)'}")
     print(f"Report market: {'ENABLED, seller ' + settings.near_testnet_account_id if settings.near_testnet_account_id else 'off (set NEAR_TESTNET_ACCOUNT_ID)'}")
-    uvicorn.run(app, host="127.0.0.1", port=args.port, log_level="warning")
+    uvicorn.run(app, host=args.host, port=args.port, log_level="warning")
     return 0
 
 

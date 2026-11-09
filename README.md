@@ -83,6 +83,20 @@ python scripts\db_check.py        # see: connection status and saved runs
 
 Keys (see `.env.example`): `NEAR_AI_API_KEY` from https://cloud.near.ai, `OPENALEX_API_KEY` from a free account at https://openalex.org/settings/api. arXiv and GDELT need no key. `EDGAR_USER_AGENT` must be your name and a real contact email (the SEC requires it; it is sent only to sec.gov). Companies checked by the Market agent are listed in `backend/config/companies.yaml`.
 
+## Launch it and share it
+
+The dashboard talks to the API through its own origin (`/api/*` is proxied by Next.js to `API_INTERNAL_URL`, default `http://127.0.0.1:8000`), so one address is enough to show the site to other people.
+
+| How | Command / steps | Who can see it |
+|---|---|---|
+| **On your laptop** | backend: `python scripts\serve.py` · frontend: `npm run dev` → http://localhost:3000 | you |
+| **Same Wi-Fi** (phone, a friend next to you) | `python scripts\serve.py --host 0.0.0.0` and `npm run dev -- -H 0.0.0.0`, then open `http://<your-PC-IP>:3000` | people on your network |
+| **Temporary public link** (for a demo call or judges, no account needed) | keep both servers running, install [cloudflared](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/) and run `cloudflared tunnel --url http://localhost:3000`; it prints an `https://….trycloudflare.com` address that works while the command runs | anyone with the link |
+| **One command with Docker** | `docker compose up --build` (reads keys from `.env`; without a database it serves `backend/runs`, or the sample reports when there are none) → http://localhost:3000 | you, or a server you own |
+| **Always-on hosting** | frontend on Vercel (import the repo, root `frontend`, set `API_INTERNAL_URL` to your API's URL); API on Render/Railway/Fly (Python service, start command `python scripts/serve.py --host 0.0.0.0 --port $PORT`, env vars from `.env.example`). Keys live in the host's environment settings, never in the repo | the public |
+
+What to keep private: `.env` (keys), your NEAR testnet private keys. Sharing the site shares the reports; it never exposes keys. Watch mode (`scripts\watch.py --loop`) only runs where you start it.
+
 ## Layout
 
 ```

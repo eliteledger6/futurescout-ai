@@ -54,6 +54,10 @@ def test_fingerprint_is_stable_across_schema_additions(report):
     old_style = report.model_dump(mode="json", exclude={"chain_record"})
     old_style.pop("scout", None)                                   # these fields did not exist when it was sealed
     old_style.pop("sector", None)
+    if (old_style.get("investment") or {}).get("draft"):
+        old_style["investment"]["draft"].pop("plain_summary", None)
+    for m in ((old_style.get("timing") or {}).get("metrics") or []):
+        m.pop("closes", None)
     for part in ("science", "risk", "market", "x", "patent", "timing"):
         for src in ((old_style.get(part) or {}).get("sources") or []):
             src.pop("affiliations", None)

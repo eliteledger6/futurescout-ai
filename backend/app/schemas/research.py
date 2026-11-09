@@ -123,6 +123,7 @@ class DimensionRatingDraft(Referenced):
 
 class InvestmentDraft(BaseModel):
     summary: str
+    plain_summary: Optional[str] = None   # 2-3 sentences for a non-expert reader (added 2026-11-09; optional)
     themes: list[ThesisDraft] = Field(default_factory=list)
     dimension_ratings: list[DimensionRatingDraft] = Field(default_factory=list)
     missing_data: list[str] = Field(default_factory=list)

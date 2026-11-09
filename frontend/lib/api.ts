@@ -1,7 +1,8 @@
 import type { ApiConfig, Job, Portfolio, Radar, RunDetail, RunSummary, Sector, Treasury, Verification, WatchStatus } from "./types";
 
-// The FastAPI backend started with `python scripts\serve.py` (backend folder).
-export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://127.0.0.1:8000";
+// Empty (default) = same origin: Next proxies /api/* to the FastAPI server (API_INTERNAL_URL, see next.config.mjs).
+// Set NEXT_PUBLIC_API_URL to talk to an API directly, e.g. http://127.0.0.1:8001 for a second dev server.
+export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
 
 async function get<T>(path: string): Promise<T> {
   const res = await fetch(`${API_URL}${path}`, { cache: "no-store" });

@@ -76,7 +76,7 @@ def compute_metrics(ticker: str, company: str, bars: list[Bar], source_id: str) 
         ticker=ticker, company=company, source_id=source_id, last_date=bars[-1].day.isoformat(), last_close=round(last, 2),
         bars=len(bars), window_start=bars[0].day.isoformat(), return_1m_pct=r1, return_3m_pct=r3, vs_50d_avg_pct=vs50,
         volatility_20d_pct=vol, from_window_high_pct=from_hi, from_window_low_pct=from_lo,
-        timing_risk=level, reasons=reasons, high_volatility=high_vol,
+        timing_risk=level, reasons=reasons, high_volatility=high_vol, closes=[round(c, 2) for c in closes],
     )
 
 

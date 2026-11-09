@@ -1,0 +1,22 @@
+# One command to run FUTURESCOUT AI:   docker compose up --build
+# Then open http://localhost:3000 . Keys are read from ./.env (never committed); without a database the API serves
+# the saved runs in backend/runs (mounted) and, if there are none, the sample reports shipped in backend/samples.
+services:
+  api:
+    build:
+      context: ./backend
+    env_file: .env
+    volumes:
+      - ./backend/runs:/app/runs          # reports, radar, watch state, portfolio (persist outside the container)
+      - ./backend/cache:/app/cache        # cached API responses
+    ports:
+      - "8000:8000"
+  web:
+    build:
+      context: ./frontend
+    environment:
+      API_INTERNAL_URL: http://api:8000   # the dashboard proxies /api/* here
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api

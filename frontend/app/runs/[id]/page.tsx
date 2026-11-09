@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { api, fmtDate, fmtUsd } from "@/lib/api";
-import type { CompanySignal, Finding, Label, Report, RunDetail, Source, Theme } from "@/lib/types";
+import type { CompanySignal, Finding, Label, Report, RunDetail, Source, Theme, Verdict } from "@/lib/types";
 import { ConfidencePill, ErrorNotice, LABEL_HELP, LabelBadge, Loading } from "@/components/ui";
 import { NearBadge } from "@/components/NearBadge";
 import { AgentFlow } from "@/components/AgentFlow";
@@ -36,6 +36,12 @@ function ReportView({ data }: { data: RunDetail }) {
     return m;
   }, [r]);
   const draft = r.investment?.draft;
+  const [view, setView] = useState<"simple" | "full">("simple");
+  useEffect(() => {
+    try { const v = localStorage.getItem("fs-report-view"); if (v === "full" || v === "simple") setView(v); } catch { /* storage unavailable */ }
+  }, []);
+  const choose = (v: "simple" | "full") => { setView(v); try { localStorage.setItem("fs-report-view", v); } catch { /* ignore */ } };
+  const simple = view === "simple";
 
   return (
     <>
@@ -53,7 +59,20 @@ function ReportView({ data }: { data: RunDetail }) {
         </div>
       </section>
 
-      <ReportToc items={[
+      <section className="section" style={{ paddingTop: 28, paddingBottom: 8 }}>
+        <div className="container stack">
+          <div className="row" style={{ justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 10 }}>
+            <div className="tabs" role="tablist" aria-label="Report view">
+              <button className={`tab ${simple ? "on" : ""}`} role="tab" aria-selected={simple} onClick={() => choose("simple")}>Simple view</button>
+              <button className={`tab ${!simple ? "on" : ""}`} role="tab" aria-selected={!simple} onClick={() => choose("full")}>Full report</button>
+            </div>
+            <span className="small muted">{simple ? "The verdict, the score, the companies and the risks. Switch to the full report for every finding and source." : "Every section, finding and source."}</span>
+          </div>
+          <VerdictCard v={data.verdict} />
+        </div>
+      </section>
+
+      {!simple && <ReportToc items={[
         { id: "summary", label: "Summary" }, { id: "trace", label: "Agent trace" },
         ...(r.investment?.score ? [{ id: "score", label: "Score" }] : []),
         ...(draft && draft.themes.length ? [{ id: "themes", label: "Themes" }] : []),
@@ -64,8 +83,21 @@ function ReportView({ data }: { data: RunDetail }) {
         ...(r.market && r.market.companies.length ? [{ id: "companies", label: "Companies" }] : []),
         ...(r.timing && r.timing.metrics.length ? [{ id: "timing", label: "Price & timing" }] : []),
         { id: "sources", label: "Sources" }, { id: "gaps", label: "Gaps" }, { id: "usage", label: "Cost" },
-      ]} />
+      ]} />}
 
+      {simple ? (
+        <>
+          {r.investment?.score && <ScoreSection report={r} />}
+          {r.scout && (r.scout.candidates.length > 0 || r.scout.unlisted.length > 0) && <ScoutSection report={r} sources={sources} />}
+          {r.timing && r.timing.metrics.length > 0 ? <TimingSection report={r} /> : <TimingEmpty />}
+          <section className="section" style={{ paddingTop: 0 }}>
+            <div className="container">
+              <button className="btn btn-ghost" onClick={() => choose("full")}>Open the full report: evidence, sources, themes, costs →</button>
+            </div>
+          </section>
+        </>
+      ) : (
+        <>
       <section className="section" id="summary">
         <div className="container stack">
           <h2 className="h3">Summary</h2>
@@ -102,7 +134,76 @@ function ReportView({ data }: { data: RunDetail }) {
       <SourcesSection sources={[...sources.values()]} />
       <GapsSection report={r} />
       <UsageSection report={r} />
+        </>
+      )}
     </>
+  );
+}
+
+/* ---------------------------------------------------------------- verdict (code-computed from the report) */
+function VerdictCard({ v }: { v?: Verdict }) {
+  if (!v) return null;
+  const band = v.band ?? "insufficient";
+  return (
+    <div className={`verdict verdict-${band}`}>
+      <div className="verdict-head">
+        <div>
+          <div className="eyebrow">Verdict · {v.label} · computed from this report</div>
+          <h2 className="h2" style={{ marginTop: 8 }}>{v.headline}</h2>
+          {v.qualifiers && v.qualifiers.length > 0 && <p className="small" style={{ color: "var(--text-2)", margin: "6px 0 0" }}>But: {v.qualifiers.join("; ")}.</p>}
+        </div>
+        {v.score != null && <div className="verdict-score"><span>{Math.round(v.score)}</span><small>score · {v.confidence} confidence</small></div>}
+      </div>
+      {v.plain && <p className="verdict-plain">{v.plain}</p>}
+      {v.available && (
+        <div className="verdict-grid">
+          <div><div className="label label-verified_fact" style={{ marginBottom: 8 }}>why</div><ul>{(v.why ?? []).map((x) => <li key={x}>{x}</li>)}</ul></div>
+          <div><div className="label label-unverified_claim" style={{ marginBottom: 8 }}>watch out</div><ul>{(v.watch ?? []).map((x) => <li key={x}>{x}</li>)}</ul></div>
+          <div><div className="label label-forecast" style={{ marginBottom: 8 }}>what would change it</div><ul>{(v.change ?? []).map((x) => <li key={x}>{x}</li>)}</ul></div>
+        </div>
+      )}
+      {v.horizon_1_3y && <p className="small" style={{ color: "var(--text-2)", margin: 0 }}><strong style={{ color: "var(--text)" }}>1–3 years:</strong> {v.horizon_1_3y}</p>}
+      <p className="small muted" style={{ margin: 0 }}>{v.disclaimer}</p>
+    </div>
+  );
+}
+
+/* ---------------------------------------------------------------- price & timing: empty state */
+function TimingEmpty() {
+  return (
+    <section className="section" id="timing">
+      <div className="container">
+        <div className="notice small">
+          <strong style={{ color: "var(--text)" }}>Price &amp; timing risk: not run for this report.</strong> It needs a free Alpha Vantage key
+          (<span className="mono">ALPHA_VANTAGE_API_KEY</span> in <span className="mono">.env</span>). When present, this section shows each related stock&apos;s
+          last 100 days, how far it has already run, and a timing-risk level (elevated / moderate / subdued). It is a risk input: it never says when to buy.
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Sparkline({ closes }: { closes: number[] }) {
+  if (closes.length < 2) return null;
+  const w = 160, h = 40, min = Math.min(...closes), max = Math.max(...closes), span = max - min || 1;
+  const pts = closes.map((c, i) => `${(i / (closes.length - 1)) * w},${h - ((c - min) / span) * (h - 4) - 2}`).join(" ");
+  const up = closes[closes.length - 1] >= closes[0];
+  return (
+    <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} role="img" aria-label={`${closes.length} daily closes, ${up ? "up" : "down"} over the window`}>
+      <polyline points={pts} fill="none" stroke={up ? "var(--accent)" : "var(--l-danger)"} strokeWidth="1.6" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function StretchMeter({ vs50, r3 }: { vs50: number | null; r3: number | null }) {
+  // how far the price sits from its own recent average: a plain "how stretched is it" bar, not a signal
+  const v = vs50 ?? 0;
+  const pos = Math.max(0, Math.min(100, 50 + v * 1.5));
+  return (
+    <div className="stretch" title={`${v > 0 ? "+" : ""}${v.toFixed(1)}% vs 50-day average; ${r3 == null ? "n/a" : (r3 > 0 ? "+" : "") + r3.toFixed(1) + "%"} over 3 months`}>
+      <div className="stretch-track"><div className="stretch-dot" style={{ left: `${pos}%` }} /></div>
+      <div className="stretch-labels"><span>below average</span><span>stretched</span></div>
+    </div>
   );
 }
 
@@ -654,15 +755,18 @@ function TimingSection({ report }: { report: Report }) {
     <section className="section" id="timing">
       <div className="container stack">
         <h2 className="h2">Price &amp; timing risk</h2>
-        <p className="sub">Part of the Risk agent. How far the theme&apos;s stocks have already moved, computed by code from daily prices.
-          A risk input, <strong>not</strong> a buy or sell signal; past prices do not predict future prices.</p>
+        <p className="sub">Part of the Risk agent. How far the theme&apos;s stocks have already moved, computed by code from the last ~100 daily closes.
+          <strong>Elevated</strong> means much of the story may already be in the price; <strong>subdued</strong> means the stock has been weak lately.
+          It is a risk input, <strong>not</strong> a buy or sell signal and not an entry point; past prices do not predict future prices.</p>
         <div className="table-wrap">
           <table className="table">
-            <thead><tr><th>Company</th><th className="num">Last close</th><th className="num">1 month</th><th className="num">3 months</th>
+            <thead><tr><th>Company</th><th>Last 100 days</th><th>How stretched</th><th className="num">Last close</th><th className="num">1 month</th><th className="num">3 months</th>
               <th className="num">vs 50-day avg</th><th className="num">Volatility (20d)</th><th className="num">From high</th><th>Timing risk</th></tr></thead>
             <tbody>{t.metrics.map((m) => (
               <tr key={m.ticker}>
                 <td>{m.company} <span className="muted mono small">{m.ticker}</span></td>
+                <td>{m.closes && m.closes.length > 1 ? <Sparkline closes={m.closes} /> : <span className="muted small">no series stored</span>}</td>
+                <td><StretchMeter vs50={m.vs_50d_avg_pct} r3={m.return_3m_pct} /></td>
                 <td className="num">{m.last_close}<div className="small muted">{m.last_date}</div></td>
                 <td className="num">{pct(m.return_1m_pct)}</td><td className="num">{pct(m.return_3m_pct)}</td>
                 <td className="num">{pct(m.vs_50d_avg_pct)}</td>

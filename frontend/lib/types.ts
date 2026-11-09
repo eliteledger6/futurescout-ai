@@ -146,7 +146,7 @@ export interface Report {
     metrics: {
       ticker: string; company: string; last_date: string; last_close: number; bars: number;
       return_1m_pct: number | null; return_3m_pct: number | null; vs_50d_avg_pct: number | null;
-      volatility_20d_pct: number | null; from_window_high_pct: number; timing_risk: string; reasons: string[];
+      volatility_20d_pct: number | null; from_window_high_pct: number; timing_risk: string; reasons: string[]; closes?: number[];
     }[];
   } | null;
   scout: {
@@ -164,7 +164,12 @@ export interface Report {
   errors: { agent: string; source: string; message: string }[];
 }
 
-export interface RunDetail { summary: RunSummary; report: Report; markdown: string | null }
+export interface Verdict {
+  available: boolean; band?: "strong" | "building" | "early" | "weak" | "insufficient"; headline: string; score?: number | null;
+  confidence?: string; qualifiers?: string[]; plain?: string; why?: string[]; watch?: string[]; change?: string[];
+  horizon_1_3y?: string | null; label: string; basis?: string; disclaimer: string;
+}
+export interface RunDetail { summary: RunSummary; report: Report; markdown: string | null; verdict?: Verdict }
 
 export interface ApiConfig {
   run_api_enabled: boolean;

@@ -26,6 +26,7 @@ class PriceMetrics(BaseModel):
     timing_risk: str
     reasons: list[str] = Field(default_factory=list)
     high_volatility: bool = False
+    closes: list[float] = Field(default_factory=list)   # daily closes in the window, oldest first (for the chart); added 2026-11-09
 
 
 class TimingReport(BaseModel):

@@ -41,6 +41,7 @@ from app.radar import load_radar
 from app.treasury import default_balance_reader, treasury_report
 from app.watch import load_state as load_watch_state
 from app.report.markdown import DISCLAIMER
+from app.report.verdict import build_verdict
 
 log = logging.getLogger("futurescout.api")
 
@@ -187,7 +188,8 @@ def create_app(
         if found is None:
             raise HTTPException(404, "run not found")
         report, markdown = found
-        return {"summary": summarize(run_id, report), "report": report.model_dump(mode="json"), "markdown": markdown}
+        return {"summary": summarize(run_id, report), "report": report.model_dump(mode="json"), "markdown": markdown,
+                "verdict": build_verdict(report)}
 
     @app.get("/api/runs/{run_id}/verify")
     def verify_run(run_id: str) -> dict:
