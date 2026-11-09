@@ -27,7 +27,7 @@ from app.schemas.scout import ScoutResult
 from app.schemas.timing import PriceTimingResult
 from app.schemas.xsignals import XResult
 from app.schemas.science import ScienceResult
-from app.scoring.engine import RISK_KEY, ScoringConfig, compute_opportunity_score, load_scoring_config
+from app.scoring.engine import RISK_KEY, ScoringConfig, compute_opportunity_score, load_scoring_config, verified_share_of
 
 log = logging.getLogger("futurescout.investment")
 
@@ -194,6 +194,7 @@ class InvestmentAgent:
         draft, issues = validate_draft(reply.parsed, valid_ids)  # type: ignore[arg-type]
         result.draft = draft
         result.reference_issues = issues
-        result.score = compute_opportunity_score(draft.dimension_ratings, valid_ids, self.scoring)
+        result.score = compute_opportunity_score(draft.dimension_ratings, valid_ids, self.scoring,
+                                                 verified_share=verified_share_of(all_findings))
         result.status = "ok"
         return result

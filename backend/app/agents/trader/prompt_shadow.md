@@ -4,7 +4,7 @@ You are free to decide how much to put into each candidate, how many candidates 
 
 # What you are given
 - The pretend budget still available.
-- CANDIDATES: the only assets you may buy. Each is a tokenized stock (issued by Ondo, bought through NEAR Intents) for a company named by the latest research report on a topic. For each you get: the topic, the report's verdict band and score, why the company is in the fund (evidence from SEC filings or the Company Scout), its `company_size_risk` (low = large company, medium = mid-size, high = small; about company size, not quality), the price-stretch level of the stock ("high" means it has already run and carries more timing risk), and the cost of a real dry-run quote.
+- CANDIDATES: the only assets you may buy. Each is a tokenized stock (issued by Ondo, bought through NEAR Intents) for a company named by the latest research report on a topic. For each you get: the topic, the report's verdict band and opportunity score (0-100), `report_confidence_pct` (how sure the report is: evidence quality times a risk multiplier; 70 or more counts as confident, below 45 is low), why the company is in the fund (evidence from SEC filings or the Company Scout), its `company_size_risk` (low = large company, medium = mid-size, high = small; about company size, not quality), the price-stretch level of the stock ("high" means it has already run and carries more timing risk), and the cost of a real dry-run quote.
 - What the shadow portfolio already holds, if anything.
 
 # Rules

@@ -68,6 +68,7 @@ class FundConfig(BaseModel):
     max_holdings_per_tier: int = 4
     exposure_by_band: dict[str, float]
     score_drop_points: float = 8
+    full_confidence_pct: float = 70.0     # confidence needed to invest the band's full share; below it, proportionally less
     stretched_stage_factor: float = 0.5
     min_trade_share: float = 0.02
     review_days: int = 7
@@ -118,6 +119,7 @@ class Decision(BaseModel):
     band: str
     score: Optional[float] = None
     previous_score: Optional[float] = None
+    confidence_pct: Optional[float] = None
     target_invested_pct: float
     tier_targets_usd: dict[str, float] = Field(default_factory=dict)
     staged_tiers: list[str] = Field(default_factory=list)
@@ -326,6 +328,15 @@ def decide(fund: TopicFund, run_id: str, report: ResearchReport, book: PriceBook
     exposure = cfg.exposure_by_band.get(band, 0.0)
     reasons.append(f"Verdict band '{band}'" + (f" (score {score})" if score is not None else "")
                    + f" -> invest {exposure:.0%} of the fund.")
+    conf = verdict.get("confidence_pct")
+    if conf is not None and exposure > 0:
+        k = min(1.0, conf / cfg.full_confidence_pct)
+        if k < 1:
+            exposure *= k
+            reasons.append(f"Confidence {conf:.0f}% is below the {cfg.full_confidence_pct:.0f}% needed for full size -> "
+                           f"invest {k:.0%} of that: {exposure:.0%} of the fund.")
+        else:
+            reasons.append(f"Confidence {conf:.0f}% is at or above {cfg.full_confidence_pct:.0f}%: full size.")
     prev_score = prev.score if prev else None
     if prev_score is not None and score is not None and prev_score - score >= cfg.score_drop_points:
         exposure *= 0.5
@@ -417,7 +428,7 @@ def decide(fund: TopicFund, run_id: str, report: ResearchReport, book: PriceBook
     reasons.append(f"Each trade pays an assumed {cfg.fee_pct}% cost; fills at the latest daily close on or before {today.isoformat()}.")
 
     d = Decision(at=now, run_id=run_id, report_date=report.generated_at.date().isoformat(), band=band, score=score,
-                 previous_score=prev_score, target_invested_pct=round(exposure * 100, 1), tier_targets_usd=tier_targets,
+                 previous_score=prev_score, confidence_pct=conf, target_invested_pct=round(exposure * 100, 1), tier_targets_usd=tier_targets,
                  staged_tiers=staged, waiting_for_price=waiting, trades=trades, reasons=reasons, value_before_usd=value)
     d.sha256 = _digest(d)
     fund.decisions.append(d)
@@ -500,7 +511,7 @@ def tradable_tokens(funds_dir: Path) -> list[dict]:
                 continue
             row = {"ticker": h.ticker, "symbol": h.route.symbol, "asset_id": h.route.asset_id, "decimals": 18,
                    "price": h.route.token_price_usd, "topic": f.topic, "band": last.band if last else None,
-                   "score": last.score if last else None, "tier": h.tier, "why": h.why, "stretch": h.timing_risk,
+                   "score": last.score if last else None, "confidence_pct": last.confidence_pct if last else None, "tier": h.tier, "why": h.why, "stretch": h.timing_risk,
                    "last_close": h.last_close, "last_close_date": h.last_date}
             if h.ticker not in best or (row["score"] or 0) > (best[h.ticker]["score"] or 0):
                 best[h.ticker] = row

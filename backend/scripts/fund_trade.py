@@ -99,7 +99,7 @@ def cmd_shadow(s, cfg, usd: float | None) -> int:  # noqa: ANN001
     account = (s.fund_mainnet_account_id or "intents.near").strip() or "intents.near"
     cands = []
     for t in toks:
-        c = Candidate(ticker=t["ticker"], symbol=t["symbol"], asset_id=t["asset_id"], topic=t["topic"], verdict_band=t["band"], score=t["score"],
+        c = Candidate(ticker=t["ticker"], symbol=t["symbol"], asset_id=t["asset_id"], topic=t["topic"], verdict_band=t["band"], score=t["score"], confidence_pct=t.get("confidence_pct"),
                       tier=t["tier"], why=t["why"], price_stretch=t["stretch"], last_close=t["last_close"], last_close_date=t["last_close_date"], quotable=True)
         try:
             q = ex.dry_quote(c.asset_id, min(1000.0, budget), account)
@@ -155,7 +155,7 @@ def cmd_propose(s, cfg, shadow: bool, usd: float | None) -> int:  # noqa: ANN001
     account = (s.fund_mainnet_account_id or "intents.near").strip() or "intents.near"
     cands = []
     for t in toks:
-        c = Candidate(ticker=t["ticker"], symbol=t["symbol"], asset_id=t["asset_id"], topic=t["topic"], verdict_band=t["band"], score=t["score"],
+        c = Candidate(ticker=t["ticker"], symbol=t["symbol"], asset_id=t["asset_id"], topic=t["topic"], verdict_band=t["band"], score=t["score"], confidence_pct=t.get("confidence_pct"),
                       tier=t["tier"], why=t["why"], price_stretch=t["stretch"], last_close=t["last_close"], last_close_date=t["last_close_date"])
         try:
             q = ex.dry_quote(c.asset_id, budget, account)

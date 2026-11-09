@@ -106,14 +106,19 @@ def render_markdown(report: ResearchReport) -> str:
         sc = inv.score
         out += ["## Technology Opportunity Score"]
         if sc.reportable:
-            out.append(f"**Score: {sc.score} / 100** (confidence: {sc.confidence.value}; evidence coverage {sc.coverage:.0%})")
+            conf = (f"**Confidence: {sc.confidence_pct:.0f}%** ({sc.confidence.value}; evidence {sc.evidence_confidence_pct:.0f}% x risk multiplier "
+                    f"{sc.risk_multiplier})" if sc.confidence_pct is not None else f"confidence: {sc.confidence.value}")
+            out.append(f"**Opportunity score: {sc.score} / 100** · {conf} · evidence coverage {sc.coverage:.0%}")
         elif sc.score is not None:
             out.append(f"**Not reportable.** Indicative value {sc.score} / 100 uses only {sc.coverage:.0%} of the scoring weight; do not compare it with other technologies.")
         else:
             out.append("**No score computed:** no dimension had cited evidence.")
         out.append("")
         if sc.risk_rating is not None:
-            out += [f"Risk adjustment: rating {sc.risk_rating}/5 lowered the score by {sc.risk_penalty_pct}% (base {sc.base_score}).", ""]
+            if sc.risk_penalty_pct is not None:      # method v1 (older reports)
+                out += [f"Risk adjustment: rating {sc.risk_rating}/5 lowered the score by {sc.risk_penalty_pct}% (base {sc.base_score}).", ""]
+            else:
+                out += [f"Risk: rating {sc.risk_rating}/5 does not change the score; it multiplies confidence by {sc.risk_multiplier}.", ""]
         if sc.commercialization_gap is not None:
             out += [f"Commercialization Gap (research momentum rating minus commercial readiness rating): {sc.commercialization_gap:+.0f}", ""]
         out += ["", "| Dimension | Weight | Rating (0-5) | Evidence | Reasoning |", "|---|---|---|---|---|"]

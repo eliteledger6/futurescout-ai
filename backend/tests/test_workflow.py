@@ -116,7 +116,7 @@ def test_full_pipeline_with_one_gap_round_checks_everything():
     assert theme.base.finding_ids == ["S1"] and theme.companies == []
     assert [v.horizon.value for v in theme.horizons] == ["near_0_12m", "medium_1_3y", "long_3_5y"]
     sc = inv.score
-    assert sc.coverage == pytest.approx(0.30) and sc.reportable is False and sc.score == 61.6
+    assert sc.coverage == pytest.approx(0.30) and sc.reportable is False and sc.score == 70.0 and sc.risk_multiplier == 0.8   # v2: risk lowers confidence, not the score
     assert next(d for d in sc.dimensions if d.key == "commercial_readiness").status == "missing"
     # usage is tracked per agent
     assert {u["agent"] for u in report.usage} == {"chief", "science", "risk", "investment"} and report.total_cost_usd > 0

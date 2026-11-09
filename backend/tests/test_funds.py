@@ -190,3 +190,14 @@ def test_bridge_listed_stock_token_needs_a_matching_quoted_price():
     assert not bad.available and "unrelated" in bad.note
     assert not client.route_for("BIG2", 50.0, 15).available          # in neither list
     assert bodies and all('"dry":true' in b.replace(" ", "") for b in bodies)   # only ever dry quotes
+
+
+def test_confidence_below_70_shrinks_the_position(verdict):
+    verdict.update(band="strong", score=76.0, confidence_pct=56.0)
+    f = new_fund("Fixture tech", None, CFG, NOW)
+    d = decide(f, "run1", report(), FakeBook(PRICES), CFG, NOW, "first")
+    assert d.target_invested_pct == 80.0 and d.confidence_pct == 56.0          # strong = 100% x 56/70
+    assert any("below the 70%" in r for r in d.reasons)
+    verdict.update(confidence_pct=75.0)
+    f2 = new_fund("Fixture tech", None, CFG, NOW)
+    assert decide(f2, "run1", report(), FakeBook(PRICES), CFG, NOW, "first").target_invested_pct == 100.0

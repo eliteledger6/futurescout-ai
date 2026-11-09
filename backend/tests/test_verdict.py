@@ -30,3 +30,14 @@ def test_verdict_uses_only_what_the_report_contains():
 def test_verdict_without_an_assessment_is_honest():
     v = build_verdict(ResearchReport(topic="x"))
     assert v["available"] is False and "No verdict" in v["headline"]
+
+
+def test_confidence_below_70_is_always_stated_first():
+    r = fixture_report()
+    sc = r.investment.score
+    sc.confidence_pct, sc.score, sc.reportable = 47.0, 72.0, True
+    v = build_verdict(r)
+    assert v["band"] == "strong" and "confidence 47%" in v["qualifiers"][0] and "70%" in v["qualifiers"][0]
+    assert v["confidence_pct"] == 47.0
+    sc.confidence_pct = 81.0
+    assert not any("counts as confident" in q for q in build_verdict(r)["qualifiers"])

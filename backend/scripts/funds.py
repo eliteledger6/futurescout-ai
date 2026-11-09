@@ -52,6 +52,7 @@ def main() -> int:
     ap.add_argument("--no-seal", action="store_true")
     ap.add_argument("--max-price-requests", type=int, default=10)
     ap.add_argument("--seal-missing", action="store_true", help="only fingerprint decisions that are not sealed yet")
+    ap.add_argument("--redecide", help="force a new decision for every fund, with this reason (e.g. after a scoring-method change)")
     ap.add_argument("--out-dir", help="write funds here instead of runs/funds (for a trial run)")
     args = ap.parse_args()
     funds_dir = Path(args.out_dir) if args.out_dir else FUNDS_DIR
@@ -88,7 +89,7 @@ def main() -> int:
     for run_id, report in reports:
         path = funds_dir / f"{slug_of(report.topic)}.json"
         fund = load_fund(path)
-        why = needs_decision(fund, run_id, now, cfg)
+        why = args.redecide or needs_decision(fund, run_id, now, cfg)
         if fund is None:
             fund = new_fund(report.topic, report.sector, cfg, now)
         if why:
@@ -101,6 +102,7 @@ def main() -> int:
                                                          "at": d.at.isoformat(), "band": d.band})
                     d.chain = rec.as_dict()
                     line += "; sealed on NEAR testnet"
+                    time.sleep(6)          # the public testnet RPC rate-limits bursts
                 except NearRecordError as exc:
                     line += f"; NOT sealed ({str(exc)[:120]})"
             print(line)

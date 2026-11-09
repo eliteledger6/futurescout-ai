@@ -144,12 +144,16 @@ class DimensionScore(BaseModel):
 
 class OpportunityScore(BaseModel):
     reportable: bool
-    score: Optional[float] = None          # 0-100 after risk adjustment; None if nothing was scored
+    score: Optional[float] = None          # 0-100 opportunity score (v2: not reduced by risk); None if nothing was scored
     base_score: Optional[float] = None     # before risk adjustment
     coverage: float = 0.0                  # share of total weight that has cited evidence
     confidence: Confidence = Confidence.LOW
     risk_rating: Optional[int] = None
-    risk_penalty_pct: Optional[float] = None
+    risk_penalty_pct: Optional[float] = None           # method v1 only (risk used to cut the score); None in v2
+    confidence_pct: Optional[float] = None             # v2: evidence confidence x risk multiplier, 0-100
+    evidence_confidence_pct: Optional[float] = None    # v2: coverage + rating confidence + verified share, 0-100
+    risk_multiplier: Optional[float] = None            # v2: 1 - 0.10 x risk rating
+    scoring_version: Optional[int] = None              # 2 = opportunity score without risk cut + confidence %
     commercialization_gap: Optional[float] = None  # momentum rating minus readiness rating (-5..5)
     dimensions: list[DimensionScore] = Field(default_factory=list)
     missing_dimensions: list[str] = Field(default_factory=list)

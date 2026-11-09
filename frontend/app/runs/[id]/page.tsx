@@ -172,7 +172,7 @@ function VerdictCard({ v }: { v?: Verdict }) {
           <h2 className="h2" style={{ marginTop: 8 }}>{v.headline}</h2>
           {v.qualifiers && v.qualifiers.length > 0 && <p className="small" style={{ color: "var(--text-2)", margin: "6px 0 0" }}>But: {v.qualifiers.join("; ")}.</p>}
         </div>
-        {v.score != null && <div className="verdict-score"><span>{Math.round(v.score)}</span><small>score · {v.confidence} confidence</small></div>}
+        {v.score != null && <div className="verdict-score"><span>{Math.round(v.score)}</span><small>score · {v.confidence_pct != null ? `${Math.round(v.confidence_pct)}%` : v.confidence} confidence</small></div>}
       </div>
       {v.plain && <p className="verdict-plain">{v.plain}</p>}
       {v.available && (
@@ -243,7 +243,10 @@ function ScoreSection({ report }: { report: Report }) {
               {!sc.reportable && <span className="pill" style={{ color: "var(--l-unverified)" }}>not reportable</span>}
             </div>
             {sc.risk_rating !== null && (
-              <p className="small muted">Risk rating {sc.risk_rating}/5 lowered the score by {sc.risk_penalty_pct}% (base {sc.base_score}).</p>
+              sc.risk_multiplier != null
+                ? <p className="small muted"><b>Confidence {Math.round(sc.confidence_pct ?? 0)}%</b> = evidence confidence {Math.round(sc.evidence_confidence_pct ?? 0)}% × risk multiplier {sc.risk_multiplier} (risk rating {sc.risk_rating}/5).
+                    Risk does not reduce the score. 70% or more counts as confident.</p>
+                : <p className="small muted">Risk rating {sc.risk_rating}/5 lowered the score by {sc.risk_penalty_pct}% (base {sc.base_score}).</p>
             )}
             <ul className="small muted" style={{ paddingLeft: 18, margin: 0 }}>
               {sc.notes.map((n, i) => <li key={i}>{n}</li>)}

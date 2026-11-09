@@ -13,9 +13,9 @@ from typing import Optional
 from app.schemas.research import ResearchReport
 
 BANDS = [  # (min score, band key, headline)
-    (65, "strong", "Strong momentum, worth close attention"),
-    (50, "building", "Building: real activity, not yet proven commercially"),
-    (35, "early", "Early and mixed: watch, do not assume"),
+    (70, "strong", "Strong momentum, worth close attention"),            # v2 thresholds on the opportunity score (2026-11-09)
+    (55, "building", "Building: real activity, not yet proven commercially"),
+    (40, "early", "Early and mixed: watch, do not assume"),
     (0, "weak", "Weak case on today's evidence"),
 ]
 
@@ -56,7 +56,11 @@ def build_verdict(report: ResearchReport) -> dict:
     ytd_q = report.science.ytd if report.science else None
     if ytd_q and ytd_q.trend == "cooling":
         qualifiers.append(f"research is cooling this year ({ytd_q.growth_pct:+.0f}% vs the same dates last year)")
-    if score and score.confidence.value == "low":
+    if score and score.confidence_pct is not None:
+        if score.confidence_pct < 70:      # shown first: a strong score with weak confidence must never stand alone
+            word = "low confidence" if score.confidence.value == "low" else "confidence"
+            qualifiers.insert(0, f"{word} {score.confidence_pct:.0f}%, below the 70% that counts as confident")
+    elif score and score.confidence.value == "low":
         qualifiers.append("low confidence: the evidence is thin")
 
     # why: strongest scored dimensions, research acceleration, scout
@@ -119,6 +123,10 @@ def build_verdict(report: ResearchReport) -> dict:
         "headline": headline,
         "score": value,
         "confidence": score.confidence.value if score else "low",
+        "confidence_pct": score.confidence_pct if score else None,
+        "evidence_confidence_pct": score.evidence_confidence_pct if score else None,
+        "risk_multiplier": score.risk_multiplier if score else None,
+        "risk_rating": score.risk_rating if score else None,
         "qualifiers": qualifiers,
         "plain": plain,
         "why": why[:4],

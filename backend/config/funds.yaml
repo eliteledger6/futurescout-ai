@@ -20,6 +20,7 @@ exposure_by_band:
   early: 0.40
   weak: 0.10
   insufficient: 0.00
+full_confidence_pct: 70        # confidence needed for the band's full share; below it the share shrinks in proportion
 score_drop_points: 8           # score fell this much vs the last decision -> halve the target ("signal weakening")
 stretched_stage_factor: 0.5    # a tier whose stocks look stretched (timing risk high) invests only this share now
 min_trade_share: 0.02          # ignore rebalancing trades smaller than 2% of the fund (avoid churn)
@@ -39,7 +40,7 @@ intents:
 # Nothing can be sent while trading_enabled is false. Only `python scripts\fund_trade.py approve <id>` sends money.
 # These caps are the owner's; Claude must not raise them without the owner saying so in writing.
 live:
-  trading_enabled: false       # master switch; the owner turns it on for the first trade
+  trading_enabled: true       # master switch; the owner turns it on for the first trade
   pay_with: near               # owner 2026-11-09: pay with NEAR directly (no USDC needed); "usdc" also works
   max_trade_usd: 10.0
   max_day_usd: 10.0

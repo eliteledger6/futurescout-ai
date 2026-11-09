@@ -39,7 +39,8 @@ export function ReportVisual({ report: r, verdict: v, sources }: { report: Repor
   const findings = allFindings(r);
   return (
     <div className="rv">
-      <Reveal><VerdictBanner v={v} score={sc?.score ?? null} reportable={!!sc?.reportable} confidence={sc?.confidence ?? null} /></Reveal>
+      <Reveal><VerdictBanner v={v} score={sc?.score ?? null} reportable={!!sc?.reportable}
+        confidence={sc?.confidence_pct != null ? `${Math.round(sc.confidence_pct)}% confidence` : sc?.confidence ?? null} /></Reveal>
       <Reveal delay={60}><Tiles r={r} findings={findings.length} sources={sources.size} /></Reveal>
       {sc && sc.dimensions.length > 0 && <Reveal delay={60}><ScoreBars r={r} /></Reveal>}
       {theme && <Reveal delay={60}><Scenarios bull={theme.bull.narrative} base={theme.base.narrative} bear={theme.bear.narrative} name={theme.name} /></Reveal>}
@@ -96,6 +97,8 @@ function Tiles({ r, findings, sources }: { r: Report; findings: number; sources:
   const a = r.science?.acceleration, y = r.science?.ytd, pa = r.patent?.acceleration, py = r.patent?.ytd;
   const risk = r.investment?.score?.risk_rating ?? null;
   const cov = r.investment?.score?.coverage ?? null;
+  const sco = r.investment?.score;
+  const conf = sco?.confidence_pct ?? null;
   const cands = (r.scout?.candidates ?? []).filter((c) => !c.off_sector);
   const trendColour = y?.trend === "rising" ? "var(--accent)" : y?.trend === "cooling" ? "var(--l-danger)" : "var(--text-2)";
   return (
@@ -121,10 +124,21 @@ function Tiles({ r, findings, sources }: { r: Report; findings: number; sources:
         <div className="rv-tile-sub">{risk == null ? "not rated" : risk >= 4 ? "high" : risk >= 3 ? "moderate" : "low"} · from the Risk agent</div>
       </div>
       <div className="rv-tile">
-        <div className="rv-tile-label">Evidence coverage</div>
-        <div className="rv-tile-value">{cov != null ? <CountUp value={cov * 100} suffix="%" /> : "–"}</div>
-        <div className="rv-tile-sub">of the score backed by cited findings</div>
-        {cov != null && <div className="rv-meter"><div className="rv-meter-fill" style={{ ["--w" as string]: `${cov * 100}%` } as React.CSSProperties} /></div>}
+        {conf != null ? (
+          <>
+            <div className="rv-tile-label">Confidence</div>
+            <div className="rv-tile-value" style={{ color: conf >= 70 ? "var(--accent)" : undefined }}><CountUp value={conf} suffix="%" /></div>
+            <div className="rv-tile-sub">evidence {Math.round(sco?.evidence_confidence_pct ?? 0)}% × risk ×{sco?.risk_multiplier ?? 1} · 70% = confident</div>
+            <div className="rv-meter"><div className="rv-meter-fill" style={{ ["--w" as string]: `${conf}%` } as React.CSSProperties} /></div>
+          </>
+        ) : (
+          <>
+            <div className="rv-tile-label">Evidence coverage</div>
+            <div className="rv-tile-value">{cov != null ? <CountUp value={cov * 100} suffix="%" /> : "–"}</div>
+            <div className="rv-tile-sub">of the score backed by cited findings</div>
+            {cov != null && <div className="rv-meter"><div className="rv-meter-fill" style={{ ["--w" as string]: `${cov * 100}%` } as React.CSSProperties} /></div>}
+          </>
+        )}
       </div>
       <div className="rv-tile">
         <div className="rv-tile-label">Companies found</div>
@@ -160,8 +174,8 @@ function ScoreBars({ r }: { r: Report }) {
           </div>
         ))}
         {sc.risk_rating != null && (
-          <div className="rv-bar-row" title={`Risk lowers the score by ${sc.risk_penalty_pct ?? 0}%`}>
-            <span className="rv-bar-label">Risk (lowers score)</span>
+          <div className="rv-bar-row" title={sc.risk_multiplier != null ? `Risk does not change the score; it multiplies confidence by ${sc.risk_multiplier}` : `Risk lowers the score by ${sc.risk_penalty_pct ?? 0}%`}>
+            <span className="rv-bar-label">{sc.risk_multiplier != null ? "Risk (lowers confidence)" : "Risk (lowers score)"}</span>
             <div className="rv-bar-track"><div className="rv-bar-fill risk" style={{ ["--w" as string]: `${(sc.risk_rating / 5) * 100}%` } as React.CSSProperties} /></div>
             <span className="rv-bar-val">{sc.risk_rating}/5</span>
           </div>

@@ -26,6 +26,7 @@ class Candidate(BaseModel):
     topic: str
     verdict_band: Optional[str] = None
     score: Optional[float] = None
+    confidence_pct: Optional[float] = None     # confidence of that report (evidence x risk multiplier)
     tier: str = ""
     why: str = ""
     price_stretch: Optional[str] = None
@@ -59,7 +60,7 @@ def decide(router: ModelRouter, candidates: list[Candidate], *, budget_usd: floa
     if not quotable:
         return TraderResult(decision=TraderDecision(action="hold", rationale="No candidate can be bought at this size right now."),
                             notes=["no quotable candidate; the model was not called"])
-    listing = [{"ticker": c.ticker, "token": c.symbol, "topic": c.topic, "report_verdict": c.verdict_band, "report_score": c.score,
+    listing = [{"ticker": c.ticker, "token": c.symbol, "topic": c.topic, "report_verdict": c.verdict_band, "report_score": c.score, "report_confidence_pct": c.confidence_pct,
                 "company_size_risk": c.tier, "why_in_fund": c.why, "price_stretch": c.price_stretch or "unknown",
                 "quotable": c.quotable, "quote_cost_pct": c.quote_cost_pct} for c in candidates]
     messages = [
@@ -126,7 +127,7 @@ def allocate(router: ModelRouter, candidates: list[Candidate], *, budget_usd: fl
     """Shadow mode only: the model decides sizes freely; code keeps it to the candidate list and inside the budget."""
     if not candidates or budget_usd <= 0:
         return PlanResult(plan=TraderPlan(summary="Nothing to allocate."), notes=["no candidates or no budget; the model was not called"])
-    listing = [{"ticker": c.ticker, "token": c.symbol, "topic": c.topic, "report_verdict": c.verdict_band, "report_score": c.score,
+    listing = [{"ticker": c.ticker, "token": c.symbol, "topic": c.topic, "report_verdict": c.verdict_band, "report_score": c.score, "report_confidence_pct": c.confidence_pct,
                 "company_size_risk": c.tier, "why_in_fund": c.why, "price_stretch": c.price_stretch or "unknown",
                 "quote_cost_pct": c.quote_cost_pct} for c in candidates]
     messages = [

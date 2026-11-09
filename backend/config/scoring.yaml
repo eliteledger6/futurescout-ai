@@ -4,13 +4,16 @@
 # fitted to data and the score is not a validated predictor of stock performance.
 # Weights of the 8 positive dimensions must sum to 1.0.
 #
-# How the score is computed (see app/scoring/engine.py):
-#   1. A model rates each dimension 0-5 and MUST cite findings; no cited evidence => the
-#      dimension counts as "missing", never as zero.
-#   2. base = sum(weight * rating/5) over evidenced dimensions / sum(weight of those) * 100
-#   3. risk adjustment: risk rating r (0-5, 5 = severe) reduces the score by max_penalty * r/5
-#   4. coverage = share of total weight that has evidence. If coverage is below
-#      min_coverage_to_report the score is shown only as "indicative, not comparable".
+# METHOD v2 (owner decision 2026-11-09). Two separate numbers (see app/scoring/engine.py):
+#   OPPORTUNITY SCORE = sum(weight * rating/5) over evidenced dimensions / sum(weight of those) * 100
+#       A model rates each dimension 0-5 and MUST cite findings; no cited evidence => the dimension is "missing",
+#       never zero. Risk does NOT reduce this number any more (it used to cut up to 30%, which counted an unproven
+#       technology's weakness twice: once in the readiness/customer/supply ratings and again as risk).
+#   CONFIDENCE % = evidence confidence * risk multiplier
+#       evidence confidence = weighted mix of evidence coverage, the confidence of the cited ratings and the share
+#       of verified facts among the findings (confidence_weights below)
+#       risk multiplier = 1 - step * risk rating   (risk 1 -> x0.9, 2 -> x0.8, 3 -> x0.7, 4 -> x0.6, 5 -> x0.5)
+#   If coverage is below min_coverage_to_report the score is shown only as "indicative, not comparable".
 
 dimensions:
   research_momentum:      {label: "Research Momentum",      weight: 0.15}
@@ -23,10 +26,15 @@ dimensions:
   supply_chain_readiness: {label: "Supply-Chain Readiness", weight: 0.15}
 
 risk_adjustment:
-  label: "Risk Adjustment"
-  max_penalty: 0.30
+  label: "Risk"
+  step: 0.10             # confidence multiplier = 1 - step * risk rating (0-5, 5 = severe)
+  min_multiplier: 0.5
 
 min_coverage_to_report: 0.5      # below this the score is labelled indicative only
-confidence_thresholds:           # coverage needed for each confidence level
-  medium: 0.6
-  high: 0.85
+confidence_weights:              # how evidence confidence is mixed (they are normalised)
+  coverage: 0.40                 # share of the scoring weight that has cited evidence
+  rating_confidence: 0.35        # low / medium / high confidence of the cited ratings (0 / 0.5 / 1)
+  verified_share: 0.25           # share of findings that are verified facts
+confidence_labels:               # confidence % needed for the low / medium / high label
+  medium: 45
+  high: 70

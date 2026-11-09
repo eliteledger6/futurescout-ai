@@ -85,6 +85,7 @@ export interface Score {
   confidence: Confidence;
   risk_rating: number | null;
   risk_penalty_pct: number | null;
+  confidence_pct?: number | null; evidence_confidence_pct?: number | null; risk_multiplier?: number | null; scoring_version?: number | null;
   dimensions: Dimension[];
   notes: string[];
   formula: string;
@@ -170,6 +171,7 @@ export interface Report {
 export interface Verdict {
   available: boolean; band?: "strong" | "building" | "early" | "weak" | "insufficient"; headline: string; score?: number | null;
   confidence?: string; qualifiers?: string[]; plain?: string; why?: string[]; watch?: string[]; change?: string[];
+  confidence_pct?: number | null; evidence_confidence_pct?: number | null; risk_multiplier?: number | null; risk_rating?: number | null;
   horizon_1_3y?: string | null; label: string; basis?: string; disclaimer: string;
 }
 export interface RunDetail { summary: RunSummary; report: Report; markdown: string | null; verdict?: Verdict }

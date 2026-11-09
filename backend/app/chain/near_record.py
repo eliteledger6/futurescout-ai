@@ -46,7 +46,8 @@ class NearRecordError(RuntimeError):
 # A report that actually carries the new data includes it in the digest as usual. Add to this list whenever a
 # new optional field is introduced; never remove entries.
 ADDED_TOP_LEVEL_IF_NONE = ("scout", "sector")        # 2026-11-09 Company Scout; 2026-11-09 sector
-ADDED_ANYWHERE_IF_EMPTY = ("affiliations", "closes", "plain_summary", "ytd", "counting", "estimated_relevant")   # 2026-11-09: SourceRecord.affiliations, PriceMetrics.closes, InvestmentDraft.plain_summary
+ADDED_ANYWHERE_IF_EMPTY = ("affiliations", "closes", "plain_summary", "ytd", "counting", "estimated_relevant",
+                           "confidence_pct", "evidence_confidence_pct", "risk_multiplier", "scoring_version")   # 2026-11-09 scoring v2   # 2026-11-09: SourceRecord.affiliations, PriceMetrics.closes, InvestmentDraft.plain_summary
 
 
 def _strip_added_defaults(obj):  # noqa: ANN001

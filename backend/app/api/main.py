@@ -309,7 +309,7 @@ def create_app(
             "balances": balances,
             "shadow_portfolio": shadow_portfolio(state, {t["symbol"]: t["price"] for t in tokens if t.get("price")}, lv.shadow_budget_usd),
             "pay_with": lv.pay_with,
-            "allowlist": [{k: t[k] for k in ("ticker", "symbol", "topic", "band", "score", "price")} for t in tokens],
+            "allowlist": [{k: t[k] for k in ("ticker", "symbol", "topic", "band", "score", "confidence_pct", "price")} for t in tokens],
             "proposals": [p.model_dump(mode="json") for p in reversed(state.proposals[-60:])],
             "explorer_tx": lv.explorer_tx, "approval": "owner's terminal only: python scripts\\fund_trade.py approve <id>",
             "disclaimer": LIVE_DISCLAIMER,
