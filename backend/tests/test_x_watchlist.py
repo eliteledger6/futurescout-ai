@@ -95,4 +95,5 @@ def test_real_watchlist_file_loads_with_defaults():
     data = wl.load()
     # owner decision 2026-11-09: the agent manages the list itself, verified accounts only, stricter score
     assert data["auto_manage"] is True and data["require_verified"] is True and data["auto_add_min_score"] >= 8.0
-    assert sum(1 for a in data["approved"] if a.get("approved_by", "owner") == "owner") == 37
+    owner = [a for a in data["approved"] if a.get("approved_by", "owner") == "owner"]
+    assert sum(1 for a in owner if a.get("group") != "owner-added") == 37 and len(owner) == 37 + 79

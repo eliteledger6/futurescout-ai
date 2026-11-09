@@ -4021,1209 +4021,6 @@ suggested:
   suggested_on: '2026-11-09'
   description: ''
   role: null
-- handle: eeNewsEurope
-  id: '515325247'
-  name: eeNews Europe
-  flags: []
-  verified_type: blue
-  followers: 6865
-  score: 6.3
-  posts_on_topic: 1
-  role: null
-  topics:
-  - high bandwidth memory
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 6.3 below 8.0'
-- handle: machinelearnflx
-  id: '4820804277'
-  name: Machine Learning FLX
-  flags: []
-  verified_type: blue
-  followers: 170730
-  score: 7.7
-  posts_on_topic: 1
-  role: null
-  topics:
-  - AI agents
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 7.7 below 8.0'
-- handle: dez_blanchfield
-  id: '34181507'
-  name: Sociaall Inc.
-  flags: []
-  verified_type: none
-  followers: 172262
-  score: 7.2
-  posts_on_topic: 1
-  role: null
-  topics:
-  - AI agents
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: not verified (none)'
-- handle: 0xRicker
-  id: '1991548234058330113'
-  name: Ricker
-  flags: []
-  verified_type: blue
-  followers: 11790
-  score: 6.6
-  posts_on_topic: 1
-  role: null
-  topics:
-  - AI agents
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 6.6 below 8.0'
-- handle: Lance_Edelman
-  id: '2800599859'
-  name: Lance Edelman
-  flags: []
-  verified_type: blue
-  followers: 4243
-  score: 6.1
-  posts_on_topic: 1
-  role: null
-  topics:
-  - AI agents
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 6.1 below 8.0'
-- handle: Techmeme
-  id: '817386'
-  name: Techmeme
-  flags: []
-  verified_type: blue
-  followers: 427504
-  score: 8.1
-  posts_on_topic: 1
-  role: null
-  topics:
-  - vision-language-action model
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: one post and a paid badge only (needs 2+ topic posts, a senior role, a mention by a watched account,
-    or an organisation badge)'
-- handle: chr1sa
-  id: '17595439'
-  name: Chris Anderson (in Bay Area)
-  flags: []
-  verified_type: blue
-  followers: 176273
-  score: 7.8
-  posts_on_topic: 1
-  role: null
-  topics:
-  - vision-language-action model
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 7.8 below 8.0'
-- handle: Romka2x
-  id: '1747103855056166912'
-  name: 🇺🇸 Roman R 🇺🇸
-  flags: []
-  verified_type: blue
-  followers: 1621
-  score: 7.7
-  posts_on_topic: 2
-  role: null
-  topics:
-  - vision-language-action model
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 7.7 below 8.0'
-- handle: OWW
-  id: '255642463'
-  name: Robotics Papers
-  flags: []
-  verified_type: none
-  followers: 2907
-  score: 7.5
-  posts_on_topic: 2
-  role: null
-  topics:
-  - vision-language-action model
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: not verified (none)'
-- handle: CyberRobooo
-  id: '1610480598321168384'
-  name: CyberRobo
-  flags: []
-  verified_type: blue
-  followers: 41025
-  score: 7.1
-  posts_on_topic: 1
-  role: null
-  topics:
-  - vision-language-action model
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 7.1 below 8.0'
-- handle: Decoded08
-  id: '2468696821'
-  name: Decoded
-  flags: []
-  verified_type: blue
-  followers: 2787
-  score: 7.0
-  posts_on_topic: 1
-  role: FOUNDER
-  topics:
-  - vision-language-action model
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 7.0 below 8.0'
-- handle: techniahqrobot
-  id: '1444821703415242760'
-  name: Techniahqrobot | humanoid robots
-  flags: []
-  verified_type: blue
-  followers: 19216
-  score: 6.8
-  posts_on_topic: 1
-  role: null
-  topics:
-  - vision-language-action model
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 6.8 below 8.0'
-- handle: liuziwei7
-  id: '957685323198164992'
-  name: Ziwei Liu
-  flags: []
-  verified_type: blue
-  followers: 13669
-  score: 6.6
-  posts_on_topic: 1
-  role: null
-  topics:
-  - vision-language-action model
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 6.6 below 8.0'
-- handle: johnkoetsier
-  id: '1253661'
-  name: John Koetsier
-  flags: []
-  verified_type: none
-  followers: 39866
-  score: 6.6
-  posts_on_topic: 1
-  role: null
-  topics:
-  - vision-language-action model
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: not verified (none)'
-- handle: preskill
-  id: '207256884'
-  name: John Preskill
-  flags: []
-  verified_type: blue
-  followers: 345674
-  score: 8.0
-  posts_on_topic: 1
-  role: null
-  topics:
-  - quantum error correction
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: one post and a paid badge only (needs 2+ topic posts, a senior role, a mention by a watched account,
-    or an organisation badge)'
-- handle: gp_pulipaka
-  id: '4263007693'
-  name: Dr. Ganapathi Pulipaka 🇺🇸
-  flags: []
-  verified_type: blue
-  followers: 148380
-  score: 7.7
-  posts_on_topic: 1
-  role: null
-  topics:
-  - quantum error correction
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 7.7 below 8.0'
-- handle: QuantumStateX
-  id: '1687442525143912449'
-  name: QuantumX
-  flags: []
-  verified_type: blue
-  followers: 1253
-  score: 7.6
-  posts_on_topic: 2
-  role: null
-  topics:
-  - quantum error correction
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 7.6 below 8.0'
-- handle: Scholarshipps
-  id: '983436290451525633'
-  name: Scholarships and Jobs in Europe, US, Canada, AU...
-  flags: []
-  verified_type: blue
-  followers: 83093
-  score: 7.4
-  posts_on_topic: 1
-  role: null
-  topics:
-  - quantum error correction
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 7.4 below 8.0'
-- handle: QuantumDaily
-  id: '1092933627732623360'
-  name: The Quantum Insider
-  flags: []
-  verified_type: blue
-  followers: 25438
-  score: 6.9
-  posts_on_topic: 1
-  role: null
-  topics:
-  - quantum error correction
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 6.9 below 8.0'
-- handle: scitechgirl
-  id: '1997429568404377601'
-  name: SciTech Girl
-  flags: []
-  verified_type: blue
-  followers: 23463
-  score: 6.9
-  posts_on_topic: 1
-  role: null
-  topics:
-  - quantum error correction
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 6.9 below 8.0'
-- handle: Amandasatiro07
-  id: '1825386407189237760'
-  name: Amandasatiro
-  flags: []
-  verified_type: blue
-  followers: 7678
-  score: 6.4
-  posts_on_topic: 1
-  role: null
-  topics:
-  - quantum error correction
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 6.4 below 8.0'
-- handle: thatoptometrist
-  id: '1475027981424865280'
-  name: Mark™️
-  flags: []
-  verified_type: blue
-  followers: 7171
-  score: 6.4
-  posts_on_topic: 1
-  role: null
-  topics:
-  - quantum error correction
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 6.4 below 8.0'
-- handle: QuantumPapers
-  id: '136501409'
-  name: Quantum Physics Papers
-  flags: []
-  verified_type: none
-  followers: 15725
-  score: 6.2
-  posts_on_topic: 1
-  role: null
-  topics:
-  - quantum error correction
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: not verified (none)'
-- handle: the_hindu
-  id: '20751449'
-  name: The Hindu
-  flags: []
-  verified_type: blue
-  followers: 8429293
-  score: 9.4
-  posts_on_topic: 1
-  role: null
-  topics:
-  - grid-scale energy storage
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: one post and a paid badge only (needs 2+ topic posts, a senior role, a mention by a watched account,
-    or an organisation badge)'
-- handle: IndiaToday
-  id: '19897138'
-  name: IndiaToday
-  flags: []
-  verified_type: blue
-  followers: 6277976
-  score: 9.3
-  posts_on_topic: 1
-  role: null
-  topics:
-  - grid-scale energy storage
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: one post and a paid badge only (needs 2+ topic posts, a senior role, a mention by a watched account,
-    or an organisation badge)'
-- handle: EconomicTimes
-  id: '39743812'
-  name: Economic Times
-  flags: []
-  verified_type: blue
-  followers: 4309449
-  score: 9.1
-  posts_on_topic: 1
-  role: null
-  topics:
-  - grid-scale energy storage
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: one post and a paid badge only (needs 2+ topic posts, a senior role, a mention by a watched account,
-    or an organisation badge)'
-- handle: ETNOWlive
-  id: '225012752'
-  name: ET NOW
-  flags: []
-  verified_type: blue
-  followers: 869010
-  score: 8.4
-  posts_on_topic: 1
-  role: null
-  topics:
-  - grid-scale energy storage
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: one post and a paid badge only (needs 2+ topic posts, a senior role, a mention by a watched account,
-    or an organisation badge)'
-- handle: GreaterKashmir
-  id: '582941136'
-  name: Greater Kashmir
-  flags: []
-  verified_type: blue
-  followers: 559120
-  score: 8.2
-  posts_on_topic: 1
-  role: null
-  topics:
-  - grid-scale energy storage
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: one post and a paid badge only (needs 2+ topic posts, a senior role, a mention by a watched account,
-    or an organisation badge)'
-- handle: DDIndialive
-  id: '718368960903847936'
-  name: DD India
-  flags: []
-  verified_type: blue
-  followers: 107960
-  score: 7.5
-  posts_on_topic: 1
-  role: null
-  topics:
-  - grid-scale energy storage
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 7.5 below 8.0'
-- handle: c_aashish
-  id: '83182871'
-  name: Aashish Chandorkar
-  flags: []
-  verified_type: blue
-  followers: 73316
-  score: 7.4
-  posts_on_topic: 1
-  role: null
-  topics:
-  - grid-scale energy storage
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 7.4 below 8.0'
-- handle: TheQuietSensei
-  id: '1053245333579255808'
-  name: Common Sensei
-  flags: []
-  verified_type: blue
-  followers: 59145
-  score: 7.3
-  posts_on_topic: 1
-  role: null
-  topics:
-  - grid-scale energy storage
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 7.3 below 8.0'
-- handle: CBCRajouri
-  id: '1249581119931994112'
-  name: Central Bureau of Communication, Rajouri (J&K)
-  flags: []
-  verified_type: none
-  followers: 1264
-  score: 7.1
-  posts_on_topic: 2
-  role: null
-  topics:
-  - grid-scale energy storage
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: not verified (none)'
-- handle: india_plus_
-  id: '1973984508232806400'
-  name: India Plus
-  flags: []
-  verified_type: blue
-  followers: 30564
-  score: 7.0
-  posts_on_topic: 1
-  role: null
-  topics:
-  - grid-scale energy storage
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 7.0 below 8.0'
-- handle: alphaaffairsf2f
-  id: '3113911373'
-  name: alphaaffairsf2f
-  flags: []
-  verified_type: blue
-  followers: 18513
-  score: 6.8
-  posts_on_topic: 1
-  role: null
-  topics:
-  - grid-scale energy storage
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 6.8 below 8.0'
-- handle: dayalugurubjp
-  id: '783196991782318080'
-  name: Dr. Dayashankar Mishra 'Dayalu'
-  flags: []
-  verified_type: blue
-  followers: 18228
-  score: 6.8
-  posts_on_topic: 1
-  role: null
-  topics:
-  - grid-scale energy storage
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 6.8 below 8.0'
-- handle: Prabinmen
-  id: '2833299887'
-  name: PM
-  flags: []
-  verified_type: blue
-  followers: 17683
-  score: 6.8
-  posts_on_topic: 1
-  role: null
-  topics:
-  - grid-scale energy storage
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 6.8 below 8.0'
-- handle: PsuWatch
-  id: '1004022363002818561'
-  name: PSUWatch
-  flags: []
-  verified_type: blue
-  followers: 9788
-  score: 6.5
-  posts_on_topic: 1
-  role: null
-  topics:
-  - grid-scale energy storage
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 6.5 below 8.0'
-- handle: aseemmanchanda
-  id: '89475731'
-  name: Aseem Manchanda
-  flags: []
-  verified_type: blue
-  followers: 9381
-  score: 6.5
-  posts_on_topic: 1
-  role: null
-  topics:
-  - grid-scale energy storage
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 6.5 below 8.0'
-- handle: bhagwantkhuba
-  id: '702634714'
-  name: Bhagwanth Khuba
-  flags: []
-  verified_type: none
-  followers: 22970
-  score: 6.4
-  posts_on_topic: 1
-  role: null
-  topics:
-  - grid-scale energy storage
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: not verified (none)'
-- handle: SUDHIRb9661
-  id: '1842931906293497856'
-  name: SUDHIR
-  flags: []
-  verified_type: blue
-  followers: 6452
-  score: 6.3
-  posts_on_topic: 1
-  role: null
-  topics:
-  - grid-scale energy storage
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 6.3 below 8.0'
-- handle: governancenow
-  id: '86106315'
-  name: Governance Now
-  flags: []
-  verified_type: none
-  followers: 11985
-  score: 6.1
-  posts_on_topic: 1
-  role: null
-  topics:
-  - grid-scale energy storage
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: not verified (none)'
-- handle: PIB_India
-  id: '231033118'
-  name: PIB India
-  flags: []
-  verified_type: blue
-  followers: 3148557
-  score: 9.0
-  posts_on_topic: 1
-  role: null
-  topics:
-  - 6G
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: one post and a paid badge only (needs 2+ topic posts, a senior role, a mention by a watched account,
-    or an organisation badge)'
-- handle: marinaj4q
-  id: '1557872001427148803'
-  name: Mmir
-  flags: []
-  verified_type: blue
-  followers: 51307
-  score: 7.2
-  posts_on_topic: 1
-  role: null
-  topics:
-  - 6G
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 7.2 below 8.0'
-- handle: Finsee_main
-  id: '1653727125759721472'
-  name: Finsee
-  flags: []
-  verified_type: blue
-  followers: 12009
-  score: 6.6
-  posts_on_topic: 1
-  role: null
-  topics:
-  - 6G
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 6.6 below 8.0'
-- handle: skathire
-  id: '635833627'
-  name: Sek Kathiresan MD
-  flags: []
-  verified_type: blue
-  followers: 30495
-  score: 9.0
-  posts_on_topic: 1
-  role: null
-  topics:
-  - base editing
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: one post and a paid badge only (needs 2+ topic posts, a senior role, a mention by a watched account,
-    or an organisation badge)'
-- handle: singularityhub
-  id: '15249166'
-  name: Singularity Hub
-  flags: []
-  verified_type: blue
-  followers: 110303
-  score: 7.5
-  posts_on_topic: 1
-  role: null
-  topics:
-  - base editing
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 7.5 below 8.0'
-- handle: ahier
-  id: '18244332'
-  name: Brian Ahier
-  flags: []
-  verified_type: blue
-  followers: 52613
-  score: 7.2
-  posts_on_topic: 1
-  role: null
-  topics:
-  - base editing
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 7.2 below 8.0'
-- handle: MolecularCell
-  id: '1345385060'
-  name: Molecular Cell
-  flags: []
-  verified_type: none
-  followers: 151081
-  score: 7.2
-  posts_on_topic: 1
-  role: null
-  topics:
-  - base editing
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: not verified (none)'
-- handle: RevvityLifeSci
-  id: '50076223'
-  name: Revvity for Life Sciences
-  flags: []
-  verified_type: blue
-  followers: 20531
-  score: 6.8
-  posts_on_topic: 1
-  role: null
-  topics:
-  - base editing
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 6.8 below 8.0'
-- handle: idtdna
-  id: '28173220'
-  name: Integrated DNA Technologies
-  flags: []
-  verified_type: blue
-  followers: 13363
-  score: 6.6
-  posts_on_topic: 1
-  role: null
-  topics:
-  - base editing
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 6.6 below 8.0'
-- handle: NaturePlants
-  id: '2444052414'
-  name: Nature Plants
-  flags: []
-  verified_type: none
-  followers: 39619
-  score: 6.6
-  posts_on_topic: 1
-  role: null
-  topics:
-  - base editing
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: not verified (none)'
-- handle: SimbokeSarah
-  id: '1363108375123255299'
-  name: Sarah, D.Sc 🐣
-  flags: []
-  verified_type: none
-  followers: 29521
-  score: 6.5
-  posts_on_topic: 1
-  role: null
-  topics:
-  - base editing
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: not verified (none)'
-- handle: ChEnected
-  id: '95439667'
-  name: American Institute of Chemical Engineers (AIChE)
-  flags: []
-  verified_type: none
-  followers: 22431
-  score: 6.3
-  posts_on_topic: 1
-  role: null
-  topics:
-  - base editing
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: not verified (none)'
-- handle: RZubiranS
-  id: '243364384'
-  name: Rafael Zubirán
-  flags: []
-  verified_type: blue
-  followers: 5772
-  score: 6.3
-  posts_on_topic: 1
-  role: null
-  topics:
-  - base editing
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 6.3 below 8.0'
-- handle: BioinfoAdv
-  id: '1377623691278876682'
-  name: Bioinformatics Advances
-  flags: []
-  verified_type: blue
-  followers: 5170
-  score: 6.2
-  posts_on_topic: 1
-  role: null
-  topics:
-  - base editing
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 6.2 below 8.0'
-- handle: srqstockpicker
-  id: '30820266'
-  name: Boaty McBoatface
-  flags:
-  - trading-tip, promotional or parody wording in the profile
-  verified_type: blue
-  followers: 4746
-  score: 6.2
-  posts_on_topic: 1
-  role: null
-  topics:
-  - base editing
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: caution flags: trading-tip, promotional or parody wording in the profile'
-- handle: ShorterLab
-  id: '474088050'
-  name: ShorterLab
-  flags: []
-  verified_type: none
-  followers: 12938
-  score: 6.1
-  posts_on_topic: 1
-  role: null
-  topics:
-  - base editing
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: not verified (none)'
-- handle: nabil125125125
-  id: '1856562223172472832'
-  name: Nabil_islaM
-  flags: []
-  verified_type: none
-  followers: 2744
-  score: 19.4
-  posts_on_topic: 8
-  role: null
-  topics:
-  - post-quantum cryptography
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: not verified (none)'
-- handle: ThalesDigiSec
-  id: '17103069'
-  name: Thales Cyber and Digital
-  flags: []
-  verified_type: none
-  followers: 19271
-  score: 8.3
-  posts_on_topic: 2
-  role: null
-  topics:
-  - post-quantum cryptography
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: not verified (none)'
-- handle: ThejesterVerse
-  id: '1862103657455435776'
-  name: The jester verse
-  flags:
-  - trading-tip, promotional or parody wording in the profile
-  verified_type: blue
-  followers: 2790
-  score: 8.0
-  posts_on_topic: 2
-  role: null
-  topics:
-  - post-quantum cryptography
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: caution flags: trading-tip, promotional or parody wording in the profile'
-- handle: WOCTechnology
-  id: '24245696'
-  name: Women of Color Magazine & Conference
-  flags: []
-  verified_type: none
-  followers: 2770
-  score: 7.4
-  posts_on_topic: 2
-  role: null
-  topics:
-  - post-quantum cryptography
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: not verified (none)'
-- handle: QuantSecXYZ
-  id: '1493680968095383558'
-  name: QuantSec
-  flags: []
-  verified_type: none
-  followers: 22171
-  score: 6.3
-  posts_on_topic: 1
-  role: null
-  topics:
-  - post-quantum cryptography
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: not verified (none)'
-- handle: Ronald_vanLoon
-  id: '555031989'
-  name: Ronald van Loon
-  flags: []
-  verified_type: blue
-  followers: 357508
-  score: 8.1
-  posts_on_topic: 1
-  role: null
-  topics:
-  - oled displays
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: one post and a paid badge only (needs 2+ topic posts, a senior role, a mention by a watched account,
-    or an organisation badge)'
-- handle: PrameyaEnglish
-  id: '1189773941302124544'
-  name: Prameya English
-  flags: []
-  verified_type: blue
-  followers: 1572
-  score: 7.7
-  posts_on_topic: 2
-  role: null
-  topics:
-  - oled displays
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 7.7 below 8.0'
-- handle: craigapplecom
-  id: '1362860562359734277'
-  name: Federighi’s Assistant
-  flags: []
-  verified_type: none
-  followers: 2129
-  score: 7.3
-  posts_on_topic: 2
-  role: null
-  topics:
-  - oled displays
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: not verified (none)'
-- handle: BLU_Products
-  id: '161771384'
-  name: BLU Products
-  flags: []
-  verified_type: blue
-  followers: 31301
-  score: 7.0
-  posts_on_topic: 1
-  role: null
-  topics:
-  - oled displays
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 7.0 below 8.0'
-- handle: PragativadiNews
-  id: '3227904038'
-  name: Pragativadi
-  flags: []
-  verified_type: blue
-  followers: 25218
-  score: 6.9
-  posts_on_topic: 1
-  role: null
-  topics:
-  - oled displays
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 6.9 below 8.0'
-- handle: HimanshiTech
-  id: '1582340767699173376'
-  name: Himanshi 👸
-  flags: []
-  verified_type: blue
-  followers: 18609
-  score: 6.8
-  posts_on_topic: 1
-  role: null
-  topics:
-  - oled displays
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 6.8 below 8.0'
-- handle: NyongesaSande
-  id: '236264187'
-  name: Nyongesa Sande
-  flags: []
-  verified_type: none
-  followers: 27033
-  score: 6.4
-  posts_on_topic: 1
-  role: null
-  topics:
-  - oled displays
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: not verified (none)'
-- handle: gadgetbytenepal
-  id: '1264990284'
-  name: Gadgetbyte
-  flags: []
-  verified_type: none
-  followers: 21769
-  score: 6.3
-  posts_on_topic: 1
-  role: null
-  topics:
-  - oled displays
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: not verified (none)'
-- handle: bobbymorris280
-  id: '1444645474489749510'
-  name: Bobby
-  flags: []
-  verified_type: blue
-  followers: 5452
-  score: 6.2
-  posts_on_topic: 1
-  role: null
-  topics:
-  - oled displays
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 6.2 below 8.0'
-- handle: TechieUltimatum
-  id: '1970531672765665280'
-  name: Tech Ultimatum
-  flags: []
-  verified_type: blue
-  followers: 4821
-  score: 6.2
-  posts_on_topic: 1
-  role: null
-  topics:
-  - oled displays
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 6.2 below 8.0'
-- handle: PaidFreeDroid
-  id: '1484352290'
-  name: PaidFreeDroid
-  flags: []
-  verified_type: blue
-  followers: 3301
-  score: 6.0
-  posts_on_topic: 1
-  role: null
-  topics:
-  - oled displays
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: score 6.0 below 8.0'
-- handle: nitin_gadkari
-  id: '97217966'
-  name: Nitin Gadkari
-  flags: []
-  verified_type: government
-  followers: 15457786
-  score: 12.2
-  posts_on_topic: 1
-  role: null
-  topics:
-  - grid-scale energy storage
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: one post and a badge only (needs 2+ topic posts, a senior role, a mention by a watched account,
-    or a business badge)'
-- handle: MIB_India
-  id: '920488039'
-  name: Ministry of Information and Broadcasting
-  flags: []
-  verified_type: government
-  followers: 2194282
-  score: 11.3
-  posts_on_topic: 1
-  role: null
-  topics:
-  - grid-scale energy storage
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: one post and a badge only (needs 2+ topic posts, a senior role, a mention by a watched account,
-    or a business badge)'
-- handle: kishanreddybjp
-  id: '160509668'
-  name: G Kishan Reddy
-  flags: []
-  verified_type: government
-  followers: 396306
-  score: 10.6
-  posts_on_topic: 1
-  role: null
-  topics:
-  - grid-scale energy storage
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: one post and a badge only (needs 2+ topic posts, a senior role, a mention by a watched account,
-    or a business badge)'
-- handle: IndiaInGuate
-  id: '1694885089'
-  name: India in Guatemala
-  flags: []
-  verified_type: government
-  followers: 27742
-  score: 9.4
-  posts_on_topic: 1
-  role: null
-  topics:
-  - grid-scale energy storage
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: one post and a badge only (needs 2+ topic posts, a senior role, a mention by a watched account,
-    or a business badge)'
-- handle: PIBDehradun
-  id: '921296037632868353'
-  name: PIB in Uttarakhand
-  flags: []
-  verified_type: government
-  followers: 18150
-  score: 9.3
-  posts_on_topic: 1
-  role: null
-  topics:
-  - grid-scale energy storage
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: one post and a badge only (needs 2+ topic posts, a senior role, a mention by a watched account,
-    or a business badge)'
-- handle: CISACyber
-  id: '18066440'
-  name: CISA Cyber
-  flags: []
-  verified_type: government
-  followers: 311951
-  score: 10.5
-  posts_on_topic: 1
-  role: null
-  topics:
-  - post-quantum cryptography
-  evidence: []
-  suggested_on: '2026-11-09'
-  description: ''
-  rechecked: '2026-11-09: one post and a badge only (needs 2+ topic posts, a senior role, a mention by a watched account,
-    or a business badge)'
 candidates:
 - handle: MicronTech
   group: company
@@ -5698,6 +4495,970 @@ approved:
   topics:
   - oled displays
   first_checked: '2026-11-09'
+- handle: eeNewsEurope
+  id: '515325247'
+  group: owner-added
+  name: eeNews Europe
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - high bandwidth memory
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 6865
+  note: 'owner approved 2026-11-09 despite: score 6.3 below 8.0'
+- handle: machinelearnflx
+  id: '4820804277'
+  group: owner-added
+  name: Machine Learning FLX
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - AI agents
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 170730
+  note: 'owner approved 2026-11-09 despite: score 7.7 below 8.0'
+- handle: dez_blanchfield
+  id: '34181507'
+  group: owner-added
+  name: Sociaall Inc.
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - AI agents
+  first_checked: '2026-11-09'
+  verified_type: none
+  followers: 172262
+  note: 'owner approved 2026-11-09 despite: not verified (none)'
+- handle: 0xRicker
+  id: '1991548234058330113'
+  group: owner-added
+  name: Ricker
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - AI agents
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 11790
+  note: 'owner approved 2026-11-09 despite: score 6.6 below 8.0'
+- handle: Lance_Edelman
+  id: '2800599859'
+  group: owner-added
+  name: Lance Edelman
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - AI agents
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 4243
+  note: 'owner approved 2026-11-09 despite: score 6.1 below 8.0'
+- handle: Techmeme
+  id: '817386'
+  group: owner-added
+  name: Techmeme
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - vision-language-action model
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 427504
+  note: 'owner approved 2026-11-09 despite: one post and a paid badge only (needs 2+ topic posts, a senior role, a mention
+    by a watched account, or an organisation badge)'
+- handle: chr1sa
+  id: '17595439'
+  group: owner-added
+  name: Chris Anderson (in Bay Area)
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - vision-language-action model
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 176273
+  note: 'owner approved 2026-11-09 despite: score 7.8 below 8.0'
+- handle: Romka2x
+  id: '1747103855056166912'
+  group: owner-added
+  name: 🇺🇸 Roman R 🇺🇸
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - vision-language-action model
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 1621
+  note: 'owner approved 2026-11-09 despite: score 7.7 below 8.0'
+- handle: OWW
+  id: '255642463'
+  group: owner-added
+  name: Robotics Papers
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - vision-language-action model
+  first_checked: '2026-11-09'
+  verified_type: none
+  followers: 2907
+  note: 'owner approved 2026-11-09 despite: not verified (none)'
+- handle: CyberRobooo
+  id: '1610480598321168384'
+  group: owner-added
+  name: CyberRobo
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - vision-language-action model
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 41025
+  note: 'owner approved 2026-11-09 despite: score 7.1 below 8.0'
+- handle: Decoded08
+  id: '2468696821'
+  group: owner-added
+  name: Decoded
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - vision-language-action model
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 2787
+  note: 'owner approved 2026-11-09 despite: score 7.0 below 8.0'
+- handle: techniahqrobot
+  id: '1444821703415242760'
+  group: owner-added
+  name: Techniahqrobot | humanoid robots
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - vision-language-action model
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 19216
+  note: 'owner approved 2026-11-09 despite: score 6.8 below 8.0'
+- handle: liuziwei7
+  id: '957685323198164992'
+  group: owner-added
+  name: Ziwei Liu
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - vision-language-action model
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 13669
+  note: 'owner approved 2026-11-09 despite: score 6.6 below 8.0'
+- handle: johnkoetsier
+  id: '1253661'
+  group: owner-added
+  name: John Koetsier
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - vision-language-action model
+  first_checked: '2026-11-09'
+  verified_type: none
+  followers: 39866
+  note: 'owner approved 2026-11-09 despite: not verified (none)'
+- handle: preskill
+  id: '207256884'
+  group: owner-added
+  name: John Preskill
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - quantum error correction
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 345674
+  note: 'owner approved 2026-11-09 despite: one post and a paid badge only (needs 2+ topic posts, a senior role, a mention
+    by a watched account, or an organisation badge)'
+- handle: gp_pulipaka
+  id: '4263007693'
+  group: owner-added
+  name: Dr. Ganapathi Pulipaka 🇺🇸
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - quantum error correction
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 148380
+  note: 'owner approved 2026-11-09 despite: score 7.7 below 8.0'
+- handle: QuantumStateX
+  id: '1687442525143912449'
+  group: owner-added
+  name: QuantumX
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - quantum error correction
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 1253
+  note: 'owner approved 2026-11-09 despite: score 7.6 below 8.0'
+- handle: Scholarshipps
+  id: '983436290451525633'
+  group: owner-added
+  name: Scholarships and Jobs in Europe, US, Canada, AU...
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - quantum error correction
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 83093
+  note: 'owner approved 2026-11-09 despite: score 7.4 below 8.0'
+- handle: QuantumDaily
+  id: '1092933627732623360'
+  group: owner-added
+  name: The Quantum Insider
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - quantum error correction
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 25438
+  note: 'owner approved 2026-11-09 despite: score 6.9 below 8.0'
+- handle: scitechgirl
+  id: '1997429568404377601'
+  group: owner-added
+  name: SciTech Girl
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - quantum error correction
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 23463
+  note: 'owner approved 2026-11-09 despite: score 6.9 below 8.0'
+- handle: Amandasatiro07
+  id: '1825386407189237760'
+  group: owner-added
+  name: Amandasatiro
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - quantum error correction
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 7678
+  note: 'owner approved 2026-11-09 despite: score 6.4 below 8.0'
+- handle: thatoptometrist
+  id: '1475027981424865280'
+  group: owner-added
+  name: Mark™️
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - quantum error correction
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 7171
+  note: 'owner approved 2026-11-09 despite: score 6.4 below 8.0'
+- handle: QuantumPapers
+  id: '136501409'
+  group: owner-added
+  name: Quantum Physics Papers
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - quantum error correction
+  first_checked: '2026-11-09'
+  verified_type: none
+  followers: 15725
+  note: 'owner approved 2026-11-09 despite: not verified (none)'
+- handle: the_hindu
+  id: '20751449'
+  group: owner-added
+  name: The Hindu
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - grid-scale energy storage
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 8429293
+  note: 'owner approved 2026-11-09 despite: one post and a paid badge only (needs 2+ topic posts, a senior role, a mention
+    by a watched account, or an organisation badge)'
+- handle: IndiaToday
+  id: '19897138'
+  group: owner-added
+  name: IndiaToday
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - grid-scale energy storage
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 6277976
+  note: 'owner approved 2026-11-09 despite: one post and a paid badge only (needs 2+ topic posts, a senior role, a mention
+    by a watched account, or an organisation badge)'
+- handle: EconomicTimes
+  id: '39743812'
+  group: owner-added
+  name: Economic Times
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - grid-scale energy storage
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 4309449
+  note: 'owner approved 2026-11-09 despite: one post and a paid badge only (needs 2+ topic posts, a senior role, a mention
+    by a watched account, or an organisation badge)'
+- handle: ETNOWlive
+  id: '225012752'
+  group: owner-added
+  name: ET NOW
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - grid-scale energy storage
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 869010
+  note: 'owner approved 2026-11-09 despite: one post and a paid badge only (needs 2+ topic posts, a senior role, a mention
+    by a watched account, or an organisation badge)'
+- handle: GreaterKashmir
+  id: '582941136'
+  group: owner-added
+  name: Greater Kashmir
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - grid-scale energy storage
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 559120
+  note: 'owner approved 2026-11-09 despite: one post and a paid badge only (needs 2+ topic posts, a senior role, a mention
+    by a watched account, or an organisation badge)'
+- handle: DDIndialive
+  id: '718368960903847936'
+  group: owner-added
+  name: DD India
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - grid-scale energy storage
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 107960
+  note: 'owner approved 2026-11-09 despite: score 7.5 below 8.0'
+- handle: c_aashish
+  id: '83182871'
+  group: owner-added
+  name: Aashish Chandorkar
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - grid-scale energy storage
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 73316
+  note: 'owner approved 2026-11-09 despite: score 7.4 below 8.0'
+- handle: TheQuietSensei
+  id: '1053245333579255808'
+  group: owner-added
+  name: Common Sensei
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - grid-scale energy storage
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 59145
+  note: 'owner approved 2026-11-09 despite: score 7.3 below 8.0'
+- handle: CBCRajouri
+  id: '1249581119931994112'
+  group: owner-added
+  name: Central Bureau of Communication, Rajouri (J&K)
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - grid-scale energy storage
+  first_checked: '2026-11-09'
+  verified_type: none
+  followers: 1264
+  note: 'owner approved 2026-11-09 despite: not verified (none)'
+- handle: india_plus_
+  id: '1973984508232806400'
+  group: owner-added
+  name: India Plus
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - grid-scale energy storage
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 30564
+  note: 'owner approved 2026-11-09 despite: score 7.0 below 8.0'
+- handle: alphaaffairsf2f
+  id: '3113911373'
+  group: owner-added
+  name: alphaaffairsf2f
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - grid-scale energy storage
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 18513
+  note: 'owner approved 2026-11-09 despite: score 6.8 below 8.0'
+- handle: dayalugurubjp
+  id: '783196991782318080'
+  group: owner-added
+  name: Dr. Dayashankar Mishra 'Dayalu'
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - grid-scale energy storage
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 18228
+  note: 'owner approved 2026-11-09 despite: score 6.8 below 8.0'
+- handle: Prabinmen
+  id: '2833299887'
+  group: owner-added
+  name: PM
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - grid-scale energy storage
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 17683
+  note: 'owner approved 2026-11-09 despite: score 6.8 below 8.0'
+- handle: PsuWatch
+  id: '1004022363002818561'
+  group: owner-added
+  name: PSUWatch
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - grid-scale energy storage
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 9788
+  note: 'owner approved 2026-11-09 despite: score 6.5 below 8.0'
+- handle: aseemmanchanda
+  id: '89475731'
+  group: owner-added
+  name: Aseem Manchanda
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - grid-scale energy storage
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 9381
+  note: 'owner approved 2026-11-09 despite: score 6.5 below 8.0'
+- handle: bhagwantkhuba
+  id: '702634714'
+  group: owner-added
+  name: Bhagwanth Khuba
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - grid-scale energy storage
+  first_checked: '2026-11-09'
+  verified_type: none
+  followers: 22970
+  note: 'owner approved 2026-11-09 despite: not verified (none)'
+- handle: SUDHIRb9661
+  id: '1842931906293497856'
+  group: owner-added
+  name: SUDHIR
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - grid-scale energy storage
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 6452
+  note: 'owner approved 2026-11-09 despite: score 6.3 below 8.0'
+- handle: governancenow
+  id: '86106315'
+  group: owner-added
+  name: Governance Now
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - grid-scale energy storage
+  first_checked: '2026-11-09'
+  verified_type: none
+  followers: 11985
+  note: 'owner approved 2026-11-09 despite: not verified (none)'
+- handle: PIB_India
+  id: '231033118'
+  group: owner-added
+  name: PIB India
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - 6G
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 3148557
+  note: 'owner approved 2026-11-09 despite: one post and a paid badge only (needs 2+ topic posts, a senior role, a mention
+    by a watched account, or an organisation badge)'
+- handle: marinaj4q
+  id: '1557872001427148803'
+  group: owner-added
+  name: Mmir
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - 6G
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 51307
+  note: 'owner approved 2026-11-09 despite: score 7.2 below 8.0'
+- handle: Finsee_main
+  id: '1653727125759721472'
+  group: owner-added
+  name: Finsee
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - 6G
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 12009
+  note: 'owner approved 2026-11-09 despite: score 6.6 below 8.0'
+- handle: skathire
+  id: '635833627'
+  group: owner-added
+  name: Sek Kathiresan MD
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - base editing
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 30495
+  note: 'owner approved 2026-11-09 despite: one post and a paid badge only (needs 2+ topic posts, a senior role, a mention
+    by a watched account, or an organisation badge)'
+- handle: singularityhub
+  id: '15249166'
+  group: owner-added
+  name: Singularity Hub
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - base editing
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 110303
+  note: 'owner approved 2026-11-09 despite: score 7.5 below 8.0'
+- handle: ahier
+  id: '18244332'
+  group: owner-added
+  name: Brian Ahier
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - base editing
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 52613
+  note: 'owner approved 2026-11-09 despite: score 7.2 below 8.0'
+- handle: MolecularCell
+  id: '1345385060'
+  group: owner-added
+  name: Molecular Cell
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - base editing
+  first_checked: '2026-11-09'
+  verified_type: none
+  followers: 151081
+  note: 'owner approved 2026-11-09 despite: not verified (none)'
+- handle: RevvityLifeSci
+  id: '50076223'
+  group: owner-added
+  name: Revvity for Life Sciences
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - base editing
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 20531
+  note: 'owner approved 2026-11-09 despite: score 6.8 below 8.0'
+- handle: idtdna
+  id: '28173220'
+  group: owner-added
+  name: Integrated DNA Technologies
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - base editing
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 13363
+  note: 'owner approved 2026-11-09 despite: score 6.6 below 8.0'
+- handle: NaturePlants
+  id: '2444052414'
+  group: owner-added
+  name: Nature Plants
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - base editing
+  first_checked: '2026-11-09'
+  verified_type: none
+  followers: 39619
+  note: 'owner approved 2026-11-09 despite: not verified (none)'
+- handle: SimbokeSarah
+  id: '1363108375123255299'
+  group: owner-added
+  name: Sarah, D.Sc 🐣
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - base editing
+  first_checked: '2026-11-09'
+  verified_type: none
+  followers: 29521
+  note: 'owner approved 2026-11-09 despite: not verified (none)'
+- handle: ChEnected
+  id: '95439667'
+  group: owner-added
+  name: American Institute of Chemical Engineers (AIChE)
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - base editing
+  first_checked: '2026-11-09'
+  verified_type: none
+  followers: 22431
+  note: 'owner approved 2026-11-09 despite: not verified (none)'
+- handle: RZubiranS
+  id: '243364384'
+  group: owner-added
+  name: Rafael Zubirán
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - base editing
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 5772
+  note: 'owner approved 2026-11-09 despite: score 6.3 below 8.0'
+- handle: BioinfoAdv
+  id: '1377623691278876682'
+  group: owner-added
+  name: Bioinformatics Advances
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - base editing
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 5170
+  note: 'owner approved 2026-11-09 despite: score 6.2 below 8.0'
+- handle: srqstockpicker
+  id: '30820266'
+  group: owner-added
+  name: Boaty McBoatface
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - base editing
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 4746
+  note: 'owner approved 2026-11-09 despite: caution flags: trading-tip, promotional or parody wording in the profile'
+- handle: ShorterLab
+  id: '474088050'
+  group: owner-added
+  name: ShorterLab
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - base editing
+  first_checked: '2026-11-09'
+  verified_type: none
+  followers: 12938
+  note: 'owner approved 2026-11-09 despite: not verified (none)'
+- handle: nabil125125125
+  id: '1856562223172472832'
+  group: owner-added
+  name: Nabil_islaM
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - post-quantum cryptography
+  first_checked: '2026-11-09'
+  verified_type: none
+  followers: 2744
+  note: 'owner approved 2026-11-09 despite: not verified (none)'
+- handle: ThalesDigiSec
+  id: '17103069'
+  group: owner-added
+  name: Thales Cyber and Digital
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - post-quantum cryptography
+  first_checked: '2026-11-09'
+  verified_type: none
+  followers: 19271
+  note: 'owner approved 2026-11-09 despite: not verified (none)'
+- handle: ThejesterVerse
+  id: '1862103657455435776'
+  group: owner-added
+  name: The jester verse
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - post-quantum cryptography
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 2790
+  note: 'owner approved 2026-11-09 despite: caution flags: trading-tip, promotional or parody wording in the profile'
+- handle: WOCTechnology
+  id: '24245696'
+  group: owner-added
+  name: Women of Color Magazine & Conference
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - post-quantum cryptography
+  first_checked: '2026-11-09'
+  verified_type: none
+  followers: 2770
+  note: 'owner approved 2026-11-09 despite: not verified (none)'
+- handle: QuantSecXYZ
+  id: '1493680968095383558'
+  group: owner-added
+  name: QuantSec
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - post-quantum cryptography
+  first_checked: '2026-11-09'
+  verified_type: none
+  followers: 22171
+  note: 'owner approved 2026-11-09 despite: not verified (none)'
+- handle: Ronald_vanLoon
+  id: '555031989'
+  group: owner-added
+  name: Ronald van Loon
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - oled displays
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 357508
+  note: 'owner approved 2026-11-09 despite: one post and a paid badge only (needs 2+ topic posts, a senior role, a mention
+    by a watched account, or an organisation badge)'
+- handle: PrameyaEnglish
+  id: '1189773941302124544'
+  group: owner-added
+  name: Prameya English
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - oled displays
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 1572
+  note: 'owner approved 2026-11-09 despite: score 7.7 below 8.0'
+- handle: craigapplecom
+  id: '1362860562359734277'
+  group: owner-added
+  name: Federighi’s Assistant
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - oled displays
+  first_checked: '2026-11-09'
+  verified_type: none
+  followers: 2129
+  note: 'owner approved 2026-11-09 despite: not verified (none)'
+- handle: BLU_Products
+  id: '161771384'
+  group: owner-added
+  name: BLU Products
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - oled displays
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 31301
+  note: 'owner approved 2026-11-09 despite: score 7.0 below 8.0'
+- handle: PragativadiNews
+  id: '3227904038'
+  group: owner-added
+  name: Pragativadi
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - oled displays
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 25218
+  note: 'owner approved 2026-11-09 despite: score 6.9 below 8.0'
+- handle: HimanshiTech
+  id: '1582340767699173376'
+  group: owner-added
+  name: Himanshi 👸
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - oled displays
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 18609
+  note: 'owner approved 2026-11-09 despite: score 6.8 below 8.0'
+- handle: NyongesaSande
+  id: '236264187'
+  group: owner-added
+  name: Nyongesa Sande
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - oled displays
+  first_checked: '2026-11-09'
+  verified_type: none
+  followers: 27033
+  note: 'owner approved 2026-11-09 despite: not verified (none)'
+- handle: gadgetbytenepal
+  id: '1264990284'
+  group: owner-added
+  name: Gadgetbyte
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - oled displays
+  first_checked: '2026-11-09'
+  verified_type: none
+  followers: 21769
+  note: 'owner approved 2026-11-09 despite: not verified (none)'
+- handle: bobbymorris280
+  id: '1444645474489749510'
+  group: owner-added
+  name: Bobby
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - oled displays
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 5452
+  note: 'owner approved 2026-11-09 despite: score 6.2 below 8.0'
+- handle: TechieUltimatum
+  id: '1970531672765665280'
+  group: owner-added
+  name: Tech Ultimatum
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - oled displays
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 4821
+  note: 'owner approved 2026-11-09 despite: score 6.2 below 8.0'
+- handle: PaidFreeDroid
+  id: '1484352290'
+  group: owner-added
+  name: PaidFreeDroid
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - oled displays
+  first_checked: '2026-11-09'
+  verified_type: blue
+  followers: 3301
+  note: 'owner approved 2026-11-09 despite: score 6.0 below 8.0'
+- handle: nitin_gadkari
+  id: '97217966'
+  group: owner-added
+  name: Nitin Gadkari
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - grid-scale energy storage
+  first_checked: '2026-11-09'
+  verified_type: government
+  followers: 15457786
+  note: 'owner approved 2026-11-09 despite: one post and a badge only (needs 2+ topic posts, a senior role, a mention by a
+    watched account, or a business badge)'
+- handle: MIB_India
+  id: '920488039'
+  group: owner-added
+  name: Ministry of Information and Broadcasting
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - grid-scale energy storage
+  first_checked: '2026-11-09'
+  verified_type: government
+  followers: 2194282
+  note: 'owner approved 2026-11-09 despite: one post and a badge only (needs 2+ topic posts, a senior role, a mention by a
+    watched account, or a business badge)'
+- handle: kishanreddybjp
+  id: '160509668'
+  group: owner-added
+  name: G Kishan Reddy
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - grid-scale energy storage
+  first_checked: '2026-11-09'
+  verified_type: government
+  followers: 396306
+  note: 'owner approved 2026-11-09 despite: one post and a badge only (needs 2+ topic posts, a senior role, a mention by a
+    watched account, or a business badge)'
+- handle: IndiaInGuate
+  id: '1694885089'
+  group: owner-added
+  name: India in Guatemala
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - grid-scale energy storage
+  first_checked: '2026-11-09'
+  verified_type: government
+  followers: 27742
+  note: 'owner approved 2026-11-09 despite: one post and a badge only (needs 2+ topic posts, a senior role, a mention by a
+    watched account, or a business badge)'
+- handle: PIBDehradun
+  id: '921296037632868353'
+  group: owner-added
+  name: PIB in Uttarakhand
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - grid-scale energy storage
+  first_checked: '2026-11-09'
+  verified_type: government
+  followers: 18150
+  note: 'owner approved 2026-11-09 despite: one post and a badge only (needs 2+ topic posts, a senior role, a mention by a
+    watched account, or a business badge)'
+- handle: CISACyber
+  id: '18066440'
+  group: owner-added
+  name: CISA Cyber
+  approved_by: owner
+  added_on: '2026-11-09'
+  topics:
+  - post-quantum cryptography
+  first_checked: '2026-11-09'
+  verified_type: government
+  followers: 311951
+  note: 'owner approved 2026-11-09 despite: one post and a badge only (needs 2+ topic posts, a senior role, a mention by a
+    watched account, or a business badge)'
 changes:
 - date: '2026-11-09'
   change: 'owner: auto_manage on, verified accounts only, up to 200 accounts; roles and @mentions by watched accounts count'
@@ -5891,6 +5652,8 @@ changes:
   change: 're-check under stricter rules: 73 agent-added account(s) moved back to suggested'
 - date: '2026-11-09'
   change: 're-check under stricter rules: 6 agent-added account(s) moved back to suggested'
+- date: '2026-11-09'
+  change: owner approved 79 accounts the re-check had moved back to suggested
 require_verified: true
 endorse_min_watchers: 2
 endorsements: {}

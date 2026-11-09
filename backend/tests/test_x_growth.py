@@ -128,3 +128,20 @@ def test_budget_stops_reading_and_new_topics_trigger_capped_account_searches(tmp
     assert x.searches == [["glass substrate"]]                                                 # 1 per day
     assert "labvp" in [a["handle"] for a in wl.load(w.watchlist_path)["approved"]]
     assert any("postponed" in e["detail"] for e in state.events)
+
+
+def test_post_cap_is_shared_across_query_chunks_so_more_accounts_do_not_cost_more():
+    import httpx
+
+    from app.sources.x import XClient, account_chunks
+    handles = [f"fixtureacct{i:03d}" for i in range(130)]
+    asked = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        asked.append(int(request.url.params["max_results"]))
+        return httpx.Response(200, json={"data": [], "includes": {"users": []}, "meta": {"result_count": 0}})
+    x = XClient("FIXTURE-token", http=httpx.Client(transport=httpx.MockTransport(handler)), sleep=lambda s: None)
+    x.recent_from_accounts(handles, max_posts=100)
+    chunks = len(account_chunks(handles, ""))
+    assert chunks > 1 and len(asked) == chunks
+    assert sum(asked) <= max(100, 10 * chunks)          # never chunks x 100

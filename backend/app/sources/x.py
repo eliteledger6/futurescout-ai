@@ -207,8 +207,11 @@ class XClient:
         """Newest posts by the approved accounts on ANY subject (watch mode scan). `since_id` skips posts
         already seen, so a quiet period costs nothing but the request."""
         records: dict[str, SourceRecord] = {}
-        per_chunk = max(10, min(max_posts, 100))
-        for query in account_chunks(usernames, ""):
+        queries = account_chunks(usernames, "")
+        # X bills every post a request returns, so the cap is shared across ALL chunks (10 is X's minimum per request):
+        # 130 accounts = ~6 queries x 17 posts, not 6 x 100.
+        per_chunk = max(10, min(100, max_posts // max(1, len(queries))))
+        for query in queries:
             params: dict = {
                 "query": query, "max_results": per_chunk, "sort_order": "recency",
                 "tweet.fields": "created_at,author_id,lang,public_metrics", "expansions": "author_id", "user.fields": "username,name",
@@ -225,8 +228,10 @@ class XClient:
     def search_watchlist(self, keywords: list[str], usernames: list[str], *, max_posts: int = 30) -> list[SourceRecord]:
         """Topic posts by the approved accounts; the account list is chunked to respect the query length limit."""
         records: dict[str, SourceRecord] = {}
-        for query in watchlist_queries(keywords, usernames):
-            for r in self.search_recent(query, max_posts=max_posts):
+        queries = watchlist_queries(keywords, usernames)
+        per_chunk = max(10, max_posts // max(1, len(queries)))   # shared cap: billing is per post returned
+        for query in queries:
+            for r in self.search_recent(query, max_posts=per_chunk):
                 records[r.id] = r
         return sorted(records.values(), key=lambda r: r.published_at or "", reverse=True)[:max_posts]
 
