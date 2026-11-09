@@ -299,8 +299,8 @@ def run_research(
         run.append("patent")
     if timing and timing.llm_alias:
         run.append("timing")
-    if scout_result and scout_result.status == "ok":
-        run.append("scout")
+    if scout_result and (scout_result.status == "ok" or (scout_result.status == "partial" and (scout_result.incumbents or scout_result.unlisted))):
+        run.append("scout")   # partial with incumbents/unlisted = it ran and found companies, just no NEW listed one
     if investment and investment.draft:
         run.append("investment")
     usage = router.usage_summary()

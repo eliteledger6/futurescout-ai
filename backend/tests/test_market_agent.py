@@ -219,7 +219,7 @@ def test_workflow_runs_market_in_parallel_and_investment_sees_m_ids():
     market = MarketAgent(router, edgar(), gdelt(), companies=COMPANIES[:1], now=lambda: NOW)
     report = workflow.run_research("chiplet interconnect", router=router, openalex=oa, arxiv=ax, max_papers=10,
                                    market_agent=market, now=lambda: NOW)
-    assert report.agents_run == ["chief", "science", "risk", "market", "investment"]
+    assert report.agents_run == ["chief", "science", "risk", "market", "scout", "investment"]
     assert report.agents_not_run == ["patent", "x"]
     assert script.calls["MarketReport"] == 1  # not re-run by the extra Science round
     assert report.market.findings[0].fid == "M1" and report.market.findings[0].label == Label.VERIFIED_FACT

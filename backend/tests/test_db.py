@@ -69,7 +69,7 @@ def test_save_and_reload_a_full_run(migrated):
     with Session(migrated) as session:
         run = session.get(Run, run_id)
         assert run.topic == "chiplet interconnect" and run.report_markdown == markdown
-        assert run.agents_run == ["chief", "science", "risk", "market", "investment"]
+        assert run.agents_run == ["chief", "science", "risk", "market", "scout", "investment"]
         assert run.score_reportable is False and run.score == report.investment.score.score
         # findings from every agent, with their ids and labels
         rows = session.scalars(select(FindingRow).where(FindingRow.run_id == run_id)).all()

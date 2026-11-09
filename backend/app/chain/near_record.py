@@ -160,6 +160,14 @@ class NearRecorder:
         return ChainRecord("testnet", self.contract, self.account_id, f"sales/{key}/{buyer}", tx_hash, tx or None,
                            EXPLORER_TX.format(tx=tx) if tx else EXPLORER_ACCOUNT.format(account=self.account_id))
 
+    def record_fund_decision(self, key: str, value: dict) -> ChainRecord:
+        """Fingerprint of one topic-fund decision (paper simulation), under <account>/futurescout/funds/<key>."""
+        k = record_key(key)
+        args = {"data": {self.account_id: {APP_KEY: {"funds": {k: value}}}}}
+        tx = self._signer("set", args, STORAGE_DEPOSIT_YOCTO)
+        return ChainRecord("testnet", self.contract, self.account_id, f"funds/{k}", str(value.get("sha256", "")), tx or None,
+                           EXPLORER_TX.format(tx=tx) if tx else EXPLORER_ACCOUNT.format(account=self.account_id))
+
     # ---- read (free, no key needed) -----------------------------------------
     def read(self, run_key: str) -> Optional[dict]:
         return read_record(self._http, self.rpc, self.contract, self.account_id, record_key(run_key))

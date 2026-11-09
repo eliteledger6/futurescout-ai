@@ -49,7 +49,7 @@ def test_list_and_detail_from_report_files(file_store, report):
     assert len(runs) == 1  # the broken file is skipped, not fatal
     card = runs[0]
     assert card["id"] == "report_20261108T000000Z" and card["topic"] == "chiplet interconnect"
-    assert card["agents_run"] == ["chief", "science", "risk", "market", "investment"] and card["findings"] == 6
+    assert card["agents_run"] == ["chief", "science", "risk", "market", "scout", "investment"] and card["findings"] == 6
     detail = client.get(f"/api/runs/{card['id']}").json()
     assert detail["report"]["market"]["findings"][0]["fid"] == "M1"
     assert detail["markdown"].startswith("# FUTURESCOUT AI research report")

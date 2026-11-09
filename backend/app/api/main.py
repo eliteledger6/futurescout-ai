@@ -13,6 +13,7 @@ Runs locally on 127.0.0.1 (see scripts/serve.py). Never returns keys, prompts or
 from __future__ import annotations
 
 import logging
+import re
 import threading
 import time
 import uuid
@@ -36,6 +37,7 @@ from app.chain.near_record import SOCIALDB_TESTNET, TESTNET_RPC
 from app.config import ConfigError, Settings, get_settings
 from app.graph.workflow import AGENTS_NOT_BUILT
 from app.models.config import load_model_config
+from app.fund import DISCLAIMER as FUND_DISCLAIMER, fund_payload, list_funds, load_fund
 from app.portfolio import load_portfolio, portfolio_payload, save_portfolio, sync_from_store
 from app.radar import load_radar
 from app.treasury import default_balance_reader, treasury_report
@@ -103,6 +105,7 @@ def create_app(
     sale_recorder: Optional[Callable[[], Optional[NearRecorder]]] = None,
     balance_reader: Optional[Callable[[str], dict]] = None,
     portfolio_path: Optional[Path] = None,
+    funds_dir: Optional[Path] = None,
 ) -> FastAPI:
     settings = settings or get_settings()
     read_onchain = chain_reader or _read_testnet
@@ -110,6 +113,7 @@ def create_app(
     if ledger is None:
         ledger = DbLedger(store._sessions) if isinstance(store, DbStore) else FileLedger(service.RUNS_DIR / "purchases.json")
     portfolio_path = portfolio_path or (service.RUNS_DIR / "portfolio.json")
+    funds_dir = funds_dir or (service.RUNS_DIR / "funds")
     balances = balance_reader if balance_reader is not None else default_balance_reader()
     jobs: dict[str, Job] = {}
     lock = threading.Lock()
@@ -250,6 +254,23 @@ def create_app(
         if sync_from_store(pf, store):
             save_portfolio(pf, portfolio_path)
         return portfolio_payload(pf, prices_configured=bool(settings.alpha_vantage_key_value()))
+
+    @app.get("/api/funds")
+    def funds() -> dict:
+        """Topic funds (SIMULATION, stages 1-2). Built and updated by scripts/funds.py; read-only here."""
+        items = [{"topic": f.topic, "slug": f.slug, "sector": f.sector, "updated_at": f.updated_at.isoformat() if f.updated_at else None,
+                  "history": [h.model_dump() for h in f.history[-60:]], **f.summary()} for f in list_funds(funds_dir)]
+        items.sort(key=lambda x: -(x["value_usd"] or 0))
+        return {"funds": items, "label": "simulation", "disclaimer": FUND_DISCLAIMER}
+
+    @app.get("/api/funds/{slug}")
+    def fund_detail(slug: str) -> dict:
+        if not re.fullmatch(r"[a-z0-9-]{1,60}", slug):
+            raise HTTPException(status_code=404, detail="fund not found")
+        f = load_fund(funds_dir / f"{slug}.json")
+        if f is None:
+            raise HTTPException(status_code=404, detail="fund not found")
+        return fund_payload(f)
 
     balance_cache: dict = {}
 

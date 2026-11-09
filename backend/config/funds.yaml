@@ -1,0 +1,35 @@
+# Topic funds: one PAPER fund per research topic (SIMULATION: no money moves, nothing is traded).
+# Stage 1 = paper trades at real closing prices; stage 2 = real NEAR Intents (1Click) DRY-RUN quotes for holdings
+# that have a tokenized version (dry quotes reserve nothing and send nothing). Owner decision 2026-11-09.
+
+start_cash_usd: 10000
+benchmark: SPY                 # broad-market comparison for every fund
+
+# Risk tiers by company size (SEC XBRL revenue size class) and their share of the invested money.
+tiers:
+  low:    {label: "Low risk: large companies",          weight: 0.60, size_classes: [large]}
+  medium: {label: "Medium risk: mid-size companies",    weight: 0.30, size_classes: [mid]}
+  high:   {label: "High risk: small companies",         weight: 0.10, size_classes: [small, micro]}
+max_holdings_per_tier: 4
+
+# Decision agent (code rules; every reason is written to the decision log and sealed on NEAR testnet).
+# Target share of the fund invested, by the report's verdict band (app/report/verdict.py):
+exposure_by_band:
+  strong: 1.00
+  building: 0.75
+  early: 0.40
+  weak: 0.10
+  insufficient: 0.00
+score_drop_points: 8           # score fell this much vs the last decision -> halve the target ("signal weakening")
+stretched_stage_factor: 0.5    # a tier whose stocks look stretched (timing risk high) invests only this share now
+min_trade_share: 0.02          # ignore rebalancing trades smaller than 2% of the fund (avoid churn)
+review_days: 7                 # with a staged entry still open, review again after this many days
+fee_pct: 0.30                  # ASSUMED cost per trade (swap fee + slippage), close to the real 1Click dry quotes
+
+# Stage 2: NEAR Intents 1Click dry-run quotes (public API, no key, nothing is sent)
+intents:
+  api: https://1click.chaindefuser.com
+  pay_asset: "nep141:17208628f84f5d6ad33f0da3bbbeb27ffcb398eac501a31bd6ad2011e36133a1"   # USDC on NEAR
+  pay_decimals: 6
+  quote_account: intents.near  # placeholder recipient required by the quote format; dry quotes send nothing
+  price_tolerance_pct: 15      # a token only counts as a stock's tokenized version if its price is this close
