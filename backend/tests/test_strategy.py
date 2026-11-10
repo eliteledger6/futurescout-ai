@@ -82,3 +82,52 @@ def test_auto_approve_is_off_by_default_and_present_in_the_config():
     assert LiveConfig().auto_approve is False
     cfg = yaml.safe_load(Path(__file__).resolve().parents[1].joinpath("config", "funds.yaml").read_text(encoding="utf-8"))
     assert isinstance(cfg["live"]["auto_approve"], bool)   # the owner's switch (set true by the owner 2026-11-10); Claude never flips it
+
+
+# ---------------------------------------------------------------- selling (owner's written yes 2026-11-10)
+HELD = [{"ticker": "GOOGL", "symbol": "GOOGLon", "asset_id": "b", "topic": "AI agents", "quantity": 0.12, "cost_usd": 35.0, "value_usd": 36.0,
+         "held_hours": 30.0, "report_verdict": "strong", "report_confidence_pct": 38.7, "last_close": 300.0, "last_close_date": "2026-11-09"},
+        {"ticker": "MRVL", "symbol": "MRVLon", "asset_id": "a", "topic": "hbm", "quantity": 0.16, "cost_usd": 25.0, "value_usd": 24.0,
+         "held_hours": 6.0, "report_verdict": "strong", "report_confidence_pct": 46.8}]
+
+
+def sell_run(d, **kw):
+    r = FakeRouter(d)
+    args = dict(triggers=[NS(kind="manual", ticker="", topic="", detail="owner review")], candidates=cands(), holdings=[], context={},
+                budget_usd=0.0, fixed_usd=None, cfg=CFG, adds_so_far={}, sellable=HELD, sells_enabled=True, can_buy=False, sells_left_today=2)
+    args.update(kw)
+    return assess(r, **args), r
+
+
+def test_sales_follow_the_rules_in_code():
+    sell = {"action": "sell", "ticker": "googl", "fraction": 0.5, "what_changed": "w", "rationale": "rotation: GOOGL's report is below the minimum", "confidence": "low"}
+    (d, h, *_ , notes), r = sell_run(sell)
+    assert d.action == "sell" and h["symbol"] == "GOOGLon" and d.fraction == 0.5 and d.usd == 18.0 and d.ticker == "GOOGL"
+    assert "HOLDINGS YOU COULD SELL" in r.seen and "NO CASH" in r.seen and "SELLING is allowed" in r.seen
+    (d, h, *_, notes), _ = sell_run({**sell, "fraction": None})
+    assert d.fraction == 1.0 and d.usd == 36.0                                                    # no share given: the whole holding
+    (d, _, *_, notes), _ = sell_run({**sell, "fraction": 0.05})
+    assert d.fraction == CFG.min_sell_fraction and any("raised to the minimum" in n for n in notes)
+    refusals = [
+        (dict(sells_enabled=False), sell, "switched off"),
+        (dict(sells_left_today=0), sell, "no sales left today"),
+        ({}, {**sell, "ticker": "NVDA"}, "not a holding"),
+        ({}, {**sell, "ticker": "MRVL"}, "held only 6 h"),                                       # bought this morning: no churning
+    ]
+    for kw, dec, match in refusals:
+        (d, h, *_, notes), _ = sell_run(dec, **kw)
+        assert d.action == "hold" and h is None and any(match in n for n in notes), (match, notes)
+    buy = {"action": "buy", "ticker": "MRVL", "usd": 25, "what_changed": "w", "rationale": "r", "confidence": "low"}
+    (d, _, *_, notes), _ = sell_run(buy)
+    assert d.action == "hold" and any("no cash" in n for n in notes)                             # without cash a buy must wait for a sale
+    (d, c, *_), r = sell_run(buy, can_buy=True, fixed_usd=25.0, budget_usd=25.0, sells_enabled=False)
+    assert d.action == "buy" and c.ticker == "MRVL" and "SELLING is not available" in r.seen
+
+
+def test_a_too_small_sale_is_sized_up_to_the_market_minimum_or_refused():
+    sell = {"action": "sell", "ticker": "GOOGL", "fraction": 0.5, "what_changed": "w", "rationale": "r", "confidence": "low"}
+    (d, h, *_, notes), _ = sell_run(sell, min_sale_usd=20.0)                     # half of $36 = $18 < $20
+    assert d.action == "sell" and d.usd >= 20.0 and d.fraction > 0.5 and any("market's minimum" in n for n in notes)
+    small = [{**HELD[0], "value_usd": 15.0}]
+    (d, h, *_, notes), _ = sell_run(sell, min_sale_usd=20.0, sellable=small)
+    assert d.action == "hold" and any("below the market's minimum" in n for n in notes)

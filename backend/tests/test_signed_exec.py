@@ -126,8 +126,9 @@ def test_happy_path_logs_in_checks_balance_verifies_then_submits_once(tmp_path):
     st, p = TradingState(), prop()
     st.proposals.append(p)
     ex.execute(st, p)
-    assert p.status == "deposited" and len(sent) == 1 and sent[0] == order()          # submitted once; outcome recorded by the owner
-    assert api.calls == ["login", "balances", ("quote", "CONFIDENTIAL_INTENTS", False, "tok"), "order"]
+    assert p.status == "deposited" and len(sent) == 1 and sent[0] == order()          # submitted once; nothing arrived: the owner confirms
+    assert api.calls[:4] == ["login", "balances", ("quote", "CONFIDENTIAL_INTENTS", False, "tok"), "order"]
+    assert set(api.calls[4:]) == {"balances"}                                           # after submitting: only balance reads
     assert p.quote["route"] == "confidential" and [e.status for e in p.history][:2] == ["executing", "deposited"]
     assert "IntentHash111" in " ".join(e.note for e in p.history) and "confirm sig1234567" in p.history[-1].note
     with pytest.raises(RuntimeError, match="never sent twice"):
@@ -195,3 +196,110 @@ def test_submit_signs_the_exact_payload_and_posts_it_once():
     assert key.split(":")[1] not in json.dumps(body)
     with pytest.raises(RuntimeError, match="refused the order"):
         submit_signed_order(httpx.Client(transport=httpx.MockTransport(lambda r: httpx.Response(400, json={"message": "bad"}))), "https://oc.test", None, o, key)
+
+
+# ---------------------------------------------------------------- settle by watching the private balance; selling (2026-11-10)
+GOOG = "nep141:googl"
+GOOG_UNITS = 80 * 10 ** 15                                            # 0.08 GOOGLon (18 decimals)
+
+
+class LiveBalances(FakeApi):
+    """Private balance that changes once the order is submitted (as the real one did within seconds)."""
+
+    def __init__(self, before, after, **kw):
+        super().__init__(**kw)
+        self.before, self.after, self.submitted = before, after, False
+
+    def balances(self, token):
+        self.calls.append("balances")
+        return [{"tokenId": k, "available": str(v)} for k, v in (self.after if self.submitted else self.before).items()]
+
+
+def make_live(tmp_path, api, **cfg_kw):
+    cfg = LiveConfig(**{**dict(trading_enabled=True, route="confidential", signed_route_enabled=True, max_trade_usd=25, max_day_usd=35,
+                                max_total_usd=35, poll_seconds=0.0), **cfg_kw})
+    ex, sent = make(tmp_path, api, cfg=cfg)
+    orig = ex._submit
+
+    def submit(o, key):
+        api.submitted = True
+        return orig(o, key)
+    ex._submit = submit
+    return ex, sent
+
+
+def test_buy_is_marked_success_when_the_token_shows_up_in_the_private_balance(tmp_path):
+    q = {"amountIn": str(UNITS), "amountInUsd": "25", "amountOut": "500000000000000000", "amountOutFormatted": "0.5", "amountOutUsd": "24.8",
+         "minAmountOut": "495000000000000000", "depositAddress": DEPOSIT, "deadline": "2026-11-13T09:00:00.000Z"}
+    api = LiveBalances({NEAR: 10 * 10 ** 24}, {NEAR: 5 * 10 ** 24, "imt:" + "7" * 64 + ":" + GOOG: 499 * 10 ** 15}, quote=q)
+    ex, sent = make_live(tmp_path, api)
+    st, p = TradingState(), prop()
+    st.proposals.append(p)
+    ex.execute(st, p)
+    assert p.status == "success" and len(sent) == 1 and p.sha256
+    assert p.result["status"].startswith("SUCCESS (seen in the private balance)") and float(p.result["amountOutFormatted"]) == pytest.approx(0.499)
+
+
+def sell_prop(fraction=1.0, status="approved"):
+    p = Proposal(id="sell123456", created_at=NOW, mode="live", side="sell", topic="AI agents", ticker="GOOGL", symbol="GOOGLon", asset_id=GOOG,
+                 usd=24.0, fraction=fraction, quantity=0.08, ref_close=300.0, ref_close_date="2026-11-09")
+    p.status = status
+    return p
+
+
+def holding_state():
+    st = TradingState()
+    b = Proposal(id="buy0000001", created_at=datetime(2026, 11, 9, tzinfo=timezone.utc), mode="live", topic="AI agents", ticker="GOOGL",
+                 symbol="GOOGLon", asset_id=GOOG, usd=25.0)
+    b.status, b.result = "success", {"amountOutFormatted": "0.08"}
+    st.proposals.append(b)
+    return st
+
+
+def sell_quote(units=GOOG_UNITS, out_usd="23.9", in_usd="24.0", q_in="0.08"):
+    return {"amountIn": str(units), "amountInFormatted": q_in, "amountInUsd": in_usd, "amountOut": str(48 * 10 ** 23), "amountOutFormatted": "4.8",
+            "amountOutUsd": out_usd, "minAmountOut": str(475 * 10 ** 22), "depositAddress": DEPOSIT, "deadline": "2026-11-13T09:00:00.000Z"}
+
+
+def test_sale_pays_in_the_held_token_and_gets_near_back(tmp_path):
+    api = LiveBalances({GOOG: GOOG_UNITS, NEAR: 10 ** 23}, {NEAR: 10 ** 23 + 48 * 10 ** 23}, quote=sell_quote(),
+                       order_obj=order(tokens={"imt:" + "7" * 64 + ":" + GOOG: str(GOOG_UNITS)}))
+    ex, sent = make_live(tmp_path, api, sells_enabled=True)
+    st = holding_state()
+    p = sell_prop()
+    st.proposals.append(p)
+    ex.execute(st, p)
+    assert p.status == "success" and len(sent) == 1 and "sale of 0.08 GOOGLon" in p.history[0].note
+    assert st.live_holdings() == [] and st.proceeds("live") == pytest.approx(23.9)
+    assert st.invested("live", "spent") == 25.0 and st.invested("live", "net") == pytest.approx(1.1)   # net mode frees the sale money
+
+
+def test_every_sale_guard_stops_before_signing(tmp_path):
+    bal = {GOOG: GOOG_UNITS, NEAR: 10 ** 23}
+    good_order = order(tokens={GOOG: str(GOOG_UNITS)})
+    cases = [
+        ({}, sell_quote(), good_order, holding_state(), "sells_enabled is false"),                                   # owner switch, off by default
+        ({"sells_enabled": True}, sell_quote(), good_order, TradingState(), "holds no GOOGLon according to its records"),
+        ({"sells_enabled": True}, sell_quote(out_usd="20.0", in_usd="24.0"), good_order, holding_state(), "cost"),
+        ({"sells_enabled": True, "max_cost_pct": 50}, sell_quote(out_usd="20.0", in_usd="20.5"), good_order, holding_state(), "below the stock's last close"),
+        ({"sells_enabled": True}, sell_quote(), order(tokens={GOOG: str(GOOG_UNITS * 2)}), holding_state(), "not exactly"),
+        ({"sells_enabled": True}, sell_quote(), order(tokens={GOOG: str(GOOG_UNITS)}, receiver="attacker.near"), holding_state(), "deposit address"),
+        ({"sells_enabled": True, "max_sells_per_day": 0}, sell_quote(), good_order, holding_state(), r"sale\(s\) today"),
+    ]
+    for i, (cfg_kw, q, o, st, match) in enumerate(cases):
+        api = LiveBalances(bal, bal, quote=q, order_obj=o)
+        ex, sent = make_live(tmp_path / str(i), api, **cfg_kw)
+        p = sell_prop()
+        st.proposals.append(p)
+        with pytest.raises(RuntimeError, match=match):
+            ex.execute(st, p)
+        assert sent == [], match
+    half = LiveBalances(bal, bal, quote=sell_quote(units=GOOG_UNITS // 2, q_in="0.04", in_usd="12", out_usd="11.95"),
+                        order_obj=order(tokens={GOOG: str(GOOG_UNITS // 2)}))
+    ex, sent = make_live(tmp_path / "half", half, sells_enabled=True)
+    st, p = holding_state(), sell_prop(fraction=0.5)
+    p.usd = 12.0
+    st.proposals.append(p)
+    ex.execute(st, p)                                                  # half the holding: exactly half the units are signed over
+    assert len(sent) == 1 and p.quote["amountIn"] == str(GOOG_UNITS // 2) and p.status == "deposited"
+    assert LiveConfig().sells_enabled is False and LiveConfig().budget_mode == "spent"

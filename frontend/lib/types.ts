@@ -277,16 +277,19 @@ export interface TopicFund { topic: string; slug: string; sector: string | null;
 /* ---- stage 3: live-trading test + shadow mode (read-only view) */
 export interface TradeQuote { amountInUsd?: string; amountOutUsd?: string; amountOutFormatted?: string; depositAddress?: string; quotedAt?: string; dry?: boolean }
 export interface TradeProposal {
-  id: string; created_at: string; mode: "live" | "shadow"; side: "buy" | "hold"; topic: string; ticker: string; symbol: string; usd: number;
+  id: string; created_at: string; mode: "live" | "shadow"; side: "buy" | "sell" | "hold"; topic: string; ticker: string; symbol: string; usd: number;
+  fraction?: number | null; quantity?: number | null;
   rationale: string; risks: string[]; confidence: string; model: string | null; model_cost_usd: number;
   ref_close: number | null; ref_close_date: string | null; dry_quote: TradeQuote | null; quote: TradeQuote | null; status: string;
-  deposit_tx: string | null; result: { status?: string; amountOutFormatted?: string; amountOutUsd?: string } | null; error: string | null;
+  deposit_tx: string | null; result: { status?: string; amountInFormatted?: string; amountOutFormatted?: string; amountOutUsd?: string } | null; error: string | null;
   history: { at: string; status: string; note: string }[]; sha256: string | null; chain: { explorer_url?: string } | null;
 }
 export interface Trading {
   network: string; account: string | null; key_configured: boolean; trading_enabled: boolean; kill_switch: boolean;
   limits: { max_trade_usd: number; max_day_usd: number; max_total_usd: number; price_band_pct: number; max_cost_pct: number; shadow_budget_usd: number };
-  spent: { live_total_usd: number; live_today_usd: number; shadow_filled_usd: number };
+  spent: { live_total_usd: number; live_today_usd: number; shadow_filled_usd: number; live_proceeds_usd?: number; live_counted_usd?: number };
+  selling?: { enabled: boolean; budget_mode: "spent" | "net"; max_sells_per_day: number };
+  live_holdings?: { ticker: string; symbol: string; topic: string; quantity: number; cost_usd: number; first_bought: string; buys: number }[];
   balances: { account: string; near: number | null; usdc: number | null; holdings: { symbol: string; ticker: string; quantity: number; value_usd: number | null }[]; errors: string[] } | null;
   allowlist: { ticker: string; symbol: string; topic: string; band: string | null; score: number | null; price: number | null }[];
   proposals: TradeProposal[]; explorer_tx: string; approval: string; disclaimer: string;
@@ -296,6 +299,6 @@ export interface Trading {
     max_adds_per_ticker: number; max_ticker_share_pct: number }; last_check_at: string | null };
   checks: { id: string; at: string; mode: "live" | "shadow"; triggers: { kind: string; ticker: string; topic: string; detail: string }[]; action: string;
     ticker: string; usd: number; summary: string; what_changed: string; proposal_id: string | null; model: string | null; cost_usd: number; notes: string[] }[];
-  shadow_portfolio: { budget_usd: number; invested_usd: number; cash_usd: number; value_usd: number;
+  shadow_portfolio: { budget_usd: number; invested_usd: number; cash_usd: number; value_usd: number; realized_usd?: number;
     positions: { symbol: string; ticker: string; topic: string; quantity: number; cost_usd: number; orders: number; value_usd: number | null; change_pct: number | null }[] };
 }

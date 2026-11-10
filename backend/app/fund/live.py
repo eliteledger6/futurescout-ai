@@ -6,7 +6,8 @@ mode (real quotes, nothing sent) continues with a larger pretend budget. See STA
 
 Safety, all enforced HERE in code and never left to a model:
   * `trading_enabled` is false by default (config/funds.yaml -> live), and a kill-switch file stops everything;
-  * only BUYS of tokens on the allowlist built from the price-checked Ondo routes; sells are not implemented;
+  * BUYS of tokens on the allowlist built from the price-checked Ondo routes; SELLS (owner's written yes 2026-11-10) only of
+    a token the fund holds, only on the private signed route, only when the owner set `live.sells_enabled: true`;
   * caps per trade, per UTC day and in total; quoted price within a band of the stock's last close; cost cap;
   * a proposal can be executed once: its status is saved as "executing" BEFORE any transfer, and a proposal that is
     past "approved" is never sent again (resume only polls the status of the deposit already made);
@@ -31,7 +32,7 @@ import time
 import uuid
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from typing import Any, Callable, Optional
+from typing import Any, Callable, Literal, Optional
 
 import httpx
 from pydantic import BaseModel, Field
@@ -42,6 +43,7 @@ DISCLAIMER = ("Real-money test with a very small budget, approved trade by trade
               "issued by Ondo and are not the shares themselves. Not investment advice.")
 FINAL = {"success", "refunded", "failed", "rejected", "shadow_filled", "hold"}
 SPENT = {"executing", "deposited", "success"}          # statuses that count against the caps
+SIDES = ("buy", "sell")
 
 
 # ------------------------------------------------------------------ config
@@ -62,6 +64,10 @@ class LiveConfig(BaseModel):
     signed_route_enabled: bool = False   # second switch for the confidential route; false = built but cannot submit
     order_recipients: list[str] = ["intents.near"]   # verifiers a generated order may be addressed to
     intents_contract: str = "intents.near"
+    sells_enabled: bool = False          # OWNER-ONLY switch (written yes 2026-11-10): the agent may sell a held token for NEAR
+    budget_mode: Literal["spent", "net"] = "spent"   # "spent": the total cap counts every dollar ever spent on buys;
+                                         # "net" (OWNER-ONLY): it counts buys minus the proceeds of sales, so sale money can be re-invested
+    max_sells_per_day: int = 2
     max_trade_usd: float = 5.0
     max_day_usd: float = 5.0
     max_total_usd: float = 5.0
@@ -89,12 +95,14 @@ class Proposal(BaseModel):
     id: str
     created_at: datetime
     mode: str                                  # live | shadow
-    side: str = "buy"                          # buy | hold (the agent proposed to do nothing)
+    side: str = "buy"                          # buy | sell | hold (the agent proposed to do nothing)
     topic: str
     ticker: str
     symbol: str                                # token symbol, e.g. INTCon
     asset_id: str
-    usd: float
+    usd: float                                 # buy: amount paid; sell: estimated value of what is sold
+    fraction: Optional[float] = None           # sell: share of the holding to sell (0..1)
+    quantity: Optional[float] = None           # sell: tokens to sell (estimate at proposal time; the real amount is in quote)
     rationale: str = ""
     risks: list[str] = Field(default_factory=list)
     confidence: str = "low"
@@ -131,14 +139,67 @@ class TradingState(BaseModel):
         return next((p for p in self.proposals if p.id == pid or p.id.startswith(pid)), None)
 
     def spent(self, mode: str = "live", day: Optional[str] = None) -> float:
+        """Dollars paid for BUYS (sells never count here)."""
         tot = 0.0
         for p in self.proposals:
-            if p.mode != mode or p.status not in SPENT:
+            if p.mode != mode or p.status not in SPENT or p.side != "buy":
                 continue
             if day and not any(e.status == "executing" and e.at.astimezone(timezone.utc).date().isoformat() == day for e in p.history):
                 continue
             tot += p.usd
         return round(tot, 2)
+
+    def proceeds(self, mode: str = "live") -> float:
+        """Dollars received from finished SALES (the amount actually reported, else the quote's)."""
+        return round(sum(_usd_out(p) for p in self.proposals
+                         if p.mode == mode and p.side == "sell" and p.status in ("success", "shadow_filled")), 2)
+
+    def invested(self, mode: str, budget_mode: str) -> float:
+        """What the total cap is measured against: every buy ("spent") or buys minus sale proceeds ("net")."""
+        return round(self.spent(mode) - (self.proceeds(mode) if budget_mode == "net" else 0.0), 2)
+
+    def sells_today(self, mode: str, day: str) -> int:
+        return sum(1 for p in self.proposals if p.mode == mode and p.side == "sell"
+                   and any(e.status in ("executing", "shadow_filled") and e.at.astimezone(timezone.utc).date().isoformat() == day for e in p.history))
+
+    def live_holdings(self) -> list[dict]:
+        """Tokens the live fund holds according to its own records: finished buys minus sales (finished or under way)."""
+        rows: dict[str, dict] = {}
+        for p in sorted(self.proposals, key=lambda x: x.created_at):
+            if p.mode != "live" or p.side not in SIDES:
+                continue
+            if p.side == "buy" and p.status == "success":
+                r = rows.setdefault(p.symbol, {"ticker": p.ticker, "symbol": p.symbol, "asset_id": p.asset_id, "topic": p.topic, "quantity": 0.0,
+                                               "cost_usd": 0.0, "first_bought": p.created_at.isoformat(), "buys": 0})
+                r["quantity"] += _qty_out(p)
+                r["cost_usd"] += p.usd
+                r["buys"] += 1
+            elif p.side == "sell" and p.status in SPENT and p.symbol in rows:
+                r = rows[p.symbol]
+                sold = _qty_in(p)
+                if r["quantity"] > 0:
+                    r["cost_usd"] *= max(0.0, 1 - sold / r["quantity"])
+                r["quantity"] = max(0.0, r["quantity"] - sold)
+        return [{**r, "quantity": round(r["quantity"], 8), "cost_usd": round(r["cost_usd"], 2)} for r in rows.values() if r["quantity"] > 1e-9]
+
+
+def _num(v: Any) -> float:
+    try:
+        return float(v)
+    except (TypeError, ValueError):
+        return 0.0
+
+
+def _qty_out(p: "Proposal") -> float:
+    return _num((p.result or {}).get("amountOutFormatted")) or _num((p.quote or {}).get("amountOutFormatted"))
+
+
+def _qty_in(p: "Proposal") -> float:
+    return _num((p.result or {}).get("amountInFormatted")) or _num((p.quote or {}).get("amountInFormatted")) or _num(p.quantity)
+
+
+def _usd_out(p: "Proposal") -> float:
+    return _num((p.result or {}).get("amountOutUsd")) or _num((p.quote or {}).get("amountOutUsd"))
 
 
 _lock = threading.Lock()
@@ -176,17 +237,56 @@ def check_limits(state: TradingState, p: Proposal, cfg: LiveConfig, *, kill_swit
         bad.append("kill switch is on (STOP file present)")
     if not cfg.trading_enabled:
         bad.append("trading_enabled is false in config/funds.yaml")
-    if p.side != "buy":
-        bad.append("only buys are implemented")
+    if p.side not in SIDES:
+        bad.append(f"'{p.side}' is not a trade")
+        return bad
+    day = now.astimezone(timezone.utc).date().isoformat()
+    if p.side == "sell":
+        if not cfg.sells_enabled:
+            bad.append("selling is built but switched off (live.sells_enabled is false in config/funds.yaml)")
+        if state.sells_today("live", day) >= cfg.max_sells_per_day:
+            bad.append(f"already {cfg.max_sells_per_day} sale(s) today (live.max_sells_per_day)")
+        if not p.fraction or not 0 < p.fraction <= 1:
+            bad.append("a sale needs a share of the holding between 0 and 1")
+        if not any(h["symbol"] == p.symbol for h in state.live_holdings()):
+            bad.append(f"the fund holds no {p.symbol} according to its records")
+        if p.usd < cfg.min_trade_usd:
+            bad.append(f"the sale is worth about ${p.usd:.2f}, below the minimum ${cfg.min_trade_usd:.2f}")
+        return bad
     if p.usd < cfg.min_trade_usd:
         bad.append(f"amount ${p.usd:.2f} is below the minimum ${cfg.min_trade_usd:.2f}")
     if p.usd > cfg.max_trade_usd + 1e-9:
         bad.append(f"amount ${p.usd:.2f} is above the per-trade cap ${cfg.max_trade_usd:.2f}")
-    day = now.astimezone(timezone.utc).date().isoformat()
     if state.spent("live", day) + p.usd > cfg.max_day_usd + 1e-9:
         bad.append(f"daily cap ${cfg.max_day_usd:.2f} would be exceeded (already ${state.spent('live', day):.2f} today)")
-    if state.spent("live") + p.usd > cfg.max_total_usd + 1e-9:
-        bad.append(f"total cap ${cfg.max_total_usd:.2f} would be exceeded (already ${state.spent('live'):.2f} in total)")
+    used = state.invested("live", cfg.budget_mode)
+    if used + p.usd > cfg.max_total_usd + 1e-9:
+        what = "invested net of sales" if cfg.budget_mode == "net" else "in total"
+        bad.append(f"total cap ${cfg.max_total_usd:.2f} would be exceeded (already ${used:.2f} {what})")
+    return bad
+
+
+def check_sell_quote(q: dict, p: Proposal, cfg: LiveConfig, now: Optional[datetime] = None) -> list[str]:
+    """Sanity checks on a SALE quote (token in, NEAR out) before anything is signed: the swap cost, and the price received per
+    token must not be far BELOW the stock's last close (selling above it is fine)."""
+    try:
+        q_in, in_usd, out_usd = float(q["amountInFormatted"]), float(q["amountInUsd"]), float(q["amountOutUsd"])
+    except (KeyError, TypeError, ValueError):
+        return ["quote is missing amounts"]
+    if q_in <= 0 or in_usd <= 0 or out_usd <= 0:
+        return ["quote has non-positive amounts"]
+    bad: list[str] = []
+    cost = (in_usd - out_usd) / in_usd * 100
+    if cost > cfg.max_cost_pct:
+        bad.append(f"quoted cost {cost:.2f}% is above the cap {cfg.max_cost_pct:.2f}%")
+    if p.ref_close:
+        got = out_usd / q_in
+        band = price_band(cfg, p.ref_close_date, now or datetime.now(timezone.utc))
+        if got < p.ref_close * (1 - band / 100):
+            bad.append(f"the sale pays ${got:.2f} per token, {(1 - got / p.ref_close) * 100:.1f}% below the stock's last close "
+                       f"${p.ref_close:.2f} of {p.ref_close_date or 'unknown date'} (band {band:.1f}%)")
+    else:
+        bad.append("no reference close for the stock")
     return bad
 
 
@@ -338,10 +438,12 @@ class OneClickLive:
         self._headers = {"Authorization": f"Bearer {api_key}"} if api_key else {}
 
     def quote(self, *, dry: bool, pay_asset: str, dest_asset: str, amount_units: int, account: str, slippage_bps: int,
-              deadline: datetime) -> dict:
+              deadline: datetime, deposit_type: str = "ORIGIN_CHAIN") -> dict:
+        """deposit_type INTENTS = paid from a balance already inside NEAR Intents (needed to quote a SALE of a bridged stock
+        token: an ORIGIN_CHAIN quote refuses it with "refundTo is not valid", seen 2026-11-10)."""
         body = {"dry": dry, "swapType": "EXACT_INPUT", "slippageTolerance": slippage_bps, "originAsset": pay_asset,
-                "depositType": "ORIGIN_CHAIN", "destinationAsset": dest_asset, "amount": str(amount_units),
-                "refundTo": account, "refundType": "ORIGIN_CHAIN", "recipient": account, "recipientType": "INTENTS",
+                "depositType": deposit_type, "destinationAsset": dest_asset, "amount": str(amount_units),
+                "refundTo": account, "refundType": deposit_type, "recipient": account, "recipientType": "INTENTS",
                 "deadline": deadline.strftime("%Y-%m-%dT%H:%M:%S.000Z")}
         r = self._http.post(f"{self.api}/v0/quote", json=body, headers=self._headers)
         try:
@@ -407,9 +509,11 @@ class Executor:
                                    slippage_bps=self.cfg.slippage_bps, deadline=self._now() + timedelta(minutes=10))
 
     # ---- shadow: a real dry quote, nothing sent
-    def shadow_fill(self, state: TradingState, p: Proposal, account: str = "intents.near") -> Proposal:
+    def shadow_fill(self, state: TradingState, p: Proposal, account: str = "intents.near", decimals: int = 18) -> Proposal:
         if p.mode != "shadow" or p.status != "proposed":
             raise RuntimeError("only a fresh shadow proposal can be shadow-filled")
+        if p.side == "sell":
+            return self._shadow_sell(state, p, account, decimals)
         try:
             q = self.dry_quote(p.asset_id, p.usd, account)
         except (RuntimeError, httpx.HTTPError) as exc:
@@ -429,6 +533,28 @@ class Executor:
         save_state(state, self.state_path)
         return p
 
+    def _shadow_sell(self, state: TradingState, p: Proposal, account: str, decimals: int) -> Proposal:
+        units = int((p.quantity or 0) * 10 ** decimals)
+        problems: list[str] = []
+        try:
+            if units <= 0:
+                raise RuntimeError("nothing to sell")
+            q = self.oneclick.quote(dry=True, pay_asset=p.asset_id, dest_asset=self.cfg.near_asset_id, amount_units=units, account=account,
+                                    slippage_bps=self.cfg.slippage_bps, deadline=self._now() + timedelta(minutes=10), deposit_type="INTENTS")
+            problems = [m for m in check_sell_quote(q, p, self.cfg, self._now()) if "cost" not in m]
+        except (RuntimeError, httpx.HTTPError) as exc:
+            q, problems = None, [str(exc)[:200]]
+        p.quote = q
+        if problems:
+            p.error = "; ".join(problems)
+            p.mark("failed", "shadow sale: " + p.error, self._now())
+        else:
+            p.mark("shadow_filled", f"would sell {q.get('amountInFormatted')} {p.symbol} for about ${float(q.get('amountOutUsd') or 0):.2f} of NEAR "
+                                    "(nothing was sent)", self._now())
+        p.sha256 = fingerprint(p)
+        save_state(state, self.state_path)
+        return p
+
     # ---- live
     def execute(self, state: TradingState, p: Proposal) -> Proposal:
         """Run ONE approved live buy. Raises RuntimeError (and leaves funds untouched) if any check fails before sending."""
@@ -436,6 +562,8 @@ class Executor:
             raise RuntimeError("not a live proposal")
         if p.status != "approved":
             raise RuntimeError(f"proposal is '{p.status}', not 'approved' (a proposal is never sent twice; use resume to re-check a deposit)")
+        if p.side == "sell":
+            raise RuntimeError("sales run only on the private signed route (live.route: confidential); the stocks are in the private balance")
         if self.signer is None:
             raise RuntimeError("FUND_MAINNET_ACCOUNT_ID / FUND_MAINNET_PRIVATE_KEY are not set")
         blocked = check_limits(state, p, self.cfg, kill_switch=self.kill_switch(), now=self._now())
@@ -538,21 +666,31 @@ class Executor:
 
 
 def shadow_portfolio(state: TradingState, prices: dict[str, float], budget: float) -> dict:
-    """Pretend positions built from shadow fills: quantity and cost per token, valued at the given token prices."""
+    """Pretend positions built from shadow fills: quantity and cost per token, valued at the given token prices.
+    A shadow sale removes tokens at their average cost and adds what the quote paid to the cash."""
     rows: dict[str, dict] = {}
-    for p in state.proposals:
+    proceeds = realized = 0.0
+    for p in sorted(state.proposals, key=lambda x: x.created_at):
         if p.mode != "shadow" or p.status != "shadow_filled" or not p.quote:
             continue
-        try:
-            qty = float(p.quote.get("amountOutFormatted") or 0)
-        except (TypeError, ValueError):
-            qty = 0.0
-        r = rows.setdefault(p.symbol, {"symbol": p.symbol, "ticker": p.ticker, "topic": p.topic, "quantity": 0.0, "cost_usd": 0.0, "orders": 0})
-        r["quantity"] += qty
+        if p.side == "sell":
+            r = rows.get(p.symbol)
+            sold, got = _num(p.quote.get("amountInFormatted")), _usd_out(p)
+            if r and r["quantity"] > 0:
+                share = min(1.0, sold / r["quantity"])
+                realized += got - r["cost_usd"] * share
+                r["cost_usd"] *= 1 - share
+                r["quantity"] = max(0.0, r["quantity"] - sold)
+            proceeds += got
+            continue
+        r = rows.setdefault(p.symbol, {"symbol": p.symbol, "ticker": p.ticker, "topic": p.topic, "asset_id": p.asset_id, "quantity": 0.0,
+                                       "cost_usd": 0.0, "orders": 0, "first_bought": p.created_at.isoformat()})
+        r["quantity"] += _num(p.quote.get("amountOutFormatted"))
         r["cost_usd"] += p.usd
         r["orders"] += 1
+    spent_total = sum(p.usd for p in state.proposals if p.mode == "shadow" and p.status == "shadow_filled" and p.side == "buy")
     out, invested, value = [], 0.0, 0.0
-    for r in rows.values():
+    for r in [r for r in rows.values() if r["quantity"] > 1e-9]:
         px = prices.get(r["symbol"])
         r["quantity"] = round(r["quantity"], 6)
         r["cost_usd"] = round(r["cost_usd"], 2)
@@ -562,6 +700,7 @@ def shadow_portfolio(state: TradingState, prices: dict[str, float], budget: floa
         value += r["value_usd"] if r["value_usd"] is not None else r["cost_usd"]
         out.append(r)
     out.sort(key=lambda r: -r["cost_usd"])
-    cash = round(budget - invested, 2)
-    return {"budget_usd": budget, "invested_usd": round(invested, 2), "cash_usd": cash, "value_usd": round(value + cash, 2), "positions": out}
+    cash = round(budget - spent_total + proceeds, 2)
+    return {"budget_usd": budget, "invested_usd": round(invested, 2), "cash_usd": cash, "value_usd": round(value + cash, 2),
+            "realized_usd": round(realized, 2), "positions": out}
 

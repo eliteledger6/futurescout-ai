@@ -189,3 +189,10 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
 - The demo needs a real working run (video). A local-only demo is allowed, but screenshots alone are not enough when judges cannot open it.
 - Human-only steps (not done without your explicit yes): make the repo public, push, publish the X demo post with video, create your mainnet NEAR payout account, provide team lead name/email/team size, consent to the contact notice, and confirm the exact JSON payload before the single submission.
 - Everything unfinished must be described as unfinished in the README.
+
+
+## 2026-11-10: selling, hosting
+- Selling built (owner's written yes): the agent may sell (part of) a holding for NEAR on the private signed route. Code rules: held >= 24 h, report weakened / fall explained by evidence / rotation into a better-supported company; at most 2 sales a day; sale price not far below the last close; cost cap; a too-small sale is sized up to the $20 market minimum. After a sale the agent is woken once more and may buy. Orders on the private route are now settled by watching the private balance (no manual `confirm` needed when the coins arrive).
+- Switches (owner-only, OFF): `live.sells_enabled`, `live.budget_mode: net` (cap counts buys minus sale proceeds). `live.auto_approve` was set true by the owner.
+- Mock-tested (278 tests). Run live: dry sale quotes for GOOGLon and MRVLon on the INTENTS route pass every sale check (cost ~0.6%). No real sale yet.
+- Hosting prepared: Render (API reading the exported snapshot backend/site_data) + Vercel (website). See HOSTING.md. Not deployed yet.

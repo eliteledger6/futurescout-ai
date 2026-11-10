@@ -8,6 +8,13 @@
   python scripts\\fund_trade.py reject <id>
   python scripts\\fund_trade.py resume <id>            re-check a deposit that was sent but not finished (sends nothing)
   python scripts\\fund_trade.py stop | start           kill switch on / off
+  python scripts\\fund_trade.py check [--shadow] [--review]   strategy wake-up (--review: the owner asks for a full keep/sell/buy review)
+  python scripts\\fund_trade.py watch                  shadow + live checks every hour (live executes only with live.auto_approve)
+  python scripts\\fund_trade.py holdings               what the live fund holds according to its records
+
+Selling (owner's written yes 2026-11-10) is off until the owner sets `live.sells_enabled: true`; a sale pays the stock token
+from the PRIVATE balance and gets NEAR back (signed route only). With `live.budget_mode: net` the total cap counts buys minus
+sale proceeds, so money from a sale can be invested again.
 
 What can move money: ONLY `approve`, only when `live.trading_enabled: true` in config\\funds.yaml, the kill switch is
 off, FUND_MAINNET_ACCOUNT_ID / FUND_MAINNET_PRIVATE_KEY are in .env, every limit passes and you type the confirmation.
@@ -34,6 +41,7 @@ from app.fund import load_fund_config, tradable_tokens as fund_tradable_tokens  
 from app.fund.intents_signed import SignedIntents  # noqa: E402
 from app.fund.signed_exec import SignedExecutor, submit_signed_order  # noqa: E402
 from app.fund.strategy import RULES, Check, Trigger, assess, detect_triggers  # noqa: E402
+from app.fund.live import TradingState  # noqa: E402,F401
 from app.fund.live import (Executor, MainnetSigner, OneClickLive, Proposal, check_limits, fingerprint, load_state,  # noqa: E402
                            new_id, read_balances, save_state, shadow_portfolio)
 from app.models.config import load_model_config  # noqa: E402
@@ -236,12 +244,13 @@ def cmd_pending(s, cfg) -> int:  # noqa: ANN001
         print("no live proposal is waiting for approval")
         return 0
     for p in waiting:
-        print(f"{p.id}  {p.created_at:%m-%d %H:%M} UTC  buy ${p.usd:.2f} of {p.symbol} ({p.topic})\n   why: {p.rationale[:300]}\n"
+        what = f"SELL {round((p.fraction or 1) * 100)}% of {p.symbol} (about ${p.usd:.2f})" if p.side == "sell" else f"buy ${p.usd:.2f} of {p.symbol}"
+        print(f"{p.id}  {p.created_at:%m-%d %H:%M} UTC  {what} ({p.topic})\n   why: {p.rationale[:300]}\n"
               f"   approve:  python scripts\\fund_trade.py approve {p.id}     reject:  python scripts\\fund_trade.py reject {p.id}")
     return 0
 
 
-def run_check(s, cfg, shadow: bool) -> int:  # noqa: ANN001
+def run_check(s, cfg, shadow: bool, extra: list | None = None, depth: int = 0) -> int:  # noqa: ANN001
     """Strategy wake-up: look for triggers (new report, sharp move, routine review); if any, the agent assesses and decides.
     Shadow: filled with pretend money. Live: a proposal the owner approves (or, only if the owner set live.auto_approve, sent)."""
     import hashlib
@@ -262,7 +271,8 @@ def run_check(s, cfg, shadow: bool) -> int:  # noqa: ANN001
         prices = AlphaVantageClient(s.alpha_vantage_key_value()) if s.alpha_vantage_key_value() else None
         book = PriceBook(prices, max_requests=st_cfg.price_requests_per_check)
         closes: dict = {}
-        for t in toks:
+        held_rows = state.live_holdings() if not shadow else []
+        for t in toks + [h for h in held_rows if h["ticker"] not in {x["ticker"] for x in toks}]:
             bars = book.bars(t["ticker"])
             if len(bars) >= 2:
                 closes[t["ticker"]] = (bars[-1].day.isoformat(), bars[-1].close, bars[-2].close)
@@ -276,13 +286,14 @@ def run_check(s, cfg, shadow: bool) -> int:  # noqa: ANN001
         seen_closes = {k[len(kp):]: v for k, v in state.seen_closes.items() if k.startswith(kp) and (shadow and not k.startswith("live:") or not shadow)}
         triggers = detect_triggers(tokens=toks, seen_runs=seen_runs, closes=closes, seen_closes=seen_closes,
                                    last_check=state.last_check_at if shadow else state.last_live_check_at, now=now, cfg=st_cfg, held=held)
+        triggers += list(extra or [])
         check = Check(id=new_id(), at=now, mode=mode, triggers=triggers)
         print(f"[{now:%Y-%m-%d %H:%M} UTC] {mode} check: " + (", ".join(f"{t.kind} {t.ticker or t.topic}".strip() for t in triggers) or "no trigger"))
         if not triggers:
             check.action = "none"
             check.summary = "No trigger: no new report, no sharp move, no review due. The agent was not called."
         else:
-            check = _assess(s, cfg, state, toks, triggers, check, shadow, now, pf)
+            check = _assess(s, cfg, state, toks, triggers, check, shadow, now, pf, closes)
         for t in triggers:                       # remember what was reacted to, so the same event does not wake the agent twice
             if t.kind == "new_report":
                 state.seen_runs[kp + t.topic] = next((x.get("run_id") for x in toks if x["topic"] == t.topic), "") or ""
@@ -296,15 +307,54 @@ def run_check(s, cfg, shadow: bool) -> int:  # noqa: ANN001
         state.checks = (state.checks or [])[-199:] + [check.model_dump(mode="json")]
         save_state(state, STATE)
         print(f"  -> {check.action}: {check.summary[:200]}")
-        if not shadow and check.action == "buy" and check.proposal_id:
+        rc, sold = 0, False
+        if shadow and check.action == "sell" and check.proposal_id:
+            sold = getattr(state.get(check.proposal_id), "status", "") == "shadow_filled"
+        if not shadow and check.action in ("buy", "sell") and check.proposal_id:
             if cfg.live.auto_approve:
                 print("  live.auto_approve is ON (owner setting): executing through the same checks as a typed approval")
-                return cmd_approve(s, cfg, check.proposal_id, auto=True)
-            print(f"  waiting for the owner:  python scripts\\fund_trade.py approve {check.proposal_id}   (or reject)")
-        return 0
+                rc = cmd_approve(s, cfg, check.proposal_id, auto=True)
+                sold = check.action == "sell" and getattr(load_state(STATE).get(check.proposal_id), "status", "") == "success"
+            else:
+                print(f"  waiting for the owner:  python scripts\\fund_trade.py approve {check.proposal_id}   (or reject)")
+        if sold and depth == 0:
+            p = load_state(STATE).get(check.proposal_id)
+            got = p.result or p.quote or {}
+            print("  sale done: waking the agent once more to decide what to do with the money")
+            return run_check(s, cfg, shadow, extra=[Trigger(kind="after_sale", ticker=p.ticker, topic=p.topic,
+                                                           detail=f"sold {got.get('amountInFormatted')} {p.symbol} for about ${float(got.get('amountOutUsd') or 0):.2f}; "
+                                                                  "that money is now available")], depth=1)
+        return rc
 
 
-def _assess(s, cfg, state, toks, triggers, check, shadow, now, pf):  # noqa: ANN001,ANN201
+def _sellable(state, toks, pf, shadow, closes, now, ex):  # noqa: ANN001,ANN201
+    """Holdings the agent may consider selling, each with its latest report (or a note that no fund includes it any more)."""
+    rows = pf["positions"] if shadow else state.live_holdings()
+    out = []
+    for h in rows:
+        tok = next((t for t in toks if t["ticker"] == h["ticker"]), None) or next((t for t in toks if t["topic"] == h.get("topic")), None)
+        try:
+            first = datetime.fromisoformat(str(h.get("first_bought")))
+            hours = (now - first).total_seconds() / 3600
+        except ValueError:
+            hours = 0.0
+        value = h.get("value_usd")
+        if value is None:
+            try:
+                value = round(h["quantity"] * ex.oneclick.price_usd(h["asset_id"]), 2)
+            except Exception:  # noqa: BLE001
+                value = None
+        day, close, _prev = closes.get(h["ticker"], (None, None, None))
+        out.append({"ticker": h["ticker"], "symbol": h["symbol"], "asset_id": h.get("asset_id"), "topic": h.get("topic"), "quantity": h["quantity"],
+                    "cost_usd": h.get("cost_usd"), "value_usd": value, "held_hours": round(hours, 1), "last_close": close, "last_close_date": day,
+                    "report_verdict": (tok or {}).get("band") if tok and tok["ticker"] == h["ticker"] else None,
+                    "report_confidence_pct": (tok or {}).get("confidence_pct") if tok and tok["ticker"] == h["ticker"] else None,
+                    "still_in_a_fund": bool(tok and tok["ticker"] == h["ticker"]),
+                    "note": "" if tok and tok["ticker"] == h["ticker"] else "no topic fund includes this company any more (its report no longer names it)"})
+    return out
+
+
+def _assess(s, cfg, state, toks, triggers, check, shadow, now, pf, closes=None):  # noqa: ANN001,ANN201
     """Build candidates with real dry quotes, give the agent the evidence, apply its decision (shadow fill or live proposal)."""
     lv = cfg.live
     ex = make_executor(s, cfg, with_signer=False)
@@ -313,10 +363,14 @@ def _assess(s, cfg, state, toks, triggers, check, shadow, now, pf):  # noqa: ANN
     if shadow:
         budget, fixed = pf["cash_usd"], None
     else:
-        budget = min(lv.max_trade_usd, lv.max_total_usd - state.spent("live"), lv.max_day_usd - state.spent("live", day))
+        budget = min(lv.max_trade_usd, lv.max_total_usd - state.invested("live", lv.budget_mode), lv.max_day_usd - state.spent("live", day))
         fixed = budget if budget >= lv.min_trade_usd else None
-    if budget < (1 if shadow else lv.min_trade_usd):
-        check.action, check.summary = "hold", f"No budget left (${budget:.2f}); the agent was not called."
+    can_buy = budget >= (1 if shadow else lv.min_trade_usd)
+    sells_on = True if shadow else lv.sells_enabled
+    sells_left = max(0, lv.max_sells_per_day - state.sells_today("shadow" if shadow else "live", day))
+    sellable = _sellable(state, toks, pf, shadow, closes or {}, now, ex)
+    if not can_buy and not (sells_on and sells_left and sellable):
+        check.action, check.summary = "hold", f"No budget left (${budget:.2f}) and nothing can be sold; the agent was not called."
         return check
     cands = []
     for t in toks:
@@ -324,26 +378,44 @@ def _assess(s, cfg, state, toks, triggers, check, shadow, now, pf):  # noqa: ANN
                       confidence_pct=t.get("confidence_pct"), tier=t["tier"], why=t["why"], price_stretch=t["stretch"], last_close=t["last_close"],
                       last_close_date=t["last_close_date"])
         try:
-            q = ex.dry_quote(c.asset_id, fixed or min(1000.0, budget), account)
+            q = ex.dry_quote(c.asset_id, fixed or (min(1000.0, budget) if can_buy else lv.max_trade_usd), account)
             c.quotable, c.dry_quote = True, q
             c.quote_cost_pct = round((float(q["amountInUsd"]) - float(q["amountOutUsd"])) / float(q["amountInUsd"]) * 100, 2)
         except (RuntimeError, KeyError, ValueError, httpx.HTTPError) as exc:
             c.note = str(exc)[:120]
         cands.append(c)
     context = evidence_context(s, toks)
-    holdings = pf["positions"] if shadow else [{"ticker": p.ticker, "symbol": p.symbol, "cost_usd": p.usd} for p in state.proposals if p.mode == "live" and p.status == "success"]
+    holdings = pf["positions"] if shadow else [{"ticker": h["ticker"], "symbol": h["symbol"], "cost_usd": h["cost_usd"]} for h in state.live_holdings()]
     adds = {}
     for p in state.proposals:
         if p.mode == ("shadow" if shadow else "live") and p.side == "buy" and p.status in ("shadow_filled", "success", "deposited", "executing", "proposed", "approved"):
             adds[p.ticker.upper()] = adds.get(p.ticker.upper(), 0) + 1
     d, cand, model, cost, notes = assess(ModelRouter(load_model_config(), s), triggers=triggers, candidates=cands, holdings=holdings, context=context,
-                                         budget_usd=budget, fixed_usd=fixed, cfg=lv.strategy, adds_so_far=adds)
+                                         budget_usd=max(0.0, budget), fixed_usd=fixed, cfg=lv.strategy, adds_so_far=adds, sellable=sellable,
+                                         sells_enabled=sells_on, can_buy=can_buy, sells_left_today=sells_left,
+                                         min_sale_usd=0.0 if shadow else lv.min_trade_usd)
     check.model, check.cost_usd, check.notes, check.what_changed = model, cost, notes, d.what_changed
     check.action, check.summary = d.action, d.rationale
     for n in notes:
         print("  note:", n)
     print(f"  agent ({model}, ${cost:.3f}): {d.what_changed}")
     mode = "shadow" if shadow else "live"
+    if d.action == "sell" and isinstance(cand, dict):
+        h = cand
+        p = Proposal(id=new_id(), created_at=now, mode=mode, side="sell", topic=h.get("topic") or "", ticker=h["ticker"], symbol=h["symbol"],
+                     asset_id=h["asset_id"], usd=float(d.usd or 0), fraction=d.fraction, quantity=round(h["quantity"] * (d.fraction or 1), 12),
+                     rationale=f"{d.what_changed} {d.rationale}".strip(), risks=d.risks, confidence=d.confidence, model=model, model_cost_usd=cost,
+                     ref_close=h.get("last_close"), ref_close_date=h.get("last_close_date"))
+        p.mark("proposed", f"strategy check ({', '.join(t.kind for t in triggers)}): the agent proposed to SELL {round((d.fraction or 1) * 100)}% of its "
+                           f"{p.symbol} (about ${p.usd:.2f})", now)
+        state.proposals.append(p)
+        check.ticker, check.usd, check.proposal_id = h["ticker"], p.usd, p.id
+        if shadow:
+            ex.shadow_fill(state, p, account=account)
+            print(f"  shadow sale: {p.status}: {p.history[-1].note[:120]}")
+        else:
+            print(f"  PROPOSAL {p.id}: SELL {round((d.fraction or 1) * 100)}% of {p.symbol}. To approve:  python scripts\\fund_trade.py approve {p.id}")
+        return check
     if d.action == "hold" or cand is None:
         p = Proposal(id=new_id(), created_at=now, mode=mode, side="hold", topic="", ticker="", symbol="", asset_id="", usd=0.0,
                      rationale=f"{d.what_changed} {d.rationale}".strip(), risks=d.risks, confidence=d.confidence, model=model, model_cost_usd=cost)
@@ -420,6 +492,8 @@ def cmd_approve(s, cfg, pid: str, *, auto: bool = False) -> int:  # noqa: ANN001
     ex = make_executor(s, cfg, with_signer=not signed_route)
     now = datetime.now(timezone.utc)
     blocked = check_limits(state, p, cfg.live, kill_switch=ex.kill_switch(), now=now)
+    if p.side == "sell" and not signed_route:
+        blocked.append("sales run only on the private signed route (live.route: confidential): the stocks are in the private balance")
     if not creds:
         blocked.append("FUND_MAINNET_ACCOUNT_ID / FUND_MAINNET_PRIVATE_KEY are not set in .env")
     if signed_route:
@@ -440,7 +514,11 @@ def cmd_approve(s, cfg, pid: str, *, auto: bool = False) -> int:  # noqa: ANN001
         return 1
     coin = "NEAR" if cfg.live.pay_with == "near" else "USDC"
     source = "the PRIVATE balance (near.com route, signed order)" if signed_route else "the wallet"
-    print(f"REAL MONEY. About to pay ${p.usd:.2f} of {coin} from {source} of {creds[0]} (NEAR mainnet) to buy {p.symbol}.")
+    if p.side == "sell":
+        print(f"REAL MONEY. About to SELL {round((p.fraction or 1) * 100)}% of the {p.symbol} in {source} of {creds[0]} (NEAR mainnet) "
+              f"for NEAR (about ${p.usd:.2f}).")
+    else:
+        print(f"REAL MONEY. About to pay ${p.usd:.2f} of {coin} from {source} of {creds[0]} (NEAR mainnet) to buy {p.symbol}.")
     print(f"  agent's reason: {p.rationale}")
     if auto:
         p.mark("approved", "approved AUTOMATICALLY: live.auto_approve is on (owner's setting); all code checks passed", datetime.now(timezone.utc))
@@ -466,7 +544,8 @@ def cmd_approve(s, cfg, pid: str, *, auto: bool = False) -> int:  # noqa: ANN001
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("command", choices=["status", "propose", "list", "approve", "reject", "resume", "confirm", "refunded", "stop", "start", "register-usdc", "check", "rules", "watch", "pending"])
+    ap.add_argument("command", choices=["status", "propose", "list", "approve", "reject", "resume", "confirm", "refunded", "stop", "start", "register-usdc", "check", "rules", "watch", "pending", "holdings"])
+    ap.add_argument("--review", action="store_true", help="with check: the owner asks the agent for a full keep / sell / buy review now")
     ap.add_argument("id", nargs="?")
     ap.add_argument("--shadow", action="store_true")
     ap.add_argument("--usd", type=float)
@@ -480,7 +559,19 @@ def main() -> int:
     if args.command == "propose":
         return cmd_propose(s, cfg, args.shadow, args.usd)
     if args.command == "check":
+        if args.review:
+            return run_check(s, cfg, args.shadow, extra=[Trigger(kind="manual", detail="the owner asked for a full review now: keep, sell (part of) a holding, or buy")])
         return cmd_check(s, cfg, args.shadow, args.loop)
+    if args.command == "holdings":
+        rows = load_state(STATE).live_holdings()
+        if not rows:
+            print("the live fund holds nothing according to its records")
+        for h in rows:
+            print(f"  {h['symbol']:8} {h['quantity']:.8f}  cost ${h['cost_usd']:.2f}  ({h['topic']}; first bought {h['first_bought'][:16]})")
+        st = load_state(STATE)
+        print(f"spent on buys ${st.spent('live'):.2f}; sale proceeds ${st.proceeds('live'):.2f}; counted against the total cap "
+              f"(budget_mode {cfg.live.budget_mode}): ${st.invested('live', cfg.live.budget_mode):.2f} of ${cfg.live.max_total_usd:.2f}")
+        return 0
     if args.command == "watch":
         return cmd_watch(s, cfg)
     if args.command == "pending":

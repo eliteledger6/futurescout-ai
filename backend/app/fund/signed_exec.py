@@ -18,8 +18,14 @@ One buy, step by step (the first three move nothing):
      well-formed nonce and a future deadline. Anything else: refuse, nothing is signed;
   5. save the proposal as "executing", sign the order (NEP-413) and submit it ONCE; an unclear submit error is
      recorded as "deposited" and never retried (resume only polls);
-  6. the owner checks near.com and records the outcome (`confirm` / `refunded`): the public status endpoint
-     answers 404 for private-route deposit addresses, so there is nothing to poll.
+  6. the public status endpoint answers 404 for private-route deposit addresses, so the code instead watches the PRIVATE
+     balance with the same session (2026-11-10): when the bought token (or, for a sale, the NEAR) arrives, the order is
+     marked success with the amounts seen; if nothing arrives in time it stays "deposited" for the owner's `confirm`.
+
+A SALE (owner's written yes 2026-11-10; `live.sells_enabled`) is the same flow in the other direction: the stock token in the
+private balance is paid in, NEAR comes back. The order check is identical (one transfer of exactly the approved amount of
+that token to the quote's deposit address), and the quote must pass `check_sell_quote` (cost cap; price not far below the
+stock's last close).
 The first real run of steps 3-6 is the integration test: generating and submitting an order on the private route has
 not been exercised, so the checks in step 4 are deliberately strict and report what they saw.
 """
@@ -29,6 +35,7 @@ from __future__ import annotations
 import base64
 import json
 import re
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable, Optional
@@ -36,7 +43,8 @@ from typing import Any, Callable, Optional
 import httpx
 
 from app.fund.intents_signed import NONCE_MAGIC, SignedIntents, sign_nep413
-from app.fund.live import Executor, LiveConfig, OneClickLive, Proposal, TradingState, check_limits, check_quote, save_state
+from app.fund.live import (Executor, LiveConfig, OneClickLive, Proposal, TradingState, check_limits, check_quote, check_sell_quote,
+                           fingerprint, save_state)
 
 ROUTE = "CONFIDENTIAL_INTENTS"
 
@@ -117,15 +125,31 @@ def submit_signed_order(http: httpx.Client, api: str, api_key: Optional[str], or
     return str(data["intentHash"])
 
 
+def held(balances: list[dict], asset: str) -> int:
+    """Available units of `asset` in the private balance (plain id or its `imt:<bridge>:<id>` form)."""
+    tot = 0
+    for b in balances:
+        tid = str(b.get("tokenId") or "")
+        if tid == asset or re.fullmatch(r"imt:[0-9a-f]{64}:" + re.escape(asset), tid):
+            try:
+                tot += int(b.get("available") or 0)
+            except (TypeError, ValueError):
+                pass
+    return tot
+
+
+_QUOTE_KEYS = ("amountIn", "amountInFormatted", "amountInUsd", "amountOut", "amountOutFormatted", "amountOutUsd", "minAmountOut",
+               "timeEstimate", "depositAddress", "deadline", "timeWhenInactive", "correlationId")
+
+
 class SignedExecutor:
     def __init__(self, cfg: LiveConfig, state_path: Path, api: SignedIntents, oneclick: OneClickLive, *, account: str, private_key: str,
                  salt_reader: Callable[[], str], submitter: Optional[Callable[[dict, str], str]] = None, kill_file: Optional[Path] = None,
                  now: Callable[[], datetime] = lambda: datetime.now(timezone.utc), sleep: Optional[Callable[[float], None]] = None) -> None:
         self.cfg, self.state_path, self.api, self.account, self._key = cfg, state_path, api, account, private_key
         self._salt_reader, self._submit, self._now = salt_reader, submitter, now
-        kw: dict[str, Any] = {"pay_asset": cfg.near_asset_id, "kill_file": kill_file, "now": now}
-        if sleep is not None:
-            kw["sleep"] = sleep
+        self._sleep = sleep or time.sleep
+        kw: dict[str, Any] = {"pay_asset": cfg.near_asset_id, "kill_file": kill_file, "now": now, "sleep": self._sleep}
         self._poller = Executor(cfg, state_path, oneclick, **kw)       # reused for the kill switch and status polling only
 
     def kill_switch(self) -> bool:
@@ -152,42 +176,54 @@ class SignedExecutor:
             return RuntimeError("refused before signing (nothing was sent): " + why)
 
         # ---- steps 1-3: nothing moves
+        selling = p.side == "sell"
         try:
             session = self.api.login(self.account, self._key, self._salt_reader())
             token = session["accessToken"]
-            price = next((float(t["price"]) for t in self.api.tokens() if t.get("assetId") == cfg.near_asset_id and t.get("price")), None)
-            if not price:
-                raise RuntimeError("no NEAR price in the token list")
-            units = int(p.usd / price * 10 ** 24)
-            have = next((int(b.get("available", "0")) for b in self.api.balances(token) if b.get("tokenId") == cfg.near_asset_id), 0)
-            if have < units:
-                raise RuntimeError(f"the private balance holds {have / 1e24:.3f} NEAR, less than the {units / 1e24:.3f} NEAR needed for ${p.usd:.2f}")
-            q = self.api.quote(route=ROUTE, pay_asset=cfg.near_asset_id, dest_asset=p.asset_id, amount_units=units, account=self.account,
+            balances = self.api.balances(token)
+            if selling:
+                pay, dest = p.asset_id, cfg.near_asset_id
+                have = held(balances, pay)
+                if have <= 0:
+                    raise RuntimeError(f"the private balance holds no {p.symbol}")
+                units = have if (p.fraction or 0) >= 0.999 else int(have * (p.fraction or 0))
+                if units <= 0:
+                    raise RuntimeError(f"{p.fraction} of the {p.symbol} holding is nothing")
+            else:
+                pay, dest = cfg.near_asset_id, p.asset_id
+                price = next((float(t["price"]) for t in self.api.tokens() if t.get("assetId") == cfg.near_asset_id and t.get("price")), None)
+                if not price:
+                    raise RuntimeError("no NEAR price in the token list")
+                units = int(p.usd / price * 10 ** 24)
+                have = held(balances, pay)
+                if have < units:
+                    raise RuntimeError(f"the private balance holds {have / 1e24:.3f} NEAR, less than the {units / 1e24:.3f} NEAR needed for ${p.usd:.2f}")
+            before = held(balances, dest)
+            q = self.api.quote(route=ROUTE, pay_asset=pay, dest_asset=dest, amount_units=units, account=self.account,
                                dry=False, session_token=token, slippage_bps=cfg.slippage_bps)
             deposit = q.get("depositAddress")
-            problems = check_quote(q, p, cfg, self._now())
+            problems = check_sell_quote(q, p, cfg, self._now()) if selling else check_quote(q, p, cfg, self._now())
             if not deposit:
                 problems.append("quote has no deposit address")
             if str(q.get("amountIn")) != str(units):
                 problems.append("quote amountIn differs from the approved amount")
             order = self.api.unsigned_order(deposit, self.account) if deposit else {}
             if deposit:
-                problems += verify_order(order, account=self.account, deposit_address=deposit, pay_asset=cfg.near_asset_id, units=units,
+                problems += verify_order(order, account=self.account, deposit_address=deposit, pay_asset=pay, units=units,
                                          allowed_recipients=cfg.order_recipients, now=self._now())
         except (RuntimeError, ValueError, KeyError, httpx.HTTPError) as exc:
             raise refuse(str(exc)[:300]) from None
         if problems:
-            p.quote = {k: q.get(k) for k in ("amountIn", "amountInFormatted", "amountInUsd", "amountOut", "amountOutFormatted", "amountOutUsd",
-                                             "minAmountOut", "timeEstimate", "depositAddress", "deadline", "timeWhenInactive", "correlationId")}
+            p.quote = {k: q.get(k) for k in _QUOTE_KEYS}
             raise refuse("; ".join(problems))
 
         # ---- step 5: record first, then sign and submit exactly once
-        p.quote = {k: q.get(k) for k in ("amountIn", "amountInFormatted", "amountInUsd", "amountOut", "amountOutFormatted", "amountOutUsd",
-                                         "minAmountOut", "timeEstimate", "depositAddress", "deadline", "timeWhenInactive", "correlationId")}
+        p.quote = {k: q.get(k) for k in _QUOTE_KEYS}
         p.quote["route"] = "confidential"
         p.deposit_address = deposit
-        p.mark("executing", f"order verified; signing a transfer of ${p.usd:.2f} of NEAR from the private balance "
-                            f"(the service may take until {q.get('deadline')})", self._now())
+        what = (f"a sale of {q.get('amountInFormatted')} {p.symbol} (about ${float(q.get('amountInUsd') or 0):.2f}) for NEAR" if selling
+                else f"a transfer of ${p.usd:.2f} of NEAR")
+        p.mark("executing", f"order verified; signing {what} from the private balance (the service may take until {q.get('deadline')})", self._now())
         save_state(state, self.state_path)
         try:
             intent_hash = self._submit(order, self._key) if self._submit else None
@@ -199,7 +235,34 @@ class SignedExecutor:
             save_state(state, self.state_path)
             raise RuntimeError(p.error + " (status kept as 'deposited': run resume, never approve again)") from None
         p.deposit_tx = None
-        p.mark("deposited", f"signed order submitted, intent {intent_hash}. The public status check cannot see private-route orders: "
-                            f"check near.com, then record the outcome with `fund_trade.py confirm {p.id}` (or `refunded`)", self._now())
+        p.mark("deposited", f"signed order submitted, intent {intent_hash}; watching the private balance for the result", self._now())
         save_state(state, self.state_path)
-        return p                                   # no polling: see the note above (learned on the first real order, 2026-11-10)
+        return self.settle(state, p, token, dest, before)
+
+    def settle(self, state: TradingState, p: Proposal, token: str, dest: str, before: int) -> Proposal:
+        """Watch the PRIVATE balance (same session; reads only) until what was bought or sold for arrives. Sends nothing."""
+        q = p.quote or {}
+        expected = int(q.get("minAmountOut") or q.get("amountOut") or 0)
+        waited = 0.0
+        rounds = int(self.cfg.poll_timeout_seconds / self.cfg.poll_seconds) if self.cfg.poll_seconds > 0 else 3
+        for _ in range(max(1, rounds)):
+            self._sleep(self.cfg.poll_seconds)
+            waited += self.cfg.poll_seconds
+            try:
+                got = held(self.api.balances(token), dest) - before
+            except (RuntimeError, ValueError, httpx.HTTPError) as exc:
+                p.history[-1].note += f" (balance check stopped: {str(exc)[:80]})"
+                break
+            if got > 0 and (not expected or got >= expected * 0.98):
+                ratio = got / int(q.get("amountOut") or got)
+                p.result = {"status": "SUCCESS (seen in the private balance)", "amountInFormatted": q.get("amountInFormatted"),
+                            "amountOutFormatted": str(round(float(q.get("amountOutFormatted") or 0) * ratio, 12)),
+                            "amountOutUsd": str(round(float(q.get("amountOutUsd") or 0) * ratio, 4)), "received_units": str(got)}
+                p.mark("success", f"{'NEAR' if p.side == 'sell' else p.symbol} arrived in the private balance after about {waited:.0f}s", self._now())
+                p.sha256 = fingerprint(p)
+                save_state(state, self.state_path)
+                return p
+        p.history.append(type(p.history[-1])(at=self._now(), status=p.status,
+                                             note=f"nothing arrived within {waited:.0f}s: check near.com, then `fund_trade.py confirm {p.id}` (or `refunded`)"))
+        save_state(state, self.state_path)
+        return p

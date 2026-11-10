@@ -104,7 +104,7 @@ def test_limits_block_everything_that_should_be_blocked():
     assert "daily cap" in msgs and "total cap" in msgs
     sell = proposal(1)
     sell.side = "sell"
-    assert "only buys" in " ".join(check_limits(TradingState(), sell, cfg, kill_switch=False, now=NOW))
+    assert "sells_enabled is false" in " ".join(check_limits(TradingState(), sell, cfg, kill_switch=False, now=NOW))   # selling: owner switch, off by default
 
 
 def test_quote_checks_price_band_cost_and_amount():
@@ -355,8 +355,9 @@ def test_shadow_portfolio_adds_up_fills():
     st.proposals.append(proposal(usd=999.0, mode="shadow", status="failed"))
     pf = shadow_portfolio(st, {"INTCon": 58.0}, 10000.0)
     assert pf["invested_usd"] == 4000.0 and pf["cash_usd"] == 6000.0
-    assert pf["positions"] == [{"symbol": "INTCon", "ticker": "INTC", "topic": "chiplet", "quantity": 70.0, "cost_usd": 4000.0, "orders": 2,
-                                "value_usd": 4060.0, "change_pct": 1.5}]
+    pos = {k: v for k, v in pf["positions"][0].items() if k not in ("asset_id", "first_bought")}
+    assert len(pf["positions"]) == 1 and pos == {"symbol": "INTCon", "ticker": "INTC", "topic": "chiplet", "quantity": 70.0, "cost_usd": 4000.0,
+                                                 "orders": 2, "value_usd": 4060.0, "change_pct": 1.5}
     assert pf["value_usd"] == 10060.0
 
 
@@ -373,3 +374,20 @@ def test_private_route_orders_are_not_polled_through_the_public_status(tmp_path)
     with pytest.raises(RuntimeError, match="PRIVATE route"):
         ex.poll(TradingState(), p)
     assert p.status == "deposited"
+
+
+def test_shadow_sale_moves_tokens_back_to_cash_at_average_cost():
+    from datetime import timedelta
+    from app.fund.live import shadow_portfolio
+    st = TradingState()
+    b = proposal(usd=4000.0, mode="shadow")
+    b.quote, b.status = {"amountOutFormatted": "80.0"}, "shadow_filled"
+    s = proposal(usd=2200.0, mode="shadow")
+    s.side, s.created_at = "sell", b.created_at + timedelta(hours=30)
+    s.quote, s.status = {"amountInFormatted": "40.0", "amountOutUsd": "2200.0"}, "shadow_filled"
+    st.proposals += [b, s]
+    pf = shadow_portfolio(st, {"INTCon": 55.0}, 10000.0)
+    pos = pf["positions"][0]
+    assert pos["quantity"] == 40.0 and pos["cost_usd"] == 2000.0                     # half sold: half the cost goes with it
+    assert pf["cash_usd"] == 8200.0 and pf["realized_usd"] == 200.0 and pf["value_usd"] == 8200.0 + 40 * 55.0
+    assert st.proceeds("shadow") == 2200.0 and st.spent("shadow") == 0.0            # shadow fills are not "spent" live money

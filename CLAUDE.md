@@ -31,6 +31,8 @@ Rules that always apply:
   Claude may run `check --shadow`, `check` (live PROPOSALS only) and `watch`; the owner approves each live proposal.
   `live.auto_approve` (funds.yaml): the owner set it to true on 2026-11-10. Claude never changes it. While it is true, a live
   check signs with the owner's key, so Claude does NOT run live `check` or `watch`: the owner runs the loop; Claude may run `check --shadow`.
+  Selling (owner's written yes 2026-11-10, "Yes, build selling"): built, mock-tested, dry quotes run live; OFF until the owner sets
+  `live.sells_enabled: true`. Re-investing sale money needs `live.budget_mode: net`. Both are owner-only: Claude never sets them.
 - Hosting (2026-11-10): Render (API, read-only snapshot `backend/site_data`, no key) + Vercel (website). See HOSTING.md.
 - Say "mock-tested" vs "run live" honestly; never call a feature complete without a test.
 - Do not push, make the repo public, post on X, submit to the hackathon or spend on mainnet without the owner's explicit yes.

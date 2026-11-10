@@ -26,7 +26,7 @@ from pydantic import BaseModel, Field
 from app.agents.trader.agent import AGENT, Candidate
 from app.models.router import ModelRouter, ModelRouterError
 
-STRATEGY_VERSION = 1
+STRATEGY_VERSION = 2          # 2026-11-10: the agent may also SELL (owner's written yes), under the rules below
 _PROMPT_PATH = Path(__file__).resolve().parents[1] / "agents" / "trader" / "prompt_strategy.md"
 
 
@@ -39,10 +39,12 @@ class StrategyConfig(BaseModel):
     max_adds_per_ticker: int = 2         # buying the dip is allowed at most this many times per ticker
     max_ticker_share_pct: float = 25.0   # shadow mode: one company may not exceed this share of the budget
     price_requests_per_check: int = 6    # Alpha Vantage calls allowed per check (free plan: 25 a day)
+    min_hold_hours: float = 24.0         # a holding is not sold before it was held this long (no churning)
+    min_sell_fraction: float = 0.25      # a sale is at least this share of the holding (smaller sales cost more than they move)
 
 
 class Trigger(BaseModel):
-    kind: Literal["new_report", "price_drop", "price_jump", "review", "manual"]
+    kind: Literal["new_report", "price_drop", "price_jump", "review", "manual", "after_sale"]
     ticker: str = ""
     topic: str = ""
     detail: str = ""
@@ -54,7 +56,7 @@ class Check(BaseModel):
     at: datetime
     mode: str                                    # live | shadow
     triggers: list[Trigger] = Field(default_factory=list)
-    action: str = "hold"                         # buy | hold | none (no trigger, agent not called)
+    action: str = "hold"                         # buy | sell | hold | none (no trigger, agent not called)
     ticker: str = ""
     usd: float = 0.0
     summary: str = ""
@@ -68,9 +70,10 @@ class Check(BaseModel):
 
 class StrategyDecision(BaseModel):
     """What the model returns. Code checks every field before anything happens."""
-    action: Literal["buy", "hold"]
+    action: Literal["buy", "sell", "hold"]
     ticker: Optional[str] = None
     usd: Optional[float] = None
+    fraction: Optional[float] = None             # sell: share of the holding to sell
     what_changed: str = ""                       # the agent's reading of the trigger: what the evidence says about it
     rationale: str = ""
     risks: list[str] = Field(default_factory=list)
@@ -84,7 +87,10 @@ RULES = [
     "On a sharp rise: never chase; hold and note it.",
     "Size follows confidence: less confident reports get smaller orders; in live mode the size is fixed by the caps.",
     "Diversify: in shadow mode one company stays under the share cap; keeping cash is allowed and must be explained.",
-    "Only buys. Selling, auto-approval and more budget each need the owner's written yes.",
+    "Sell only a holding kept at least the minimum time, and only when its report weakened (verdict below 'building' or confidence "
+    "under the minimum), when the evidence explains a fall as a real problem, or to rotate into a clearly better-evidenced candidate "
+    "when there is no cash; never sell in panic on a fall the evidence does not explain. Selling is the owner's switch (live.sells_enabled).",
+    "After a sale the agent is woken once more at once and may buy with the money (live: only if the owner counts the budget net of sales).",
     "Every wake-up is recorded with its triggers and reasoning, and the record is fingerprinted.",
 ]
 
@@ -118,9 +124,14 @@ def detect_triggers(*, tokens: list[dict], seen_runs: dict[str, str], closes: di
 
 # ------------------------------------------------------------------ the agent, with the strategy
 def assess(router: ModelRouter, *, triggers: list[Trigger], candidates: list[Candidate], holdings: list[dict], context: dict,
-           budget_usd: float, fixed_usd: Optional[float], cfg: StrategyConfig, adds_so_far: dict[str, int]) -> tuple[StrategyDecision, Optional[Candidate], Optional[str], float, list[str]]:
-    """Returns (decision, candidate, model alias, cost, notes). `fixed_usd` is set in live mode (size fixed by the caps)."""
+           budget_usd: float, fixed_usd: Optional[float], cfg: StrategyConfig, adds_so_far: dict[str, int],
+           sellable: Optional[list[dict]] = None, sells_enabled: bool = False, can_buy: bool = True,
+           sells_left_today: int = 0, min_sale_usd: float = 0.0) -> tuple[StrategyDecision, "Optional[Candidate | dict]", Optional[str], float, list[str]]:
+    """Returns (decision, target, model alias, cost, notes). target: the Candidate to buy, or the holding (dict) to sell.
+    `fixed_usd` is set in live mode (size fixed by the caps). `sellable`: holdings with ticker, symbol, asset_id, quantity,
+    value_usd, held_hours, report verdict and confidence."""
     notes: list[str] = []
+    sellable = sellable or []
     quotable = [c for c in candidates if c.quotable]
     listing = [{"ticker": c.ticker, "token": c.symbol, "topic": c.topic, "report_verdict": c.verdict_band, "report_score": c.score,
                 "report_confidence_pct": c.confidence_pct, "company_size_risk": c.tier, "why_in_fund": c.why, "price_stretch": c.price_stretch or "unknown",
@@ -128,9 +139,15 @@ def assess(router: ModelRouter, *, triggers: list[Trigger], candidates: list[Can
                 "adds_so_far": adds_so_far.get(c.ticker.upper(), 0)} for c in candidates]
     size_line = (f"Trade size is FIXED at ${fixed_usd:.2f} (live mode)." if fixed_usd else
                  f"Pretend budget available: ${budget_usd:,.2f}; one company may not exceed {cfg.max_ticker_share_pct:.0f}% of the whole budget.")
+    if not can_buy:
+        size_line = "NO CASH for a buy right now: you may only SELL (to free money for a better candidate) or HOLD."
+    sell_line = (f"SELLING is allowed: up to {sells_left_today} sale(s) left today; a holding must have been held at least {cfg.min_hold_hours:.0f} h; "
+                 f"sell a share of a holding (`fraction`, {cfg.min_sell_fraction} to 1); the market's minimum trade is ${min_sale_usd:.2f}." if sells_enabled and sells_left_today > 0
+                 else "SELLING is not available now (switched off by the owner or today's sales used up): buy or hold.")
     user = (f"WHY YOU WOKE UP:\n" + "\n".join(f"- {t.kind}: {t.detail}" for t in triggers) + "\n\n"
-            f"{size_line}\nMinimum report confidence for a new buy: {cfg.min_confidence_pct:.0f}%. Max adds per ticker: {cfg.max_adds_per_ticker}.\n\n"
+            f"{size_line}\n{sell_line}\nMinimum report confidence for a new buy: {cfg.min_confidence_pct:.0f}%. Max adds per ticker: {cfg.max_adds_per_ticker}.\n\n"
             f"WHAT YOU ALREADY HOLD:\n{json.dumps(holdings)}\n\n"
+            f"HOLDINGS YOU COULD SELL (with their latest report):\n{json.dumps(sellable, indent=1)}\n\n"
             f"LATEST EVIDENCE PER TOPIC (from the sealed reports; dated, labelled; nothing else was read):\n{json.dumps(context, indent=1)}\n\n"
             f"CANDIDATES:\n{json.dumps(listing, indent=1)}")
     messages = [{"role": "system", "content": _PROMPT_PATH.read_text(encoding="utf-8")}, {"role": "user", "content": user}]
@@ -144,6 +161,40 @@ def assess(router: ModelRouter, *, triggers: list[Trigger], candidates: list[Can
         d.confidence = "medium"
         notes.append("confidence capped at medium (small test, thin evidence)")
     if d.action == "hold":
+        return d, None, reply.llm_alias, cost, notes
+    if d.action == "sell":
+        def no(why: str):  # noqa: ANN202
+            notes.append(f"sale of '{d.ticker}' refused by code: {why}; turned into hold")
+            d.action, d.ticker, d.usd, d.fraction = "hold", None, None, None
+            return d, None, reply.llm_alias, cost, notes
+        h = next((x for x in sellable if str(x.get("ticker", "")).upper() == (d.ticker or "").upper()), None)
+        if not sells_enabled:
+            return no("selling is switched off")
+        if sells_left_today <= 0:
+            return no("no sales left today")
+        if h is None:
+            return no("not a holding")
+        if float(h.get("held_hours") or 0) < cfg.min_hold_hours:
+            return no(f"held only {float(h.get('held_hours') or 0):.0f} h (minimum {cfg.min_hold_hours:.0f} h)")
+        frac = d.fraction if d.fraction and d.fraction > 0 else 1.0
+        if frac > 1:
+            notes.append(f"share {frac} capped at the whole holding")
+            frac = 1.0
+        if frac < cfg.min_sell_fraction:
+            notes.append(f"share {frac} raised to the minimum {cfg.min_sell_fraction}")
+            frac = cfg.min_sell_fraction
+        value = float(h.get("value_usd") or 0)
+        if min_sale_usd and value * frac < min_sale_usd:
+            if value < min_sale_usd:
+                return no(f"the whole holding is worth about ${value:.2f}, below the market's minimum trade ${min_sale_usd:.2f}")
+            notes.append(f"share {frac} raised to {min(1.0, min_sale_usd / value):.2f} so the sale reaches the market's minimum ${min_sale_usd:.2f}")
+            frac = min(1.0, min_sale_usd * 1.02 / value)
+        d.ticker, d.fraction = h["ticker"], round(min(1.0, frac), 4)
+        d.usd = round(value * d.fraction, 2) or None
+        return d, h, reply.llm_alias, cost, notes
+    if not can_buy:
+        notes.append(f"buy of '{d.ticker}' refused by code: no cash (sell first); turned into hold")
+        d.action, d.ticker, d.usd = "hold", None, None
         return d, None, reply.llm_alias, cost, notes
     cand = next((c for c in quotable if c.ticker.upper() == (d.ticker or "").upper()), None)
     if cand is None:

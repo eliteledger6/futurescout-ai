@@ -294,7 +294,10 @@ def create_app(
             "limits": {"max_trade_usd": lv.max_trade_usd, "max_day_usd": lv.max_day_usd, "max_total_usd": lv.max_total_usd,
                        "price_band_pct": lv.price_band_pct, "max_cost_pct": lv.max_cost_pct, "shadow_budget_usd": lv.shadow_budget_usd},
             "spent": {"live_total_usd": state.spent("live"), "live_today_usd": state.spent("live", today),
-                      "shadow_filled_usd": round(sum(p.usd for p in state.proposals if p.mode == "shadow" and p.status == "shadow_filled"), 2)},
+                      "shadow_filled_usd": round(sum(p.usd for p in state.proposals if p.mode == "shadow" and p.status == "shadow_filled" and p.side == "buy"), 2),
+                      "live_proceeds_usd": state.proceeds("live"), "live_counted_usd": state.invested("live", lv.budget_mode)},
+            "selling": {"enabled": lv.sells_enabled, "budget_mode": lv.budget_mode, "max_sells_per_day": lv.max_sells_per_day},
+            "live_holdings": state.live_holdings(),
             "balances": balances,
             "shadow_portfolio": shadow_portfolio(state, {t["symbol"]: t["price"] for t in tokens if t.get("price")}, lv.shadow_budget_usd),
             "pay_with": lv.pay_with,
@@ -304,7 +307,9 @@ def create_app(
             "auto_approve": lv.auto_approve,
             "allowlist": [{k: t[k] for k in ("ticker", "symbol", "topic", "band", "score", "confidence_pct", "price")} for t in tokens],
             "proposals": [p.model_dump(mode="json") for p in reversed(state.proposals[-60:])],
-            "explorer_tx": lv.explorer_tx, "approval": "owner's terminal only: python scripts\\fund_trade.py approve <id>",
+            "explorer_tx": lv.explorer_tx,
+            "approval": ("automatic: the agent's orders run when every code check passes (owner's setting live.auto_approve)" if lv.auto_approve
+                         else "owner's terminal only: python scripts\\fund_trade.py approve <id>"),
             "disclaimer": LIVE_DISCLAIMER,
         }
 

@@ -37,12 +37,15 @@ export default function TradingPage() {
       <section className="hero tp-hero">
         <div className="aurora" aria-hidden="true" />
         <div className="container">
-          <div className="eyebrow">Trading · an AI agent with a human on the switch{t?.auto_approve ? " · auto-approve ON" : ""}</div>
-          <h1 className="display" style={{ fontSize: "clamp(36px, 5.4vw, 66px)" }}>The agent <span className="gradient-text">proposes</span>. Code checks. The owner approves.</h1>
+          <div className="eyebrow">Trading · {t?.auto_approve ? "an AI agent that trades on its own, inside hard limits" : "an AI agent with a human on the switch"}</div>
+          {t?.auto_approve
+            ? <h1 className="display" style={{ fontSize: "clamp(36px, 5.4vw, 66px)" }}>The agent <span className="gradient-text">decides</span>. Code checks. The order runs.</h1>
+            : <h1 className="display" style={{ fontSize: "clamp(36px, 5.4vw, 66px)" }}>The agent <span className="gradient-text">proposes</span>. Code checks. The owner approves.</h1>}
           {t && (
             <div className={`tp-status ${state}`} style={{ marginTop: 18 }}>
               <span className="lamp" />
-              {t.kill_switch ? "Stopped: kill switch on" : t.trading_enabled ? "Armed: an approved trade can be sent" : "Off: no real trade can be sent"}
+              {t.kill_switch ? "Stopped: kill switch on" : !t.trading_enabled ? "Off: no real trade can be sent"
+                : t.auto_approve ? "Armed: the agent's orders run when every check passes" : "Armed: an approved trade can be sent"}
               <span className="muted">· {t.account ?? "no account connected"} · NEAR mainnet</span>
             </div>
           )}
@@ -54,22 +57,24 @@ export default function TradingPage() {
           <FundTabs active="trading" />
           {error ? <ErrorNotice error={error} /> : !t ? <Loading lines={5} /> : (
             <>
-              <Pipeline p={current} />
+              <Pipeline p={current} auto={t.auto_approve} />
 
               <Reveal>
                 <div className="stats">
-                  <div className="stat"><div className="stat-value"><CountUp value={t.spent.live_total_usd} decimals={2} prefix="$" /><span className="muted" style={{ fontSize: 22 }}> / {usd(t.limits.max_total_usd, 0)}</span></div><div className="stat-label">real money used, of the total cap</div></div>
+                  <div className="stat"><div className="stat-value"><CountUp value={t.spent.live_counted_usd ?? t.spent.live_total_usd} decimals={2} prefix="$" /><span className="muted" style={{ fontSize: 22 }}> / {usd(t.limits.max_total_usd, 0)}</span></div><div className="stat-label">{t.selling?.budget_mode === "net" ? "real money invested (buys minus sales), of the cap" : "real money used, of the total cap"}</div></div>
                   <div className="stat"><div className="stat-value">{t.balances?.near != null ? <><CountUp value={t.balances.near} decimals={2} /> Ⓝ</> : "–"}</div><div className="stat-label">NEAR in the fund wallet (trades are paid in NEAR)</div></div>
                   <div className="stat"><div className="stat-value"><CountUp value={t.shadow_portfolio.invested_usd} prefix="$" /><span className="muted" style={{ fontSize: 22 }}> / {usd(t.shadow_portfolio.budget_usd, 0)}</span></div><div className="stat-label">shadow mode: pretend money placed at real quotes</div></div>
                   <div className="stat"><div className="stat-value"><CountUp value={t.allowlist.length} /></div><div className="stat-label">tokenized stocks the agent may choose from</div></div>
                 </div>
               </Reveal>
 
-              {t.balances && t.balances.holdings.length > 0 && (
-                <div className="notice"><b>Held now (real):</b> {t.balances.holdings.map((h) => `${h.quantity} ${h.symbol}${h.value_usd != null ? ` (about ${usd(h.value_usd)})` : ""}`).join(" · ")}</div>
+              {(t.live_holdings?.length ?? 0) > 0 && (
+                <div className="notice"><b>Held now (real money, from the fund&apos;s records):</b>{" "}
+                  {t.live_holdings!.map((h) => `${h.quantity.toFixed(5)} ${h.symbol} (cost ${usd(h.cost_usd)})`).join(" · ")}
+                  {(t.spent.live_proceeds_usd ?? 0) > 0 && <> · sales so far returned {usd(t.spent.live_proceeds_usd!)}</>}</div>
               )}
 
-              {t.pending_live.length > 0 && (
+              {t.pending_live.length > 0 && !t.auto_approve && (
                 <div className="notice notice-warn"><b>{t.pending_live.length} real-money proposal{t.pending_live.length > 1 ? "s" : ""} waiting for the owner&apos;s approval.</b>{" "}
                   The agent decided; only the owner can send it: <span className="mono">python scripts\fund_trade.py approve {t.pending_live[0]}</span> in the backend folder (or <span className="mono">reject</span>).</div>
               )}
@@ -90,12 +95,14 @@ export default function TradingPage() {
                 <div className="grid grid-2" style={{ background: "transparent", border: 0, gap: 24, marginTop: 12 }}>
                   <ul className="small" style={{ color: "var(--text-2)", lineHeight: 1.7, background: "transparent", margin: 0 }}>
                     <li>At most {usd(t.limits.max_trade_usd)} per trade, {usd(t.limits.max_day_usd)} per day, {usd(t.limits.max_total_usd)} in total.</li>
-                    <li>Buys only, and only the tokens listed here.</li>
+                    <li>{t.selling?.enabled ? `Buys of the tokens listed here; sales only of what the fund holds (at most ${t.selling.max_sells_per_day} a day, never far below the last close).` : "Buys only, and only the tokens listed here."}</li>
                     <li>The quoted price must be within {t.limits.price_band_pct}% of the stock&apos;s last close (a little wider when that close is days old).</li>
                     <li>Real quotes costing more than {t.limits.max_cost_pct}% are refused.</li>
                     <li>Each proposal can be sent once. A kill switch stops everything.</li>
                     <li>No control on this site can approve or send a trade.</li>
-                    <li>The agent runs on its own (<span className="mono">fund_trade.py watch</span>): shadow orders fill themselves; a live order is a proposal until the owner approves it{t.auto_approve ? " (auto-approve is ON: the owner switched the typed approval off)" : ""}.</li>
+                    <li>The agent runs on its own (<span className="mono">fund_trade.py watch</span>): shadow orders fill themselves; {t.auto_approve
+                      ? "live orders run automatically once every check passes (the owner switched on auto-approve; the kill switch still stops everything)"
+                      : "a live order is a proposal until the owner approves it"}.</li>
                   </ul>
                   <div className="table-wrap" style={{ background: "transparent" }}>
                     <table className="table">
@@ -131,26 +138,30 @@ const NODES = [
   { key: "agent", name: "Trading agent", sub: "Claude Opus picks and explains" },
   { key: "checks", name: "Safety checks", sub: "caps, allowlist, price band" },
   { key: "owner", name: "Owner", sub: "approves in their terminal" },
-  { key: "swap", name: "NEAR Intents", sub: "NEAR → tokenized stock" },
+  { key: "swap", name: "NEAR Intents", sub: "NEAR ⇄ tokenized stock" },
   { key: "hold", name: "Holding", sub: "in the fund account" },
 ];
 
-function Pipeline({ p }: { p?: TradeProposal }) {
+function Pipeline({ p, auto = false }: { p?: TradeProposal; auto?: boolean }) {
+  const nodes = NODES.map((n) => (n.key === "owner" && auto ? { ...n, name: "Auto-approve", sub: "runs when every check passes" } : n));
+  const selling = p?.side === "sell";
   // active = index of the stage the newest real proposal is at; done = stages before it
   let active = -1, bad = -1, allDone = false, caption: ReactNode = <>Idle. The agent runs when the owner asks for a proposal.</>;
   if (p) {
     const s = p.status;
-    if (s === "proposed") { active = 3; caption = <>Waiting for the <b>owner&apos;s approval</b> of {usd(p.usd)} of {p.symbol}.</>; }
+    if (s === "proposed") { active = 3; caption = <>Waiting for the <b>owner&apos;s approval</b> to {selling ? "sell" : "buy"} {usd(p.usd)} of {p.symbol}.</>; }
     else if (s === "approved" || s === "executing") { active = 4; caption = <>Approved. Getting a real quote and <b>sending the payment</b>.</>; }
-    else if (s === "deposited") { active = 4; caption = <>Payment sent. <b>NEAR Intents is swapping</b> it into {p.symbol}.</>; }
-    else if (s === "success") { allDone = true; caption = <><b>Filled.</b> The fund account holds {p.result?.amountOutFormatted ? `${Number(p.result.amountOutFormatted).toFixed(5)} ` : ""}{p.symbol}.</>; }
+    else if (s === "deposited") { active = 4; caption = selling ? <>Order sent. <b>NEAR Intents is swapping</b> {p.symbol} into NEAR.</> : <>Payment sent. <b>NEAR Intents is swapping</b> it into {p.symbol}.</>; }
+    else if (s === "success") { allDone = true; caption = selling
+      ? <><b>Sold.</b> {p.result?.amountInFormatted ? `${Number(p.result.amountInFormatted).toFixed(5)} ` : ""}{p.symbol} for about {usd(Number(p.result?.amountOutUsd ?? 0))} of NEAR.</>
+      : <><b>Filled.</b> The fund account holds {p.result?.amountOutFormatted ? `${Number(p.result.amountOutFormatted).toFixed(5)} ` : ""}{p.symbol}.</>; }
     else if (s === "refunded") { bad = 4; caption = <><b>Refunded.</b> The swap did not complete and the payment came back.</>; }
     else if (s === "rejected") { bad = 3; caption = <>The owner <b>rejected</b> this proposal.</>; }
     else { bad = p.deposit_tx ? 4 : 2; caption = <><b>Stopped by a check.</b> {p.error ?? "See the step log."}</>; }
   }
   return (
     <div className="tp-pipe" role="img" aria-label="Trading pipeline: research, trading agent, safety checks, owner approval, NEAR Intents swap, holding">
-      {NODES.map((n, i) => {
+      {nodes.map((n, i) => {
         const done = allDone || (active >= 0 ? i < active : bad >= 0 ? i < bad : false);
         const cls = [done ? "done" : "", i === active ? "active" : "", i === bad ? "bad" : "",
           allDone || (active >= 0 && i < active) ? "flow" : !p ? "idle" : ""].join(" ");
@@ -206,7 +217,7 @@ function HoldCard({ p }: { p: TradeProposal }) {
   );
 }
 
-const TRIGGER_WORDS: Record<string, string> = { new_report: "new report", price_drop: "sharp fall", price_jump: "sharp rise", review: "routine review", manual: "owner" };
+const TRIGGER_WORDS: Record<string, string> = { new_report: "new report", price_drop: "sharp fall", price_jump: "sharp rise", review: "routine review", manual: "owner asked", after_sale: "money from a sale" };
 
 function AgentLog({ t }: { t: Trading }) {
   const checks = t.checks ?? [];
@@ -221,7 +232,7 @@ function AgentLog({ t }: { t: Trading }) {
         <p className="small" style={{ color: "var(--text-2)", margin: 0 }}>
           Triggers: a new sealed report for a traded topic · a one-day fall of {cfg.drop_pct}% or more, or a rise of {cfg.jump_pct}% or more, in a held or allowed stock
           · a routine review every {cfg.review_hours} h. On waking it re-reads the report&apos;s verdict, confidence and dated findings, then buys one candidate or holds.
-          No new buy below {cfg.min_confidence_pct}% report confidence; at most {cfg.max_adds_per_ticker} dip-buys per company; one company at most {cfg.max_ticker_share_pct}% of the shadow budget. Only buys.
+          No new buy below {cfg.min_confidence_pct}% report confidence; at most {cfg.max_adds_per_ticker} dip-buys per company; one company at most {cfg.max_ticker_share_pct}% of the shadow budget. {t.selling?.enabled ? "Sales: only a holding kept 24 h or more, when its report weakened, the evidence explains a fall, or to rotate into a better-supported company." : "Only buys (selling is switched off)."}
         </p>
       )}
       {checks.length === 0 ? <div className="small muted">No wake-up recorded yet.</div> : (
@@ -230,7 +241,7 @@ function AgentLog({ t }: { t: Trading }) {
             <li key={c.id}>
               <b>{fmtDate(c.at)}</b> · <span className="pill" style={{ marginRight: 6 }}>{c.mode}</span>
               {c.triggers.length ? c.triggers.map((x) => `${TRIGGER_WORDS[x.kind] ?? x.kind}${x.ticker ? ` ${x.ticker}` : x.topic ? ` (${x.topic})` : ""}`).join(", ") : "no trigger"}
-              {" → "}<b>{c.action === "none" ? "not called" : c.action === "buy" ? `buy ${usd(c.usd)} of ${c.ticker}` : "hold"}</b>
+              {" → "}<b>{c.action === "none" ? "not called" : c.action === "buy" ? `buy ${usd(c.usd)} of ${c.ticker}` : c.action === "sell" ? `sell about ${usd(c.usd)} of ${c.ticker}` : "hold"}</b>
               {c.what_changed && <div className="small" style={{ color: "var(--text-2)" }}>{c.what_changed}</div>}
               {c.summary && c.action !== "none" && <div className="small muted">{c.summary}</div>}
             </li>
@@ -260,7 +271,7 @@ function LiveTrade({ p, explorer, animate = true }: { p: TradeProposal; explorer
   return (
     <div className={`tr-card live ${working ? "working" : ""} ${s === "success" ? "ok" : ""}`}>
       <div className="tr-head">
-        <h2 className="tr-title">Buy {usd(p.usd)} of {p.symbol} <span className="muted small">{p.ticker} · {p.topic}</span></h2>
+        <h2 className="tr-title">{p.side === "sell" ? `Sell ${Math.round((p.fraction ?? 1) * 100)}% of ${p.symbol} (about ${usd(p.usd)})` : `Buy ${usd(p.usd)} of ${p.symbol}`} <span className="muted small">{p.ticker} · {p.topic}</span></h2>
         <div className="pills"><span className="pill tr-pill-live">real money</span><span className="pill">{s.replace("_", " ")}</span></div>
       </div>
 
@@ -272,7 +283,7 @@ function LiveTrade({ p, explorer, animate = true }: { p: TradeProposal; explorer
         })}
       </div>
       {s === "deposited" && sentAt && (
-        <div className="tr-wait"><span className="tr-dots"><span /><span /><span /></span>NEAR Intents is swapping the payment into {p.symbol} · <Elapsed since={sentAt} /> so far. If it cannot complete, the payment is refunded.</div>
+        <div className="tr-wait"><span className="tr-dots"><span /><span /><span /></span>NEAR Intents is swapping {p.side === "sell" ? `${p.symbol} into NEAR` : `the payment into ${p.symbol}`} · <Elapsed since={sentAt} /> so far. If it cannot complete, the {p.side === "sell" ? "tokens come" : "payment comes"} back.</div>
       )}
 
       <div className="tr-agent">
@@ -286,7 +297,7 @@ function LiveTrade({ p, explorer, animate = true }: { p: TradeProposal; explorer
 
       <div className="tr-kv">
         <div><div className="k">Pays</div><div className="v">{usd(inUsd ?? p.usd)} in NEAR</div></div>
-        <div><div className="k">{s === "success" ? "Received" : "Quoted"}</div><div className="v">{p.result?.amountOutFormatted ?? q?.amountOutFormatted ? `${Number(p.result?.amountOutFormatted ?? q?.amountOutFormatted).toFixed(5)} ${p.symbol}` : "–"}</div></div>
+        <div><div className="k">{s === "success" ? "Received" : "Quoted"}</div><div className="v">{p.result?.amountOutFormatted ?? q?.amountOutFormatted ? `${Number(p.result?.amountOutFormatted ?? q?.amountOutFormatted).toFixed(5)} ${p.side === "sell" ? "NEAR" : p.symbol}` : "–"}</div></div>
         <div><div className="k">Quoted cost</div><div className="v">{cost != null ? `${cost.toFixed(2)}%` : "–"}</div></div>
         <div><div className="k">Stock&apos;s last close</div><div className="v">{usd(p.ref_close)}<span className="muted small"> {p.ref_close_date ?? ""}</span></div></div>
       </div>

@@ -43,6 +43,10 @@ live:
   trading_enabled: true       # master switch; the owner turns it on for the first trade
   route: confidential          # owner 2026-11-09: trade like near.com (signed order from the private balance); "wallet" = old route
   auto_approve: true          # FUTURE (owner-only): true = a live proposal from `fund_trade.py watch` is sent without the typed approval. Keep false for now.
+  sells_enabled: false        # OWNER-ONLY. true = the agent may SELL (part of) a holding for NEAR (owner's written yes 2026-11-10)
+  budget_mode: spent          # OWNER-ONLY. spent = max_total_usd counts every dollar ever spent on buys;
+                              #             net   = it counts buys MINUS sale proceeds (sale money can be invested again)
+  max_sells_per_day: 2
   strategy:                    # when the trading agent wakes up, and its fixed rules (app/fund/strategy.py)
     check_minutes: 60          # `python scripts\fund_trade.py check --shadow --loop` looks this often
     review_hours: 24           # routine review even when nothing moved
@@ -52,6 +56,8 @@ live:
     max_adds_per_ticker: 2     # buying a dip at most twice per company
     max_ticker_share_pct: 25.0 # shadow mode: one company at most this share of the budget
     price_requests_per_check: 6
+    min_hold_hours: 24         # a holding is not sold before it was held this long
+    min_sell_fraction: 0.25    # smallest share of a holding the agent may sell
   order_recipients: [intents.near, intents.far]   # verifiers an order may be addressed to; intents.far = the private shard's contract (first real order, 2026-11-10)
   signed_route_enabled: true  # SECOND switch for that route. Built, not yet run for real. Only the owner turns it on.
   pay_with: near               # owner 2026-11-09: pay with NEAR directly (no USDC needed); "usdc" also works
