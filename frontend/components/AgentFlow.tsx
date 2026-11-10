@@ -8,32 +8,33 @@ import { fmtUsd } from "@/lib/api";
 import { AgentIcon } from "./AgentIcon";
 
 const W = 178, H = 60;
-// Research band (also the per-report trace) on top; the agent economy (overview only) in its own band below.
-const ROW_A = 535, ROW_B = 650, DIVIDER = 470, LINK_Y = 492, SPINE_X = 26;
+// One left-to-right flow. Columns: plan, research, companies & review, timing & scout, write & seal, sell & fund, trade & stake.
+// Science and Patent sit together (both feed Market); Risk and X signals below them (both feed the Chief review).
+const COL = [14, 228, 442, 656, 870, 1084, 1388];
 const POS: Record<AgentKey, [number, number]> = {
-  chief: [14, 275],
-  science: [242, 140], risk: [242, 230], x: [242, 320], patent: [242, 410],
-  market: [470, 185],
-  review: [470, 365],
-  timing: [698, 230], scout: [698, 320],
-  investment: [918, 230],
-  near: [918, 340],
-  fund: [60, ROW_A], trader: [420, ROW_A],
-  seller: [60, ROW_B], stake: [420, ROW_B],
-  trader2: [800, ROW_B],
+  chief: [COL[0], 260],
+  science: [COL[1], 120], patent: [COL[1], 200], risk: [COL[1], 320], x: [COL[1], 400],
+  market: [COL[2], 160],
+  review: [COL[2], 360],
+  timing: [COL[3], 220], scout: [COL[3], 300],
+  investment: [COL[4], 220],
+  near: [COL[4], 320],
+  fund: [COL[5], 160], seller: [COL[5], 360],
+  trader: [COL[6], 160], stake: [COL[6], 360],
+  trader2: [COL[6], 460],
 };
 const AFTER_REPORT: AgentKey[] = ["fund", "trader", "seller", "stake", "trader2"];   // overview only, hidden in one report's trace
 const PLANNED: AgentKey[] = ["trader2"];                                              // drawn dashed: the next step, not running yet
 const EDGES: [AgentKey, AgentKey][] = [
-  ["chief", "science"], ["chief", "risk"], ["chief", "x"], ["chief", "patent"],
+  ["chief", "science"], ["chief", "patent"], ["chief", "risk"], ["chief", "x"],
   ["science", "market"], ["patent", "market"],
   ["market", "review"], ["risk", "review"], ["x", "review"],
   ["review", "timing"], ["review", "scout"],
   ["timing", "investment"], ["scout", "investment"],
   ["investment", "near"],
-  ["fund", "trader"], ["seller", "stake"],
+  ["near", "fund"], ["near", "seller"], ["fund", "trader"],
 ];
-const ORDER: AgentKey[][] = [["chief"], ["science", "risk", "x", "patent"], ["market"], ["review"], ["timing", "scout"], ["investment"], ["near"],
+const ORDER: AgentKey[][] = [["chief"], ["science", "patent", "risk", "x"], ["market"], ["review"], ["timing", "scout"], ["investment"], ["near"],
   ["fund", "seller"], ["trader"], ["stake"], ["trader2"]];
 
 function edgePath(a: AgentKey, b: AgentKey): string {
@@ -52,41 +53,31 @@ const LOOP = (() => {
   return `M ${rx + W} ${ry - 6} C ${rx + W + 70} ${top}, ${sx + W / 2} ${top - 10}, ${sx + W / 2} ${sy - H / 2}`;
 })();
 
-// The sealed report drops from NEAR record into the economy band: to the topic fund and to the report agent.
-const LINK = (() => {
-  const [nx, ny] = POS.near, x = nx + W / 2, r = 10;
-  const [, fy] = POS.fund, [, sy] = POS.seller, [fx] = POS.fund;
-  return {
-    main: `M ${x} ${ny + H / 2} L ${x} ${LINK_Y - r} Q ${x} ${LINK_Y} ${x - r} ${LINK_Y} L ${SPINE_X + r} ${LINK_Y} Q ${SPINE_X} ${LINK_Y} ${SPINE_X} ${LINK_Y + r} L ${SPINE_X} ${sy}`,
-    toFund: `M ${SPINE_X} ${fy} L ${fx} ${fy}`,
-    toSeller: `M ${SPINE_X} ${sy} L ${fx} ${sy}`,
-  };
-})();
-
-// The deal: the report goes up to the trading agent, its 3-5 NEAR payment comes back down (two parallel curves).
+// The deal between the report agent and the trading agent: report up, NEAR payment back down (two parallel curves).
+const GAP_MID = (COL[5] + W + COL[6]) / 2;
 const SALE = (() => {
-  const [, ty] = POS.trader, [, sy] = POS.seller;
-  const top = ty + H / 2, bot = sy - H / 2, mid = (top + bot) / 2;
+  const [, sy] = POS.seller, [, ty] = POS.trader, x1 = COL[5] + W, x2 = COL[6];
   return {
-    report: `M 200 ${bot} C 200 ${mid}, 430 ${mid}, 430 ${top}`,     // report agent -> trading agent
-    pay: `M 470 ${top} C 470 ${mid}, 240 ${mid}, 240 ${bot}`,        // trading agent -> report agent
-    mid,
+    report: `M ${x1} ${sy - 22} C ${GAP_MID - 12} ${sy - 22}, ${GAP_MID - 12} ${ty + 4}, ${x2} ${ty + 4}`,    // report agent -> trading agent
+    pay: `M ${x2} ${ty + 18} C ${GAP_MID + 12} ${ty + 18}, ${GAP_MID + 12} ${sy - 8}, ${x1} ${sy - 8}`,       // trading agent -> report agent
+    stake: `M ${x1} ${sy + 14} L ${x2} ${sy + 14}`,                                                             // report agent -> staking
   };
 })();
 
-// NEAR AI credits rise from staking back to the research team.
-const CREDIT_X = 700;
+// NEAR AI credits: from staking along the bottom back to the Chief (they pay every agent's model calls).
+const CREDIT_Y = 526;
 const CREDITS = (() => {
-  const [sx, sy] = POS.stake, r = 10;
-  return `M ${sx + W} ${sy} L ${CREDIT_X - r} ${sy} Q ${CREDIT_X} ${sy} ${CREDIT_X} ${sy - r} L ${CREDIT_X} ${DIVIDER - 6}`;
+  const [sx, sy] = POS.stake, [cx, cy] = POS.chief, r = 12;
+  const xr = sx + W + 22, x2 = cx + W / 2;
+  return `M ${sx + W} ${sy} L ${xr - r} ${sy} Q ${xr} ${sy} ${xr} ${sy + r} L ${xr} ${CREDIT_Y - r} Q ${xr} ${CREDIT_Y} ${xr - r} ${CREDIT_Y} `
+       + `L ${x2 + r} ${CREDIT_Y} Q ${x2} ${CREDIT_Y} ${x2} ${CREDIT_Y - r} L ${x2} ${cy + H / 2}`;
 })();
 
 // The report agent's kept 30% pot: once it passes $200 it funds a second trading agent (planned).
-const POT_Y = 705;
 const POT = (() => {
   const [sx, sy] = POS.seller, [nx, ny] = POS.trader2, r = 10;
-  const x1 = sx + W / 2, x2 = nx + W / 2;
-  return `M ${x1} ${sy + H / 2} L ${x1} ${POT_Y - r} Q ${x1} ${POT_Y} ${x1 + r} ${POT_Y} L ${x2 - r} ${POT_Y} Q ${x2} ${POT_Y} ${x2} ${POT_Y - r} L ${x2} ${ny + H / 2}`;
+  const x = sx + W / 2;
+  return `M ${x} ${sy + H / 2} L ${x} ${ny - r} Q ${x} ${ny} ${x + r} ${ny} L ${nx} ${ny}`;
 })();
 
 function Badge({ x, y, text, tone }: { x: number; y: number; text: string; tone: "report" | "pay" | "pot" | "credit" }) {
@@ -113,8 +104,8 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
     <div className="flow">
       <div className="flow-swipe">Swipe sideways to see the whole network. Tap an agent for details.</div>
       <div className="flow-canvas">
-        <svg className="flow-svg" viewBox={`0 0 1110 ${stats ? 505 : 725}`} role="img"
-             aria-label="Agent network. Research team: Chief plans; Science, Risk, X and Patent research in parallel; Market reads the SEC filings of the companies the papers and patents point to; Chief reviews; price timing is checked while the Company scout finds the companies behind the patents and papers; Investment writes the report; its fingerprint is recorded on NEAR. Agent economy: the sealed report goes to the topic fund and to the report agent; the report agent sells it to the trading agent, which pays 3 to 5 NEAR; the trading agent trades tokenized stocks through NEAR Intents; the report agent stakes 70% of each payment with NEAR AI, whose credits pay every agent's model calls, and keeps 30%, which funds a planned second trading agent at $200.">
+        <svg className="flow-svg" viewBox={stats ? "0 0 1062 450" : "0 0 1610 545"} role="img"
+             aria-label="Agent network, left to right: Chief plans; Science and Patent research, and the Market agent reads the SEC filings of the companies they point to; Risk and X signals research in parallel and the Chief reviews; price timing is checked while the Company scout finds the companies behind the patents and papers; Investment writes the report and its fingerprint is recorded on NEAR; the topic fund invests a paper fund and the report agent sells the report to the trading agent, which pays 3 to 5 NEAR and trades tokenized stocks through NEAR Intents; the report agent stakes 70% of each payment with NEAR AI, whose credits pay every agent's model calls, and keeps 30%, which funds a planned second trading agent at $200.">
           <defs>
             <radialGradient id="nodeGlow" cx="50%" cy="50%" r="60%">
               <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.28" />
@@ -122,8 +113,9 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
             </radialGradient>
           </defs>
           {/* stage labels */}
-          {([["Plan", 103], ["Research in parallel", 331], ["Companies & review", 559], ["Timing & scout", 787], ["Write & seal", 1007]] as [string, number][]).map(([t, x]) => (
-            <text key={t} x={x} y={14} className="flow-stage" textAnchor="middle">{t}</text>
+          {([["Plan", 0], ["Research in parallel", 1], ["Companies & review", 2], ["Timing & scout", 3], ["Write & seal", 4],
+             ...(stats ? [] : [["Sell & fund", 5], ["Trade & stake", 6]])] as [string, number][]).map(([t, i]) => (
+            <text key={t} x={COL[i] + W / 2} y={14} className="flow-stage" textAnchor="middle">{t}</text>
           ))}
           {/* edges */}
           {EDGES.filter(([a, b]) => !stats || !(AFTER_REPORT.includes(a) || AFTER_REPORT.includes(b))).map(([a, b]) => {
@@ -138,20 +130,16 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
           })}
           {!stats && (
             <>
-              <line x1={0} y1={DIVIDER} x2={1110} y2={DIVIDER} className="flow-divider" />
-              <text x={14} y={DIVIDER - 8} className="flow-stage">Research team ▲</text>
-              <text x={14} y={DIVIDER + 16} className="flow-stage">Agent economy ▼</text>
-              <Flow d={LINK.main} /><Flow d={LINK.toFund} /><Flow d={LINK.toSeller} />
-              <text x={POS.near[0] + W / 2 - 10} y={LINK_Y - 8} className="flow-note" textAnchor="end">sealed report</text>
               <Flow d={SALE.report} cls="edge on sale-report" />
               <Flow d={SALE.pay} cls="edge on sale-pay" />
-              <Badge x={128} y={SALE.mid} text="report ▴" tone="report" />
-              <Badge x={548} y={SALE.mid} text="▾ pays 3–5 NEAR" tone="pay" />
-              <Badge x={(POS.seller[0] + W + POS.stake[0]) / 2} y={POS.stake[1] - 16} text="stakes 70%" tone="credit" />
+              <Flow d={SALE.stake} />
+              <Badge x={GAP_MID} y={POS.trader[1] + 62} text="report ▸" tone="report" />
+              <Badge x={GAP_MID} y={POS.seller[1] - 62} text="◂ pays 3–5 NEAR" tone="pay" />
+              <Badge x={GAP_MID} y={POS.seller[1] + 32} text="stakes 70% ▸" tone="credit" />
               <Flow d={CREDITS} cls="edge on credits" />
-              <Badge x={CREDIT_X + 126} y={ROW_A + 20} text="▲ NEAR AI credits pay every agent" tone="credit" />
+              <Badge x={(POS.chief[0] + POS.stake[0] + W) / 2} y={CREDIT_Y} text="◂ NEAR AI credits from staking pay every agent's model calls" tone="credit" />
               <g className="edge planned-edge"><path d={POT} className="edge-base" /></g>
-              <Badge x={(POS.seller[0] + POS.trader2[0] + W) / 2} y={POT_Y} text="keeps 30% · at $200 ▸" tone="pot" />
+              <Badge x={GAP_MID - 26} y={POS.trader2[1] - 14} text="keeps 30% · at $200 ▸" tone="pot" />
             </>
           )}
           <g className="edge loop">
