@@ -85,6 +85,7 @@ economy:
   budget_share_of_fund: 0.30      # owner 2026-11-10: at most 30% of the live fund's value is spent on reports (was 10%)
   stake_share: 0.80               # owner: the report agent stakes 80% of its NEAR, keeps 20% for fees
   min_stake_near: 1.0
+  pay_from: private               # owner 2026-11-10: pay reports from the near.com (private) balance; "wallet" = plain transfer
   staking_contract: stake.dao     # NEAR AI's "Stake NEAR" contract, read from the owner's own dashboard stake (2026-11-10)
   stake_method: stake
   stake_args: {product_id: prod_33Kp14MGUJa2QA, price_id: price_QzmSvxbZqdbV0XbG6VD6KkbB}   # "NEAR AI Cloud Credits" / "Staking Farm"

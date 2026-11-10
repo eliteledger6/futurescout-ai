@@ -509,11 +509,16 @@ def economy_buy_reports(s, cfg, toks, cands, now, *, execute: bool) -> set:  # n
                              confidence_pct=c.confidence_pct, near_usd=px, cfg=ec, now=now)
         state.prices[rid] = price
         budget = report_budget_near(fund_value_usd=live_fund_value(s, cfg, ex), near_usd=px, state=state, cfg=ec)
-        wallet = account_near(httpx.Client(timeout=30), cfg.live.rpc, buyer)[0] / 1e24 if buyer else 0.0
+        private = ec.pay_from == "private"
+        wallet = None if private else (account_near(httpx.Client(timeout=30), cfg.live.rpc, buyer)[0] / 1e24 if buyer else 0.0)
         blocks = purchase_blocks(state=state, price=price, budget_near=budget, wallet_near=wallet, cfg=ec,
                                  trading_enabled=cfg.live.trading_enabled, kill_switch=ex.kill_switch())
         if not creds:
             blocks.append("FUND_MAINNET_ACCOUNT_ID / FUND_MAINNET_PRIVATE_KEY are not set")
+        if private and not cfg.live.signed_route_enabled:
+            blocks.append("paying from the near.com balance needs live.signed_route_enabled")
+        if private and not s.oneclick_api_key:
+            blocks.append("ONECLICK_API_KEY is not set (the private route needs the partner key)")
         print(f"  report '{c.topic}': {price.price_near:g} NEAR (${price.price_usd:.2f}); budget left {budget:.3f} NEAR")
         if blocks:
             print("    not bought: " + "; ".join(blocks))
@@ -521,9 +526,24 @@ def economy_buy_reports(s, cfg, toks, cands, now, *, execute: bool) -> set:  # n
         if not execute:
             print("    would buy it; real payments run in the owner's loop (live.auto_approve) or with:  python scripts\\fund_trade.py economy buy")
             continue
-        signer = MainnetSigner(creds[0], creds[1], cfg.live.rpc)
-        p = buy_report(state=state, path=ECONOMY, price=price, buyer=creds[0], cfg=ec, send=signer.transfer,
-                       read=lambda h, who: read_tx(httpx.Client(timeout=60), ec.rpc, h, who), now=now)
+        if private:
+            from app.fund.economy_pay import pay_from_private, seller_total_reader
+            api_key = s.oneclick_api_key.get_secret_value().strip()
+            http = httpx.Client(timeout=40)
+            try:
+                p = pay_from_private(state=state, path=ECONOMY, price=price, account=creds[0], private_key=creds[1], cfg=ec,
+                                     api=SignedIntents(cfg.intents.api, api_key=api_key), salt_reader=lambda: str(rpc_view_salt(cfg)),
+                                     submit=lambda order, key: submit_signed_order(http, cfg.intents.api, api_key, order, key),
+                                     allowed_recipients=cfg.live.order_recipients,
+                                     read_seller_total=seller_total_reader(httpx.Client(timeout=30), ec.rpc, ec.seller_account),
+                                     now=lambda: datetime.now(timezone.utc))
+            except RuntimeError as exc:
+                print(f"    not bought: {str(exc)[:240]}")
+                continue
+        else:
+            signer = MainnetSigner(creds[0], creds[1], cfg.live.rpc)
+            p = buy_report(state=state, path=ECONOMY, price=price, buyer=creds[0], cfg=ec, send=signer.transfer,
+                           read=lambda h, who: read_tx(httpx.Client(timeout=60), ec.rpc, h, who), now=now)
         print(f"    bought: {p.status} (tx {p.tx_hash}) {p.note}")
         if p.status == "paid":
             usable.add(c.topic)
@@ -556,13 +576,18 @@ def cmd_economy(s, cfg, what: str) -> int:  # noqa: ANN001
         if creds[0] != ec.seller_account:
             print(f"REPORT_AGENT_ACCOUNT_ID ({creds[0]}) is not economy.seller_account ({ec.seller_account}); nothing staked")
             return 1
+        from app.fund.economy_pay import wnear_balance
+        signer = MainnetSigner(creds[0], creds[1], ec.rpc)
+        wrapped = wnear_balance(httpx.Client(timeout=30), ec.rpc, creds[0])
+        if wrapped > 0:                                   # a payment from the near.com balance may arrive as wNEAR: unwrap it first
+            tx = signer.call("wrap.near", "near_withdraw", {"amount": str(wrapped)}, 10 * 10 ** 12, 1)
+            print(f"unwrapped {wrapped / YOCTO:.4f} wNEAR into NEAR (tx {tx})")
         liquid, _ = account_near(httpx.Client(timeout=30), ec.rpc, creds[0])
         if stake_amount_yocto(liquid, ec) is None:
             print(f"nothing to stake: {liquid / YOCTO:.3f} NEAR x {ec.stake_share:.0%} is under the {ec.min_stake_near} NEAR minimum")
             return 0
         state = load_economy(ECONOMY)
-        ev = stake(state=state, path=ECONOMY, account=creds[0], balance_yocto=liquid, cfg=ec,
-                   call=MainnetSigner(creds[0], creds[1], ec.rpc).call, now=now)
+        ev = stake(state=state, path=ECONOMY, account=creds[0], balance_yocto=liquid, cfg=ec, call=signer.call, now=now)
         print(f"{ev.status}: {ev.note} (tx {ev.tx_hash})")
         return 0 if ev.status == "staked" else 1
     state = load_economy(ECONOMY)

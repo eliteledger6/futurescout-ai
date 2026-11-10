@@ -50,6 +50,7 @@ class EconomyConfig(BaseModel):
     stake_gas_tgas: int = 125
     rpc: str = "https://free.rpc.fastnear.com"
     wallet_reserve_near: float = 0.05    # the trading agent always keeps this much NEAR for fees
+    pay_from: str = "wallet"             # "wallet" (plain transfer) or "private" (signed order from the near.com balance)
 
 
 class Price(BaseModel):
@@ -137,7 +138,7 @@ def report_budget_near(*, fund_value_usd: float, near_usd: float, state: Economy
     return round(max(0.0, cfg.budget_share_of_fund * fund_value_usd / near_usd - state.spent_near()), 6)
 
 
-def purchase_blocks(*, state: EconomyState, price: Price, budget_near: float, wallet_near: float, cfg: EconomyConfig,
+def purchase_blocks(*, state: EconomyState, price: Price, budget_near: float, wallet_near: Optional[float], cfg: EconomyConfig,
                     trading_enabled: bool, kill_switch: bool) -> list[str]:
     bad: list[str] = []
     if not cfg.enabled:
@@ -155,7 +156,7 @@ def purchase_blocks(*, state: EconomyState, price: Price, budget_near: float, wa
     if price.price_near > budget_near + 1e-9:
         bad.append(f"price {price.price_near} NEAR is above the report budget left ({budget_near:.3f} NEAR = "
                    f"{cfg.budget_share_of_fund:.0%} of the fund minus reports already bought)")
-    if wallet_near - cfg.wallet_reserve_near < price.price_near:
+    if wallet_near is not None and wallet_near - cfg.wallet_reserve_near < price.price_near:
         bad.append(f"the trading wallet holds {wallet_near:.3f} NEAR; {price.price_near} NEAR plus the {cfg.wallet_reserve_near} NEAR fee reserve is needed")
     return bad
 

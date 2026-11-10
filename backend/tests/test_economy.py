@@ -113,3 +113,54 @@ def test_stake_uses_near_ai_product_args_and_reads_the_farm_position(tmp_path):
             body = _json.dumps({"staked_near_amount": str(5 * YOCTO), "status": "Active"}).encode()
             return type("R", (), {"json": lambda self: {"result": {"result": list(body)}}})()
     assert staked_amount(Http(), cfg, "r.near") == 5 * YOCTO
+
+
+# ---------------------------------------------------------------- paying from the near.com (private) balance
+def test_payment_from_the_private_balance_is_checked_signed_once_and_seen_arriving(tmp_path):
+    import base64 as b64
+    import json as _json
+    from app.fund.economy_pay import WNEAR, pay_from_private
+    from app.fund.intents_signed import versioned_nonce
+    units = near_to_yocto(4.6)
+    DEP = "dep" + "1" * 61
+
+    def order(receiver=DEP, amount=units, asset="imt:" + "7" * 64 + ":" + WNEAR):
+        msg = {"deadline": "2026-11-13T09:00:00.000Z", "signer_id": BUYER,
+               "intents": [{"intent": "transfer", "receiver_id": receiver, "tokens": {asset: str(amount)}}]}
+        nonce = b64.b64encode(versioned_nonce("252812b3", datetime(2026, 11, 13, 9, tzinfo=timezone.utc), rand=bytes(15))).decode()
+        return {"standard": "nep413", "payload": {"message": _json.dumps(msg), "nonce": nonce, "recipient": "intents.far"}}
+
+    class Api:
+        def __init__(self, have=10 * YOCTO, out=None, o=None):
+            self.have, self.out, self.o, self.quotes = have, out, o, []
+        def login(self, a, k, salt): return {"accessToken": "tok"}
+        def balances(self, tok): return [{"tokenId": "imt:" + "7" * 64 + ":" + WNEAR, "available": str(self.have)}]
+        def quote(self, **kw):
+            self.quotes.append(kw)
+            return {"amountIn": str(units), "minAmountOut": str(self.out if self.out is not None else units * 99 // 100),
+                    "amountOutFormatted": "4.6", "depositAddress": DEP}
+        def unsigned_order(self, dep, acc): return self.o or order()
+
+    def run(api, arrive=True):
+        total, sent = {"v": YOCTO}, []
+        def submit(o, k):
+            sent.append(o)
+            if arrive:
+                total["v"] += units
+            return "INTENT1"
+        st = EconomyState()
+        p = pay_from_private(state=st, path=tmp_path / "e.json", price=price(), account=BUYER, private_key="ed25519:" + "1" * 40, cfg=CFG,
+                             api=api, salt_reader=lambda: "252812b3", submit=submit, allowed_recipients=["intents.near", "intents.far"],
+                             read_seller_total=lambda: total["v"], now=lambda: NOW, sleep=lambda s: None, poll_seconds=0)
+        return p, sent, st
+
+    api = Api()
+    p, sent, st = run(api)
+    assert p.status == "paid" and len(sent) == 1 and "near.com balance" in p.note and st.bought("run1")
+    assert api.quotes[0]["recipient"] == "report-agent.near" and api.quotes[0]["recipient_type"] == "DESTINATION_CHAIN"
+    p, sent, _ = run(Api(), arrive=False)
+    assert p.status == "sending" and "nothing arrived" in p.note and len(sent) == 1      # never re-sent
+    for api, match in ((Api(have=YOCTO), "holds 1.000 NEAR"), (Api(out=units // 2), "less than 98%"),
+                       (Api(o=order(receiver="evil.near")), "deposit address"), (Api(o=order(amount=units * 2)), "not exactly")):
+        with pytest.raises(RuntimeError, match=match):
+            run(api)

@@ -98,7 +98,8 @@ class SignedIntents:
         return r.json() if r.status_code == 200 else []
 
     def quote(self, *, route: str, pay_asset: str, dest_asset: str, amount_units: int, account: str, dry: bool = True,
-              session_token: Optional[str] = None, slippage_bps: int = 100) -> dict:
+              session_token: Optional[str] = None, slippage_bps: int = 100, recipient: Optional[str] = None,
+              recipient_type: Optional[str] = None) -> dict:
         """A quote on one route. Raises RuntimeError with the service's message when refused.
 
         Confidential quotes need BOTH a partner API key (X-API-Key) and the user's session token (Authorization: Bearer).
@@ -108,7 +109,8 @@ class SignedIntents:
             raise ValueError(f"unknown route {route}")
         body = {"dry": dry, "swapType": "EXACT_INPUT", "slippageTolerance": slippage_bps, "originAsset": pay_asset, "depositType": route,
                 "destinationAsset": dest_asset, "amount": str(amount_units), "refundTo": account, "refundType": route,
-                "recipient": account, "recipientType": "INTENTS" if route == "ORIGIN_CHAIN" else route,
+                "recipient": recipient or account,
+                "recipientType": recipient_type or ("INTENTS" if route == "ORIGIN_CHAIN" else route),   # DESTINATION_CHAIN = paid out to a wallet
                 "deadline": (self._now() + timedelta(minutes=15)).strftime("%Y-%m-%dT%H:%M:%S.000Z")}
         headers = dict(self._key_header)
         if session_token:
