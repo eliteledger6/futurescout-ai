@@ -9,6 +9,7 @@ const LABELS: Label[] = ["verified_fact", "ai_interpretation", "forecast", "unve
 const RULES = [
   ["seal", "Sources only from real APIs", "Every URL in a report comes from an API response, never from a model's memory. Invented source ids are removed."],
   ["shield", "Quotes are checked", "A 'verified fact' must quote its source word for word. Headlines and X posts can never verify a fact."],
+  ["building", "Companies come from the evidence", "No hand-made company list: a company is checked because the retrieved patents name it as assignee or its researchers wrote the papers. A filing that merely mentions the topic is shown, but is never a reason to buy."],
   ["swords", "A second agent argues back", "The Risk agent searches independently for limits and failures, then challenges specific findings."],
   ["pulse", "Risk, not trading", "Price run-up is measured as a risk. No buy or sell signals, no price targets, no promised returns."],
 ] as const;

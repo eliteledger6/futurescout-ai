@@ -78,8 +78,9 @@ SCENES = [
     ]),
     Scene("03_agents", "02", "The agent team", [
         ("Each topic gets a full research run.", None),
-        ("A chief agent plans. Science, risk, market, patent and X agents work in parallel, on real papers, patents, SEC filings and posts.",
-         "A chief agent plans. Science, risk, market, patent and X agents work in parallel, on real papers, patents, S E C filings and posts."),
+        ("A chief agent plans. Science, risk, patent and X agents work in parallel, on real papers, patents and posts.", None),
+        ("Then the market agent reads the SEC filings of the companies those papers and patents point to. No hand-made company list.",
+         "Then the market agent reads the S E C filings of the companies those papers and patents point to. No hand-made company list."),
         ("An AI check keeps the paper counts on topic, and the risk agent argues the other side.",
          "An A I check keeps the paper counts on topic, and the risk agent argues the other side."),
     ]),
@@ -461,15 +462,15 @@ async def rec_agents(k: Take) -> None:
     await b.hover("g.node", text="chief", seconds=0.7)
     await k.until(k.sent[1])
     span = max(2.0, k.sent[2] - k.sent[1] - 0.6)
-    names = ["chief", "science", "risk", "market", "patent"]
+    names = ["chief", "science", "risk", "patent", "X"]
     for i, name in enumerate(names):
         await k.until(k.sent[1] + span * i / len(names))
         await b.hover("g.node", text=name, seconds=0.55)
-    await k.until(k.sent[1] + span * 0.92)
-    await b.hover("g.node", text="X", seconds=0.5)
-    await k.until(k.sent[2] - 0.1)
+    await k.until(k.sent[2] + 0.3)
+    await b.hover("g.node", text="market", seconds=0.8)
+    await k.until(k.sent[3] - 0.1)
     await b.hover("g.node", text="science", seconds=0.6)
-    await k.until(k.sent[2] + (k.dur - k.sent[2]) * 0.5)
+    await k.until(k.sent[3] + (k.dur - k.sent[3]) * 0.5)
     await b.hover("g.node", text="risk", seconds=0.7)
 
 

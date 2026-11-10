@@ -98,7 +98,6 @@ What to keep private: `.env` (keys), your NEAR testnet private keys. Sharing the
 ```
 backend/config/model_config.yaml   model per agent, prices, fallbacks
 backend/app/models/                NEAR AI client and router
-backend/config/companies.yaml      companies the Market agent checks (tickers; CIKs resolved live)
 backend/app/sources/               OpenAlex, arXiv, SEC EDGAR, GDELT clients
 backend/app/agents/{chief,science,risk,market,investment}/   one agent each (+ prompts)
 backend/app/graph/citation_guard.py, workflow.py      evidence checks; LangGraph pipeline

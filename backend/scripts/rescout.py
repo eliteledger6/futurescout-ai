@@ -20,7 +20,6 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from app import service  # noqa: E402
-from app.agents.market.agent import load_companies  # noqa: E402
 from app.config import get_settings  # noqa: E402
 from app.report import render_markdown  # noqa: E402
 from app.scout import CompanyScout  # noqa: E402
@@ -38,7 +37,7 @@ def main() -> int:
         print("EDGAR_USER_AGENT is not set")
         return 1
     edgar, facts = EdgarClient(s.edgar_user_agent), SecFactsClient(s.edgar_user_agent)
-    scout = CompanyScout(edgar, facts, incumbent_tickers=[c.ticker for c in load_companies()])
+    scout = CompanyScout(edgar, facts)
 
     report = None
     sessions = None

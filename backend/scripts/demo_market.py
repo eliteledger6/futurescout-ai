@@ -17,7 +17,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from app.agents.market import MarketAgent, load_companies  # noqa: E402
+from app.agents.market import CompanyConfig, MarketAgent  # noqa: E402
 from app.config import ConfigError, get_settings  # noqa: E402
 from app.models.config import load_model_config  # noqa: E402
 from app.models.router import ModelRouter  # noqa: E402
@@ -30,7 +30,7 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--topic", required=True)
     ap.add_argument("--keywords", default="", help="extra comma-separated terms, e.g. abbreviations")
-    ap.add_argument("--tickers", default="", help="comma-separated subset of config/companies.yaml")
+    ap.add_argument("--tickers", required=True, help="comma-separated tickers to read (in a real run the companies come from the papers and patents)")
     ap.add_argument("--no-news", action="store_true")
     ap.add_argument("--llm", action="store_true", help="also run the model analysis (costs NEAR AI credit)")
     args = ap.parse_args()
@@ -40,15 +40,10 @@ def main() -> int:
         print("EDGAR_USER_AGENT is not set in .env. The SEC requires your name and a contact email, "
               "e.g. EDGAR_USER_AGENT=YourName you@example.com")
         return 1
-    companies = load_companies()
-    if args.tickers:
-        wanted = {t.strip().upper() for t in args.tickers.split(",") if t.strip()}
-        companies = [c for c in companies if c.ticker.upper() in wanted]
-        unknown = wanted - {c.ticker.upper() for c in companies}
-        if unknown:
-            print(f"Not in config/companies.yaml (add them there first): {', '.join(sorted(unknown))}")
-        if not companies:
-            return 1
+    companies = [CompanyConfig(ticker=t.strip().upper(), name=t.strip().upper(), evidence="given on the command line")
+                 for t in args.tickers.split(",") if t.strip()]
+    if not companies:
+        return 1
 
     router = None
     if args.llm:

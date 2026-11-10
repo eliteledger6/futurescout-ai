@@ -230,3 +230,20 @@ def test_workflow_runs_market_in_parallel_and_investment_sees_m_ids():
     md = render_markdown(report)
     assert "## Evidence: company filings and news" in md and TEN_K in md
     assert "Agents NOT run in this version: patent, x" in md and "social-media evidence" in md
+
+
+def test_companies_come_from_the_papers_and_patents_when_no_list_is_given():
+    from app.schemas.patent import PatentResult
+    from app.schemas.science import ScienceResult
+    pat = SourceRecord(url="https://patents.google.com/patent/FX1/en", source_name="Google Patents (SerpApi)", content_type=ContentType.PATENT,
+                       title="Stacked memory", authors=["Fixture Memory Corporation"], organization="Fixture Memory Corporation", retrieved_at=NOW, is_mock=True)
+    paper = SourceRecord(url="https://doi.org/10.0000/fx.1", source_name="OpenAlex", content_type=ContentType.PAPER, title="Stacked memory thermals",
+                         affiliations=["Fixture Memory Corp (United States)", "Nowhere University"], retrieved_at=NOW, is_mock=True)
+    agent = MarketAgent(None, edgar(), None, now=lambda: NOW)                     # no company list at all
+    result = agent.run("stacked memory", use_llm=False,
+                       patent=PatentResult(topic="stacked memory", status="retrieval_only", sources=[pat]),
+                       science=ScienceResult(topic="stacked memory", status="retrieval_only", sources=[paper]))
+    assert [c.ticker for c in result.companies] == ["FIXT"] and result.companies[0].evidence == "1 patent(s) as assignee, 1 paper(s) by its researchers"
+    assert result.companies[0].filings_with_mentions >= 1 and "chosen from the evidence" in result.coverage_note
+    empty = MarketAgent(None, edgar(), None, now=lambda: NOW).run("stacked memory", use_llm=False)   # nothing retrieved: no company read
+    assert empty.companies == [] and "no company names" in empty.coverage_note

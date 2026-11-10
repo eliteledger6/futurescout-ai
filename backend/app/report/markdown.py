@@ -294,7 +294,7 @@ def render_markdown(report: ResearchReport) -> str:
                 out.append(f"- {s.name}: " + "; ".join(s.score_reasons))
             out.append("")
         if sc.incumbents:
-            out += ["**Configured incumbents that also showed up:**", ""] + header + [row(s) for s in sc.incumbents] + [""]
+            out += ["**Known big names that also showed up:**", ""] + header + [row(s) for s in sc.incumbents] + [""]
         if sc.unlisted:
             out += ["**Found but not in the SEC ticker file (private, foreign, or name not matched):** "
                     + ", ".join(f"{s.name} ({s.patents}P/{s.papers}A/{s.filings}F)" for s in sc.unlisted), ""]

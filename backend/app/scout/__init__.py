@@ -3,7 +3,11 @@
 Code only (no model call). Inputs are the other agents' retrieved sources:
   * Patent agent  -> assignees of the retrieved patent publications
   * Science agent -> company-type author affiliations (OpenAlex institution type "company")
-  * Market agent  -> companies whose SEC reports mention the topic (configured list + full-text discovery)
+  * Market agent  -> companies whose SEC reports mention the topic (the evidence companies + full-text discovery)
+
+`evidence_companies()` is also what the Market agent uses to decide WHOSE filings to read: there is no fixed company
+list any more (owner decision 2026-11-10). Patent assignees and paper affiliations come first because they are
+provable records of work on the topic; a filing mention is weaker; news and X posts never pick a company.
 
 Steps: merge names -> match against the SEC ticker file (never guessed) -> pull XBRL fundamentals for the
 matches -> compute a transparent 0-100 "next-runner" heuristic -> write K-findings the Investment agent may cite.
@@ -105,6 +109,81 @@ class SecMatcher:
         return cik, ticker, title.title() if title.isupper() else title
 
 
+MAX_EVIDENCE_COMPANIES = 10   # listed companies whose filings the Market agent reads, ranked by patents + papers
+
+
+def collect_names(science: Optional[ScienceResult], patent: Optional[PatentResult]) -> "OrderedDict[str, CompanySignal]":
+    """Company names seen in the retrieved patents (assignees) and papers (company-type affiliations), merged by identity tokens."""
+    raw: "OrderedDict[str, CompanySignal]" = OrderedDict()
+
+    def bucket(name: str) -> Optional[CompanySignal]:
+        if not is_company_name(name):
+            return None
+        key = " ".join(normalize_tokens(name))
+        if not key:
+            return None
+        sig = raw.get(key)
+        if sig is None:
+            sig = raw[key] = CompanySignal(name=name.strip())
+        if name.strip() not in sig.aliases:
+            sig.aliases.append(name.strip())
+        return sig
+
+    for rec in (patent.sources if patent else []):
+        for a in rec.authors or ([rec.organization] if rec.organization else []):
+            sig = bucket(a)
+            if sig and rec.id not in sig.patent_source_ids:
+                sig.patent_source_ids.append(rec.id)
+    for rec in (science.sources if science else []):
+        for a in rec.affiliations:
+            sig = bucket(a)
+            if sig and rec.id not in sig.paper_source_ids:
+                sig.paper_source_ids.append(rec.id)
+    for sig in raw.values():
+        sig.patents, sig.papers = len(sig.patent_source_ids), len(sig.paper_source_ids)
+    return raw
+
+
+def evidence_companies(science: Optional[ScienceResult], patent: Optional[PatentResult], edgar: Optional[EdgarClient],
+                       *, limit: int = MAX_EVIDENCE_COMPANIES) -> tuple[list[CompanySignal], list[str]]:
+    """SEC-listed companies the evidence points to, best first: by patents + papers, then patents. Code only.
+    Returns (companies, notes). A name the SEC file does not contain is left out here (the Scout still lists it as unlisted)."""
+    notes: list[str] = []
+    raw = collect_names(science, patent)
+    if not raw:
+        return [], ["no company names in the retrieved patents and papers"]
+    if edgar is None:
+        return [], ["no SEC client: names could not be matched to the SEC ticker file"]
+    try:
+        matcher = SecMatcher(edgar.ticker_map())
+    except SourceError as exc:
+        return [], [f"SEC ticker file unavailable: {exc.message}"]
+    by_cik: "OrderedDict[int, CompanySignal]" = OrderedDict()
+    for sig in raw.values():
+        m = matcher.match(sig.name)
+        if not m:
+            continue
+        sig.cik, sig.ticker, sig.name, sig.sec_listed = m[0], m[1], m[2], True
+        dst = by_cik.get(m[0])
+        if dst is None:
+            by_cik[m[0]] = sig
+            continue
+        for attr in ("patent_source_ids", "paper_source_ids", "aliases"):
+            for v in getattr(sig, attr):
+                if v not in getattr(dst, attr):
+                    getattr(dst, attr).append(v)
+        dst.patents, dst.papers = len(dst.patent_source_ids), len(dst.paper_source_ids)
+    ranked = sorted(by_cik.values(), key=lambda s: (-(s.patents + s.papers), -s.patents, s.name))
+    notes.append(f"{len(raw)} company name(s) in the patents and papers; {len(ranked)} matched to the SEC ticker file; "
+                 f"the top {min(limit, len(ranked))} by patents + papers are read")
+    return ranked[:limit], notes
+
+
+def evidence_summary(sig: CompanySignal) -> str:
+    parts = [f"{sig.patents} patent(s) as assignee" if sig.patents else "", f"{sig.papers} paper(s) by its researchers" if sig.papers else ""]
+    return ", ".join(p for p in parts if p) or "named in the evidence"
+
+
 def next_runner_score(sig: CompanySignal) -> tuple[float, list[str]]:
     """Transparent heuristic, 0-100. Rewards evidence breadth and a smaller, growing, R&D-heavy company."""
     pts = 0.0
@@ -181,7 +260,7 @@ class CompanyScout:
     def run(self, topic: str, science: Optional[ScienceResult], market: Optional[MarketResult],
             patent: Optional[PatentResult]) -> ScoutResult:
         result = ScoutResult(topic=topic, status="no_data", basis=BASIS)
-        raw: "OrderedDict[str, CompanySignal]" = OrderedDict()   # key: normalised name
+        raw = collect_names(science, patent)
 
         def bucket(name: str) -> Optional[CompanySignal]:
             if not is_company_name(name):
@@ -196,16 +275,6 @@ class CompanyScout:
                 sig.aliases.append(name.strip())
             return sig
 
-        for rec in (patent.sources if patent else []):
-            for a in rec.authors or ([rec.organization] if rec.organization else []):
-                sig = bucket(a)
-                if sig and rec.id not in sig.patent_source_ids:
-                    sig.patent_source_ids.append(rec.id)
-        for rec in (science.sources if science else []):
-            for a in rec.affiliations:
-                sig = bucket(a)
-                if sig and rec.id not in sig.paper_source_ids:
-                    sig.paper_source_ids.append(rec.id)
         filing_by_ticker: dict[str, list[SourceRecord]] = {}
         for rec in (market.sources if market else []):
             if rec.organization:

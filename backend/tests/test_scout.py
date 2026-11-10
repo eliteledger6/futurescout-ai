@@ -192,3 +192,16 @@ def test_workflow_runs_the_scout_and_the_report_shows_emerging_companies():
     # the Investment agent saw the K findings
     assert any("COMPANY SCOUT findings" in str(c["messages"][-1]["content"]) and "[K1]" in str(c["messages"][-1]["content"])
                for c in router._clients[next(iter(router._clients))].calls) if hasattr(router, "_clients") else True
+
+
+def test_evidence_companies_rank_listed_patent_and_paper_companies_first():
+    from app.scout import evidence_companies, evidence_summary
+    edgar, _ = sec_clients()
+    science, _, patents = scout_inputs()
+    found, notes = evidence_companies(science, patents, edgar)
+    assert [c.ticker for c in found] == ["GLSS", "FIXT"]                     # Glassfix: 2 patents + 1 paper; Fixture Memory: 1 patent
+    assert found[0].patents == 2 and found[0].papers == 1 and evidence_summary(found[0]) == "2 patent(s) as assignee, 1 paper(s) by its researchers"
+    assert all("university" not in c.name.lower() for c in found) and all(c.sec_listed for c in found)
+    assert notes and "matched to the SEC ticker file" in notes[0]
+    assert evidence_companies(None, None, edgar) == ([], ["no company names in the retrieved patents and papers"])
+    assert evidence_companies(science, patents, None)[0] == []

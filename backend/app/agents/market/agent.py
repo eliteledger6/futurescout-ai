@@ -1,9 +1,13 @@
 """Market Intelligence Agent.
 
 Flow (code-driven, like the Science agent, so retrieval cannot be skipped or faked):
-  1. for each company in config/companies.yaml, read its latest annual (10-K / 20-F) and
-     quarterly (10-Q) report from SEC EDGAR and keep verbatim passages that mention the
-     topic keywords (text_depth "excerpt_only")
+  1. decide WHICH companies from the evidence (owner decision 2026-11-10: no fixed company list):
+     the SEC-listed companies that appear as patent assignees or as the employers of paper authors
+     in what the Patent and Science agents retrieved (`app.scout.evidence_companies`, code only),
+     plus companies whose SEC reports mention the topic (full-text search). Patents and papers come
+     first because they are provable records of work on the topic; a filing mention is weaker.
+     For each, read its latest annual (10-K / 20-F) and quarterly (10-Q) report from SEC EDGAR and
+     keep verbatim passages that mention the topic keywords (text_depth "excerpt_only")
   2. optionally search news headlines with GDELT (text_depth "metadata_only")
   3. ask the model for findings that cite those sources by id
   4. citation guard; then code enforces the market-specific rules:
@@ -23,14 +27,14 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Callable, Optional
 
-import yaml
 from pydantic import BaseModel
 
-from app.config import CONFIG_DIR
 from app.graph.citation_guard import NEVER_VERIFIES, apply_citation_guard
 from app.models.router import ModelRouter, ModelRouterError
 from app.schemas.common import AgentError, Confidence, ContentType, Label, SourceRecord
 from app.schemas.market import CompanyCheck, MarketReport, MarketResult
+from app.schemas.patent import PatentResult
+from app.schemas.science import ScienceResult
 from app.sources.base import SourceError
 from app.sources.edgar import ARCHIVE_URL, EdgarClient
 from app.sources.edgar import SOURCE as EDGAR_SOURCE
@@ -60,16 +64,11 @@ _HEADLINE_LABELS = {Label.UNVERIFIED_CLAIM, Label.AI_INTERPRETATION}
 
 
 class CompanyConfig(BaseModel):
+    """One company whose filings are read. Built from the evidence at run time (or given explicitly by a script/test)."""
     ticker: str
     name: str
     segment: str = ""
-    sector: str = "semiconductors"   # key from config/sectors.yaml
-
-
-def load_companies(path: Optional[Path] = None) -> list[CompanyConfig]:
-    with open(path or (CONFIG_DIR / "companies.yaml"), "r", encoding="utf-8") as fh:
-        data = yaml.safe_load(fh) or {}
-    return [CompanyConfig.model_validate(row) for row in data.get("companies") or []]
+    evidence: str = ""       # why it is read, e.g. "3 patent(s) as assignee, 2 paper(s) by its researchers"
 
 
 def clean_keywords(keywords: list[str]) -> list[str]:
@@ -110,7 +109,7 @@ class MarketAgent:
         edgar: Optional[EdgarClient] = None,
         gdelt: Optional[GdeltClient] = None,
         *,
-        companies: Optional[list[CompanyConfig]] = None,
+        companies: Optional[list[CompanyConfig]] = None,   # None = derive from the evidence at run time
         discovery: Optional[EdgarFullTextClient] = None,
         facts: Optional[SecFactsClient] = None,
         max_discovered: int = MAX_DISCOVERED,
@@ -120,7 +119,7 @@ class MarketAgent:
         self.router = router
         self.edgar = edgar
         self.gdelt = gdelt
-        self.companies = companies if companies is not None else load_companies()
+        self.companies = companies
         self.discovery = discovery
         self.facts = facts
         self.max_discovered = max_discovered
@@ -135,27 +134,29 @@ class MarketAgent:
         keywords: Optional[list[str]] = None,
         max_news: int = 15,
         use_llm: bool = True,
-        sector: Optional[str] = None,
+        science: Optional[ScienceResult] = None,
+        patent: Optional[PatentResult] = None,
     ) -> MarketResult:
         keywords = clean_keywords([topic, *(keywords or [])])
-        # Read only the companies of the topic's sector (the configured list spans every sector); the SEC
-        # full-text discovery still finds filers from anywhere. Unknown sector -> whole list, as before.
-        all_companies = self.companies
-        if sector and any(c.sector == sector for c in all_companies):
-            self.companies = [c for c in all_companies if c.sector == sector]
-        try:
-            return self._run(topic, keywords=keywords, max_news=max_news, use_llm=use_llm)
-        finally:
-            self.companies = all_companies
+        notes: list[str] = []
+        if self.companies is not None:
+            companies = list(self.companies)
+        else:
+            from app.scout import evidence_companies, evidence_summary   # local import: the scout also imports market schemas
+            found, notes = evidence_companies(science, patent, self.edgar)
+            companies = [CompanyConfig(ticker=s.ticker or "", name=s.name, evidence=evidence_summary(s)) for s in found if s.ticker]
+        return self._run(topic, companies, keywords=keywords, max_news=max_news, use_llm=use_llm, notes=notes)
 
-    def _run(self, topic: str, *, keywords: list[str], max_news: int, use_llm: bool) -> MarketResult:
+    def _run(self, topic: str, companies: list[CompanyConfig], *, keywords: list[str], max_news: int, use_llm: bool,
+             notes: Optional[list[str]] = None) -> MarketResult:
         result = MarketResult(
             topic=topic, status="no_data", keywords=keywords,
             coverage_note=(
-                "Company evidence is limited to short verbatim passages from the latest SEC annual/quarterly "
-                "reports of the companies in config/companies.yaml that mention the keywords. 8-K press releases "
-                "(exhibit files) are not read, and companies that do not file with the SEC (e.g. SK hynix, Samsung) "
-                "are not covered. News items are headlines only: the articles were not read."
+                "Companies are chosen from the evidence: SEC-listed patent assignees and employers of paper authors found by the "
+                "Patent and Science agents (" + ("; ".join(notes) if notes else "given explicitly") + "), plus filers whose reports "
+                "mention the topic. Company evidence is limited to short verbatim passages from their latest SEC annual/quarterly "
+                "reports that mention the keywords. 8-K press releases (exhibit files) are not read, and companies that do not file "
+                "with the SEC (e.g. SK hynix, Samsung) are not covered. News items are headlines only: the articles were not read."
             ),
         )
         if not self.edgar and not self.gdelt:
@@ -164,7 +165,7 @@ class MarketAgent:
 
         sources: list[SourceRecord] = []
         if self.edgar:
-            sources += self._filings(keywords, result)
+            sources += self._filings(companies, keywords, result)
             if self.discovery:
                 sources += self._discovered_filings(topic, keywords, result)
             if self.facts:
@@ -175,8 +176,8 @@ class MarketAgent:
             if self.discovery:
                 result.coverage_note += (
                     " Companies marked 'discovered' were found by a full-text search of all SEC filings for the "
-                    "topic phrase; they are not on the configured list, are often small, and a mention in a filing "
-                    "says nothing about their size, role or prospects.")
+                    "topic phrase only; no patent or paper of theirs was found, they are often small, and a mention in a "
+                    "filing says nothing about their size, role or prospects.")
         if self.gdelt:
             sources += self._news(topic, max_news, result)
         result.sources = sources
@@ -190,12 +191,12 @@ class MarketAgent:
             result.coverage_note += " Model analysis was skipped (retrieval only)."
             return result
 
-        company_lines = "\n".join(f"- {c.ticker}: {c.name} ({c.segment})" for c in self.companies)
+        company_lines = "\n".join(f"- {c.ticker}: {c.name} (IN THE EVIDENCE: {c.evidence or c.segment or 'given'})" for c in companies)
         discovered = [c for c in result.companies if c.discovered]
         if discovered:
             company_lines += "\n" + "\n".join(
                 f"- {c.ticker}: {c.name} (DISCOVERED by full-text search: {c.mentions_in_search} filing(s) mention the topic; "
-                "not on the configured list; size and role unknown)" for c in discovered)
+                "no patent or paper of theirs was found; size and role unknown)" for c in discovered)
         checks = "\n".join(
             f"- {c.ticker}: {c.filings_checked} report(s) read, {c.filings_with_mentions} mention the keywords"
             + (f", {c.press_releases_read} press release(s) read" if c.press_releases_read else "")
@@ -233,12 +234,12 @@ class MarketAgent:
         return result
 
     # ------------------------------------------------------------------
-    def _filings(self, keywords: list[str], result: MarketResult) -> list[SourceRecord]:
+    def _filings(self, companies: list[CompanyConfig], keywords: list[str], result: MarketResult) -> list[SourceRecord]:
         assert self.edgar is not None
         since = (self._now() - timedelta(days=LOOKBACK_DAYS)).date().isoformat()
         found: list[SourceRecord] = []
-        for company in self.companies:
-            check = CompanyCheck(ticker=company.ticker, name=company.name)
+        for company in companies:
+            check = CompanyCheck(ticker=company.ticker, name=company.name, evidence=company.evidence or None)
             result.companies.append(check)
             try:
                 recent = self.edgar.recent_filings(company.ticker, forms=REPORT_FORMS, since=since, limit=10)

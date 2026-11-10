@@ -578,17 +578,18 @@ function CompaniesSection({ report }: { report: Report }) {
     <section className="section" id="companies">
       <div className="container stack">
         <h2 className="h2">Company filings checked</h2>
-        <p className="sub">Latest SEC annual and quarterly reports (and recent 8-K press releases), searched for: {m.keywords.join(", ")}. A report that does not mention the keywords does not show that the company is absent from this market.
+        <p className="sub">Which companies: the SEC-listed patent assignees and paper authors&apos; employers found by the Patent and Science agents, plus filers whose reports mention the topic (marked &quot;filing mention only&quot;). Their latest SEC annual and quarterly reports (and recent 8-K press releases) were searched for: {m.keywords.join(", ")}. A report that does not mention the keywords does not show that the company is absent from this market.
           Size classes (micro &lt; $100M, small &lt; $1B, mid &lt; $10B, large) are by reported revenue from SEC XBRL data, not market value.</p>
         <div className="table-wrap">
           <table className="table">
-            <thead><tr><th>Company</th><th className="num">Reports read</th><th className="num">Mentioning keywords</th><th>Size (revenue)</th><th className="num">Revenue growth</th><th className="num">R&amp;D / revenue</th><th>Note</th></tr></thead>
+            <thead><tr><th>Company</th><th>Why checked</th><th className="num">Reports read</th><th className="num">Mentioning keywords</th><th>Size (revenue)</th><th className="num">Revenue growth</th><th className="num">R&amp;D / revenue</th><th>Note</th></tr></thead>
             <tbody>{m.companies.map((c) => {
               const f = c.fundamentals;
               const rev = f?.latest_year ? f.revenue[String(f.latest_year)] : undefined;
               return (
                 <tr key={c.ticker}>
-                  <td>{c.name} <span className="muted mono small">{c.ticker}</span>{c.discovered && <span className="pill" style={{ marginLeft: 6 }}>discovered</span>}</td>
+                  <td>{c.name} <span className="muted mono small">{c.ticker}</span></td>
+                  <td className="small">{c.discovered ? <span className="pill">filing mention only</span> : (c.evidence ?? "in the evidence")}</td>
                   <td className="num">{c.filings_checked}{c.press_releases_read ? <div className="small muted">+{c.press_releases_read} press rel.</div> : null}</td>
                   <td className="num">{c.filings_with_mentions}</td>
                   <td title={f?.summary}>{rev !== undefined ? <><span className="pill">{f!.size_class}</span> <span className="small muted">{(rev / 1e9).toFixed(1)}B {f!.currency} · FY{f!.latest_year}</span></> : <span className="muted">–</span>}</td>

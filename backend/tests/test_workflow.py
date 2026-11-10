@@ -187,3 +187,23 @@ def test_missing_credentials_stop_loudly_instead_of_failing_every_node():
     oa, ax = clients()
     with pytest.raises(ConfigError):
         workflow.run_research("x", router=router, openalex=oa, arxiv=ax)
+
+
+def test_market_runs_after_science_and_patent_and_receives_their_results():
+    """The Market agent reads the filings of the companies the papers and patents point to, so it must get those results."""
+    from app.schemas.market import MarketResult
+    seen = {}
+
+    class FakeMarket:
+        companies = None
+
+        def run(self, topic, *, keywords=None, science=None, patent=None, **kw):
+            seen["science"], seen["patent"] = science, patent
+            return MarketResult(topic=topic, status="retrieval_only", keywords=keywords or [])
+    client = FakeClient(Scripted(replies()))
+    router = ModelRouter(load_model_config(), Settings(near_ai_api_key="k", _env_file=None), client_factory=lambda s: client, sleep=lambda s: None)
+    oa, ax = clients(True, True)
+    report = workflow.run_research("chiplet interconnect", router=router, openalex=oa, arxiv=ax, max_papers=10, now=lambda: NOW, market_agent=FakeMarket())
+    assert seen["science"] is not None and seen["science"].findings           # Science had finished before Market ran
+    assert seen["patent"] is None                                              # no Patent agent in this test: passed as None, not skipped
+    assert report.market is not None and report.market.status == "retrieval_only"

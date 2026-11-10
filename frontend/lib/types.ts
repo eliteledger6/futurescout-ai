@@ -93,7 +93,7 @@ export interface Score {
 
 export interface CompanyCheck {
   ticker: string; name: string; filings_checked: number; filings_with_mentions: number; error: string | null;
-  discovered?: boolean; mentions_in_search?: number | null; press_releases_read?: number;
+  evidence?: string | null; discovered?: boolean; mentions_in_search?: number | null; press_releases_read?: number;
   fundamentals?: {
     currency: string; latest_year: number | null; revenue: Record<string, number>; revenue_growth_pct: number | null;
     rnd_intensity_pct: number | null; size_class: string | null; summary: string;
@@ -191,7 +191,7 @@ export interface Acceleration {
   yoy_growth_pct: number | null; basis: string;
 }
 
-export interface Sector { key: string; name: string; hints: string; discovery_queries: string[]; topics: number; companies: number }
+export interface Sector { key: string; name: string; hints: string; discovery_queries: string[]; topics: number }
 
 export interface PhraseCheck { phrase: string; source: "topic" | "config" | "ai_suggested"; matches: number; sampled: number; relevant: number; kept: boolean; reason: string }
 export interface CountingBasis { phrases: string[]; checks: PhraseCheck[]; precision_sampled: number; precision_relevant: number; precision_pct: number | null; note: string }

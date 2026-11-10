@@ -143,11 +143,10 @@ def create_app(
     @app.get("/api/sectors")
     def sectors() -> list[dict]:
         """The technology sectors (config/sectors.yaml) with their topic and company counts."""
-        from app.agents.market.agent import load_companies
         from app.radar import load_sectors, load_topics
-        topics, companies = load_topics(), load_companies()
+        topics = load_topics()
         return [{"key": s.key, "name": s.name, "hints": s.hints, "discovery_queries": s.discovery_queries,
-                 "topics": sum(1 for t in topics if t.sector == s.key), "companies": sum(1 for c in companies if c.sector == s.key)}
+                 "topics": sum(1 for t in topics if t.sector == s.key)}
                 for s in load_sectors()]
 
     @app.get("/api/radar")

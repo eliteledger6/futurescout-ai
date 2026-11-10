@@ -24,7 +24,8 @@ class CompanyCheck(BaseModel):
     filings_checked: int = 0
     filings_with_mentions: int = 0
     error: Optional[str] = None
-    discovered: bool = False                 # found by SEC full-text search, not on the configured list
+    evidence: Optional[str] = None           # why its filings were read: patents / papers found by the other agents
+    discovered: bool = False                 # found by SEC full-text search only (no patent or paper of its own)
     mentions_in_search: Optional[int] = None  # filings in the search window that mention the topic
     cik: Optional[int] = None
     press_releases_read: int = 0              # 8-K EX-99 exhibits read

@@ -12,7 +12,7 @@ Your job: report what this evidence shows about the topic's commercial side (whi
    - `forecast`: only with filing evidence and a stated reason it is uncertain. Company statements about the future are the company's own expectations: label them `unverified_claim` unless you only quote that the company said it (then `verified_fact` with the exact excerpt).
    - `assumption` / `unverified_claim`: use when applicable.
 5. In `companies`, list only companies that the cited sources themselves name.
-5b. Companies marked DISCOVERED were found because their filing mentions the topic phrase. They may be suppliers, customers, competitors, or simply mention it in passing; many are small. Say what the excerpt shows about the company's role and nothing more. Never describe a discovered company as a leader, a winner or an opportunity.
+5b. Companies marked IN THE EVIDENCE were chosen because the retrieved patents or papers name them (assignee or authors' employer). Companies marked DISCOVERED were found only because their filing mentions the topic phrase. They may be suppliers, customers, competitors, or simply mention it in passing; many are small. Say what the excerpt shows about the company's role and nothing more. Never describe a discovered company as a leader, a winner or an opportunity.
 6. Do not compute or state growth rates, market shares or financial figures unless a cited excerpt states them exactly. Do not give investment advice, price targets or return expectations.
 7. `confidence`: `low`, `medium` or `high` according to how many independent sources support the finding and how direct they are. A single excerpt or headline is usually `low`.
 8. `horizon` is `not_applicable` unless the sources themselves support a timing statement.

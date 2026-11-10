@@ -21,9 +21,9 @@ def co(ticker, size, mentions=2):
     return NS(ticker=ticker, name=f"{ticker} Corp", filings_with_mentions=mentions, fundamentals={"size_class": size})
 
 
-def scout(ticker, size, score=50.0, off=False):
+def scout(ticker, size, score=50.0, off=False, patents=3, papers=1, filings=0):
     return NS(ticker=ticker, name=f"{ticker} Inc", sec_listed=True, off_sector=off, fundamentals={"size_class": size},
-              patents=3, papers=1, filings=0, next_runner_score=score)
+              patents=patents, papers=papers, filings=filings, next_runner_score=score)
 
 
 def report(risks=None):
@@ -31,7 +31,9 @@ def report(risks=None):
     return NS(topic="Fixture tech", generated_at=NOW, sector="semiconductors",
               market=NS(companies=[co("BIG1", "large"), co("BIG2", "large"), co("MIDA", "mid"), co("NOMENTION", "large", 0),
                                    co("NOSIZE", None)]),
-              scout=NS(candidates=[scout("SMOL", "small"), scout("BANK", "large", off=True), scout("MIDB", "mid", 20)]),
+              scout=NS(candidates=[scout("SMOL", "small"), scout("BANK", "large", off=True), scout("MIDB", "mid", 20), scout("MIDA", "mid", 30),
+                                   scout("FILINGS", "mid", 90, patents=0, papers=0, filings=3)],      # filing mentions only: never bought
+                       incumbents=[scout("BIG1", "large", 60), scout("BIG2", "large", 55)]),
               timing=NS(metrics=[NS(ticker=t, timing_risk=r) for t, r in risks.items()]))
 
 

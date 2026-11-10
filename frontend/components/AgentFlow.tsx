@@ -10,8 +10,9 @@ import { AgentIcon } from "./AgentIcon";
 const W = 178, H = 60;
 const POS: Record<AgentKey, [number, number]> = {
   chief: [14, 275],
-  science: [242, 95], risk: [242, 185], market: [242, 275], x: [242, 365], patent: [242, 455],
-  review: [470, 275],
+  science: [242, 140], risk: [242, 230], x: [242, 320], patent: [242, 410],
+  market: [470, 185],
+  review: [470, 365],
   timing: [698, 230], scout: [698, 320],
   investment: [918, 140],
   near: [918, 240],
@@ -20,13 +21,14 @@ const POS: Record<AgentKey, [number, number]> = {
 };
 const AFTER_REPORT: AgentKey[] = ["fund", "trader"];     // shown in the overview, hidden in one report's trace
 const EDGES: [AgentKey, AgentKey][] = [
-  ["chief", "science"], ["chief", "risk"], ["chief", "market"], ["chief", "x"], ["chief", "patent"],
-  ["science", "review"], ["risk", "review"], ["market", "review"], ["x", "review"], ["patent", "review"],
+  ["chief", "science"], ["chief", "risk"], ["chief", "x"], ["chief", "patent"],
+  ["science", "market"], ["patent", "market"],
+  ["market", "review"], ["risk", "review"], ["x", "review"],
   ["review", "timing"], ["review", "scout"],
   ["timing", "investment"], ["scout", "investment"],
   ["investment", "near"], ["near", "fund"], ["fund", "trader"],
 ];
-const ORDER: AgentKey[][] = [["chief"], ["science", "risk", "market", "x", "patent"], ["review"], ["timing", "scout"], ["investment"], ["near"], ["fund"], ["trader"]];
+const ORDER: AgentKey[][] = [["chief"], ["science", "risk", "x", "patent"], ["market"], ["review"], ["timing", "scout"], ["investment"], ["near"], ["fund"], ["trader"]];
 
 function edgePath(a: AgentKey, b: AgentKey): string {
   const [ax, ay] = POS[a], [bx, by] = POS[b];
@@ -39,8 +41,9 @@ function edgePath(a: AgentKey, b: AgentKey): string {
 }
 
 const LOOP = (() => {
-  const [rx, ry] = POS.review, [sx, sy] = POS.science;
-  return `M ${rx + W / 2} ${ry - H / 2} C ${rx + W / 2} ${sy - 60}, ${sx + W / 2} ${sy - 70}, ${sx + W / 2} ${sy - H / 2}`;
+  const [rx, ry] = POS.review, [sx, sy] = POS.science, [mx, my] = POS.market;
+  const top = Math.min(sy, my) - 70;
+  return `M ${rx + W} ${ry - 6} C ${rx + W + 70} ${top}, ${sx + W / 2} ${top - 10}, ${sx + W / 2} ${sy - H / 2}`;
 })();
 
 export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRunStat>; models?: Record<string, string> }) {
@@ -54,7 +57,7 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
       <div className="flow-swipe">Swipe sideways to see the whole network. Tap an agent for details.</div>
       <div className="flow-canvas">
         <svg className="flow-svg" viewBox="0 0 1110 505" role="img"
-             aria-label="Agent network: Chief plans; Science, Risk, Market, X and Patent research in parallel; Chief reviews; price timing is checked while the Company scout finds the companies behind the patents and papers; Investment writes the report; the fingerprint is recorded on NEAR; a paper fund is sized for the topic; the trading agent proposes buys through NEAR Intents, each approved by the owner.">
+             aria-label="Agent network: Chief plans; Science, Risk, X and Patent research in parallel; Market reads the SEC filings of the companies the papers and patents point to; Chief reviews; price timing is checked while the Company scout finds the companies behind the patents and papers; Investment writes the report; the fingerprint is recorded on NEAR; a paper fund is sized for the topic; the trading agent proposes buys through NEAR Intents, each approved by the owner.">
           <defs>
             <radialGradient id="nodeGlow" cx="50%" cy="50%" r="60%">
               <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.28" />
@@ -62,7 +65,7 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
             </radialGradient>
           </defs>
           {/* stage labels */}
-          {[["Plan", 103], ["Research in parallel", 331], ["Review", 559], ["Timing & scout", 787], ["Write, seal & trade", 1007]].map(([t, x]) => (
+          {[["Plan", 103], ["Research in parallel", 331], ["Companies & review", 559], ["Timing & scout", 787], ["Write, seal & trade", 1007]].map(([t, x]) => (
             <text key={t} x={x} y={14} className="flow-stage" textAnchor="middle">{t}</text>
           ))}
           {/* edges */}

@@ -1,1 +1,1 @@
-from app.agents.market.agent import MarketAgent, load_companies  # noqa: F401
+from app.agents.market.agent import CompanyConfig, MarketAgent  # noqa: F401

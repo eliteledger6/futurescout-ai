@@ -23,7 +23,7 @@ class CompanySignal(BaseModel):
     ticker: Optional[str] = None
     cik: Optional[int] = None
     sec_listed: bool = False                    # matched to the SEC ticker file
-    incumbent: bool = False                     # on config/companies.yaml (the Market agent already covers it)
+    incumbent: bool = False                     # explicitly passed as a known big name (none by default since 2026-11-10)
     patents: int = 0                            # retrieved patent publications naming it as assignee
     patent_source_ids: list[str] = Field(default_factory=list)
     papers: int = 0                             # retrieved papers with an author affiliated to it

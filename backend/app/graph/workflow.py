@@ -1,11 +1,12 @@
 ﻿"""LangGraph workflow connecting the agents.
 
-  chief_plan -> science          \
-             -> risk_independent  >-> chief_review -> (gap? -> science_more -> chief_review) -> risk_challenge
-             -> market           /                                                            -> investment
-             -> x               /
+  chief_plan -> science  -> market (companies FROM the papers and patents) \
+             -> patent  ->                                                   >-> chief_review -> (gap? -> science_more -> chief_review)
+             -> risk_independent                                            /       -> risk_challenge -> investment
+             -> x                                                          /
 
-Science, the independent Risk pass, Market, X and Patent run in parallel. The Chief may request ONE extra
+Science, the independent Risk pass, X and Patent run in parallel; Market waits for Science and Patent because it
+reads the SEC filings of the companies they point to (no fixed company list). The Chief may request ONE extra
 Science round (MAX_EXTRA_ROUNDS) so cost stays bounded. A crashing agent is recorded as an
 error and the workflow continues with what it has.
 """
@@ -140,7 +141,8 @@ def build_graph(deps: Deps):
     def market(state: State) -> dict:
         if deps.market is None:
             return {}
-        return {"market": deps.market.run(state["topic"], keywords=plan_of(state).market_keywords, sector=state.get("sector"))}
+        return {"market": deps.market.run(state["topic"], keywords=plan_of(state).market_keywords,
+                                          science=state.get("science"), patent=state.get("patent"))}
 
     def x(state: State) -> dict:
         if deps.x is None:
@@ -199,10 +201,10 @@ def build_graph(deps: Deps):
     graph.add_edge(START, "chief_plan")
     graph.add_edge("chief_plan", "science")
     graph.add_edge("chief_plan", "risk_independent")
-    graph.add_edge("chief_plan", "market")
     graph.add_edge("chief_plan", "x")
     graph.add_edge("chief_plan", "patent")
-    graph.add_edge(["science", "risk_independent", "market", "x", "patent"], "chief_review")
+    graph.add_edge(["science", "patent"], "market")
+    graph.add_edge(["market", "risk_independent", "x"], "chief_review")
     graph.add_conditional_edges("chief_review", route_after_review, {"more": "science_more", "challenge": "risk_challenge"})
     graph.add_edge("science_more", "chief_review")
     graph.add_edge("risk_challenge", "investment")
@@ -251,7 +253,7 @@ def run_research(
         market_agent = MarketAgent(router, edgar, gdelt, discovery=discovery, facts=facts, now=now)
     if scout is None:
         # Always runs (code only). Without an SEC client it can still list the names it found, marked "not matched".
-        scout = CompanyScout(edgar, facts, incumbent_tickers=[c.ticker for c in market_agent.companies] if market_agent else [], now=now)
+        scout = CompanyScout(edgar, facts, now=now)
     if x_agent is None and x_client is not None:
         x_agent = XAgent(router, x_client, now=now)
     if patent_agent is None and epo is not None:

@@ -264,18 +264,15 @@ def build_basket(report: ResearchReport, cfg: FundConfig) -> list[Candidate]:
     timing = {m.ticker.upper(): m.timing_risk for m in (report.timing.metrics if report.timing else [])}
     seen: set[str] = set()
     cands: list[Candidate] = []
-    for c in (report.market.companies if report.market else []):
-        size = (c.fundamentals or {}).get("size_class")
-        if not c.ticker or c.filings_with_mentions <= 0 or size not in tier_of or c.ticker.upper() in seen:
-            continue
-        seen.add(c.ticker.upper())
-        cands.append(Candidate(ticker=c.ticker.upper(), company=c.name, tier=tier_of[size], rank=float(c.filings_with_mentions) + 100,
-                               why=f"{c.filings_with_mentions} SEC report(s) mention the topic; {size} by revenue",
-                               timing_risk=timing.get(c.ticker.upper())))
-    for c in (report.scout.candidates if report.scout else []):
+    # Owner decision 2026-11-10: a holding must be backed by patents or papers naming the company. Companies that only
+    # mention the topic in an SEC filing (or only appear in news / X posts) are shown in the report but never bought.
+    pool = [*(report.scout.candidates if report.scout else []), *(report.scout.incumbents if report.scout else [])]
+    for c in pool:
         size = (c.fundamentals or {}).get("size_class")
         if not c.ticker or not c.sec_listed or c.off_sector or size not in tier_of or c.ticker.upper() in seen:
             continue
+        if not (c.patents or c.papers):
+            continue                                   # filing mentions only: not provable work on the topic
         seen.add(c.ticker.upper())
         parts = [f"{c.patents} patent(s)" if c.patents else "", f"{c.papers} paper(s)" if c.papers else "",
                  f"{c.filings} filing(s)" if c.filings else ""]

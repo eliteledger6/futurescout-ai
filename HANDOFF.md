@@ -58,7 +58,7 @@ backend/scripts/                   list_models, demo_science, check_counts, run_
 backend/tests/                     84 tests (fixtures in tests/fixtures, helpers in tests/helpers.py)
 ```
 
-Pipeline (`workflow.py`): chief_plan -> (science || risk_independent) -> chief_review -> optional ONE extra science round (MAX_EXTRA_ROUNDS=1) -> risk_challenge -> investment. A crashing node is recorded as an error and the run continues; missing credentials (`ConfigError`) stop the run loudly. `AGENTS_NOT_RUN = ["patent","market","x"]` appears in every report.
+Pipeline (`workflow.py`, since 2026-11-10 Market runs after Science and Patent and takes its companies from them; no companies.yaml): chief_plan -> (science || risk_independent) -> chief_review -> optional ONE extra science round (MAX_EXTRA_ROUNDS=1) -> risk_challenge -> investment. A crashing node is recorded as an error and the run continues; missing credentials (`ConfigError`) stop the run loudly. `AGENTS_NOT_RUN = ["patent","market","x"]` appears in every report.
 
 Key design decisions:
 - Source ids = `"src_" + sha1(canonical url)[:10]`. Models may only reference ids.
