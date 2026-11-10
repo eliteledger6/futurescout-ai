@@ -33,8 +33,8 @@ Rules that always apply:
   check signs with the owner's key, so Claude does NOT run live `check` or `watch`: the owner runs the loop; Claude may run `check --shadow`.
   Selling (owner's written yes 2026-11-10, "Yes, build selling"): built, mock-tested, dry quotes run live; OFF until the owner sets
   `live.sells_enabled: true`. Re-investing sale money needs `live.budget_mode: net`. Both are owner-only: Claude never sets them.
-  Agent economy (owner 2026-11-10): the trading agent buys reports from the report agent (grandbread5023.near) in NEAR (max 2 NEAR
-  per report, at most 10% of the fund); the report agent stakes 80% of its NEAR (keeps 20%) via NEAR AI Staking for Inference.
+  Agent economy (owner 2026-11-10): the trading agent buys reports from the report agent (grandbread5023.near) in NEAR (3-5 NEAR
+  per report by quality, owner 2026-11-10; at most 10% of the fund); the report agent stakes 80% of its NEAR (keeps 20%) via NEAR AI Staking for Inference.
   `economy.enabled` is owner-only (owner set it true 2026-11-10); staking goes to stake.dao (NEAR AI Cloud Credits), copied from the owner's own dashboard stake; payments and stakes sign with keys, so they run in the owner's loop.
 - Hosting (2026-11-10): Render (API, read-only snapshot `backend/site_data`, no key) + Vercel (website). See HOSTING.md.
 - Say "mock-tested" vs "run live" honestly; never call a feature complete without a test.

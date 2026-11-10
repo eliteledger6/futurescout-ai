@@ -79,9 +79,9 @@ live:
 economy:
   enabled: true                  # OWNER-ONLY switch: true = the trading agent pays real NEAR for reports
   seller_account: grandbread5023.near   # the report agent (owner's account, linked to NEAR AI Cloud)
-  max_price_near: 2.0             # owner: a report never costs more than 2 NEAR
-  min_price_near: 0.05
-  markup: 3.0                     # price = AI cost of the report x 3 x quality (never below cost)
+  max_price_near: 5.0             # owner 2026-11-10: a report costs 3 to 5 NEAR, set by its quality
+  min_price_near: 3.0
+  markup: 3.0                     # floor: never below the report's AI cost x 3
   budget_share_of_fund: 0.10      # owner: at most 10% of the live fund's value is spent on reports
   stake_share: 0.80               # owner: the report agent stakes 80% of its NEAR, keeps 20% for fees
   min_stake_near: 1.0

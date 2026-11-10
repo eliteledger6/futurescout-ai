@@ -20,10 +20,10 @@ def price(**kw):
 
 def test_price_follows_cost_and_quality_within_the_owners_limits():
     p = price()
-    assert p.price_near == pytest.approx(0.267, abs=0.001) and "x3 markup" in p.basis              # 0.40 x 3 x 0.8 = $0.96
-    assert price(score=20, confidence_pct=10).price_usd >= 0.40                                     # never below what it cost
-    assert price(cost_usd=50.0).price_near == CFG.max_price_near                                     # owner: at most 2 NEAR
-    assert price(cost_usd=0.0001).price_near == CFG.min_price_near
+    assert p.price_near == pytest.approx(4.6) and "3-5 NEAR band" in p.basis                         # quality 0.8 -> 3 + 2 x 0.8
+    assert price(score=0, confidence_pct=0).price_near == CFG.min_price_near == 3.0                  # owner: 3 to 5 NEAR
+    assert price(score=100, confidence_pct=100).price_near == CFG.max_price_near == 5.0
+    assert price(score=0, confidence_pct=0, cost_usd=14.4).price_near == pytest.approx(5.0)         # never below cost x 3 (capped)
 
 
 def test_budget_is_10pct_of_the_fund_minus_reports_already_bought():
@@ -40,36 +40,36 @@ def buy_like(price_near=0.3, status="paid", run_id="old"):
 
 def test_every_guard_blocks_a_purchase():
     p = price()
-    ok = dict(state=EconomyState(), price=p, budget_near=1.0, wallet_near=1.0, cfg=CFG, trading_enabled=True, kill_switch=False)
+    ok = dict(state=EconomyState(), price=p, budget_near=10.0, wallet_near=10.0, cfg=CFG, trading_enabled=True, kill_switch=False)
     assert purchase_blocks(**ok) == []
     cases = [
         (dict(cfg=EconomyConfig(seller_account="r.near")), "switched off"),                # owner switch, off by default
         (dict(trading_enabled=False), "trading_enabled"),
         (dict(kill_switch=True), "kill switch"),
         (dict(budget_near=0.1), "report budget left"),
-        (dict(wallet_near=0.3), "fee reserve"),
+        (dict(wallet_near=4.6), "fee reserve"),
         (dict(state=EconomyState(purchases=[buy_like(run_id="run1", status="sending")])), "already bought"),
     ]
     for kw, match in cases:
         assert any(match in b for b in purchase_blocks(**{**ok, **kw})), match
-    assert EconomyConfig().enabled is False and EconomyConfig().max_price_near == 2.0
+    assert EconomyConfig().enabled is False and EconomyConfig().max_price_near == 5.0
 
 
 def tx(signer=BUYER, receiver="report-agent.near", deposit=None, status=None):
     return {"result": {"status": status or {"SuccessValue": ""}, "transaction": {"hash": "H1", "signer_id": signer, "receiver_id": receiver,
-            "actions": [{"Transfer": {"deposit": str(deposit if deposit is not None else near_to_yocto(0.267))}}]}}}
+            "actions": [{"Transfer": {"deposit": str(deposit if deposit is not None else near_to_yocto(4.6))}}]}}}
 
 
 def test_payment_is_sent_once_and_confirmed_on_chain(tmp_path):
     st, sent = EconomyState(), []
     p = buy_report(state=st, path=tmp_path / "e.json", price=price(), buyer=BUYER, cfg=CFG,
                    send=lambda to, y: sent.append((to, y)) or "H1", read=lambda h, who: tx(), now=NOW)
-    assert p.status == "paid" and sent == [("report-agent.near", near_to_yocto(0.267))] and st.bought("run1")
+    assert p.status == "paid" and sent == [("report-agent.near", near_to_yocto(4.6))] and st.bought("run1")
     assert (tmp_path / "e.json").is_file()
     for bad, match in ((tx(receiver="evil.near"), "not the report agent"), (tx(signer="x.near"), "not by the buyer"),
                        (tx(deposit=1), "too small"), (tx(status={"Failure": {}}), "did not succeed")):
         with pytest.raises(RuntimeError, match=match):
-            parse_transfer(bad, tx_hash="H1", buyer=BUYER, seller="report-agent.near", min_yocto=near_to_yocto(0.267))
+            parse_transfer(bad, tx_hash="H1", buyer=BUYER, seller="report-agent.near", min_yocto=near_to_yocto(4.6))
 
 
 def test_an_unclear_send_is_recorded_and_never_retried(tmp_path):

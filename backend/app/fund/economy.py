@@ -38,9 +38,9 @@ def near_to_yocto(amount_near: float) -> int:
 class EconomyConfig(BaseModel):
     enabled: bool = False                # OWNER-ONLY switch: the trading agent pays the report agent in real NEAR
     seller_account: str = ""             # the report agent's mainnet account (must match REPORT_AGENT_ACCOUNT_ID)
-    max_price_near: float = 2.0          # owner: a report never costs more than this
-    min_price_near: float = 0.05
-    markup: float = 3.0                  # price = what the report cost to make x markup x quality (never below cost)
+    max_price_near: float = 5.0          # owner 2026-11-10: a report costs 3 to 5 NEAR, set by its quality
+    min_price_near: float = 3.0
+    markup: float = 3.0                  # floor: never below what the report cost to make x markup
     budget_share_of_fund: float = 0.10   # owner: at most this share of the live fund's value goes to reports
     stake_share: float = 0.80            # owner: the report agent stakes this share of its NEAR ...
     min_stake_near: float = 1.0          # ... when that is at least this much (smaller stakes earn almost nothing)
@@ -114,17 +114,18 @@ def save_economy(state: EconomyState, path: Path) -> None:
 # ------------------------------------------------------------------ pricing (the report agent sets its price)
 def price_report(*, run_id: str, topic: str, cost_usd: float, score: Optional[float], confidence_pct: Optional[float],
                  near_usd: float, cfg: EconomyConfig, now: datetime) -> Price:
-    """Price = what the report cost to make, times the markup, times its quality (score and confidence); never below its
-    cost, never outside [min_price_near, max_price_near]."""
+    """Price inside the owner's band by quality (score and confidence): the weakest report costs min_price_near, the best
+    max_price_near; never below what the report cost to make (x markup)."""
     s = (score if score is not None else 40.0) / 100
     c = (confidence_pct if confidence_pct is not None else 30.0) / 100
-    quality = s * (0.5 + c)                      # e.g. score 80, confidence 50% -> 0.8
-    usd = max(cost_usd * 1.1, cost_usd * cfg.markup * quality)
-    near = min(cfg.max_price_near, max(cfg.min_price_near, usd / near_usd if near_usd > 0 else cfg.max_price_near))
-    near = round(near, 3)
-    basis = (f"made for ${cost_usd:.2f} of AI; quality {quality:.2f} (score {score if score is not None else 'n/a'}, confidence "
-             f"{confidence_pct if confidence_pct is not None else 'n/a'}%); x{cfg.markup:g} markup = ${usd:.2f}; at ${near_usd:.2f} per NEAR "
-             f"= {near:g} NEAR (limits {cfg.min_price_near:g}-{cfg.max_price_near:g} NEAR)")
+    quality = max(0.0, min(1.0, s * (0.5 + c)))  # e.g. score 80, confidence 50% -> 0.8
+    near = cfg.min_price_near + (cfg.max_price_near - cfg.min_price_near) * quality
+    floor = cost_usd * cfg.markup / near_usd if near_usd > 0 else 0.0
+    near = round(min(cfg.max_price_near, max(near, floor)), 3)
+    usd = near * near_usd
+    basis = (f"quality {quality:.2f} (score {score if score is not None else 'n/a'}, confidence "
+             f"{confidence_pct if confidence_pct is not None else 'n/a'}%) inside the {cfg.min_price_near:g}-{cfg.max_price_near:g} NEAR band "
+             f"= {near:g} NEAR (${usd:.2f}); the report cost ${cost_usd:.2f} of AI to make")
     return Price(run_id=run_id, topic=topic, price_near=near, price_usd=round(near * near_usd, 4), cost_usd=round(cost_usd, 4), basis=basis, at=now)
 
 
