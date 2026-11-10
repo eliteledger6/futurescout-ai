@@ -32,7 +32,18 @@ from app.sources.openalex import OpenAlexClient
 from app.sources.x import XClient
 
 # FUTURESCOUT_DATA_DIR points the API at another folder, e.g. the exported snapshot `site_data` on the hosted copy.
-RUNS_DIR = (BACKEND_DIR / os.environ["FUTURESCOUT_DATA_DIR"]) if os.environ.get("FUTURESCOUT_DATA_DIR") else BACKEND_DIR / "runs"
+def _runs_dir() -> Path:
+    """FUTURESCOUT_DATA_DIR when set; else backend/runs; and when runs/ holds no report but the exported snapshot
+    site_data/ does (a fresh hosted copy, where runs/ is not in git), the snapshot."""
+    if os.environ.get("FUTURESCOUT_DATA_DIR"):
+        return BACKEND_DIR / os.environ["FUTURESCOUT_DATA_DIR"]
+    runs, snap = BACKEND_DIR / "runs", BACKEND_DIR / "site_data"
+    if not any(runs.glob("report_*.json")) and any(snap.glob("report_*.json")):
+        return snap
+    return runs
+
+
+RUNS_DIR = _runs_dir()
 
 
 @dataclass
