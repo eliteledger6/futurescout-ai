@@ -64,7 +64,7 @@ export default function TradingPage() {
               <Reveal>
                 <div className="stats">
                   <div className="stat"><div className="stat-value"><CountUp value={t.spent.live_counted_usd ?? t.spent.live_total_usd} decimals={2} prefix="$" /><span className="muted" style={{ fontSize: 22 }}> / {usd(t.limits.max_total_usd, 0)}</span></div><div className="stat-label">{t.selling?.budget_mode === "net" ? "real money invested (buys minus sales), of the cap" : "real money used, of the total cap"}</div></div>
-                  <div className="stat"><div className="stat-value">{t.balances?.near != null ? <><CountUp value={t.balances.near} decimals={2} /> Ⓝ</> : "–"}</div><div className="stat-label">NEAR in the fund wallet (trades are paid in NEAR)</div></div>
+                  <div className="stat"><div className="stat-value">{t.private_near != null ? <><CountUp value={t.private_near} decimals={2} /> Ⓝ</> : "–"}</div><div className="stat-label">NEAR in the fund&apos;s near.com balance{t.private_checked_at ? ` (as of ${fmtDate(t.private_checked_at)})` : " (not read yet)"}; wallet {t.balances?.near != null ? `${t.balances.near.toFixed(2)} NEAR` : "–"}</div></div>
                   <div className="stat"><div className="stat-value"><CountUp value={t.shadow_portfolio.invested_usd} prefix="$" /><span className="muted" style={{ fontSize: 22 }}> / {usd(t.shadow_portfolio.budget_usd, 0)}</span></div><div className="stat-label">shadow mode: pretend money placed at real quotes</div></div>
                   <div className="stat"><div className="stat-value"><CountUp value={t.allowlist.length} /></div><div className="stat-label">tokenized stocks the agent may choose from</div></div>
                 </div>
@@ -85,6 +85,11 @@ export default function TradingPage() {
 
               <h2 className="h2" style={{ margin: "8px 0 0" }}>Real-money trades <span className="muted small">· {live.length} completed, newest first · each record sealed on NEAR testnet</span></h2>
               {live.length === 0 && <div className="notice">No real trade completed yet.</div>}
+              {(t.owner_sales?.length ?? 0) > 0 && (
+                <p className="small muted" style={{ margin: 0 }}>
+                  {t.owner_sales!.map((o) => `${o.symbol} (bought for ${usd(o.bought_usd)} on ${fmtDate(o.bought_at)})`).join(", ")}: sold by the owner in near.com to pay for research reports; not an agent trade, so not listed here.
+                </p>
+              )}
               {live.map((p, i) => <LiveTrade key={p.id} p={p} explorer={t.explorer_tx} animate={i === 0} />)}
 
               <ShadowPortfolio t={t} orders={shadowOrders} />
@@ -208,8 +213,8 @@ function EconomyPanel({ e }: { e: Economy }) {
         <div className="pills"><span className="pill">{e.enabled ? "on: real NEAR" : "off"}</span></div>
       </div>
       <p className="small" style={{ color: "var(--text-2)", margin: 0 }}>
-        The report agent prices every report in NEAR (what it cost to make, times quality; at most {e.limits.max_price_near} NEAR). The trading agent may only use
-        reports it has bought, and spends at most {Math.round(e.limits.budget_share_of_fund * 100)}% of its fund on them. Each payment is a NEAR transfer checked on chain.
+        The report agent prices every report in NEAR by its quality (score and confidence), at most {e.limits.max_price_near} NEAR and never below what it cost to make. The trading agent may only use
+        reports it has bought, and spends at most {Math.round(e.limits.budget_share_of_fund * 100)}% of its fund on them. Each payment is a signed order from the trading agent's near.com balance, checked before signing, and confirmed when it arrives.
         The report agent stakes {Math.round(e.limits.stake_share * 100)}% of what it holds through NEAR AI&apos;s Staking for Inference; the rewards pay for its AI. The rest stays for fees.
       </p>
       <div className="stats" style={{ marginTop: 4, gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 140px), 1fr))", overflowWrap: "anywhere" }}>
@@ -283,7 +288,8 @@ function LiveTrade({ p, explorer, animate = true }: { p: TradeProposal; explorer
   const endBad = s === "refunded" || s === "failed" || s === "rejected";
   const idx = s === "proposed" ? 0 : s === "approved" || s === "executing" ? 1 : s === "deposited" ? 2 : s === "success" ? 3 : p.deposit_tx ? 2 : p.history.some((e) => e.status === "approved") ? 1 : 0;
   const autoApproved = p.history.some((e) => e.status === "approved" && /AUTOMATICALLY/.test(e.note));
-  const stops = ["Decided by the agent", autoApproved ? "Approved by the agent (all checks passed)" : "Approved by the owner", p.side === "sell" ? "Order sent" : "Payment sent", s === "refunded" ? "Refunded" : s === "failed" ? "Failed" : s === "rejected" ? "Rejected" : "Filled"];
+  const manual = p.quote?.route === "manual";                         // the owner's own sale in near.com, recorded by hand
+  const stops = manual ? ["Sold by the owner in near.com", "No agent decision", "Recorded by hand", "Done"] : ["Decided by the agent", autoApproved ? "Approved by the agent (all checks passed)" : "Approved by the owner", p.side === "sell" ? "Order sent" : "Payment sent", s === "refunded" ? "Refunded" : s === "failed" ? "Failed" : s === "rejected" ? "Rejected" : "Filled"];
   return (
     <div className={`tr-card live ${working ? "working" : ""} ${s === "success" ? "ok" : ""}`}>
       <div className="tr-head">
@@ -305,7 +311,7 @@ function LiveTrade({ p, explorer, animate = true }: { p: TradeProposal; explorer
       <div className="tr-agent">
         <div className="tr-avatar">{ICON.agent}</div>
         <div>
-          <div className="tr-model">TRADING AGENT · {(p.model ?? "model").replace(/_/g, " ").toUpperCase()}</div>
+          <div className="tr-model">{manual ? "OWNER · MANUAL SALE IN NEAR.COM" : `TRADING AGENT · ${(p.model ?? "model").replace(/_/g, " ").toUpperCase()}`}</div>
           <p className="tr-say">{animate ? typed : p.rationale}{animate && typed.length < p.rationale.length && <span className="caret" />}</p>
           {p.risks.length > 0 && <ul className="tr-risks">{p.risks.map((r) => <li key={r}>{r}</li>)}</ul>}
         </div>

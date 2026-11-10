@@ -275,7 +275,7 @@ export interface TopicFund { topic: string; slug: string; sector: string | null;
   updated_at: string | null; notes: string[]; summary: FundSummary; disclaimer: string }
 
 /* ---- stage 3: live-trading test + shadow mode (read-only view) */
-export interface TradeQuote { amountInUsd?: string; amountOutUsd?: string; amountOutFormatted?: string; depositAddress?: string; quotedAt?: string; dry?: boolean }
+export interface TradeQuote { amountInUsd?: string; amountOutUsd?: string; amountOutFormatted?: string; depositAddress?: string; quotedAt?: string; dry?: boolean; route?: string }
 export interface TradeProposal {
   id: string; created_at: string; mode: "live" | "shadow"; side: "buy" | "sell" | "hold"; topic: string; ticker: string; symbol: string; usd: number;
   fraction?: number | null; quantity?: number | null;
@@ -295,6 +295,8 @@ export interface Trading {
   proposals: TradeProposal[]; explorer_tx: string; approval: string; disclaimer: string;
   pay_with: string;
   pending_live: string[]; auto_approve: boolean;
+  private_near?: number | null; private_checked_at?: string | null;
+  owner_sales?: { symbol: string; bought_usd: number; bought_at: string }[];
   strategy: { rules: string[]; config: { check_minutes: number; review_hours: number; drop_pct: number; jump_pct: number; min_confidence_pct: number;
     max_adds_per_ticker: number; max_ticker_share_pct: number }; last_check_at: string | null };
   checks: { id: string; at: string; mode: "live" | "shadow"; triggers: { kind: string; ticker: string; topic: string; detail: string }[]; action: string;

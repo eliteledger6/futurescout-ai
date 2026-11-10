@@ -339,7 +339,11 @@ def create_app(
             "pending_live": [p.id for p in state.proposals if p.mode == "live" and p.status == "proposed"],
             "auto_approve": lv.auto_approve,
             "allowlist": [{k: t[k] for k in ("ticker", "symbol", "topic", "band", "score", "confidence_pct", "price")} for t in tokens],
-            "proposals": [p.model_dump(mode="json") for p in reversed(state.proposals[-60:])],
+            "proposals": [p.model_dump(mode="json") for p in reversed(state.proposals[-60:]) if p.id not in state.hidden],
+            "private_near": state.private_near,
+            "private_checked_at": state.private_checked_at.isoformat() if state.private_checked_at else None,
+            "owner_sales": [{"symbol": p.symbol, "bought_usd": p.usd, "bought_at": p.created_at.isoformat()}
+                            for p in state.proposals if p.id in state.hidden],   # sold later by the owner by hand in near.com
             "explorer_tx": lv.explorer_tx,
             "approval": ("automatic: the agent's orders run when every code check passes (owner's setting live.auto_approve)" if lv.auto_approve
                          else "owner's terminal only: python scripts\\fund_trade.py approve <id>"),

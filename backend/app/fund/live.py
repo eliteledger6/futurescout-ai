@@ -39,8 +39,9 @@ from pydantic import BaseModel, Field
 
 from app.fund.strategy import StrategyConfig
 
-DISCLAIMER = ("Real-money test with a very small budget, approved trade by trade by the owner. Tokenized stocks are "
-              "issued by Ondo and are not the shares themselves. Not investment advice.")
+DISCLAIMER = ("Real money with a small budget capped by the owner; orders run after the code checks, either on the agent's own "
+              "approval (owner's setting live.auto_approve) or the owner's typed approval. Tokenized stocks are issued by Ondo and are "
+              "not the shares themselves. Not investment advice.")
 FINAL = {"success", "refunded", "failed", "rejected", "shadow_filled", "hold"}
 SPENT = {"executing", "deposited", "success"}          # statuses that count against the caps
 SIDES = ("buy", "sell")
@@ -134,6 +135,10 @@ class TradingState(BaseModel):
     seen_closes: dict[str, str] = Field(default_factory=dict)   # ticker -> close date already reacted to
     last_check_at: Optional[datetime] = None
     last_live_check_at: Optional[datetime] = None          # live and shadow react to the same events separately
+    private_near: Optional[float] = None                   # NEAR in the near.com (private) balance, read by the owner's loop after a
+    private_checked_at: Optional[datetime] = None          # signed login; the read-only site shows this snapshot
+    hidden: list[str] = Field(default_factory=list)        # owner 2026-11-10: records kept in this file but not shown on the site
+                                                           # and not counted as holdings (e.g. MRVLon, sold by hand in near.com)
 
     def get(self, pid: str) -> Optional[Proposal]:
         return next((p for p in self.proposals if p.id == pid or p.id.startswith(pid)), None)
@@ -166,7 +171,7 @@ class TradingState(BaseModel):
         """Tokens the live fund holds according to its own records: finished buys minus sales (finished or under way)."""
         rows: dict[str, dict] = {}
         for p in sorted(self.proposals, key=lambda x: x.created_at):
-            if p.mode != "live" or p.side not in SIDES:
+            if p.mode != "live" or p.side not in SIDES or p.id in self.hidden:
                 continue
             if p.side == "buy" and p.status == "success":
                 r = rows.setdefault(p.symbol, {"ticker": p.ticker, "symbol": p.symbol, "asset_id": p.asset_id, "topic": p.topic, "quantity": 0.0,

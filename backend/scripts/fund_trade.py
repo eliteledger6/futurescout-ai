@@ -266,6 +266,11 @@ def run_check(s, cfg, shadow: bool, extra: list | None = None, depth: int = 0) -
     from app.sources.prices import AlphaVantageClient
     st_cfg = cfg.live.strategy
     if True:
+        if not shadow and cfg.live.auto_approve:
+            try:
+                refresh_private_balance(s, cfg)
+            except Exception as exc:  # noqa: BLE001
+                print(f"  near.com balance not readable: {str(exc)[:100]}")
         state = load_state(STATE)
         now = datetime.now(timezone.utc)
         mode = "shadow" if shadow else "live"
@@ -465,8 +470,9 @@ def near_price(ex) -> float:  # noqa: ANN001
     return ex.oneclick.price_usd(ex.cfg.near_asset_id)
 
 
-def live_fund_value(s, cfg, ex) -> float:  # noqa: ANN001
-    """Value of the live fund: its holdings at a real dry sale quote plus the NEAR in the trading wallet."""
+def live_fund_value(s, cfg, ex, private_near: float = 0.0) -> float:  # noqa: ANN001
+    """Value of the live fund: its holdings at a real dry sale quote, the NEAR in the trading wallet and, when known,
+    the NEAR in its near.com (private) balance (read only after a signed login, i.e. in the owner's own loop)."""
     from app.fund.economy import account_near
     state = load_state(STATE)
     value = sum(holding_value(ex, h) or 0.0 for h in state.live_holdings())
@@ -474,7 +480,31 @@ def live_fund_value(s, cfg, ex) -> float:  # noqa: ANN001
     if acc:
         liquid, _ = account_near(httpx.Client(timeout=30), cfg.live.rpc, acc)
         value += liquid / 1e24 * near_price(ex)
+    value += private_near * near_price(ex)
     return round(value, 2)
+
+
+def refresh_private_balance(s, cfg) -> float | None:  # noqa: ANN001
+    """Read the near.com balance (signed login, owner's loop only) and save it for the website."""
+    near = private_near_balance(s, cfg)
+    if near is not None:
+        st = load_state(STATE)
+        st.private_near, st.private_checked_at = round(near, 4), datetime.now(timezone.utc)
+        save_state(st, STATE)
+    return near
+
+
+def private_near_balance(s, cfg) -> float | None:  # noqa: ANN001
+    """NEAR in the trading agent's near.com balance. Needs a signed login with the trading key: only call it in the
+    owner's own loop (live.auto_approve) or from an owner command, never from a read-only check."""
+    from app.fund.economy_pay import WNEAR
+    from app.fund.signed_exec import held
+    creds = s.fund_mainnet_credentials()
+    if not creds or not s.oneclick_api_key:
+        return None
+    api = SignedIntents(cfg.intents.api, api_key=s.oneclick_api_key.get_secret_value().strip())
+    token = api.login(creds[0], creds[1], str(rpc_view_salt(cfg)))["accessToken"]
+    return held(api.balances(token), WNEAR) / 1e24
 
 
 def economy_buy_reports(s, cfg, toks, cands, now, *, execute: bool) -> set:  # noqa: ANN001
@@ -491,6 +521,13 @@ def economy_buy_reports(s, cfg, toks, cands, now, *, execute: bool) -> set:  # n
     creds = s.fund_mainnet_credentials()
     buyer = creds[0] if creds else (s.fund_mainnet_account_id or "").strip()
     usable: set = set()
+    priv = 0.0
+    if execute and ec.pay_from == "private":
+        try:
+            priv = refresh_private_balance(s, cfg) or 0.0
+            print(f"  near.com balance: {priv:.3f} NEAR (counted in the fund's value)")
+        except Exception as exc:  # noqa: BLE001
+            print(f"  near.com balance not readable ({str(exc)[:100]}); the fund is valued without it")
     want = sorted({c.topic: c for c in cands}.values(), key=lambda c: -(c.score or 0))     # best-scored reports first
     for c in want:
         rid = next((t.get("run_id") for t in toks if t["topic"] == c.topic and t.get("run_id")), None)
@@ -508,7 +545,7 @@ def economy_buy_reports(s, cfg, toks, cands, now, *, execute: bool) -> set:  # n
         price = price_report(run_id=rid, topic=c.topic, cost_usd=rep.total_cost_usd or 0.0, score=score,
                              confidence_pct=c.confidence_pct, near_usd=px, cfg=ec, now=now)
         state.prices[rid] = price
-        budget = report_budget_near(fund_value_usd=live_fund_value(s, cfg, ex), near_usd=px, state=state, cfg=ec)
+        budget = report_budget_near(fund_value_usd=live_fund_value(s, cfg, ex, priv), near_usd=px, state=state, cfg=ec)
         private = ec.pay_from == "private"
         wallet = None if private else (account_near(httpx.Client(timeout=30), cfg.live.rpc, buyer)[0] / 1e24 if buyer else 0.0)
         blocks = purchase_blocks(state=state, price=price, budget_near=budget, wallet_near=wallet, cfg=ec,
@@ -549,6 +586,42 @@ def economy_buy_reports(s, cfg, toks, cands, now, *, execute: bool) -> set:  # n
             usable.add(c.topic)
     save_economy(state, ECONOMY)
     return usable
+
+
+def cmd_record_sale(s, cfg, symbol: str, near_received: float | None, why: str) -> int:  # noqa: ANN001
+    """Record a sale the OWNER made by hand in near.com, so the records and the website match the real holdings.
+    It is labelled as the owner's action, never as an agent decision. Without --near the amount is estimated from a
+    real dry sale quote and labelled as an estimate (the owner's near.com history has the exact figure)."""
+    state = load_state(STATE)
+    h = next((x for x in state.live_holdings() if x["symbol"].upper() == symbol.upper()), None)
+    if h is None:
+        print(f"the live fund holds no {symbol} according to its records")
+        return 1
+    ex = make_executor(s, cfg, with_signer=False)
+    px = near_price(ex)
+    value = holding_value(ex, h)
+    if near_received is not None:
+        near_amt, usd, how = near_received, round(near_received * px, 2), "amount given by the owner from near.com"
+    else:
+        usd = value or 0.0
+        near_amt, how = round(usd / px, 6) if px else 0.0, "amount ESTIMATED from a dry sale quote when recorded (near.com has the exact figure)"
+    now = datetime.now(timezone.utc)
+    p = Proposal(id=new_id(), created_at=now, mode="live", side="sell", topic=h["topic"], ticker=h["ticker"], symbol=h["symbol"],
+                 asset_id=h["asset_id"], usd=usd, fraction=1.0, quantity=h["quantity"],
+                 rationale=f"Sold by the owner by hand in near.com, not by the trading agent: {why}",
+                 risks=[], confidence="low", model=None)
+    rec = {"amountInFormatted": str(h["quantity"]), "amountOutFormatted": str(near_amt), "amountOutUsd": str(usd), "route": "manual"}
+    p.quote = dict(rec)
+    p.result = {**rec, "status": "SUCCESS (manual sale by the owner in near.com; recorded by hand)", "amounts_are": how}
+    p.mark("approved", "manual sale by the owner in near.com (no agent decision, no code checks)", now)
+    p.mark("success", f"recorded by hand: all {h['quantity']} {h['symbol']} sold for about {near_amt:g} NEAR (${usd:.2f}); {how}", now)
+    p.sha256 = fingerprint(p)
+    state.proposals.append(p)
+    save_state(state, STATE)
+    seal(s, p)
+    save_state(state, STATE)
+    print(f"recorded: owner sold {h['quantity']} {h['symbol']} for about {near_amt:g} NEAR (${usd:.2f}); {how}")
+    return 0
 
 
 def cmd_economy(s, cfg, what: str) -> int:  # noqa: ANN001
@@ -721,7 +794,9 @@ def cmd_approve(s, cfg, pid: str, *, auto: bool = False) -> int:  # noqa: ANN001
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("command", choices=["status", "propose", "list", "approve", "reject", "resume", "confirm", "refunded", "stop", "start", "register-usdc", "check", "rules", "watch", "pending", "holdings", "economy"])
+    ap.add_argument("command", choices=["status", "propose", "list", "approve", "reject", "resume", "confirm", "refunded", "stop", "start", "register-usdc", "check", "rules", "watch", "pending", "holdings", "economy", "record-sale", "balance"])
+    ap.add_argument("--near", type=float, help="with record-sale: NEAR the owner received (from near.com); else estimated")
+    ap.add_argument("--why", default="to pay for research reports (the agent economy)", help="with record-sale: the owner's reason")
     ap.add_argument("--review", action="store_true", help="with check: the owner asks the agent for a full keep / sell / buy review now")
     ap.add_argument("id", nargs="?")
     ap.add_argument("--shadow", action="store_true")
@@ -739,6 +814,15 @@ def main() -> int:
         if args.review:
             return run_check(s, cfg, args.shadow, extra=[Trigger(kind="manual", detail="the owner asked for a full review now: keep, sell (part of) a holding, or buy")])
         return cmd_check(s, cfg, args.shadow, args.loop)
+    if args.command == "balance":
+        near = refresh_private_balance(s, cfg)
+        print("near.com balance: " + (f"{near:.4f} NEAR (saved for the website)" if near is not None else "not readable (keys missing)"))
+        return 0
+    if args.command == "record-sale":
+        if not args.id:
+            print("usage: fund_trade.py record-sale <SYMBOL> [--near X] [--why ...]")
+            return 1
+        return cmd_record_sale(s, cfg, args.id, args.near, args.why)
     if args.command == "economy":
         return cmd_economy(s, cfg, args.id or "status")
     if args.command == "holdings":

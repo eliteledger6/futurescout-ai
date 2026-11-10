@@ -36,6 +36,7 @@ Rules that always apply:
   Agent economy (owner 2026-11-10): the trading agent buys reports from the report agent (grandbread5023.near) in NEAR (3-5 NEAR
   per report by quality, owner 2026-11-10; at most 30% of the fund); the report agent stakes 80% of its NEAR (keeps 20%) via NEAR AI Staking for Inference.
   `economy.enabled` is owner-only (owner set it true 2026-11-10); staking goes to stake.dao (NEAR AI Cloud Credits), copied from the owner's own dashboard stake; payments and stakes sign with keys, so they run in the owner's loop.
+  Restart 2026-11-10 (owner): trading/economy records archived, fresh $60 budget approved by the owner in chat.
 - Hosting (2026-11-10): Render (API, read-only snapshot `backend/site_data`, no key) + Vercel (website). See HOSTING.md.
 - Say "mock-tested" vs "run live" honestly; never call a feature complete without a test.
 - Do not push, make the repo public, post on X, submit to the hackathon or spend on mainnet without the owner's explicit yes.
