@@ -17,7 +17,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
+import time
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -53,6 +55,24 @@ def save(run_id: str, report: ResearchReport, in_db: bool, sessions) -> None:  #
         path.write_text(report.model_dump_json(indent=2), encoding="utf-8")
 
 
+BUSY = re.compile(r"(?i)429|rate limit|not available|timeout|timed out|connect|503|502")
+WAITS = (20, 60, 120)          # seconds to wait after a busy RPC before trying the same report again
+
+
+def seal_with_retry(recorder, run_id: str, report: ResearchReport, sleep=time.sleep, log=print):  # noqa: ANN001, ANN201
+    """One seal; when the public RPC is busy (rate limit, not available), wait and try again. Re-sending is safe: the
+    seal writes the same fingerprint again, costing only gas (the storage deposit is never paid twice)."""
+    for i in range(len(WAITS) + 1):
+        try:
+            return recorder.record(run_id, report)
+        except NearRecordError as exc:
+            if i == len(WAITS) or not BUSY.search(str(exc)):
+                raise
+            log(f"  RPC busy, waiting {WAITS[i]}s then retrying {run_id[:8]}")
+            sleep(WAITS[i])
+    raise AssertionError("unreachable")
+
+
 def all_run_ids(sessions) -> list[str]:  # noqa: ANN001
     if sessions:
         with sessions() as db:
@@ -68,6 +88,7 @@ def main() -> int:
     g.add_argument("--all", action="store_true", help="every report not yet sealed on the current network")
     ap.add_argument("--force", action="store_true", help="re-seal even if a record on this network exists")
     ap.add_argument("--dry-run", action="store_true", help="only list what would be sealed")
+    ap.add_argument("--pause", type=float, default=4.0, help="seconds between seals (the free RPC rate-limits bursts)")
     args = ap.parse_args()
     quiet_network_logs()
     s = get_settings()
@@ -110,18 +131,26 @@ def main() -> int:
             print(f"  {run_id}  {report.topic[:60]}")
         return 0
 
-    failed = 0
-    for run_id, report, in_db in todo:
+    failed = in_a_row = 0
+    n = -1
+    for n, (run_id, report, in_db) in enumerate(todo):
+        if n:
+            time.sleep(args.pause)
         try:
-            rec = recorder.record(run_id, report)
+            rec = seal_with_retry(recorder, run_id, report)
         except NearRecordError as exc:
             failed += 1
+            in_a_row += 1
             print(f"  ERROR {run_id}: {exc}")
+            if in_a_row >= 3:
+                print("three failures in a row: stopping. Run the same command later; sealed reports are skipped.")
+                break
             continue
+        in_a_row = 0
         report.chain_record = rec.as_dict()
         save(run_id, report, in_db, sessions)
         print(f"  sealed {run_id}  {report.topic[:40]}  {rec.explorer_url}")
-    print(f"done: {len(todo) - failed} sealed, {failed} failed")
+    print(f"done: {n + 1 - failed} sealed, {failed} failed, {len(todo) - n - 1} not tried")
     return 1 if failed else 0
 
 

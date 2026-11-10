@@ -207,3 +207,29 @@ def test_api_verify_reads_a_mainnet_record_from_mainnet(tmp_path, report):
                      chain_reader=lambda a, k, c: seen.append(c) or {"sha256": rec.sha256})
     res = TestClient(app).get("/api/runs/report_20261108T000000Z/verify").json()
     assert res["status"] == "match" and res["network"] == "mainnet" and seen == [SOCIALDB_MAINNET]
+
+
+def test_batch_reseal_waits_and_retries_when_the_rpc_is_busy(report):
+    import importlib.util
+    from pathlib import Path
+    spec = importlib.util.spec_from_file_location("nrr", Path(__file__).resolve().parents[1] / "scripts" / "near_record_report.py")
+    nrr = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(nrr)
+    errors = [NearRecordError("could not send the mainnet transaction (InternalError: Rate limits exceeded -429)"),
+              NearRecordError("could not send the mainnet transaction (RpcNotAvailableError: RPC not available)")]
+
+    class Flaky:
+        def record(self, run_id, rep):
+            if errors:
+                raise errors.pop(0)
+            return "sealed"
+    waits = []
+    assert nrr.seal_with_retry(Flaky(), "r1", report, sleep=waits.append, log=lambda _: None) == "sealed"
+    assert waits == [20, 60]
+
+    class Refused:
+        def record(self, run_id, rep):
+            raise NearRecordError("transaction failed on chain: not enough balance")
+    with pytest.raises(NearRecordError, match="balance"):                      # a real refusal is not retried
+        nrr.seal_with_retry(Refused(), "r1", report, sleep=waits.append, log=lambda _: None)
+    assert waits == [20, 60]
