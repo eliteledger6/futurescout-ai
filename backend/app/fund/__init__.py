@@ -34,6 +34,7 @@ from pydantic import BaseModel, Field
 
 from app.config import CONFIG_DIR
 from app.fund.intents import OneClickClient, QuoteCheck, TokenRoute
+from app.fund.economy import EconomyConfig
 from app.fund.live import LiveConfig
 from app.report.verdict import build_verdict
 from app.schemas.research import ResearchReport
@@ -78,6 +79,7 @@ class FundConfig(BaseModel):
     fee_pct: float = 0.30
     intents: IntentsConfig
     live: LiveConfig = LiveConfig()
+    economy: EconomyConfig = EconomyConfig()          # agent economy: reports bought in NEAR, earnings staked for AI credits
 
 
 def load_fund_config(path: Optional[Path] = None) -> FundConfig:

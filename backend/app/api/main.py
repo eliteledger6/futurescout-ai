@@ -265,6 +265,39 @@ def create_app(
         return fund_payload(f)
 
     trading_cache: dict = {}
+    economy_cache: dict = {}
+
+    @app.get("/api/economy")
+    def economy() -> dict:
+        """Agent economy, READ-ONLY: report prices, the trading agent's report purchases (paid in NEAR, checked on chain)
+        and the report agent's stake for NEAR AI credits. Nothing here can move money or shows a key."""
+        from app.fund.economy import YOCTO, account_near, load_economy, staked_in_pool
+        ec = load_fund_config().economy
+        st = load_economy(trading_dir.parent / "economy" / "state.json")
+        wallet = staked = None
+        if ec.seller_account:
+            hit = economy_cache.get(ec.seller_account)
+            if hit and time.time() - hit[0] < 120:
+                wallet, staked = hit[1]
+            else:
+                try:
+                    with httpx.Client(timeout=15.0) as http:
+                        liquid, _ = account_near(http, ec.rpc, ec.seller_account)
+                        pool = staked_in_pool(http, ec.rpc, ec.staking_contract, ec.seller_account)
+                    wallet, staked = round(liquid / YOCTO, 4), (round(pool / YOCTO, 4) if pool is not None else None)
+                    economy_cache[ec.seller_account] = (time.time(), (wallet, staked))
+                except Exception:  # noqa: BLE001
+                    pass
+        return {
+            "enabled": ec.enabled, "seller_account": ec.seller_account, "staking_contract": ec.staking_contract or None,
+            "limits": {"max_price_near": ec.max_price_near, "budget_share_of_fund": ec.budget_share_of_fund,
+                       "stake_share": ec.stake_share, "min_stake_near": ec.min_stake_near},
+            "spent_near": st.spent_near(), "report_agent_wallet_near": wallet, "report_agent_staked_near": staked,
+            "prices": sorted((p.model_dump(mode="json") for p in st.prices.values()), key=lambda p: -p["price_near"]),
+            "purchases": [p.model_dump(mode="json") for p in reversed(st.purchases[-30:])],
+            "stakes": [e.model_dump(mode="json") for e in reversed(st.stakes[-10:])],
+            "explorer_tx": "https://nearblocks.io/txns/{tx}",
+        }
 
     @app.get("/api/trading")
     def trading() -> dict:

@@ -34,6 +34,10 @@ Technology investing mixes verifiable facts, rumours and hype, and "AI picks" ra
 | Real-money trades on NEAR mainnet through NEAR Intents: 3 buys, then on 2026-11-10 an automatic round where the agent sold all its GOOGLon (report weakened) and put the NEAR into INTCon seconds later | Real-money budget is capped at $60 in total by the owner |
 | Settlement confirmed by reading the private balance | Stock prices: Alpha Vantage free plan (25 lookups a day), NEAR Intents token prices as a labelled fallback |
 
+### Agent economy: agents pay each other and pay for their own AI
+
+The report agent prices each report in NEAR (what it cost to make in AI usage, times its quality; at most 2 NEAR). The trading agent may only use reports it has bought, pays with a NEAR transfer that the code reads back from the chain, and spends at most 10% of its fund on reports. The report agent stakes 80% of what it holds through NEAR AI Cloud's Staking for Inference, so the staking rewards pay for its model usage; it keeps 20% for fees. Commands: `fund_trade.py economy status | price | buy | stake`. Owner switch: `economy.enabled` in `backend/config/funds.yaml`. Honest limit: at these amounts the staking rewards cover only a small part of the real AI bill.
+
 ### Safety limits on the trading agent (enforced in code, not by the model)
 
 - Master switch, kill switch file (`fund_trade.py stop`), a total budget cap, and near.com's $20 minimum per trade.

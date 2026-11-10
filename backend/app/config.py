@@ -74,6 +74,15 @@ class Settings(BaseSettings):
     fund_mainnet_private_key: Optional[SecretStr] = None
     oneclick_api_key: Optional[SecretStr] = None      # optional NEAR Intents partner key (avoids the extra 0.25% fee)
 
+    # Agent economy (owner 2026-11-10): the report agent's own mainnet account; it is paid for reports and stakes for AI credits
+    report_agent_account_id: Optional[str] = None
+    report_agent_private_key: Optional[SecretStr] = None
+
+    def report_agent_credentials(self) -> Optional[tuple[str, str]]:
+        acc = (self.report_agent_account_id or "").strip()
+        key = self.report_agent_private_key.get_secret_value().strip() if self.report_agent_private_key else ""
+        return (acc, key) if acc and key else None
+
     def fund_mainnet_credentials(self) -> Optional[tuple[str, str]]:
         acc = (self.fund_mainnet_account_id or "").strip()
         key = self.fund_mainnet_private_key.get_secret_value().strip() if self.fund_mainnet_private_key else ""

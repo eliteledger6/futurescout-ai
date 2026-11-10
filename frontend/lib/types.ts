@@ -302,3 +302,13 @@ export interface Trading {
   shadow_portfolio: { budget_usd: number; invested_usd: number; cash_usd: number; value_usd: number; realized_usd?: number;
     positions: { symbol: string; ticker: string; topic: string; quantity: number; cost_usd: number; orders: number; value_usd: number | null; change_pct: number | null }[] };
 }
+
+export interface Economy {
+  enabled: boolean; seller_account: string; staking_contract: string | null;
+  limits: { max_price_near: number; budget_share_of_fund: number; stake_share: number; min_stake_near: number };
+  spent_near: number; report_agent_wallet_near: number | null; report_agent_staked_near: number | null;
+  prices: { run_id: string; topic: string; price_near: number; price_usd: number; cost_usd: number; basis: string; at: string }[];
+  purchases: { id: string; run_id: string; topic: string; price_near: number; status: string; tx_hash: string | null; note: string; at: string }[];
+  stakes: { id: string; amount_near: number; contract: string; status: string; tx_hash: string | null; note: string; at: string }[];
+  explorer_tx: string;
+}

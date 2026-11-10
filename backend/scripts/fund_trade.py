@@ -48,6 +48,7 @@ from app.models.config import load_model_config  # noqa: E402
 from app.models.router import ModelRouter  # noqa: E402
 
 FUNDS_DIR = service.RUNS_DIR / "funds"
+ECONOMY = service.RUNS_DIR / "economy" / "state.json"
 STATE = service.RUNS_DIR / "trading" / "state.json"
 
 
@@ -234,6 +235,11 @@ def cmd_watch(s, cfg) -> int:  # noqa: ANN001
                 run_check(s, cfg, shadow)
             except Exception as exc:  # noqa: BLE001  (one failed check must not kill the loop)
                 print(f"  check failed ({'shadow' if shadow else 'live'}): {type(exc).__name__}: {str(exc)[:160]}")
+        if cfg.economy.enabled and cfg.economy.staking_contract and s.report_agent_credentials():
+            try:
+                cmd_economy(s, cfg, "stake")
+            except Exception as exc:  # noqa: BLE001
+                print(f"  stake step failed: {type(exc).__name__}: {str(exc)[:160]}")
         time.sleep(max(60, cfg.live.strategy.check_minutes * 60))
 
 
@@ -394,6 +400,14 @@ def _assess(s, cfg, state, toks, triggers, check, shadow, now, pf, closes=None):
             c.note = str(exc)[:120]
         cands.append(c)
     context = evidence_context(s, toks)
+    if not shadow and cfg.economy.enabled:
+        bought = economy_buy_reports(s, cfg, toks, cands, now, execute=cfg.live.auto_approve)
+        dropped = sorted({c.ticker for c in cands if c.topic not in bought})
+        cands = [c for c in cands if c.topic in bought]
+        context = {k: v for k, v in context.items() if k in bought}
+        if dropped:
+            check.notes.append(f"not usable (report not bought): {', '.join(dropped)}")
+            print(f"  reports not bought, so not usable: {', '.join(dropped)}")
     holdings = pf["positions"] if shadow else [{"ticker": h["ticker"], "symbol": h["symbol"], "cost_usd": h["cost_usd"]} for h in state.live_holdings()]
     adds = {}
     for p in state.proposals:
@@ -445,6 +459,135 @@ def _assess(s, cfg, state, toks, triggers, check, shadow, now, pf, closes=None):
     else:
         print(f"  PROPOSAL {p.id}: buy ${p.usd:.2f} of {p.symbol}. To approve (sends money):  python scripts\\fund_trade.py approve {p.id}")
     return check
+
+
+def near_price(ex) -> float:  # noqa: ANN001
+    return ex.oneclick.price_usd(ex.cfg.near_asset_id)
+
+
+def live_fund_value(s, cfg, ex) -> float:  # noqa: ANN001
+    """Value of the live fund: its holdings at a real dry sale quote plus the NEAR in the trading wallet."""
+    from app.fund.economy import account_near
+    state = load_state(STATE)
+    value = sum(holding_value(ex, h) or 0.0 for h in state.live_holdings())
+    acc = (s.fund_mainnet_account_id or "").strip()
+    if acc:
+        liquid, _ = account_near(httpx.Client(timeout=30), cfg.live.rpc, acc)
+        value += liquid / 1e24 * near_price(ex)
+    return round(value, 2)
+
+
+def economy_buy_reports(s, cfg, toks, cands, now, *, execute: bool) -> set:  # noqa: ANN001
+    """Make sure the trading agent holds the reports behind its candidates: price each one (report agent) and, when
+    `execute` (the owner's own loop with live.auto_approve, or `economy buy`), pay for it in NEAR. Returns the usable topics."""
+    from app.fund.economy import (account_near, buy_report, load_economy, price_report, purchase_blocks, read_tx,
+                                  report_budget_near, save_economy)
+    from app.api.main import _default_store
+    ec = cfg.economy
+    ex = make_executor(s, cfg, with_signer=False)
+    state = load_economy(ECONOMY)
+    store = _default_store(s)
+    px = near_price(ex)
+    creds = s.fund_mainnet_credentials()
+    buyer = creds[0] if creds else (s.fund_mainnet_account_id or "").strip()
+    usable: set = set()
+    want = sorted({c.topic: c for c in cands}.values(), key=lambda c: -(c.score or 0))     # best-scored reports first
+    for c in want:
+        rid = next((t.get("run_id") for t in toks if t["topic"] == c.topic and t.get("run_id")), None)
+        if not rid:
+            continue
+        if state.bought(rid):
+            usable.add(c.topic)
+            continue
+        found = store.get(rid)
+        if not found:
+            continue
+        rep = found[0]
+        score = rep.investment.score.score if rep.investment and rep.investment.score else None
+        conf = getattr(rep.investment.score.confidence, "value", None) if rep.investment and rep.investment.score else None
+        price = price_report(run_id=rid, topic=c.topic, cost_usd=rep.total_cost_usd or 0.0, score=score,
+                             confidence_pct=c.confidence_pct, near_usd=px, cfg=ec, now=now)
+        state.prices[rid] = price
+        budget = report_budget_near(fund_value_usd=live_fund_value(s, cfg, ex), near_usd=px, state=state, cfg=ec)
+        wallet = account_near(httpx.Client(timeout=30), cfg.live.rpc, buyer)[0] / 1e24 if buyer else 0.0
+        blocks = purchase_blocks(state=state, price=price, budget_near=budget, wallet_near=wallet, cfg=ec,
+                                 trading_enabled=cfg.live.trading_enabled, kill_switch=ex.kill_switch())
+        if not creds:
+            blocks.append("FUND_MAINNET_ACCOUNT_ID / FUND_MAINNET_PRIVATE_KEY are not set")
+        print(f"  report '{c.topic}': {price.price_near:g} NEAR (${price.price_usd:.2f}); budget left {budget:.3f} NEAR")
+        if blocks:
+            print("    not bought: " + "; ".join(blocks))
+            continue
+        if not execute:
+            print("    would buy it; real payments run in the owner's loop (live.auto_approve) or with:  python scripts\\fund_trade.py economy buy")
+            continue
+        signer = MainnetSigner(creds[0], creds[1], cfg.live.rpc)
+        p = buy_report(state=state, path=ECONOMY, price=price, buyer=creds[0], cfg=ec, send=signer.transfer,
+                       read=lambda h, who: read_tx(httpx.Client(timeout=60), ec.rpc, h, who), now=now)
+        print(f"    bought: {p.status} (tx {p.tx_hash}) {p.note}")
+        if p.status == "paid":
+            usable.add(c.topic)
+    save_economy(state, ECONOMY)
+    return usable
+
+
+def cmd_economy(s, cfg, what: str) -> int:  # noqa: ANN001
+    """economy status | price | buy | stake"""
+    from app.fund.economy import (YOCTO, account_near, load_economy, save_economy, stake, stake_amount_yocto,
+                                  staked_in_pool)
+    ec = cfg.economy
+    ex = make_executor(s, cfg, with_signer=False)
+    now = datetime.now(timezone.utc)
+    if what in ("price", "buy"):
+        toks = tradable_tokens()
+        cands = [Candidate(ticker=t["ticker"], symbol=t["symbol"], asset_id=t["asset_id"], topic=t["topic"], verdict_band=t["band"],
+                           score=t["score"], confidence_pct=t.get("confidence_pct")) for t in toks]
+        if what == "buy" and not ec.enabled:
+            print("economy.enabled is false in config/funds.yaml: nothing is bought")
+            return 1
+        usable = economy_buy_reports(s, cfg, toks, cands, now, execute=(what == "buy"))
+        print(f"reports the trading agent may use: {len(usable)} topic(s)")
+        return 0
+    if what == "stake":
+        creds = s.report_agent_credentials()
+        if not ec.enabled or not creds or not ec.staking_contract:
+            print("cannot stake: needs economy.enabled, economy.staking_contract and REPORT_AGENT_ACCOUNT_ID / _PRIVATE_KEY in .env")
+            return 1
+        if creds[0] != ec.seller_account:
+            print(f"REPORT_AGENT_ACCOUNT_ID ({creds[0]}) is not economy.seller_account ({ec.seller_account}); nothing staked")
+            return 1
+        liquid, _ = account_near(httpx.Client(timeout=30), ec.rpc, creds[0])
+        if stake_amount_yocto(liquid, ec) is None:
+            print(f"nothing to stake: {liquid / YOCTO:.3f} NEAR x {ec.stake_share:.0%} is under the {ec.min_stake_near} NEAR minimum")
+            return 0
+        state = load_economy(ECONOMY)
+        ev = stake(state=state, path=ECONOMY, account=creds[0], balance_yocto=liquid, cfg=ec,
+                   call=MainnetSigner(creds[0], creds[1], ec.rpc).call, now=now)
+        print(f"{ev.status}: {ev.note} (tx {ev.tx_hash})")
+        return 0 if ev.status == "staked" else 1
+    state = load_economy(ECONOMY)
+    seller = ec.seller_account
+    print(f"agent economy: {'ON' if ec.enabled else 'off (economy.enabled is false)'}; report agent {seller or '-'}; "
+          f"staking contract {ec.staking_contract or '- (not set)'}")
+    try:
+        px = near_price(ex)
+        val = live_fund_value(s, cfg, ex)
+        from app.fund.economy import report_budget_near
+        print(f"NEAR ${px:.2f}; live fund worth about ${val:.2f}; report budget {ec.budget_share_of_fund:.0%} = "
+              f"{ec.budget_share_of_fund * val / px:.3f} NEAR, spent {state.spent_near():g} NEAR, left "
+              f"{report_budget_near(fund_value_usd=val, near_usd=px, state=state, cfg=ec):.3f} NEAR")
+    except Exception as exc:  # noqa: BLE001
+        print(f"(prices unavailable: {str(exc)[:100]})")
+    if seller:
+        liquid, locked = account_near(httpx.Client(timeout=30), ec.rpc, seller)
+        st = staked_in_pool(httpx.Client(timeout=30), ec.rpc, ec.staking_contract, seller)
+        print(f"report agent wallet: {liquid / YOCTO:.3f} NEAR; staked: {('%.3f NEAR' % (st / YOCTO)) if st is not None else 'n/a'}")
+    for p in state.purchases[-10:]:
+        print(f"  bought {p.topic[:30]:30} {p.price_near:g} NEAR  {p.status:8} tx {p.tx_hash}")
+    for e in state.stakes[-5:]:
+        print(f"  staked {e.amount_near:g} NEAR into {e.contract}: {e.status} (tx {e.tx_hash})")
+    save_economy(state, ECONOMY)
+    return 0
 
 
 def evidence_context(s, toks) -> dict:  # noqa: ANN001
@@ -553,7 +696,7 @@ def cmd_approve(s, cfg, pid: str, *, auto: bool = False) -> int:  # noqa: ANN001
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("command", choices=["status", "propose", "list", "approve", "reject", "resume", "confirm", "refunded", "stop", "start", "register-usdc", "check", "rules", "watch", "pending", "holdings"])
+    ap.add_argument("command", choices=["status", "propose", "list", "approve", "reject", "resume", "confirm", "refunded", "stop", "start", "register-usdc", "check", "rules", "watch", "pending", "holdings", "economy"])
     ap.add_argument("--review", action="store_true", help="with check: the owner asks the agent for a full keep / sell / buy review now")
     ap.add_argument("id", nargs="?")
     ap.add_argument("--shadow", action="store_true")
@@ -571,6 +714,8 @@ def main() -> int:
         if args.review:
             return run_check(s, cfg, args.shadow, extra=[Trigger(kind="manual", detail="the owner asked for a full review now: keep, sell (part of) a holding, or buy")])
         return cmd_check(s, cfg, args.shadow, args.loop)
+    if args.command == "economy":
+        return cmd_economy(s, cfg, args.id or "status")
     if args.command == "holdings":
         rows = load_state(STATE).live_holdings()
         if not rows:

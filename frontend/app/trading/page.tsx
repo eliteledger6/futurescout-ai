@@ -7,7 +7,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { CountUp, Reveal } from "@/components/motion";
 import { ErrorNotice, Loading } from "@/components/ui";
 import { api, fmtDate } from "@/lib/api";
-import type { TradeProposal, Trading } from "@/lib/types";
+import type { Economy, TradeProposal, Trading } from "@/lib/types";
 
 const usd = (v: number | null | undefined, d = 2) => (v == null ? "–" : `$${Number(v).toLocaleString(undefined, { minimumFractionDigits: d, maximumFractionDigits: d })}`);
 const num = (v: unknown) => (v == null ? null : Number(v));
@@ -17,7 +17,9 @@ const COLOURS = ["#3987e6", "#00ec97", "#c98a1f", "#d4486a", "#8ea3ff", "#7fd1c8
 export default function TradingPage() {
   const [t, setT] = useState<Trading | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [eco, setEco] = useState<Economy | null>(null);
   const busy = useRef(false);
+  useEffect(() => { api.economy().then(setEco).catch(() => setEco(null)); }, []);
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
     const load = () => api.trading()
@@ -79,6 +81,7 @@ export default function TradingPage() {
                   The agent decided; only the owner can send it: <span className="mono">python scripts\fund_trade.py approve {t.pending_live[0]}</span> in the backend folder (or <span className="mono">reject</span>).</div>
               )}
               <AgentLog t={t} />
+              {eco && <EconomyPanel e={eco} />}
 
               <h2 className="h2" style={{ margin: "8px 0 0" }}>Real-money trades <span className="muted small">· {live.length} completed, newest first · each record sealed on NEAR testnet</span></h2>
               {live.length === 0 && <div className="notice">No real trade completed yet.</div>}
@@ -195,6 +198,35 @@ function Elapsed({ since }: { since: string }) {
 }
 
 const TRIGGER_WORDS: Record<string, string> = { new_report: "new report", price_drop: "sharp fall", price_jump: "sharp rise", review: "daily review", manual: "review on request", after_sale: "after a sale" };
+
+function EconomyPanel({ e }: { e: Economy }) {
+  const link = (tx: string | null) => (tx ? <a href={e.explorer_tx.replace("{tx}", tx)} target="_blank" rel="noopener noreferrer">tx ↗</a> : null);
+  return (
+    <div className="tr-card">
+      <div className="tr-head">
+        <h2 className="tr-title" style={{ minWidth: 0, overflowWrap: "anywhere" }}>Agent economy <span className="muted small">· reports bought in NEAR</span></h2>
+        <div className="pills"><span className="pill">{e.enabled ? "on: real NEAR" : "off"}</span></div>
+      </div>
+      <p className="small" style={{ color: "var(--text-2)", margin: 0 }}>
+        The report agent prices every report in NEAR (what it cost to make, times quality; at most {e.limits.max_price_near} NEAR). The trading agent may only use
+        reports it has bought, and spends at most {Math.round(e.limits.budget_share_of_fund * 100)}% of its fund on them. Each payment is a NEAR transfer checked on chain.
+        The report agent stakes {Math.round(e.limits.stake_share * 100)}% of what it holds through NEAR AI&apos;s Staking for Inference; the rewards pay for its AI. The rest stays for fees.
+      </p>
+      <div className="stats" style={{ marginTop: 4, gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 140px), 1fr))", overflowWrap: "anywhere" }}>
+        <div className="stat"><div className="stat-value">{e.spent_near.toFixed(3)} Ⓝ</div><div className="stat-label">paid for reports by the trading agent</div></div>
+        <div className="stat"><div className="stat-value">{e.report_agent_wallet_near != null ? `${e.report_agent_wallet_near.toFixed(2)} Ⓝ` : "–"}</div><div className="stat-label">report agent wallet ({e.seller_account})</div></div>
+        <div className="stat"><div className="stat-value">{e.report_agent_staked_near != null ? `${e.report_agent_staked_near.toFixed(2)} Ⓝ` : "–"}</div><div className="stat-label">staked for NEAR AI credits</div></div>
+      </div>
+      {e.prices.length > 0 && (
+        <div className="tr-mini">{e.prices.slice(0, 6).map((p) => {
+          const b = e.purchases.find((x) => x.run_id === p.run_id && x.status !== "failed");
+          return <div key={p.run_id}><b>{p.price_near} Ⓝ</b><span>{p.topic} <span className="why">· {b ? (b.status === "paid" ? "bought" : "payment sent") : "not bought"} {b && link(b.tx_hash)}</span></span></div>;
+        })}</div>
+      )}
+      {e.stakes.length > 0 && <div className="small muted">{e.stakes.map((s) => <div key={s.id}>{fmtDate(s.at)} · staked {s.amount_near} NEAR · {s.status} {link(s.tx_hash)}</div>)}</div>}
+    </div>
+  );
+}
 
 function whyWoke(triggers: { kind: string }[]): string {
   const kinds = Array.from(new Set(triggers.map((x) => TRIGGER_WORDS[x.kind] ?? x.kind)));
