@@ -392,7 +392,10 @@ class MainnetSigner:
         async def go() -> str:
             acc = Account(self.account_id, self._key, rpc_addr=self.rpc)
             await acc.startup()
-            res = await acc.function_call(contract, method, args, gas=gas, amount=deposit)
+            try:
+                res = await acc.function_call(contract, method, args, gas=gas, amount=deposit)
+            finally:
+                await acc.shutdown()
             status = getattr(res, "status", None)
             if isinstance(status, dict) and "Failure" in status:
                 raise RuntimeError(f"transaction failed on chain: {str(status['Failure'])[:200]}")
@@ -410,7 +413,10 @@ class MainnetSigner:
         async def go() -> str:
             acc = Account(self.account_id, self._key, rpc_addr=self.rpc)
             await acc.startup()
-            res = await acc.send_money(receiver, amount_yocto)
+            try:
+                res = await acc.send_money(receiver, amount_yocto)
+            finally:
+                await acc.shutdown()
             status = getattr(res, "status", None)
             if isinstance(status, dict) and "Failure" in status:
                 raise RuntimeError(f"transfer failed on chain: {str(status['Failure'])[:200]}")

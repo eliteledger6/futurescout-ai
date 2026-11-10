@@ -155,7 +155,10 @@ class NearRecorder:
         async def go() -> str:
             acc = Account(self.account_id, self._key, rpc_addr=self.rpc)
             await acc.startup()
-            res = await acc.function_call(self.contract, method, args, gas=GAS, amount=deposit)
+            try:
+                res = await acc.function_call(self.contract, method, args, gas=GAS, amount=deposit)
+            finally:
+                await acc.shutdown()          # closes the HTTP session (else aiohttp prints "Unclosed client session")
             tx = getattr(getattr(res, "transaction", None), "hash", None) or getattr(res, "transaction_hash", None)
             if isinstance(res, str):
                 tx = res

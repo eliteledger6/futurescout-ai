@@ -10,6 +10,8 @@
       "symbol": "GOOGLon",
       "asset_id": "nep141:bnb-0x091fc7778e6932d4009b087b191d1ee3bac5729a.omdep.near",
       "usd": 1800.0,
+      "fraction": null,
+      "quantity": null,
       "rationale": "GOOGL is the largest AI-agents position because its price stretch is subdued and its 0.62% quote is the cheapest in that topic. Two SEC reports mention the topic and the report scores it 60.1 (building).",
       "risks": [
         "Tokenized stocks depend on their issuer (Ondo) and on NEAR Intents settlement; they are not the underlying shares themselves.",
@@ -66,6 +68,8 @@
       "symbol": "MSFTon",
       "asset_id": "nep141:bnb-0x6bfe75d1ad432050ea973c3a3dcd88f02e2444c3.omdep.near",
       "usd": 1200.0,
+      "fraction": null,
+      "quantity": null,
       "rationale": "MSFT has the most direct evidence in the AI-agents topic, with 3 SEC reports mentioning it. The size is trimmed because its price stretch is moderate and its 0.92% quote cost is the highest of all candidates.",
       "risks": [
         "Tokenized stocks depend on their issuer (Ondo) and on NEAR Intents settlement; they are not the underlying shares themselves.",
@@ -122,6 +126,8 @@
       "symbol": "METAon",
       "asset_id": "nep141:bnb-0xd7df5863a3e742f0c767768cdfcb63f09e0422f6.omdep.near",
       "usd": 800.0,
+      "fraction": null,
+      "quantity": null,
       "rationale": "META has 2 SEC report mentions under the same 60.1 building AI-agents report. It is the smallest AI-agents position because its price stretch is moderate and this topic is already the largest exposure.",
       "risks": [
         "Tokenized stocks depend on their issuer (Ondo) and on NEAR Intents settlement; they are not the underlying shares themselves.",
@@ -178,6 +184,8 @@
       "symbol": "MRVLon",
       "asset_id": "nep141:bnb-0x1501ec83ffef405b4331cc4f73277a40fb0c627d.omdep.near",
       "usd": 1800.0,
+      "fraction": null,
+      "quantity": null,
       "rationale": "MRVL has 3 SEC report mentions for silicon photonics (building, 59.8), a subdued price stretch and the lowest quote cost at 0.42%. It is capped at this level because it is a mid-size company with medium size risk.",
       "risks": [
         "Tokenized stocks depend on their issuer (Ondo) and on NEAR Intents settlement; they are not the underlying shares themselves.",
@@ -234,6 +242,8 @@
       "symbol": "INTCon",
       "asset_id": "nep141:bnb-0xa528caaa2f96090e379d43f90834c75df54d6e74.omdep.near",
       "usd": 1000.0,
+      "fraction": null,
+      "quantity": null,
       "rationale": "INTC adds a separate chiplet topic (building, 58.1) at a subdued price stretch, which spreads the portfolio beyond one theme. It is sized smaller because only 1 SEC report mentions the topic and the report score is the lowest.",
       "risks": [
         "Tokenized stocks depend on their issuer (Ondo) and on NEAR Intents settlement; they are not the underlying shares themselves.",
@@ -290,6 +300,8 @@
       "symbol": "GOOGLon",
       "asset_id": "nep141:bnb-0x091fc7778e6932d4009b087b191d1ee3bac5729a.omdep.near",
       "usd": 10.0,
+      "fraction": null,
+      "quantity": null,
       "rationale": "GOOGL is one of only two candidates that can actually be bought at $10. Its AI agents report has a 'building' verdict with a score of 60.1, slightly above the chiplet report behind INTC at 58.1. GOOGL is also backed by two SEC reports mentioning the topic, versus one for INTC, and it has the lower quoted cost (0.68% vs 0.73%) with a price that is not stretched.",
       "risks": [
         "A tokenized stock depends on its issuer (Ondo) and is not the share itself.",
@@ -404,6 +416,8 @@
       "symbol": "GOOGLon",
       "asset_id": "nep141:bnb-0x091fc7778e6932d4009b087b191d1ee3bac5729a.omdep.near",
       "usd": 20.0,
+      "fraction": null,
+      "quantity": null,
       "rationale": "GOOGL is the strongest candidate that can be bought at this size. Its AI agents report is rated 'building' with a score of 60.1, and two SEC reports mention the topic for this company. Its price is not stretched ('subdued'), and its quoted cost of 0.67% is lower than INTC's 1.03%, the only other buyable option. The report's confidence level was not provided, so this pick rests on thin evidence.",
       "risks": [
         "A tokenized stock depends on its issuer (Ondo) and the NEAR Intents route, and is not the share itself.",
@@ -459,6 +473,8 @@
       "symbol": "GOOGLon",
       "asset_id": "nep141:bnb-0x091fc7778e6932d4009b087b191d1ee3bac5729a.omdep.near",
       "usd": 25.0,
+      "fraction": null,
+      "quantity": null,
       "rationale": "Only GOOGL and INTC can be bought at this size, and INTC's quoted cost of 1.93% is above the 1.5% limit. GOOGL is tied for the highest report score (60.1, verdict 'building') on AI agents, and two SEC reports mention the topic. Its quoted cost is a low 0.66%, and the stock is not stretched ('subdued'). No report confidence figure was provided, so the evidence behind this choice is thin.",
       "risks": [
         "A tokenized stock depends on its issuer (Ondo) and is not the share itself.",
@@ -573,6 +589,8 @@
       "symbol": "MRVLon",
       "asset_id": "nep141:bnb-0x1501ec83ffef405b4331cc4f73277a40fb0c627d.omdep.near",
       "usd": 25.0,
+      "fraction": null,
+      "quantity": null,
       "rationale": "Marvell comes from the high bandwidth memory report. That report has a strong verdict, a score of 72.0, and a confidence of 46.8%, just above the low-confidence line. The AI agents report scores slightly higher at 73.3, but its 38.7% confidence counts as low, so it is weaker support for MSFT, GOOGL and META. Marvell's quoted cost of 0.64% is the second lowest, and an SEC filing mentions the topic.",
       "risks": [
         "A tokenized stock depends on its issuer (Ondo) and is not the share itself.",
@@ -646,6 +664,8 @@
       "symbol": "MRVLon",
       "asset_id": "nep141:bnb-0x1501ec83ffef405b4331cc4f73277a40fb0c627d.omdep.near",
       "usd": 25.0,
+      "fraction": null,
+      "quantity": null,
       "rationale": "Marvell's topic, high bandwidth memory, has a 'strong' report verdict with a score of 72.0, almost the same as the AI agents report (73.3). The memory report's confidence is 46.8%, above the 45% low mark, while the AI agents report sits at 38.7%, which counts as low. Marvell's quoted cost of 0.67% is also among the lowest on the list. The evidence is thin, though: only one SEC filing mentions the topic, so this is a small test, not a firm conviction.",
       "risks": [
         "A tokenized stock depends on its issuer (Ondo) and the NEAR Intents route; it is not the share itself.",
@@ -744,6 +764,8 @@
       "symbol": "",
       "asset_id": "",
       "usd": 0.0,
+      "fraction": null,
+      "quantity": null,
       "rationale": "Three new reports arrived on the first review, and no stock has a sharp move to act on. The AI agents report is rated strong but with only 38.7% confidence, below the 45% minimum. The high bandwidth memory report (46.8%) and the chiplet report (46.7%) clear the minimum by less than 2 points. MSFT, GOOGL and META cannot be bought because the AI agents report's confidence (38.7%) is below the 45% minimum. MRVL is listed under high bandwidth memory, but none of that report's findings names Marvell; the HBM evidence centres on Micron, SK hynix, Samsung, KLA and Applied Materials. MRVL is also already the largest holding, up about 10%, and buying more would chase that rise. INTC has a verified chiplet finding (Intel's foundry offers chiplet integration), but it is already held, has not fallen, and its report confidence barely clears the bar, so keeping the $3,400 in cash is the cautious choice until clearer evidence or a dip the evidence does not explain.",
       "risks": [
         "A tokenized stock depends on its issuer (Ondo) and is not the share itself.",
@@ -782,6 +804,8 @@
       "symbol": "INTCon",
       "asset_id": "nep141:bnb-0xa528caaa2f96090e379d43f90834c75df54d6e74.omdep.near",
       "usd": 500.0,
+      "fraction": null,
+      "quantity": null,
       "rationale": "A new high bandwidth memory report (listed twice in the triggers) rates the topic strong (score 80) at 49.6% confidence, just above the 45% minimum. The OLED report also passed the minimum, but the AI agents (38.6%) and 6G (37.7%, early) reports did not. No price moves were reported, so there was no dip or spike to judge. Only INTC, MRVL and META meet the verdict and confidence rules. INTC is the choice because it has low company-size risk, a subdued price stretch and room under the 25% cap, and it adds memory exposure to a portfolio already heavy in AI agents (GOOGL, MSFT, META) and MRVL. The HBM evidence points to tight supply: unverified claims say HBM is sold out through 2027 and DRAM faces a deficit, and FormFactor's filing ties DRAM probe card growth to HBM demand. Confidence is barely above the minimum and none of the findings names Intel, so the order is a small $500 and the rest stays in cash.",
       "risks": [
         "None of the HBM findings mentions Intel. Its link to the topic rests only on the fund's patent and filing screen, and most supporting claims are unverified X posts.",
@@ -838,9 +862,317 @@
       ],
       "sha256": "50d1b78d6afb85ee79f012eec3e566ccd2eda24d83ff063a81520b22ab0c7843",
       "chain": null
+    },
+    {
+      "id": "bf13068f9d",
+      "created_at": "2026-11-10T07:50:11.811607Z",
+      "mode": "shadow",
+      "side": "hold",
+      "topic": "",
+      "ticker": "",
+      "symbol": "",
+      "asset_id": "",
+      "usd": 0.0,
+      "fraction": null,
+      "quantity": null,
+      "rationale": "This is a manual full review, not a price move or a new-report trigger. All five holdings were bought about 18.3 hours ago, short of the 24-hour minimum, so no sale is possible yet. GOOGL is no longer named by any topic report, and the AI agents report backing MSFT is now at 38.6% confidence, below the 45% minimum. The only candidates that clear the strong-verdict and 45% confidence bar are INTC, MRVL and META. INTC has already used its 2 allowed adds. MRVL is up 8.5% since purchase and META is up 2.5%; neither has a dip to buy into, and we do not chase rises. META's OLED link rests on a single patent, and none of the OLED findings mention it. MSFT (38.6%) and AAPL (early verdict) do not qualify, so keeping the $2,900 in cash is the disciplined choice until GOOGL and MSFT can be reviewed for sale once the 24-hour hold has passed.",
+      "risks": [
+        "A tokenized stock depends on its issuer (Ondo) and is not the share itself.",
+        "GOOGL no longer has a supporting report, and the MSFT report is below minimum confidence; both cannot be sold until the 24-hour hold passes.",
+        "The portfolio leans heavily on the AI agents topic (GOOGL, MSFT, META), and every qualifying report sits just under 50% confidence."
+      ],
+      "confidence": "medium",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.061004,
+      "ref_close": null,
+      "ref_close_date": null,
+      "dry_quote": null,
+      "status": "hold",
+      "quote": null,
+      "deposit_address": null,
+      "deposit_tx": null,
+      "result": null,
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-10T07:50:11.811607Z",
+          "status": "hold",
+          "note": "strategy check: manual"
+        }
+      ],
+      "sha256": "148a94a115aadc8f9b1d3646aa1357426e85d16a49f5578adca12257dfed11cc",
+      "chain": null
+    },
+    {
+      "id": "fb6ebda5d0",
+      "created_at": "2026-11-10T08:03:23.978741Z",
+      "mode": "live",
+      "side": "hold",
+      "topic": "",
+      "ticker": "",
+      "symbol": "",
+      "asset_id": "",
+      "usd": 0.0,
+      "fraction": null,
+      "quantity": null,
+      "rationale": "This is a full review requested by the owner, with no price move behind it. GOOGL is no longer named in any topic fund, and its AI agents topic report sits at 38.6% confidence, below the 45% minimum. MRVL's high bandwidth memory report is 'strong' (score 80) at 49.6% confidence. There is no cash, so the only possible actions are to sell or hold. GOOGL has a valid sell reason because its report no longer supports it, but it has been held only 18.2 hours, short of the 24-hour minimum, so it cannot be sold yet. MRVL is still backed by a 'strong' report above the confidence minimum and has been held only 5.6 hours, so there is no reason or permission to sell it. Holding now is the only allowed choice; GOOGL is the first holding to review for sale once it passes 24 hours.",
+      "risks": [
+        "A tokenized stock (GOOGLon, MRVLon) depends on its issuer, Ondo, and is not the share itself.",
+        "GOOGL stays in the fund for a few more hours without supporting evidence, because the 24-hour holding rule blocks an earlier sale.",
+        "MRVL's support rests on a report with confidence just under 50%, and most of its findings are unverified claims from X posts."
+      ],
+      "confidence": "medium",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.047276,
+      "ref_close": null,
+      "ref_close_date": null,
+      "dry_quote": null,
+      "status": "hold",
+      "quote": null,
+      "deposit_address": null,
+      "deposit_tx": null,
+      "result": null,
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-10T08:03:23.978741Z",
+          "status": "hold",
+          "note": "strategy check: manual"
+        }
+      ],
+      "sha256": "c6cf90972dc63c983216e782ee698ba8df487299edf8d3ed631887755374fab9",
+      "chain": null
+    },
+    {
+      "id": "7b0560c275",
+      "created_at": "2026-11-10T08:05:46.273161Z",
+      "mode": "live",
+      "side": "hold",
+      "topic": "",
+      "ticker": "",
+      "symbol": "",
+      "asset_id": "",
+      "usd": 0.0,
+      "fraction": null,
+      "quantity": null,
+      "rationale": "In this full review, GOOGL is no longer named by any topic report, so it has no current verdict. Its former topic, AI agents, now has a report confidence of 38.6%, below the 45% minimum. MRVL's high bandwidth memory report remains 'strong' at 49.6% confidence, above the minimum. Selling GOOGL in full under reason (a): its report weakened, because the AI agents report no longer names it and that topic's confidence (38.6%) is below the 45% minimum. It is the holding with the weakest evidence; MRVL is still backed by a 'strong' report at 49.6% confidence, so it stays. A full sale is needed because half of the roughly $34 position would fall below the $20 minimum trade. The freed money can then go to a candidate whose report is 'strong' and at or above 45% confidence, preferably not MRVL, to keep the fund diversified.",
+      "risks": [
+        "A tokenized stock (GOOGLon) depends on its issuer, Ondo, and is not the share itself, so sale proceeds and timing rely on the issuer and NEAR Intents.",
+        "GOOGL's price may rise after the sale; the decision rests on weaker evidence, not on a price forecast.",
+        "Many findings behind the remaining reports are unverified claims from X posts."
+      ],
+      "confidence": "medium",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.052436,
+      "ref_close": null,
+      "ref_close_date": null,
+      "dry_quote": null,
+      "status": "hold",
+      "quote": null,
+      "deposit_address": null,
+      "deposit_tx": null,
+      "result": null,
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-10T08:05:46.273161Z",
+          "status": "hold",
+          "note": "strategy check: manual"
+        }
+      ],
+      "sha256": "f608b5c10951559a4b7b29f113000b2916a1ef8297a013f8bfb3f70849ff79f6",
+      "chain": null
+    },
+    {
+      "id": "ed8177d3ba",
+      "created_at": "2026-11-10T08:08:18.478043Z",
+      "mode": "live",
+      "side": "sell",
+      "topic": "AI agents",
+      "ticker": "GOOGL",
+      "symbol": "GOOGLon",
+      "asset_id": "nep141:bnb-0x091fc7778e6932d4009b087b191d1ee3bac5729a.omdep.near",
+      "usd": 34.67,
+      "fraction": 1.0,
+      "quantity": 0.1190599,
+      "rationale": "In this full review, GOOGL is no longer named in any topic fund. The latest AI agents report, its topic, has confidence of only 38.6%, below the 45% minimum. MRVL's high bandwidth memory report remains 'strong' at 49.6% confidence, so it still meets the rules. Sell GOOGL under reason (a): its latest report weakened. The report no longer names the company, and its topic's confidence of 38.6% is below the 45% minimum. It is the holding with the weakest evidence, so it should go first. A partial sale would come to about $17, below the $20 market minimum, so the whole holding is sold. MRVL is kept because its report is still 'strong' at 49.6% confidence.",
+      "risks": [
+        "A tokenized stock (GOOGLon) depends on its issuer Ondo and is not the share itself; redemption and pricing rely on the issuer and the NEAR Intents route.",
+        "The sale realizes a small loss of about $0.33 against cost, plus quote costs.",
+        "Selling and then rebuying adds trading costs, and the cash will stay idle if no candidate passes the rules on the next wake-up."
+      ],
+      "confidence": "medium",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.04798,
+      "ref_close": 288.15,
+      "ref_close_date": "2026-11-09",
+      "dry_quote": null,
+      "status": "success",
+      "quote": {
+        "amountIn": "119059903759527683",
+        "amountInFormatted": "0.119059903759527683",
+        "amountInUsd": "34.667862776699",
+        "amountOut": "9537949716741789722522168",
+        "amountOutFormatted": "9.537949716741789722522168",
+        "amountOutUsd": "34.622757471773",
+        "minAmountOut": "9442570219574371825296946",
+        "timeEstimate": 10,
+        "depositAddress": "71ba61c9cf19ebdeace279c630ea276d71aebeace3607855f1ad4f0df0c899d3",
+        "deadline": "2026-11-13T08:23:38.000Z",
+        "timeWhenInactive": "2026-11-13T08:23:38.000Z",
+        "correlationId": "f69d034a-ff4c-4de9-a122-6ae07a3278cd",
+        "route": "confidential"
+      },
+      "deposit_address": "71ba61c9cf19ebdeace279c630ea276d71aebeace3607855f1ad4f0df0c899d3",
+      "deposit_tx": null,
+      "result": {
+        "status": "SUCCESS (seen in the private balance)",
+        "amountInFormatted": "0.119059903759527683",
+        "amountOutFormatted": "9.540624410237",
+        "amountOutUsd": "34.6325",
+        "received_units": "9540624410237146588900402"
+      },
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-10T08:08:18.478043Z",
+          "status": "proposed",
+          "note": "strategy check (manual): the agent proposed to SELL 100% of its GOOGLon (about $34.67)"
+        },
+        {
+          "at": "2026-11-10T08:08:36.893649Z",
+          "status": "approved",
+          "note": "approved AUTOMATICALLY: live.auto_approve is on (owner's setting); all code checks passed"
+        },
+        {
+          "at": "2026-11-10T08:08:39.118534Z",
+          "status": "executing",
+          "note": "order verified; signing a sale of 0.119059903759527683 GOOGLon (about $34.67) for NEAR from the private balance (the service may take until 2026-11-13T08:23:38.000Z)"
+        },
+        {
+          "at": "2026-11-10T08:08:39.663743Z",
+          "status": "deposited",
+          "note": "signed order submitted, intent ENcc3zccejT7yCE6nRNBBDCesEBRSAv5pK2UJHuPVnH7; watching the private balance for the result"
+        },
+        {
+          "at": "2026-11-10T08:08:50.598002Z",
+          "status": "success",
+          "note": "NEAR arrived in the private balance after about 10s"
+        }
+      ],
+      "sha256": "da6a3fcae5e0f0b2650b3c4958febb000f0814036ef4c49790bad6011cf710eb",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/trade_ed8177d3ba",
+        "sha256": "da6a3fcae5e0f0b2650b3c4958febb000f0814036ef4c49790bad6011cf710eb",
+        "tx_hash": "CoWbVqd3Mg1kKmTRYTHSFdbZJvHw3n6uC7FuWuCeqT4Y",
+        "explorer_url": "https://testnet.nearblocks.io/txns/CoWbVqd3Mg1kKmTRYTHSFdbZJvHw3n6uC7FuWuCeqT4Y"
+      }
+    },
+    {
+      "id": "aedd8cf803",
+      "created_at": "2026-11-10T08:08:54.561572Z",
+      "mode": "live",
+      "side": "buy",
+      "topic": "high bandwidth memory",
+      "ticker": "INTC",
+      "symbol": "INTCon",
+      "asset_id": "nep141:bnb-0xa528caaa2f96090e379d43f90834c75df54d6e74.omdep.near",
+      "usd": 34.629999999999995,
+      "fraction": null,
+      "quantity": null,
+      "rationale": "A sale of GOOGLon freed about $34.63. No price move or new report triggered this wake-up; the only question is where to place the cash. INTC sits in the high bandwidth memory topic, whose report has a 'strong' verdict, the highest score (80) and 49.6% confidence, which is above the 45% minimum. Findings such as FormFactor's verified HBM-driven revenue growth and claims that HBM is sold out through 2027 support the topic. INTC is a large company with a subdued price stretch, and buying it spreads the money beyond our single MRVL holding. MSFT and AAPL fall below the confidence minimum, and META's report scores lower (71) with an unknown price stretch.",
+      "risks": [
+        "The tokenized INTCon depends on its issuer (Ondo) and is not the share itself.",
+        "Report confidence is only 49.6%, and most HBM findings are unverified X claims; this also adds a second holding in the same topic as MRVL.",
+        "Alternatives like SK hynix's High Bandwidth Flash and ongoing HBM patent litigation (Netlist) could weaken the HBM case."
+      ],
+      "confidence": "low",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.050156,
+      "ref_close": 59.37,
+      "ref_close_date": "2026-11-09",
+      "dry_quote": {
+        "amountIn": "9539944903581266431967232",
+        "amountInFormatted": "9.539944903581266431967232",
+        "amountInUsd": "34.630000000000",
+        "amountOut": "581646058286161862",
+        "amountOutFormatted": "0.581646058286161862",
+        "amountOutUsd": "34.241503451306",
+        "minAmountOut": "575829597703300243",
+        "timeEstimate": 22,
+        "correlationId": "4a687fbc-3400-4583-8da0-5743050a7f38",
+        "quotedAt": "2026-11-10T08:08:57.205329+00:00",
+        "dry": true
+      },
+      "status": "success",
+      "quote": {
+        "amountIn": "9539944903581266431967232",
+        "amountInFormatted": "9.539944903581266431967232",
+        "amountInUsd": "34.630000000000",
+        "amountOut": "581369571091068337",
+        "amountOutFormatted": "0.581369571091068337",
+        "amountOutUsd": "34.225226650131",
+        "minAmountOut": "575555875380157653",
+        "timeEstimate": 12,
+        "depositAddress": "b5fbb406315cb5c630c4446c099362fe9baee3b287c918b9172cabd5eb43f744",
+        "deadline": "2026-11-13T08:24:15.000Z",
+        "timeWhenInactive": "2026-11-13T08:24:15.000Z",
+        "correlationId": "5336c0a5-22e8-4277-9cc2-ae29e743e16a",
+        "route": "confidential"
+      },
+      "deposit_address": "b5fbb406315cb5c630c4446c099362fe9baee3b287c918b9172cabd5eb43f744",
+      "deposit_tx": null,
+      "result": {
+        "status": "SUCCESS (seen in the private balance)",
+        "amountInFormatted": "9.539944903581266431967232",
+        "amountOutFormatted": "0.581412654957",
+        "amountOutUsd": "34.2278",
+        "received_units": "581412654956602322"
+      },
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-10T08:08:54.561572Z",
+          "status": "proposed",
+          "note": "strategy check (after_sale): the agent proposed to buy $34.63 of INTCon"
+        },
+        {
+          "at": "2026-11-10T08:09:13.998689Z",
+          "status": "approved",
+          "note": "approved AUTOMATICALLY: live.auto_approve is on (owner's setting); all code checks passed"
+        },
+        {
+          "at": "2026-11-10T08:09:17.005228Z",
+          "status": "executing",
+          "note": "order verified; signing a transfer of $34.63 of NEAR from the private balance (the service may take until 2026-11-13T08:24:15.000Z)"
+        },
+        {
+          "at": "2026-11-10T08:09:17.566605Z",
+          "status": "deposited",
+          "note": "signed order submitted, intent J7GTMFhnCq7e3LC7QF8VbLXvSn156VqAq3WnCsrTbKyb; watching the private balance for the result"
+        },
+        {
+          "at": "2026-11-10T08:09:28.536160Z",
+          "status": "success",
+          "note": "INTCon arrived in the private balance after about 10s"
+        }
+      ],
+      "sha256": "266dd0482449825f477fcd09e682c49ec6bbe658743d7af80dca9e72486db7a8",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/trade_aedd8cf803",
+        "sha256": "266dd0482449825f477fcd09e682c49ec6bbe658743d7af80dca9e72486db7a8",
+        "tx_hash": "AG4g9KVaLhGPksuPL4GX3D7aFTNHobG5WPjk3mcSzgmM",
+        "explorer_url": "https://testnet.nearblocks.io/txns/AG4g9KVaLhGPksuPL4GX3D7aFTNHobG5WPjk3mcSzgmM"
+      }
     }
   ],
-  "updated_at": "2026-11-10T06:52:31.078302Z",
+  "updated_at": "2026-11-10T08:09:31.786118Z",
   "checks": [
     {
       "id": "c1a159957a",
@@ -1090,6 +1422,157 @@
       "cost_usd": 0.0,
       "notes": [],
       "sha256": "8ac2312b0912ecbe4c8cd234671cd80f7af32f0bcb40a6648386e38c13f6cdf3"
+    },
+    {
+      "id": "c20ef27973",
+      "at": "2026-11-10T07:50:11.811607Z",
+      "mode": "shadow",
+      "triggers": [
+        {
+          "kind": "manual",
+          "ticker": "",
+          "topic": "",
+          "detail": "the owner asked for a full review now: keep, sell (part of) a holding, or buy"
+        }
+      ],
+      "action": "hold",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "The only candidates that clear the strong-verdict and 45% confidence bar are INTC, MRVL and META. INTC has already used its 2 allowed adds. MRVL is up 8.5% since purchase and META is up 2.5%; neither has a dip to buy into, and we do not chase rises. META's OLED link rests on a single patent, and none of the OLED findings mention it. MSFT (38.6%) and AAPL (early verdict) do not qualify, so keeping the $2,900 in cash is the disciplined choice until GOOGL and MSFT can be reviewed for sale once the 24-hour hold has passed.",
+      "what_changed": "This is a manual full review, not a price move or a new-report trigger. All five holdings were bought about 18.3 hours ago, short of the 24-hour minimum, so no sale is possible yet. GOOGL is no longer named by any topic report, and the AI agents report backing MSFT is now at 38.6% confidence, below the 45% minimum.",
+      "proposal_id": "bf13068f9d",
+      "model": "claude_opus_5_5",
+      "cost_usd": 0.061004,
+      "notes": [],
+      "sha256": "f1e66cfb32d4c6f8d8c461749c0120f867687af2c519cd85989c12eb02a64dcc"
+    },
+    {
+      "id": "3a091fe163",
+      "at": "2026-11-10T07:57:34.200886Z",
+      "mode": "shadow",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "17b399061605c2b77a5b6dec59147ce95ef58fe9cb9c5c2d8afb8a5de05e23f2"
+    },
+    {
+      "id": "97fbe025ea",
+      "at": "2026-11-10T07:57:34.938250Z",
+      "mode": "live",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "6abf6f833996ffb1d4dfcbc14155cedf3701d5503194601d783036ff0a56bc7b"
+    },
+    {
+      "id": "a0569fc62f",
+      "at": "2026-11-10T08:03:23.978741Z",
+      "mode": "live",
+      "triggers": [
+        {
+          "kind": "manual",
+          "ticker": "",
+          "topic": "",
+          "detail": "the owner asked for a full review now: keep, sell (part of) a holding, or buy"
+        }
+      ],
+      "action": "hold",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "There is no cash, so the only possible actions are to sell or hold. GOOGL has a valid sell reason because its report no longer supports it, but it has been held only 18.2 hours, short of the 24-hour minimum, so it cannot be sold yet. MRVL is still backed by a 'strong' report above the confidence minimum and has been held only 5.6 hours, so there is no reason or permission to sell it. Holding now is the only allowed choice; GOOGL is the first holding to review for sale once it passes 24 hours.",
+      "what_changed": "This is a full review requested by the owner, with no price move behind it. GOOGL is no longer named in any topic fund, and its AI agents topic report sits at 38.6% confidence, below the 45% minimum. MRVL's high bandwidth memory report is 'strong' (score 80) at 49.6% confidence.",
+      "proposal_id": "fb6ebda5d0",
+      "model": "claude_opus_5_5",
+      "cost_usd": 0.047276,
+      "notes": [],
+      "sha256": "767d4278d6e34ec4939a0d7b4b87ff215fc56e3cb4febacda8b0652795d4e023"
+    },
+    {
+      "id": "ef33035920",
+      "at": "2026-11-10T08:05:46.273161Z",
+      "mode": "live",
+      "triggers": [
+        {
+          "kind": "manual",
+          "ticker": "",
+          "topic": "",
+          "detail": "the owner asked for a full review now: keep, sell (part of) a holding, or buy"
+        }
+      ],
+      "action": "hold",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "Selling GOOGL in full under reason (a): its report weakened, because the AI agents report no longer names it and that topic's confidence (38.6%) is below the 45% minimum. It is the holding with the weakest evidence; MRVL is still backed by a 'strong' report at 49.6% confidence, so it stays. A full sale is needed because half of the roughly $34 position would fall below the $20 minimum trade. The freed money can then go to a candidate whose report is 'strong' and at or above 45% confidence, preferably not MRVL, to keep the fund diversified.",
+      "what_changed": "In this full review, GOOGL is no longer named by any topic report, so it has no current verdict. Its former topic, AI agents, now has a report confidence of 38.6%, below the 45% minimum. MRVL's high bandwidth memory report remains 'strong' at 49.6% confidence, above the minimum.",
+      "proposal_id": "7b0560c275",
+      "model": "claude_opus_5_5",
+      "cost_usd": 0.052436,
+      "notes": [
+        "sale of 'GOOGL' refused by code: the whole holding is worth about $0.00, below the market's minimum trade $20.00; turned into hold"
+      ],
+      "sha256": "dfcc76b55da84d2acab6f1cb29686fec20316dc84a95cff2fbb2e0222e8c0ebc"
+    },
+    {
+      "id": "5e6f62e502",
+      "at": "2026-11-10T08:08:18.478043Z",
+      "mode": "live",
+      "triggers": [
+        {
+          "kind": "manual",
+          "ticker": "",
+          "topic": "",
+          "detail": "the owner asked for a full review now: keep, sell (part of) a holding, or buy"
+        }
+      ],
+      "action": "sell",
+      "ticker": "GOOGL",
+      "usd": 34.67,
+      "summary": "Sell GOOGL under reason (a): its latest report weakened. The report no longer names the company, and its topic's confidence of 38.6% is below the 45% minimum. It is the holding with the weakest evidence, so it should go first. A partial sale would come to about $17, below the $20 market minimum, so the whole holding is sold. MRVL is kept because its report is still 'strong' at 49.6% confidence.",
+      "what_changed": "In this full review, GOOGL is no longer named in any topic fund. The latest AI agents report, its topic, has confidence of only 38.6%, below the 45% minimum. MRVL's high bandwidth memory report remains 'strong' at 49.6% confidence, so it still meets the rules.",
+      "proposal_id": "ed8177d3ba",
+      "model": "claude_opus_5_5",
+      "cost_usd": 0.04798,
+      "notes": [],
+      "sha256": "bdd3ce220d2552909892fcd745b9f3f211a6ad0d68e2bfde10906d87f049725c"
+    },
+    {
+      "id": "8a6d7fbf2f",
+      "at": "2026-11-10T08:08:54.561572Z",
+      "mode": "live",
+      "triggers": [
+        {
+          "kind": "after_sale",
+          "ticker": "GOOGL",
+          "topic": "AI agents",
+          "detail": "sold 0.119059903759527683 GOOGLon for about $34.63; that money is now available"
+        }
+      ],
+      "action": "buy",
+      "ticker": "INTC",
+      "usd": 34.629999999999995,
+      "summary": "INTC sits in the high bandwidth memory topic, whose report has a 'strong' verdict, the highest score (80) and 49.6% confidence, which is above the 45% minimum. Findings such as FormFactor's verified HBM-driven revenue growth and claims that HBM is sold out through 2027 support the topic. INTC is a large company with a subdued price stretch, and buying it spreads the money beyond our single MRVL holding. MSFT and AAPL fall below the confidence minimum, and META's report scores lower (71) with an unknown price stretch.",
+      "what_changed": "A sale of GOOGLon freed about $34.63. No price move or new report triggered this wake-up; the only question is where to place the cash.",
+      "proposal_id": "aedd8cf803",
+      "model": "claude_opus_5_5",
+      "cost_usd": 0.050156,
+      "notes": [
+        "size set to the fixed $34.63 (the model said 34.63)"
+      ],
+      "sha256": "9309297afdaa1c4f9d88db60998af16374f01b3732cca98cbf1a68fc85837e05"
     }
   ],
   "seen_runs": {
@@ -1104,6 +1587,6 @@
     "live:6G": "f0934784-6b57-49fd-a4dc-09d320bbd16e"
   },
   "seen_closes": {},
-  "last_check_at": "2026-11-10T06:52:30.262461Z",
-  "last_live_check_at": "2026-11-10T06:52:30.655310Z"
+  "last_check_at": "2026-11-10T07:57:34.200886Z",
+  "last_live_check_at": "2026-11-10T08:08:54.561572Z"
 }
