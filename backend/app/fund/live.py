@@ -125,6 +125,7 @@ class TradingState(BaseModel):
     seen_runs: dict[str, str] = Field(default_factory=dict)     # topic -> report run id already considered
     seen_closes: dict[str, str] = Field(default_factory=dict)   # ticker -> close date already reacted to
     last_check_at: Optional[datetime] = None
+    last_live_check_at: Optional[datetime] = None          # live and shadow react to the same events separately
 
     def get(self, pid: str) -> Optional[Proposal]:
         return next((p for p in self.proposals if p.id == pid or p.id.startswith(pid)), None)

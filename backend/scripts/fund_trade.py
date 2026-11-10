@@ -270,8 +270,12 @@ def run_check(s, cfg, shadow: bool) -> int:  # noqa: ANN001
                 closes[t["ticker"]] = (bars[-1].day.isoformat(), bars[-1].close, None)
         pf = shadow_portfolio(state, {t["symbol"]: t["price"] for t in toks if t.get("price")}, cfg.live.shadow_budget_usd)
         held = {p["ticker"] for p in pf["positions"]} if shadow else {p.ticker for p in state.proposals if p.mode == "live" and p.status == "success"}
-        triggers = detect_triggers(tokens=toks, seen_runs=state.seen_runs, closes=closes, seen_closes=state.seen_closes, last_check=state.last_check_at,
-                                   now=now, cfg=st_cfg, held=held)
+        # shadow and live each react to every event once: live keys are prefixed so a shadow check does not "use up" a trigger
+        kp = "" if shadow else "live:"
+        seen_runs = {k[len(kp):]: v for k, v in state.seen_runs.items() if k.startswith(kp) and (shadow and not k.startswith("live:") or not shadow)}
+        seen_closes = {k[len(kp):]: v for k, v in state.seen_closes.items() if k.startswith(kp) and (shadow and not k.startswith("live:") or not shadow)}
+        triggers = detect_triggers(tokens=toks, seen_runs=seen_runs, closes=closes, seen_closes=seen_closes,
+                                   last_check=state.last_check_at if shadow else state.last_live_check_at, now=now, cfg=st_cfg, held=held)
         check = Check(id=new_id(), at=now, mode=mode, triggers=triggers)
         print(f"[{now:%Y-%m-%d %H:%M} UTC] {mode} check: " + (", ".join(f"{t.kind} {t.ticker or t.topic}".strip() for t in triggers) or "no trigger"))
         if not triggers:
@@ -281,10 +285,13 @@ def run_check(s, cfg, shadow: bool) -> int:  # noqa: ANN001
             check = _assess(s, cfg, state, toks, triggers, check, shadow, now, pf)
         for t in triggers:                       # remember what was reacted to, so the same event does not wake the agent twice
             if t.kind == "new_report":
-                state.seen_runs[t.topic] = next((x.get("run_id") for x in toks if x["topic"] == t.topic), "") or ""
+                state.seen_runs[kp + t.topic] = next((x.get("run_id") for x in toks if x["topic"] == t.topic), "") or ""
             if t.kind in ("price_drop", "price_jump") and t.ticker in closes:
-                state.seen_closes[t.ticker] = closes[t.ticker][0]
-        state.last_check_at = now
+                state.seen_closes[kp + t.ticker] = closes[t.ticker][0]
+        if shadow:
+            state.last_check_at = now
+        else:
+            state.last_live_check_at = now
         check.sha256 = hashlib.sha256(json.dumps(check.model_dump(mode="json", exclude={"sha256"}), sort_keys=True).encode()).hexdigest()
         state.checks = (state.checks or [])[-199:] + [check.model_dump(mode="json")]
         save_state(state, STATE)
