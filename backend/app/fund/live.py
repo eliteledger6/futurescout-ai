@@ -494,6 +494,12 @@ class Executor:
         """Wait for the swap of an already-made deposit to finish (also used by resume). Sends nothing."""
         if p.status != "deposited" or not p.deposit_address:
             raise RuntimeError("nothing to poll: no deposit was made for this proposal")
+        if (p.quote or {}).get("route") == "confidential":
+            # Learned on the first real private-route order (2026-11-10): the public status endpoint answers 404 for a
+            # private deposit address; the order's progress is only visible inside near.com (or with the owner's session).
+            raise RuntimeError("this order went through the PRIVATE route, which the public status check cannot see. "
+                               "Check near.com; when the stock is there, record it with:  python scripts\\fund_trade.py confirm "
+                               + p.id + "   (or `refunded` if the money came back)")
         waited = 0.0
         last = ""
         while waited <= self.cfg.poll_timeout_seconds:

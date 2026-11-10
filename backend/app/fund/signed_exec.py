@@ -18,7 +18,8 @@ One buy, step by step (the first three move nothing):
      well-formed nonce and a future deadline. Anything else: refuse, nothing is signed;
   5. save the proposal as "executing", sign the order (NEP-413) and submit it ONCE; an unclear submit error is
      recorded as "deposited" and never retried (resume only polls);
-  6. poll the status until success or refund.
+  6. the owner checks near.com and records the outcome (`confirm` / `refunded`): the public status endpoint
+     answers 404 for private-route deposit addresses, so there is nothing to poll.
 The first real run of steps 3-6 is the integration test: generating and submitting an order on the private route has
 not been exercised, so the checks in step 4 are deliberately strict and report what they saw.
 """
@@ -198,6 +199,7 @@ class SignedExecutor:
             save_state(state, self.state_path)
             raise RuntimeError(p.error + " (status kept as 'deposited': run resume, never approve again)") from None
         p.deposit_tx = None
-        p.mark("deposited", f"signed order submitted, intent {intent_hash}", self._now())
+        p.mark("deposited", f"signed order submitted, intent {intent_hash}. The public status check cannot see private-route orders: "
+                            f"check near.com, then record the outcome with `fund_trade.py confirm {p.id}` (or `refunded`)", self._now())
         save_state(state, self.state_path)
-        return self._poller.poll(state, p)
+        return p                                   # no polling: see the note above (learned on the first real order, 2026-11-10)

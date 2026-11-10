@@ -274,7 +274,7 @@ def cmd_approve(s, cfg, pid: str) -> int:  # noqa: ANN001
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("command", choices=["status", "propose", "list", "approve", "reject", "resume", "stop", "start", "register-usdc"])
+    ap.add_argument("command", choices=["status", "propose", "list", "approve", "reject", "resume", "confirm", "refunded", "stop", "start", "register-usdc"])
     ap.add_argument("id", nargs="?")
     ap.add_argument("--shadow", action="store_true")
     ap.add_argument("--usd", type=float)
@@ -336,6 +336,24 @@ def main() -> int:
         p.sha256 = fingerprint(p)
         save_state(state, STATE)
         print("rejected")
+        return 0
+    if args.command in ("confirm", "refunded"):
+        # The owner saw the outcome in near.com (private-route orders are invisible to the public status check).
+        if p.status != "deposited":
+            print(f"proposal is '{p.status}'; only a submitted ('deposited') order can be confirmed")
+            return 1
+        if args.command == "confirm":
+            q = p.quote or {}
+            p.result = {"status": "SUCCESS (seen by the owner in near.com; not read from the service)",
+                        "amountInFormatted": q.get("amountInFormatted"), "amountOutFormatted": q.get("amountOutFormatted"),
+                        "amountOutUsd": q.get("amountOutUsd"), "amounts_are": "the quote, not the fill"}
+            p.mark("success", "owner confirmed in near.com that the stock arrived (private route; amounts are the quoted ones)")
+        else:
+            p.mark("refunded", "owner reported in near.com that the payment came back (private route)")
+        p.sha256 = fingerprint(p)
+        seal(s, p)
+        save_state(state, STATE)
+        print(f"recorded: {p.status}")
         return 0
     if args.command == "resume":
         ex = make_executor(s, cfg, with_signer=False)

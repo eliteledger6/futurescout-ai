@@ -358,3 +358,18 @@ def test_shadow_portfolio_adds_up_fills():
     assert pf["positions"] == [{"symbol": "INTCon", "ticker": "INTC", "topic": "chiplet", "quantity": 70.0, "cost_usd": 4000.0, "orders": 2,
                                 "value_usd": 4060.0, "change_pct": 1.5}]
     assert pf["value_usd"] == 10060.0
+
+
+def test_private_route_orders_are_not_polled_through_the_public_status(tmp_path):
+    from app.fund.live import Executor, LiveConfig, OneClickLive, Proposal, TradingState
+    from datetime import datetime, timezone
+    import httpx
+    oc = OneClickLive("https://oc.test", http=httpx.Client(transport=httpx.MockTransport(lambda r: httpx.Response(404, json={"message": "not found"}))))
+    ex = Executor(LiveConfig(poll_seconds=0.0), tmp_path / "state.json", oc, pay_asset="nep141:wrap.near", sleep=lambda s: None)
+    p = Proposal(id="priv0000001", created_at=datetime(2026, 11, 10, tzinfo=timezone.utc), mode="live", topic="t", ticker="MRVL", symbol="MRVLon",
+                 asset_id="nep141:mrvl", usd=25.0)
+    p.status, p.deposit_address, p.quote = "deposited", "e9" * 32, {"route": "confidential"}
+    import pytest
+    with pytest.raises(RuntimeError, match="PRIVATE route"):
+        ex.poll(TradingState(), p)
+    assert p.status == "deposited"

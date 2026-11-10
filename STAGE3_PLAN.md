@@ -1,4 +1,4 @@
-# Stage 3 plan: small real trades through NEAR Intents (BUILT, SWITCHED OFF, no trade made)
+# Stage 3 plan: small real trades through NEAR Intents (RUN LIVE: 3 real buys, the last one on the signed private route)
 
 Status 2026-11-09 evening: the owner gave the go-ahead for a first proof trade (about 5 USD + 0.5 NEAR, agent on a
 strong model, visible UI). Step C is built and mock-tested; shadow mode has run (real quotes, nothing sent).
@@ -127,3 +127,5 @@ steps A1-A2 are done. Claude then updates `CLAUDE.md` with exactly those limits 
 explicit yes.
 
 **Update 2026-11-10:** both real orders COMPLETED (1Click status SUCCESS, re-checked read-only with `fund_trade.py resume`): $10 -> 0.0345 GOOGLon and $25 -> 0.0846 GOOGLon, delivered by `mt_transfer` to `wrongowl2563.near` inside intents.near (tx A3xEUnJFCCCKtgEXYMd1aiHjMquxJ95bsgrXaUMoxEjd for the $25 order). They took about 10 hours, not minutes. At 2026-11-10 ~01:00 UTC the account's public intents.near balance of that token reads 0 and `mt_tokens_for_owner` is empty, so the tokens were moved after delivery (probably into the near.com private balance by the owner; not verified). Total cap $35 is fully used; kill switch ON; wallet holds 0.52 NEAR. A second trade needs the owner to: raise `max_total_usd` (their words), top up NEAR, run `start`, and pick a route (wallet route is proven; the signed route is still untested).
+
+**Update 2026-11-10 02:28 UTC, first SIGNED-ROUTE trade:** proposal 9debb3300c, $25 of MRVLon from the near.com private balance. First approval (b39b1c6232) was refused before signing: stale close (MRVL closed $154.60 on 11-09, cache had $141.20), the order's token id in the private form `imt:<bridge id>:nep141:wrap.near`, and the verifier `intents.far` (the private shard's contract). After fixing the check (tests) and refreshing the price, the second approval verified, signed and submitted in 1 s (intent CtpYsoMb3j9qLq2eszvvscVmeJxtZcL56DfyKqudXKd8). The owner saw the stock in near.com within minutes. The public 1Click status endpoint answers 404 for private deposit addresses, so private-route orders are no longer polled; the owner records the outcome with `fund_trade.py confirm <id>` / `refunded`. Caps now: $25 per trade, $35 per day, $60 total (owner set), spent $60.

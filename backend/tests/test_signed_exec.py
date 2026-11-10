@@ -126,10 +126,10 @@ def test_happy_path_logs_in_checks_balance_verifies_then_submits_once(tmp_path):
     st, p = TradingState(), prop()
     st.proposals.append(p)
     ex.execute(st, p)
-    assert p.status == "success" and len(sent) == 1 and sent[0] == order()
+    assert p.status == "deposited" and len(sent) == 1 and sent[0] == order()          # submitted once; outcome recorded by the owner
     assert api.calls == ["login", "balances", ("quote", "CONFIDENTIAL_INTENTS", False, "tok"), "order"]
     assert p.quote["route"] == "confidential" and [e.status for e in p.history][:2] == ["executing", "deposited"]
-    assert "IntentHash111" in " ".join(e.note for e in p.history)
+    assert "IntentHash111" in " ".join(e.note for e in p.history) and "confirm sig1234567" in p.history[-1].note
     with pytest.raises(RuntimeError, match="never sent twice"):
         ex.execute(st, p)
     assert len(sent) == 1
