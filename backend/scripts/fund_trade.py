@@ -33,6 +33,7 @@ from app.config import get_settings  # noqa: E402
 from app.fund import load_fund_config, tradable_tokens as fund_tradable_tokens  # noqa: E402
 from app.fund.intents_signed import SignedIntents  # noqa: E402
 from app.fund.signed_exec import SignedExecutor, submit_signed_order  # noqa: E402
+from app.fund.strategy import RULES, Check, Trigger, assess, detect_triggers  # noqa: E402
 from app.fund.live import (Executor, MainnetSigner, OneClickLive, Proposal, check_limits, fingerprint, load_state,  # noqa: E402
                            new_id, read_balances, save_state, shadow_portfolio)
 from app.models.config import load_model_config  # noqa: E402
@@ -203,6 +204,145 @@ def cmd_propose(s, cfg, shadow: bool, usd: float | None) -> int:  # noqa: ANN001
     return 0
 
 
+def cmd_check(s, cfg, shadow: bool, loop: bool) -> int:  # noqa: ANN001
+    """Strategy wake-up: look for triggers (new report, sharp move, routine review); if any, the agent assesses and decides.
+    Shadow: filled with pretend money. Live: a proposal the owner approves. Nothing is sent here."""
+    import hashlib
+    import json
+    import time
+    from app.fund import PriceBook
+    from app.fund.live import shadow_portfolio
+    from app.sources.prices import AlphaVantageClient
+    st_cfg = cfg.live.strategy
+    while True:
+        state = load_state(STATE)
+        now = datetime.now(timezone.utc)
+        mode = "shadow" if shadow else "live"
+        toks = tradable_tokens()
+        if not toks:
+            print("no tradable token in the funds; run scripts\\funds.py first")
+            return 1
+        # prices: the cache first, a few Alpha Vantage calls at most
+        prices = AlphaVantageClient(s.alpha_vantage_key_value()) if s.alpha_vantage_key_value() else None
+        book = PriceBook(prices, max_requests=st_cfg.price_requests_per_check)
+        closes: dict = {}
+        for t in toks:
+            bars = book.bars(t["ticker"])
+            if len(bars) >= 2:
+                closes[t["ticker"]] = (bars[-1].day.isoformat(), bars[-1].close, bars[-2].close)
+            elif bars:
+                closes[t["ticker"]] = (bars[-1].day.isoformat(), bars[-1].close, None)
+        pf = shadow_portfolio(state, {t["symbol"]: t["price"] for t in toks if t.get("price")}, cfg.live.shadow_budget_usd)
+        held = {p["ticker"] for p in pf["positions"]} if shadow else {p.ticker for p in state.proposals if p.mode == "live" and p.status == "success"}
+        triggers = detect_triggers(tokens=toks, seen_runs=state.seen_runs, closes=closes, seen_closes=state.seen_closes, last_check=state.last_check_at,
+                                   now=now, cfg=st_cfg, held=held)
+        check = Check(id=new_id(), at=now, mode=mode, triggers=triggers)
+        print(f"[{now:%Y-%m-%d %H:%M} UTC] {mode} check: " + (", ".join(f"{t.kind} {t.ticker or t.topic}".strip() for t in triggers) or "no trigger"))
+        if not triggers:
+            check.action = "none"
+            check.summary = "No trigger: no new report, no sharp move, no review due. The agent was not called."
+        else:
+            check = _assess(s, cfg, state, toks, triggers, check, shadow, now, pf)
+        for t in triggers:                       # remember what was reacted to, so the same event does not wake the agent twice
+            if t.kind == "new_report":
+                state.seen_runs[t.topic] = next((x.get("run_id") for x in toks if x["topic"] == t.topic), "") or ""
+            if t.kind in ("price_drop", "price_jump") and t.ticker in closes:
+                state.seen_closes[t.ticker] = closes[t.ticker][0]
+        state.last_check_at = now
+        check.sha256 = hashlib.sha256(json.dumps(check.model_dump(mode="json", exclude={"sha256"}), sort_keys=True).encode()).hexdigest()
+        state.checks = (state.checks or [])[-199:] + [check.model_dump(mode="json")]
+        save_state(state, STATE)
+        print(f"  -> {check.action}: {check.summary[:200]}")
+        if not loop:
+            return 0
+        time.sleep(max(60, st_cfg.check_minutes * 60))
+
+
+def _assess(s, cfg, state, toks, triggers, check, shadow, now, pf):  # noqa: ANN001,ANN201
+    """Build candidates with real dry quotes, give the agent the evidence, apply its decision (shadow fill or live proposal)."""
+    lv = cfg.live
+    ex = make_executor(s, cfg, with_signer=False)
+    account = (s.fund_mainnet_account_id or "intents.near").strip() or "intents.near"
+    day = now.date().isoformat()
+    if shadow:
+        budget, fixed = pf["cash_usd"], None
+    else:
+        budget = min(lv.max_trade_usd, lv.max_total_usd - state.spent("live"), lv.max_day_usd - state.spent("live", day))
+        fixed = budget if budget >= lv.min_trade_usd else None
+    if budget < (1 if shadow else lv.min_trade_usd):
+        check.action, check.summary = "hold", f"No budget left (${budget:.2f}); the agent was not called."
+        return check
+    cands = []
+    for t in toks:
+        c = Candidate(ticker=t["ticker"], symbol=t["symbol"], asset_id=t["asset_id"], topic=t["topic"], verdict_band=t["band"], score=t["score"],
+                      confidence_pct=t.get("confidence_pct"), tier=t["tier"], why=t["why"], price_stretch=t["stretch"], last_close=t["last_close"],
+                      last_close_date=t["last_close_date"])
+        try:
+            q = ex.dry_quote(c.asset_id, fixed or min(1000.0, budget), account)
+            c.quotable, c.dry_quote = True, q
+            c.quote_cost_pct = round((float(q["amountInUsd"]) - float(q["amountOutUsd"])) / float(q["amountInUsd"]) * 100, 2)
+        except (RuntimeError, KeyError, ValueError, httpx.HTTPError) as exc:
+            c.note = str(exc)[:120]
+        cands.append(c)
+    context = evidence_context(s, toks)
+    holdings = pf["positions"] if shadow else [{"ticker": p.ticker, "symbol": p.symbol, "cost_usd": p.usd} for p in state.proposals if p.mode == "live" and p.status == "success"]
+    adds = {}
+    for p in state.proposals:
+        if p.mode == ("shadow" if shadow else "live") and p.side == "buy" and p.status in ("shadow_filled", "success", "deposited", "executing", "proposed", "approved"):
+            adds[p.ticker.upper()] = adds.get(p.ticker.upper(), 0) + 1
+    d, cand, model, cost, notes = assess(ModelRouter(load_model_config(), s), triggers=triggers, candidates=cands, holdings=holdings, context=context,
+                                         budget_usd=budget, fixed_usd=fixed, cfg=lv.strategy, adds_so_far=adds)
+    check.model, check.cost_usd, check.notes, check.what_changed = model, cost, notes, d.what_changed
+    check.action, check.summary = d.action, d.rationale
+    for n in notes:
+        print("  note:", n)
+    print(f"  agent ({model}, ${cost:.3f}): {d.what_changed}")
+    mode = "shadow" if shadow else "live"
+    if d.action == "hold" or cand is None:
+        p = Proposal(id=new_id(), created_at=now, mode=mode, side="hold", topic="", ticker="", symbol="", asset_id="", usd=0.0,
+                     rationale=f"{d.what_changed} {d.rationale}".strip(), risks=d.risks, confidence=d.confidence, model=model, model_cost_usd=cost)
+        p.mark("hold", "strategy check: " + ", ".join(t.kind for t in triggers), now)
+        p.sha256 = fingerprint(p)
+        state.proposals.append(p)
+        check.proposal_id = p.id
+        return check
+    p = Proposal(id=new_id(), created_at=now, mode=mode, topic=cand.topic, ticker=cand.ticker, symbol=cand.symbol, asset_id=cand.asset_id, usd=float(d.usd),
+                 rationale=f"{d.what_changed} {d.rationale}".strip(), risks=d.risks, confidence=d.confidence, model=model, model_cost_usd=cost,
+                 ref_close=cand.last_close, ref_close_date=cand.last_close_date, dry_quote=cand.dry_quote)
+    p.mark("proposed", f"strategy check ({', '.join(t.kind for t in triggers)}): the agent proposed to buy ${p.usd:.2f} of {p.symbol}", now)
+    state.proposals.append(p)
+    check.ticker, check.usd, check.proposal_id = cand.ticker, float(d.usd), p.id
+    if shadow:
+        ex.shadow_fill(state, p, account=account)
+        print(f"  shadow: {p.status}: {p.history[-1].note[:120]}")
+    else:
+        print(f"  PROPOSAL {p.id}: buy ${p.usd:.2f} of {p.symbol}. To approve (sends money):  python scripts\\fund_trade.py approve {p.id}")
+    return check
+
+
+def evidence_context(s, toks) -> dict:  # noqa: ANN001
+    """Per topic: the latest sealed report's verdict and its dated X / market findings (claims with labels). Read-only."""
+    from app.api.main import _default_store
+    from app.report.verdict import build_verdict
+    store = _default_store(s)
+    out: dict = {}
+    for t in toks:
+        if t["topic"] in out or not t.get("run_id"):
+            continue
+        found = store.get(t["run_id"])
+        if not found:
+            continue
+        report = found[0]
+        v = build_verdict(report)
+        items = []
+        for group, res in (("x", report.x), ("market", report.market)):
+            for f in (res.findings if res else [])[:6]:
+                items.append({"from": group, "label": f.label.value, "date": report.generated_at.date().isoformat(), "claim": f.claim[:240]})
+        out[t["topic"]] = {"report_date": report.generated_at.date().isoformat(), "verdict": v.get("band"), "score": v.get("score"),
+                           "confidence_pct": v.get("confidence_pct"), "findings": items[:10]}
+    return out
+
+
 def seal(s, p: Proposal) -> None:  # noqa: ANN001
     creds = s.near_testnet_credentials()
     if not creds or not p.sha256:
@@ -274,10 +414,11 @@ def cmd_approve(s, cfg, pid: str) -> int:  # noqa: ANN001
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("command", choices=["status", "propose", "list", "approve", "reject", "resume", "confirm", "refunded", "stop", "start", "register-usdc"])
+    ap.add_argument("command", choices=["status", "propose", "list", "approve", "reject", "resume", "confirm", "refunded", "stop", "start", "register-usdc", "check", "rules"])
     ap.add_argument("id", nargs="?")
     ap.add_argument("--shadow", action="store_true")
     ap.add_argument("--usd", type=float)
+    ap.add_argument("--loop", action="store_true", help="with check: run forever, one check every strategy.check_minutes")
     args = ap.parse_args()
     s, cfg = get_settings(), load_fund_config()
     STATE.parent.mkdir(parents=True, exist_ok=True)
@@ -286,6 +427,12 @@ def main() -> int:
         return cmd_status(s, cfg)
     if args.command == "propose":
         return cmd_propose(s, cfg, args.shadow, args.usd)
+    if args.command == "check":
+        return cmd_check(s, cfg, args.shadow, args.loop)
+    if args.command == "rules":
+        for r in RULES:
+            print("-", r)
+        return 0
     if args.command == "list":
         for p in load_state(STATE).proposals[-30:]:
             print(f"{p.id}  {p.created_at:%m-%d %H:%M}  {p.mode:6} {p.status:13} {p.side:4} ${p.usd:7.2f} {p.symbol:8} {p.rationale[:70]}")

@@ -28,8 +28,8 @@ export default function TradingPage() {
     return () => clearTimeout(timer);
   }, []);
 
-  const live = t?.proposals.filter((p) => p.mode === "live" && p.side !== "hold") ?? [];
-  const current = live[0];
+  const live = t?.proposals.filter((p) => p.mode === "live") ?? [];          // every real-money decision, newest first
+  const current = live.find((p) => p.side !== "hold");
   const shadowOrders = t?.proposals.filter((p) => p.mode === "shadow") ?? [];
   const state = !t ? "" : t.kill_switch ? "stopped" : t.trading_enabled ? "armed" : "";
   return (
@@ -69,14 +69,15 @@ export default function TradingPage() {
                 <div className="notice"><b>Held now (real):</b> {t.balances.holdings.map((h) => `${h.quantity} ${h.symbol}${h.value_usd != null ? ` (about ${usd(h.value_usd)})` : ""}`).join(" · ")}</div>
               )}
 
-              {current ? <LiveTrade p={current} explorer={t.explorer_tx} /> : (
-                <div className="notice">No real trade proposed yet. The owner runs <span className="mono">python scripts\fund_trade.py propose</span> in the backend folder.</div>
+              <AgentLog t={t} />
+
+              <h2 className="h2" style={{ margin: "8px 0 0" }}>Every real-money decision <span className="muted small">· {live.length} so far, newest first · each one sealed on NEAR testnet</span></h2>
+              {live.length === 0 && (
+                <div className="notice">No real trade proposed yet. The agent wakes on triggers (<span className="mono">python scripts\\fund_trade.py check</span>) or the owner runs <span className="mono">propose</span>.</div>
               )}
-              {live.length > 1 && (
-                <details><summary className="small muted" style={{ cursor: "pointer" }}>Earlier real proposals ({live.length - 1})</summary>
-                  <div className="tr-mini">{live.slice(1).map((p) => <div key={p.id}><b>{usd(p.usd)}</b><span>{p.symbol} <span className="why">· {p.status.replace("_", " ")} · {fmtDate(p.created_at)}</span></span><span className="pill">{p.status.replace("_", " ")}</span></div>)}</div>
-                </details>
-              )}
+              {live.map((p, i) => p.side === "hold"
+                ? <HoldCard key={p.id} p={p} />
+                : <LiveTrade key={p.id} p={p} explorer={t.explorer_tx} animate={i === 0} />)}
 
               <ShadowPortfolio t={t} orders={shadowOrders} />
 
@@ -180,8 +181,68 @@ function Elapsed({ since }: { since: string }) {
   return <span className="mono">{Math.floor(s / 60)}:{String(s % 60).padStart(2, "0")}</span>;
 }
 
-function LiveTrade({ p, explorer }: { p: TradeProposal; explorer: string }) {
-  const typed = useTyped(p.rationale, true);
+function HoldCard({ p }: { p: TradeProposal }) {
+  return (
+    <div className="tr-card">
+      <div className="tr-head">
+        <h2 className="tr-title">Decided to hold <span className="muted small">{fmtDate(p.created_at)}</span></h2>
+        <div className="pills"><span className="pill tr-pill-live">real money</span><span className="pill">hold</span></div>
+      </div>
+      <div className="tr-agent">
+        <div className="tr-avatar">{ICON.agent}</div>
+        <div>
+          <div className="tr-model">TRADING AGENT · {(p.model ?? "model").replace(/_/g, " ").toUpperCase()}</div>
+          <p className="tr-say">{p.rationale}</p>
+          {p.risks.length > 0 && <ul className="tr-risks">{p.risks.map((r) => <li key={r}>{r}</li>)}</ul>}
+        </div>
+      </div>
+      <div className="small muted">{p.history[p.history.length - 1]?.note}{p.chain?.explorer_url && <> · <a href={p.chain.explorer_url} target="_blank" rel="noopener noreferrer">record sealed on NEAR testnet ↗</a></>}</div>
+    </div>
+  );
+}
+
+const TRIGGER_WORDS: Record<string, string> = { new_report: "new report", price_drop: "sharp fall", price_jump: "sharp rise", review: "routine review", manual: "owner" };
+
+function AgentLog({ t }: { t: Trading }) {
+  const checks = t.checks ?? [];
+  const cfg = t.strategy?.config;
+  return (
+    <div className="tr-card">
+      <div className="tr-head">
+        <h2 className="tr-title">When the agent wakes up <span className="muted small">· and what it decided</span></h2>
+        <div className="pills"><span className="pill">{t.strategy?.last_check_at ? `last check ${fmtDate(t.strategy.last_check_at)}` : "no check yet"}</span></div>
+      </div>
+      {cfg && (
+        <p className="small" style={{ color: "var(--text-2)", margin: 0 }}>
+          Triggers: a new sealed report for a traded topic · a one-day fall of {cfg.drop_pct}% or more, or a rise of {cfg.jump_pct}% or more, in a held or allowed stock
+          · a routine review every {cfg.review_hours} h. On waking it re-reads the report&apos;s verdict, confidence and dated findings, then buys one candidate or holds.
+          No new buy below {cfg.min_confidence_pct}% report confidence; at most {cfg.max_adds_per_ticker} dip-buys per company; one company at most {cfg.max_ticker_share_pct}% of the shadow budget. Only buys.
+        </p>
+      )}
+      {checks.length === 0 ? <div className="small muted">No wake-up recorded yet.</div> : (
+        <ol className="tr-log" style={{ margin: 0 }}>
+          {checks.slice(0, 12).map((c) => (
+            <li key={c.id}>
+              <b>{fmtDate(c.at)}</b> · <span className="pill" style={{ marginRight: 6 }}>{c.mode}</span>
+              {c.triggers.length ? c.triggers.map((x) => `${TRIGGER_WORDS[x.kind] ?? x.kind}${x.ticker ? ` ${x.ticker}` : x.topic ? ` (${x.topic})` : ""}`).join(", ") : "no trigger"}
+              {" → "}<b>{c.action === "none" ? "not called" : c.action === "buy" ? `buy ${usd(c.usd)} of ${c.ticker}` : "hold"}</b>
+              {c.what_changed && <div className="small" style={{ color: "var(--text-2)" }}>{c.what_changed}</div>}
+              {c.summary && c.action !== "none" && <div className="small muted">{c.summary}</div>}
+            </li>
+          ))}
+        </ol>
+      )}
+      {t.strategy?.rules && (
+        <details><summary className="small muted" style={{ cursor: "pointer" }}>The strategy, rule by rule</summary>
+          <ul className="small" style={{ color: "var(--text-2)", lineHeight: 1.6 }}>{t.strategy.rules.map((r) => <li key={r}>{r}</li>)}</ul>
+        </details>
+      )}
+    </div>
+  );
+}
+
+function LiveTrade({ p, explorer, animate = true }: { p: TradeProposal; explorer: string; animate?: boolean }) {
+  const typed = useTyped(p.rationale, animate);
   const q = p.quote ?? p.dry_quote;
   const inUsd = num(q?.amountInUsd), outUsd = num(q?.amountOutUsd);
   const cost = inUsd && outUsd ? ((inUsd - outUsd) / inUsd) * 100 : null;
@@ -213,7 +274,7 @@ function LiveTrade({ p, explorer }: { p: TradeProposal; explorer: string }) {
         <div className="tr-avatar">{ICON.agent}</div>
         <div>
           <div className="tr-model">TRADING AGENT · {(p.model ?? "model").replace(/_/g, " ").toUpperCase()}</div>
-          <p className="tr-say">{typed}{typed.length < p.rationale.length && <span className="caret" />}</p>
+          <p className="tr-say">{animate ? typed : p.rationale}{animate && typed.length < p.rationale.length && <span className="caret" />}</p>
           {p.risks.length > 0 && <ul className="tr-risks">{p.risks.map((r) => <li key={r}>{r}</li>)}</ul>}
         </div>
       </div>

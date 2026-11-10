@@ -36,6 +36,8 @@ from typing import Any, Callable, Optional
 import httpx
 from pydantic import BaseModel, Field
 
+from app.fund.strategy import StrategyConfig
+
 DISCLAIMER = ("Real-money test with a very small budget, approved trade by trade by the owner. Tokenized stocks are "
               "issued by Ondo and are not the shares themselves. Not investment advice.")
 FINAL = {"success", "refunded", "failed", "rejected", "shadow_filled", "hold"}
@@ -44,6 +46,7 @@ SPENT = {"executing", "deposited", "success"}          # statuses that count aga
 
 # ------------------------------------------------------------------ config
 class LiveConfig(BaseModel):
+    strategy: StrategyConfig = Field(default_factory=StrategyConfig)   # when the agent wakes up and its fixed rules (app/fund/strategy.py)
     trading_enabled: bool = False
     rpc: str = "https://free.rpc.fastnear.com"     # rpc.mainnet.near.org is deprecated and rate-limits (HTTP 429, seen 2026-11-09)
     usdc_contract: str = "17208628f84f5d6ad33f0da3bbbeb27ffcb398eac501a31bd6ad2011e36133a1"
@@ -115,6 +118,10 @@ class Proposal(BaseModel):
 class TradingState(BaseModel):
     proposals: list[Proposal] = Field(default_factory=list)
     updated_at: Optional[datetime] = None
+    checks: list = Field(default_factory=list)            # strategy wake-ups (app.fund.strategy.Check), newest last
+    seen_runs: dict[str, str] = Field(default_factory=dict)     # topic -> report run id already considered
+    seen_closes: dict[str, str] = Field(default_factory=dict)   # ticker -> close date already reacted to
+    last_check_at: Optional[datetime] = None
 
     def get(self, pid: str) -> Optional[Proposal]:
         return next((p for p in self.proposals if p.id == pid or p.id.startswith(pid)), None)
@@ -553,3 +560,4 @@ def shadow_portfolio(state: TradingState, prices: dict[str, float], budget: floa
     out.sort(key=lambda r: -r["cost_usd"])
     cash = round(budget - invested, 2)
     return {"budget_usd": budget, "invested_usd": round(invested, 2), "cash_usd": cash, "value_usd": round(value + cash, 2), "positions": out}
+

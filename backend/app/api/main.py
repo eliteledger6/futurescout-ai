@@ -35,6 +35,7 @@ from app.config import ConfigError, Settings, get_settings
 from app.graph.workflow import AGENTS_NOT_BUILT
 from app.models.config import load_model_config
 from app.fund import DISCLAIMER as FUND_DISCLAIMER, fund_payload, list_funds, load_fund, load_fund_config, tradable_tokens
+from app.fund.strategy import RULES as STRATEGY_RULES
 from app.fund.live import DISCLAIMER as LIVE_DISCLAIMER, load_state as load_trading_state, read_balances, shadow_portfolio
 from app.portfolio import load_portfolio, portfolio_payload, save_portfolio, sync_from_store
 from app.radar import load_radar
@@ -297,6 +298,8 @@ def create_app(
             "balances": balances,
             "shadow_portfolio": shadow_portfolio(state, {t["symbol"]: t["price"] for t in tokens if t.get("price")}, lv.shadow_budget_usd),
             "pay_with": lv.pay_with,
+            "strategy": {"rules": STRATEGY_RULES, "config": lv.strategy.model_dump(), "last_check_at": state.last_check_at.isoformat() if state.last_check_at else None},
+            "checks": list(reversed((state.checks or [])[-40:])),
             "allowlist": [{k: t[k] for k in ("ticker", "symbol", "topic", "band", "score", "confidence_pct", "price")} for t in tokens],
             "proposals": [p.model_dump(mode="json") for p in reversed(state.proposals[-60:])],
             "explorer_tx": lv.explorer_tx, "approval": "owner's terminal only: python scripts\\fund_trade.py approve <id>",

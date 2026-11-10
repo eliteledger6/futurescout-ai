@@ -508,7 +508,7 @@ def tradable_tokens(funds_dir: Path) -> list[dict]:
                 continue
             row = {"ticker": h.ticker, "symbol": h.route.symbol, "asset_id": h.route.asset_id, "decimals": 18,
                    "price": h.route.token_price_usd, "topic": f.topic, "band": last.band if last else None,
-                   "score": last.score if last else None, "confidence_pct": last.confidence_pct if last else None, "tier": h.tier, "why": h.why, "stretch": h.timing_risk,
+                   "score": last.score if last else None, "confidence_pct": last.confidence_pct if last else None, "run_id": last.run_id if last else None, "tier": h.tier, "why": h.why, "stretch": h.timing_risk,
                    "last_close": h.last_close, "last_close_date": h.last_date}
             if h.ticker not in best or (row["score"] or 0) > (best[h.ticker]["score"] or 0):
                 best[h.ticker] = row

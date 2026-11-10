@@ -291,6 +291,10 @@ export interface Trading {
   allowlist: { ticker: string; symbol: string; topic: string; band: string | null; score: number | null; price: number | null }[];
   proposals: TradeProposal[]; explorer_tx: string; approval: string; disclaimer: string;
   pay_with: string;
+  strategy: { rules: string[]; config: { check_minutes: number; review_hours: number; drop_pct: number; jump_pct: number; min_confidence_pct: number;
+    max_adds_per_ticker: number; max_ticker_share_pct: number }; last_check_at: string | null };
+  checks: { id: string; at: string; mode: "live" | "shadow"; triggers: { kind: string; ticker: string; topic: string; detail: string }[]; action: string;
+    ticker: string; usd: number; summary: string; what_changed: string; proposal_id: string | null; model: string | null; cost_usd: number; notes: string[] }[];
   shadow_portfolio: { budget_usd: number; invested_usd: number; cash_usd: number; value_usd: number;
     positions: { symbol: string; ticker: string; topic: string; quantity: number; cost_usd: number; orders: number; value_usd: number | null; change_pct: number | null }[] };
 }

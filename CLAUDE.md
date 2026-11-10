@@ -27,6 +27,8 @@ Rules that always apply:
   The near.com-style route (signed order from the private balance, `app/fund/signed_exec.py`) is built and OFF:
   `live.signed_route_enabled: false`. Only the owner sets it to true; Claude never does, and never signs. Any cap
   change needs the owner's words in chat first. Selling, auto-approval and more budget each need a new written yes.
+  Trading strategy (owner 2026-11-10): `fund_trade.py check` wakes the agent on triggers; shadow fills itself, live only PROPOSES.
+  Claude may run `check --shadow`; the owner runs `check` for live proposals and approves each one.
 - Say "mock-tested" vs "run live" honestly; never call a feature complete without a test.
 - Do not push, make the repo public, post on X, submit to the hackathon or spend on mainnet without the owner's explicit yes.
 - Update `PROJECT_STATUS.md` after each phase.
