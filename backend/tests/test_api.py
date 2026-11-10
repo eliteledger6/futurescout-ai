@@ -38,7 +38,8 @@ def file_store(tmp_path, report):
 
 def test_health_and_config_say_what_is_enabled_and_leak_nothing(file_store):
     client = TestClient(create_app(settings(), store=file_store))
-    assert client.get("/api/health").json() == {"ok": True, "store": "files"}
+    h = client.get("/api/health").json()
+    assert h["ok"] is True and h["store"] == "files" and h["reports"] == 2
     cfg = client.get("/api/config").json()
     assert cfg["run_api_enabled"] is False and cfg["store"] == "files"
     assert set(cfg["agents"]) == {"chief", "science", "risk", "market", "x", "patent", "timing", "investment", "relevance", "trader"}
