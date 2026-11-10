@@ -487,12 +487,33 @@ def near_price(ex) -> float:  # noqa: ANN001
     return ex.oneclick.price_usd(ex.cfg.near_asset_id)
 
 
+def valued_holding(state, ex, h: dict, now: datetime | None = None) -> tuple[float, str]:  # noqa: ANN001
+    """(USD value, how it was valued) of one live holding: a real dry sale quote when NEAR Intents answers (saved as the
+    last known value); otherwise the last known quote, else what it cost. Owner 2026-11-10: a holding that cannot be
+    quoted (Intents down) is not worth $0."""
+    v = holding_value(ex, h)
+    if v is not None:
+        state.last_values[h["symbol"]] = {"usd": v, "at": (now or datetime.now(timezone.utc)).isoformat()}
+        return v, "live quote"
+    last = state.last_values.get(h["symbol"])
+    if last:
+        return float(last["usd"]), f"last known quote ({str(last['at'])[:16]})"
+    return round(float(h.get("cost_usd") or 0.0), 2), "what it cost (no quote yet)"
+
+
 def live_fund_value(s, cfg, ex, private_near: float = 0.0) -> float:  # noqa: ANN001
-    """Value of the live fund: its holdings at a real dry sale quote, the NEAR in the trading wallet and, when known,
-    the NEAR in its near.com (private) balance (read only after a signed login, i.e. in the owner's own loop)."""
+    """Value of the live fund: its holdings at a real dry sale quote (or the last known value when NEAR Intents cannot
+    quote), the NEAR in the trading wallet and, when known, the NEAR in its near.com (private) balance (read only after
+    a signed login, i.e. in the owner's own loop)."""
     from app.fund.economy import account_near
     state = load_state(STATE)
-    value = sum(holding_value(ex, h) or 0.0 for h in state.live_holdings())
+    value = 0.0
+    for h in state.live_holdings():
+        v, how = valued_holding(state, ex, h)
+        value += v
+        if how != "live quote":
+            print(f"  {h['symbol']}: NEAR Intents gave no quote; counted at {how}: ${v:.2f}")
+    save_state(state, STATE)
     acc = (s.fund_mainnet_account_id or "").strip()
     if acc:
         liquid, _ = account_near(httpx.Client(timeout=30), cfg.live.rpc, acc)
@@ -696,7 +717,11 @@ def cmd_economy(s, cfg, what: str, max_new: int | None = None) -> int:  # noqa: 
           f"staking contract {ec.staking_contract or '- (not set)'}")
     try:
         px = near_price(ex)
-        val = live_fund_value(s, cfg, ex)
+        tst = load_state(STATE)
+        snap = tst.private_near or 0.0
+        if tst.private_near is not None:
+            print(f"near.com balance {snap:g} NEAR as last read {str(tst.private_checked_at)[:16]} (re-read by economy buy)")
+        val = live_fund_value(s, cfg, ex, snap)
         from app.fund.economy import report_budget_near
         print(f"NEAR ${px:.2f}; live fund worth about ${val:.2f}; report budget {ec.budget_share_of_fund:.0%} = "
               f"{ec.budget_share_of_fund * val / px:.3f} NEAR, spent {state.spent_near():g} NEAR, left "

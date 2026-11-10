@@ -138,6 +138,8 @@ class TradingState(BaseModel):
     last_live_check_at: Optional[datetime] = None          # live and shadow react to the same events separately
     private_near: Optional[float] = None                   # NEAR in the near.com (private) balance, read by the owner's loop after a
     private_checked_at: Optional[datetime] = None          # signed login; the read-only site shows this snapshot
+    last_values: dict[str, dict] = Field(default_factory=dict)   # symbol -> {"usd", "at"}: last good dry-quote value of a holding,
+                                                           # used when NEAR Intents cannot quote it (owner 2026-11-10)
     hidden: list[str] = Field(default_factory=list)        # owner 2026-11-10: records kept in this file but not shown on the site
                                                            # and not counted as holdings (e.g. MRVLon, sold by hand in near.com)
 

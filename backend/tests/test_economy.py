@@ -197,3 +197,21 @@ def test_payment_from_the_private_balance_is_checked_signed_once_and_seen_arrivi
                        (Api(o=order(receiver="evil.near")), "deposit address"), (Api(o=order(amount=units * 2)), "not exactly")):
         with pytest.raises(RuntimeError, match=match):
             run(api)
+
+
+def test_a_holding_nobody_can_quote_keeps_its_last_known_value():
+    import importlib.util
+    from pathlib import Path
+    from app.fund.live import TradingState
+    spec = importlib.util.spec_from_file_location("ft", Path(__file__).resolve().parents[1] / "scripts" / "fund_trade.py")
+    ft = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(ft)
+    h = {"symbol": "INTCon", "asset_id": "a", "quantity": 1.2, "cost_usd": 43.83}
+    st = TradingState()
+    ft.holding_value = lambda ex, h, account="intents.near": None             # NEAR Intents down
+    assert ft.valued_holding(st, None, h, NOW) == (43.83, "what it cost (no quote yet)")
+    ft.holding_value = lambda ex, h, account="intents.near": 47.10            # a quote again: remembered
+    assert ft.valued_holding(st, None, h, NOW) == (47.10, "live quote")
+    ft.holding_value = lambda ex, h, account="intents.near": None             # down again: the last quote, not $0
+    v, how = ft.valued_holding(st, None, h, NOW)
+    assert v == 47.10 and how.startswith("last known quote")
