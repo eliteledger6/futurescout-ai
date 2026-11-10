@@ -15,6 +15,10 @@ def test_only_a_short_topic_is_taken_from_the_brief():
     assert topic_from_brief("a" * 200, "", CFG) is None
     assert topic_from_brief("one two three four five six seven eight nine ten", "", CFG) is None
     assert topic_from_brief("Tell me about quantum error correction!", "", CFG) == "quantum error correction"
+    # the marketplace writes its own titles: the buyer's brief wins, and a generic title is never a topic (seen live 2026-11-10)
+    assert topic_from_brief("Test run: FUTURESCOUT Research Agent", "high bandwidth memory", CFG) == "high bandwidth memory"
+    assert topic_from_brief("Test run: FUTURESCOUT Research Agent", "", CFG) is None
+    assert topic_from_brief("solid-state batteries", "", CFG) == "solid-state batteries"
 
 
 class FakeMarket:

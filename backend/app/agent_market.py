@@ -79,11 +79,16 @@ _INSTRUCTION = re.compile(r"\b(ignore|disregard|instruction|prompt|system|assist
 _LEAD = re.compile(r"^(please\s+)?(research|analy[sz]e|report on|a report on|study|look into|write about|tell me about)\s+(the\s+)?", re.I)
 
 
+_GENERIC_TITLE = re.compile(r"(?i)\b(test run|futurescout|research agent|hire|job|request|order)\b")
+
+
 def topic_from_brief(title: str, description: str, cfg: MarketConfig) -> Optional[str]:
-    """A short technology topic from the job's title (preferred) or the first line of its description, or None when
-    neither is usable. Nothing else from the brief is ever used."""
-    for raw in (title or "", (description or "").strip().splitlines()[0] if (description or "").strip() else ""):
-        if _INSTRUCTION.search(raw):
+    """A short technology topic from the first line of the buyer's brief (preferred: the marketplace writes its own job
+    titles, e.g. "Test run: <agent name>"), else from the title unless it is such a generic title; None when neither is
+    usable. Nothing else from the brief is ever used."""
+    first = (description or "").strip().splitlines()[0] if (description or "").strip() else ""
+    for raw, is_title in ((first, False), (title or "", True)):
+        if _INSTRUCTION.search(raw) or (is_title and _GENERIC_TITLE.search(raw)):
             continue
         t = _URL.sub(" ", raw)
         t = _LEAD.sub("", t.strip())
