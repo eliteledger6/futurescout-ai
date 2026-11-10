@@ -49,3 +49,9 @@ Render and Vercel redeploy by themselves within a few minutes.
 - Website shows "Could not reach the API": the Render API is asleep (wait a minute and refresh) or `API_INTERNAL_URL` is wrong
   (Vercel -> Project -> Settings -> Environment Variables; after changing it, Deployments -> ... -> **Redeploy**).
 - Render build failed: open the service -> **Logs**, copy the last lines into the chat.
+
+## Notes from the first deploy (2026-11-10)
+- Live: API https://futurescout-ai.onrender.com (Render, built with `backend/Dockerfile`), website https://futurescout-ai.vercel.app.
+- Render builds the Docker image, so anything the hosted API needs must be copied in `backend/Dockerfile` (it ships `site_data`).
+- `/api/health` shows which data folder is served and how many reports it holds (`"data":"site_data","reports":59`).
+- A manually created Render service may not redeploy on push: use **Manual Deploy -> Deploy latest commit**, or turn Auto-Deploy on.
