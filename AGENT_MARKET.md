@@ -2,7 +2,8 @@
 
 The report agent can be hired per job on NEAR's Agent Market. A buyer writes a technology topic, pays the price (held by the
 marketplace), and gets an evidence-backed research report sealed on NEAR. The agent keeps running on this laptop; the
-marketplace never sees our code or keys. Built 2026-11-10; mock-tested; not yet live (the owner creates the listing).
+marketplace never sees our code or keys. Built 2026-11-10. **Live: https://market.near.ai/a/futurescout** ($3 per hire, 12 h delivery, self-hosted). A test hire ran live
+(brief `high bandwidth memory`, change request, sealed report delivered).
 
 ## Owner steps (once)
 

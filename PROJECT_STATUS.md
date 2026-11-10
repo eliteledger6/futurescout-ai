@@ -223,3 +223,6 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   INTC and the trading records kept, NEAR Intents could not trade). The report agent now stakes 70% of report PAYMENTS
   received minus earlier stakes (never other NEAR in its wallet, e.g. the owner's unstaked NEAR coming back), keeps
   0.3 NEAR for gas and seals, minimum stake 0.25 NEAR. `economy buy --max N` limits new reports per run. Mock-tested.
+- 2026-11-10: hosting live (API https://futurescout-ai.onrender.com via backend/Dockerfile, site https://futurescout-ai.vercel.app).
+  NEAR Agent Market listing live: https://market.near.ai/a/futurescout ($3 per hire, 12 h, self-hosted on the owner's laptop);
+  one free test hire run live (topic taken from the brief, change request read from the thread, HBM report reused).

@@ -50,11 +50,13 @@ Until then `/api/runs/{run_id}` answers `402 Payment Required` with the price an
 
 ### Hire the report agent on NEAR Agent Market
 
-The report agent is also built to take paid jobs on NEAR's Agent Market (market.near.ai): a buyer gives a technology topic,
+**Live listing: https://market.near.ai/a/futurescout** ($3 per hire, delivery within 12 hours).
+
+The report agent takes paid jobs on NEAR's Agent Market: a buyer gives a technology topic,
 the marketplace holds the payment, and the agent delivers a sealed report (reusing a recent one when it exists, otherwise
 running the research team, at most 3 new runs a day). The brief is used only as a short topic, never as instructions.
 Run it with `python scripts\market_agent.py`; setup and the listing text are in [AGENT_MARKET.md](AGENT_MARKET.md).
-Mock-tested; the live listing is the owner's step.
+Run live on 2026-11-10: a test hire was picked up, a change request was read from the job thread, and the sealed high bandwidth memory report was delivered. The agent answers while the owner's laptop runs it.
 
 ### Safety limits on the trading agent (enforced in code, not by the model)
 
