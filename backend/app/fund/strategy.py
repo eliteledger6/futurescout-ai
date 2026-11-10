@@ -183,6 +183,8 @@ def assess(router: ModelRouter, *, triggers: list[Trigger], candidates: list[Can
         if frac < cfg.min_sell_fraction:
             notes.append(f"share {frac} raised to the minimum {cfg.min_sell_fraction}")
             frac = cfg.min_sell_fraction
+        if h.get("value_usd") is None:
+            return no("the holding's current value could not be quoted")
         value = float(h.get("value_usd") or 0)
         if min_sale_usd and value * frac < min_sale_usd:
             if value < min_sale_usd:

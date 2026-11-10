@@ -131,3 +131,9 @@ def test_a_too_small_sale_is_sized_up_to_the_market_minimum_or_refused():
     small = [{**HELD[0], "value_usd": 15.0}]
     (d, h, *_, notes), _ = sell_run(sell, min_sale_usd=20.0, sellable=small)
     assert d.action == "hold" and any("below the market's minimum" in n for n in notes)
+
+
+def test_a_holding_without_a_current_value_is_not_sold_as_if_worthless():
+    sell = {"action": "sell", "ticker": "GOOGL", "fraction": 1.0, "what_changed": "w", "rationale": "r", "confidence": "low"}
+    (d, h, *_, notes), _ = sell_run(sell, min_sale_usd=20.0, sellable=[{**HELD[0], "value_usd": None}])
+    assert d.action == "hold" and any("could not be quoted" in n for n in notes)       # bug 2026-11-10: a missing price read as $0

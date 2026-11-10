@@ -327,6 +327,18 @@ def run_check(s, cfg, shadow: bool, extra: list | None = None, depth: int = 0) -
         return rc
 
 
+def holding_value(ex, h: dict, account: str = "intents.near") -> float | None:  # noqa: ANN001
+    """What the whole holding would fetch now: a real DRY sale quote (stock -> NEAR, from a balance inside NEAR Intents).
+    The public token list leaves the tokenized stocks out, so a price lookup there gave $0 (bug seen 2026-11-10)."""
+    try:
+        q = ex.oneclick.quote(dry=True, pay_asset=h["asset_id"], dest_asset=ex.cfg.near_asset_id, amount_units=int(h["quantity"] * 10 ** 18),
+                              account=account, slippage_bps=ex.cfg.slippage_bps, deadline=datetime.now(timezone.utc) + timedelta(minutes=10),
+                              deposit_type="INTENTS")
+        return round(float(q["amountInUsd"]), 2)
+    except Exception:  # noqa: BLE001
+        return None
+
+
 def _sellable(state, toks, pf, shadow, closes, now, ex):  # noqa: ANN001,ANN201
     """Holdings the agent may consider selling, each with its latest report (or a note that no fund includes it any more)."""
     rows = pf["positions"] if shadow else state.live_holdings()
@@ -340,10 +352,7 @@ def _sellable(state, toks, pf, shadow, closes, now, ex):  # noqa: ANN001,ANN201
             hours = 0.0
         value = h.get("value_usd")
         if value is None:
-            try:
-                value = round(h["quantity"] * ex.oneclick.price_usd(h["asset_id"]), 2)
-            except Exception:  # noqa: BLE001
-                value = None
+            value = holding_value(ex, h)
         day, close, _prev = closes.get(h["ticker"], (None, None, None))
         out.append({"ticker": h["ticker"], "symbol": h["symbol"], "asset_id": h.get("asset_id"), "topic": h.get("topic"), "quantity": h["quantity"],
                     "cost_usd": h.get("cost_usd"), "value_usd": value, "held_hours": round(hours, 1), "last_close": close, "last_close_date": day,
