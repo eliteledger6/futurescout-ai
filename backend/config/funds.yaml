@@ -43,8 +43,8 @@ live:
   trading_enabled: true       # master switch; the owner turns it on for the first trade
   route: confidential          # owner 2026-11-09: trade like near.com (signed order from the private balance); "wallet" = old route
   auto_approve: true          # FUTURE (owner-only): true = a live proposal from `fund_trade.py watch` is sent without the typed approval. Keep false for now.
-  sells_enabled: false        # OWNER-ONLY. true = the agent may SELL (part of) a holding for NEAR (owner's written yes 2026-11-10)
-  budget_mode: spent          # OWNER-ONLY. spent = max_total_usd counts every dollar ever spent on buys;
+  sells_enabled: true        # OWNER-ONLY. true = the agent may SELL (part of) a holding for NEAR (owner's written yes 2026-11-10)
+  budget_mode: net          # OWNER-ONLY. spent = max_total_usd counts every dollar ever spent on buys;
                               #             net   = it counts buys MINUS sale proceeds (sale money can be invested again)
   max_sells_per_day: 2
   strategy:                    # when the trading agent wakes up, and its fixed rules (app/fund/strategy.py)
@@ -61,8 +61,8 @@ live:
   order_recipients: [intents.near, intents.far]   # verifiers an order may be addressed to; intents.far = the private shard's contract (first real order, 2026-11-10)
   signed_route_enabled: true  # SECOND switch for that route. Built, not yet run for real. Only the owner turns it on.
   pay_with: near               # owner 2026-11-09: pay with NEAR directly (no USDC needed); "usdc" also works
-  max_trade_usd: 25.0
-  max_day_usd: 35.0
+  max_trade_usd: 60.0          # owner 2026-11-10: "remove 35usd per day the 25 per trade": set equal to the total cap, so only
+  max_day_usd: 60.0            #   max_total_usd and the $20 near.com minimum limit a trade
   max_total_usd: 60       # the whole real-money budget, ever (owner 2026-11-09: per-trade cap 25 on top of the $10 already sent)
   min_trade_usd: 20.0          # near.com enforces a flat $20 minimum on stock trades (owner's screenshot 2026-11-09); the $10 test got stuck
   price_band_pct: 3.0          # quoted token price must be this close to the stock's last close (close <= 1 day old)
