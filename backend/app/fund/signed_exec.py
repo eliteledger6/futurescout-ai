@@ -14,7 +14,7 @@ One buy, step by step (the first three move nothing):
   2. check the private balance covers the amount;
   3. real quote on the private route -> a deposit address; then ask the service for the order it wants signed;
   4. VERIFY that order before signing: it must be exactly one transfer of exactly the approved amount of the pay
-     token, from this account, to exactly the quote's deposit address, addressed to an allowed verifier, with a
+     token (plain id, or the private balance's `imt:<bridge>:<id>` form of it), from this account, to exactly the quote's deposit address, addressed to an allowed verifier, with a
      well-formed nonce and a future deadline. Anything else: refuse, nothing is signed;
   5. save the proposal as "executing", sign the order (NEP-413) and submit it ONCE; an unclear submit error is
      recorded as "deposited" and never retried (resume only polls);
@@ -27,6 +27,7 @@ from __future__ import annotations
 
 import base64
 import json
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable, Optional
@@ -81,7 +82,7 @@ def verify_order(order: dict, *, account: str, deposit_address: str, pay_asset: 
             bad.append(f"unexpected action fields {sorted(set(it) - {'intent', 'receiver_id', 'tokens', 'memo'})}")
         if it.get("receiver_id") != deposit_address:
             bad.append("the transfer does not go to the quote's deposit address")
-        if it.get("tokens") != {pay_asset: str(units)}:
+        if not _moves_exactly(it.get("tokens"), pay_asset, units):
             bad.append(f"the transfer moves {it.get('tokens')}, not exactly {units} of {pay_asset}")
     try:
         deadline = datetime.fromisoformat(str(msg.get("deadline")).replace("Z", "+00:00"))
@@ -90,6 +91,17 @@ def verify_order(order: dict, *, account: str, deposit_address: str, pay_asset: 
     except ValueError:
         bad.append("the order deadline is not a date")
     return bad
+
+
+def _moves_exactly(tokens: Any, pay_asset: str, units: int) -> bool:
+    """One token, exactly `units`. The asset may be the plain id (public balance) or the private balance's form of the
+    same asset, `imt:<64-hex bridge id>:<plain id>` (seen in the first real private-route order, 2026-11-10)."""
+    if not isinstance(tokens, dict) or len(tokens) != 1:
+        return False
+    (key, amount), = tokens.items()
+    if str(amount) != str(units):
+        return False
+    return key == pay_asset or re.fullmatch(r"imt:[0-9a-f]{64}:" + re.escape(pay_asset), str(key)) is not None
 
 
 def submit_signed_order(http: httpx.Client, api: str, api_key: Optional[str], order: dict, private_key: str) -> str:

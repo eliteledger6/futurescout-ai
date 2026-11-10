@@ -48,6 +48,16 @@ def test_only_the_exact_approved_transfer_passes():
     bad_nonce = order()
     bad_nonce["payload"]["nonce"] = base64.b64encode(bytes(32)).decode()
     assert any("versioned nonce" in p for p in check(bad_nonce))
+    private_form = order(tokens={"imt:" + "5" * 64 + ":" + NEAR: str(UNITS)})          # the private balance's form of the same asset
+    assert check(private_form) == []
+    wrong_asset = order(tokens={"imt:" + "5" * 64 + ":nep141:usdc": str(UNITS)})
+    assert any("not exactly" in p for p in check(wrong_asset))
+    short_id = order(tokens={"imt:abc:" + NEAR: str(UNITS)})
+    assert any("not exactly" in p for p in check(short_id))
+    far = order(recipient="intents.far")
+    assert any("addressed to" in p for p in check(far))                                  # only when the config lists it
+    assert verify_order(far, account=ACCOUNT, deposit_address=DEPOSIT, pay_asset=NEAR, units=UNITS,
+                        allowed_recipients=["intents.near", "intents.far"], now=NOW) == []
     with_cb = order()
     with_cb["payload"]["callbackUrl"] = "https://x.test"
     assert any("callback" in p for p in check(with_cb))
