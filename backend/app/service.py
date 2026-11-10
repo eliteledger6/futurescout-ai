@@ -35,9 +35,16 @@ from app.sources.x import XClient
 def _runs_dir() -> Path:
     """FUTURESCOUT_DATA_DIR when set; else backend/runs; and when runs/ holds no report but the exported snapshot
     site_data/ does (a fresh hosted copy, where runs/ is not in git), the snapshot."""
-    if os.environ.get("FUTURESCOUT_DATA_DIR"):
-        return BACKEND_DIR / os.environ["FUTURESCOUT_DATA_DIR"]
-    runs, snap = BACKEND_DIR / "runs", BACKEND_DIR / "site_data"
+    snap = BACKEND_DIR / "site_data"
+    raw = os.environ.get("FUTURESCOUT_DATA_DIR", "").strip().strip("/\\")
+    if raw:
+        for cand in (BACKEND_DIR / raw, BACKEND_DIR.parent / raw):     # "site_data" or "backend/site_data"
+            if any(cand.glob("report_*.json")):
+                return cand
+        if any(snap.glob("report_*.json")):
+            return snap
+        return BACKEND_DIR / raw
+    runs = BACKEND_DIR / "runs"
     if not any(runs.glob("report_*.json")) and any(snap.glob("report_*.json")):
         return snap
     return runs
