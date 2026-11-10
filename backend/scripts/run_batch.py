@@ -192,7 +192,16 @@ def main() -> int:
             usage = {"model_usd": worst["model"], "openalex_usd": worst["openalex"], "x_usd": X_WORST_CASE_USD if use_x else 0,
                      "serpapi_searches": PATENT_SEARCHES_PER_TOPIC if patents_live else 0}
             out = None
-        empty = out is not None and not out.report.agents_run
+        model_agents = {"chief", "science", "risk", "market", "x", "patent", "timing", "investment"}
+        empty = out is not None and not (set(out.report.agents_run) & model_agents)     # code-only agents (scout) do not count
+        if empty and out is not None and any("402" in e.message for e in out.report.errors):
+            # 2026-11-10: NEAR AI Cloud answered 402 (no credit) for 13 topics in a row; each still cost X data and a seal.
+            print("    stopped: the model provider answered 402 (payment required): the NEAR AI Cloud credit is used up. Top it up and rerun.")
+            if out.run_id:
+                import subprocess
+                subprocess.run([sys.executable, str(Path(__file__).with_name("quarantine_runs.py")), "--run", out.run_id],
+                               cwd=Path(__file__).resolve().parents[1])
+            break
         if empty:
             # nothing analysed (network or provider outage): do not count it as a report; retry the topic once
             print("    no agent produced output (network or provider problem): not counted"
