@@ -85,14 +85,18 @@ def test_an_unclear_send_is_recorded_and_never_retried(tmp_path):
 
 
 def test_report_agent_stakes_80pct_and_keeps_20pct(tmp_path):
-    bal = 5 * YOCTO
-    assert stake_amount_yocto(bal, CFG) == 4 * YOCTO
-    assert stake_amount_yocto(YOCTO, CFG) is None                          # 0.8 NEAR is under the 1 NEAR minimum
-    assert stake_amount_yocto(bal, EconomyConfig(stake_share=0.8)) is None # no staking contract: off
-    calls = []
-    ev = stake(state=EconomyState(), path=tmp_path / "e.json", account="report-agent.near", balance_yocto=bal, cfg=CFG,
+    bal = 10 * YOCTO
+    assert stake_amount_yocto(bal, CFG) == 7 * YOCTO                       # 70% of new money
+    assert stake_amount_yocto(YOCTO, CFG) is None                          # 0.7 NEAR is under the 1 NEAR minimum
+    assert stake_amount_yocto(bal, EconomyConfig(stake_share=0.7)) is None # no staking contract: off
+    calls, st = [], EconomyState()
+    ev = stake(state=st, path=tmp_path / "e.json", account="report-agent.near", balance_yocto=bal, cfg=CFG,
                call=lambda c, m, a, g, d: calls.append((c, m, d)) or "T1", now=NOW)
-    assert ev.status == "staked" and calls == [("pool.poolv1.near", "deposit_and_stake", 4 * YOCTO)] and ev.amount_near == 4.0
+    assert ev.status == "staked" and calls == [("pool.poolv1.near", "deposit_and_stake", 7 * YOCTO)] and st.kept_near == 3.0
+    # next payment of 10 NEAR: the 3 NEAR pot is not re-staked; 70% of the new 10 is, and the pot grows to 6
+    stake(state=st, path=tmp_path / "e.json", account="report-agent.near", balance_yocto=13 * YOCTO, cfg=CFG,
+          call=lambda c, m, a, g, d: calls.append((c, m, d)) or "T2", now=NOW)
+    assert calls[-1][2] == 7 * YOCTO and st.kept_near == 6.0
 
 
 def test_stake_uses_near_ai_product_args_and_reads_the_farm_position(tmp_path):
@@ -104,7 +108,7 @@ def test_stake_uses_near_ai_product_args_and_reads_the_farm_position(tmp_path):
     calls = []
     stake(state=EconomyState(), path=tmp_path / "e.json", account="r.near", balance_yocto=2 * YOCTO, cfg=cfg,
           call=lambda c, m, a, g, d: calls.append((c, m, a, g, d)) or "T", now=NOW)
-    assert calls == [("stake.dao", "stake", {"product_id": "prod_X", "price_id": "price_Y"}, 300 * 10 ** 12, 16 * YOCTO // 10)]
+    assert calls == [("stake.dao", "stake", {"product_id": "prod_X", "price_id": "price_Y"}, 300 * 10 ** 12, 14 * YOCTO // 10)]
 
     class Http:
         def post(self, url, json, timeout):  # noqa: A002

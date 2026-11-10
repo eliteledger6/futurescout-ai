@@ -57,7 +57,7 @@ export const AGENTS: Record<AgentKey, AgentInfo> = {
     detail: "Prices every sealed report in NEAR by its quality (3 to 5 NEAR, never below what it cost to make) and sells it to the trading agent. Each payment comes from the trading agent's near.com balance as a signed order, checked before signing and confirmed when it arrives in the report agent's own wallet.",
     sources: "Its own NEAR account · NEAR Intents" },
   stake: { key: "stake", name: "NEAR AI staking", role: "Earns credits for AI", icon: "sprout",
-    detail: "The report agent stakes 80% of what it earns through NEAR AI Cloud's Staking for Inference (stake.dao, validator nearai.pool.near) and keeps 20% for fees. The staking rewards become NEAR AI credits that pay for the agents' model calls; the staked NEAR stays withdrawable.",
+    detail: "The report agent stakes 70% of every payment through NEAR AI Cloud's Staking for Inference (stake.dao, validator nearai.pool.near) and keeps 30%; once the kept part passes $200 it funds a second trading agent (next step). The staking rewards become NEAR AI credits that pay for the agents' model calls; the staked NEAR stays withdrawable.",
     sources: "NEAR mainnet · NEAR AI Cloud" },
   trader: { key: "trader", name: "Trading agent", role: "Buys reports, trades", icon: "pulse", modelKey: "trader",
     detail: "Wakes on a new report, a sharp price move or a daily review. It may only use reports it has bought from the report agent, then buys, sells or holds a tokenized stock and explains why. Code checks the budget, the allowed stocks, the price and the cost; then the agent approves its own order, which goes through NEAR Intents from its near.com balance. In shadow mode it places pretend orders at real quotes.",

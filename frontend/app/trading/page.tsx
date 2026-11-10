@@ -215,12 +215,14 @@ function EconomyPanel({ e }: { e: Economy }) {
       <p className="small" style={{ color: "var(--text-2)", margin: 0 }}>
         The report agent prices every report in NEAR by its quality (score and confidence), at most {e.limits.max_price_near} NEAR and never below what it cost to make. The trading agent may only use
         reports it has bought, and spends at most {Math.round(e.limits.budget_share_of_fund * 100)}% of its fund on them. Each payment is a signed order from the trading agent's near.com balance, checked before signing, and confirmed when it arrives.
-        The report agent stakes {Math.round(e.limits.stake_share * 100)}% of what it holds through NEAR AI&apos;s Staking for Inference; the rewards pay for its AI. The rest stays for fees.
+        The report agent stakes {Math.round(e.limits.stake_share * 100)}% of every payment through NEAR AI&apos;s Staking for Inference; the rewards pay for the agents&apos; AI.
+        It keeps the other {100 - Math.round(e.limits.stake_share * 100)}%; once that pot passes ${e.second_trader_at_usd ?? 200} it funds a second trading agent (the next step).
       </p>
       <div className="stats" style={{ marginTop: 4, gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 140px), 1fr))", overflowWrap: "anywhere" }}>
         <div className="stat"><div className="stat-value">{e.spent_near.toFixed(3)} Ⓝ</div><div className="stat-label">paid for reports by the trading agent</div></div>
         <div className="stat"><div className="stat-value">{e.report_agent_wallet_near != null ? `${e.report_agent_wallet_near.toFixed(2)} Ⓝ` : "–"}</div><div className="stat-label">report agent wallet ({e.seller_account})</div></div>
         <div className="stat"><div className="stat-value">{e.report_agent_staked_near != null ? `${e.report_agent_staked_near.toFixed(2)} Ⓝ` : "–"}</div><div className="stat-label">staked for NEAR AI credits</div></div>
+        <div className="stat"><div className="stat-value">{(e.kept_near ?? 0).toFixed(2)} Ⓝ</div><div className="stat-label">kept pot: at ${e.second_trader_at_usd ?? 200} it funds a second trading agent</div></div>
       </div>
       {e.prices.length > 0 && (
         <div className="tr-mini">{e.prices.slice(0, 6).map((p) => {

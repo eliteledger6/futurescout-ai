@@ -125,7 +125,7 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
               <g className="edge on sale-pay"><path d={SALE.pay} className="edge-base" /><path d={SALE.pay} className="edge-flow" /></g>
               <Badge x={SALE.mid - 16} y={POS.trader[1] + 26} text="report ▸" tone="report" />
               <Badge x={SALE.mid - 6} y={POS.seller[1] - 30} text="◂ 3–5 NEAR" tone="pay" />
-              <text x={(POS.seller[0] + W + POS.stake[0]) / 2} y={POS.stake[1] + 18} className="flow-note" textAnchor="middle">stakes 80%</text>
+              <text x={(POS.seller[0] + W + POS.stake[0]) / 2} y={POS.stake[1] + 18} className="flow-note" textAnchor="middle">stakes 70%</text>
             </>
           )}
           <g className="edge loop">

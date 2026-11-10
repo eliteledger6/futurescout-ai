@@ -673,7 +673,7 @@ def cmd_economy(s, cfg, what: str) -> int:  # noqa: ANN001
             tx = signer.call("wrap.near", "near_withdraw", {"amount": str(wrapped)}, 10 * 10 ** 12, 1)
             print(f"unwrapped {wrapped / YOCTO:.4f} wNEAR into NEAR (tx {tx})")
         liquid, _ = account_near(httpx.Client(timeout=30), ec.rpc, creds[0])
-        if stake_amount_yocto(liquid, ec) is None:
+        if stake_amount_yocto(liquid, ec, load_economy(ECONOMY).kept_near) is None:
             print(f"nothing to stake: {liquid / YOCTO:.3f} NEAR x {ec.stake_share:.0%} is under the {ec.min_stake_near} NEAR minimum")
             return 0
         state = load_economy(ECONOMY)

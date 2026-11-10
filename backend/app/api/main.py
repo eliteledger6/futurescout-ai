@@ -405,6 +405,7 @@ def create_app(
             "limits": {"max_price_near": ec.max_price_near, "budget_share_of_fund": ec.budget_share_of_fund,
                        "stake_share": ec.stake_share, "min_stake_near": ec.min_stake_near},
             "spent_near": st.spent_near(), "report_agent_wallet_near": wallet, "report_agent_staked_near": staked,
+            "kept_near": st.kept_near, "second_trader_at_usd": ec.second_trader_at_usd,
             "prices": sorted((p.model_dump(mode="json") for p in st.prices.values()), key=lambda p: -p["price_near"]),
             "purchases": [p.model_dump(mode="json") for p in reversed(st.purchases[-30:])],
             "stakes": [e.model_dump(mode="json") for e in reversed(st.stakes[-10:])],
