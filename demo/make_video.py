@@ -88,6 +88,8 @@ SCENES = [
         ("When a report is sealed, the report agent sells it to the trading agent for NEAR, and a paper fund is invested.", None),
         ("The report agent stakes 70% of what it earns with NEAR AI, so the staking rewards pay for every agent's models.",
          "The report agent stakes seventy percent of what it earns with NEAR A I, so the staking rewards pay for every agent's models."),
+        ("It keeps the other 30%. When that pot passes 200 dollars, it funds a second trading agent.",
+         "It keeps the other thirty percent. When that pot passes two hundred dollars, it funds a second trading agent."),
     ]),
     Scene("04_report", "03", "A research report", [
         ("Here is the report on high bandwidth memory.", None),
@@ -137,7 +139,7 @@ SCENES = [
     Scene("10_close", "", "", [
         ("FUTURESCOUT AI: evidence-first technology research.", "Future Scout A I: evidence-first technology research."),
         ("Models on NEAR AI Cloud, reports sealed on NEAR.", "Models on NEAR A I Cloud, reports sealed on NEAR."),
-        ("Research information, not financial advice.", None),
+        ("Built for the NEAR Hackathon.", None),
     ], tail=2.2),
 ]
 
@@ -416,7 +418,7 @@ def closing_card(t: float, dur: float) -> Image.Image:
         for i, row in enumerate(rows):
             ar = ease((t - (t0 + 0.25 + i * 0.1)) / 0.4)
             d.text((x + 34, 440 + i * 56), row, font=font(27, "regular"), fill=rgba(INK, ar), anchor="lm")
-    rise(d, (W / 2, 880), "Research information   ·   Not financial advice   ·   Built for the NEAR hackathon", font(28, "semibold"), INK, t, 1.9)
+    rise(d, (W / 2, 880), "Built for the NEAR Hackathon", font(28, "semibold"), INK, t, 1.9)
     return img
 
 
@@ -498,6 +500,10 @@ async def rec_agents(k: Take) -> None:
     await b.hover("g.node", text="trading agent", seconds=0.7)
     await k.until(k.sent[5] + 0.2)
     await b.hover("g.node", text="near ai staking", seconds=0.7)
+    await k.until(k.sent[6] + 0.2)
+    await b.hover("g.node", text="report agent", seconds=0.6)
+    await k.until(k.sent[6] + (k.dur - k.sent[6]) * 0.4)
+    await b.hover("g.node", text="trading agent 2", seconds=0.8)
 
 
 async def rec_report(k: Take) -> None:
