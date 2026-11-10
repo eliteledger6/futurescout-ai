@@ -2,7 +2,8 @@
 import type { Report } from "./types";
 
 export type AgentKey =
-  | "chief" | "science" | "risk" | "market" | "x" | "patent" | "review" | "timing" | "scout" | "investment" | "near" | "fund" | "trader";
+  | "chief" | "science" | "risk" | "market" | "x" | "patent" | "review" | "timing" | "scout" | "investment" | "near" | "fund" | "trader"
+  | "seller" | "stake";
 
 export interface AgentInfo {
   key: AgentKey;
@@ -52,9 +53,15 @@ export const AGENTS: Record<AgentKey, AgentInfo> = {
   fund: { key: "fund", name: "Topic fund", role: "Invests a paper fund", icon: "building",
     detail: "Builds a pretend-money fund for the topic from the companies the patents and papers name, split into low, medium and high risk, and keeps it fully invested. Every decision lists its reasons and is fingerprinted on NEAR testnet.",
     sources: "The sealed report · daily prices · NEAR Intents dry-run quotes" },
-  trader: { key: "trader", name: "Trading agent", role: "Trades via NEAR Intents", icon: "pulse", modelKey: "trader",
-    detail: "Wakes on a new report, a sharp price move or a daily review, then buys, sells or holds a tokenized stock and explains why. Code checks the budget, the allowed stocks, the price and the cost; then the agent approves its own order, which goes through NEAR Intents. In shadow mode it places pretend orders at real quotes.",
-    sources: "Topic funds · NEAR Intents quotes" },
+  seller: { key: "seller", name: "Report agent", role: "Sells reports for NEAR", icon: "coin",
+    detail: "Prices every sealed report in NEAR by its quality (3 to 5 NEAR, never below what it cost to make) and sells it to the trading agent. Each payment comes from the trading agent's near.com balance as a signed order, checked before signing and confirmed when it arrives in the report agent's own wallet.",
+    sources: "Its own NEAR account · NEAR Intents" },
+  stake: { key: "stake", name: "NEAR AI staking", role: "Earns credits for AI", icon: "sprout",
+    detail: "The report agent stakes 80% of what it earns through NEAR AI Cloud's Staking for Inference (stake.dao, validator nearai.pool.near) and keeps 20% for fees. The staking rewards become NEAR AI credits that pay for the agents' model calls; the staked NEAR stays withdrawable.",
+    sources: "NEAR mainnet · NEAR AI Cloud" },
+  trader: { key: "trader", name: "Trading agent", role: "Buys & sells stocks", icon: "pulse", modelKey: "trader",
+    detail: "Wakes on a new report, a sharp price move or a daily review. It may only use reports it has bought from the report agent, then buys, sells or holds a tokenized stock and explains why. Code checks the budget, the allowed stocks, the price and the cost; then the agent approves its own order, which goes through NEAR Intents from its near.com balance. In shadow mode it places pretend orders at real quotes.",
+    sources: "Bought reports · topic funds · NEAR Intents quotes" },
 };
 
 export type AgentState = "ran" | "partial" | "not_run" | "off";
@@ -96,5 +103,7 @@ export function agentStats(r: Report): Record<AgentKey, AgentRunStat> {
     near: { state: r.chain_record ? "ran" : "off", note: r.chain_record ? "fingerprint on testnet" : "not recorded" },
     fund: { state: "off", note: "after the report: see Funds & trading" },       // not part of one report's trace (hidden there)
     trader: { state: "off", note: "after the report: see Funds & trading" },
+    seller: { state: "off", note: "after the report: see Funds & trading" },
+    stake: { state: "off", note: "after the report: see Funds & trading" },
   };
 }

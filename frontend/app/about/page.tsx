@@ -11,7 +11,8 @@ const RULES = [
   ["shield", "Quotes are checked", "A 'verified fact' must quote its source word for word. Headlines and X posts can never verify a fact."],
   ["building", "Companies come from the evidence", "No hand-made company list: a company is checked because the retrieved patents name it as assignee or its researchers wrote the papers. A filing that merely mentions the topic is shown, but is never a reason to buy."],
   ["swords", "A second agent argues back", "The Risk agent searches independently for limits and failures, then challenges specific findings."],
-  ["pulse", "Risk, not trading", "Price run-up is measured as a risk. No buy or sell signals, no price targets, no promised returns."],
+  ["pulse", "Limits written in code", "The trading agent decides, but code sets the limits: a capped budget, an allowlist of tokenized stocks, a price band around the last close, a cost cap, a kill switch, and an order checked field by field before it is signed."],
+  ["coin", "Agents pay their way", "The trading agent must buy a report before it may use it. The report agent stakes what it earns with NEAR AI, and the rewards pay for the agents' model calls."],
 ] as const;
 
 export default function About() {
@@ -22,7 +23,7 @@ export default function About() {
         <div className="container">
           <div className="eyebrow">How it works</div>
           <h1 className="display" style={{ fontSize: "clamp(40px, 6vw, 76px)" }}>A team of agents, <span className="gradient-text">one rule: show the evidence</span></h1>
-          <p className="lede">A hot technology shows up first in research papers and patent filings, then in company reports. FUTURESCOUT measures all three, argues the other side, and tells you which companies the evidence points to, and how much of the move may already be priced in.</p>
+          <p className="lede">A hot technology shows up first in research papers and patent filings, then in company reports. FUTURESCOUT measures all three, argues the other side, and names the companies the evidence points to. Then the agents act on it: a report agent sells each report for NEAR, a trading agent buys it and trades tokenized stocks through NEAR Intents, and the report agent&apos;s earnings are staked so NEAR AI pays for the models.</p>
         </div>
       </section>
 
@@ -66,15 +67,16 @@ export default function About() {
             <h3 className="h3">Where NEAR fits</h3>
             <p style={{ color: "var(--text-2)", margin: 0 }}>
               Every agent calls a model from the NEAR AI Cloud catalogue (Qwen, DeepSeek, GLM, Claude), each chosen per agent with
-              fallbacks and per-run cost tracking. Each finished report's SHA-256 fingerprint is stored on NEAR testnet, so anyone
-              can check it was not edited afterwards.
+              fallbacks and per-run cost tracking. The trading agent trades through NEAR Intents on mainnet, signing orders from its
+              near.com balance; it pays the report agent the same way. The report agent stakes with NEAR AI (Staking for Inference) for
+              model credits. Fingerprints of every report, fund decision and trade are stored on NEAR testnet.
             </p>
           </div>
           <div className="card">
             <h3 className="h3">What it is not</h3>
             <p style={{ color: "var(--text-2)", margin: 0 }}>
-              Not a trading bot. It never places trades, holds no wallet for trading, never promises returns and gives no price
-              targets. It never posts, likes or follows on X.
+              Not financial advice and not a money machine. The trading agent works with a small budget capped by the owner, buys only
+              tokenized stocks from its allowlist, and never promises returns or gives price targets. It never posts, likes or follows on X.
             </p>
           </div>
         </div>

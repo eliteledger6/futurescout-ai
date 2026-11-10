@@ -29,14 +29,16 @@ export default function Home() {
       <section className="hero hero-compact">
         <div className="aurora" aria-hidden="true" />
         <div className="container">
-          <div className="eyebrow">Multi-agent technology research · 1–5 year horizon</div>
+          <div className="eyebrow">Autonomous research and trading agents on NEAR · 1–5 year horizon</div>
           <h1 className="display">Find the next hot technology. <span className="gradient-text">Show the evidence.</span></h1>
           <p className="lede">AI agents read papers, patents, company filings and X, argue the other side, and write a report where every claim has a label and a source.
-            Models run on NEAR AI Cloud; every report is sealed on NEAR.</p>
+            A trading agent buys those reports in NEAR and trades tokenized stocks through NEAR Intents, inside hard limits. The report agent stakes what it
+            earns, so NEAR AI pays for its models. Every report and trade is sealed on NEAR.</p>
           <div className="actions">
             {latest ? <Link className="btn btn-solid" href={`/runs/${latest.id}`}>Open latest report →</Link>
               : <Link className="btn btn-solid" href="/research">Start research →</Link>}
             <Link className="btn btn-ghost" href="/radar">See what&apos;s heating up</Link>
+            <Link className="btn btn-ghost" href="/trading">Watch the trading agent</Link>
           </div>
           <RadarStrip />
         </div>

@@ -14,21 +14,24 @@ const POS: Record<AgentKey, [number, number]> = {
   market: [470, 185],
   review: [470, 365],
   timing: [698, 230], scout: [698, 320],
-  investment: [918, 140],
-  near: [918, 240],
-  fund: [918, 340],
-  trader: [918, 440],
+  investment: [918, 160],
+  near: [918, 290],
+  seller: [918, 420],
+  fund: [1140, 160],
+  trader: [1140, 290],
+  stake: [1140, 420],
 };
-const AFTER_REPORT: AgentKey[] = ["fund", "trader"];     // shown in the overview, hidden in one report's trace
+const AFTER_REPORT: AgentKey[] = ["fund", "trader", "seller", "stake"];     // shown in the overview, hidden in one report's trace
 const EDGES: [AgentKey, AgentKey][] = [
   ["chief", "science"], ["chief", "risk"], ["chief", "x"], ["chief", "patent"],
   ["science", "market"], ["patent", "market"],
   ["market", "review"], ["risk", "review"], ["x", "review"],
   ["review", "timing"], ["review", "scout"],
   ["timing", "investment"], ["scout", "investment"],
-  ["investment", "near"], ["near", "fund"], ["fund", "trader"],
+  ["investment", "near"], ["near", "seller"], ["near", "fund"], ["fund", "trader"], ["seller", "trader"], ["seller", "stake"],
 ];
-const ORDER: AgentKey[][] = [["chief"], ["science", "risk", "x", "patent"], ["market"], ["review"], ["timing", "scout"], ["investment"], ["near"], ["fund"], ["trader"]];
+const ORDER: AgentKey[][] = [["chief"], ["science", "risk", "x", "patent"], ["market"], ["review"], ["timing", "scout"], ["investment"], ["near"],
+  ["seller", "fund"], ["trader"], ["stake"]];
 
 function edgePath(a: AgentKey, b: AgentKey): string {
   const [ax, ay] = POS[a], [bx, by] = POS[b];
@@ -56,8 +59,8 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
     <div className="flow">
       <div className="flow-swipe">Swipe sideways to see the whole network. Tap an agent for details.</div>
       <div className="flow-canvas">
-        <svg className="flow-svg" viewBox="0 0 1110 505" role="img"
-             aria-label="Agent network: Chief plans; Science, Risk, X and Patent research in parallel; Market reads the SEC filings of the companies the papers and patents point to; Chief reviews; price timing is checked while the Company scout finds the companies behind the patents and papers; Investment writes the report; the fingerprint is recorded on NEAR; a fully invested paper fund is built for the topic; the trading agent buys and sells through NEAR Intents and approves its own orders after the code checks.">
+        <svg className="flow-svg" viewBox={`0 0 ${stats ? 1110 : 1332} 505`} role="img"
+             aria-label="Agent network: Chief plans; Science, Risk, X and Patent research in parallel; Market reads the SEC filings of the companies the papers and patents point to; Chief reviews; price timing is checked while the Company scout finds the companies behind the patents and papers; Investment writes the report; the fingerprint is recorded on NEAR; the report agent sells the report to the trading agent for NEAR and stakes its earnings with NEAR AI for model credits; a fully invested paper fund is built for the topic; the trading agent buys and sells through NEAR Intents and approves its own orders after the code checks.">
           <defs>
             <radialGradient id="nodeGlow" cx="50%" cy="50%" r="60%">
               <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.28" />
@@ -65,7 +68,8 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
             </radialGradient>
           </defs>
           {/* stage labels */}
-          {[["Plan", 103], ["Research in parallel", 331], ["Companies & review", 559], ["Timing & scout", 787], ["Write, seal & trade", 1007]].map(([t, x]) => (
+          {([["Plan", 103], ["Research in parallel", 331], ["Companies & review", 559], ["Timing & scout", 787], ["Write, seal & sell", 1007],
+             ...(stats ? [] : [["Fund, trade & stake", 1229]])] as [string, number][]).map(([t, x]) => (
             <text key={t} x={x} y={14} className="flow-stage" textAnchor="middle">{t}</text>
           ))}
           {/* edges */}
@@ -79,6 +83,12 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
               </g>
             );
           })}
+          {!stats && (
+            <>
+              <text x={(POS.seller[0] + W + POS.trader[0]) / 2} y={(POS.seller[1] + POS.trader[1]) / 2 - 8} className="flow-note" textAnchor="middle">NEAR</text>
+              <text x={(POS.seller[0] + W + POS.stake[0]) / 2} y={POS.stake[1] - 8} className="flow-note" textAnchor="middle">80%</text>
+            </>
+          )}
           <g className="edge loop">
             <path d={LOOP} className="edge-base" />
             <text x={(POS.review[0] + POS.science[0]) / 2 + W / 2} y={POS.science[1] - 52} className="flow-note" textAnchor="middle">
