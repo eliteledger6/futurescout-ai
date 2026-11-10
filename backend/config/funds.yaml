@@ -87,6 +87,8 @@ economy:
   min_stake_near: 1.0
   market_open: true               # owner 2026-11-10: other trading bots may buy early access to fresh reports (/api/market)
   embargo_hours: 24               # a report is sold for its first 24 h, then it is free on the site
+  always_free:                    # owner 2026-11-10: never locked, for the demo (high bandwidth memory, score 80)
+    - e5d41d1f-fa56-42ce-bf27-9fccb47298a2
   pay_from: private               # owner 2026-11-10: pay reports from the near.com (private) balance; "wallet" = plain transfer
   staking_contract: stake.dao     # NEAR AI's "Stake NEAR" contract, read from the owner's own dashboard stake (2026-11-10)
   stake_method: stake

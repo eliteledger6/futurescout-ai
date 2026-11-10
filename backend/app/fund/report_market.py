@@ -63,8 +63,10 @@ def unlock_at(generated_at: datetime, cfg: EconomyConfig) -> datetime:
     return g + timedelta(hours=cfg.embargo_hours)
 
 
-def is_locked(generated_at: datetime, cfg: EconomyConfig, now: datetime) -> bool:
-    """True while a report is in its early-access window (and the market is open)."""
+def is_locked(generated_at: datetime, cfg: EconomyConfig, now: datetime, run_id: str = "") -> bool:
+    """True while a report is in its early-access window (and the market is open), unless the owner made it always free."""
+    if run_id and run_id in cfg.always_free:
+        return False
     return bool(cfg.market_open) and now < unlock_at(generated_at, cfg)
 
 

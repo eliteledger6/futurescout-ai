@@ -66,3 +66,8 @@ def test_api_locks_a_fresh_report_with_buying_instructions(tmp_path, monkeypatch
     assert m["open"] and m["pay_to"] == "report-agent.near" and m["how_to_buy"]
     assert [r["run_id"] for r in m["reports"]] == (["report_fresh1"] if scored else [])   # only scored reports are on sale
     assert client.get("/api/runs/report_fresh1?access=wrong").status_code == 402
+
+
+def test_owner_can_keep_a_report_always_free():
+    cfg = EconomyConfig(market_open=True, seller_account="r.near", always_free=["demo1"])
+    assert not is_locked(NOW, cfg, NOW, "demo1") and is_locked(NOW, cfg, NOW, "other")

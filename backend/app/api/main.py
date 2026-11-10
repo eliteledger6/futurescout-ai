@@ -210,7 +210,7 @@ def create_app(
 
     def lock_info(run_id: str, report) -> Optional[dict]:  # noqa: ANN001
         ec = load_fund_config().economy
-        if not is_locked(report.generated_at, ec, datetime.now(timezone.utc)):
+        if not is_locked(report.generated_at, ec, datetime.now(timezone.utc), run_id):
             return None
         try:
             price = report_price(run_id, report)
@@ -228,7 +228,7 @@ def create_app(
         ec = load_fund_config().economy
         now = datetime.now(timezone.utc)
         for r in rows:
-            if is_locked(datetime.fromisoformat(r["generated_at"]), ec, now):
+            if is_locked(datetime.fromisoformat(r["generated_at"]), ec, now, r["id"]):
                 found = store.get(r["id"])
                 info = lock_info(r["id"], found[0]) if found else None
                 if info:
@@ -244,7 +244,7 @@ def create_app(
             if r.get("score") is None or r["topic"] in seen:
                 continue
             seen.add(r["topic"])
-            if not is_locked(datetime.fromisoformat(r["generated_at"]), ec, datetime.now(timezone.utc)):
+            if not is_locked(datetime.fromisoformat(r["generated_at"]), ec, datetime.now(timezone.utc), r["id"]):
                 continue
             found = store.get(r["id"])
             info = lock_info(r["id"], found[0]) if found else None
