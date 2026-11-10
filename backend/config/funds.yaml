@@ -56,7 +56,7 @@ live:
     max_adds_per_ticker: 2     # buying a dip at most twice per company
     max_ticker_share_pct: 25.0 # shadow mode: one company at most this share of the budget
     price_requests_per_check: 6
-    min_hold_hours: 24         # a holding is not sold before it was held this long
+    min_hold_hours: 0          # owner 2026-11-10: "remove the 24hrs limitation" (no minimum holding time)
     min_sell_fraction: 0.25    # smallest share of a holding the agent may sell
   order_recipients: [intents.near, intents.far]   # verifiers an order may be addressed to; intents.far = the private shard's contract (first real order, 2026-11-10)
   signed_route_enabled: true  # SECOND switch for that route. Built, not yet run for real. Only the owner turns it on.
