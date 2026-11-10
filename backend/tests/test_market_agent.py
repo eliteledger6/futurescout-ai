@@ -247,3 +247,14 @@ def test_companies_come_from_the_papers_and_patents_when_no_list_is_given():
     assert result.companies[0].filings_with_mentions >= 1 and "chosen from the evidence" in result.coverage_note
     empty = MarketAgent(None, edgar(), None, now=lambda: NOW).run("stacked memory", use_llm=False)   # nothing retrieved: no company read
     assert empty.companies == [] and "no company names" in empty.coverage_note
+
+
+def test_discovery_works_without_a_company_list(disc_server=None):
+    """Regression (batch crash 2026-11-10): discovery used the old fixed list; with evidence-based companies there is none."""
+    from app.sources.edgar_fulltext import EdgarFullTextClient
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(200, json={"hits": {"total": {"value": 0}, "hits": []}})
+    disc = EdgarFullTextClient(UA, http=httpx.Client(transport=httpx.MockTransport(handler)), limiter=RateLimiter(0), sleep=lambda s: None, now=lambda: NOW)
+    result = MarketAgent(None, edgar(), None, discovery=disc, now=lambda: NOW).run("stacked memory", use_llm=False)
+    assert result.companies == [] and not result.errors

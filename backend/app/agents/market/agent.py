@@ -167,7 +167,7 @@ class MarketAgent:
         if self.edgar:
             sources += self._filings(companies, keywords, result)
             if self.discovery:
-                sources += self._discovered_filings(topic, keywords, result)
+                sources += self._discovered_filings(topic, keywords, result, known={c.ticker.upper() for c in companies})
             if self.facts:
                 self._add_fundamentals(result)
                 result.coverage_note += (
@@ -304,10 +304,9 @@ class MarketAgent:
                 found.append(rec)
         return found
 
-    def _discovered_filings(self, topic: str, keywords: list[str], result: MarketResult) -> list[SourceRecord]:
+    def _discovered_filings(self, topic: str, keywords: list[str], result: MarketResult, *, known: set[str]) -> list[SourceRecord]:
         """Companies not on the list whose filings mention the topic (SEC full-text search), newest filing each."""
         assert self.edgar is not None and self.discovery is not None
-        known = {c.ticker.upper() for c in self.companies}
         try:
             _, filers = self.discovery.find_filers(topic)
         except SourceError as exc:
