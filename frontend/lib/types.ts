@@ -291,6 +291,7 @@ export interface Trading {
   allowlist: { ticker: string; symbol: string; topic: string; band: string | null; score: number | null; price: number | null }[];
   proposals: TradeProposal[]; explorer_tx: string; approval: string; disclaimer: string;
   pay_with: string;
+  pending_live: string[]; auto_approve: boolean;
   strategy: { rules: string[]; config: { check_minutes: number; review_hours: number; drop_pct: number; jump_pct: number; min_confidence_pct: number;
     max_adds_per_ticker: number; max_ticker_share_pct: number }; last_check_at: string | null };
   checks: { id: string; at: string; mode: "live" | "shadow"; triggers: { kind: string; ticker: string; topic: string; detail: string }[]; action: string;

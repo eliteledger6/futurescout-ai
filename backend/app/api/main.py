@@ -300,6 +300,8 @@ def create_app(
             "pay_with": lv.pay_with,
             "strategy": {"rules": STRATEGY_RULES, "config": lv.strategy.model_dump(), "last_check_at": state.last_check_at.isoformat() if state.last_check_at else None},
             "checks": list(reversed((state.checks or [])[-40:])),
+            "pending_live": [p.id for p in state.proposals if p.mode == "live" and p.status == "proposed"],
+            "auto_approve": lv.auto_approve,
             "allowlist": [{k: t[k] for k in ("ticker", "symbol", "topic", "band", "score", "confidence_pct", "price")} for t in tokens],
             "proposals": [p.model_dump(mode="json") for p in reversed(state.proposals[-60:])],
             "explorer_tx": lv.explorer_tx, "approval": "owner's terminal only: python scripts\\fund_trade.py approve <id>",

@@ -205,16 +205,52 @@ def cmd_propose(s, cfg, shadow: bool, usd: float | None) -> int:  # noqa: ANN001
 
 
 def cmd_check(s, cfg, shadow: bool, loop: bool) -> int:  # noqa: ANN001
+    """Strategy wake-up for ONE mode; with --loop, forever (one check every strategy.check_minutes)."""
+    import time
+    while True:
+        rc = run_check(s, cfg, shadow)
+        if not loop:
+            return rc
+        time.sleep(max(60, cfg.live.strategy.check_minutes * 60))
+
+
+def cmd_watch(s, cfg) -> int:  # noqa: ANN001
+    """The auto-trading loop (owner request 2026-11-10): every check_minutes, a shadow check (pretend money, fills itself) and a
+    live check (real money: a PROPOSAL; executed only after the owner's typed approval, unless the owner has set live.auto_approve)."""
+    import time
+    print(f"auto-trading loop: shadow + live check every {cfg.live.strategy.check_minutes} min; live.auto_approve is "
+          f"{'ON (owner setting): approved proposals are sent' if cfg.live.auto_approve else 'off: live proposals wait for the owner'}. Ctrl+C stops.")
+    while True:
+        for shadow in (True, False):
+            try:
+                run_check(s, cfg, shadow)
+            except Exception as exc:  # noqa: BLE001  (one failed check must not kill the loop)
+                print(f"  check failed ({'shadow' if shadow else 'live'}): {type(exc).__name__}: {str(exc)[:160]}")
+        time.sleep(max(60, cfg.live.strategy.check_minutes * 60))
+
+
+def cmd_pending(s, cfg) -> int:  # noqa: ANN001
+    state = load_state(STATE)
+    waiting = [p for p in state.proposals if p.mode == "live" and p.status == "proposed"]
+    if not waiting:
+        print("no live proposal is waiting for approval")
+        return 0
+    for p in waiting:
+        print(f"{p.id}  {p.created_at:%m-%d %H:%M} UTC  buy ${p.usd:.2f} of {p.symbol} ({p.topic})\n   why: {p.rationale[:300]}\n"
+              f"   approve:  python scripts\\fund_trade.py approve {p.id}     reject:  python scripts\\fund_trade.py reject {p.id}")
+    return 0
+
+
+def run_check(s, cfg, shadow: bool) -> int:  # noqa: ANN001
     """Strategy wake-up: look for triggers (new report, sharp move, routine review); if any, the agent assesses and decides.
-    Shadow: filled with pretend money. Live: a proposal the owner approves. Nothing is sent here."""
+    Shadow: filled with pretend money. Live: a proposal the owner approves (or, only if the owner set live.auto_approve, sent)."""
     import hashlib
     import json
-    import time
     from app.fund import PriceBook
     from app.fund.live import shadow_portfolio
     from app.sources.prices import AlphaVantageClient
     st_cfg = cfg.live.strategy
-    while True:
+    if True:
         state = load_state(STATE)
         now = datetime.now(timezone.utc)
         mode = "shadow" if shadow else "live"
@@ -253,9 +289,12 @@ def cmd_check(s, cfg, shadow: bool, loop: bool) -> int:  # noqa: ANN001
         state.checks = (state.checks or [])[-199:] + [check.model_dump(mode="json")]
         save_state(state, STATE)
         print(f"  -> {check.action}: {check.summary[:200]}")
-        if not loop:
-            return 0
-        time.sleep(max(60, st_cfg.check_minutes * 60))
+        if not shadow and check.action == "buy" and check.proposal_id:
+            if cfg.live.auto_approve:
+                print("  live.auto_approve is ON (owner setting): executing through the same checks as a typed approval")
+                return cmd_approve(s, cfg, check.proposal_id, auto=True)
+            print(f"  waiting for the owner:  python scripts\\fund_trade.py approve {check.proposal_id}   (or reject)")
+        return 0
 
 
 def _assess(s, cfg, state, toks, triggers, check, shadow, now, pf):  # noqa: ANN001,ANN201
@@ -360,7 +399,10 @@ def rpc_view_salt(cfg):  # noqa: ANN001,ANN201
     return rpc_view(httpx.Client(timeout=30), cfg.live.rpc, cfg.live.intents_contract, "current_salt", {})
 
 
-def cmd_approve(s, cfg, pid: str) -> int:  # noqa: ANN001
+def cmd_approve(s, cfg, pid: str, *, auto: bool = False) -> int:  # noqa: ANN001
+    """auto=True is used only by the strategy loop when live.auto_approve is true in config/funds.yaml (owner-only switch)."""
+    if auto and not cfg.live.auto_approve:
+        raise RuntimeError("auto approval requested but live.auto_approve is false")
     state = load_state(STATE)
     p = state.get(pid)
     if p is None or p.mode != "live" or p.status != "proposed":
@@ -393,11 +435,14 @@ def cmd_approve(s, cfg, pid: str) -> int:  # noqa: ANN001
     source = "the PRIVATE balance (near.com route, signed order)" if signed_route else "the wallet"
     print(f"REAL MONEY. About to pay ${p.usd:.2f} of {coin} from {source} of {creds[0]} (NEAR mainnet) to buy {p.symbol}.")
     print(f"  agent's reason: {p.rationale}")
-    typed = input(f"Type  APPROVE {p.id}  to go ahead (anything else cancels): ").strip()
-    if typed != f"APPROVE {p.id}":
-        print("cancelled; nothing was sent")
-        return 1
-    p.mark("approved", "approved by the owner at the keyboard", datetime.now(timezone.utc))
+    if auto:
+        p.mark("approved", "approved AUTOMATICALLY: live.auto_approve is on (owner's setting); all code checks passed", datetime.now(timezone.utc))
+    else:
+        typed = input(f"Type  APPROVE {p.id}  to go ahead (anything else cancels): ").strip()
+        if typed != f"APPROVE {p.id}":
+            print("cancelled; nothing was sent")
+            return 1
+        p.mark("approved", "approved by the owner at the keyboard", datetime.now(timezone.utc))
     save_state(state, STATE)
     try:
         ex.execute(state, p)
@@ -414,7 +459,7 @@ def cmd_approve(s, cfg, pid: str) -> int:  # noqa: ANN001
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("command", choices=["status", "propose", "list", "approve", "reject", "resume", "confirm", "refunded", "stop", "start", "register-usdc", "check", "rules"])
+    ap.add_argument("command", choices=["status", "propose", "list", "approve", "reject", "resume", "confirm", "refunded", "stop", "start", "register-usdc", "check", "rules", "watch", "pending"])
     ap.add_argument("id", nargs="?")
     ap.add_argument("--shadow", action="store_true")
     ap.add_argument("--usd", type=float)
@@ -429,6 +474,10 @@ def main() -> int:
         return cmd_propose(s, cfg, args.shadow, args.usd)
     if args.command == "check":
         return cmd_check(s, cfg, args.shadow, args.loop)
+    if args.command == "watch":
+        return cmd_watch(s, cfg)
+    if args.command == "pending":
+        return cmd_pending(s, cfg)
     if args.command == "rules":
         for r in RULES:
             print("-", r)

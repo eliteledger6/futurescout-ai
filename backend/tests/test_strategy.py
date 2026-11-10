@@ -73,3 +73,12 @@ def test_rules_are_enforced_by_code_not_trusted_to_the_model():
     assert d.action == "buy" and d.usd == 25.0 and any("fixed $25.00" in n for n in notes)                                              # live: size fixed by the caps
     (d, c, *_), r = run({"action": "hold", "what_changed": "the fall is not explained by the evidence", "rationale": "hold"})
     assert d.action == "hold" and "WHY YOU WOKE UP" in r.seen and "LATEST EVIDENCE PER TOPIC" in r.seen
+
+
+def test_auto_approve_is_off_by_default_and_in_the_config():
+    import yaml
+    from pathlib import Path
+    from app.fund.live import LiveConfig
+    assert LiveConfig().auto_approve is False
+    cfg = yaml.safe_load(Path(__file__).resolve().parents[1].joinpath("config", "funds.yaml").read_text(encoding="utf-8"))
+    assert cfg["live"]["auto_approve"] is False            # the owner's switch; Claude never flips it

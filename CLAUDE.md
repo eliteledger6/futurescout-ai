@@ -28,7 +28,8 @@ Rules that always apply:
   `live.signed_route_enabled: false`. Only the owner sets it to true; Claude never does, and never signs. Any cap
   change needs the owner's words in chat first. Selling, auto-approval and more budget each need a new written yes.
   Trading strategy (owner 2026-11-10): `fund_trade.py check` wakes the agent on triggers; shadow fills itself, live only PROPOSES.
-  Claude may run `check --shadow`; the owner runs `check` for live proposals and approves each one.
+  Claude may run `check --shadow`, `check` (live PROPOSALS only) and `watch`; the owner approves each live proposal.
+  `live.auto_approve` (funds.yaml) exists for the future and is false: Claude NEVER sets it to true; it is a new written yes from the owner.
 - Say "mock-tested" vs "run live" honestly; never call a feature complete without a test.
 - Do not push, make the repo public, post on X, submit to the hackathon or spend on mainnet without the owner's explicit yes.
 - Update `PROJECT_STATUS.md` after each phase.

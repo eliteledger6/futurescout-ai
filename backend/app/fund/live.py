@@ -46,6 +46,9 @@ SPENT = {"executing", "deposited", "success"}          # statuses that count aga
 
 # ------------------------------------------------------------------ config
 class LiveConfig(BaseModel):
+    auto_approve: bool = False           # FUTURE, owner-only: when true a live proposal from a strategy check is executed without the
+                                         # typed approval. Built 2026-11-10 at the owner's request ("for now still owner approves");
+                                         # Claude never sets it to true. Every other check (caps, allowlist, price band, kill switch) still runs.
     strategy: StrategyConfig = Field(default_factory=StrategyConfig)   # when the agent wakes up and its fixed rules (app/fund/strategy.py)
     trading_enabled: bool = False
     rpc: str = "https://free.rpc.fastnear.com"     # rpc.mainnet.near.org is deprecated and rate-limits (HTTP 429, seen 2026-11-09)

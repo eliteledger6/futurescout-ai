@@ -37,7 +37,7 @@ export default function TradingPage() {
       <section className="hero tp-hero">
         <div className="aurora" aria-hidden="true" />
         <div className="container">
-          <div className="eyebrow">Trading · an AI agent with a human on the switch</div>
+          <div className="eyebrow">Trading · an AI agent with a human on the switch{t?.auto_approve ? " · auto-approve ON" : ""}</div>
           <h1 className="display" style={{ fontSize: "clamp(36px, 5.4vw, 66px)" }}>The agent <span className="gradient-text">proposes</span>. Code checks. The owner approves.</h1>
           {t && (
             <div className={`tp-status ${state}`} style={{ marginTop: 18 }}>
@@ -69,6 +69,10 @@ export default function TradingPage() {
                 <div className="notice"><b>Held now (real):</b> {t.balances.holdings.map((h) => `${h.quantity} ${h.symbol}${h.value_usd != null ? ` (about ${usd(h.value_usd)})` : ""}`).join(" · ")}</div>
               )}
 
+              {t.pending_live.length > 0 && (
+                <div className="notice notice-warn"><b>{t.pending_live.length} real-money proposal{t.pending_live.length > 1 ? "s" : ""} waiting for the owner&apos;s approval.</b>{" "}
+                  The agent decided; only the owner can send it: <span className="mono">python scripts\fund_trade.py approve {t.pending_live[0]}</span> in the backend folder (or <span className="mono">reject</span>).</div>
+              )}
               <AgentLog t={t} />
 
               <h2 className="h2" style={{ margin: "8px 0 0" }}>Every real-money decision <span className="muted small">· {live.length} so far, newest first · each one sealed on NEAR testnet</span></h2>
@@ -91,6 +95,7 @@ export default function TradingPage() {
                     <li>Real quotes costing more than {t.limits.max_cost_pct}% are refused.</li>
                     <li>Each proposal can be sent once. A kill switch stops everything.</li>
                     <li>No control on this site can approve or send a trade.</li>
+                    <li>The agent runs on its own (<span className="mono">fund_trade.py watch</span>): shadow orders fill themselves; a live order is a proposal until the owner approves it{t.auto_approve ? " (auto-approve is ON: the owner switched the typed approval off)" : ""}.</li>
                   </ul>
                   <div className="table-wrap" style={{ background: "transparent" }}>
                     <table className="table">
