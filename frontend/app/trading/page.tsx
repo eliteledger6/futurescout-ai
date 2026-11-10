@@ -19,11 +19,11 @@ export default function TradingPage() {
   const [error, setError] = useState<string | null>(null);
   const [eco, setEco] = useState<Economy | null>(null);
   const busy = useRef(false);
-  useEffect(() => { api.economy().then(setEco).catch(() => setEco(null)); }, []);
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
     const load = () => api.trading()
       .then((x) => { setT(x); setError(null); busy.current = x.proposals.some((p) => p.mode === "live" && IN_FLIGHT.includes(p.status)); })
+      .then(() => api.economy().then(setEco).catch(() => undefined))          // the economy panel refreshes with the rest
       .catch((e: Error) => setError(e.message))
       .finally(() => { timer = setTimeout(load, busy.current ? 4_000 : 15_000); });   // faster while a real trade is in flight
     load();

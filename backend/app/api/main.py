@@ -277,7 +277,7 @@ def create_app(
         wallet = staked = None
         if ec.seller_account:
             hit = economy_cache.get(ec.seller_account)
-            if hit and time.time() - hit[0] < 120:
+            if hit and time.time() - hit[0] < 20:
                 wallet, staked = hit[1]
             else:
                 try:
