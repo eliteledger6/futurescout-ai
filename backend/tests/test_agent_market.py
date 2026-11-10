@@ -119,3 +119,10 @@ def test_request_changes_is_read_from_the_thread(tmp_path):
     assert handle(r, client=m, state=st, state_path=tmp_path / "s.json", cfg=CFG, recent=lambda: RECENT,
                   load_report=lambda rid: ("# sealed report", None), run_research=lambda t: ("n", "", None), now=NOW,
                   log=lambda _: None) is None
+
+
+def test_delivery_shows_the_title_once():
+    body = deliverable("hbm", "# FUTURESCOUT AI research report: hbm\n\nGenerated: today\n\n## Verdict\n", run_id="r",
+                       explorer_url="https://nearblocks.io/txns/T", reused=True, site_url=None)
+    assert body.count("FUTURESCOUT AI research report") == 1 and "Generated: today" in body and "## Verdict" in body
+    assert "- Fingerprint on NEAR: https://nearblocks.io/txns/T" in body

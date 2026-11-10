@@ -119,11 +119,12 @@ def deliverable(topic: str, markdown: str, *, run_id: str, explorer_url: Optiona
     head = [f"# FUTURESCOUT AI research report: {topic}", "",
             ("Delivered from a report our agent team sealed recently on this topic." if reused else
              "Written for this job by FUTURESCOUT's research team (models on NEAR AI Cloud)."),
-            "Every claim carries a label (verified fact, AI interpretation, forecast, assumption, unverified claim) and its sources.",
-            f"Fingerprint on NEAR: {explorer_url}" if explorer_url else "Fingerprint on NEAR: not recorded for this report.",
-            f"Report id: {run_id}" + (f" · online: {site_url.rstrip('/')}/runs/{run_id}" if site_url else ""),
+            "Every claim carries a label (verified fact, AI interpretation, forecast, assumption, unverified claim) and its sources.", "",
+            f"- Fingerprint on NEAR: {explorer_url}" if explorer_url else "- Fingerprint on NEAR: not recorded for this report.",
+            f"- Report id: {run_id}" + (f" · online: {site_url.rstrip('/')}/runs/{run_id}" if site_url else ""),
             "", "---", ""]
-    body = "\n".join(head) + (markdown or "")
+    markdown = re.sub(r"\A\s*# [^\n]*\n+", "", markdown or "", count=1)      # the report's own title: ours is already above
+    body = "\n".join(head) + markdown
     if len(body.encode("utf-8")) > MAX_DELIVERABLE:
         body = body.encode("utf-8")[:MAX_DELIVERABLE - 200].decode("utf-8", "ignore") + "\n\n_(cut to the marketplace's size limit; the full report is online)_\n"
     return body
