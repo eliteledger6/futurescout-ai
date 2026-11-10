@@ -534,7 +534,7 @@ def economy_buy_reports(s, cfg, toks, cands, now, *, execute: bool) -> set:  # n
 def cmd_economy(s, cfg, what: str) -> int:  # noqa: ANN001
     """economy status | price | buy | stake"""
     from app.fund.economy import (YOCTO, account_near, load_economy, save_economy, stake, stake_amount_yocto,
-                                  staked_in_pool)
+                                  staked_amount)
     ec = cfg.economy
     ex = make_executor(s, cfg, with_signer=False)
     now = datetime.now(timezone.utc)
@@ -580,7 +580,7 @@ def cmd_economy(s, cfg, what: str) -> int:  # noqa: ANN001
         print(f"(prices unavailable: {str(exc)[:100]})")
     if seller:
         liquid, locked = account_near(httpx.Client(timeout=30), ec.rpc, seller)
-        st = staked_in_pool(httpx.Client(timeout=30), ec.rpc, ec.staking_contract, seller)
+        st = staked_amount(httpx.Client(timeout=30), ec, seller)
         print(f"report agent wallet: {liquid / YOCTO:.3f} NEAR; staked: {('%.3f NEAR' % (st / YOCTO)) if st is not None else 'n/a'}")
     for p in state.purchases[-10:]:
         print(f"  bought {p.topic[:30]:30} {p.price_near:g} NEAR  {p.status:8} tx {p.tx_hash}")

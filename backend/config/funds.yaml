@@ -77,7 +77,7 @@ live:
 # Agent economy (owner 2026-11-10): the report agent (its own mainnet account) sells each report to the trading agent for
 # NEAR, and stakes what it earns so the staking rewards pay for its NEAR AI usage (Staking for Inference).
 economy:
-  enabled: false                  # OWNER-ONLY switch: true = the trading agent pays real NEAR for reports
+  enabled: true                  # OWNER-ONLY switch: true = the trading agent pays real NEAR for reports
   seller_account: grandbread5023.near   # the report agent (owner's account, linked to NEAR AI Cloud)
   max_price_near: 2.0             # owner: a report never costs more than 2 NEAR
   min_price_near: 0.05
@@ -85,4 +85,7 @@ economy:
   budget_share_of_fund: 0.10      # owner: at most 10% of the live fund's value is spent on reports
   stake_share: 0.80               # owner: the report agent stakes 80% of its NEAR, keeps 20% for fees
   min_stake_near: 1.0
-  staking_contract: ""            # the pool NEAR AI's "Stake NEAR" button uses; empty = staking off until confirmed
+  staking_contract: stake.dao     # NEAR AI's "Stake NEAR" contract, read from the owner's own dashboard stake (2026-11-10)
+  stake_method: stake
+  stake_args: {product_id: prod_33Kp14MGUJa2QA, price_id: price_QzmSvxbZqdbV0XbG6VD6KkbB}   # "NEAR AI Cloud Credits" / "Staking Farm"
+  stake_gas_tgas: 300             # validator nearai.pool.near; rate "100 NEAR x 1 month = $1 credit"

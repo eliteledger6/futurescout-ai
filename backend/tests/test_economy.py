@@ -93,3 +93,23 @@ def test_report_agent_stakes_80pct_and_keeps_20pct(tmp_path):
     ev = stake(state=EconomyState(), path=tmp_path / "e.json", account="report-agent.near", balance_yocto=bal, cfg=CFG,
                call=lambda c, m, a, g, d: calls.append((c, m, d)) or "T1", now=NOW)
     assert ev.status == "staked" and calls == [("pool.poolv1.near", "deposit_and_stake", 4 * YOCTO)] and ev.amount_near == 4.0
+
+
+def test_stake_uses_near_ai_product_args_and_reads_the_farm_position(tmp_path):
+    import base64
+    import json as _json
+    from app.fund.economy import staked_amount
+    cfg = EconomyConfig(enabled=True, seller_account="r.near", staking_contract="stake.dao", stake_method="stake", stake_gas_tgas=300,
+                        stake_args={"product_id": "prod_X", "price_id": "price_Y"})
+    calls = []
+    stake(state=EconomyState(), path=tmp_path / "e.json", account="r.near", balance_yocto=2 * YOCTO, cfg=cfg,
+          call=lambda c, m, a, g, d: calls.append((c, m, a, g, d)) or "T", now=NOW)
+    assert calls == [("stake.dao", "stake", {"product_id": "prod_X", "price_id": "price_Y"}, 300 * 10 ** 12, 16 * YOCTO // 10)]
+
+    class Http:
+        def post(self, url, json, timeout):  # noqa: A002
+            args = _json.loads(base64.b64decode(json["params"]["args_base64"]))
+            assert json["params"]["method_name"] == "get_farm_position" and args == {"account_id": "r.near", "product_id": "prod_X"}
+            body = _json.dumps({"staked_near_amount": str(5 * YOCTO), "status": "Active"}).encode()
+            return type("R", (), {"json": lambda self: {"result": {"result": list(body)}}})()
+    assert staked_amount(Http(), cfg, "r.near") == 5 * YOCTO

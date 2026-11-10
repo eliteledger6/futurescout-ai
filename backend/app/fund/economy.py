@@ -44,8 +44,10 @@ class EconomyConfig(BaseModel):
     budget_share_of_fund: float = 0.10   # owner: at most this share of the live fund's value goes to reports
     stake_share: float = 0.80            # owner: the report agent stakes this share of its NEAR ...
     min_stake_near: float = 1.0          # ... when that is at least this much (smaller stakes earn almost nothing)
-    staking_contract: str = ""           # the pool behind NEAR AI's "Stake NEAR" button; empty = staking is off
+    staking_contract: str = ""           # the contract behind NEAR AI's "Stake NEAR" button; empty = staking is off
     stake_method: str = "deposit_and_stake"
+    stake_args: dict = Field(default_factory=dict)   # e.g. NEAR AI's product_id and price_id (copied from the dashboard's own call)
+    stake_gas_tgas: int = 125
     rpc: str = "https://free.rpc.fastnear.com"
     wallet_reserve_near: float = 0.05    # the trading agent always keeps this much NEAR for fees
 
@@ -226,7 +228,7 @@ def stake(*, state: EconomyState, path: Path, account: str, balance_yocto: int, 
     state.stakes.append(ev)
     save_economy(state, path)
     try:
-        ev.tx_hash = call(cfg.staking_contract, cfg.stake_method, {}, 125 * 10 ** 12, amount) or None
+        ev.tx_hash = call(cfg.staking_contract, cfg.stake_method, dict(cfg.stake_args), cfg.stake_gas_tgas * 10 ** 12, amount) or None
         ev.status, ev.note = "staked", f"staked {ev.amount_near:g} NEAR ({cfg.stake_share:.0%} of {ev.balance_before_near:g}); the rest stays for fees"
     except Exception as exc:  # noqa: BLE001
         ev.status, ev.note = "failed", f"stake refused: {str(exc)[:200]}"
@@ -241,16 +243,20 @@ def account_near(http: httpx.Client, rpc: str, account: str) -> tuple[int, int]:
     return int(r.get("amount") or 0), int(r.get("locked") or 0)
 
 
-def staked_in_pool(http: httpx.Client, rpc: str, pool: str, account: str) -> Optional[int]:
-    """Staked balance of `account` in a standard staking pool (get_account_staked_balance). Read-only."""
-    if not pool:
+def staked_amount(http: httpx.Client, cfg: EconomyConfig, account: str) -> Optional[int]:
+    """NEAR `account` has staked through the configured contract. NEAR AI's stake.dao: get_farm_position(account_id,
+    product_id) -> staked_near_amount (seen 2026-11-10); a plain staking pool: get_account_staked_balance. Read-only."""
+    if not cfg.staking_contract:
         return None
     import base64
+    product = cfg.stake_args.get("product_id")
+    method, args = (("get_farm_position", {"account_id": account, "product_id": product}) if product
+                    else ("get_account_staked_balance", {"account_id": account}))
     body = {"jsonrpc": "2.0", "id": "fs-econ", "method": "query",
-            "params": {"request_type": "call_function", "finality": "final", "account_id": pool, "method_name": "get_account_staked_balance",
-                       "args_base64": base64.b64encode(json.dumps({"account_id": account}).encode()).decode()}}
+            "params": {"request_type": "call_function", "finality": "final", "account_id": cfg.staking_contract, "method_name": method,
+                       "args_base64": base64.b64encode(json.dumps(args).encode()).decode()}}
     try:
-        res = http.post(rpc, json=body, timeout=30).json()["result"]["result"]
-        return int(json.loads(bytes(res).decode()))
+        out = json.loads(bytes(http.post(cfg.rpc, json=body, timeout=30).json()["result"]["result"]).decode())
+        return int(out["staked_near_amount"]) if isinstance(out, dict) else int(out or 0)
     except Exception:  # noqa: BLE001
         return None

@@ -35,7 +35,7 @@ Rules that always apply:
   `live.sells_enabled: true`. Re-investing sale money needs `live.budget_mode: net`. Both are owner-only: Claude never sets them.
   Agent economy (owner 2026-11-10): the trading agent buys reports from the report agent (grandbread5023.near) in NEAR (max 2 NEAR
   per report, at most 10% of the fund); the report agent stakes 80% of its NEAR (keeps 20%) via NEAR AI Staking for Inference.
-  `economy.enabled` and `economy.staking_contract` are owner-only; payments and stakes sign with keys, so they run in the owner's loop.
+  `economy.enabled` is owner-only (owner set it true 2026-11-10); staking goes to stake.dao (NEAR AI Cloud Credits), copied from the owner's own dashboard stake; payments and stakes sign with keys, so they run in the owner's loop.
 - Hosting (2026-11-10): Render (API, read-only snapshot `backend/site_data`, no key) + Vercel (website). See HOSTING.md.
 - Say "mock-tested" vs "run live" honestly; never call a feature complete without a test.
 - Do not push, make the repo public, post on X, submit to the hackathon or spend on mainnet without the owner's explicit yes.

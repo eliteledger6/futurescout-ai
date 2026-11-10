@@ -271,7 +271,7 @@ def create_app(
     def economy() -> dict:
         """Agent economy, READ-ONLY: report prices, the trading agent's report purchases (paid in NEAR, checked on chain)
         and the report agent's stake for NEAR AI credits. Nothing here can move money or shows a key."""
-        from app.fund.economy import YOCTO, account_near, load_economy, staked_in_pool
+        from app.fund.economy import YOCTO, account_near, load_economy, staked_amount
         ec = load_fund_config().economy
         st = load_economy(trading_dir.parent / "economy" / "state.json")
         wallet = staked = None
@@ -283,7 +283,7 @@ def create_app(
                 try:
                     with httpx.Client(timeout=15.0) as http:
                         liquid, _ = account_near(http, ec.rpc, ec.seller_account)
-                        pool = staked_in_pool(http, ec.rpc, ec.staking_contract, ec.seller_account)
+                        pool = staked_amount(http, ec, ec.seller_account)
                     wallet, staked = round(liquid / YOCTO, 4), (round(pool / YOCTO, 4) if pool is not None else None)
                     economy_cache[ec.seller_account] = (time.time(), (wallet, staked))
                 except Exception:  # noqa: BLE001
