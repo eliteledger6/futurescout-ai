@@ -28,7 +28,7 @@ export default function TradingPage() {
     return () => clearTimeout(timer);
   }, []);
 
-  const live = t?.proposals.filter((p) => p.mode === "live") ?? [];          // every real-money decision, newest first
+  const live = t?.proposals.filter((p) => p.mode === "live" && (p.status === "success" || IN_FLIGHT.includes(p.status))) ?? [];   // completed (or running) real trades, newest first
   const current = live.find((p) => p.side !== "hold");
   const shadowOrders = t?.proposals.filter((p) => p.mode === "shadow") ?? [];
   const state = !t ? "" : t.kill_switch ? "stopped" : t.trading_enabled ? "armed" : "";
@@ -80,13 +80,9 @@ export default function TradingPage() {
               )}
               <AgentLog t={t} />
 
-              <h2 className="h2" style={{ margin: "8px 0 0" }}>Every real-money decision <span className="muted small">· {live.length} so far, newest first · each one sealed on NEAR testnet</span></h2>
-              {live.length === 0 && (
-                <div className="notice">No real trade proposed yet. The agent wakes on triggers (<span className="mono">python scripts\\fund_trade.py check</span>) or the owner runs <span className="mono">propose</span>.</div>
-              )}
-              {live.map((p, i) => p.side === "hold"
-                ? <HoldCard key={p.id} p={p} />
-                : <LiveTrade key={p.id} p={p} explorer={t.explorer_tx} animate={i === 0} />)}
+              <h2 className="h2" style={{ margin: "8px 0 0" }}>Real-money trades <span className="muted small">· {live.length} completed, newest first · each record sealed on NEAR testnet</span></h2>
+              {live.length === 0 && <div className="notice">No real trade completed yet.</div>}
+              {live.map((p, i) => <LiveTrade key={p.id} p={p} explorer={t.explorer_tx} animate={i === 0} />)}
 
               <ShadowPortfolio t={t} orders={shadowOrders} />
 
@@ -146,10 +142,11 @@ function Pipeline({ p, auto = false }: { p?: TradeProposal; auto?: boolean }) {
   const nodes = NODES.map((n) => (n.key === "owner" && auto ? { ...n, name: "Auto-approve", sub: "runs when every check passes" } : n));
   const selling = p?.side === "sell";
   // active = index of the stage the newest real proposal is at; done = stages before it
-  let active = -1, bad = -1, allDone = false, caption: ReactNode = <>Idle. The agent runs when the owner asks for a proposal.</>;
+  let active = -1, bad = -1, allDone = false, caption: ReactNode = <>Idle. The agent wakes on a new report, a sharp price move or its daily review.</>;
   if (p) {
     const s = p.status;
-    if (s === "proposed") { active = 3; caption = <>Waiting for the <b>owner&apos;s approval</b> to {selling ? "sell" : "buy"} {usd(p.usd)} of {p.symbol}.</>; }
+    if (s === "proposed") { active = 3; caption = auto ? <>The agent decided to {selling ? "sell" : "buy"} {usd(p.usd)} of {p.symbol}; <b>checks running</b>.</>
+      : <>Waiting for the <b>owner&apos;s approval</b> to {selling ? "sell" : "buy"} {usd(p.usd)} of {p.symbol}.</>; }
     else if (s === "approved" || s === "executing") { active = 4; caption = <>Approved. Getting a real quote and <b>sending the payment</b>.</>; }
     else if (s === "deposited") { active = 4; caption = selling ? <>Order sent. <b>NEAR Intents is swapping</b> {p.symbol} into NEAR.</> : <>Payment sent. <b>NEAR Intents is swapping</b> it into {p.symbol}.</>; }
     else if (s === "success") { allDone = true; caption = selling
@@ -160,7 +157,7 @@ function Pipeline({ p, auto = false }: { p?: TradeProposal; auto?: boolean }) {
     else { bad = p.deposit_tx ? 4 : 2; caption = <><b>Stopped by a check.</b> {p.error ?? "See the step log."}</>; }
   }
   return (
-    <div className="tp-pipe" role="img" aria-label="Trading pipeline: research, trading agent, safety checks, owner approval, NEAR Intents swap, holding">
+    <div className="tp-pipe" role="img" aria-label={`Trading pipeline: research, trading agent, safety checks, ${auto ? "automatic approval" : "owner approval"}, NEAR Intents swap, holding`}>
       {nodes.map((n, i) => {
         const done = allDone || (active >= 0 ? i < active : bad >= 0 ? i < bad : false);
         const cls = [done ? "done" : "", i === active ? "active" : "", i === bad ? "bad" : "",
@@ -197,60 +194,46 @@ function Elapsed({ since }: { since: string }) {
   return <span className="mono">{Math.floor(s / 60)}:{String(s % 60).padStart(2, "0")}</span>;
 }
 
-function HoldCard({ p }: { p: TradeProposal }) {
-  return (
-    <div className="tr-card">
-      <div className="tr-head">
-        <h2 className="tr-title">Decided to hold <span className="muted small">{fmtDate(p.created_at)}</span></h2>
-        <div className="pills"><span className="pill tr-pill-live">real money</span><span className="pill">hold</span></div>
-      </div>
-      <div className="tr-agent">
-        <div className="tr-avatar">{ICON.agent}</div>
-        <div>
-          <div className="tr-model">TRADING AGENT · {(p.model ?? "model").replace(/_/g, " ").toUpperCase()}</div>
-          <p className="tr-say">{p.rationale}</p>
-          {p.risks.length > 0 && <ul className="tr-risks">{p.risks.map((r) => <li key={r}>{r}</li>)}</ul>}
-        </div>
-      </div>
-      <div className="small muted">{p.history[p.history.length - 1]?.note}{p.chain?.explorer_url && <> · <a href={p.chain.explorer_url} target="_blank" rel="noopener noreferrer">record sealed on NEAR testnet ↗</a></>}</div>
-    </div>
-  );
+const TRIGGER_WORDS: Record<string, string> = { new_report: "new report", price_drop: "sharp fall", price_jump: "sharp rise", review: "daily review", manual: "review on request", after_sale: "after a sale" };
+
+function whyWoke(triggers: { kind: string }[]): string {
+  const kinds = Array.from(new Set(triggers.map((x) => TRIGGER_WORDS[x.kind] ?? x.kind)));
+  return kinds.length ? kinds.join(", ") : "check";
 }
 
-const TRIGGER_WORDS: Record<string, string> = { new_report: "new report", price_drop: "sharp fall", price_jump: "sharp rise", review: "routine review", manual: "owner asked", after_sale: "money from a sale" };
+function firstSentence(text: string): string {
+  const m = text.match(/^.{20,}?[.!?](\s|$)/);
+  const one = (m ? m[0] : text).trim();
+  return one.length > 180 ? one.slice(0, 177).trimEnd() + "…" : one;
+}
 
 function AgentLog({ t }: { t: Trading }) {
-  const checks = t.checks ?? [];
+  const woke = (t.checks ?? []).filter((c) => c.action !== "none" && !c.summary.startsWith("No budget left"));   // the agent was actually called
   const cfg = t.strategy?.config;
   return (
     <div className="tr-card">
       <div className="tr-head">
-        <h2 className="tr-title">When the agent wakes up <span className="muted small">· and what it decided</span></h2>
+        <h2 className="tr-title">Latest decisions <span className="muted small">· by the trading agent</span></h2>
         <div className="pills"><span className="pill">{t.strategy?.last_check_at ? `last check ${fmtDate(t.strategy.last_check_at)}` : "no check yet"}</span></div>
       </div>
-      {cfg && (
-        <p className="small" style={{ color: "var(--text-2)", margin: 0 }}>
-          Triggers: a new sealed report for a traded topic · a one-day fall of {cfg.drop_pct}% or more, or a rise of {cfg.jump_pct}% or more, in a held or allowed stock
-          · a routine review every {cfg.review_hours} h. On waking it re-reads the report&apos;s verdict, confidence and dated findings, then buys one candidate or holds.
-          No new buy below {cfg.min_confidence_pct}% report confidence; at most {cfg.max_adds_per_ticker} dip-buys per company; one company at most {cfg.max_ticker_share_pct}% of the shadow budget. {t.selling?.enabled ? "Sales: only a holding kept 24 h or more, when its report weakened, the evidence explains a fall, or to rotate into a better-supported company." : "Only buys (selling is switched off)."}
-        </p>
-      )}
-      {checks.length === 0 ? <div className="small muted">No wake-up recorded yet.</div> : (
+      <p className="small" style={{ color: "var(--text-2)", margin: 0 }}>
+        It checks every {cfg?.check_minutes ?? 60} min and wakes on a new report, a sharp price move or a daily review{t.selling?.enabled ? "; it can buy, sell or hold" : "; it can buy or hold"}.
+      </p>
+      {woke.length === 0 ? <div className="small muted">No decision recorded yet.</div> : (
         <ol className="tr-log" style={{ margin: 0 }}>
-          {checks.slice(0, 12).map((c) => (
+          {woke.slice(0, 5).map((c) => (
             <li key={c.id}>
-              <b>{fmtDate(c.at)}</b> · <span className="pill" style={{ marginRight: 6 }}>{c.mode}</span>
-              {c.triggers.length ? c.triggers.map((x) => `${TRIGGER_WORDS[x.kind] ?? x.kind}${x.ticker ? ` ${x.ticker}` : x.topic ? ` (${x.topic})` : ""}`).join(", ") : "no trigger"}
-              {" → "}<b>{c.action === "none" ? "not called" : c.action === "buy" ? `buy ${usd(c.usd)} of ${c.ticker}` : c.action === "sell" ? `sell about ${usd(c.usd)} of ${c.ticker}` : "hold"}</b>
-              {c.what_changed && <div className="small" style={{ color: "var(--text-2)" }}>{c.what_changed}</div>}
-              {c.summary && c.action !== "none" && <div className="small muted">{c.summary}</div>}
+              <b>{fmtDate(c.at)}</b> · <span className="pill" style={{ marginRight: 6 }}>{c.mode === "live" ? "real" : "shadow"}</span>
+              {whyWoke(c.triggers)}{" → "}
+              <b>{c.action === "buy" ? `bought ${usd(c.usd)} of ${c.ticker}` : c.action === "sell" ? `sold about ${usd(c.usd)} of ${c.ticker}` : "held"}</b>
+              {c.summary && <div className="small muted">{firstSentence(c.summary)}</div>}
             </li>
           ))}
         </ol>
       )}
-      {t.strategy?.rules && (
-        <details><summary className="small muted" style={{ cursor: "pointer" }}>The strategy, rule by rule</summary>
-          <ul className="small" style={{ color: "var(--text-2)", lineHeight: 1.6 }}>{t.strategy.rules.map((r) => <li key={r}>{r}</li>)}</ul>
+      {(t.strategy?.rules || cfg) && (
+        <details><summary className="small muted" style={{ cursor: "pointer" }}>How it decides</summary>
+          {t.strategy?.rules && <ul className="small" style={{ color: "var(--text-2)", lineHeight: 1.6 }}>{t.strategy.rules.map((r) => <li key={r}>{r}</li>)}</ul>}
         </details>
       )}
     </div>
@@ -267,7 +250,8 @@ function LiveTrade({ p, explorer, animate = true }: { p: TradeProposal; explorer
   const sentAt = p.history.find((e) => e.status === "deposited")?.at;
   const endBad = s === "refunded" || s === "failed" || s === "rejected";
   const idx = s === "proposed" ? 0 : s === "approved" || s === "executing" ? 1 : s === "deposited" ? 2 : s === "success" ? 3 : p.deposit_tx ? 2 : p.history.some((e) => e.status === "approved") ? 1 : 0;
-  const stops = ["Proposed by the agent", "Approved by the owner", "Payment sent", s === "refunded" ? "Refunded" : s === "failed" ? "Failed" : s === "rejected" ? "Rejected" : "Filled"];
+  const autoApproved = p.history.some((e) => e.status === "approved" && /AUTOMATICALLY/.test(e.note));
+  const stops = ["Decided by the agent", autoApproved ? "Approved by the agent (all checks passed)" : "Approved by the owner", p.side === "sell" ? "Order sent" : "Payment sent", s === "refunded" ? "Refunded" : s === "failed" ? "Failed" : s === "rejected" ? "Rejected" : "Filled"];
   return (
     <div className={`tr-card live ${working ? "working" : ""} ${s === "success" ? "ok" : ""}`}>
       <div className="tr-head">
