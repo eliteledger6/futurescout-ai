@@ -33,8 +33,8 @@ Rules that always apply:
   check signs with the owner's key, so Claude does NOT run live `check` or `watch`: the owner runs the loop; Claude may run `check --shadow`.
   Selling (owner's written yes 2026-11-10, "Yes, build selling"): built, mock-tested, dry quotes run live; OFF until the owner sets
   `live.sells_enabled: true`. Re-investing sale money needs `live.budget_mode: net`. Both are owner-only: Claude never sets them.
-  Agent economy (owner 2026-11-10): the trading agent buys reports from the report agent (grandbread5023.near) in NEAR (3-5 NEAR
-  per report by quality, owner 2026-11-10; at most 30% of the fund); the report agent stakes 70% of each payment (keeps 30%; at $200 the pot funds a second trading agent, planned) via NEAR AI Staking for Inference.
+  Agent economy (owner 2026-11-10): the trading agent buys reports from the report agent (grandbread5023.near) in NEAR ($2-3
+  per report by what it cost to make, paid in NEAR, owner 2026-11-10; Agent Market hire $3; at most 30% of the fund); the report agent stakes 70% of each payment (keeps 30%; at $200 the pot funds a second trading agent, planned) via NEAR AI Staking for Inference.
   `economy.enabled` is owner-only (owner set it true 2026-11-10); staking goes to stake.dao (NEAR AI Cloud Credits), copied from the owner's own dashboard stake; payments and stakes sign with keys, so they run in the owner's loop.
   Restart 2026-11-10 (owner): trading/economy records archived, fresh $60 budget approved by the owner in chat.
   Agent Market (owner 2026-11-10): the report agent takes jobs at market.near.ai via scripts/market_agent.py; the owner makes the

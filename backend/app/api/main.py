@@ -200,12 +200,14 @@ def create_app(
 
     def report_price(run_id: str, report) -> dict:  # noqa: ANN001
         ec = load_fund_config().economy
-        known = load_economy(econ_path).prices.get(run_id)
+        known = None if ec.max_price_usd else load_economy(econ_path).prices.get(run_id)   # dollar prices follow the live NEAR price
         if known:
             return {"price_near": known.price_near, "price_usd": known.price_usd}
         v = build_verdict(report)
+        searches = int(((report.patent.source_usage or {}).get("requests") or 0) if report.patent else 0)
         p = price_report(run_id=run_id, topic=report.topic, cost_usd=report.total_cost_usd or 0.0, score=v.get("score"),
-                         confidence_pct=v.get("confidence_pct"), near_usd=near_usd(), cfg=ec, now=datetime.now(timezone.utc))
+                         confidence_pct=v.get("confidence_pct"), near_usd=near_usd(), cfg=ec, now=datetime.now(timezone.utc),
+                         patent_searches=searches)
         return {"price_near": p.price_near, "price_usd": p.price_usd}
 
     def lock_info(run_id: str, report) -> Optional[dict]:  # noqa: ANN001
@@ -277,7 +279,7 @@ def create_app(
         try:
             with httpx.Client(timeout=60.0) as http:
                 sale = market_buy(state=load_market(sales_path), path=sales_path, run_id=req.run_id, buyer=req.buyer, tx_hash=req.tx_hash,
-                                  price_near=info["price_near"], cfg=ec, read=lambda h, who: read_tx(http, ec.rpc, h, who),
+                                  price_near=info["price_near"] * 0.97, cfg=ec,   # 3% leeway: the NEAR price moves between quote and payment read=lambda h, who: read_tx(http, ec.rpc, h, who),
                                   now=datetime.now(timezone.utc))
         except ValueError as exc:
             raise HTTPException(402, {"message": str(exc), **info}) from None

@@ -36,13 +36,13 @@ Technology investing mixes verifiable facts, rumours and hype, and "AI picks" ra
 
 ### Agent economy: agents pay each other and pay for their own AI
 
-The report agent prices each report in NEAR (what it cost to make in AI usage, set by its quality inside a 3-5 NEAR band, never below its AI cost). The trading agent may only use reports it has bought, pays with a NEAR transfer that the code reads back from the chain, and spends at most 30% of its fund on reports. The report agent stakes 70% of every payment through NEAR AI Cloud's Staking for Inference, so the staking rewards pay for the agents' model usage; it keeps 30%, and once that pot passes $200 it funds a second trading agent (the next step, not built yet). Commands: `fund_trade.py economy status | price | buy | stake`. Owner switch: `economy.enabled` in `backend/config/funds.yaml`. Honest limit: at these amounts the staking rewards cover only a small part of the real AI bill.
+The report agent prices each report at what it cost to make (models and X reads, patent searches, the NEAR seal) plus $1.50, kept between $2 and $3 and paid in NEAR at the live price (owner 2026-11-10). The trading agent may only use reports it has bought, pays with a NEAR transfer that the code reads back from the chain, and spends at most 30% of its fund on reports. The report agent stakes 70% of every payment through NEAR AI Cloud's Staking for Inference, so the staking rewards pay for the agents' model usage; it keeps 30%, and once that pot passes $200 it funds a second trading agent (the next step, not built yet). Commands: `fund_trade.py economy status | price | buy | stake`. Owner switch: `economy.enabled` in `backend/config/funds.yaml`. Honest limit: at these amounts the staking rewards cover only a small part of the real AI bill.
 
 ### Report market: any trading bot can buy a report
 
 Reports are paid access only: they are never unlocked on the site without payment (owner 2026-11-10; `economy.embargo_hours: null`; one demo report stays free). Any bot can buy it without an account or a key:
 
-1. `GET /api/market`: the newest scored report per topic, its price in NEAR (3-5 NEAR by quality) and the account to pay (the report agent, NEAR mainnet).
+1. `GET /api/market`: the newest scored report per topic, its price in NEAR ($2-3 by cost) and the account to pay (the report agent, NEAR mainnet).
 2. Send that much NEAR to the report agent with an ordinary NEAR mainnet transfer.
 3. `POST /api/market/buy` with `{"run_id", "tx_hash", "buyer"}`: the API reads the transaction from the chain (final, signed by the buyer, paid to the report agent, at least the price; each transaction redeemed once) and returns the full report and an access token for `/api/runs/{run_id}?access=...`.
 

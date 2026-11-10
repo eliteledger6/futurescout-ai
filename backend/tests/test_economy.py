@@ -26,6 +26,23 @@ def test_price_follows_cost_and_quality_within_the_owners_limits():
     assert price(score=0, confidence_pct=0, cost_usd=14.4).price_near == pytest.approx(5.0)         # never below cost x 3 (capped)
 
 
+def test_dollar_price_follows_what_the_report_cost_to_make():
+    cfg = EconomyConfig(enabled=True, seller_account="r.near", min_price_usd=2.0, max_price_usd=3.0, margin_usd=1.5)
+    cheap = price(cost_usd=0.10, cfg=cfg)                                   # 0.10 + seal 0.05 + 1.50 = 1.65 -> $2 minimum
+    assert cheap.price_usd == pytest.approx(2.0, abs=0.01) and cheap.price_near == pytest.approx(0.556, abs=0.001)
+    mid = price(cost_usd=0.45, cfg=cfg, patent_searches=8)                  # 0.45 + 0.20 + 0.05 + 1.50 = 2.20
+    assert mid.price_usd == pytest.approx(2.2, abs=0.01) and "8 patent searches" in mid.basis
+    dear = price(cost_usd=1.40, cfg=cfg, patent_searches=6)                # 3.10 -> $3 maximum
+    assert dear.price_usd == pytest.approx(3.0, abs=0.01)
+    assert price(cost_usd=0.45, cfg=cfg, near_usd=1.8).price_near == pytest.approx(1.111, abs=0.001)   # NEAR halves: twice the NEAR
+
+
+def test_shipped_config_prices_reports_at_2_to_3_dollars():
+    from app.fund import load_fund_config
+    ec = load_fund_config().economy
+    assert (ec.min_price_usd, ec.max_price_usd) == (2.0, 3.0) and ec.max_price_near >= 3.0 / 3.0
+
+
 def test_budget_is_10pct_of_the_fund_minus_reports_already_bought():
     st = EconomyState()
     assert report_budget_near(fund_value_usd=60.0, near_usd=3.0, state=st, cfg=CFG) == pytest.approx(2.0)

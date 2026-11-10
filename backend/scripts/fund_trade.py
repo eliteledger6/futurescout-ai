@@ -559,8 +559,9 @@ def economy_buy_reports(s, cfg, toks, cands, now, *, execute: bool) -> set:  # n
         rep = found[0]
         score = rep.investment.score.score if rep.investment and rep.investment.score else None
         conf = getattr(rep.investment.score.confidence, "value", None) if rep.investment and rep.investment.score else None
+        searches = int(((rep.patent.source_usage or {}).get("requests") or 0) if rep.patent else 0)
         price = price_report(run_id=rid, topic=c.topic, cost_usd=rep.total_cost_usd or 0.0, score=score,
-                             confidence_pct=c.confidence_pct, near_usd=px, cfg=ec, now=now)
+                             confidence_pct=c.confidence_pct, near_usd=px, cfg=ec, now=now, patent_searches=searches)
         state.prices[rid] = price
         budget = report_budget_near(fund_value_usd=live_fund_value(s, cfg, ex, priv), near_usd=px, state=state, cfg=ec)
         private = ec.pay_from == "private"

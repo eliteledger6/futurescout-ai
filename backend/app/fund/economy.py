@@ -41,6 +41,13 @@ class EconomyConfig(BaseModel):
     max_price_near: float = 5.0          # owner 2026-11-10: a report costs 3 to 5 NEAR, set by its quality
     min_price_near: float = 3.0
     markup: float = 3.0                  # floor: never below what the report cost to make x markup
+    # Owner 2026-11-10: price in DOLLARS by what the report cost to make, paid in NEAR at the live price.
+    # When max_price_usd is set it replaces the NEAR quality band: price = full cost + margin_usd, kept in [min, max].
+    min_price_usd: Optional[float] = None
+    max_price_usd: Optional[float] = None
+    margin_usd: float = 1.50
+    patent_search_usd: float = 0.025     # SerpApi, counted at a paid-plan rate (free while inside the monthly allowance)
+    seal_usd: float = 0.05               # NEAR mainnet seal (~0.013 NEAR)
     budget_share_of_fund: float = 0.10   # owner: at most this share of the live fund's value goes to reports
     stake_share: float = 0.70            # owner 2026-11-10: the report agent stakes 70% of each NEW payment ...
     min_stake_near: float = 1.0          # ... when that is at least this much (smaller stakes earn almost nothing)
@@ -119,9 +126,19 @@ def save_economy(state: EconomyState, path: Path) -> None:
 
 # ------------------------------------------------------------------ pricing (the report agent sets its price)
 def price_report(*, run_id: str, topic: str, cost_usd: float, score: Optional[float], confidence_pct: Optional[float],
-                 near_usd: float, cfg: EconomyConfig, now: datetime) -> Price:
-    """Price inside the owner's band by quality (score and confidence): the weakest report costs min_price_near, the best
-    max_price_near; never below what the report cost to make (x markup)."""
+                 near_usd: float, cfg: EconomyConfig, now: datetime, patent_searches: int = 0) -> Price:
+    """Owner 2026-11-10 (max_price_usd set): full cost to make the report (models + X reads, patent searches, the NEAR
+    seal) + margin_usd, kept between min_price_usd and max_price_usd, paid in NEAR at the live price.
+    Otherwise the older rule: inside the NEAR band by quality, never below cost x markup."""
+    if cfg.max_price_usd:
+        full = cost_usd + patent_searches * cfg.patent_search_usd + cfg.seal_usd
+        usd = round(min(cfg.max_price_usd, max(cfg.min_price_usd or 0.0, full + cfg.margin_usd)), 2)
+        near = round(usd / near_usd, 3) if near_usd > 0 else 0.0
+        basis = (f"cost to make ${full:.2f} (models and X ${cost_usd:.2f}, {patent_searches} patent searches, NEAR seal) "
+                 f"+ ${cfg.margin_usd:.2f} margin, kept in the ${cfg.min_price_usd or 0:g}-${cfg.max_price_usd:g} band "
+                 f"= ${usd:.2f} = {near:g} NEAR at ${near_usd:.2f}")
+        return Price(run_id=run_id, topic=topic, price_near=near, price_usd=round(near * near_usd, 4), cost_usd=round(full, 4),
+                     basis=basis, at=now)
     s = (score if score is not None else 40.0) / 100
     c = (confidence_pct if confidence_pct is not None else 30.0) / 100
     quality = max(0.0, min(1.0, s * (0.5 + c)))  # e.g. score 80, confidence 50% -> 0.8

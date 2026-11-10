@@ -216,3 +216,6 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
 - 2026-11-10 (owner): reports are never unlocked without payment. `economy.embargo_hours: null` keeps every report locked
   (402 with the price) until a buyer pays; a number brings back "free after N hours". The demo report (high bandwidth
   memory) stays free via `always_free`. Mock-tested.
+- 2026-11-10 (owner): reports cost $2-3 by what they cost to make (models and X reads, patent searches at $0.025, NEAR seal
+  $0.05, plus $1.50), paid in NEAR at the live price; buyers get 3% leeway for NEAR price moves. Agent Market hire: $3.
+  Mock-tested (307 tests).
