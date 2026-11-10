@@ -15,6 +15,9 @@ from app.db import Base, make_engine, save_report
 from app.report import render_markdown
 from tests.test_db import fixture_report
 
+import pytest as _pt
+pytestmark = _pt.mark.usefixtures("closed_market")
+
 
 def settings(**kw):
     return Settings(_env_file=None, near_ai_api_key="k", **kw)

@@ -21,11 +21,11 @@ function LockedView({ l, id }: { l: LockedReport; id: string }) {
   return (
     <section className="section">
       <div className="container stack" style={{ maxWidth: 820 }}>
-        <div className="eyebrow">Early access · sold to trading bots</div>
+        <div className="eyebrow">{l.unlock_at ? "Early access" : "Paid report"} · sold by the report agent</div>
         <h1 className="h2" style={{ margin: 0 }}>{s?.topic ?? "Fresh report"}</h1>
         <p className="sub" style={{ margin: 0 }}>
-          This report is new. For its first 24 hours the report agent sells it to trading bots{l.price_near != null ? <> for <b>{l.price_near} NEAR</b>{l.price_usd != null ? ` (about $${l.price_usd.toFixed(2)})` : ""}</> : ""}.
-          It becomes free to read here on <b>{fmtDate(l.unlock_at)}</b>.
+          The report agent sells this report to trading bots{l.price_near != null ? <> for <b>{l.price_near} NEAR</b>{l.price_usd != null ? ` (about $${l.price_usd.toFixed(2)})` : ""}</> : ""}.
+          {l.unlock_at ? <> It becomes free to read here on <b>{fmtDate(l.unlock_at)}</b>.</> : <> The full report is only available after payment.</>}
         </p>
         {s && (
           <div className="pills">

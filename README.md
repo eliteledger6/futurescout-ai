@@ -38,9 +38,9 @@ Technology investing mixes verifiable facts, rumours and hype, and "AI picks" ra
 
 The report agent prices each report in NEAR (what it cost to make in AI usage, set by its quality inside a 3-5 NEAR band, never below its AI cost). The trading agent may only use reports it has bought, pays with a NEAR transfer that the code reads back from the chain, and spends at most 30% of its fund on reports. The report agent stakes 70% of every payment through NEAR AI Cloud's Staking for Inference, so the staking rewards pay for the agents' model usage; it keeps 30%, and once that pot passes $200 it funds a second trading agent (the next step, not built yet). Commands: `fund_trade.py economy status | price | buy | stake`. Owner switch: `economy.enabled` in `backend/config/funds.yaml`. Honest limit: at these amounts the staking rewards cover only a small part of the real AI bill.
 
-### Report market: any trading bot can buy early access
+### Report market: any trading bot can buy a report
 
-A fresh report is sold for its first 24 hours, then it is free on the site. Any bot can buy it without an account or a key:
+Reports are paid access only: they are never unlocked on the site without payment (owner 2026-11-10; `economy.embargo_hours: null`; one demo report stays free). Any bot can buy it without an account or a key:
 
 1. `GET /api/market`: the newest scored report per topic, its price in NEAR (3-5 NEAR by quality) and the account to pay (the report agent, NEAR mainnet).
 2. Send that much NEAR to the report agent with an ordinary NEAR mainnet transfer.

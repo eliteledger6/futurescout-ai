@@ -71,3 +71,16 @@ def test_api_locks_a_fresh_report_with_buying_instructions(tmp_path, monkeypatch
 def test_owner_can_keep_a_report_always_free():
     cfg = EconomyConfig(market_open=True, seller_account="r.near", always_free=["demo1"])
     assert not is_locked(NOW, cfg, NOW, "demo1") and is_locked(NOW, cfg, NOW, "other")
+
+
+def test_paid_only_reports_never_unlock_without_payment():
+    cfg = EconomyConfig(market_open=True, seller_account="r.near", embargo_hours=None, always_free=["demo1"])
+    assert unlock_at(NOW, cfg) is None
+    assert is_locked(NOW - timedelta(days=365), cfg, NOW, "old")              # a year later: still locked
+    assert not is_locked(NOW, cfg, NOW, "demo1")                              # the owner's demo report stays free
+
+
+def test_shipped_config_keeps_reports_paid_only():
+    from app.fund import load_fund_config
+    ec = load_fund_config().economy
+    assert ec.market_open and ec.embargo_hours is None                       # owner 2026-11-10: never free without payment

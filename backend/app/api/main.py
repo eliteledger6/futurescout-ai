@@ -216,7 +216,8 @@ def create_app(
             price = report_price(run_id, report)
         except Exception:  # noqa: BLE001  (no price feed: still locked, price shown as unknown)
             price = {"price_near": None, "price_usd": None}
-        return {"locked": True, "unlock_at": unlock_at(report.generated_at, ec).isoformat(), "pay_to": ec.seller_account,
+        until = unlock_at(report.generated_at, ec)
+        return {"locked": True, "unlock_at": until.isoformat() if until else None, "pay_to": ec.seller_account,
                 "network": "NEAR mainnet", **price,
                 "how_to_buy": ["Send price_near NEAR to pay_to with an ordinary NEAR transfer (mainnet).",
                                "POST /api/market/buy with JSON {run_id, tx_hash, buyer} (buyer = the account that paid).",
@@ -256,6 +257,7 @@ def create_app(
                 "how_to_buy": ["GET /api/market to see fresh reports and their price in NEAR.",
                                "Send price_near NEAR to pay_to with an ordinary NEAR mainnet transfer.",
                                "POST /api/market/buy with JSON {run_id, tx_hash, buyer}; you get the full report and an access token.",
+                               "Reports are never free on the website: paid access only." if ec.embargo_hours is None else
                                f"Every report becomes free on the website {ec.embargo_hours:g} hours after it was written."]}
 
     @app.post("/api/market/buy")
@@ -294,8 +296,9 @@ def create_app(
         if info:
             sale = load_market(sales_path).by_token(access or x_report_access or "")
             if not sale or sale.run_id != run_id:
-                raise HTTPException(402, {"message": "Fresh report: early access is sold to trading bots. It is free here after "
-                                                     + info["unlock_at"], **info, "summary": summarize(run_id, report)})
+                msg = ("Paid report: buy access from the report agent in NEAR." if not info["unlock_at"] else
+                       "Fresh report: early access is sold to trading bots. It is free here after " + info["unlock_at"])
+                raise HTTPException(402, {"message": msg, **info, "summary": summarize(run_id, report)})
         return {"summary": summarize(run_id, report), "report": report.model_dump(mode="json"), "markdown": markdown,
                 "verdict": build_verdict(report)}
 

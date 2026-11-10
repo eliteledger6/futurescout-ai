@@ -212,3 +212,7 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   says which ("Unchanged since recorded on NEAR mainnet / testnet").
 - Moving old reports: `python scripts\near_record_report.py --all --dry-run`, then without `--dry-run` (owner runs it;
   first seal locks 0.1 NEAR storage, about 0.004 NEAR per seal after that).
+
+- 2026-11-10 (owner): reports are never unlocked without payment. `economy.embargo_hours: null` keeps every report locked
+  (402 with the price) until a buyer pays; a number brings back "free after N hours". The demo report (high bandwidth
+  memory) stays free via `always_free`. Mock-tested.

@@ -58,16 +58,21 @@ def save_market(state: MarketState, path: Path) -> None:
         tmp.replace(path)
 
 
-def unlock_at(generated_at: datetime, cfg: EconomyConfig) -> datetime:
+def unlock_at(generated_at: datetime, cfg: EconomyConfig) -> Optional[datetime]:
+    """When a report becomes free on the site; None when it never does (embargo_hours: null = paid access only)."""
+    if cfg.embargo_hours is None:
+        return None
     g = generated_at if generated_at.tzinfo else generated_at.replace(tzinfo=timezone.utc)
     return g + timedelta(hours=cfg.embargo_hours)
 
 
 def is_locked(generated_at: datetime, cfg: EconomyConfig, now: datetime, run_id: str = "") -> bool:
-    """True while a report is in its early-access window (and the market is open), unless the owner made it always free."""
+    """True while the market is open and the report is not yet free (never free when embargo_hours is null), unless the
+    owner made it always free."""
     if run_id and run_id in cfg.always_free:
         return False
-    return bool(cfg.market_open) and now < unlock_at(generated_at, cfg)
+    until = unlock_at(generated_at, cfg)
+    return bool(cfg.market_open) and (until is None or now < until)
 
 
 def buy(*, state: MarketState, path: Path, run_id: str, buyer: str, tx_hash: str, price_near: float, cfg: EconomyConfig,

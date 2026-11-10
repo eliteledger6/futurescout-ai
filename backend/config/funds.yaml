@@ -86,8 +86,8 @@ economy:
   stake_share: 0.70               # owner 2026-11-10: stake 70% of each new payment, keep 30% in a pot
   second_trader_at_usd: 200       # owner 2026-11-10: when the kept pot passes $200 it funds a second trading agent (next step, not built)
   min_stake_near: 1.0
-  market_open: true               # owner 2026-11-10: other trading bots may buy early access to fresh reports (/api/market)
-  embargo_hours: 24               # a report is sold for its first 24 h, then it is free on the site
+  market_open: true               # owner 2026-11-10: other trading bots may buy reports (/api/market)
+  embargo_hours: null             # owner 2026-11-10: reports are never unlocked without payment (a number = free after N hours)
   always_free:                    # owner 2026-11-10: never locked, for the demo (high bandwidth memory, score 80)
     - e5d41d1f-fa56-42ce-bf27-9fccb47298a2
   pay_from: private               # owner 2026-11-10: pay reports from the near.com (private) balance; "wallet" = plain transfer

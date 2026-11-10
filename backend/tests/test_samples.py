@@ -10,6 +10,9 @@ from app.config import Settings
 from app.radar import Radar, load_radar
 from tests.test_db import fixture_report
 
+import pytest as _pt
+pytestmark = _pt.mark.usefixtures("closed_market")
+
 
 def test_store_falls_back_to_samples_when_runs_is_empty(tmp_path, monkeypatch):
     runs, samples = tmp_path / "runs", tmp_path / "samples"

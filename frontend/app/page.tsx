@@ -97,7 +97,7 @@ function TopicCard({ g }: { g: TopicGroup<RunSummary> }) {
       <div className="card-kicker"><span>{sectorLabel(run.sector)}</span><span>·</span><span>{fmtDate(run.generated_at)}</span></div>
       {run.locked && (
         <div><span className="pill" style={{ color: "#e0b04a", borderColor: "#e0b04a", whiteSpace: "nowrap" }}>
-          Early access{run.price_near != null ? ` · ${run.price_near} NEAR` : ""}
+          {run.unlock_at ? "Early access" : "Paid"}{run.price_near != null ? ` · ${run.price_near} NEAR` : ""}
         </span></div>
       )}
       <div className="row" style={{ alignItems: "flex-start", flexWrap: "nowrap", gap: 14 }}>

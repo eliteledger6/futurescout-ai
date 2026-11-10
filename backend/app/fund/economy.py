@@ -52,7 +52,7 @@ class EconomyConfig(BaseModel):
     wallet_reserve_near: float = 0.05    # the trading agent always keeps this much NEAR for fees
     pay_from: str = "wallet"             # "wallet" (plain transfer) or "private" (signed order from the near.com balance)
     market_open: bool = False            # owner 2026-11-10: outside bots may buy early access to fresh reports (GET/POST /api/market)
-    embargo_hours: float = 24.0          # a report is sold for this long after it was written, then it is free on the site
+    embargo_hours: Optional[float] = 24.0   # sold for this long, then free on the site; None = never free (owner 2026-11-10)
     second_trader_at_usd: float = 200.0  # owner 2026-11-10: when the kept 30% passes this, it funds a second trading agent (next step)
     always_free: list[str] = Field(default_factory=list)   # owner: report ids never locked (e.g. the demo report)
 
