@@ -13,6 +13,7 @@ Runs locally on 127.0.0.1 (see scripts/serve.py). Never returns keys, prompts or
 from __future__ import annotations
 
 import logging
+import os
 import re
 import threading
 import time
