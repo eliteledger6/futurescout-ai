@@ -524,7 +524,7 @@ def private_near_balance(s, cfg) -> float | None:  # noqa: ANN001
     return held(api.balances(token), WNEAR) / 1e24
 
 
-def economy_buy_reports(s, cfg, toks, cands, now, *, execute: bool) -> set:  # noqa: ANN001
+def economy_buy_reports(s, cfg, toks, cands, now, *, execute: bool, max_new: int | None = None) -> set:  # noqa: ANN001
     """Make sure the trading agent holds the reports behind its candidates: price each one (report agent) and, when
     `execute` (the owner's own loop with live.auto_approve, or `economy buy`), pay for it in NEAR. Returns the usable topics."""
     from app.fund.economy import (account_near, buy_report, load_economy, price_report, purchase_blocks, read_tx,
@@ -546,6 +546,7 @@ def economy_buy_reports(s, cfg, toks, cands, now, *, execute: bool) -> set:  # n
         except Exception as exc:  # noqa: BLE001
             print(f"  near.com balance not readable ({str(exc)[:100]}); the fund is valued without it")
     want = sorted({c.topic: c for c in cands}.values(), key=lambda c: -(c.score or 0))     # best-scored reports first
+    new_bought = 0
     for c in want:
         rid = next((t.get("run_id") for t in toks if t["topic"] == c.topic and t.get("run_id")), None)
         if not rid:
@@ -575,6 +576,8 @@ def economy_buy_reports(s, cfg, toks, cands, now, *, execute: bool) -> set:  # n
         if private and not s.oneclick_api_key:
             blocks.append("ONECLICK_API_KEY is not set (the private route needs the partner key)")
         print(f"  report '{c.topic}': {price.price_near:g} NEAR (${price.price_usd:.2f}); budget left {budget:.3f} NEAR")
+        if max_new is not None and new_bought >= max_new:
+            blocks.append(f"the owner limited this run to {max_new} new report(s) (--max)")
         if blocks:
             print("    not bought: " + "; ".join(blocks))
             continue
@@ -600,6 +603,8 @@ def economy_buy_reports(s, cfg, toks, cands, now, *, execute: bool) -> set:  # n
             p = buy_report(state=state, path=ECONOMY, price=price, buyer=creds[0], cfg=ec, send=signer.transfer,
                            read=lambda h, who: read_tx(httpx.Client(timeout=60), ec.rpc, h, who), now=now)
         print(f"    bought: {p.status} (tx {p.tx_hash}) {p.note}")
+        if p.status in ("paid", "sending"):
+            new_bought += 1
         if p.status == "paid":
             usable.add(c.topic)
     save_economy(state, ECONOMY)
@@ -642,7 +647,7 @@ def cmd_record_sale(s, cfg, symbol: str, near_received: float | None, why: str) 
     return 0
 
 
-def cmd_economy(s, cfg, what: str) -> int:  # noqa: ANN001
+def cmd_economy(s, cfg, what: str, max_new: int | None = None) -> int:  # noqa: ANN001
     """economy status | price | buy | stake"""
     from app.fund.economy import (YOCTO, account_near, load_economy, save_economy, stake, stake_amount_yocto,
                                   staked_amount)
@@ -656,7 +661,7 @@ def cmd_economy(s, cfg, what: str) -> int:  # noqa: ANN001
         if what == "buy" and not ec.enabled:
             print("economy.enabled is false in config/funds.yaml: nothing is bought")
             return 1
-        usable = economy_buy_reports(s, cfg, toks, cands, now, execute=(what == "buy"))
+        usable = economy_buy_reports(s, cfg, toks, cands, now, execute=(what == "buy"), max_new=max_new)
         print(f"reports the trading agent may use: {len(usable)} topic(s)")
         return 0
     if what == "stake":
@@ -674,8 +679,12 @@ def cmd_economy(s, cfg, what: str) -> int:  # noqa: ANN001
             tx = signer.call("wrap.near", "near_withdraw", {"amount": str(wrapped)}, 10 * 10 ** 12, 1)
             print(f"unwrapped {wrapped / YOCTO:.4f} wNEAR into NEAR (tx {tx})")
         liquid, _ = account_near(httpx.Client(timeout=30), ec.rpc, creds[0])
-        if stake_amount_yocto(liquid, ec, load_economy(ECONOMY).kept_near) is None:
-            print(f"nothing to stake: {liquid / YOCTO:.3f} NEAR x {ec.stake_share:.0%} is under the {ec.min_stake_near} NEAR minimum")
+        st0 = load_economy(ECONOMY)
+        if stake_amount_yocto(liquid, ec, st0) is None:
+            owed = st0.received_near() * ec.stake_share - st0.staked_near()
+            print(f"nothing to stake: {ec.stake_share:.0%} of the {st0.received_near():g} NEAR received for reports, minus "
+                  f"{st0.staked_near():g} NEAR already staked, is {max(0.0, owed):.3f} NEAR (minimum {ec.min_stake_near} NEAR; "
+                  f"wallet {liquid / YOCTO:.3f} NEAR, {ec.stake_reserve_near} NEAR always kept for gas). Other NEAR in the wallet is never staked.")
             return 0
         state = load_economy(ECONOMY)
         ev = stake(state=state, path=ECONOMY, account=creds[0], balance_yocto=liquid, cfg=ec, call=signer.call, now=now)
@@ -824,6 +833,7 @@ def main() -> int:
     ap.add_argument("id", nargs="?")
     ap.add_argument("--shadow", action="store_true")
     ap.add_argument("--usd", type=float)
+    ap.add_argument("--max", type=int, help="with economy buy: buy at most this many new reports (best-scored first)")
     ap.add_argument("--loop", action="store_true", help="with check: run forever, one check every strategy.check_minutes")
     args = ap.parse_args()
     s, cfg = get_settings(), load_fund_config()
@@ -847,7 +857,7 @@ def main() -> int:
             return 1
         return cmd_record_sale(s, cfg, args.id, args.near, args.why)
     if args.command == "economy":
-        return cmd_economy(s, cfg, args.id or "status")
+        return cmd_economy(s, cfg, args.id or "status", args.max)
     if args.command == "holdings":
         rows = load_state(STATE).live_holdings()
         if not rows:

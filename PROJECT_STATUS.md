@@ -219,3 +219,7 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
 - 2026-11-10 (owner): reports cost $2-3 by what they cost to make (models and X reads, patent searches at $0.025, NEAR seal
   $0.05, plus $1.50), paid in NEAR at the live price; buyers get 3% leeway for NEAR price moves. Agent Market hire: $3.
   Mock-tested (307 tests).
+- 2026-11-10 (owner): economy restarted at $2-3 reports (old records in runs/economy/archive_2026-11-10_before_2usd_restart/;
+  INTC and the trading records kept, NEAR Intents could not trade). The report agent now stakes 70% of report PAYMENTS
+  received minus earlier stakes (never other NEAR in its wallet, e.g. the owner's unstaked NEAR coming back), keeps
+  0.3 NEAR for gas and seals, minimum stake 0.25 NEAR. `economy buy --max N` limits new reports per run. Mock-tested.

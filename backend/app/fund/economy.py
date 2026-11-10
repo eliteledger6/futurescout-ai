@@ -50,6 +50,7 @@ class EconomyConfig(BaseModel):
     seal_usd: float = 0.05               # NEAR mainnet seal (~0.013 NEAR)
     budget_share_of_fund: float = 0.10   # owner: at most this share of the live fund's value goes to reports
     stake_share: float = 0.70            # owner 2026-11-10: the report agent stakes 70% of each NEW payment ...
+    stake_reserve_near: float = 0.3      # always left unstaked in the report agent's wallet (gas, NEAR seals)
     min_stake_near: float = 1.0          # ... when that is at least this much (smaller stakes earn almost nothing)
     staking_contract: str = ""           # the contract behind NEAR AI's "Stake NEAR" button; empty = staking is off
     stake_method: str = "deposit_and_stake"
@@ -110,6 +111,13 @@ class EconomyState(BaseModel):
 
     def spent_near(self) -> float:
         return round(sum(p.price_near for p in self.purchases if p.status in ("paid", "sending")), 6)
+
+    def received_near(self) -> float:
+        """NEAR the report agent was paid for reports (paid purchases only)."""
+        return round(sum(p.price_near for p in self.purchases if p.status == "paid"), 6)
+
+    def staked_near(self) -> float:
+        return round(sum(e.amount_near for e in self.stakes if e.status == "staked"), 6)
 
 
 def load_economy(path: Path) -> EconomyState:
@@ -233,32 +241,37 @@ def buy_report(*, state: EconomyState, path: Path, price: Price, buyer: str, cfg
 
 
 # ------------------------------------------------------------------ the report agent stakes what it earned
-def stake_amount_yocto(balance_yocto: int, cfg: EconomyConfig, kept_near: float = 0.0) -> Optional[int]:
-    """stake_share of the NEW money (balance minus the kept pot), or None when that is under min_stake_near or staking is off.
-    The rest of the new money joins the kept pot, so the pot grows instead of being re-staked each time."""
+def stake_amount_yocto(balance_yocto: int, cfg: EconomyConfig, state: Optional["EconomyState"] = None,
+                       extra_received_near: float = 0.0) -> Optional[int]:
+    """stake_share of every report PAYMENT received (our trading agent's purchases + extra_received_near, e.g. outside
+    buyers) minus what was already staked; never more than the wallet holds above stake_reserve_near (kept for gas and
+    seals). None when under min_stake_near or staking is off. Other NEAR in the wallet (e.g. the owner's own unstaked
+    NEAR coming back) is never staked."""
     if not cfg.staking_contract:
         return None
-    new = max(0, balance_yocto - near_to_yocto(kept_near))
-    amount = int(Decimal(new) * Decimal(str(cfg.stake_share)))
+    st = state or EconomyState()
+    owed = Decimal(str(st.received_near() + extra_received_near)) * Decimal(str(cfg.stake_share)) - Decimal(str(st.staked_near()))
+    room = max(0, balance_yocto - near_to_yocto(cfg.stake_reserve_near))
+    amount = min(int(owed * YOCTO) if owed > 0 else 0, room)
     return amount if amount >= near_to_yocto(cfg.min_stake_near) else None
 
 
 def stake(*, state: EconomyState, path: Path, account: str, balance_yocto: int, cfg: EconomyConfig,
-          call: Callable[[str, str, dict, int, int], str], now: datetime) -> Optional[StakeEvent]:
+          call: Callable[[str, str, dict, int, int], str], now: datetime, extra_received_near: float = 0.0) -> Optional[StakeEvent]:
     """Stake stake_share of the report agent's NEAR into the configured pool. `call(contract, method, args, gas, deposit)` signs."""
-    amount = stake_amount_yocto(balance_yocto, cfg, state.kept_near)
+    amount = stake_amount_yocto(balance_yocto, cfg, state, extra_received_near)
     if amount is None:
         return None
-    new = max(0, balance_yocto - near_to_yocto(state.kept_near))
+    received = state.received_near() + extra_received_near
     ev = StakeEvent(id=uuid.uuid4().hex[:10], account=account, contract=cfg.staking_contract, amount_near=round(amount / YOCTO, 6),
                     balance_before_near=round(balance_yocto / YOCTO, 6), at=now, note="saved before sending")
     state.stakes.append(ev)
     save_economy(state, path)
     try:
         ev.tx_hash = call(cfg.staking_contract, cfg.stake_method, dict(cfg.stake_args), cfg.stake_gas_tgas * 10 ** 12, amount) or None
-        state.kept_near = round(state.kept_near + (new - amount) / YOCTO, 6)
-        ev.status, ev.note = "staked", (f"staked {ev.amount_near:g} NEAR ({cfg.stake_share:.0%} of {new / YOCTO:g} new NEAR); "
-                                        f"kept pot now {state.kept_near:g} NEAR")
+        state.kept_near = round(received * (1 - cfg.stake_share), 6)
+        ev.status, ev.note = "staked", (f"staked {ev.amount_near:g} NEAR ({cfg.stake_share:.0%} of {received:g} NEAR received "
+                                        f"for reports, minus earlier stakes); kept pot now {state.kept_near:g} NEAR")
     except Exception as exc:  # noqa: BLE001
         ev.status, ev.note = "failed", f"stake refused: {str(exc)[:200]}"
     save_economy(state, path)

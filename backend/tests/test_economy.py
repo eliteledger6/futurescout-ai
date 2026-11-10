@@ -101,17 +101,29 @@ def test_an_unclear_send_is_recorded_and_never_retried(tmp_path):
                                                               trading_enabled=True, kill_switch=False))
 
 
-def test_report_agent_stakes_80pct_and_keeps_20pct(tmp_path):
-    bal = 10 * YOCTO
-    assert stake_amount_yocto(bal, CFG) == 7 * YOCTO                       # 70% of new money
-    assert stake_amount_yocto(YOCTO, CFG) is None                          # 0.7 NEAR is under the 1 NEAR minimum
-    assert stake_amount_yocto(bal, EconomyConfig(stake_share=0.7)) is None # no staking contract: off
-    calls, st = [], EconomyState()
-    ev = stake(state=st, path=tmp_path / "e.json", account="report-agent.near", balance_yocto=bal, cfg=CFG,
+def paid(st, near, rid="r"):
+    from app.fund.economy import Purchase
+    st.purchases.append(Purchase(id=rid, run_id=rid, topic="t", price_near=near, buyer=BUYER, seller="report-agent.near",
+                                 status="paid", at=NOW))
+    return st
+
+
+def test_report_agent_stakes_70pct_of_each_payment_never_the_rest_of_its_wallet(tmp_path):
+    st = paid(EconomyState(), 10.0)
+    assert stake_amount_yocto(100 * YOCTO, CFG, st) == 7 * YOCTO             # 70% of the 10 NEAR paid, not of the 100 in the wallet
+    assert stake_amount_yocto(100 * YOCTO, CFG, EconomyState()) is None      # no payment yet: the owner's own NEAR is never staked
+    assert stake_amount_yocto(100 * YOCTO, EconomyConfig(stake_share=0.7), st) is None   # no staking contract: off
+    small = EconomyConfig(staking_contract="pool.poolv1.near", min_stake_near=0.25, stake_reserve_near=0.3)
+    one = paid(EconomyState(), 0.6)                                          # one $2 report
+    assert stake_amount_yocto(5 * YOCTO, small, one) == 42 * YOCTO // 100   # 0.42 NEAR staked
+    assert stake_amount_yocto(YOCTO // 2, small, one) is None                # 0.5 NEAR wallet - 0.3 reserve = 0.2: under the minimum
+    calls = []
+    ev = stake(state=st, path=tmp_path / "e.json", account="report-agent.near", balance_yocto=100 * YOCTO, cfg=CFG,
                call=lambda c, m, a, g, d: calls.append((c, m, d)) or "T1", now=NOW)
     assert ev.status == "staked" and calls == [("pool.poolv1.near", "deposit_and_stake", 7 * YOCTO)] and st.kept_near == 3.0
-    # next payment of 10 NEAR: the 3 NEAR pot is not re-staked; 70% of the new 10 is, and the pot grows to 6
-    stake(state=st, path=tmp_path / "e.json", account="report-agent.near", balance_yocto=13 * YOCTO, cfg=CFG,
+    assert stake_amount_yocto(100 * YOCTO, CFG, st) is None                  # already staked: nothing twice
+    paid(st, 10.0, "r2")                                                     # the next payment: 70% of it, the pot grows to 6
+    stake(state=st, path=tmp_path / "e.json", account="report-agent.near", balance_yocto=100 * YOCTO, cfg=CFG,
           call=lambda c, m, a, g, d: calls.append((c, m, d)) or "T2", now=NOW)
     assert calls[-1][2] == 7 * YOCTO and st.kept_near == 6.0
 
@@ -123,7 +135,7 @@ def test_stake_uses_near_ai_product_args_and_reads_the_farm_position(tmp_path):
     cfg = EconomyConfig(enabled=True, seller_account="r.near", staking_contract="stake.dao", stake_method="stake", stake_gas_tgas=300,
                         stake_args={"product_id": "prod_X", "price_id": "price_Y"})
     calls = []
-    stake(state=EconomyState(), path=tmp_path / "e.json", account="r.near", balance_yocto=2 * YOCTO, cfg=cfg,
+    stake(state=paid(EconomyState(), 2.0), path=tmp_path / "e.json", account="r.near", balance_yocto=5 * YOCTO, cfg=cfg,
           call=lambda c, m, a, g, d: calls.append((c, m, a, g, d)) or "T", now=NOW)
     assert calls == [("stake.dao", "stake", {"product_id": "prod_X", "price_id": "price_Y"}, 300 * 10 ** 12, 14 * YOCTO // 10)]
 
