@@ -8,7 +8,12 @@ async function get<T>(path: string): Promise<T> {
   const res = await fetch(`${API_URL}${path}`, { cache: "no-store" });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
-    throw new Error(body.detail ?? `HTTP ${res.status}`);
+    if (res.status === 402 && body.detail && typeof body.detail === "object") {     // early access: the report is for sale
+      const e = new Error(body.detail.message ?? "locked") as Error & { locked?: unknown };
+      e.locked = body.detail;
+      throw e;
+    }
+    throw new Error(typeof body.detail === "string" ? body.detail : `HTTP ${res.status}`);
   }
   return res.json() as Promise<T>;
 }

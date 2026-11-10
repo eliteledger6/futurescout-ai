@@ -94,7 +94,8 @@ function TopicCard({ g }: { g: TopicGroup<RunSummary> }) {
   const score = run.score ?? 0;
   return (
     <Link className="card topic-card" href={`/runs/${run.id}`} onMouseMove={glow} style={{ height: "100%" }}>
-      <div className="card-kicker"><span>{sectorLabel(run.sector)}</span><span>·</span><span>{fmtDate(run.generated_at)}</span></div>
+      <div className="card-kicker"><span>{sectorLabel(run.sector)}</span><span>·</span><span>{fmtDate(run.generated_at)}</span>
+        {run.locked && <span className="pill" style={{ marginLeft: "auto", color: "#e0b04a", borderColor: "#e0b04a" }}>early access{run.price_near != null ? ` · ${run.price_near} NEAR` : ""}</span>}</div>
       <div className="row" style={{ alignItems: "flex-start", flexWrap: "nowrap", gap: 14 }}>
         <div className="card-title" style={{ flex: 1 }}>{run.topic}</div>
         {run.score !== null && (

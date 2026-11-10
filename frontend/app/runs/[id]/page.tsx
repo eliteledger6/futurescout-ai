@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { api, fmtDate, fmtUsd } from "@/lib/api";
-import type { CountingBasis, CompanySignal, Finding, Label, Report, RunDetail, Source, Theme, Verdict } from "@/lib/types";
+import type { LockedReport, CountingBasis, CompanySignal, Finding, Label, Report, RunDetail, Source, Theme, Verdict } from "@/lib/types";
 import { ConfidencePill, ErrorNotice, LABEL_HELP, LabelBadge, Loading } from "@/components/ui";
 import { NearBadge } from "@/components/NearBadge";
 import { AgentFlow } from "@/components/AgentFlow";
@@ -16,15 +16,50 @@ import "../../report-visual.css";
 
 const HORIZON_NAME: Record<string, string> = { near_0_12m: "0-12 months", medium_1_3y: "1-3 years", long_3_5y: "3-5 years" };
 
+function LockedView({ l, id }: { l: LockedReport; id: string }) {
+  const s = l.summary;
+  return (
+    <section className="section">
+      <div className="container stack" style={{ maxWidth: 820 }}>
+        <div className="eyebrow">Early access · sold to trading bots</div>
+        <h1 className="h2" style={{ margin: 0 }}>{s?.topic ?? "Fresh report"}</h1>
+        <p className="sub" style={{ margin: 0 }}>
+          This report is new. For its first 24 hours the report agent sells it to trading bots{l.price_near != null ? <> for <b>{l.price_near} NEAR</b>{l.price_usd != null ? ` (about $${l.price_usd.toFixed(2)})` : ""}</> : ""}.
+          It becomes free to read here on <b>{fmtDate(l.unlock_at)}</b>.
+        </p>
+        {s && (
+          <div className="pills">
+            {s.score != null && <span className="pill">score {s.score}</span>}
+            <span className="pill">{s.findings} findings</span>
+            <span className="pill">{s.sources} sources</span>
+            <span className="pill">written {fmtDate(s.generated_at)}</span>
+          </div>
+        )}
+        <div className="card">
+          <h3 className="h3" style={{ marginTop: 0 }}>For trading bots: how to buy</h3>
+          <ol style={{ color: "var(--text-2)", lineHeight: 1.7, margin: 0 }}>
+            <li>Send <b>{l.price_near ?? "the listed"} NEAR</b> to <span className="mono">{l.pay_to}</span> with an ordinary NEAR mainnet transfer.</li>
+            <li>POST <span className="mono">/api/market/buy</span> with <span className="mono">{`{"run_id": "${id}", "tx_hash": "…", "buyer": "your.near"}`}</span>.</li>
+            <li>The reply holds the full report and an access token for <span className="mono">/api/runs/{id}?access=…</span>.</li>
+          </ol>
+          <p className="small muted" style={{ marginBottom: 0 }}>The payment is checked on chain: signed by the buyer, paid to the report agent, at least the price. Each transaction is redeemed once. Catalog: <span className="mono">GET /api/market</span>.</p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function RunPage() {
   const { id } = useParams<{ id: string }>();
   const [data, setData] = useState<RunDetail | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [locked, setLocked] = useState<LockedReport | null>(null);
 
   useEffect(() => {
-    api.run(id).then(setData).catch((e: Error) => setError(e.message));
+    api.run(id).then(setData).catch((e: Error & { locked?: LockedReport }) => (e.locked ? setLocked(e.locked) : setError(e.message)));
   }, [id]);
 
+  if (locked) return <LockedView l={locked} id={id} />;
   if (error) return <section className="section"><div className="container"><ErrorNotice error={error} /></div></section>;
   if (!data) return <section className="section"><div className="container"><Loading lines={5} /></div></section>;
   return <ReportView data={data} />;

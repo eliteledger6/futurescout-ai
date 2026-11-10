@@ -54,11 +54,21 @@ const SALE = (() => {
   const [sx, sy] = POS.seller, [tx, ty] = POS.trader;
   const x1 = sx + W, x2 = tx, mid = (x1 + x2) / 2;
   return {
-    report: `M ${x1} ${sy - 10} C ${mid} ${sy - 10}, ${mid} ${ty + 4}, ${x2} ${ty + 4}`,            // report agent -> trading agent
-    pay: `M ${x2} ${ty + 18} C ${mid + 12} ${ty + 18}, ${mid + 12} ${sy + 4}, ${x1} ${sy + 4}`,     // trading agent -> report agent
+    report: `M ${x1} ${sy - 18} C ${mid - 18} ${sy - 18}, ${mid - 18} ${ty - 8}, ${x2} ${ty - 8}`,   // report agent -> trading agent
+    pay: `M ${x2} ${ty + 20} C ${mid + 18} ${ty + 20}, ${mid + 18} ${sy + 8}, ${x1} ${sy + 8}`,     // trading agent -> report agent
     mid,
   };
 })();
+
+function Badge({ x, y, text, tone }: { x: number; y: number; text: string; tone: "report" | "pay" }) {
+  const w = text.length * 6.6 + 14;
+  return (
+    <g className={`flow-badge ${tone}`} transform={`translate(${x - w / 2} ${y - 9})`}>
+      <rect width={w} height={18} rx={9} />
+      <text x={w / 2} y={12.5} textAnchor="middle">{text}</text>
+    </g>
+  );
+}
 
 // The loop that closes the agent economy: staking rewards come back as NEAR AI credits that pay every agent's model calls.
 const CREDIT_Y = 528;
@@ -113,9 +123,8 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
               </text>
               <g className="edge on sale-report"><path d={SALE.report} className="edge-base" /><path d={SALE.report} className="edge-flow" /></g>
               <g className="edge on sale-pay"><path d={SALE.pay} className="edge-base" /><path d={SALE.pay} className="edge-flow" /></g>
-              <text x={SALE.mid - 6} y={POS.trader[1] + 50} className="flow-note" textAnchor="end">report →</text>
-              <text x={SALE.mid + 4} y={POS.seller[1] - 44} className="flow-note" textAnchor="middle">← pays</text>
-              <text x={SALE.mid + 4} y={POS.seller[1] - 32} className="flow-note" textAnchor="middle">3–5 NEAR</text>
+              <Badge x={SALE.mid - 16} y={POS.trader[1] + 26} text="report ▸" tone="report" />
+              <Badge x={SALE.mid - 6} y={POS.seller[1] - 30} text="◂ 3–5 NEAR" tone="pay" />
               <text x={(POS.seller[0] + W + POS.stake[0]) / 2} y={POS.stake[1] + 18} className="flow-note" textAnchor="middle">stakes 80%</text>
             </>
           )}

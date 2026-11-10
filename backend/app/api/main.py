@@ -23,7 +23,7 @@ from pathlib import Path
 from typing import Callable, Optional
 
 import httpx
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import Header, FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
@@ -78,6 +78,13 @@ def _read_testnet(account: str, key: str, contract: str) -> Optional[dict]:
 
 
 SAMPLES_DIR = service.BACKEND_DIR / "samples"   # real past runs shipped with the repo (scripts/export_samples.py)
+
+
+class BuyRequest(BaseModel):
+    """A trading bot redeems its NEAR payment for early access to a fresh report."""
+    run_id: str = Field(max_length=80)
+    tx_hash: str = Field(max_length=80)
+    buyer: str = Field(max_length=64)
 
 
 def _default_store(settings: Settings) -> ReportStore:
@@ -174,16 +181,121 @@ def create_app(
             "events": recent,
         }
 
+    # ---------------------------------------------------------------- report market (owner 2026-11-10)
+    from app.fund.economy import load_economy, price_report
+    from app.fund.report_market import buy as market_buy, is_locked, load_market, unlock_at
+    econ_path = trading_dir.parent / "economy" / "state.json"
+    sales_path = trading_dir.parent / "economy" / "sales.json"
+    px_cache: dict = {}
+
+    def near_usd() -> float:
+        hit = px_cache.get("near")
+        if hit and time.time() - hit[0] < 600:
+            return hit[1]
+        from app.fund.live import OneClickLive
+        fc = load_fund_config()
+        px = OneClickLive(fc.intents.api).price_usd(fc.live.near_asset_id)
+        px_cache["near"] = (time.time(), px)
+        return px
+
+    def report_price(run_id: str, report) -> dict:  # noqa: ANN001
+        ec = load_fund_config().economy
+        known = load_economy(econ_path).prices.get(run_id)
+        if known:
+            return {"price_near": known.price_near, "price_usd": known.price_usd}
+        v = build_verdict(report)
+        p = price_report(run_id=run_id, topic=report.topic, cost_usd=report.total_cost_usd or 0.0, score=v.get("score"),
+                         confidence_pct=v.get("confidence_pct"), near_usd=near_usd(), cfg=ec, now=datetime.now(timezone.utc))
+        return {"price_near": p.price_near, "price_usd": p.price_usd}
+
+    def lock_info(run_id: str, report) -> Optional[dict]:  # noqa: ANN001
+        ec = load_fund_config().economy
+        if not is_locked(report.generated_at, ec, datetime.now(timezone.utc)):
+            return None
+        try:
+            price = report_price(run_id, report)
+        except Exception:  # noqa: BLE001  (no price feed: still locked, price shown as unknown)
+            price = {"price_near": None, "price_usd": None}
+        return {"locked": True, "unlock_at": unlock_at(report.generated_at, ec).isoformat(), "pay_to": ec.seller_account,
+                "network": "NEAR mainnet", **price,
+                "how_to_buy": ["Send price_near NEAR to pay_to with an ordinary NEAR transfer (mainnet).",
+                               "POST /api/market/buy with JSON {run_id, tx_hash, buyer} (buyer = the account that paid).",
+                               "Use the returned access_token as ?access=... or the X-Report-Access header on /api/runs/{run_id}."]}
+
     @app.get("/api/runs")
     def runs(limit: int = Query(50, ge=1, le=200), topic: Optional[str] = Query(None, max_length=120)) -> list[dict]:
-        return store.list(limit=limit, topic=topic)
+        rows = store.list(limit=limit, topic=topic)
+        ec = load_fund_config().economy
+        now = datetime.now(timezone.utc)
+        for r in rows:
+            if is_locked(datetime.fromisoformat(r["generated_at"]), ec, now):
+                found = store.get(r["id"])
+                info = lock_info(r["id"], found[0]) if found else None
+                if info:
+                    r.update({k: info[k] for k in ("locked", "unlock_at", "price_near")})
+        return rows
+
+    @app.get("/api/market")
+    def market() -> dict:
+        """Fresh reports on sale to any trading bot (early access), with price and the account to pay. Read-only."""
+        ec = load_fund_config().economy
+        items, seen = [], set()
+        for r in store.list(limit=200):                      # newest first: the newest scored report per topic is on sale
+            if r.get("score") is None or r["topic"] in seen:
+                continue
+            seen.add(r["topic"])
+            if not is_locked(datetime.fromisoformat(r["generated_at"]), ec, datetime.now(timezone.utc)):
+                continue
+            found = store.get(r["id"])
+            info = lock_info(r["id"], found[0]) if found else None
+            if info:
+                items.append({"run_id": r["id"], "topic": r["topic"], "sector": r.get("sector"), "generated_at": r["generated_at"],
+                              "score": r.get("score"), **{k: info[k] for k in ("unlock_at", "price_near", "price_usd")}})
+        return {"open": ec.market_open, "embargo_hours": ec.embargo_hours, "pay_to": ec.seller_account, "network": "NEAR mainnet",
+                "reports": items, "sold": len(load_market(sales_path).sales),
+                "how_to_buy": ["GET /api/market to see fresh reports and their price in NEAR.",
+                               "Send price_near NEAR to pay_to with an ordinary NEAR mainnet transfer.",
+                               "POST /api/market/buy with JSON {run_id, tx_hash, buyer}; you get the full report and an access token.",
+                               f"Every report becomes free on the website {ec.embargo_hours:g} hours after it was written."]}
+
+    @app.post("/api/market/buy")
+    def market_buy_endpoint(req: BuyRequest) -> dict:
+        """Grant access after checking the buyer's NEAR payment on chain (reads only; nothing is signed here)."""
+        from app.fund.economy import read_tx
+        found = store.get(req.run_id)
+        if found is None:
+            raise HTTPException(404, "run not found")
+        report, markdown = found
+        info = lock_info(req.run_id, report)
+        if not info:
+            raise HTTPException(409, "this report is no longer in early access: it is free at /api/runs/" + req.run_id)
+        if info.get("price_near") is None:
+            raise HTTPException(503, "no NEAR price available right now; try again in a minute")
+        ec = load_fund_config().economy
+        try:
+            with httpx.Client(timeout=60.0) as http:
+                sale = market_buy(state=load_market(sales_path), path=sales_path, run_id=req.run_id, buyer=req.buyer, tx_hash=req.tx_hash,
+                                  price_near=info["price_near"], cfg=ec, read=lambda h, who: read_tx(http, ec.rpc, h, who),
+                                  now=datetime.now(timezone.utc))
+        except ValueError as exc:
+            raise HTTPException(402, {"message": str(exc), **info}) from None
+        return {"access_token": sale.token, "paid_near": sale.amount_near, "tx_hash": sale.tx_hash,
+                "summary": summarize(req.run_id, report), "report": report.model_dump(mode="json"), "markdown": markdown,
+                "verdict": build_verdict(report)}
 
     @app.get("/api/runs/{run_id}")
-    def run_detail(run_id: str) -> dict:
+    def run_detail(run_id: str, access: Optional[str] = Query(None, max_length=80),
+                   x_report_access: Optional[str] = Header(None)) -> dict:
         found = store.get(run_id)
         if found is None:
             raise HTTPException(404, "run not found")
         report, markdown = found
+        info = lock_info(run_id, report)
+        if info:
+            sale = load_market(sales_path).by_token(access or x_report_access or "")
+            if not sale or sale.run_id != run_id:
+                raise HTTPException(402, {"message": "Fresh report: early access is sold to trading bots. It is free here after "
+                                                     + info["unlock_at"], **info, "summary": summarize(run_id, report)})
         return {"summary": summarize(run_id, report), "report": report.model_dump(mode="json"), "markdown": markdown,
                 "verdict": build_verdict(report)}
 

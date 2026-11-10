@@ -38,6 +38,16 @@ Technology investing mixes verifiable facts, rumours and hype, and "AI picks" ra
 
 The report agent prices each report in NEAR (what it cost to make in AI usage, set by its quality inside a 3-5 NEAR band, never below its AI cost). The trading agent may only use reports it has bought, pays with a NEAR transfer that the code reads back from the chain, and spends at most 30% of its fund on reports. The report agent stakes 80% of what it holds through NEAR AI Cloud's Staking for Inference, so the staking rewards pay for its model usage; it keeps 20% for fees. Commands: `fund_trade.py economy status | price | buy | stake`. Owner switch: `economy.enabled` in `backend/config/funds.yaml`. Honest limit: at these amounts the staking rewards cover only a small part of the real AI bill.
 
+### Report market: any trading bot can buy early access
+
+A fresh report is sold for its first 24 hours, then it is free on the site. Any bot can buy it without an account or a key:
+
+1. `GET /api/market`: the newest scored report per topic, its price in NEAR (3-5 NEAR by quality) and the account to pay (the report agent, NEAR mainnet).
+2. Send that much NEAR to the report agent with an ordinary NEAR mainnet transfer.
+3. `POST /api/market/buy` with `{"run_id", "tx_hash", "buyer"}`: the API reads the transaction from the chain (final, signed by the buyer, paid to the report agent, at least the price; each transaction redeemed once) and returns the full report and an access token for `/api/runs/{run_id}?access=...`.
+
+Until then `/api/runs/{run_id}` answers `402 Payment Required` with the price and these steps. Owner switches: `economy.market_open`, `economy.embargo_hours`.
+
 ### Safety limits on the trading agent (enforced in code, not by the model)
 
 - Master switch, kill switch file (`fund_trade.py stop`), a total budget cap, and near.com's $20 minimum per trade.

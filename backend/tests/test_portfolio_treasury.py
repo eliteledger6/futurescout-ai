@@ -124,5 +124,5 @@ def test_api_portfolio_route_and_no_report_selling_routes(tmp_path):
     assert pf["label"] == "simulation" and pf["summary"]["positions"] == 3 and pf["summary"]["pending"] == 3
     assert pf["positions"][0]["ticker"] == "GLSS" and pf["prices_configured"] is False and "No money moves" in pf["disclaimer"]
     assert (tmp_path / "portfolio.json").is_file()
-    for gone in ("/api/treasury", "/api/market"):                       # report selling was removed on 2026-11-10
-        assert client.get(gone).status_code == 404
+    assert client.get("/api/treasury").status_code == 404                # the old testnet report shop stays removed
+    assert client.get("/api/market").status_code == 200                 # owner 2026-11-10: early access sold to trading bots

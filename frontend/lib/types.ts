@@ -13,6 +13,7 @@ export interface RunSummary {
   agents_not_run: string[];
   score: number | null;
   score_reportable: boolean;
+  locked?: boolean; unlock_at?: string; price_near?: number | null;   // early access: sold to trading bots for 24 h
   score_confidence: Confidence | null;
   coverage: number | null;
   findings: number;
@@ -313,4 +314,9 @@ export interface Economy {
   purchases: { id: string; run_id: string; topic: string; price_near: number; status: string; tx_hash: string | null; note: string; at: string }[];
   stakes: { id: string; amount_near: number; contract: string; status: string; tx_hash: string | null; note: string; at: string }[];
   explorer_tx: string;
+}
+
+export interface LockedReport {
+  message: string; locked: true; unlock_at: string; pay_to: string; network: string; price_near: number | null; price_usd: number | null;
+  how_to_buy: string[]; summary?: RunSummary;
 }

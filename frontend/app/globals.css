@@ -463,3 +463,9 @@ a.card:hover { box-shadow: 0 12px 40px -18px color-mix(in srgb, var(--accent) 45
 .edge.sale-pay .edge-base { stroke: color-mix(in srgb, #e0b04a 55%, var(--line-strong)); }
 .edge.sale-pay .edge-flow { stroke: #e0b04a; }
 .edge.credits .edge-base { stroke-dasharray: 4 6; }
+.flow-badge rect { fill: var(--bg, #000); stroke-width: 1.2; }
+.flow-badge text { font: 600 11px var(--font-mono, ui-monospace, monospace); }
+.flow-badge.report rect { stroke: var(--accent); }
+.flow-badge.report text { fill: var(--accent); }
+.flow-badge.pay rect { stroke: #e0b04a; }
+.flow-badge.pay text { fill: #e0b04a; }

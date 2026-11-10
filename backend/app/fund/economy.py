@@ -51,6 +51,8 @@ class EconomyConfig(BaseModel):
     rpc: str = "https://free.rpc.fastnear.com"
     wallet_reserve_near: float = 0.05    # the trading agent always keeps this much NEAR for fees
     pay_from: str = "wallet"             # "wallet" (plain transfer) or "private" (signed order from the near.com balance)
+    market_open: bool = False            # owner 2026-11-10: outside bots may buy early access to fresh reports (GET/POST /api/market)
+    embargo_hours: float = 24.0          # a report is sold for this long after it was written, then it is free on the site
 
 
 class Price(BaseModel):
