@@ -37,6 +37,8 @@ Rules that always apply:
   per report by quality, owner 2026-11-10; at most 30% of the fund); the report agent stakes 70% of each payment (keeps 30%; at $200 the pot funds a second trading agent, planned) via NEAR AI Staking for Inference.
   `economy.enabled` is owner-only (owner set it true 2026-11-10); staking goes to stake.dao (NEAR AI Cloud Credits), copied from the owner's own dashboard stake; payments and stakes sign with keys, so they run in the owner's loop.
   Restart 2026-11-10 (owner): trading/economy records archived, fresh $60 budget approved by the owner in chat.
+  Agent Market (owner 2026-11-10): the report agent takes jobs at market.near.ai via scripts/market_agent.py; the owner makes the
+  account, approves the public listing and holds the token (AGENT_MARKET_TOKEN); withdrawals are the owner's.
 - Hosting (2026-11-10): Render (API, read-only snapshot `backend/site_data`, no key) + Vercel (website). See HOSTING.md.
 - Say "mock-tested" vs "run live" honestly; never call a feature complete without a test.
 - Do not push, make the repo public, post on X, submit to the hackathon or spend on mainnet without the owner's explicit yes.

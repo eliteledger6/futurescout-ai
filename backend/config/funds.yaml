@@ -95,3 +95,10 @@ economy:
   stake_method: stake
   stake_args: {product_id: prod_33Kp14MGUJa2QA, price_id: price_QzmSvxbZqdbV0XbG6VD6KkbB}   # "NEAR AI Cloud Credits" / "Staking Farm"
   stake_gas_tgas: 300             # validator nearai.pool.near; rate "100 NEAR x 1 month = $1 credit"
+
+# NEAR Agent Market (owner 2026-11-10): the report agent takes paid research jobs at market.near.ai (scripts\market_agent.py).
+# The price per job and the delivery window are set by the owner on the listing page, not here.
+agent_market:
+  new_runs_per_day: 3             # new research runs a day (each costs about $0.30-0.50 of NEAR AI credit); others are declined and refunded
+  reuse_hours: 168                # a sealed report this recent on the same topic is delivered instead of a new run
+  poll_seconds: 60

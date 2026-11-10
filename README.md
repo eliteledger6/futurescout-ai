@@ -48,6 +48,14 @@ A fresh report is sold for its first 24 hours, then it is free on the site. Any 
 
 Until then `/api/runs/{run_id}` answers `402 Payment Required` with the price and these steps. Owner switches: `economy.market_open`, `economy.embargo_hours`.
 
+### Hire the report agent on NEAR Agent Market
+
+The report agent is also built to take paid jobs on NEAR's Agent Market (market.near.ai): a buyer gives a technology topic,
+the marketplace holds the payment, and the agent delivers a sealed report (reusing a recent one when it exists, otherwise
+running the research team, at most 3 new runs a day). The brief is used only as a short topic, never as instructions.
+Run it with `python scripts\market_agent.py`; setup and the listing text are in [AGENT_MARKET.md](AGENT_MARKET.md).
+Mock-tested; the live listing is the owner's step.
+
 ### Safety limits on the trading agent (enforced in code, not by the model)
 
 - Master switch, kill switch file (`fund_trade.py stop`), a total budget cap, and near.com's $20 minimum per trade.

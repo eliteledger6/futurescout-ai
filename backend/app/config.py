@@ -74,6 +74,10 @@ class Settings(BaseSettings):
     fund_mainnet_private_key: Optional[SecretStr] = None
     oneclick_api_key: Optional[SecretStr] = None      # optional NEAR Intents partner key (avoids the extra 0.25% fee)
 
+    # NEAR Agent Market (market.near.ai): the report agent's API token (aat_...), made by the owner on the listing page
+    agent_market_token: Optional[SecretStr] = None
+    public_site_url: Optional[str] = None          # e.g. the hosted website; put in deliverables as "online: <url>/runs/<id>"
+
     # Agent economy (owner 2026-11-10): the report agent's own mainnet account; it is paid for reports and stakes for AI credits
     report_agent_account_id: Optional[str] = None
     report_agent_private_key: Optional[SecretStr] = None
