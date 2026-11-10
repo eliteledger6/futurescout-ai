@@ -1,0 +1,22 @@
+# Render blueprint: the FUTURESCOUT AI API, read-only, on Render's free plan.
+# It serves the snapshot in backend/site_data (made by `python scripts\export_site.py`); no database, no model calls,
+# no new runs, and NO private key: the hosted copy can show the trading record but can never trade.
+services:
+  - type: web
+    name: futurescout-api
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -e .
+    startCommand: python scripts/serve.py --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    autoDeploy: true                     # every push to main redeploys
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.7
+      - key: FUTURESCOUT_DATA_DIR
+        value: site_data
+      - key: ENABLE_RUN_API
+        value: "false"
+      - key: FUND_MAINNET_ACCOUNT_ID   # public account name only (shows balances); never add the private key here
+        sync: false

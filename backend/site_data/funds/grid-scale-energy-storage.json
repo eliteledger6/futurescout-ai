@@ -1,0 +1,321 @@
+{
+  "kind": "simulation",
+  "topic": "grid-scale energy storage",
+  "slug": "grid-scale-energy-storage",
+  "sector": "energy",
+  "created_at": "2026-11-09T11:14:10.603393Z",
+  "start_cash_usd": 10000.0,
+  "cash_usd": 5530.17,
+  "holdings": [
+    {
+      "ticker": "FLNC",
+      "company": "Fluence Energy",
+      "tier": "medium",
+      "shares": 839.0544957983194,
+      "cost_usd": 4421.817192857143,
+      "last_close": 5.27,
+      "last_date": "2026-11-06",
+      "timing_risk": null,
+      "why": "Company Scout: 5 patent(s), 2 filing(s); mid by revenue",
+      "route": {
+        "available": false,
+        "symbol": null,
+        "asset_id": null,
+        "blockchain": null,
+        "token_price_usd": null,
+        "checked_at": "2026-11-10T04:47:33.723163Z",
+        "note": "no tokenized version in the public NEAR Intents token lists"
+      },
+      "quote": null
+    }
+  ],
+  "decisions": [
+    {
+      "at": "2026-11-09T11:14:10.603393Z",
+      "run_id": "3002f3be-fb2d-484e-94da-c36f6c9ffa1f",
+      "report_date": "2026-11-09",
+      "band": "building",
+      "score": 50.8,
+      "previous_score": null,
+      "confidence_pct": null,
+      "target_invested_pct": 75.0,
+      "tier_targets_usd": {
+        "medium": 5625.0,
+        "high": 1875.0
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "NRG",
+        "PNW",
+        "SMR"
+      ],
+      "trades": [
+        {
+          "day": "2026-11-06",
+          "ticker": "FLNC",
+          "tier": "medium",
+          "side": "buy",
+          "shares": 533.681214,
+          "price": 5.27,
+          "usd": 2812.5,
+          "fee_usd": 8.44
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "ENPH",
+          "tier": "medium",
+          "side": "buy",
+          "shares": 98.805551,
+          "price": 28.465,
+          "usd": 2812.5,
+          "fee_usd": 8.44
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "IE",
+          "tier": "high",
+          "side": "buy",
+          "shares": 82.453826,
+          "price": 7.58,
+          "usd": 625.0,
+          "fee_usd": 1.88
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "NRGV",
+          "tier": "high",
+          "side": "buy",
+          "shares": 192.901235,
+          "price": 3.24,
+          "usd": 625.0,
+          "fee_usd": 1.88
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "BLGO",
+          "tier": "high",
+          "side": "buy",
+          "shares": 8741.258741,
+          "price": 0.0715,
+          "usd": 625.0,
+          "fee_usd": 1.88
+        }
+      ],
+      "reasons": [
+        "Why now: first decision for this topic.",
+        "Verdict band 'building' (score 50.8) -> invest 75% of the fund.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): NRG, PNW, SMR. Reviewed again after the next price update.",
+        "No priced company in the low-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-09."
+      ],
+      "value_before_usd": 10000.0,
+      "sha256": "eddfa3449ef1eb4c326f6de43a1788bb3e76ce1b3780de89dc54838f6da0af7f",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_grid-scale-energy-storage_1",
+        "sha256": "eddfa3449ef1eb4c326f6de43a1788bb3e76ce1b3780de89dc54838f6da0af7f",
+        "tx_hash": "3Qdg2fJGpCLezmTw2rgKUk9FEYpwRBDdL8Mc5ayqQmUG",
+        "explorer_url": "https://testnet.nearblocks.io/txns/3Qdg2fJGpCLezmTw2rgKUk9FEYpwRBDdL8Mc5ayqQmUG"
+      }
+    },
+    {
+      "at": "2026-11-09T14:53:29.139053Z",
+      "run_id": "3002f3be-fb2d-484e-94da-c36f6c9ffa1f",
+      "report_date": "2026-11-09",
+      "band": "building",
+      "score": 62.0,
+      "previous_score": 50.8,
+      "confidence_pct": 42.6,
+      "target_invested_pct": 45.6,
+      "tier_targets_usd": {
+        "medium": 3415.51,
+        "high": 1138.5
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "NRG",
+        "PNW",
+        "SMR"
+      ],
+      "trades": [
+        {
+          "day": "2026-11-06",
+          "ticker": "FLNC",
+          "tier": "medium",
+          "side": "sell",
+          "shares": 209.628837,
+          "price": 5.27,
+          "usd": 1104.74,
+          "fee_usd": 3.31
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "ENPH",
+          "tier": "medium",
+          "side": "sell",
+          "shares": 38.810609,
+          "price": 28.465,
+          "usd": 1104.74,
+          "fee_usd": 3.31
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "IE",
+          "tier": "high",
+          "side": "sell",
+          "shares": 32.387686,
+          "price": 7.58,
+          "usd": 245.5,
+          "fee_usd": 0.74
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "NRGV",
+          "tier": "high",
+          "side": "sell",
+          "shares": 75.771192,
+          "price": 3.24,
+          "usd": 245.5,
+          "fee_usd": 0.74
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "BLGO",
+          "tier": "high",
+          "side": "sell",
+          "shares": 3433.547702,
+          "price": 0.0715,
+          "usd": 245.5,
+          "fee_usd": 0.74
+        }
+      ],
+      "reasons": [
+        "Why now: scoring method changed: risk now lowers confidence, and position size follows confidence.",
+        "Verdict band 'building' (score 62.0) -> invest 75% of the fund.",
+        "Confidence 43% is below the 70% needed for full size -> invest 61% of that: 46% of the fund.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): NRG, PNW, SMR. Reviewed again after the next price update.",
+        "No priced company in the low-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-09."
+      ],
+      "value_before_usd": 9977.5,
+      "sha256": "9c0f68eae2f8225965771a1798cebb0cc7079682f30d31bde0bad226abfc0182",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_grid-scale-energy-storage_2",
+        "sha256": "9c0f68eae2f8225965771a1798cebb0cc7079682f30d31bde0bad226abfc0182",
+        "tx_hash": "6ayTrK1Y2fD59cG4i5YTMccHFJuWdBZ1fiVfjTyDJadL",
+        "explorer_url": "https://testnet.nearblocks.io/txns/6ayTrK1Y2fD59cG4i5YTMccHFJuWdBZ1fiVfjTyDJadL"
+      }
+    },
+    {
+      "at": "2026-11-10T04:46:08.575261Z",
+      "run_id": "7642adf4-3490-4df7-be0a-9eba7dc77d26",
+      "report_date": "2026-11-10",
+      "band": "building",
+      "score": 60.0,
+      "previous_score": 62.0,
+      "confidence_pct": 41.4,
+      "target_invested_pct": 44.4,
+      "tier_targets_usd": {
+        "medium": 4421.82
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "GEV"
+      ],
+      "trades": [
+        {
+          "day": "2026-11-06",
+          "ticker": "ENPH",
+          "tier": "medium",
+          "side": "sell",
+          "shares": 59.994942,
+          "price": 28.465,
+          "usd": 1707.76,
+          "fee_usd": 5.12
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "IE",
+          "tier": "high",
+          "side": "sell",
+          "shares": 50.06614,
+          "price": 7.58,
+          "usd": 379.5,
+          "fee_usd": 1.14
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "NRGV",
+          "tier": "high",
+          "side": "sell",
+          "shares": 117.130043,
+          "price": 3.24,
+          "usd": 379.5,
+          "fee_usd": 1.14
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "BLGO",
+          "tier": "high",
+          "side": "sell",
+          "shares": 5307.711039,
+          "price": 0.0715,
+          "usd": 379.5,
+          "fee_usd": 1.14
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "FLNC",
+          "tier": "medium",
+          "side": "buy",
+          "shares": 515.002119,
+          "price": 5.27,
+          "usd": 2714.06,
+          "fee_usd": 8.14
+        }
+      ],
+      "reasons": [
+        "Why now: companies now come from patents and papers (2026-11-10 re-run).",
+        "Verdict band 'building' (score 60.0) -> invest 75% of the fund.",
+        "Confidence 41% is below the 70% needed for full size -> invest 59% of that: 44% of the fund.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): GEV. Reviewed again after the next price update.",
+        "No priced company in the low-risk tier; its share goes to the other tiers.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-10."
+      ],
+      "value_before_usd": 9968.67,
+      "sha256": "0a758be77ad0e578cfa41129d3244b3be1c750a751b67eb407f37c4d63c6dd3f",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_grid-scale-energy-storage_3",
+        "sha256": "0a758be77ad0e578cfa41129d3244b3be1c750a751b67eb407f37c4d63c6dd3f",
+        "tx_hash": "5RFLwJzNi6wSUYSJa6kEY8qxSQmWpGte7o69RBa1CicC",
+        "explorer_url": "https://testnet.nearblocks.io/txns/5RFLwJzNi6wSUYSJa6kEY8qxSQmWpGte7o69RBa1CicC"
+      }
+    }
+  ],
+  "history": [
+    {
+      "day": "2026-11-06",
+      "value_usd": 9951.99,
+      "benchmark_value_usd": null
+    }
+  ],
+  "benchmark": "SPY",
+  "benchmark_start_close": null,
+  "benchmark_start_date": null,
+  "updated_at": "2026-11-10T04:46:08.575261Z",
+  "notes": [
+    "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
+    "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",
+    "NEAR Intents quotes are dry runs: nothing is reserved or sent.",
+    "Not investment advice."
+  ]
+}

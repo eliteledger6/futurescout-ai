@@ -1,0 +1,274 @@
+{
+  "kind": "simulation",
+  "topic": "oled displays",
+  "slug": "oled-displays",
+  "sector": "xr_devices",
+  "created_at": "2026-11-09T11:14:10.603393Z",
+  "start_cash_usd": 10000.0,
+  "cash_usd": 3114.83,
+  "holdings": [
+    {
+      "ticker": "META",
+      "company": "Meta Platforms, Inc.",
+      "tier": "low",
+      "shares": 5.997557727988524,
+      "cost_usd": 3846.6535999999996,
+      "last_close": 641.37,
+      "last_date": "2026-11-09",
+      "timing_risk": null,
+      "why": "Company Scout: 1 patent(s); large by revenue",
+      "route": {
+        "available": true,
+        "symbol": "METAon",
+        "asset_id": "nep141:bnb-0xd7df5863a3e742f0c767768cdfcb63f09e0422f6.omdep.near",
+        "blockchain": "BNB Chain",
+        "token_price_usd": 647.6785,
+        "checked_at": "2026-11-10T04:48:06.780901Z",
+        "note": "listed by the NEAR Intents bridge; the price implied by a dry-run quote matches the stock"
+      },
+      "quote": {
+        "amount_in_usd": 3844.64,
+        "amount_out_usd": 3826.41,
+        "amount_out": "5.937384182213965567",
+        "cost_pct": 0.474,
+        "time_estimate_s": 25.0,
+        "quoted_at": "2026-11-10T04:48:07.834354Z",
+        "correlation_id": "1ccbe8b5-8bc3-4e26-ab34-45709af0eeec",
+        "error": null
+      }
+    },
+    {
+      "ticker": "INTC",
+      "company": "Intel Corp",
+      "tier": "low",
+      "shares": 64.79120094323733,
+      "cost_usd": 3846.6535999999996,
+      "last_close": 59.37,
+      "last_date": "2026-11-09",
+      "timing_risk": null,
+      "why": "Company Scout: 1 patent(s); large by revenue",
+      "route": {
+        "available": true,
+        "symbol": "INTCon",
+        "asset_id": "nep141:bnb-0xa528caaa2f96090e379d43f90834c75df54d6e74.omdep.near",
+        "blockchain": "BNB Chain",
+        "token_price_usd": 58.9277,
+        "checked_at": "2026-11-10T04:48:08.781816Z",
+        "note": "listed by the NEAR Intents bridge; the price implied by a dry-run quote matches the stock"
+      },
+      "quote": {
+        "amount_in_usd": 3844.64,
+        "amount_out_usd": 3825.37,
+        "amount_out": "65.279434519597389702",
+        "cost_pct": 0.501,
+        "time_estimate_s": 25.0,
+        "quoted_at": "2026-11-10T04:48:09.560608Z",
+        "correlation_id": "38af6e51-f349-4b53-a04a-7dbf596ef2eb",
+        "error": null
+      }
+    }
+  ],
+  "decisions": [
+    {
+      "at": "2026-11-09T11:14:10.603393Z",
+      "run_id": "bbf2edee-d195-476a-8d52-5162a6ac5726",
+      "report_date": "2026-11-09",
+      "band": "strong",
+      "score": 66.9,
+      "previous_score": null,
+      "confidence_pct": null,
+      "target_invested_pct": 100.0,
+      "tier_targets_usd": {
+        "high": 10000.0
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "GLW",
+        "AMAT",
+        "PPG",
+        "DLB",
+        "VUZI",
+        "HIMX",
+        "OLED"
+      ],
+      "trades": [
+        {
+          "day": "2026-11-06",
+          "ticker": "KOPN",
+          "tier": "high",
+          "side": "buy",
+          "shares": 3285.037803,
+          "price": 3.035,
+          "usd": 9970.09,
+          "fee_usd": 29.91
+        }
+      ],
+      "reasons": [
+        "Why now: first decision for this topic.",
+        "Verdict band 'strong' (score 66.9) -> invest 100% of the fund.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): GLW, AMAT, PPG, DLB, VUZI, HIMX, OLED. Reviewed again after the next price update.",
+        "No priced company in the low-risk tier; its share goes to the other tiers.",
+        "No priced company in the medium-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-09."
+      ],
+      "value_before_usd": 10000.0,
+      "sha256": "65b021607a3fe6eb9e0b376510bf4488d2c39fdd8cadfe3e7a6f955988b9215b",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_oled-displays_1",
+        "sha256": "65b021607a3fe6eb9e0b376510bf4488d2c39fdd8cadfe3e7a6f955988b9215b",
+        "tx_hash": "9bX9GSr8Cxb25QLsqSwy4zQ4oZA8DfGiAFQnX3g3321w",
+        "explorer_url": "https://testnet.nearblocks.io/txns/9bX9GSr8Cxb25QLsqSwy4zQ4oZA8DfGiAFQnX3g3321w"
+      }
+    },
+    {
+      "at": "2026-11-09T14:53:29.139053Z",
+      "run_id": "bbf2edee-d195-476a-8d52-5162a6ac5726",
+      "report_date": "2026-11-09",
+      "band": "strong",
+      "score": 76.0,
+      "previous_score": 66.9,
+      "confidence_pct": 55.2,
+      "target_invested_pct": 78.9,
+      "tier_targets_usd": {
+        "high": 7862.13
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "GLW",
+        "AMAT",
+        "PPG",
+        "DLB",
+        "VUZI",
+        "HIMX",
+        "OLED"
+      ],
+      "trades": [
+        {
+          "day": "2026-11-06",
+          "ticker": "KOPN",
+          "tier": "high",
+          "side": "sell",
+          "shares": 694.55078,
+          "price": 3.035,
+          "usd": 2107.96,
+          "fee_usd": 6.32
+        }
+      ],
+      "reasons": [
+        "Why now: scoring method changed: risk now lowers confidence, and position size follows confidence.",
+        "Verdict band 'strong' (score 76.0) -> invest 100% of the fund.",
+        "Confidence 55% is below the 70% needed for full size -> invest 79% of that: 79% of the fund.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): GLW, AMAT, PPG, DLB, VUZI, HIMX, OLED. Reviewed again after the next price update.",
+        "No priced company in the low-risk tier; its share goes to the other tiers.",
+        "No priced company in the medium-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-09."
+      ],
+      "value_before_usd": 9970.09,
+      "sha256": "75506c88c1f5b158688756c6a6bb9d334b463d440a209bf10da0e507f00c06fe",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_oled-displays_2",
+        "sha256": "75506c88c1f5b158688756c6a6bb9d334b463d440a209bf10da0e507f00c06fe",
+        "tx_hash": "8KG6qdbfGXpRELKH7bf3Pz1PN5BKtDxvMjPu5XAVhrBQ",
+        "explorer_url": "https://testnet.nearblocks.io/txns/8KG6qdbfGXpRELKH7bf3Pz1PN5BKtDxvMjPu5XAVhrBQ"
+      }
+    },
+    {
+      "at": "2026-11-10T04:46:08.575261Z",
+      "run_id": "783ab33d-be9b-4dd2-b9db-6e5e48e71b15",
+      "report_date": "2026-11-10",
+      "band": "strong",
+      "score": 71.0,
+      "previous_score": 76.0,
+      "confidence_pct": 49.6,
+      "target_invested_pct": 70.9,
+      "tier_targets_usd": {
+        "low": 7693.31
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "MRK",
+        "AMAT"
+      ],
+      "trades": [
+        {
+          "day": "2026-11-09",
+          "ticker": "KOPN",
+          "tier": "high",
+          "side": "sell",
+          "shares": 2590.487023,
+          "price": 3.38,
+          "usd": 8755.85,
+          "fee_usd": 26.27
+        },
+        {
+          "day": "2026-11-09",
+          "ticker": "META",
+          "tier": "low",
+          "side": "buy",
+          "shares": 5.997558,
+          "price": 641.37,
+          "usd": 3846.65,
+          "fee_usd": 11.54
+        },
+        {
+          "day": "2026-11-09",
+          "ticker": "INTC",
+          "tier": "low",
+          "side": "buy",
+          "shares": 64.791201,
+          "price": 59.37,
+          "usd": 3846.65,
+          "fee_usd": 11.54
+        }
+      ],
+      "reasons": [
+        "Why now: companies now come from patents and papers (2026-11-10 re-run).",
+        "Verdict band 'strong' (score 71.0) -> invest 100% of the fund.",
+        "Confidence 50% is below the 70% needed for full size -> invest 71% of that: 71% of the fund.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): MRK, AMAT. Reviewed again after the next price update.",
+        "No priced company in the medium-risk tier; its share goes to the other tiers.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-10."
+      ],
+      "value_before_usd": 10857.49,
+      "sha256": "977750fd9c9a120dbd8cfe23a123e39357e7c9e2546ff12f0035fca425b64259",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_oled-displays_3",
+        "sha256": "977750fd9c9a120dbd8cfe23a123e39357e7c9e2546ff12f0035fca425b64259",
+        "tx_hash": "3NuTP2TawqmSYN4cz46JYoXF36FyiwdtKDoi5CuoeGjX",
+        "explorer_url": "https://testnet.nearblocks.io/txns/3NuTP2TawqmSYN4cz46JYoXF36FyiwdtKDoi5CuoeGjX"
+      }
+    }
+  ],
+  "history": [
+    {
+      "day": "2026-11-06",
+      "value_usd": 9963.77,
+      "benchmark_value_usd": null
+    },
+    {
+      "day": "2026-11-09",
+      "value_usd": 10808.13,
+      "benchmark_value_usd": null
+    }
+  ],
+  "benchmark": "SPY",
+  "benchmark_start_close": null,
+  "benchmark_start_date": null,
+  "updated_at": "2026-11-10T04:46:08.575261Z",
+  "notes": [
+    "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
+    "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",
+    "NEAR Intents quotes are dry runs: nothing is reserved or sent.",
+    "Not investment advice."
+  ]
+}

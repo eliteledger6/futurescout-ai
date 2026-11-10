@@ -76,7 +76,7 @@ python scripts\db_check.py        # see: connection status and saved runs
 # (these scripts are in backend\scripts, so run them from the backend folder)
 ```
 
-Keys (see `.env.example`): `NEAR_AI_API_KEY` from https://cloud.near.ai, `OPENALEX_API_KEY` from a free account at https://openalex.org/settings/api. arXiv and GDELT need no key. `EDGAR_USER_AGENT` must be your name and a real contact email (the SEC requires it; it is sent only to sec.gov). Companies checked by the Market agent are listed in `backend/config/companies.yaml`.
+Keys (see `.env.example`): `NEAR_AI_API_KEY` from https://cloud.near.ai, `OPENALEX_API_KEY` from a free account at https://openalex.org/settings/api. arXiv and GDELT need no key. `EDGAR_USER_AGENT` must be your name and a real contact email (the SEC requires it; it is sent only to sec.gov). The Market agent checks the companies that the papers and patents point to (no hand-made list).
 
 ## Launch it and share it
 
@@ -89,7 +89,7 @@ The dashboard talks to the API through its own origin (`/api/*` is proxied by Ne
 | **Temporary public link, nothing to install** | keep both servers running and, in a new terminal, run `ssh -R 80:localhost:3000 nokey@localhost.run` (type `yes` the first time). It prints an `https://….lhr.life` address; share it. Works while that terminal stays open; the address changes each time | anyone with the link |
 | **Temporary public link, steadier** | `winget install Cloudflare.cloudflared`, then `cloudflared tunnel --url http://localhost:3000`; it prints an `https://….trycloudflare.com` address that works while the command runs | anyone with the link |
 | **One command with Docker** | `docker compose up --build` (reads keys from `.env`; without a database it serves `backend/runs`, or the sample reports when there are none) → http://localhost:3000 | you, or a server you own |
-| **Always-on hosting** | frontend on Vercel (import the repo, root `frontend`, set `API_INTERNAL_URL` to your API's URL); API on Render/Railway/Fly (Python service, start command `python scripts/serve.py --host 0.0.0.0 --port $PORT`, env vars from `.env.example`). Keys live in the host's environment settings, never in the repo | the public |
+| **Always-on hosting (set up: see HOSTING.md)** | frontend on Vercel (import the repo, root `frontend`, set `API_INTERNAL_URL` to your API's URL); API on Render/Railway/Fly (Python service, start command `python scripts/serve.py --host 0.0.0.0 --port $PORT`, env vars from `.env.example`). Keys live in the host's environment settings, never in the repo | the public |
 
 What to keep private: `.env` (keys), your NEAR testnet private keys. Sharing the site shares the reports; it never exposes keys. Watch mode (`scripts\watch.py --loop`) only runs where you start it.
 

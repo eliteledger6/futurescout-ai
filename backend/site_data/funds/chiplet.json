@@ -1,0 +1,276 @@
+{
+  "kind": "simulation",
+  "topic": "chiplet",
+  "slug": "chiplet",
+  "sector": "semiconductors",
+  "created_at": "2026-11-09T11:14:10.603393Z",
+  "start_cash_usd": 10000.0,
+  "cash_usd": 3793.08,
+  "holdings": [
+    {
+      "ticker": "AMD",
+      "company": "Advanced Micro Devices",
+      "tier": "low",
+      "shares": 13.02034246613821,
+      "cost_usd": 6401.23554026081,
+      "last_close": 508.58,
+      "last_date": "2026-11-09",
+      "timing_risk": "moderate",
+      "why": "Company Scout: 1 paper(s), 1 filing(s); large by revenue",
+      "route": {
+        "available": false,
+        "symbol": null,
+        "asset_id": null,
+        "blockchain": null,
+        "token_price_usd": null,
+        "checked_at": "2026-11-10T04:48:19.407589Z",
+        "note": "no tokenized version in the public NEAR Intents token lists"
+      },
+      "quote": null
+    }
+  ],
+  "decisions": [
+    {
+      "at": "2026-11-09T11:14:10.603393Z",
+      "run_id": "113c0b12-35e2-4d0a-bb7b-6aef2cca42a1",
+      "report_date": "2026-11-09",
+      "band": "building",
+      "score": 58.1,
+      "previous_score": null,
+      "confidence_pct": null,
+      "target_invested_pct": 75.0,
+      "tier_targets_usd": {
+        "low": 5000.0,
+        "medium": 2500.0
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "AMAT",
+        "LRCX",
+        "CDNS",
+        "CRDO",
+        "AIP",
+        "CEVA",
+        "KLIC",
+        "MRCY"
+      ],
+      "trades": [
+        {
+          "day": "2026-11-06",
+          "ticker": "AMD",
+          "tier": "low",
+          "side": "buy",
+          "shares": 5.567433,
+          "price": 449.04,
+          "usd": 2500.0,
+          "fee_usd": 7.5
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "INTC",
+          "tier": "low",
+          "side": "buy",
+          "shares": 44.420753,
+          "price": 56.28,
+          "usd": 2500.0,
+          "fee_usd": 7.5
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "MRVL",
+          "tier": "medium",
+          "side": "buy",
+          "shares": 17.705382,
+          "price": 141.2,
+          "usd": 2500.0,
+          "fee_usd": 7.5
+        }
+      ],
+      "reasons": [
+        "Why now: first decision for this topic.",
+        "Verdict band 'building' (score 58.1) -> invest 75% of the fund.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): AMAT, LRCX, CDNS, CRDO, AIP, CEVA, KLIC, MRCY. Reviewed again after the next price update.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-09."
+      ],
+      "value_before_usd": 10000.0,
+      "sha256": "1e7b91125fddd634eaa4fb7c110daf9e12b2e6d9a896043353971d0901735da8",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_chiplet_1",
+        "sha256": "1e7b91125fddd634eaa4fb7c110daf9e12b2e6d9a896043353971d0901735da8",
+        "tx_hash": "EthQLpzKjqeCwQ5a7f8xtykWTW6PnbNmQvo59UhyMiAw",
+        "explorer_url": "https://testnet.nearblocks.io/txns/EthQLpzKjqeCwQ5a7f8xtykWTW6PnbNmQvo59UhyMiAw"
+      }
+    },
+    {
+      "at": "2026-11-09T14:53:29.139053Z",
+      "run_id": "113c0b12-35e2-4d0a-bb7b-6aef2cca42a1",
+      "report_date": "2026-11-09",
+      "band": "building",
+      "score": 66.0,
+      "previous_score": 58.1,
+      "confidence_pct": 46.7,
+      "target_invested_pct": 50.0,
+      "tier_targets_usd": {
+        "low": 3328.21,
+        "medium": 1664.1
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "AMAT",
+        "LRCX",
+        "CDNS",
+        "CRDO",
+        "AIP",
+        "CEVA",
+        "KLIC",
+        "MRCY"
+      ],
+      "trades": [
+        {
+          "day": "2026-11-06",
+          "ticker": "AMD",
+          "tier": "low",
+          "side": "sell",
+          "shares": 1.861517,
+          "price": 449.04,
+          "usd": 835.9,
+          "fee_usd": 2.51
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "INTC",
+          "tier": "low",
+          "side": "sell",
+          "shares": 14.852444,
+          "price": 56.28,
+          "usd": 835.9,
+          "fee_usd": 2.51
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "MRVL",
+          "tier": "medium",
+          "side": "sell",
+          "shares": 5.91994,
+          "price": 141.2,
+          "usd": 835.9,
+          "fee_usd": 2.51
+        }
+      ],
+      "reasons": [
+        "Why now: scoring method changed: risk now lowers confidence, and position size follows confidence.",
+        "Verdict band 'building' (score 66.0) -> invest 75% of the fund.",
+        "Confidence 47% is below the 70% needed for full size -> invest 67% of that: 50% of the fund.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): AMAT, LRCX, CDNS, CRDO, AIP, CEVA, KLIC, MRCY. Reviewed again after the next price update.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-09."
+      ],
+      "value_before_usd": 9977.5,
+      "sha256": "72b24db4e0335dbf21aea7be1fada0c70b217ccbc2be8eed5284d91cfd6b33a7",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_chiplet_2",
+        "sha256": "72b24db4e0335dbf21aea7be1fada0c70b217ccbc2be8eed5284d91cfd6b33a7",
+        "tx_hash": "4vYSE88WY9yqdRGg2xMVt4878UBZU7LCkgXrvGyWER4k",
+        "explorer_url": "https://testnet.nearblocks.io/txns/4vYSE88WY9yqdRGg2xMVt4878UBZU7LCkgXrvGyWER4k"
+      }
+    },
+    {
+      "at": "2026-11-10T04:46:08.575261Z",
+      "run_id": "ab3b0896-a403-4181-990f-65bad2f59f13",
+      "report_date": "2026-11-10",
+      "band": "strong",
+      "score": 72.2,
+      "previous_score": 66.0,
+      "confidence_pct": 44.4,
+      "target_invested_pct": 63.4,
+      "tier_targets_usd": {
+        "low": 6621.89
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "NVDA"
+      ],
+      "trades": [
+        {
+          "day": "2026-11-09",
+          "ticker": "INTC",
+          "tier": "low",
+          "side": "sell",
+          "shares": 29.56831,
+          "price": 59.37,
+          "usd": 1755.47,
+          "fee_usd": 5.27
+        },
+        {
+          "day": "2026-11-09",
+          "ticker": "MRVL",
+          "tier": "medium",
+          "side": "sell",
+          "shares": 11.785442,
+          "price": 154.6,
+          "usd": 1822.03,
+          "fee_usd": 5.47
+        },
+        {
+          "day": "2026-11-09",
+          "ticker": "AMD",
+          "tier": "low",
+          "side": "buy",
+          "shares": 9.314427,
+          "price": 508.58,
+          "usd": 4737.13,
+          "fee_usd": 14.21
+        }
+      ],
+      "reasons": [
+        "Why now: companies now come from patents and papers (2026-11-10 re-run).",
+        "Verdict band 'strong' (score 72.2) -> invest 100% of the fund.",
+        "Confidence 44% is below the 70% needed for full size -> invest 63% of that: 63% of the fund.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): NVDA. Reviewed again after the next price update.",
+        "No priced company in the medium-risk tier; its share goes to the other tiers.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-10."
+      ],
+      "value_before_usd": 10439.91,
+      "sha256": "52f05588d0b25fe90bd83bd2caf34f0395f95915bbf0626ff251627d7191bc44",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_chiplet_3",
+        "sha256": "52f05588d0b25fe90bd83bd2caf34f0395f95915bbf0626ff251627d7191bc44",
+        "tx_hash": "Hs6aQfLqYHY2fg3fgbwUGAeBuaMJGC2KKvRCTBxcTWE7",
+        "explorer_url": "https://testnet.nearblocks.io/txns/Hs6aQfLqYHY2fg3fgbwUGAeBuaMJGC2KKvRCTBxcTWE7"
+      }
+    }
+  ],
+  "history": [
+    {
+      "day": "2026-11-06",
+      "value_usd": 9969.96,
+      "benchmark_value_usd": null
+    },
+    {
+      "day": "2026-11-09",
+      "value_usd": 10414.97,
+      "benchmark_value_usd": null
+    }
+  ],
+  "benchmark": "SPY",
+  "benchmark_start_close": null,
+  "benchmark_start_date": null,
+  "updated_at": "2026-11-10T04:46:08.575261Z",
+  "notes": [
+    "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
+    "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",
+    "NEAR Intents quotes are dry runs: nothing is reserved or sent.",
+    "Not investment advice."
+  ]
+}

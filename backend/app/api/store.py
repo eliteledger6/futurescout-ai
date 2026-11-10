@@ -4,6 +4,7 @@ JSON files in backend/runs/ (so the dashboard also works for someone who has no 
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 from typing import Optional, Protocol
 
@@ -12,6 +13,8 @@ from sqlalchemy import select
 from app.db import list_runs, load_report, make_engine, make_session_factory
 from app.db.models import Run
 from app.schemas.research import ResearchReport
+
+_UUID = re.compile(r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}")
 
 
 def summarize(run_id: str, report: ResearchReport) -> dict:
@@ -65,27 +68,42 @@ class FileStore:
 
     def __init__(self, runs_dir: Path) -> None:
         self.runs_dir = runs_dir
+        self._cache: dict[Path, tuple[float, Optional[dict]]] = {}   # path -> (mtime, summary); reports are large
 
-    def _files(self) -> list[Path]:
-        return sorted(self.runs_dir.glob("report_*.json"), reverse=True) if self.runs_dir.exists() else []
+    @staticmethod
+    def _id(path: Path) -> str:
+        """`report_<database uuid>.json` (exported by scripts/export_site.py) keeps its database id, so links from the
+        funds and trading pages (which store that id) still work; other files keep their file name as the id."""
+        rest = path.stem[len("report_"):]
+        return rest if _UUID.fullmatch(rest) else path.stem
+
+    def _summaries(self) -> list[dict]:
+        files = list(self.runs_dir.glob("report_*.json")) if self.runs_dir.exists() else []
+        out = []
+        for path in files:
+            mtime = path.stat().st_mtime
+            hit = self._cache.get(path)
+            if hit is None or hit[0] != mtime:
+                try:
+                    summary = summarize(self._id(path), ResearchReport.model_validate(json.loads(path.read_text(encoding="utf-8"))))
+                except Exception:  # noqa: BLE001  (a broken file is skipped, not fatal)
+                    summary = None
+                hit = self._cache[path] = (mtime, summary)
+            if hit[1] is not None:
+                out.append(hit[1])
+        return sorted(out, key=lambda s: s["generated_at"], reverse=True)     # newest first
 
     def list(self, limit: int = 50, topic: Optional[str] = None) -> list[dict]:
-        out = []
-        for path in self._files():
-            try:
-                report = ResearchReport.model_validate(json.loads(path.read_text(encoding="utf-8")))
-            except Exception:  # noqa: BLE001  (a broken file is skipped, not fatal)
-                continue
-            if topic and topic.lower() not in report.topic.lower():
-                continue
-            out.append(summarize(path.stem, report))
-            if len(out) >= limit:
-                break
-        return out
+        rows = [s for s in self._summaries() if not topic or topic.lower() in s["topic"].lower()]
+        return rows[:limit]
 
     def get(self, run_id: str) -> Optional[tuple[ResearchReport, Optional[str]]]:
-        if not run_id.startswith("report_") or "/" in run_id or "\\" in run_id or ".." in run_id:
+        if "/" in run_id or "\\" in run_id or ".." in run_id:
             return None  # only plain report file names; never arbitrary paths
+        if _UUID.fullmatch(run_id):
+            run_id = f"report_{run_id}"
+        if not run_id.startswith("report_"):
+            return None
         path = self.runs_dir / f"{run_id}.json"
         if not path.is_file():
             return None

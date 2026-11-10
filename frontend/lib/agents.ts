@@ -25,7 +25,7 @@ export const AGENTS: Record<AgentKey, AgentInfo> = {
   risk: { key: "risk", name: "Risk", role: "Argues against", icon: "shield", prefix: "R", modelKey: "risk",
     detail: "Searches independently for limits, failures, cost and reliability problems and flags hype. After the Chief review it also challenges specific findings: thin samples, simulations, preprints, overstated labels.",
     sources: "OpenAlex · arXiv · the other agents' findings" },
-  market: { key: "market", name: "Market", role: "Companies from the evidence", icon: "building", prefix: "M", modelKey: "market",
+  market: { key: "market", name: "Market", role: "From papers & patents", icon: "building", prefix: "M", modelKey: "market",
     detail: "There is no fixed company list. The companies are the SEC-listed patent assignees and employers of paper authors that the Patent and Science agents found, plus filers whose reports mention the topic. It reads their latest SEC annual and quarterly reports and keeps verbatim passages that mention the topic.",
     sources: "Patent assignees · paper affiliations · SEC EDGAR · news headlines" },
   x: { key: "x", name: "X signals", role: "37 approved accounts", icon: "signal", prefix: "X", modelKey: "x",

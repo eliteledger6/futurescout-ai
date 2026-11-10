@@ -1,0 +1,1109 @@
+{
+  "proposals": [
+    {
+      "id": "6cb942a915",
+      "created_at": "2026-11-09T13:30:19.561925Z",
+      "mode": "shadow",
+      "side": "buy",
+      "topic": "AI agents",
+      "ticker": "GOOGL",
+      "symbol": "GOOGLon",
+      "asset_id": "nep141:bnb-0x091fc7778e6932d4009b087b191d1ee3bac5729a.omdep.near",
+      "usd": 1800.0,
+      "rationale": "GOOGL is the largest AI-agents position because its price stretch is subdued and its 0.62% quote is the cheapest in that topic. Two SEC reports mention the topic and the report scores it 60.1 (building).",
+      "risks": [
+        "Tokenized stocks depend on their issuer (Ondo) and on NEAR Intents settlement; they are not the underlying shares themselves.",
+        "About 38% of the budget sits in one topic (AI agents), so a setback there would hit three positions together.",
+        "The verdicts are only 'building' with middling scores, and evidence based on SEC mentions shows that a company discusses a topic, not that it profits from it.",
+        "Quote costs of roughly 0.4% to 0.9% per trade reduce the value of each position from the start."
+      ],
+      "confidence": "low",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.0289,
+      "ref_close": 284.78,
+      "ref_close_date": "2026-11-06",
+      "dry_quote": null,
+      "status": "shadow_filled",
+      "quote": {
+        "amountIn": "508474576271186424139612160",
+        "amountInFormatted": "508.47457627118642413961216",
+        "amountInUsd": "1800.000000000000",
+        "amountOut": "6128476147678316976",
+        "amountOutFormatted": "6.128476147678316976",
+        "amountOutUsd": "1787.676492277765",
+        "minAmountOut": "6067191386201533806",
+        "timeEstimate": 35,
+        "correlationId": "b393c05b-3314-4082-909c-c1ccb7fd5cf9",
+        "quotedAt": "2026-11-09T13:30:37.224585+00:00",
+        "dry": true
+      },
+      "deposit_address": null,
+      "deposit_tx": null,
+      "result": null,
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-09T13:30:19.561925Z",
+          "status": "proposed",
+          "note": "shadow plan: $1,800.00 of GOOGLon"
+        },
+        {
+          "at": "2026-11-09T13:30:37.224585Z",
+          "status": "shadow_filled",
+          "note": "would receive 6.128476147678316976 GOOGLon for $1800.00 (nothing was sent)"
+        }
+      ],
+      "sha256": "051009512ba04cb3aaba2ca837e72173dec67f38cd465e08340c8509329df27c",
+      "chain": null
+    },
+    {
+      "id": "d81b561642",
+      "created_at": "2026-11-09T13:30:19.561925Z",
+      "mode": "shadow",
+      "side": "buy",
+      "topic": "AI agents",
+      "ticker": "MSFT",
+      "symbol": "MSFTon",
+      "asset_id": "nep141:bnb-0x6bfe75d1ad432050ea973c3a3dcd88f02e2444c3.omdep.near",
+      "usd": 1200.0,
+      "rationale": "MSFT has the most direct evidence in the AI-agents topic, with 3 SEC reports mentioning it. The size is trimmed because its price stretch is moderate and its 0.92% quote cost is the highest of all candidates.",
+      "risks": [
+        "Tokenized stocks depend on their issuer (Ondo) and on NEAR Intents settlement; they are not the underlying shares themselves.",
+        "About 38% of the budget sits in one topic (AI agents), so a setback there would hit three positions together.",
+        "The verdicts are only 'building' with middling scores, and evidence based on SEC mentions shows that a company discusses a topic, not that it profits from it.",
+        "Quote costs of roughly 0.4% to 0.9% per trade reduce the value of each position from the start."
+      ],
+      "confidence": "low",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.0,
+      "ref_close": 530.61,
+      "ref_close_date": "2026-11-06",
+      "dry_quote": null,
+      "status": "shadow_filled",
+      "quote": {
+        "amountIn": "338983050847457593186582528",
+        "amountInFormatted": "338.983050847457593186582528",
+        "amountInUsd": "1200.000000000000",
+        "amountOut": "2191631097623853378",
+        "amountOutFormatted": "2.191631097623853378",
+        "amountOutUsd": "1189.595443479251",
+        "minAmountOut": "2169714786647614844",
+        "timeEstimate": 35,
+        "correlationId": "604825e3-526a-45f0-b9f9-77cb2ab84c0a",
+        "quotedAt": "2026-11-09T13:30:38.245808+00:00",
+        "dry": true
+      },
+      "deposit_address": null,
+      "deposit_tx": null,
+      "result": null,
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-09T13:30:19.561925Z",
+          "status": "proposed",
+          "note": "shadow plan: $1,200.00 of MSFTon"
+        },
+        {
+          "at": "2026-11-09T13:30:38.245808Z",
+          "status": "shadow_filled",
+          "note": "would receive 2.191631097623853378 MSFTon for $1200.00 (nothing was sent)"
+        }
+      ],
+      "sha256": "96021f0eb4b6f3e344496dee07080cb034ee5742d245e3e98cef53fcae720d2c",
+      "chain": null
+    },
+    {
+      "id": "1d8ffd43db",
+      "created_at": "2026-11-09T13:30:19.561925Z",
+      "mode": "shadow",
+      "side": "buy",
+      "topic": "AI agents",
+      "ticker": "META",
+      "symbol": "METAon",
+      "asset_id": "nep141:bnb-0xd7df5863a3e742f0c767768cdfcb63f09e0422f6.omdep.near",
+      "usd": 800.0,
+      "rationale": "META has 2 SEC report mentions under the same 60.1 building AI-agents report. It is the smallest AI-agents position because its price stretch is moderate and this topic is already the largest exposure.",
+      "risks": [
+        "Tokenized stocks depend on their issuer (Ondo) and on NEAR Intents settlement; they are not the underlying shares themselves.",
+        "About 38% of the budget sits in one topic (AI agents), so a setback there would hit three positions together.",
+        "The verdicts are only 'building' with middling scores, and evidence based on SEC mentions shows that a company discusses a topic, not that it profits from it.",
+        "Quote costs of roughly 0.4% to 0.9% per trade reduce the value of each position from the start."
+      ],
+      "confidence": "low",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.0,
+      "ref_close": 610.15,
+      "ref_close_date": "2026-11-06",
+      "dry_quote": null,
+      "status": "shadow_filled",
+      "quote": {
+        "amountIn": "225988700564971717337808896",
+        "amountInFormatted": "225.988700564971717337808896",
+        "amountInUsd": "800.000000000000",
+        "amountOut": "1265696887848326424",
+        "amountOutFormatted": "1.265696887848326424",
+        "amountOutUsd": "794.199483187068",
+        "minAmountOut": "1253039918969843159",
+        "timeEstimate": 35,
+        "correlationId": "7c283728-9c07-4b9d-8f38-e47bcc555790",
+        "quotedAt": "2026-11-09T13:30:39.490798+00:00",
+        "dry": true
+      },
+      "deposit_address": null,
+      "deposit_tx": null,
+      "result": null,
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-09T13:30:19.561925Z",
+          "status": "proposed",
+          "note": "shadow plan: $800.00 of METAon"
+        },
+        {
+          "at": "2026-11-09T13:30:39.490798Z",
+          "status": "shadow_filled",
+          "note": "would receive 1.265696887848326424 METAon for $800.00 (nothing was sent)"
+        }
+      ],
+      "sha256": "38c1a805ad87be5e25514b1f66365e83427ee0034276f6526c84fa5c9f617b85",
+      "chain": null
+    },
+    {
+      "id": "df8223936a",
+      "created_at": "2026-11-09T13:30:19.561925Z",
+      "mode": "shadow",
+      "side": "buy",
+      "topic": "silicon photonics",
+      "ticker": "MRVL",
+      "symbol": "MRVLon",
+      "asset_id": "nep141:bnb-0x1501ec83ffef405b4331cc4f73277a40fb0c627d.omdep.near",
+      "usd": 1800.0,
+      "rationale": "MRVL has 3 SEC report mentions for silicon photonics (building, 59.8), a subdued price stretch and the lowest quote cost at 0.42%. It is capped at this level because it is a mid-size company with medium size risk.",
+      "risks": [
+        "Tokenized stocks depend on their issuer (Ondo) and on NEAR Intents settlement; they are not the underlying shares themselves.",
+        "About 38% of the budget sits in one topic (AI agents), so a setback there would hit three positions together.",
+        "The verdicts are only 'building' with middling scores, and evidence based on SEC mentions shows that a company discusses a topic, not that it profits from it.",
+        "Quote costs of roughly 0.4% to 0.9% per trade reduce the value of each position from the start."
+      ],
+      "confidence": "low",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.0,
+      "ref_close": 141.2,
+      "ref_close_date": "2026-11-06",
+      "dry_quote": null,
+      "status": "shadow_filled",
+      "quote": {
+        "amountIn": "508474576271186424139612160",
+        "amountInFormatted": "508.47457627118642413961216",
+        "amountInUsd": "1800.000000000000",
+        "amountOut": "12600427902590775228",
+        "amountOutFormatted": "12.600427902590775228",
+        "amountOutUsd": "1791.528839190357",
+        "minAmountOut": "12474423623564867475",
+        "timeEstimate": 35,
+        "correlationId": "16f38640-ff2a-4864-9e7b-35a75aababba",
+        "quotedAt": "2026-11-09T13:30:40.323863+00:00",
+        "dry": true
+      },
+      "deposit_address": null,
+      "deposit_tx": null,
+      "result": null,
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-09T13:30:19.561925Z",
+          "status": "proposed",
+          "note": "shadow plan: $1,800.00 of MRVLon"
+        },
+        {
+          "at": "2026-11-09T13:30:40.323863Z",
+          "status": "shadow_filled",
+          "note": "would receive 12.600427902590775228 MRVLon for $1800.00 (nothing was sent)"
+        }
+      ],
+      "sha256": "ab3fc178d0042073cd6be08d4cf6631ef8d925920b15083087fa9c9379a3e1ef",
+      "chain": null
+    },
+    {
+      "id": "81390912b9",
+      "created_at": "2026-11-09T13:30:19.561925Z",
+      "mode": "shadow",
+      "side": "buy",
+      "topic": "chiplet",
+      "ticker": "INTC",
+      "symbol": "INTCon",
+      "asset_id": "nep141:bnb-0xa528caaa2f96090e379d43f90834c75df54d6e74.omdep.near",
+      "usd": 1000.0,
+      "rationale": "INTC adds a separate chiplet topic (building, 58.1) at a subdued price stretch, which spreads the portfolio beyond one theme. It is sized smaller because only 1 SEC report mentions the topic and the report score is the lowest.",
+      "risks": [
+        "Tokenized stocks depend on their issuer (Ondo) and on NEAR Intents settlement; they are not the underlying shares themselves.",
+        "About 38% of the budget sits in one topic (AI agents), so a setback there would hit three positions together.",
+        "The verdicts are only 'building' with middling scores, and evidence based on SEC mentions shows that a company discusses a topic, not that it profits from it.",
+        "Quote costs of roughly 0.4% to 0.9% per trade reduce the value of each position from the start."
+      ],
+      "confidence": "low",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.0,
+      "ref_close": 56.28,
+      "ref_close_date": "2026-11-06",
+      "dry_quote": null,
+      "status": "shadow_filled",
+      "quote": {
+        "amountIn": "282485875706214706801803264",
+        "amountInFormatted": "282.485875706214706801803264",
+        "amountInUsd": "1000.000000000000",
+        "amountOut": "17653626273689389091",
+        "amountOutFormatted": "17.653626273689389091",
+        "amountOutUsd": "993.369550420502",
+        "minAmountOut": "17477090010952495200",
+        "timeEstimate": 35,
+        "correlationId": "83ca7f8b-d82d-448d-8e24-568ee2071ab4",
+        "quotedAt": "2026-11-09T13:30:41.236386+00:00",
+        "dry": true
+      },
+      "deposit_address": null,
+      "deposit_tx": null,
+      "result": null,
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-09T13:30:19.561925Z",
+          "status": "proposed",
+          "note": "shadow plan: $1,000.00 of INTCon"
+        },
+        {
+          "at": "2026-11-09T13:30:41.236386Z",
+          "status": "shadow_filled",
+          "note": "would receive 17.653626273689389091 INTCon for $1000.00 (nothing was sent)"
+        }
+      ],
+      "sha256": "e2e8a73e5a06899e958c62f06df0c8af39f0e5df90f21626b964c041f0c0f0cc",
+      "chain": null
+    },
+    {
+      "id": "5ba66962e9",
+      "created_at": "2026-11-09T13:49:07.269579Z",
+      "mode": "live",
+      "side": "buy",
+      "topic": "AI agents",
+      "ticker": "GOOGL",
+      "symbol": "GOOGLon",
+      "asset_id": "nep141:bnb-0x091fc7778e6932d4009b087b191d1ee3bac5729a.omdep.near",
+      "usd": 10.0,
+      "rationale": "GOOGL is one of only two candidates that can actually be bought at $10. Its AI agents report has a 'building' verdict with a score of 60.1, slightly above the chiplet report behind INTC at 58.1. GOOGL is also backed by two SEC reports mentioning the topic, versus one for INTC, and it has the lower quoted cost (0.68% vs 0.73%) with a price that is not stretched.",
+      "risks": [
+        "A tokenized stock depends on its issuer (Ondo) and is not the share itself.",
+        "The research verdict is only 'building', not strong, so the evidence for the topic is still developing.",
+        "This is a tiny test trade, and the quoted cost of about 0.68% takes a noticeable bite at this size."
+      ],
+      "confidence": "low",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.013364,
+      "ref_close": 284.78,
+      "ref_close_date": "2026-11-06",
+      "dry_quote": {
+        "amountIn": "2832861189801700006821888",
+        "amountInFormatted": "2.832861189801700006821888",
+        "amountInUsd": "10.000000000000",
+        "amountOut": "34114473458217529",
+        "amountOutFormatted": "0.034114473458217529",
+        "amountOutUsd": "9.931746657891",
+        "minAmountOut": "33773328723635353",
+        "timeEstimate": 22,
+        "correlationId": "a1a55765-520a-4140-9ae6-f871e111264e",
+        "quotedAt": "2026-11-09T13:49:13.290538+00:00",
+        "dry": true
+      },
+      "status": "success",
+      "quote": {
+        "amountIn": "2824858757062147218341888",
+        "amountInFormatted": "2.824858757062147218341888",
+        "amountInUsd": "10.000000000000",
+        "amountOut": "34045996479095742",
+        "amountOutFormatted": "0.034045996479095742",
+        "amountOutUsd": "9.934621772600",
+        "minAmountOut": "33705536514304784",
+        "timeEstimate": 22,
+        "depositAddress": "dbd82b56eeb6a5cfefde24e64938948ab2195ee8169c3c7760450d53a968a8a6",
+        "deadline": "2026-11-12T14:28:12.000Z",
+        "timeWhenInactive": "2026-11-12T14:28:12.000Z",
+        "correlationId": "f6385a7d-b513-42c6-bace-debe71ec8c98",
+        "quotedAt": "2026-11-09T13:58:13.766787+00:00",
+        "dry": false
+      },
+      "deposit_address": "dbd82b56eeb6a5cfefde24e64938948ab2195ee8169c3c7760450d53a968a8a6",
+      "deposit_tx": "FhTC3Y84QrZpxAth3phn8cR13je1T8pJheCqbkEW82K1",
+      "result": {
+        "status": "SUCCESS",
+        "amountInFormatted": "2.824858757062147218341888",
+        "amountOutFormatted": "0.034499148645099161",
+        "amountOutUsd": "10.054776872614",
+        "refundedAmountFormatted": "0"
+      },
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-09T13:49:07.269579Z",
+          "status": "proposed",
+          "note": "trading agent (claude_opus_5_5) proposed to buy $10.00 of GOOGLon"
+        },
+        {
+          "at": "2026-11-09T13:58:08.847946Z",
+          "status": "approved",
+          "note": "approved by the owner at the keyboard"
+        },
+        {
+          "at": "2026-11-09T13:58:13.766787Z",
+          "status": "executing",
+          "note": "real quote accepted; sending $10.00 of NEAR to the 1Click deposit address"
+        },
+        {
+          "at": "2026-11-09T13:58:31.316715Z",
+          "status": "deposited",
+          "note": "NEAR sent, tx FhTC3Y84QrZpxAth3phn8cR13je1T8pJheCqbkEW82K1"
+        },
+        {
+          "at": "2026-11-09T13:58:32.140732Z",
+          "status": "deposited",
+          "note": "1Click status: PENDING_DEPOSIT"
+        },
+        {
+          "at": "2026-11-09T13:58:53.696354Z",
+          "status": "deposited",
+          "note": "1Click status: PROCESSING"
+        },
+        {
+          "at": "2026-11-10T02:09:31.743014Z",
+          "status": "deposited",
+          "note": "1Click status: SUCCESS"
+        },
+        {
+          "at": "2026-11-10T02:09:31.743014Z",
+          "status": "success",
+          "note": "final 1Click status SUCCESS"
+        }
+      ],
+      "sha256": "d4e5155f0f56589b78cb773075525df72dbae76e194919b43919f669243f8454",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/trade_5ba66962e9",
+        "sha256": "d4e5155f0f56589b78cb773075525df72dbae76e194919b43919f669243f8454",
+        "tx_hash": "2DjDaQN3R11Qu1YgQBJEkewWVR5xu76Xa3re6F9kbMSX",
+        "explorer_url": "https://testnet.nearblocks.io/txns/2DjDaQN3R11Qu1YgQBJEkewWVR5xu76Xa3re6F9kbMSX"
+      }
+    },
+    {
+      "id": "855b00385e",
+      "created_at": "2026-11-09T14:44:04.670284Z",
+      "mode": "live",
+      "side": "buy",
+      "topic": "AI agents",
+      "ticker": "GOOGL",
+      "symbol": "GOOGLon",
+      "asset_id": "nep141:bnb-0x091fc7778e6932d4009b087b191d1ee3bac5729a.omdep.near",
+      "usd": 20.0,
+      "rationale": "GOOGL is the strongest candidate that can be bought at this size. Its AI agents report is rated 'building' with a score of 60.1, and two SEC reports mention the topic for this company. Its price is not stretched ('subdued'), and its quoted cost of 0.67% is lower than INTC's 1.03%, the only other buyable option. The report's confidence level was not provided, so this pick rests on thin evidence.",
+      "risks": [
+        "A tokenized stock depends on its issuer (Ondo) and the NEAR Intents route, and is not the share itself.",
+        "The report's confidence was not given, and a 'building' verdict with a score near 60 is moderate evidence, not strong.",
+        "Trading costs of about 0.67% on a $20 test take a noticeable bite out of the position."
+      ],
+      "confidence": "low",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.016416,
+      "ref_close": 284.78,
+      "ref_close_date": "2026-11-06",
+      "dry_quote": {
+        "amountIn": "5617977528089886641356800",
+        "amountInFormatted": "5.6179775280898866413568",
+        "amountInUsd": "20.000000000000",
+        "amountOut": "67319102672755204",
+        "amountOutFormatted": "0.067319102672755204",
+        "amountOutUsd": "19.865194007703",
+        "minAmountOut": "66645911646027651",
+        "timeEstimate": 22,
+        "correlationId": "a3496336-8a82-48ff-8a5b-8a7cee65eda9",
+        "quotedAt": "2026-11-09T14:44:11.510943+00:00",
+        "dry": true
+      },
+      "status": "rejected",
+      "quote": null,
+      "deposit_address": null,
+      "deposit_tx": null,
+      "result": null,
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-09T14:44:04.670284Z",
+          "status": "proposed",
+          "note": "trading agent (claude_opus_5_5) proposed to buy $20.00 of GOOGLon"
+        },
+        {
+          "at": "2026-11-09T14:53:40.235310Z",
+          "status": "rejected",
+          "note": "rejected by the owner"
+        }
+      ],
+      "sha256": "1d3e7044aaa8a5ca9cf174c19a9a92eca03998fab36371819905aff966606d14",
+      "chain": null
+    },
+    {
+      "id": "fdc8a90cf4",
+      "created_at": "2026-11-09T14:53:42.174972Z",
+      "mode": "live",
+      "side": "buy",
+      "topic": "AI agents",
+      "ticker": "GOOGL",
+      "symbol": "GOOGLon",
+      "asset_id": "nep141:bnb-0x091fc7778e6932d4009b087b191d1ee3bac5729a.omdep.near",
+      "usd": 25.0,
+      "rationale": "Only GOOGL and INTC can be bought at this size, and INTC's quoted cost of 1.93% is above the 1.5% limit. GOOGL is tied for the highest report score (60.1, verdict 'building') on AI agents, and two SEC reports mention the topic. Its quoted cost is a low 0.66%, and the stock is not stretched ('subdued'). No report confidence figure was provided, so the evidence behind this choice is thin.",
+      "risks": [
+        "A tokenized stock depends on its issuer (Ondo) and is not the share itself.",
+        "The report verdict is only 'building' and gives no confidence figure, so the evidence is thin.",
+        "Evidence that GOOGL fits the topic rests on two SEC filing mentions, not a detailed company-level case."
+      ],
+      "confidence": "low",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.015756,
+      "ref_close": 284.78,
+      "ref_close_date": "2026-11-06",
+      "dry_quote": {
+        "amountIn": "6944444444444444059500544",
+        "amountInFormatted": "6.944444444444444059500544",
+        "amountInUsd": "25.000000000000",
+        "amountOut": "84759684840423726",
+        "amountOutFormatted": "0.084759684840423726",
+        "amountOutUsd": "24.834587658244",
+        "minAmountOut": "83912087992019488",
+        "timeEstimate": 22,
+        "correlationId": "9478a2d1-eaca-4a42-bcd0-fa572f48c2a9",
+        "quotedAt": "2026-11-09T14:53:49.064880+00:00",
+        "dry": true
+      },
+      "status": "success",
+      "quote": {
+        "amountIn": "6925207756232687869755392",
+        "amountInFormatted": "6.925207756232687869755392",
+        "amountInUsd": "25.000000000000",
+        "amountOut": "84479249226028432",
+        "amountOutFormatted": "0.084479249226028432",
+        "amountOutUsd": "24.804797157746",
+        "minAmountOut": "83634456733768147",
+        "timeEstimate": 22,
+        "depositAddress": "8db1fe3391ef1a384cb8789571ce951cfdb6aa1e30d140cdc2736ee344cf931f",
+        "deadline": "2026-11-12T15:24:49.000Z",
+        "timeWhenInactive": "2026-11-12T15:24:49.000Z",
+        "correlationId": "137a5a75-7273-4e70-b1af-85da79308f38",
+        "quotedAt": "2026-11-09T14:54:50.881771+00:00",
+        "dry": false
+      },
+      "deposit_address": "8db1fe3391ef1a384cb8789571ce951cfdb6aa1e30d140cdc2736ee344cf931f",
+      "deposit_tx": "CcJidZ4UxjcY9RzRFpyFvwavZKEcjvwU1g6E2VbkiowX",
+      "result": {
+        "status": "SUCCESS",
+        "amountInFormatted": "6.925207756232687869755392",
+        "amountOutFormatted": "0.084560755114428522",
+        "amountOutUsd": "24.645232078100",
+        "refundedAmountFormatted": "0"
+      },
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-09T14:53:42.174972Z",
+          "status": "proposed",
+          "note": "trading agent (claude_opus_5_5) proposed to buy $25.00 of GOOGLon"
+        },
+        {
+          "at": "2026-11-09T14:54:48.354683Z",
+          "status": "approved",
+          "note": "approved by the owner at the keyboard"
+        },
+        {
+          "at": "2026-11-09T14:54:50.881771Z",
+          "status": "executing",
+          "note": "real quote accepted; sending $25.00 of NEAR to the 1Click deposit address"
+        },
+        {
+          "at": "2026-11-09T14:54:53.433711Z",
+          "status": "deposited",
+          "note": "NEAR sent, tx CcJidZ4UxjcY9RzRFpyFvwavZKEcjvwU1g6E2VbkiowX"
+        },
+        {
+          "at": "2026-11-09T14:54:54.300582Z",
+          "status": "deposited",
+          "note": "1Click status: PENDING_DEPOSIT"
+        },
+        {
+          "at": "2026-11-09T14:55:16.304661Z",
+          "status": "deposited",
+          "note": "1Click status: PROCESSING"
+        },
+        {
+          "at": "2026-11-10T02:09:40.643100Z",
+          "status": "deposited",
+          "note": "1Click status: SUCCESS"
+        },
+        {
+          "at": "2026-11-10T02:09:40.643100Z",
+          "status": "success",
+          "note": "final 1Click status SUCCESS"
+        }
+      ],
+      "sha256": "ee0cc5c4371dd809f339ae291e64f1a24f84fe5daeb3b1851e4625d86268b6d7",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/trade_fdc8a90cf4",
+        "sha256": "ee0cc5c4371dd809f339ae291e64f1a24f84fe5daeb3b1851e4625d86268b6d7",
+        "tx_hash": "59g1ca9P1vzKGsuiEdhAMmmy4ysMQ7rprBwbM88pXyma",
+        "explorer_url": "https://testnet.nearblocks.io/txns/59g1ca9P1vzKGsuiEdhAMmmy4ysMQ7rprBwbM88pXyma"
+      }
+    },
+    {
+      "id": "b39b1c6232",
+      "created_at": "2026-11-10T02:21:44.659776Z",
+      "mode": "live",
+      "side": "buy",
+      "topic": "high bandwidth memory",
+      "ticker": "MRVL",
+      "symbol": "MRVLon",
+      "asset_id": "nep141:bnb-0x1501ec83ffef405b4331cc4f73277a40fb0c627d.omdep.near",
+      "usd": 25.0,
+      "rationale": "Marvell comes from the high bandwidth memory report. That report has a strong verdict, a score of 72.0, and a confidence of 46.8%, just above the low-confidence line. The AI agents report scores slightly higher at 73.3, but its 38.7% confidence counts as low, so it is weaker support for MSFT, GOOGL and META. Marvell's quoted cost of 0.64% is the second lowest, and an SEC filing mentions the topic.",
+      "risks": [
+        "A tokenized stock depends on its issuer (Ondo) and is not the share itself.",
+        "How far Marvell's stock has already run is unknown, so the timing risk is unclear.",
+        "Only one SEC filing links Marvell to the topic, and the report's confidence is only moderate."
+      ],
+      "confidence": "low",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.020736,
+      "ref_close": 141.2,
+      "ref_close_date": "2026-11-06",
+      "dry_quote": {
+        "amountIn": "6944444444444444059500544",
+        "amountInFormatted": "6.944444444444444059500544",
+        "amountInUsd": "25.000000000000",
+        "amountOut": "158749273104277991",
+        "amountOutFormatted": "0.158749273104277991",
+        "amountOutUsd": "24.839498762626",
+        "minAmountOut": "157161780373235211",
+        "timeEstimate": 22,
+        "correlationId": "4dc8ea07-cd4d-41fc-a142-cd03f71be9b7",
+        "quotedAt": "2026-11-10T02:21:51.647279+00:00",
+        "dry": true
+      },
+      "status": "failed",
+      "quote": {
+        "amountIn": "6944444444444444059500544",
+        "amountInFormatted": "6.944444444444444059500544",
+        "amountInUsd": "25.000000000000",
+        "amountOut": "158576529348646226",
+        "amountOutFormatted": "0.158576529348646226",
+        "amountOutUsd": "24.812469547183",
+        "minAmountOut": "156990764055159763",
+        "timeEstimate": 12,
+        "depositAddress": "69876115546600413b6eb6d5cc739c7bcf60c73086d17273481d3fdecaa9dcc5",
+        "deadline": "2026-11-13T02:37:58.000Z",
+        "timeWhenInactive": "2026-11-13T02:37:58.000Z",
+        "correlationId": "c745f459-44a7-4241-a74b-2840d25fa67b"
+      },
+      "deposit_address": null,
+      "deposit_tx": null,
+      "result": null,
+      "error": "quoted price $157.65 is 11.7% away from the stock's last close $141.20 of 2026-11-06 (band 7.5%); the order is addressed to 'intents.far', not one of ['intents.near']; the transfer moves {'imt:51e8f94d77b5e90dc9852ca6113771e11e8382ce69473a75e313e41665de7cbe:nep141:wrap.near': '6944444444444444059500544'}, not exactly 6944444444444444059500544 of nep141:wrap.near",
+      "history": [
+        {
+          "at": "2026-11-10T02:21:44.659776Z",
+          "status": "proposed",
+          "note": "trading agent (claude_opus_5_5) proposed to buy $25.00 of MRVLon"
+        },
+        {
+          "at": "2026-11-10T02:22:56.341696Z",
+          "status": "approved",
+          "note": "approved by the owner at the keyboard"
+        },
+        {
+          "at": "2026-11-10T02:22:59.806449Z",
+          "status": "failed",
+          "note": "refused before signing: quoted price $157.65 is 11.7% away from the stock's last close $141.20 of 2026-11-06 (band 7.5%); the order is addressed to 'intents.far', not one of ['intents.near']; the transfer moves {'imt:51e8f94d77b5e90dc9852ca6113771e11e8382ce69473a75e313e41665de7cbe:nep141:wrap.near':"
+        }
+      ],
+      "sha256": null,
+      "chain": null
+    },
+    {
+      "id": "9debb3300c",
+      "created_at": "2026-11-10T02:27:30.876116Z",
+      "mode": "live",
+      "side": "buy",
+      "topic": "high bandwidth memory",
+      "ticker": "MRVL",
+      "symbol": "MRVLon",
+      "asset_id": "nep141:bnb-0x1501ec83ffef405b4331cc4f73277a40fb0c627d.omdep.near",
+      "usd": 25.0,
+      "rationale": "Marvell's topic, high bandwidth memory, has a 'strong' report verdict with a score of 72.0, almost the same as the AI agents report (73.3). The memory report's confidence is 46.8%, above the 45% low mark, while the AI agents report sits at 38.7%, which counts as low. Marvell's quoted cost of 0.67% is also among the lowest on the list. The evidence is thin, though: only one SEC filing mentions the topic, so this is a small test, not a firm conviction.",
+      "risks": [
+        "A tokenized stock depends on its issuer (Ondo) and the NEAR Intents route; it is not the share itself.",
+        "The price-stretch level is unknown, so the stock may already have run up, which adds timing risk.",
+        "Marvell is a mid-size company and only one SEC filing ties it to the topic, so the link is thinner than for the larger names."
+      ],
+      "confidence": "low",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.024076,
+      "ref_close": 154.6,
+      "ref_close_date": "2026-11-09",
+      "dry_quote": {
+        "amountIn": "6944444444444444059500544",
+        "amountInFormatted": "6.944444444444444059500544",
+        "amountInUsd": "25.000000000000",
+        "amountOut": "158793027400578370",
+        "amountOutFormatted": "0.15879302740057837",
+        "amountOutUsd": "24.833641555176",
+        "minAmountOut": "157205097126572586",
+        "timeEstimate": 22,
+        "correlationId": "43043036-2e60-4b44-824a-7948135c59fb",
+        "quotedAt": "2026-11-10T02:27:37.226308+00:00",
+        "dry": true
+      },
+      "status": "success",
+      "quote": {
+        "amountIn": "6944444444444444059500544",
+        "amountInFormatted": "6.944444444444444059500544",
+        "amountInUsd": "25.000000000000",
+        "amountOut": "158874269568502635",
+        "amountOutFormatted": "0.158874269568502635",
+        "amountOutUsd": "24.846347017818",
+        "minAmountOut": "157285526872817608",
+        "timeEstimate": 12,
+        "depositAddress": "e9fed504337d1ebad36f87ef4f6bece0ea84df61e37a4ac9de61b99629c772c3",
+        "deadline": "2026-11-13T02:43:31.000Z",
+        "timeWhenInactive": "2026-11-13T02:43:31.000Z",
+        "correlationId": "4b6579a4-c78c-4fc7-864a-05e18bec65e8",
+        "route": "confidential"
+      },
+      "deposit_address": "e9fed504337d1ebad36f87ef4f6bece0ea84df61e37a4ac9de61b99629c772c3",
+      "deposit_tx": null,
+      "result": {
+        "status": "SUCCESS (seen by the owner in near.com; not read from the service)",
+        "amountInFormatted": "6.944444444444444059500544",
+        "amountOutFormatted": "0.158874269568502635",
+        "amountOutUsd": "24.846347017818",
+        "amounts_are": "the quote, not the fill"
+      },
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-10T02:27:30.876116Z",
+          "status": "proposed",
+          "note": "trading agent (claude_opus_5_5) proposed to buy $25.00 of MRVLon"
+        },
+        {
+          "at": "2026-11-10T02:28:29.369269Z",
+          "status": "approved",
+          "note": "approved by the owner at the keyboard"
+        },
+        {
+          "at": "2026-11-10T02:28:32.633567Z",
+          "status": "executing",
+          "note": "order verified; signing a transfer of $25.00 of NEAR from the private balance (the service may take until 2026-11-13T02:43:31.000Z)"
+        },
+        {
+          "at": "2026-11-10T02:28:33.092860Z",
+          "status": "deposited",
+          "note": "signed order submitted, intent CtpYsoMb3j9qLq2eszvvscVmeJxtZcL56DfyKqudXKd8"
+        },
+        {
+          "at": "2026-11-10T02:40:41.270980Z",
+          "status": "success",
+          "note": "owner confirmed in near.com that the stock arrived (private route; amounts are the quoted ones)"
+        }
+      ],
+      "sha256": "6e16ec9281a0e07c980d99208ea4be9fd48d6e062073b1e87348547b2e6251e9",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/trade_9debb3300c",
+        "sha256": "6e16ec9281a0e07c980d99208ea4be9fd48d6e062073b1e87348547b2e6251e9",
+        "tx_hash": "C3C9ydgsx9y4noaMgWpKtnZnzK4oYXQgLTkh9nKFCywA",
+        "explorer_url": "https://testnet.nearblocks.io/txns/C3C9ydgsx9y4noaMgWpKtnZnzK4oYXQgLTkh9nKFCywA"
+      }
+    },
+    {
+      "id": "eca3ba2fab",
+      "created_at": "2026-11-10T03:00:43.666877Z",
+      "mode": "shadow",
+      "side": "hold",
+      "topic": "",
+      "ticker": "",
+      "symbol": "",
+      "asset_id": "",
+      "usd": 0.0,
+      "rationale": "Three new reports arrived on the first review, and no stock has a sharp move to act on. The AI agents report is rated strong but with only 38.7% confidence, below the 45% minimum. The high bandwidth memory report (46.8%) and the chiplet report (46.7%) clear the minimum by less than 2 points. MSFT, GOOGL and META cannot be bought because the AI agents report's confidence (38.7%) is below the 45% minimum. MRVL is listed under high bandwidth memory, but none of that report's findings names Marvell; the HBM evidence centres on Micron, SK hynix, Samsung, KLA and Applied Materials. MRVL is also already the largest holding, up about 10%, and buying more would chase that rise. INTC has a verified chiplet finding (Intel's foundry offers chiplet integration), but it is already held, has not fallen, and its report confidence barely clears the bar, so keeping the $3,400 in cash is the cautious choice until clearer evidence or a dip the evidence does not explain.",
+      "risks": [
+        "A tokenized stock depends on its issuer (Ondo) and is not the share itself.",
+        "Holding cash may miss gains if the chiplet or memory trends keep strengthening.",
+        "Three of the five holdings sit on one low-confidence topic (AI agents), which concentrates the fund on weak evidence."
+      ],
+      "confidence": "medium",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.054184,
+      "ref_close": null,
+      "ref_close_date": null,
+      "dry_quote": null,
+      "status": "hold",
+      "quote": null,
+      "deposit_address": null,
+      "deposit_tx": null,
+      "result": null,
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-10T03:00:43.666877Z",
+          "status": "hold",
+          "note": "strategy check: new_report, new_report, new_report, new_report, new_report, review"
+        }
+      ],
+      "sha256": "8c89101849b2bb5201de9120df488495605e389057c75b0265023e5946ad58a8",
+      "chain": null
+    },
+    {
+      "id": "1fe7eea4a8",
+      "created_at": "2026-11-10T04:49:38.607248Z",
+      "mode": "shadow",
+      "side": "buy",
+      "topic": "high bandwidth memory",
+      "ticker": "INTC",
+      "symbol": "INTCon",
+      "asset_id": "nep141:bnb-0xa528caaa2f96090e379d43f90834c75df54d6e74.omdep.near",
+      "usd": 500.0,
+      "rationale": "A new high bandwidth memory report (listed twice in the triggers) rates the topic strong (score 80) at 49.6% confidence, just above the 45% minimum. The OLED report also passed the minimum, but the AI agents (38.6%) and 6G (37.7%, early) reports did not. No price moves were reported, so there was no dip or spike to judge. Only INTC, MRVL and META meet the verdict and confidence rules. INTC is the choice because it has low company-size risk, a subdued price stretch and room under the 25% cap, and it adds memory exposure to a portfolio already heavy in AI agents (GOOGL, MSFT, META) and MRVL. The HBM evidence points to tight supply: unverified claims say HBM is sold out through 2027 and DRAM faces a deficit, and FormFactor's filing ties DRAM probe card growth to HBM demand. Confidence is barely above the minimum and none of the findings names Intel, so the order is a small $500 and the rest stays in cash.",
+      "risks": [
+        "None of the HBM findings mentions Intel. Its link to the topic rests only on the fund's patent and filing screen, and most supporting claims are unverified X posts.",
+        "Alternative memory approaches such as SK hynix's High Bandwidth Flash, plus HBM patent litigation by Netlist, could change who benefits from HBM.",
+        "A tokenized stock depends on its issuer (Ondo) and is not the share itself."
+      ],
+      "confidence": "low",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.060184,
+      "ref_close": 59.37,
+      "ref_close_date": "2026-11-09",
+      "dry_quote": {
+        "amountIn": "277777777777777762380021760",
+        "amountInFormatted": "277.77777777777776238002176",
+        "amountInUsd": "1000.000000000000",
+        "amountOut": "16985340223551920049",
+        "amountOutFormatted": "16.985340223551920049",
+        "amountOutUsd": "994.831376893436",
+        "minAmountOut": "16815486821316400848",
+        "timeEstimate": 35,
+        "correlationId": "d50c393c-7214-4f9b-b5d0-122d63f888b9",
+        "quotedAt": "2026-11-10T04:49:41.276211+00:00",
+        "dry": true
+      },
+      "status": "shadow_filled",
+      "quote": {
+        "amountIn": "138888888888888881190010880",
+        "amountInFormatted": "138.88888888888888119001088",
+        "amountInUsd": "500.000000000000",
+        "amountOut": "8504421262893215326",
+        "amountOutFormatted": "8.504421262893215326",
+        "amountOutUsd": "498.359086005542",
+        "minAmountOut": "8419377050264283172",
+        "timeEstimate": 35,
+        "correlationId": "351af386-38a8-4b44-b95b-9f7674cacac5",
+        "quotedAt": "2026-11-10T04:50:06.600933+00:00",
+        "dry": true
+      },
+      "deposit_address": null,
+      "deposit_tx": null,
+      "result": null,
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-10T04:49:38.607248Z",
+          "status": "proposed",
+          "note": "strategy check (new_report, new_report, new_report, new_report, new_report): the agent proposed to buy $500.00 of INTCon"
+        },
+        {
+          "at": "2026-11-10T04:50:06.600933Z",
+          "status": "shadow_filled",
+          "note": "would receive 8.504421262893215326 INTCon for $500.00 (nothing was sent)"
+        }
+      ],
+      "sha256": "50d1b78d6afb85ee79f012eec3e566ccd2eda24d83ff063a81520b22ab0c7843",
+      "chain": null
+    }
+  ],
+  "updated_at": "2026-11-10T06:52:31.078302Z",
+  "checks": [
+    {
+      "id": "c1a159957a",
+      "at": "2026-11-10T03:00:43.666877Z",
+      "mode": "shadow",
+      "triggers": [
+        {
+          "kind": "new_report",
+          "ticker": "MSFT",
+          "topic": "AI agents",
+          "detail": "report d9ee0298 for 'AI agents' not yet considered (verdict strong, score 73.3, confidence 38.7%)"
+        },
+        {
+          "kind": "new_report",
+          "ticker": "GOOGL",
+          "topic": "AI agents",
+          "detail": "report d9ee0298 for 'AI agents' not yet considered (verdict strong, score 73.3, confidence 38.7%)"
+        },
+        {
+          "kind": "new_report",
+          "ticker": "META",
+          "topic": "AI agents",
+          "detail": "report d9ee0298 for 'AI agents' not yet considered (verdict strong, score 73.3, confidence 38.7%)"
+        },
+        {
+          "kind": "new_report",
+          "ticker": "MRVL",
+          "topic": "high bandwidth memory",
+          "detail": "report 1290ae94 for 'high bandwidth memory' not yet considered (verdict strong, score 72.0, confidence 46.8%)"
+        },
+        {
+          "kind": "new_report",
+          "ticker": "INTC",
+          "topic": "chiplet",
+          "detail": "report 113c0b12 for 'chiplet' not yet considered (verdict building, score 66.0, confidence 46.7%)"
+        },
+        {
+          "kind": "review",
+          "ticker": "",
+          "topic": "",
+          "detail": "first review"
+        }
+      ],
+      "action": "hold",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "MSFT, GOOGL and META cannot be bought because the AI agents report's confidence (38.7%) is below the 45% minimum. MRVL is listed under high bandwidth memory, but none of that report's findings names Marvell; the HBM evidence centres on Micron, SK hynix, Samsung, KLA and Applied Materials. MRVL is also already the largest holding, up about 10%, and buying more would chase that rise. INTC has a verified chiplet finding (Intel's foundry offers chiplet integration), but it is already held, has not fallen, and its report confidence barely clears the bar, so keeping the $3,400 in cash is the cautious choice until clearer evidence or a dip the evidence does not explain.",
+      "what_changed": "Three new reports arrived on the first review, and no stock has a sharp move to act on. The AI agents report is rated strong but with only 38.7% confidence, below the 45% minimum. The high bandwidth memory report (46.8%) and the chiplet report (46.7%) clear the minimum by less than 2 points.",
+      "proposal_id": "eca3ba2fab",
+      "model": "claude_opus_5_5",
+      "cost_usd": 0.054184,
+      "notes": [],
+      "sha256": "7ec158c339648c114792e841d5c0669b65cba921b48bdd10817352a0983a9c8c"
+    },
+    {
+      "id": "f52827844e",
+      "at": "2026-11-10T04:49:38.607248Z",
+      "mode": "shadow",
+      "triggers": [
+        {
+          "kind": "new_report",
+          "ticker": "INTC",
+          "topic": "high bandwidth memory",
+          "detail": "report e5d41d1f for 'high bandwidth memory' not yet considered (verdict strong, score 80.0, confidence 49.6%)"
+        },
+        {
+          "kind": "new_report",
+          "ticker": "MRVL",
+          "topic": "high bandwidth memory",
+          "detail": "report e5d41d1f for 'high bandwidth memory' not yet considered (verdict strong, score 80.0, confidence 49.6%)"
+        },
+        {
+          "kind": "new_report",
+          "ticker": "META",
+          "topic": "oled displays",
+          "detail": "report 783ab33d for 'oled displays' not yet considered (verdict strong, score 71.0, confidence 49.6%)"
+        },
+        {
+          "kind": "new_report",
+          "ticker": "MSFT",
+          "topic": "AI agents",
+          "detail": "report 71b787db for 'AI agents' not yet considered (verdict strong, score 70.8, confidence 38.6%)"
+        },
+        {
+          "kind": "new_report",
+          "ticker": "AAPL",
+          "topic": "6G",
+          "detail": "report f0934784 for '6G' not yet considered (verdict early, score 47.0, confidence 37.7%)"
+        }
+      ],
+      "action": "buy",
+      "ticker": "INTC",
+      "usd": 500.0,
+      "summary": "Only INTC, MRVL and META meet the verdict and confidence rules. INTC is the choice because it has low company-size risk, a subdued price stretch and room under the 25% cap, and it adds memory exposure to a portfolio already heavy in AI agents (GOOGL, MSFT, META) and MRVL. The HBM evidence points to tight supply: unverified claims say HBM is sold out through 2027 and DRAM faces a deficit, and FormFactor's filing ties DRAM probe card growth to HBM demand. Confidence is barely above the minimum and none of the findings names Intel, so the order is a small $500 and the rest stays in cash.",
+      "what_changed": "A new high bandwidth memory report (listed twice in the triggers) rates the topic strong (score 80) at 49.6% confidence, just above the 45% minimum. The OLED report also passed the minimum, but the AI agents (38.6%) and 6G (37.7%, early) reports did not. No price moves were reported, so there was no dip or spike to judge.",
+      "proposal_id": "1fe7eea4a8",
+      "model": "claude_opus_5_5",
+      "cost_usd": 0.060184,
+      "notes": [],
+      "sha256": "e6d5bc8d95cc4788f0a7ed96be3ff8fc630c67743ca2a843e87d54b98661bb26"
+    },
+    {
+      "id": "3e777dd24a",
+      "at": "2026-11-10T04:50:06.742349Z",
+      "mode": "live",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "dec74f16d452ec8da4eb267c75dbc4ce15199148ab7a77d82faa4b4be9855536"
+    },
+    {
+      "id": "d952300d01",
+      "at": "2026-11-10T04:52:27.112856Z",
+      "mode": "shadow",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "d57df230b42b4af5cc8689cfc96675b2fe069c19c4f3c1e89e783b4acc9db047"
+    },
+    {
+      "id": "dfd3bdea62",
+      "at": "2026-11-10T04:52:27.495437Z",
+      "mode": "live",
+      "triggers": [
+        {
+          "kind": "new_report",
+          "ticker": "INTC",
+          "topic": "high bandwidth memory",
+          "detail": "report e5d41d1f for 'high bandwidth memory' not yet considered (verdict strong, score 80.0, confidence 49.6%)"
+        },
+        {
+          "kind": "new_report",
+          "ticker": "MRVL",
+          "topic": "high bandwidth memory",
+          "detail": "report e5d41d1f for 'high bandwidth memory' not yet considered (verdict strong, score 80.0, confidence 49.6%)"
+        },
+        {
+          "kind": "new_report",
+          "ticker": "META",
+          "topic": "oled displays",
+          "detail": "report 783ab33d for 'oled displays' not yet considered (verdict strong, score 71.0, confidence 49.6%)"
+        },
+        {
+          "kind": "new_report",
+          "ticker": "MSFT",
+          "topic": "AI agents",
+          "detail": "report 71b787db for 'AI agents' not yet considered (verdict strong, score 70.8, confidence 38.6%)"
+        },
+        {
+          "kind": "new_report",
+          "ticker": "AAPL",
+          "topic": "6G",
+          "detail": "report f0934784 for '6G' not yet considered (verdict early, score 47.0, confidence 37.7%)"
+        },
+        {
+          "kind": "review",
+          "ticker": "",
+          "topic": "",
+          "detail": "first review"
+        }
+      ],
+      "action": "hold",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No budget left ($0.00); the agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "29af86ed4e63caf9124c7b23362976e7bb7994341e192217dbd17be7fdf91260"
+    },
+    {
+      "id": "20b55f184c",
+      "at": "2026-11-10T05:52:27.908337Z",
+      "mode": "shadow",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "cfa6210f51d8fa26f40fff4b9ac9480eceb7d0e6e005bc67a542e114bc40f852"
+    },
+    {
+      "id": "470bbc155f",
+      "at": "2026-11-10T05:52:29.957296Z",
+      "mode": "live",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "9e08099b57efc0604e7d278ea143b35da4dd6dd9cdb05d5e8e0050ae7118a5f0"
+    },
+    {
+      "id": "590f756c5d",
+      "at": "2026-11-10T06:52:30.262461Z",
+      "mode": "shadow",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "07f6f0a5071791bf4cfc8c6294f36ca2eaf198cd1999d8af389afd4f24a56e09"
+    },
+    {
+      "id": "69033db0d9",
+      "at": "2026-11-10T06:52:30.655310Z",
+      "mode": "live",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "8ac2312b0912ecbe4c8cd234671cd80f7af32f0bcb40a6648386e38c13f6cdf3"
+    }
+  ],
+  "seen_runs": {
+    "AI agents": "71b787db-4595-4cab-8ae0-9aa6971d2a4b",
+    "high bandwidth memory": "e5d41d1f-fa56-42ce-bf27-9fccb47298a2",
+    "chiplet": "113c0b12-35e2-4d0a-bb7b-6aef2cca42a1",
+    "oled displays": "783ab33d-be9b-4dd2-b9db-6e5e48e71b15",
+    "6G": "f0934784-6b57-49fd-a4dc-09d320bbd16e",
+    "live:high bandwidth memory": "e5d41d1f-fa56-42ce-bf27-9fccb47298a2",
+    "live:oled displays": "783ab33d-be9b-4dd2-b9db-6e5e48e71b15",
+    "live:AI agents": "71b787db-4595-4cab-8ae0-9aa6971d2a4b",
+    "live:6G": "f0934784-6b57-49fd-a4dc-09d320bbd16e"
+  },
+  "seen_closes": {},
+  "last_check_at": "2026-11-10T06:52:30.262461Z",
+  "last_live_check_at": "2026-11-10T06:52:30.655310Z"
+}

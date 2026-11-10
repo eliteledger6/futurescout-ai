@@ -1,0 +1,386 @@
+{
+  "kind": "simulation",
+  "topic": "co-packaged optics",
+  "slug": "co-packaged-optics",
+  "sector": "semiconductors",
+  "created_at": "2026-11-09T11:14:10.603393Z",
+  "start_cash_usd": 10000.0,
+  "cash_usd": 5861.38,
+  "holdings": [
+    {
+      "ticker": "INTC",
+      "company": "Intel Corp",
+      "tier": "low",
+      "shares": 48.24497244880772,
+      "cost_usd": 2864.3040142857144,
+      "last_close": 59.37,
+      "last_date": "2026-11-09",
+      "timing_risk": null,
+      "why": "Company Scout: 1 patent(s); large by revenue",
+      "route": {
+        "available": true,
+        "symbol": "INTCon",
+        "asset_id": "nep141:bnb-0xa528caaa2f96090e379d43f90834c75df54d6e74.omdep.near",
+        "blockchain": "BNB Chain",
+        "token_price_usd": 58.9286,
+        "checked_at": "2026-11-10T04:46:19.858102Z",
+        "note": "listed by the NEAR Intents bridge; the price implied by a dry-run quote matches the stock"
+      },
+      "quote": {
+        "amount_in_usd": 2862.8,
+        "amount_out_usd": 2847.46,
+        "amount_out": "48.657931622938359791",
+        "cost_pct": 0.536,
+        "time_estimate_s": 25.0,
+        "quoted_at": "2026-11-10T04:46:22.327654Z",
+        "correlation_id": "12f2761c-4c05-4691-832c-6ba50e5a5e48",
+        "error": null
+      }
+    },
+    {
+      "ticker": "KEYS",
+      "company": "KEYSIGHT TECHNOLOGIES INC",
+      "tier": "medium",
+      "shares": 5.262749447480458,
+      "cost_usd": 1432.1520071428572,
+      "last_close": 272.13,
+      "last_date": "2026-11-06",
+      "timing_risk": null,
+      "why": "Company Scout: 1 patent(s), 1 filing(s); mid by revenue",
+      "route": {
+        "available": false,
+        "symbol": null,
+        "asset_id": null,
+        "blockchain": null,
+        "token_price_usd": null,
+        "checked_at": "2026-11-10T04:46:23.228201Z",
+        "note": "no tokenized version in the public NEAR Intents token lists"
+      },
+      "quote": null
+    }
+  ],
+  "decisions": [
+    {
+      "at": "2026-11-09T11:14:10.603393Z",
+      "run_id": "d7de6775-4ca2-4f4a-96f3-566b00884af3",
+      "report_date": "2026-11-09",
+      "band": "early",
+      "score": 40.3,
+      "previous_score": null,
+      "confidence_pct": null,
+      "target_invested_pct": 40.0,
+      "tier_targets_usd": {
+        "low": 2400.0,
+        "medium": 1200.0,
+        "high": 400.0
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "JBL",
+        "AMKR",
+        "ALMU"
+      ],
+      "trades": [
+        {
+          "day": "2026-11-06",
+          "ticker": "AMD",
+          "tier": "low",
+          "side": "buy",
+          "shares": 5.344735,
+          "price": 449.04,
+          "usd": 2400.0,
+          "fee_usd": 7.2
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "MRVL",
+          "tier": "medium",
+          "side": "buy",
+          "shares": 2.832861,
+          "price": 141.2,
+          "usd": 400.0,
+          "fee_usd": 1.2
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "COHR",
+          "tier": "medium",
+          "side": "buy",
+          "shares": 2.074581,
+          "price": 192.81,
+          "usd": 400.0,
+          "fee_usd": 1.2
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "LITE",
+          "tier": "medium",
+          "side": "buy",
+          "shares": 0.74268,
+          "price": 538.59,
+          "usd": 400.0,
+          "fee_usd": 1.2
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "FORM",
+          "tier": "high",
+          "side": "buy",
+          "shares": 2.465483,
+          "price": 81.12,
+          "usd": 200.0,
+          "fee_usd": 0.6
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "VECO",
+          "tier": "high",
+          "side": "buy",
+          "shares": 5.37779,
+          "price": 37.19,
+          "usd": 200.0,
+          "fee_usd": 0.6
+        }
+      ],
+      "reasons": [
+        "Why now: first decision for this topic.",
+        "Verdict band 'early' (score 40.3) -> invest 40% of the fund.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): JBL, AMKR, ALMU. Reviewed again after the next price update.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-09."
+      ],
+      "value_before_usd": 10000.0,
+      "sha256": "000de11b2849c3feb8ce6cbef1d1d9475a8f721aecb340e6e30ae3de6a6c0830",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_co-packaged-optics_1",
+        "sha256": "000de11b2849c3feb8ce6cbef1d1d9475a8f721aecb340e6e30ae3de6a6c0830",
+        "tx_hash": "CUTDdTanQfphCBYGToNoKTij9gK8fG7wT6uqyKGs95kW",
+        "explorer_url": "https://testnet.nearblocks.io/txns/CUTDdTanQfphCBYGToNoKTij9gK8fG7wT6uqyKGs95kW"
+      }
+    },
+    {
+      "at": "2026-11-09T14:53:29.139053Z",
+      "run_id": "d7de6775-4ca2-4f4a-96f3-566b00884af3",
+      "report_date": "2026-11-09",
+      "band": "early",
+      "score": 53.0,
+      "previous_score": 40.3,
+      "confidence_pct": 33.9,
+      "target_invested_pct": 19.4,
+      "tier_targets_usd": {
+        "low": 1160.89,
+        "medium": 580.45,
+        "high": 193.48
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "JBL",
+        "AMKR",
+        "ALMU"
+      ],
+      "trades": [
+        {
+          "day": "2026-11-06",
+          "ticker": "AMD",
+          "tier": "low",
+          "side": "sell",
+          "shares": 2.759462,
+          "price": 449.04,
+          "usd": 1239.11,
+          "fee_usd": 3.72
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "MRVL",
+          "tier": "medium",
+          "side": "sell",
+          "shares": 1.462593,
+          "price": 141.2,
+          "usd": 206.52,
+          "fee_usd": 0.62
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "COHR",
+          "tier": "medium",
+          "side": "sell",
+          "shares": 1.071097,
+          "price": 192.81,
+          "usd": 206.52,
+          "fee_usd": 0.62
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "LITE",
+          "tier": "medium",
+          "side": "sell",
+          "shares": 0.383442,
+          "price": 538.59,
+          "usd": 206.52,
+          "fee_usd": 0.62
+        }
+      ],
+      "reasons": [
+        "Why now: scoring method changed: risk now lowers confidence, and position size follows confidence.",
+        "Verdict band 'early' (score 53.0) -> invest 40% of the fund.",
+        "Confidence 34% is below the 70% needed for full size -> invest 48% of that: 19% of the fund.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): JBL, AMKR, ALMU. Reviewed again after the next price update.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-09."
+      ],
+      "value_before_usd": 9988.0,
+      "sha256": "d6d3c325547522385fee9995e1ae58c4c08591da2b3cf078192aaf3d51c44000",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_co-packaged-optics_2",
+        "sha256": "d6d3c325547522385fee9995e1ae58c4c08591da2b3cf078192aaf3d51c44000",
+        "tx_hash": "2HRFwf6UU1JYMv6UMSa7wdw1tvMfZ6DBJ25ubKt3pxLQ",
+        "explorer_url": "https://testnet.nearblocks.io/txns/2HRFwf6UU1JYMv6UMSa7wdw1tvMfZ6DBJ25ubKt3pxLQ"
+      }
+    },
+    {
+      "at": "2026-11-10T04:46:08.575261Z",
+      "run_id": "4a897d91-260c-4c3d-a452-d47f4d80f82c",
+      "report_date": "2026-11-10",
+      "band": "building",
+      "score": 62.2,
+      "previous_score": 53.0,
+      "confidence_pct": 39.4,
+      "target_invested_pct": 42.2,
+      "tier_targets_usd": {
+        "low": 2864.3,
+        "medium": 1432.15
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "CIEN"
+      ],
+      "trades": [
+        {
+          "day": "2026-11-09",
+          "ticker": "AMD",
+          "tier": "low",
+          "side": "sell",
+          "shares": 2.585273,
+          "price": 508.58,
+          "usd": 1314.82,
+          "fee_usd": 3.94
+        },
+        {
+          "day": "2026-11-09",
+          "ticker": "MRVL",
+          "tier": "medium",
+          "side": "sell",
+          "shares": 1.370268,
+          "price": 154.6,
+          "usd": 211.84,
+          "fee_usd": 0.64
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "COHR",
+          "tier": "medium",
+          "side": "sell",
+          "shares": 1.003484,
+          "price": 192.81,
+          "usd": 193.48,
+          "fee_usd": 0.58
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "LITE",
+          "tier": "medium",
+          "side": "sell",
+          "shares": 0.359238,
+          "price": 538.59,
+          "usd": 193.48,
+          "fee_usd": 0.58
+        },
+        {
+          "day": "2026-11-09",
+          "ticker": "FORM",
+          "tier": "high",
+          "side": "sell",
+          "shares": 2.465483,
+          "price": 85.2,
+          "usd": 210.06,
+          "fee_usd": 0.63
+        },
+        {
+          "day": "2026-11-09",
+          "ticker": "VECO",
+          "tier": "high",
+          "side": "sell",
+          "shares": 5.37779,
+          "price": 39.6,
+          "usd": 212.96,
+          "fee_usd": 0.64
+        },
+        {
+          "day": "2026-11-09",
+          "ticker": "INTC",
+          "tier": "low",
+          "side": "buy",
+          "shares": 48.244972,
+          "price": 59.37,
+          "usd": 2864.3,
+          "fee_usd": 8.59
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "KEYS",
+          "tier": "medium",
+          "side": "buy",
+          "shares": 5.262749,
+          "price": 272.13,
+          "usd": 1432.15,
+          "fee_usd": 4.3
+        }
+      ],
+      "reasons": [
+        "Why now: companies now come from patents and papers (2026-11-10 re-run).",
+        "Verdict band 'building' (score 62.2) -> invest 75% of the fund.",
+        "Confidence 39% is below the 70% needed for full size -> invest 56% of that: 42% of the fund.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): CIEN. Reviewed again after the next price update.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-10."
+      ],
+      "value_before_usd": 10177.73,
+      "sha256": "93d5a4d5048928ffaa99763b2aa7ce81f713d41e654646b3de2a4f4d69b44323",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_co-packaged-optics_3",
+        "sha256": "93d5a4d5048928ffaa99763b2aa7ce81f713d41e654646b3de2a4f4d69b44323",
+        "tx_hash": "3iugnMt6nTN3qn3Cjbizvax2z5MYDYyCBCHU699x398J",
+        "explorer_url": "https://testnet.nearblocks.io/txns/3iugnMt6nTN3qn3Cjbizvax2z5MYDYyCBCHU699x398J"
+      }
+    }
+  ],
+  "history": [
+    {
+      "day": "2026-11-06",
+      "value_usd": 9982.42,
+      "benchmark_value_usd": null
+    },
+    {
+      "day": "2026-11-09",
+      "value_usd": 10157.83,
+      "benchmark_value_usd": null
+    }
+  ],
+  "benchmark": "SPY",
+  "benchmark_start_close": null,
+  "benchmark_start_date": null,
+  "updated_at": "2026-11-10T04:46:08.575261Z",
+  "notes": [
+    "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
+    "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",
+    "NEAR Intents quotes are dry runs: nothing is reserved or sent.",
+    "Not investment advice."
+  ]
+}

@@ -1,0 +1,283 @@
+{
+  "kind": "simulation",
+  "topic": "silicon photonics",
+  "slug": "silicon-photonics",
+  "sector": "semiconductors",
+  "created_at": "2026-11-09T11:14:10.603393Z",
+  "start_cash_usd": 10000.0,
+  "cash_usd": 10472.86,
+  "holdings": [],
+  "decisions": [
+    {
+      "at": "2026-11-09T11:14:10.603393Z",
+      "run_id": "0b9d6521-d4ad-4c0a-9030-c4af182ad510",
+      "report_date": "2026-11-09",
+      "band": "building",
+      "score": 59.8,
+      "previous_score": null,
+      "confidence_pct": null,
+      "target_invested_pct": 75.0,
+      "tier_targets_usd": {
+        "low": 4500.0,
+        "medium": 2250.0,
+        "high": 750.0
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "TER",
+        "CIEN",
+        "LWLG",
+        "AEHR"
+      ],
+      "trades": [
+        {
+          "day": "2026-11-06",
+          "ticker": "AMD",
+          "tier": "low",
+          "side": "buy",
+          "shares": 10.021379,
+          "price": 449.04,
+          "usd": 4500.0,
+          "fee_usd": 13.5
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "MRVL",
+          "tier": "medium",
+          "side": "buy",
+          "shares": 7.967422,
+          "price": 141.2,
+          "usd": 1125.0,
+          "fee_usd": 3.38
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "KEYS",
+          "tier": "medium",
+          "side": "buy",
+          "shares": 4.134054,
+          "price": 272.13,
+          "usd": 1125.0,
+          "fee_usd": 3.38
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "FORM",
+          "tier": "high",
+          "side": "buy",
+          "shares": 4.622781,
+          "price": 81.12,
+          "usd": 375.0,
+          "fee_usd": 1.13
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "VECO",
+          "tier": "high",
+          "side": "buy",
+          "shares": 10.083356,
+          "price": 37.19,
+          "usd": 375.0,
+          "fee_usd": 1.13
+        }
+      ],
+      "reasons": [
+        "Why now: first decision for this topic.",
+        "Verdict band 'building' (score 59.8) -> invest 75% of the fund.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): TER, CIEN, LWLG, AEHR. Reviewed again after the next price update.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-09."
+      ],
+      "value_before_usd": 10000.0,
+      "sha256": "4f2d0ef1c2128e18da61bc4d036e21d2631a2d27d5a80cd111be401f924f1164",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_silicon-photonics_1",
+        "sha256": "4f2d0ef1c2128e18da61bc4d036e21d2631a2d27d5a80cd111be401f924f1164",
+        "tx_hash": "8B3DnqtRnbQ1BvRtxCJxCeZF6TxQFT3xfq3LibkY81SE",
+        "explorer_url": "https://testnet.nearblocks.io/txns/8B3DnqtRnbQ1BvRtxCJxCeZF6TxQFT3xfq3LibkY81SE"
+      }
+    },
+    {
+      "at": "2026-11-09T14:53:29.139053Z",
+      "run_id": "0b9d6521-d4ad-4c0a-9030-c4af182ad510",
+      "report_date": "2026-11-09",
+      "band": "building",
+      "score": 68.0,
+      "previous_score": 59.8,
+      "confidence_pct": 47.5,
+      "target_invested_pct": 50.9,
+      "tier_targets_usd": {
+        "low": 3046.7,
+        "medium": 1523.35,
+        "high": 507.78
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "TER",
+        "CIEN",
+        "LWLG",
+        "AEHR"
+      ],
+      "trades": [
+        {
+          "day": "2026-11-06",
+          "ticker": "AMD",
+          "tier": "low",
+          "side": "sell",
+          "shares": 3.236458,
+          "price": 449.04,
+          "usd": 1453.3,
+          "fee_usd": 4.36
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "MRVL",
+          "tier": "medium",
+          "side": "sell",
+          "shares": 2.573122,
+          "price": 141.2,
+          "usd": 363.32,
+          "fee_usd": 1.09
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "KEYS",
+          "tier": "medium",
+          "side": "sell",
+          "shares": 1.335115,
+          "price": 272.13,
+          "usd": 363.32,
+          "fee_usd": 1.09
+        }
+      ],
+      "reasons": [
+        "Why now: scoring method changed: risk now lowers confidence, and position size follows confidence.",
+        "Verdict band 'building' (score 68.0) -> invest 75% of the fund.",
+        "Confidence 48% is below the 70% needed for full size -> invest 68% of that: 51% of the fund.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): TER, CIEN, LWLG, AEHR. Reviewed again after the next price update.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-09."
+      ],
+      "value_before_usd": 9977.5,
+      "sha256": "ba849f3d2cf59bfbdd20aae3dbb2abcac8c5f9a9e907aeb84c27fba17be7f8ee",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_silicon-photonics_2",
+        "sha256": "ba849f3d2cf59bfbdd20aae3dbb2abcac8c5f9a9e907aeb84c27fba17be7f8ee",
+        "tx_hash": "7r35ygm1NVw6e4Wey2XpMDG2JCwvUqoQaT2E79TXZ8nz",
+        "explorer_url": "https://testnet.nearblocks.io/txns/7r35ygm1NVw6e4Wey2XpMDG2JCwvUqoQaT2E79TXZ8nz"
+      }
+    },
+    {
+      "at": "2026-11-10T04:46:08.575261Z",
+      "run_id": "c5a2233c-d3da-4bc8-8cf5-7f128e9f6a9e",
+      "report_date": "2026-11-10",
+      "band": "early",
+      "score": 53.8,
+      "previous_score": 68.0,
+      "confidence_pct": 35.0,
+      "target_invested_pct": 10.0,
+      "tier_targets_usd": {},
+      "staged_tiers": [],
+      "waiting_for_price": [],
+      "trades": [
+        {
+          "day": "2026-11-09",
+          "ticker": "AMD",
+          "tier": "low",
+          "side": "sell",
+          "shares": 6.784921,
+          "price": 508.58,
+          "usd": 3450.68,
+          "fee_usd": 10.35
+        },
+        {
+          "day": "2026-11-09",
+          "ticker": "MRVL",
+          "tier": "medium",
+          "side": "sell",
+          "shares": 5.3943,
+          "price": 154.6,
+          "usd": 833.96,
+          "fee_usd": 2.5
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "KEYS",
+          "tier": "medium",
+          "side": "sell",
+          "shares": 2.798939,
+          "price": 272.13,
+          "usd": 761.68,
+          "fee_usd": 2.29
+        },
+        {
+          "day": "2026-11-09",
+          "ticker": "FORM",
+          "tier": "high",
+          "side": "sell",
+          "shares": 4.622781,
+          "price": 85.2,
+          "usd": 393.86,
+          "fee_usd": 1.18
+        },
+        {
+          "day": "2026-11-09",
+          "ticker": "VECO",
+          "tier": "high",
+          "side": "sell",
+          "shares": 10.083356,
+          "price": 39.6,
+          "usd": 399.3,
+          "fee_usd": 1.2
+        }
+      ],
+      "reasons": [
+        "Why now: companies now come from patents and papers (2026-11-10 re-run).",
+        "Verdict band 'early' (score 53.8) -> invest 40% of the fund.",
+        "Confidence 35% is below the 70% needed for full size -> invest 50% of that: 20% of the fund.",
+        "Score fell 14.2 points since the last decision -> target halved to 10%.",
+        "No priced company in the low-risk tier; its share goes to the other tiers.",
+        "No priced company in the medium-risk tier; its share goes to the other tiers.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-10."
+      ],
+      "value_before_usd": 10490.39,
+      "sha256": "87f1b257240fe93f10dec4183a44c3065080352cf8ba56265458732b9b4dbaa0",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_silicon-photonics_3",
+        "sha256": "87f1b257240fe93f10dec4183a44c3065080352cf8ba56265458732b9b4dbaa0",
+        "tx_hash": "Hhs5537FmG8CQ7TXv7KkuSxTiAYSogBJwXpRVYHEVhRd",
+        "explorer_url": "https://testnet.nearblocks.io/txns/Hhs5537FmG8CQ7TXv7KkuSxTiAYSogBJwXpRVYHEVhRd"
+      }
+    }
+  ],
+  "history": [
+    {
+      "day": "2026-11-06",
+      "value_usd": 9970.97,
+      "benchmark_value_usd": null
+    },
+    {
+      "day": "2026-11-10",
+      "value_usd": 10472.86,
+      "benchmark_value_usd": null
+    }
+  ],
+  "benchmark": "SPY",
+  "benchmark_start_close": null,
+  "benchmark_start_date": null,
+  "updated_at": "2026-11-10T04:46:08.575261Z",
+  "notes": [
+    "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
+    "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",
+    "NEAR Intents quotes are dry runs: nothing is reserved or sent.",
+    "Not investment advice."
+  ]
+}

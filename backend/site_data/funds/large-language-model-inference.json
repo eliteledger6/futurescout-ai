@@ -1,0 +1,315 @@
+{
+  "kind": "simulation",
+  "topic": "large language model inference",
+  "slug": "large-language-model-inference",
+  "sector": "semiconductors",
+  "created_at": "2026-11-09T11:14:10.603393Z",
+  "start_cash_usd": 10000.0,
+  "cash_usd": 5885.1,
+  "holdings": [
+    {
+      "ticker": "MU",
+      "company": "Micron Technology",
+      "tier": "low",
+      "shares": 2.070899327122153,
+      "cost_usd": 1428.9205357142857,
+      "last_close": 733.15,
+      "last_date": "2026-11-09",
+      "timing_risk": "subdued",
+      "why": "Company Scout: 3 patent(s), 2 filing(s); large by revenue",
+      "route": {
+        "available": false,
+        "symbol": null,
+        "asset_id": null,
+        "blockchain": null,
+        "token_price_usd": null,
+        "checked_at": "2026-11-10T04:47:42.953281Z",
+        "note": "no tokenized version in the public NEAR Intents token lists"
+      },
+      "quote": null
+    },
+    {
+      "ticker": "MRVL",
+      "company": "Marvell Technology",
+      "tier": "medium",
+      "shares": 10.119833822339135,
+      "cost_usd": 1428.9205357142857,
+      "last_close": 154.6,
+      "last_date": "2026-11-09",
+      "timing_risk": "subdued",
+      "why": "Company Scout: 2 patent(s), 1 filing(s); mid by revenue",
+      "route": {
+        "available": true,
+        "symbol": "MRVLon",
+        "asset_id": "nep141:bnb-0x1501ec83ffef405b4331cc4f73277a40fb0c627d.omdep.near",
+        "blockchain": "BNB Chain",
+        "token_price_usd": 155.0322,
+        "checked_at": "2026-11-10T04:47:42.953281Z",
+        "note": "listed by the NEAR Intents bridge; the price implied by a dry-run quote matches the stock"
+      },
+      "quote": {
+        "amount_in_usd": 1563.71,
+        "amount_out_usd": 1557.91,
+        "amount_out": "10.087460379569640158",
+        "cost_pct": 0.371,
+        "time_estimate_s": 25.0,
+        "quoted_at": "2026-11-10T04:47:43.878708Z",
+        "correlation_id": "4a312b41-edee-460b-ab65-e159674e883a",
+        "error": null
+      }
+    },
+    {
+      "ticker": "INTC",
+      "company": "INTEL CORP",
+      "tier": "low",
+      "shares": 23.670514810269733,
+      "cost_usd": 1405.318464285714,
+      "last_close": 59.37,
+      "last_date": "2026-11-09",
+      "timing_risk": "subdued",
+      "why": "Company Scout: 2 patent(s), 1 filing(s); large by revenue",
+      "route": {
+        "available": true,
+        "symbol": "INTCon",
+        "asset_id": "nep141:bnb-0xa528caaa2f96090e379d43f90834c75df54d6e74.omdep.near",
+        "blockchain": "BNB Chain",
+        "token_price_usd": 58.9153,
+        "checked_at": "2026-11-10T04:47:44.712303Z",
+        "note": "listed by the NEAR Intents bridge; the price implied by a dry-run quote matches the stock"
+      },
+      "quote": {
+        "amount_in_usd": 1404.59,
+        "amount_out_usd": 1397.75,
+        "amount_out": "23.852325711010800019",
+        "cost_pct": 0.487,
+        "time_estimate_s": 25.0,
+        "quoted_at": "2026-11-10T04:47:45.382979Z",
+        "correlation_id": "5de73bcc-6ba6-4742-8de7-1989ee721612",
+        "error": null
+      }
+    }
+  ],
+  "decisions": [
+    {
+      "at": "2026-11-09T11:14:10.603393Z",
+      "run_id": "725874fe-0e58-4fb4-9aca-0353a688d96f",
+      "report_date": "2026-11-09",
+      "band": "building",
+      "score": 55.6,
+      "previous_score": null,
+      "confidence_pct": null,
+      "target_invested_pct": 75.0,
+      "tier_targets_usd": {
+        "low": 5000.0,
+        "medium": 2500.0
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "NVDA",
+        "LRCX"
+      ],
+      "trades": [
+        {
+          "day": "2026-11-06",
+          "ticker": "MU",
+          "tier": "low",
+          "side": "buy",
+          "shares": 3.623188,
+          "price": 690.0,
+          "usd": 2500.0,
+          "fee_usd": 7.5
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "AMD",
+          "tier": "low",
+          "side": "buy",
+          "shares": 5.567433,
+          "price": 449.04,
+          "usd": 2500.0,
+          "fee_usd": 7.5
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "MRVL",
+          "tier": "medium",
+          "side": "buy",
+          "shares": 17.705382,
+          "price": 141.2,
+          "usd": 2500.0,
+          "fee_usd": 7.5
+        }
+      ],
+      "reasons": [
+        "Why now: first decision for this topic.",
+        "Verdict band 'building' (score 55.6) -> invest 75% of the fund.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): NVDA, LRCX. Reviewed again after the next price update.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-09."
+      ],
+      "value_before_usd": 10000.0,
+      "sha256": "471845e6d7701c577489de9964f2c1e1308ddee51242a11367d3fafc043e3534",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_large-language-model-inference_1",
+        "sha256": "471845e6d7701c577489de9964f2c1e1308ddee51242a11367d3fafc043e3534",
+        "tx_hash": "CJrARkULcc3pyS8sxFHjcqjJJig8ecYFicxfcScgwK6z",
+        "explorer_url": "https://testnet.nearblocks.io/txns/CJrARkULcc3pyS8sxFHjcqjJJig8ecYFicxfcScgwK6z"
+      }
+    },
+    {
+      "at": "2026-11-09T14:53:29.139053Z",
+      "run_id": "725874fe-0e58-4fb4-9aca-0353a688d96f",
+      "report_date": "2026-11-09",
+      "band": "building",
+      "score": 67.8,
+      "previous_score": 55.6,
+      "confidence_pct": 40.1,
+      "target_invested_pct": 43.0,
+      "tier_targets_usd": {
+        "low": 2857.84,
+        "medium": 1428.92
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "NVDA",
+        "LRCX"
+      ],
+      "trades": [
+        {
+          "day": "2026-11-06",
+          "ticker": "MU",
+          "tier": "low",
+          "side": "sell",
+          "shares": 1.552289,
+          "price": 690.0,
+          "usd": 1071.08,
+          "fee_usd": 3.21
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "AMD",
+          "tier": "low",
+          "side": "sell",
+          "shares": 2.385265,
+          "price": 449.04,
+          "usd": 1071.08,
+          "fee_usd": 3.21
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "MRVL",
+          "tier": "medium",
+          "side": "sell",
+          "shares": 7.585549,
+          "price": 141.2,
+          "usd": 1071.08,
+          "fee_usd": 3.21
+        }
+      ],
+      "reasons": [
+        "Why now: scoring method changed: risk now lowers confidence, and position size follows confidence.",
+        "Verdict band 'building' (score 67.8) -> invest 75% of the fund.",
+        "Confidence 40% is below the 70% needed for full size -> invest 57% of that: 43% of the fund.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): NVDA, LRCX. Reviewed again after the next price update.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-09."
+      ],
+      "value_before_usd": 9977.5,
+      "sha256": "485e8170ae7f7e61ef4322fadf2c30763b81bff854c790302deac66460c67d9c",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_large-language-model-inference_2",
+        "sha256": "485e8170ae7f7e61ef4322fadf2c30763b81bff854c790302deac66460c67d9c",
+        "tx_hash": "HRcKEvjwivjom815dzfNCia7omSjDxAsyhYBPRZSxwfh",
+        "explorer_url": "https://testnet.nearblocks.io/txns/HRcKEvjwivjom815dzfNCia7omSjDxAsyhYBPRZSxwfh"
+      }
+    },
+    {
+      "at": "2026-11-10T04:46:08.575261Z",
+      "run_id": "6777f9ef-2e58-4355-bf72-bd49b0677d89",
+      "report_date": "2026-11-10",
+      "band": "building",
+      "score": 67.8,
+      "previous_score": 67.8,
+      "confidence_pct": 37.9,
+      "target_invested_pct": 40.6,
+      "tier_targets_usd": {
+        "low": 2810.64,
+        "medium": 1405.32
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "ORCL",
+        "SNDK"
+      ],
+      "trades": [
+        {
+          "day": "2026-11-09",
+          "ticker": "AMD",
+          "tier": "low",
+          "side": "sell",
+          "shares": 3.182168,
+          "price": 508.58,
+          "usd": 1618.39,
+          "fee_usd": 4.86
+        },
+        {
+          "day": "2026-11-09",
+          "ticker": "INTC",
+          "tier": "low",
+          "side": "buy",
+          "shares": 23.670515,
+          "price": 59.37,
+          "usd": 1405.32,
+          "fee_usd": 4.22
+        }
+      ],
+      "reasons": [
+        "Why now: companies now come from patents and papers (2026-11-10 re-run).",
+        "Verdict band 'building' (score 67.8) -> invest 75% of the fund.",
+        "Confidence 38% is below the 70% needed for full size -> invest 54% of that: 41% of the fund.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): ORCL, SNDK. Reviewed again after the next price update.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-10."
+      ],
+      "value_before_usd": 10382.3,
+      "sha256": "d8e22a1e3896dcfe7191175c2a9ce1b783c230cab1026acce3429d73bf1141e6",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_large-language-model-inference_3",
+        "sha256": "d8e22a1e3896dcfe7191175c2a9ce1b783c230cab1026acce3429d73bf1141e6",
+        "tx_hash": "4jhkNVSNnUjYY84YXenzYRmL9vPqix95JLtLSspcxq2W",
+        "explorer_url": "https://testnet.nearblocks.io/txns/4jhkNVSNnUjYY84YXenzYRmL9vPqix95JLtLSspcxq2W"
+      }
+    }
+  ],
+  "history": [
+    {
+      "day": "2026-11-06",
+      "value_usd": 9967.86,
+      "benchmark_value_usd": null
+    },
+    {
+      "day": "2026-11-09",
+      "value_usd": 10373.23,
+      "benchmark_value_usd": null
+    }
+  ],
+  "benchmark": "SPY",
+  "benchmark_start_close": null,
+  "benchmark_start_date": null,
+  "updated_at": "2026-11-10T04:46:08.575261Z",
+  "notes": [
+    "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
+    "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",
+    "NEAR Intents quotes are dry runs: nothing is reserved or sent.",
+    "Not investment advice."
+  ]
+}

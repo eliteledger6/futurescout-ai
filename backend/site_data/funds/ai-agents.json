@@ -1,0 +1,463 @@
+{
+  "kind": "simulation",
+  "topic": "AI agents",
+  "slug": "ai-agents",
+  "sector": "ai_software",
+  "created_at": "2026-11-09T11:14:10.603393Z",
+  "start_cash_usd": 10000.0,
+  "cash_usd": 4472.65,
+  "holdings": [
+    {
+      "ticker": "MSFT",
+      "company": "Microsoft",
+      "tier": "low",
+      "shares": 2.3101870892530707,
+      "cost_usd": 1225.808371428572,
+      "last_close": 545.18,
+      "last_date": "2026-11-09",
+      "timing_risk": "moderate",
+      "why": "Company Scout: 2 patent(s), 3 filing(s); large by revenue",
+      "route": {
+        "available": true,
+        "symbol": "MSFTon",
+        "asset_id": "nep141:bnb-0x6bfe75d1ad432050ea973c3a3dcd88f02e2444c3.omdep.near",
+        "blockchain": "BNB Chain",
+        "token_price_usd": 551.8004,
+        "checked_at": "2026-11-10T04:48:37.423819Z",
+        "note": "listed by the NEAR Intents bridge; the price implied by a dry-run quote matches the stock"
+      },
+      "quote": {
+        "amount_in_usd": 1258.82,
+        "amount_out_usd": 1249.02,
+        "amount_out": "2.279491588113320817",
+        "cost_pct": 0.778,
+        "time_estimate_s": 25.0,
+        "quoted_at": "2026-11-10T04:48:38.302655Z",
+        "correlation_id": "14c2bd48-0062-4f48-9e83-6e1c10bffc65",
+        "error": null
+      }
+    },
+    {
+      "ticker": "NOW",
+      "company": "SERVICENOW INC",
+      "tier": "low",
+      "shares": 12.023151000636403,
+      "cost_usd": 1235.498996825397,
+      "last_close": 102.76,
+      "last_date": "2026-11-09",
+      "timing_risk": "subdued",
+      "why": "Company Scout: 2 patent(s), 2 filing(s); large by revenue",
+      "route": {
+        "available": false,
+        "symbol": null,
+        "asset_id": null,
+        "blockchain": null,
+        "token_price_usd": null,
+        "checked_at": "2026-11-10T04:48:39.386885Z",
+        "note": "no tokenized version in the public NEAR Intents token lists"
+      },
+      "quote": null
+    },
+    {
+      "ticker": "PANW",
+      "company": "PALO ALTO NETWORKS INC",
+      "tier": "low",
+      "shares": 3.7338662299416634,
+      "cost_usd": 1235.498996825397,
+      "last_close": 330.89,
+      "last_date": "2026-11-09",
+      "timing_risk": "subdued",
+      "why": "Company Scout: 1 patent(s), 3 filing(s); large by revenue",
+      "route": {
+        "available": false,
+        "symbol": null,
+        "asset_id": null,
+        "blockchain": null,
+        "token_price_usd": null,
+        "checked_at": "2026-11-10T04:48:39.386885Z",
+        "note": "no tokenized version in the public NEAR Intents token lists"
+      },
+      "quote": null
+    },
+    {
+      "ticker": "NTNX",
+      "company": "NUTANIX INC",
+      "tier": "medium",
+      "shares": 31.152269208910663,
+      "cost_usd": 1853.2484952380955,
+      "last_close": 59.49,
+      "last_date": "2026-11-09",
+      "timing_risk": "subdued",
+      "why": "Company Scout: 1 patent(s), 2 filing(s); mid by revenue",
+      "route": {
+        "available": false,
+        "symbol": null,
+        "asset_id": null,
+        "blockchain": null,
+        "token_price_usd": null,
+        "checked_at": "2026-11-10T04:48:39.386885Z",
+        "note": "no tokenized version in the public NEAR Intents token lists"
+      },
+      "quote": null
+    }
+  ],
+  "decisions": [
+    {
+      "at": "2026-11-09T11:14:10.603393Z",
+      "run_id": "d9ee0298-950c-4bf1-949a-827452a0a9fa",
+      "report_date": "2026-11-09",
+      "band": "building",
+      "score": 60.1,
+      "previous_score": null,
+      "confidence_pct": null,
+      "target_invested_pct": 75.0,
+      "tier_targets_usd": {
+        "low": 5000.0,
+        "medium": 2500.0
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "CRM",
+        "TEAM",
+        "BILL",
+        "DOCN",
+        "AMPL",
+        "AI"
+      ],
+      "trades": [
+        {
+          "day": "2026-11-06",
+          "ticker": "MSFT",
+          "tier": "low",
+          "side": "buy",
+          "shares": 3.141039,
+          "price": 530.61,
+          "usd": 1666.67,
+          "fee_usd": 5.0
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "GOOGL",
+          "tier": "low",
+          "side": "buy",
+          "shares": 5.852471,
+          "price": 284.78,
+          "usd": 1666.67,
+          "fee_usd": 5.0
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "META",
+          "tier": "low",
+          "side": "buy",
+          "shares": 2.731569,
+          "price": 610.15,
+          "usd": 1666.67,
+          "fee_usd": 5.0
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "PLTR",
+          "tier": "medium",
+          "side": "buy",
+          "shares": 7.793989,
+          "price": 160.38,
+          "usd": 1250.0,
+          "fee_usd": 3.75
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "SNOW",
+          "tier": "medium",
+          "side": "buy",
+          "shares": 4.530955,
+          "price": 275.88,
+          "usd": 1250.0,
+          "fee_usd": 3.75
+        }
+      ],
+      "reasons": [
+        "Why now: first decision for this topic.",
+        "Verdict band 'building' (score 60.1) -> invest 75% of the fund.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): CRM, TEAM, BILL, DOCN, AMPL, AI. Reviewed again after the next price update.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-09."
+      ],
+      "value_before_usd": 10000.0,
+      "sha256": "b3819cbde9276dc622f8061a4ebc16ec594fc6c8d08c19d190f8914e4ad8882c",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_ai-agents_1",
+        "sha256": "b3819cbde9276dc622f8061a4ebc16ec594fc6c8d08c19d190f8914e4ad8882c",
+        "tx_hash": "87kpuKfLwF8BBVP1fJsSCpHeMoTuCtNJVjg8dj3zFxGZ",
+        "explorer_url": "https://testnet.nearblocks.io/txns/87kpuKfLwF8BBVP1fJsSCpHeMoTuCtNJVjg8dj3zFxGZ"
+      }
+    },
+    {
+      "at": "2026-11-09T14:53:29.139053Z",
+      "run_id": "d9ee0298-950c-4bf1-949a-827452a0a9fa",
+      "report_date": "2026-11-09",
+      "band": "strong",
+      "score": 73.3,
+      "previous_score": 60.1,
+      "confidence_pct": 38.7,
+      "target_invested_pct": 55.3,
+      "tier_targets_usd": {
+        "low": 3677.43,
+        "medium": 1838.71
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "CRM",
+        "TEAM",
+        "BILL",
+        "DOCN",
+        "AMPL",
+        "AI"
+      ],
+      "trades": [
+        {
+          "day": "2026-11-06",
+          "ticker": "MSFT",
+          "tier": "low",
+          "side": "sell",
+          "shares": 0.830852,
+          "price": 530.61,
+          "usd": 440.86,
+          "fee_usd": 1.32
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "GOOGL",
+          "tier": "low",
+          "side": "sell",
+          "shares": 1.548066,
+          "price": 284.78,
+          "usd": 440.86,
+          "fee_usd": 1.32
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "META",
+          "tier": "low",
+          "side": "sell",
+          "shares": 0.722541,
+          "price": 610.15,
+          "usd": 440.86,
+          "fee_usd": 1.32
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "PLTR",
+          "tier": "medium",
+          "side": "sell",
+          "shares": 2.061627,
+          "price": 160.38,
+          "usd": 330.64,
+          "fee_usd": 0.99
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "SNOW",
+          "tier": "medium",
+          "side": "sell",
+          "shares": 1.198506,
+          "price": 275.88,
+          "usd": 330.64,
+          "fee_usd": 0.99
+        }
+      ],
+      "reasons": [
+        "Why now: scoring method changed: risk now lowers confidence, and position size follows confidence.",
+        "Verdict band 'strong' (score 73.3) -> invest 100% of the fund.",
+        "Confidence 39% is below the 70% needed for full size -> invest 55% of that: 55% of the fund.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): CRM, TEAM, BILL, DOCN, AMPL, AI. Reviewed again after the next price update.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-09."
+      ],
+      "value_before_usd": 9977.51,
+      "sha256": "45317cc958790707561530305ea6400cced7f93fc6ceeb3804aca7bfd54822e7",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_ai-agents_2",
+        "sha256": "45317cc958790707561530305ea6400cced7f93fc6ceeb3804aca7bfd54822e7",
+        "tx_hash": "Hm6ndwoSuQHrqvn9pJVCvZGQjdXKykLdGLNhvuYn9cKj",
+        "explorer_url": "https://testnet.nearblocks.io/txns/Hm6ndwoSuQHrqvn9pJVCvZGQjdXKykLdGLNhvuYn9cKj"
+      }
+    },
+    {
+      "at": "2026-11-10T03:34:14.693948Z",
+      "run_id": "71b787db-4595-4cab-8ae0-9aa6971d2a4b",
+      "report_date": "2026-11-10",
+      "band": "strong",
+      "score": 70.8,
+      "previous_score": 73.3,
+      "confidence_pct": 38.6,
+      "target_invested_pct": 55.1,
+      "tier_targets_usd": {
+        "low": 3706.5,
+        "medium": 1853.25
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "FICO"
+      ],
+      "trades": [
+        {
+          "day": "2026-11-09",
+          "ticker": "GOOGL",
+          "tier": "low",
+          "side": "sell",
+          "shares": 4.304405,
+          "price": 288.15,
+          "usd": 1240.31,
+          "fee_usd": 3.72
+        },
+        {
+          "day": "2026-11-09",
+          "ticker": "META",
+          "tier": "low",
+          "side": "sell",
+          "shares": 2.009028,
+          "price": 641.37,
+          "usd": 1288.53,
+          "fee_usd": 3.87
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "PLTR",
+          "tier": "medium",
+          "side": "sell",
+          "shares": 5.732362,
+          "price": 160.38,
+          "usd": 919.36,
+          "fee_usd": 2.76
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "SNOW",
+          "tier": "medium",
+          "side": "sell",
+          "shares": 3.33245,
+          "price": 275.88,
+          "usd": 919.36,
+          "fee_usd": 2.76
+        },
+        {
+          "day": "2026-11-09",
+          "ticker": "NOW",
+          "tier": "low",
+          "side": "buy",
+          "shares": 12.023151,
+          "price": 102.76,
+          "usd": 1235.5,
+          "fee_usd": 3.71
+        },
+        {
+          "day": "2026-11-09",
+          "ticker": "PANW",
+          "tier": "low",
+          "side": "buy",
+          "shares": 3.733866,
+          "price": 330.89,
+          "usd": 1235.5,
+          "fee_usd": 3.71
+        },
+        {
+          "day": "2026-11-09",
+          "ticker": "NTNX",
+          "tier": "medium",
+          "side": "buy",
+          "shares": 31.152269,
+          "price": 59.49,
+          "usd": 1853.25,
+          "fee_usd": 5.56
+        }
+      ],
+      "reasons": [
+        "Why now: a newer report is available.",
+        "Verdict band 'strong' (score 70.8) -> invest 100% of the fund.",
+        "Confidence 39% is below the 70% needed for full size -> invest 55% of that: 55% of the fund.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): FICO. Reviewed again after the next price update.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-10."
+      ],
+      "value_before_usd": 10082.44,
+      "sha256": "5690298533e545ef17b0333838b9ae5b82acfaecdd20b9396608fd60133d648a",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_ai-agents_3",
+        "sha256": "5690298533e545ef17b0333838b9ae5b82acfaecdd20b9396608fd60133d648a",
+        "tx_hash": "EDjgfhHHYdmNeKcaawH8c1zmRQmHt11LySWp7rAfRw2j",
+        "explorer_url": "https://testnet.nearblocks.io/txns/EDjgfhHHYdmNeKcaawH8c1zmRQmHt11LySWp7rAfRw2j"
+      }
+    },
+    {
+      "at": "2026-11-10T04:46:08.575261Z",
+      "run_id": "71b787db-4595-4cab-8ae0-9aa6971d2a4b",
+      "report_date": "2026-11-10",
+      "band": "strong",
+      "score": 70.8,
+      "previous_score": 70.8,
+      "confidence_pct": 38.6,
+      "target_invested_pct": 55.1,
+      "tier_targets_usd": {
+        "low": 3696.91,
+        "medium": 1848.46
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "FICO"
+      ],
+      "trades": [],
+      "reasons": [
+        "Why now: companies now come from patents and papers (2026-11-10 re-run).",
+        "Verdict band 'strong' (score 70.8) -> invest 100% of the fund.",
+        "Confidence 39% is below the 70% needed for full size -> invest 55% of that: 55% of the fund.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): FICO. Reviewed again after the next price update.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "No trade: the fund is already close to its targets.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-10."
+      ],
+      "value_before_usd": 10056.37,
+      "sha256": "8ee4e02033d3846a5f587bb09b039605a27f8a0d4c51adbe542c2e3d002afc3e",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_ai-agents_4",
+        "sha256": "8ee4e02033d3846a5f587bb09b039605a27f8a0d4c51adbe542c2e3d002afc3e",
+        "tx_hash": "C2k7XkCiPG6WQQ8EF2JnmsB6emHY1rcZZkj33rjF2Lvi",
+        "explorer_url": "https://testnet.nearblocks.io/txns/C2k7XkCiPG6WQQ8EF2JnmsB6emHY1rcZZkj33rjF2Lvi"
+      }
+    }
+  ],
+  "history": [
+    {
+      "day": "2026-11-06",
+      "value_usd": 9971.56,
+      "benchmark_value_usd": null
+    },
+    {
+      "day": "2026-11-09",
+      "value_usd": 10056.37,
+      "benchmark_value_usd": null
+    }
+  ],
+  "benchmark": "SPY",
+  "benchmark_start_close": null,
+  "benchmark_start_date": null,
+  "updated_at": "2026-11-10T04:46:08.575261Z",
+  "notes": [
+    "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
+    "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",
+    "NEAR Intents quotes are dry runs: nothing is reserved or sent.",
+    "Not investment advice."
+  ]
+}

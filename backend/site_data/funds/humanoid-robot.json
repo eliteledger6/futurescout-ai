@@ -1,0 +1,195 @@
+{
+  "kind": "simulation",
+  "topic": "humanoid robot",
+  "slug": "humanoid-robot",
+  "sector": "robotics_autonomy",
+  "created_at": "2026-11-09T11:14:10.603393Z",
+  "start_cash_usd": 10000.0,
+  "cash_usd": 7597.45,
+  "holdings": [
+    {
+      "ticker": "CSCO",
+      "company": "Cisco Systems, Inc.",
+      "tier": "low",
+      "shares": 25.420406423624325,
+      "cost_usd": 2385.7051428571426,
+      "last_close": 93.85,
+      "last_date": "2026-11-06",
+      "timing_risk": null,
+      "why": "Company Scout: 1 patent(s); large by revenue",
+      "route": {
+        "available": false,
+        "symbol": null,
+        "asset_id": null,
+        "blockchain": null,
+        "token_price_usd": null,
+        "checked_at": "2026-11-10T04:47:03.279020Z",
+        "note": "no tokenized version in the public NEAR Intents token lists"
+      },
+      "quote": null
+    }
+  ],
+  "decisions": [
+    {
+      "at": "2026-11-09T11:14:10.603393Z",
+      "run_id": "f63a8639-eb00-48a5-a5b7-a343c1618eb0",
+      "report_date": "2026-11-09",
+      "band": "early",
+      "score": 42.6,
+      "previous_score": null,
+      "confidence_pct": null,
+      "target_invested_pct": 40.0,
+      "tier_targets_usd": {
+        "low": 4000.0
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "TSLA",
+        "MBLY",
+        "FFAI",
+        "RR",
+        "LQMT"
+      ],
+      "trades": [
+        {
+          "day": "2026-11-06",
+          "ticker": "CSCO",
+          "tier": "low",
+          "side": "buy",
+          "shares": 42.621204,
+          "price": 93.85,
+          "usd": 4000.0,
+          "fee_usd": 12.0
+        }
+      ],
+      "reasons": [
+        "Why now: first decision for this topic.",
+        "Verdict band 'early' (score 42.6) -> invest 40% of the fund.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): TSLA, MBLY, FFAI, RR, LQMT. Reviewed again after the next price update.",
+        "No priced company in the medium-risk tier; its share goes to the other tiers.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-09."
+      ],
+      "value_before_usd": 10000.0,
+      "sha256": "3bc20c406868cadfe3650c65cc784b8b1b513aa155df639ea80dbd60aacc3982",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_humanoid-robot_1",
+        "sha256": "3bc20c406868cadfe3650c65cc784b8b1b513aa155df639ea80dbd60aacc3982",
+        "tx_hash": "FcYDnXDbh43XfhgYVQiiKjkYZNpuiqgD1s1nChZnjQa1",
+        "explorer_url": "https://testnet.nearblocks.io/txns/FcYDnXDbh43XfhgYVQiiKjkYZNpuiqgD1s1nChZnjQa1"
+      }
+    },
+    {
+      "at": "2026-11-09T14:53:29.139053Z",
+      "run_id": "f63a8639-eb00-48a5-a5b7-a343c1618eb0",
+      "report_date": "2026-11-09",
+      "band": "building",
+      "score": 56.0,
+      "previous_score": 42.6,
+      "confidence_pct": 37.1,
+      "target_invested_pct": 39.8,
+      "tier_targets_usd": {
+        "low": 3970.23
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "TSLA",
+        "MBLY",
+        "FFAI",
+        "RR",
+        "LQMT"
+      ],
+      "trades": [],
+      "reasons": [
+        "Why now: scoring method changed: risk now lowers confidence, and position size follows confidence.",
+        "Verdict band 'building' (score 56.0) -> invest 75% of the fund.",
+        "Confidence 37% is below the 70% needed for full size -> invest 53% of that: 40% of the fund.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): TSLA, MBLY, FFAI, RR, LQMT. Reviewed again after the next price update.",
+        "No priced company in the medium-risk tier; its share goes to the other tiers.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "No trade: the fund is already close to its targets.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-09."
+      ],
+      "value_before_usd": 9988.0,
+      "sha256": "a618cd8d09bfb0046a63c390587deb2f293142586bc7a36263cc3bdb5b37441a",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_humanoid-robot_2",
+        "sha256": "a618cd8d09bfb0046a63c390587deb2f293142586bc7a36263cc3bdb5b37441a",
+        "tx_hash": "2LLeRL9o2f6xXWgadnMH34MSXCNVhirUYHDPnghSzNvN",
+        "explorer_url": "https://testnet.nearblocks.io/txns/2LLeRL9o2f6xXWgadnMH34MSXCNVhirUYHDPnghSzNvN"
+      }
+    },
+    {
+      "at": "2026-11-10T04:46:08.575261Z",
+      "run_id": "2af647d3-915e-4fde-96cc-f0831c149fdf",
+      "report_date": "2026-11-10",
+      "band": "early",
+      "score": 52.0,
+      "previous_score": 56.0,
+      "confidence_pct": 41.8,
+      "target_invested_pct": 23.9,
+      "tier_targets_usd": {
+        "low": 2385.71
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "NVDA"
+      ],
+      "trades": [
+        {
+          "day": "2026-11-06",
+          "ticker": "CSCO",
+          "tier": "low",
+          "side": "sell",
+          "shares": 17.200798,
+          "price": 93.85,
+          "usd": 1614.29,
+          "fee_usd": 4.84
+        }
+      ],
+      "reasons": [
+        "Why now: companies now come from patents and papers (2026-11-10 re-run).",
+        "Verdict band 'early' (score 52.0) -> invest 40% of the fund.",
+        "Confidence 42% is below the 70% needed for full size -> invest 60% of that: 24% of the fund.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): NVDA. Reviewed again after the next price update.",
+        "No priced company in the medium-risk tier; its share goes to the other tiers.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-10."
+      ],
+      "value_before_usd": 9988.0,
+      "sha256": "56cc6a0fafd52292615267a6d5c399a86736061e7f082c5ff6bd06727ba6c8e2",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_humanoid-robot_3",
+        "sha256": "56cc6a0fafd52292615267a6d5c399a86736061e7f082c5ff6bd06727ba6c8e2",
+        "tx_hash": "2pUdJiZdwNh4tuEUBrodSKa3YQbitnowsMhVYYWZNctc",
+        "explorer_url": "https://testnet.nearblocks.io/txns/2pUdJiZdwNh4tuEUBrodSKa3YQbitnowsMhVYYWZNctc"
+      }
+    }
+  ],
+  "history": [
+    {
+      "day": "2026-11-06",
+      "value_usd": 9983.16,
+      "benchmark_value_usd": null
+    }
+  ],
+  "benchmark": "SPY",
+  "benchmark_start_close": null,
+  "benchmark_start_date": null,
+  "updated_at": "2026-11-10T04:46:08.575261Z",
+  "notes": [
+    "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
+    "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",
+    "NEAR Intents quotes are dry runs: nothing is reserved or sent.",
+    "Not investment advice."
+  ]
+}

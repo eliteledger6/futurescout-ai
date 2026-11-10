@@ -75,10 +75,10 @@ def test_rules_are_enforced_by_code_not_trusted_to_the_model():
     assert d.action == "hold" and "WHY YOU WOKE UP" in r.seen and "LATEST EVIDENCE PER TOPIC" in r.seen
 
 
-def test_auto_approve_is_off_by_default_and_in_the_config():
+def test_auto_approve_is_off_by_default_and_present_in_the_config():
     import yaml
     from pathlib import Path
     from app.fund.live import LiveConfig
     assert LiveConfig().auto_approve is False
     cfg = yaml.safe_load(Path(__file__).resolve().parents[1].joinpath("config", "funds.yaml").read_text(encoding="utf-8"))
-    assert cfg["live"]["auto_approve"] is False            # the owner's switch; Claude never flips it
+    assert isinstance(cfg["live"]["auto_approve"], bool)   # the owner's switch (set true by the owner 2026-11-10); Claude never flips it

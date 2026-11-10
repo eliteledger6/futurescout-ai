@@ -29,7 +29,9 @@ Rules that always apply:
   change needs the owner's words in chat first. Selling, auto-approval and more budget each need a new written yes.
   Trading strategy (owner 2026-11-10): `fund_trade.py check` wakes the agent on triggers; shadow fills itself, live only PROPOSES.
   Claude may run `check --shadow`, `check` (live PROPOSALS only) and `watch`; the owner approves each live proposal.
-  `live.auto_approve` (funds.yaml) exists for the future and is false: Claude NEVER sets it to true; it is a new written yes from the owner.
+  `live.auto_approve` (funds.yaml): the owner set it to true on 2026-11-10. Claude never changes it. While it is true, a live
+  check signs with the owner's key, so Claude does NOT run live `check` or `watch`: the owner runs the loop; Claude may run `check --shadow`.
+- Hosting (2026-11-10): Render (API, read-only snapshot `backend/site_data`, no key) + Vercel (website). See HOSTING.md.
 - Say "mock-tested" vs "run live" honestly; never call a feature complete without a test.
 - Do not push, make the repo public, post on X, submit to the hackathon or spend on mainnet without the owner's explicit yes.
 - Update `PROJECT_STATUS.md` after each phase.

@@ -33,7 +33,8 @@ def main() -> int:
     app = create_app(settings)
     print(f"FUTURESCOUT AI API on http://{args.host}:{args.port}  (API docs: http://{args.host}:{args.port}/docs)")
     print(f"New runs from the dashboard: {'ENABLED' if settings.enable_run_api else 'off (set ENABLE_RUN_API=true in .env)'}")
-    print(f"Report market: {'ENABLED, seller ' + settings.near_testnet_account_id if settings.near_testnet_account_id else 'off (set NEAR_TESTNET_ACCOUNT_ID)'}")
+    from app import service
+    print(f"Data folder: {service.RUNS_DIR} (reports come from the database when DATABASE_URL is set)")
     uvicorn.run(app, host=args.host, port=args.port, log_level="warning")
     return 0
 

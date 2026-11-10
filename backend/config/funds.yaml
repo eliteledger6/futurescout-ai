@@ -42,7 +42,7 @@ intents:
 live:
   trading_enabled: true       # master switch; the owner turns it on for the first trade
   route: confidential          # owner 2026-11-09: trade like near.com (signed order from the private balance); "wallet" = old route
-  auto_approve: false          # FUTURE (owner-only): true = a live proposal from `fund_trade.py watch` is sent without the typed approval. Keep false for now.
+  auto_approve: true          # FUTURE (owner-only): true = a live proposal from `fund_trade.py watch` is sent without the typed approval. Keep false for now.
   strategy:                    # when the trading agent wakes up, and its fixed rules (app/fund/strategy.py)
     check_minutes: 60          # `python scripts\fund_trade.py check --shadow --loop` looks this often
     review_hours: 24           # routine review even when nothing moved

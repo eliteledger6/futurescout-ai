@@ -1,0 +1,209 @@
+{
+  "kind": "simulation",
+  "topic": "quantum error correction",
+  "slug": "quantum-error-correction",
+  "sector": "quantum",
+  "created_at": "2026-11-09T11:14:10.603393Z",
+  "start_cash_usd": 10000.0,
+  "cash_usd": 9976.0,
+  "holdings": [],
+  "decisions": [
+    {
+      "at": "2026-11-09T11:14:10.603393Z",
+      "run_id": "737cb83a-d3d7-47d0-a653-6ce4b9267fe8",
+      "report_date": "2026-11-09",
+      "band": "early",
+      "score": 43.8,
+      "previous_score": null,
+      "confidence_pct": null,
+      "target_invested_pct": 40.0,
+      "tier_targets_usd": {
+        "high": 4000.0
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "DELL"
+      ],
+      "trades": [
+        {
+          "day": "2026-11-06",
+          "ticker": "RGTI",
+          "tier": "high",
+          "side": "buy",
+          "shares": 113.475177,
+          "price": 11.75,
+          "usd": 1333.33,
+          "fee_usd": 4.0
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "IONQ",
+          "tier": "high",
+          "side": "buy",
+          "shares": 40.874719,
+          "price": 32.62,
+          "usd": 1333.33,
+          "fee_usd": 4.0
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "QBTS",
+          "tier": "high",
+          "side": "buy",
+          "shares": 124.843945,
+          "price": 10.68,
+          "usd": 1333.33,
+          "fee_usd": 4.0
+        }
+      ],
+      "reasons": [
+        "Why now: first decision for this topic.",
+        "Verdict band 'early' (score 43.8) -> invest 40% of the fund.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): DELL. Reviewed again after the next price update.",
+        "No priced company in the low-risk tier; its share goes to the other tiers.",
+        "No priced company in the medium-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-09."
+      ],
+      "value_before_usd": 10000.0,
+      "sha256": "dad43a0b459d76f856b82c7bab411fd10a7f362e83edc9e0027d376c49c22d65",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_quantum-error-correction_1",
+        "sha256": "dad43a0b459d76f856b82c7bab411fd10a7f362e83edc9e0027d376c49c22d65",
+        "tx_hash": "6K44isypWBEMn5gjzwYijRo2NemdnTTJhWH6cPDNSE7G",
+        "explorer_url": "https://testnet.nearblocks.io/txns/6K44isypWBEMn5gjzwYijRo2NemdnTTJhWH6cPDNSE7G"
+      }
+    },
+    {
+      "at": "2026-11-09T14:53:29.139053Z",
+      "run_id": "737cb83a-d3d7-47d0-a653-6ce4b9267fe8",
+      "report_date": "2026-11-09",
+      "band": "building",
+      "score": 57.6,
+      "previous_score": 43.8,
+      "confidence_pct": 35.6,
+      "target_invested_pct": 38.1,
+      "tier_targets_usd": {
+        "high": 3809.7
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "DELL"
+      ],
+      "trades": [],
+      "reasons": [
+        "Why now: scoring method changed: risk now lowers confidence, and position size follows confidence.",
+        "Verdict band 'building' (score 57.6) -> invest 75% of the fund.",
+        "Confidence 36% is below the 70% needed for full size -> invest 51% of that: 38% of the fund.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): DELL. Reviewed again after the next price update.",
+        "No priced company in the low-risk tier; its share goes to the other tiers.",
+        "No priced company in the medium-risk tier; its share goes to the other tiers.",
+        "No trade: the fund is already close to its targets.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-09."
+      ],
+      "value_before_usd": 9987.99,
+      "sha256": "9391e710deb4ee7bdf55e70d83c77ed9c1fa2f5ed8e9bbb31e427bcdbad8ee32",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_quantum-error-correction_2",
+        "sha256": "9391e710deb4ee7bdf55e70d83c77ed9c1fa2f5ed8e9bbb31e427bcdbad8ee32",
+        "tx_hash": "DxyaMWeMc6KLdTSj62H8e43zsxgxkHaDUC8pdFXX5Aud",
+        "explorer_url": "https://testnet.nearblocks.io/txns/DxyaMWeMc6KLdTSj62H8e43zsxgxkHaDUC8pdFXX5Aud"
+      }
+    },
+    {
+      "at": "2026-11-10T04:46:08.575261Z",
+      "run_id": "7b993ec1-1330-4d2a-b557-8bfeee4a4bba",
+      "report_date": "2026-11-10",
+      "band": "building",
+      "score": 67.7,
+      "previous_score": 57.6,
+      "confidence_pct": 27.5,
+      "target_invested_pct": 29.5,
+      "tier_targets_usd": {},
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "DELL"
+      ],
+      "trades": [
+        {
+          "day": "2026-11-06",
+          "ticker": "RGTI",
+          "tier": "high",
+          "side": "sell",
+          "shares": 113.475177,
+          "price": 11.75,
+          "usd": 1333.33,
+          "fee_usd": 4.0
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "IONQ",
+          "tier": "high",
+          "side": "sell",
+          "shares": 40.874719,
+          "price": 32.62,
+          "usd": 1333.33,
+          "fee_usd": 4.0
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "QBTS",
+          "tier": "high",
+          "side": "sell",
+          "shares": 124.843945,
+          "price": 10.68,
+          "usd": 1333.33,
+          "fee_usd": 4.0
+        }
+      ],
+      "reasons": [
+        "Why now: companies now come from patents and papers (2026-11-10 re-run).",
+        "Verdict band 'building' (score 67.7) -> invest 75% of the fund.",
+        "Confidence 28% is below the 70% needed for full size -> invest 39% of that: 29% of the fund.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): DELL. Reviewed again after the next price update.",
+        "No priced company in the low-risk tier; its share goes to the other tiers.",
+        "No priced company in the medium-risk tier; its share goes to the other tiers.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-10."
+      ],
+      "value_before_usd": 9987.99,
+      "sha256": "7f4b2be04a6c4db0fbb5b2ca97bf3c99d59435834bea636419e564a11ff0841b",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_quantum-error-correction_3",
+        "sha256": "7f4b2be04a6c4db0fbb5b2ca97bf3c99d59435834bea636419e564a11ff0841b",
+        "tx_hash": "9yWoc3UwiYzEpeT3rP4gewGdEgmTKC82Tz8X4H4wefzY",
+        "explorer_url": "https://testnet.nearblocks.io/txns/9yWoc3UwiYzEpeT3rP4gewGdEgmTKC82Tz8X4H4wefzY"
+      }
+    }
+  ],
+  "history": [
+    {
+      "day": "2026-11-06",
+      "value_usd": 9987.99,
+      "benchmark_value_usd": null
+    },
+    {
+      "day": "2026-11-10",
+      "value_usd": 9976.0,
+      "benchmark_value_usd": null
+    }
+  ],
+  "benchmark": "SPY",
+  "benchmark_start_close": null,
+  "benchmark_start_date": null,
+  "updated_at": "2026-11-10T04:46:08.575261Z",
+  "notes": [
+    "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
+    "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",
+    "NEAR Intents quotes are dry runs: nothing is reserved or sent.",
+    "Not investment advice."
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "kind": "simulation",
+  "topic": "vision-language-action model",
+  "slug": "vision-language-action-model",
+  "sector": "robotics_autonomy",
+  "created_at": "2026-11-09T11:14:10.603393Z",
+  "start_cash_usd": 10000.0,
+  "cash_usd": 10000.0,
+  "holdings": [],
+  "decisions": [
+    {
+      "at": "2026-11-09T11:14:10.603393Z",
+      "run_id": "954ff7cd-e1a5-4fea-89ef-b32072bbfcb5",
+      "report_date": "2026-11-09",
+      "band": "insufficient",
+      "score": null,
+      "previous_score": null,
+      "confidence_pct": null,
+      "target_invested_pct": 0.0,
+      "tier_targets_usd": {},
+      "staged_tiers": [],
+      "waiting_for_price": [],
+      "trades": [],
+      "reasons": [
+        "Why now: first decision for this topic.",
+        "Verdict band 'insufficient' -> invest 0% of the fund.",
+        "No priced company in the low-risk tier; its share goes to the other tiers.",
+        "No priced company in the medium-risk tier; its share goes to the other tiers.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "No trade: the fund is already close to its targets.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-09."
+      ],
+      "value_before_usd": 10000.0,
+      "sha256": "348e8770a366df42da36df697206533382fee0a0355df6de62aa20420aa61fd6",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_vision-language-action-model_1",
+        "sha256": "348e8770a366df42da36df697206533382fee0a0355df6de62aa20420aa61fd6",
+        "tx_hash": "BF2JSKiVX3vbNXQnahmVfHuhyuHEENz1X49QwKETkAvo",
+        "explorer_url": "https://testnet.nearblocks.io/txns/BF2JSKiVX3vbNXQnahmVfHuhyuHEENz1X49QwKETkAvo"
+      }
+    },
+    {
+      "at": "2026-11-09T14:53:29.139053Z",
+      "run_id": "954ff7cd-e1a5-4fea-89ef-b32072bbfcb5",
+      "report_date": "2026-11-09",
+      "band": "insufficient",
+      "score": null,
+      "previous_score": null,
+      "confidence_pct": 30.1,
+      "target_invested_pct": 0.0,
+      "tier_targets_usd": {},
+      "staged_tiers": [],
+      "waiting_for_price": [],
+      "trades": [],
+      "reasons": [
+        "Why now: scoring method changed: risk now lowers confidence, and position size follows confidence.",
+        "Verdict band 'insufficient' -> invest 0% of the fund.",
+        "No priced company in the low-risk tier; its share goes to the other tiers.",
+        "No priced company in the medium-risk tier; its share goes to the other tiers.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "No trade: the fund is already close to its targets.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-09."
+      ],
+      "value_before_usd": 10000.0,
+      "sha256": "59fdfa949ed3b5d3ac7ca2e0d5c16de02b892f2328ccbf3766784a908aac034a",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_vision-language-action-model_2",
+        "sha256": "59fdfa949ed3b5d3ac7ca2e0d5c16de02b892f2328ccbf3766784a908aac034a",
+        "tx_hash": "E4vREJ1BjubYC9DhLPq2TYosonwtQaUiM3XKTZpcysgj",
+        "explorer_url": "https://testnet.nearblocks.io/txns/E4vREJ1BjubYC9DhLPq2TYosonwtQaUiM3XKTZpcysgj"
+      }
+    },
+    {
+      "at": "2026-11-10T04:46:08.575261Z",
+      "run_id": "7a87a2e1-5e88-4679-b03f-a20e042c6497",
+      "report_date": "2026-11-10",
+      "band": "insufficient",
+      "score": null,
+      "previous_score": null,
+      "confidence_pct": 29.4,
+      "target_invested_pct": 0.0,
+      "tier_targets_usd": {},
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "NVDA"
+      ],
+      "trades": [],
+      "reasons": [
+        "Why now: companies now come from patents and papers (2026-11-10 re-run).",
+        "Verdict band 'insufficient' -> invest 0% of the fund.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): NVDA. Reviewed again after the next price update.",
+        "No priced company in the low-risk tier; its share goes to the other tiers.",
+        "No priced company in the medium-risk tier; its share goes to the other tiers.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "No trade: the fund is already close to its targets.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-10."
+      ],
+      "value_before_usd": 10000.0,
+      "sha256": "834cfe1cf582f01c7ac0f9218b6a47ea259898d433211e16fb3cbd8deeca8b8e",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_vision-language-action-model_3",
+        "sha256": "834cfe1cf582f01c7ac0f9218b6a47ea259898d433211e16fb3cbd8deeca8b8e",
+        "tx_hash": "88gwhhd7TKkF7RRamxTAr74MqUVcW3RBZimqpHwYtquH",
+        "explorer_url": "https://testnet.nearblocks.io/txns/88gwhhd7TKkF7RRamxTAr74MqUVcW3RBZimqpHwYtquH"
+      }
+    }
+  ],
+  "history": [
+    {
+      "day": "2026-11-09",
+      "value_usd": 10000.0,
+      "benchmark_value_usd": null
+    },
+    {
+      "day": "2026-11-10",
+      "value_usd": 10000.0,
+      "benchmark_value_usd": null
+    }
+  ],
+  "benchmark": "SPY",
+  "benchmark_start_close": null,
+  "benchmark_start_date": null,
+  "updated_at": "2026-11-10T04:46:08.575261Z",
+  "notes": [
+    "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
+    "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",
+    "NEAR Intents quotes are dry runs: nothing is reserved or sent.",
+    "Not investment advice."
+  ]
+}

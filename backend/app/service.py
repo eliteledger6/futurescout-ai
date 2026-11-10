@@ -5,6 +5,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import datetime, timezone
+import os
 from pathlib import Path
 from typing import Callable, Optional
 
@@ -30,7 +31,8 @@ from app.sources.gdelt import GdeltClient
 from app.sources.openalex import OpenAlexClient
 from app.sources.x import XClient
 
-RUNS_DIR = BACKEND_DIR / "runs"
+# FUTURESCOUT_DATA_DIR points the API at another folder, e.g. the exported snapshot `site_data` on the hosted copy.
+RUNS_DIR = (BACKEND_DIR / os.environ["FUTURESCOUT_DATA_DIR"]) if os.environ.get("FUTURESCOUT_DATA_DIR") else BACKEND_DIR / "runs"
 
 
 @dataclass
