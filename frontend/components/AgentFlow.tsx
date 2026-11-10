@@ -57,7 +57,7 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
       <div className="flow-swipe">Swipe sideways to see the whole network. Tap an agent for details.</div>
       <div className="flow-canvas">
         <svg className="flow-svg" viewBox="0 0 1110 505" role="img"
-             aria-label="Agent network: Chief plans; Science, Risk, X and Patent research in parallel; Market reads the SEC filings of the companies the papers and patents point to; Chief reviews; price timing is checked while the Company scout finds the companies behind the patents and papers; Investment writes the report; the fingerprint is recorded on NEAR; a paper fund is sized for the topic; the trading agent proposes buys through NEAR Intents, each approved by the owner.">
+             aria-label="Agent network: Chief plans; Science, Risk, X and Patent research in parallel; Market reads the SEC filings of the companies the papers and patents point to; Chief reviews; price timing is checked while the Company scout finds the companies behind the patents and papers; Investment writes the report; the fingerprint is recorded on NEAR; a fully invested paper fund is built for the topic; the trading agent buys and sells through NEAR Intents and approves its own orders after the code checks.">
           <defs>
             <radialGradient id="nodeGlow" cx="50%" cy="50%" r="60%">
               <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.28" />

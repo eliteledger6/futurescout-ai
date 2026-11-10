@@ -81,8 +81,8 @@ export default function FundPage() {
       <section className="section">
         <div className="container stack">
           <h2 className="h2">Decision log</h2>
-          <p className="sub">The decision agent follows fixed rules (backend <span className="mono">config/funds.yaml</span>): how much to invest depends on the report&apos;s verdict band,
-            a falling score halves it, and a tier whose stocks already ran hard is bought in two steps. Each decision&apos;s fingerprint is stored on NEAR testnet.</p>
+          <p className="sub">The decision agent follows fixed rules (backend <span className="mono">config/funds.yaml</span>): the fund stays fully invested in the companies the
+            report&apos;s patents and papers name, split into low, medium and high risk; the verdict and confidence are recorded with every decision. Each decision&apos;s fingerprint is stored on NEAR testnet.</p>
           <ol className="timeline">{[...f.decisions].reverse().map((d, i) => <DecisionItem key={i} d={d} />)}</ol>
           <ul className="small muted">{f.notes.map((n) => <li key={n}>{n}</li>)}</ul>
         </div>

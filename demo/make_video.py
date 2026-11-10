@@ -49,6 +49,7 @@ XF = 0.45                                 # crossfade between shots
 MINT, INK, DIM, RED = (0, 236, 151), (240, 243, 242), (150, 160, 156), (255, 110, 100)
 FONT_DIR = Path(r"C:\Windows\Fonts")
 VOICE = "Microsoft David Desktop"
+RATE = 2                                  # SAPI speaking rate: 0 = normal, 2 = about 1.25x (owner 2026-11-10)
 
 
 # ============================================================================= script
@@ -75,6 +76,7 @@ SCENES = [
         ("The radar tracks 54 topics across nine technology sectors.", "The radar tracks fifty-four topics across nine technology sectors."),
         ("It ranks them by counting research papers and patent filings: year over year, and this year so far.", None),
         ("So you can see which topics are heating up right now.", None),
+        ("A paper scout also proposes new fast-growing topics in each sector.", None),
     ]),
     Scene("03_agents", "02", "The agent team", [
         ("Each topic gets a full research run.", None),
@@ -83,6 +85,7 @@ SCENES = [
          "Then the market agent reads the S E C filings of the companies those papers and patents point to. No hand-made company list."),
         ("An AI check keeps the paper counts on topic, and the risk agent argues the other side.",
          "An A I check keeps the paper counts on topic, and the risk agent argues the other side."),
+        ("At the end, a fund agent invests a paper fund, and a trading agent trades real tokenized stocks.", None),
     ]),
     Scene("04_report", "03", "A research report", [
         ("Here is the report on high bandwidth memory.", None),
@@ -96,22 +99,36 @@ SCENES = [
         ("It names the companies behind the evidence, including smaller ones.", None),
         ("And it checks whether their share prices have already run: a risk check, never a buy signal.", None),
     ]),
-    Scene("06_evidence", "05", "Evidence you can check", [
+    Scene("05b_scout", "05", "Company scout", [
+        ("A company scout looks past the big names, for smaller listed companies behind the patents and papers.", None),
+        ("It checks their size, growth and research spending, and ranks the next runners.", None),
+    ]),
+    Scene("06_evidence", "06", "Evidence you can check", [
         ("The full report opens everything up.", None),
         ("The agent trace shows which agents ran, on which model, and at what cost.", None),
         ("Every finding carries a label, and the exact quote from its source.", None),
         ("A citation guard downgrades anything a source does not support.", None),
     ]),
-    Scene("07_seal", "06", "Sealed on NEAR", [
+    Scene("07_seal", "07", "Sealed on NEAR", [
         ("Each report's fingerprint is sealed on NEAR testnet, and re-checked on every page load.", None),
         ("Change one word, and the seal breaks.", None),
+        ("Fund decisions and every trade are fingerprinted on NEAR the same way.", None),
     ], tail=2.4),
-    Scene("09_funds", "07", "Funds and trading", [
-        ("Each topic gets a paper fund, split into low, medium and high risk companies.", None),
-        ("A trading agent on a strong model then picks tokenized stocks to buy through NEAR Intents.", None),
-        ("Safety checks run first, and the owner approves every real order.", None),
+    Scene("09_funds", "08", "Funds and trading", [
+        ("Every topic gets a paper fund, fully invested across low, medium and high risk companies.", None),
+        ("Each paper fund lists the reasons for every decision, and is measured against the S&P 500.",
+         "Each paper fund lists the reasons for every decision, and is measured against the S and P five hundred."),
+        ("A trading agent on a strong model trades tokenized stocks with real money, through NEAR Intents.", None),
+        ("Code checks every order: budget, allowed stocks, price and cost. Then the agent approves its own trade.", None),
         ("In shadow mode it has placed 7,100 pretend dollars at real quotes, and explains each choice.",
          "In shadow mode it has placed seven thousand one hundred pretend dollars at real quotes, and explains each choice."),
+    ]),
+    Scene("10_round", "09", "A real trading round", [
+        ("The agent wakes up on its own: on a new report, a sharp price move, or its daily review.", None),
+        ("Here it reviewed its holdings. Google's report had weakened, so it sold the whole position, swapping it back into NEAR.", None),
+        ("Seconds later it put the money into Intel, backed by the strongest report: high bandwidth memory.", None),
+        ("The whole round, sale and purchase, took under a minute, with no human in the loop.", None),
+        ("Every real trade is listed with the agent's reasons, and its record is sealed on NEAR.", None),
     ]),
     Scene("10_close", "", "", [
         ("FUTURESCOUT AI: evidence-first technology research.", "Future Scout A I: evidence-first technology research."),
@@ -170,7 +187,7 @@ def synthesize(items: list[tuple[str, Path]]) -> None:
         "Add-Type -AssemblyName System.Speech\n"
         "$s = New-Object System.Speech.Synthesis.SpeechSynthesizer\n"
         f"try {{ $s.SelectVoice('{VOICE}') }} catch {{}}\n"
-        "$s.Rate = 0\n"
+        f"$s.Rate = {RATE}\n"
         "$fmt = New-Object System.Speech.AudioFormat.SpeechAudioFormatInfo(44100, [System.Speech.AudioFormat.AudioBitsPerSample]::Sixteen, "
         "[System.Speech.AudioFormat.AudioChannel]::Mono)\n"
         f"$items = Get-Content -Raw -Encoding UTF8 '{spec}' | ConvertFrom-Json\n"
@@ -194,7 +211,7 @@ def read_trimmed(path: Path) -> array.array:
 def wav_path(sc: Scene, k: int) -> Path:
     import hashlib
     text = sc.lines[k][1] or sc.lines[k][0]
-    return AUDIO / f"{sc.key}_{k}_{hashlib.sha1(text.encode()).hexdigest()[:8]}.wav"
+    return AUDIO / f"{sc.key}_{k}_{hashlib.sha1(f'{RATE}|{text}'.encode()).hexdigest()[:8]}.wav"
 
 
 def build_narration(scenes: list[Scene], reuse: bool) -> Path:
@@ -381,7 +398,7 @@ def closing_card(t: float, dur: float) -> Image.Image:
             "Testnet tokens have no value",
             "Stock prices: free plan, 25 lookups a day",
             "Research activity is not commercial success",
-            "Real trades: tiny budget, owner approves each one",
+            "Real trades: small budget, the agent approves in limits",
         ]),
     ]
     for ci, (x, head, colour, rows) in enumerate(cols):
@@ -470,8 +487,11 @@ async def rec_agents(k: Take) -> None:
     await b.hover("g.node", text="market", seconds=0.8)
     await k.until(k.sent[3] - 0.1)
     await b.hover("g.node", text="science", seconds=0.6)
-    await k.until(k.sent[3] + (k.dur - k.sent[3]) * 0.5)
     await b.hover("g.node", text="risk", seconds=0.7)
+    await k.until(k.sent[4] + 0.2)
+    await b.hover("g.node", text="topic fund", seconds=0.7)
+    await k.until(k.sent[4] + (k.dur - k.sent[4]) * 0.45)
+    await b.hover("g.node", text="trading agent", seconds=0.7)
 
 
 async def rec_report(k: Take) -> None:
@@ -518,6 +538,51 @@ async def rec_companies(k: Take) -> None:
         await asyncio.sleep(0.5)
 
 
+async def rec_scout(k: Take) -> None:
+    b = k.b
+    await b.scroll_to(300, 0.5)                                       # bring the view tabs on screen (a click needs them visible)
+    for _ in range(4):                                                 # the scout table lives in the full report
+        await b.click("button.tab", text="full report", seconds=0.3)
+        await asyncio.sleep(0.35)
+        if await b.rect("#scout"):
+            break
+    await b.scroll_to_el("#scout", 0.8, offset=70)
+    await asyncio.sleep(0.3)
+    await k.hl(await b.rect("#scout table"), seconds=max(2.4, k.sent[1] - 1.8), pad=8)
+    await b.hover("#scout tbody tr", 0, seconds=0.7)
+    await k.until(k.sent[1])
+    for i in (0, 1, 2):
+        await b.hover("#scout tbody tr", i, seconds=0.6)
+        await asyncio.sleep(0.5)
+
+
+async def rec_round(k: Take) -> None:
+    b = k.b
+    await b.scroll_to_el(".tr-log", 1.1, offset=260)
+    await asyncio.sleep(0.3)
+    await k.hl(await b.rect(".tr-log"), seconds=max(2.2, k.sent[1] - 1.6), pad=10)
+    await b.hover(".tr-log li", 0, seconds=0.7)
+    await k.until(k.sent[1] - 0.9)
+    k.cut()
+    await b.scroll_to_el(".tr-card.live", 1.1, offset=110, index=1)          # newest first: the sale is the second card
+    await k.until(k.sent[1] + 0.2)
+    await k.hl(await b.rect(".tr-card.live .tr-head", 1), seconds=2.6, pad=8)
+    await b.hover(".tr-card.live .tr-say", 1, seconds=0.8)
+    await k.until(k.sent[2] - 0.9)
+    k.cut()
+    await b.scroll_to_el(".tr-card.live", 1.0, offset=110, index=0)          # the Intel buy, made with the sale's money
+    await k.until(k.sent[2] + 0.2)
+    await k.hl(await b.rect(".tr-card.live .tr-head", 0), seconds=2.6, pad=8)
+    await b.hover(".tr-card.live .tr-say", 0, seconds=0.8)
+    await k.until(k.sent[3] + 0.1)
+    await b.hover(".tr-card.live .tr-steps, .tr-card.live .tr-say", 0, seconds=0.7)
+    await k.until(k.sent[4] + 0.1)
+    r = await b.rect_text("record sealed on NEAR testnet")
+    if r and 60 < r[1] < 680:
+        await k.hl(r, seconds=2.2, pad=6)
+        await b.move_mouse(r[0] + r[2] / 2, r[1] + r[3] / 2, 0.7)
+
+
 async def rec_evidence(k: Take) -> None:
     b = k.b
     await b.scroll_to(300, 0.9)
@@ -561,26 +626,26 @@ async def rec_funds(k: Take) -> None:
     await b.hover("a.fund-card", 0, seconds=0.7)
     await asyncio.sleep(0.4)
     await b.hover("a.fund-card", 2, seconds=0.7)
-    await k.until(k.sent[1] - 1.5)
+    await k.until(k.sent[2] - 1.5)
     k.cut()
     await b.click("a.tab", text="trading agent", seconds=0.7)       # same area, second sub-tab
     await asyncio.sleep(1.2)
     await b.scroll_to_el(".tp-pipe", 0.9, offset=370)
-    await k.until(k.sent[1] + 0.2)
-    await k.hl(await b.rect(".tp-pipe"), seconds=max(2.0, k.sent[2] - k.sent[1] - 0.6), pad=10)
+    await k.until(k.sent[2] + 0.2)
+    await k.hl(await b.rect(".tp-pipe"), seconds=max(2.0, k.sent[3] - k.sent[2] - 0.6), pad=10)
     await b.hover(".tp-name", text="trading agent", seconds=0.7)
-    await k.until(k.sent[2] + 0.1)
-    span = k.sent[3] - k.sent[2] - 1.4
-    for i, name in enumerate(["safety checks", "owner", "near intents"]):
-        await k.until(k.sent[2] + 0.1 + span * i / 3)
+    await k.until(k.sent[3] + 0.1)
+    span = k.sent[4] - k.sent[3] - 1.4
+    for i, name in enumerate(["safety checks", "auto-approve", "near intents"]):
+        await k.until(k.sent[3] + 0.1 + span * i / 3)
         await b.hover(".tp-name", text=name, seconds=0.6)
-    await k.until(k.sent[3] - 1.2)
+    await k.until(k.sent[4] - 1.2)
     k.cut()
     await b.scroll_to_el(".sp-grid", 1.1, offset=210)
-    await k.until(k.sent[3] + 0.2)
+    await k.until(k.sent[4] + 0.2)
     await k.hl(await b.rect(".sp-grid"), seconds=3.2, pad=12)
     await b.hover(".sp-row", 0, seconds=0.7)
-    await k.until(k.sent[3] + (k.dur - k.sent[3]) * 0.6)
+    await k.until(k.sent[4] + (k.dur - k.sent[4]) * 0.6)
     await b.hover(".tr-agent", 1, seconds=0.8)
 
 
@@ -636,12 +701,14 @@ def build_pieces(scenes: list[Scene], rid: str, tamper_lines: list[str]) -> list
     pieces.append(Piece(s["03_agents"], "03_agents", "rec", dur=s["03_agents"].dur, prep=goto(f"{DASH}/about", 1.5), action=rec_agents))
     pieces.append(Piece(s["04_report"], "04_report", "rec", dur=s["04_report"].dur, prep=goto(report, 0.15), action=rec_report))
     pieces.append(Piece(s["05_companies"], "05_companies", "rec", dur=s["05_companies"].dur, prep=nothing, action=rec_companies))
+    pieces.append(Piece(s["05b_scout"], "05b_scout", "rec", dur=s["05b_scout"].dur, prep=nothing, action=rec_scout))
     pieces.append(Piece(s["06_evidence"], "06_evidence", "rec", dur=s["06_evidence"].dur, prep=nothing, action=rec_evidence))
     seal_rec = s["07_seal"].sent[1][0] - 0.15
     pieces += [Piece(s["07_seal"], "07_badge", "rec", dur=seal_rec, prep=nothing, action=rec_seal),
                Piece(s["07_seal"], "07_tamper", "card", dur=s["07_seal"].dur - seal_rec,
                      card=terminal_card(tamper_lines, "python scripts\\tamper_demo.py --run " + rid[:8] + "…"))]
     pieces.append(Piece(s["09_funds"], "09_funds", "rec", dur=s["09_funds"].dur, prep=goto(f"{DASH}/funds", 2.0), action=rec_funds))
+    pieces.append(Piece(s["10_round"], "10_round", "rec", dur=s["10_round"].dur, prep=goto(f"{DASH}/trading", 2.5), action=rec_round))
     pieces.append(Piece(s["10_close"], "10_close", "card", dur=s["10_close"].dur, card=closing_card))
     pieces = [p for p in pieces if p.scene in scenes]
     t = scenes[0].start

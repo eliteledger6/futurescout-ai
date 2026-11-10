@@ -49,11 +49,11 @@ export const AGENTS: Record<AgentKey, AgentInfo> = {
   near: { key: "near", name: "NEAR record", role: "Seals the report", icon: "seal",
     detail: "Stores the report's SHA-256 fingerprint on NEAR testnet, so anyone can check it was not edited afterwards.",
     sources: "NEAR testnet · SocialDB" },
-  fund: { key: "fund", name: "Topic fund", role: "Sizes a paper fund", icon: "building",
-    detail: "Builds a pretend-money fund for the topic from the report's companies (low, medium and high risk) and decides how much to invest by fixed rules: the verdict and the confidence. Every decision is fingerprinted on NEAR testnet.",
+  fund: { key: "fund", name: "Topic fund", role: "Invests a paper fund", icon: "building",
+    detail: "Builds a pretend-money fund for the topic from the companies the patents and papers name, split into low, medium and high risk, and keeps it fully invested. Every decision lists its reasons and is fingerprinted on NEAR testnet.",
     sources: "The sealed report · daily prices · NEAR Intents dry-run quotes" },
-  trader: { key: "trader", name: "Trading agent", role: "Buys via NEAR Intents", icon: "pulse", modelKey: "trader",
-    detail: "Picks a tokenized stock from a price-checked list and explains why. Spending limits, a price check and the owner's approval come before any real order goes through NEAR Intents. In shadow mode it places pretend orders at real quotes.",
+  trader: { key: "trader", name: "Trading agent", role: "Trades via NEAR Intents", icon: "pulse", modelKey: "trader",
+    detail: "Wakes on a new report, a sharp price move or a daily review, then buys, sells or holds a tokenized stock and explains why. Code checks the budget, the allowed stocks, the price and the cost; then the agent approves its own order, which goes through NEAR Intents. In shadow mode it places pretend orders at real quotes.",
     sources: "Topic funds · NEAR Intents quotes" },
 };
 

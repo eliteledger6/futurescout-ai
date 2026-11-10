@@ -24,7 +24,7 @@ export default function FundsPage() {
           <div className="eyebrow">Topic funds · simulation · pretend money, real prices</div>
           <h1 className="display" style={{ fontSize: "clamp(38px, 6vw, 72px)" }}>One <span className="gradient-text">mini-ETF</span> per technology</h1>
           <p className="lede">Each topic gets a $10,000 paper fund split into low, medium and high-risk companies from its latest report.
-            A decision agent with fixed, published rules decides how much to invest; every decision is fingerprinted on NEAR testnet.
+            Every fund stays fully invested in the companies its report's patents and papers name; every decision lists its reasons and is fingerprinted on NEAR testnet.
             Holdings are checked against NEAR Intents for a real dry-run quote. <strong>No money moves. Not investment advice.</strong></p>
         </div>
       </section>
