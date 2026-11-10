@@ -49,6 +49,14 @@ const LOOP = (() => {
   return `M ${rx + W} ${ry - 6} C ${rx + W + 70} ${top}, ${sx + W / 2} ${top - 10}, ${sx + W / 2} ${sy - H / 2}`;
 })();
 
+// The loop that closes the agent economy: staking rewards come back as NEAR AI credits that pay every agent's model calls.
+const CREDIT_Y = 528;
+const CREDITS = (() => {
+  const [sx, sy] = POS.stake, [cx, cy] = POS.chief;
+  const x1 = sx + W / 2, x2 = cx + W / 2;
+  return `M ${x1} ${sy + H / 2} L ${x1} ${CREDIT_Y - 14} Q ${x1} ${CREDIT_Y} ${x1 - 14} ${CREDIT_Y} L ${x2 + 14} ${CREDIT_Y} Q ${x2} ${CREDIT_Y} ${x2} ${CREDIT_Y - 14} L ${x2} ${cy + H / 2}`;
+})();
+
 export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRunStat>; models?: Record<string, string> }) {
   const [active, setActive] = useState<AgentKey>("chief");
   const live = (k: AgentKey) => !stats || stats[k].state === "ran" || stats[k].state === "partial";
@@ -59,8 +67,8 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
     <div className="flow">
       <div className="flow-swipe">Swipe sideways to see the whole network. Tap an agent for details.</div>
       <div className="flow-canvas">
-        <svg className="flow-svg" viewBox={`0 0 ${stats ? 1110 : 1332} 505`} role="img"
-             aria-label="Agent network: Chief plans; Science, Risk, X and Patent research in parallel; Market reads the SEC filings of the companies the papers and patents point to; Chief reviews; price timing is checked while the Company scout finds the companies behind the patents and papers; Investment writes the report; the fingerprint is recorded on NEAR; the report agent sells the report to the trading agent for NEAR and stakes its earnings with NEAR AI for model credits; a fully invested paper fund is built for the topic; the trading agent buys and sells through NEAR Intents and approves its own orders after the code checks.">
+        <svg className="flow-svg" viewBox={`0 0 ${stats ? 1110 : 1332} ${stats ? 505 : 548}`} role="img"
+             aria-label="Agent network: Chief plans; Science, Risk, X and Patent research in parallel; Market reads the SEC filings of the companies the papers and patents point to; Chief reviews; price timing is checked while the Company scout finds the companies behind the patents and papers; Investment writes the report; the fingerprint is recorded on NEAR; the report agent sells the report to the trading agent for NEAR and stakes its earnings with NEAR AI; the staking rewards come back as NEAR AI credits that pay every agent's model calls; a fully invested paper fund is built for the topic; the trading agent buys and sells through NEAR Intents and approves its own orders after the code checks.">
           <defs>
             <radialGradient id="nodeGlow" cx="50%" cy="50%" r="60%">
               <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.28" />
@@ -85,6 +93,13 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
           })}
           {!stats && (
             <>
+              <g className="edge on credits">
+                <path d={CREDITS} className="edge-base" />
+                <path d={CREDITS} className="edge-flow" />
+              </g>
+              <text x={(POS.chief[0] + POS.stake[0] + W) / 2} y={CREDIT_Y - 8} className="flow-note" textAnchor="middle">
+                staking rewards return as NEAR AI credits: they pay the model calls of every agent, from the Chief to the trading agent
+              </text>
               <text x={(POS.seller[0] + W + POS.trader[0]) / 2} y={(POS.seller[1] + POS.trader[1]) / 2 - 8} className="flow-note" textAnchor="middle">NEAR</text>
               <text x={(POS.seller[0] + W + POS.stake[0]) / 2} y={POS.stake[1] - 8} className="flow-note" textAnchor="middle">80%</text>
             </>
