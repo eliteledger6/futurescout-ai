@@ -458,3 +458,8 @@ a.card:hover { box-shadow: 0 12px 40px -18px color-mix(in srgb, var(--accent) 45
 .chip.on { background: var(--text); color: #000; border-color: var(--text); }
 .topic-card .card-kicker span:first-child { text-transform: capitalize; }
 .earlier-runs { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+
+/* agent economy: the NEAR payment runs back from the trading agent to the report agent */
+.edge.sale-pay .edge-base { stroke: color-mix(in srgb, #e0b04a 55%, var(--line-strong)); }
+.edge.sale-pay .edge-flow { stroke: #e0b04a; }
+.edge.credits .edge-base { stroke-dasharray: 4 6; }

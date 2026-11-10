@@ -17,9 +17,9 @@ const POS: Record<AgentKey, [number, number]> = {
   investment: [918, 160],
   near: [918, 290],
   seller: [918, 420],
-  fund: [1140, 160],
-  trader: [1140, 290],
-  stake: [1140, 420],
+  fund: [1196, 160],
+  trader: [1196, 290],
+  stake: [1196, 420],
 };
 const AFTER_REPORT: AgentKey[] = ["fund", "trader", "seller", "stake"];     // shown in the overview, hidden in one report's trace
 const EDGES: [AgentKey, AgentKey][] = [
@@ -28,7 +28,7 @@ const EDGES: [AgentKey, AgentKey][] = [
   ["market", "review"], ["risk", "review"], ["x", "review"],
   ["review", "timing"], ["review", "scout"],
   ["timing", "investment"], ["scout", "investment"],
-  ["investment", "near"], ["near", "seller"], ["near", "fund"], ["fund", "trader"], ["seller", "trader"], ["seller", "stake"],
+  ["investment", "near"], ["near", "seller"], ["near", "fund"], ["fund", "trader"], ["seller", "stake"],
 ];
 const ORDER: AgentKey[][] = [["chief"], ["science", "risk", "x", "patent"], ["market"], ["review"], ["timing", "scout"], ["investment"], ["near"],
   ["seller", "fund"], ["trader"], ["stake"]];
@@ -49,6 +49,17 @@ const LOOP = (() => {
   return `M ${rx + W} ${ry - 6} C ${rx + W + 70} ${top}, ${sx + W / 2} ${top - 10}, ${sx + W / 2} ${sy - H / 2}`;
 })();
 
+// The deal between the two agents: the report goes to the trading agent, its NEAR payment goes back to the report agent.
+const SALE = (() => {
+  const [sx, sy] = POS.seller, [tx, ty] = POS.trader;
+  const x1 = sx + W, x2 = tx, mid = (x1 + x2) / 2;
+  return {
+    report: `M ${x1} ${sy - 10} C ${mid} ${sy - 10}, ${mid} ${ty + 4}, ${x2} ${ty + 4}`,            // report agent -> trading agent
+    pay: `M ${x2} ${ty + 18} C ${mid + 12} ${ty + 18}, ${mid + 12} ${sy + 4}, ${x1} ${sy + 4}`,     // trading agent -> report agent
+    mid,
+  };
+})();
+
 // The loop that closes the agent economy: staking rewards come back as NEAR AI credits that pay every agent's model calls.
 const CREDIT_Y = 528;
 const CREDITS = (() => {
@@ -67,7 +78,7 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
     <div className="flow">
       <div className="flow-swipe">Swipe sideways to see the whole network. Tap an agent for details.</div>
       <div className="flow-canvas">
-        <svg className="flow-svg" viewBox={`0 0 ${stats ? 1110 : 1332} ${stats ? 505 : 548}`} role="img"
+        <svg className="flow-svg" viewBox={`0 0 ${stats ? 1110 : 1388} ${stats ? 505 : 548}`} role="img"
              aria-label="Agent network: Chief plans; Science, Risk, X and Patent research in parallel; Market reads the SEC filings of the companies the papers and patents point to; Chief reviews; price timing is checked while the Company scout finds the companies behind the patents and papers; Investment writes the report; the fingerprint is recorded on NEAR; the report agent sells the report to the trading agent for NEAR and stakes its earnings with NEAR AI; the staking rewards come back as NEAR AI credits that pay every agent's model calls; a fully invested paper fund is built for the topic; the trading agent buys and sells through NEAR Intents and approves its own orders after the code checks.">
           <defs>
             <radialGradient id="nodeGlow" cx="50%" cy="50%" r="60%">
@@ -77,7 +88,7 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
           </defs>
           {/* stage labels */}
           {([["Plan", 103], ["Research in parallel", 331], ["Companies & review", 559], ["Timing & scout", 787], ["Write, seal & sell", 1007],
-             ...(stats ? [] : [["Fund, trade & stake", 1229]])] as [string, number][]).map(([t, x]) => (
+             ...(stats ? [] : [["Fund, trade & stake", 1285]])] as [string, number][]).map(([t, x]) => (
             <text key={t} x={x} y={14} className="flow-stage" textAnchor="middle">{t}</text>
           ))}
           {/* edges */}
@@ -100,8 +111,12 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
               <text x={(POS.chief[0] + POS.stake[0] + W) / 2} y={CREDIT_Y - 8} className="flow-note" textAnchor="middle">
                 staking rewards return as NEAR AI credits: they pay the model calls of every agent, from the Chief to the trading agent
               </text>
-              <text x={(POS.seller[0] + W + POS.trader[0]) / 2} y={(POS.seller[1] + POS.trader[1]) / 2 - 8} className="flow-note" textAnchor="middle">NEAR</text>
-              <text x={(POS.seller[0] + W + POS.stake[0]) / 2} y={POS.stake[1] - 8} className="flow-note" textAnchor="middle">80%</text>
+              <g className="edge on sale-report"><path d={SALE.report} className="edge-base" /><path d={SALE.report} className="edge-flow" /></g>
+              <g className="edge on sale-pay"><path d={SALE.pay} className="edge-base" /><path d={SALE.pay} className="edge-flow" /></g>
+              <text x={SALE.mid - 6} y={POS.trader[1] + 50} className="flow-note" textAnchor="end">report →</text>
+              <text x={SALE.mid + 4} y={POS.seller[1] - 44} className="flow-note" textAnchor="middle">← pays</text>
+              <text x={SALE.mid + 4} y={POS.seller[1] - 32} className="flow-note" textAnchor="middle">3–5 NEAR</text>
+              <text x={(POS.seller[0] + W + POS.stake[0]) / 2} y={POS.stake[1] + 18} className="flow-note" textAnchor="middle">stakes 80%</text>
             </>
           )}
           <g className="edge loop">
