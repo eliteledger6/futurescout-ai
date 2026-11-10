@@ -39,6 +39,9 @@ Rules that always apply:
   Restart 2026-11-10 (owner): trading/economy records archived, fresh $60 budget approved by the owner in chat.
   Agent Market (owner 2026-11-10): the report agent takes jobs at market.near.ai via scripts/market_agent.py; the owner makes the
   account, approves the public listing and holds the token (AGENT_MARKET_TOKEN); withdrawals are the owner's.
+- Seals on mainnet (owner 2026-11-10, "use the report agent"): `SEAL_NETWORK=mainnet` seals report, fund and trade
+  fingerprints in social.near signed by the report agent's key. Claude never sets SEAL_NETWORK=mainnet and, while it is
+  mainnet, does not run research, `funds.py` or `near_record_report.py` (each seal signs and spends): the owner runs them.
 - Hosting (2026-11-10): Render (API, read-only snapshot `backend/site_data`, no key) + Vercel (website). See HOSTING.md.
 - Say "mock-tested" vs "run live" honestly; never call a feature complete without a test.
 - Do not push, make the repo public, post on X, submit to the hackathon or spend on mainnet without the owner's explicit yes.

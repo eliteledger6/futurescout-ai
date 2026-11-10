@@ -76,6 +76,7 @@ class Settings(BaseSettings):
 
     # NEAR Agent Market (market.near.ai): the report agent's API token (aat_...), made by the owner on the listing page
     agent_market_token: Optional[SecretStr] = None
+    seal_network: str = "testnet"                  # owner 2026-11-10: "mainnet" = seals signed by the report agent's account on NEAR mainnet
     public_site_url: Optional[str] = None          # e.g. the hosted website; put in deliverables as "online: <url>/runs/<id>"
 
     # Agent economy (owner 2026-11-10): the report agent's own mainnet account; it is paid for reports and stakes for AI credits

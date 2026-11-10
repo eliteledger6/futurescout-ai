@@ -729,11 +729,16 @@ def evidence_context(s, toks) -> dict:  # noqa: ANN001
 
 
 def seal(s, p: Proposal) -> None:  # noqa: ANN001
-    creds = s.near_testnet_credentials()
-    if not creds or not p.sha256:
+    from app.chain.near_record import make_recorder
+    try:
+        recorder = make_recorder(s)
+    except NearRecordError as exc:
+        print(f"  (record not sealed: {str(exc)[:100]})")
+        return
+    if recorder is None or not p.sha256:
         return
     try:
-        p.chain = NearRecorder(*creds).record_fund_decision(f"trade_{p.id}", {"sha256": p.sha256, "status": p.status, "symbol": p.symbol,
+        p.chain = recorder.record_fund_decision(f"trade_{p.id}", {"sha256": p.sha256, "status": p.status, "symbol": p.symbol,
                                                                               "usd": str(p.usd), "mode": p.mode}).as_dict()
         print("  record fingerprint sealed on NEAR testnet")
     except NearRecordError as exc:

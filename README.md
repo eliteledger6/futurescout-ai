@@ -23,14 +23,14 @@ Technology investing mixes verifiable facts, rumours and hype, and "AI picks" ra
 |---|---|---|
 | **NEAR AI Cloud** | Every agent (chief, science, risk, market, X, patent, timing, scout, investment, trading) calls a model from the NEAR AI Cloud catalogue through its OpenAI-compatible API; the trading agent runs on Claude Opus 5.5 there | `backend/config/model_config.yaml`, `backend/app/models/` |
 | **NEAR Intents (1Click), mainnet** | Real swaps NEAR ⇄ Ondo tokenized stocks. Dry quotes for every candidate; real orders are signed (NEP-413) from the account's **Confidential Intents** balance, the way near.com trades. The order is verified before signing: exactly one transfer, exactly the approved amount, to exactly the quote's deposit address | `backend/app/fund/live.py`, `signed_exec.py`, `intents_signed.py` |
-| **NEAR testnet (SocialDB)** | SHA-256 fingerprints of every report, every paper-fund decision and every trade record; the dashboard re-checks them on each page load ("unchanged since recorded") | `backend/app/chain/near_record.py` |
+| **NEAR mainnet (SocialDB `social.near`)** | SHA-256 fingerprints, signed by the report agent `grandbread5023.near` (older seals stay on testnet and still verify) of every report, every paper-fund decision and every trade record; the dashboard re-checks them on each page load ("unchanged since recorded") | `backend/app/chain/near_record.py` |
 
 ### What is real and what is simulated
 
 | Real (run live) | Simulated or limited |
 |---|---|
 | Multi-agent research on real papers (OpenAlex, arXiv), patents, SEC filings and X posts; 15 topics with full reports | Paper funds (one per topic, fully invested) use pretend money at real closing prices |
-| Report, fund and trade fingerprints on NEAR testnet | Shadow trading: pretend money, real NEAR Intents quotes |
+| Report, fund and trade fingerprints on NEAR mainnet (older ones on testnet) | Shadow trading: pretend money, real NEAR Intents quotes |
 | Real-money trades on NEAR mainnet through NEAR Intents: 3 buys, then on 2026-11-10 an automatic round where the agent sold all its GOOGLon (report weakened) and put the NEAR into INTCon seconds later | Real-money budget is capped at $60 in total by the owner |
 | Settlement confirmed by reading the private balance | Stock prices: Alpha Vantage free plan (25 lookups a day), NEAR Intents token prices as a labelled fallback |
 
@@ -88,7 +88,7 @@ npm install; npm run build; npm run start         # see: the dashboard on http:/
 Then, in the dashboard:
 
 1. Open **Radar**: see 54 topics in 9 sectors ranked by paper and patent growth.
-2. Open **Reports** and pick *high bandwidth memory*: see the verdict (score 80, confidence 50%), the companies behind the evidence, and "Unchanged since recorded on NEAR testnet". Switch to **Full report**: every finding with its label, quote and source; the agent trace with model and cost per agent; the company scout table.
+2. Open **Reports** and pick *high bandwidth memory*: see the verdict (score 80, confidence 50%), the companies behind the evidence, and "Unchanged since recorded on NEAR mainnet". Switch to **Full report**: every finding with its label, quote and source; the agent trace with model and cost per agent; the company scout table.
 3. Open **Funds & trading** → **Paper funds**: 15 fully invested pretend-money funds with their reasons, compared with the S&P 500.
 4. Open **Trading agent**: the pipeline, the agent's latest decisions, and every completed real trade with the agent's own reasoning (the GOOGLon sale and the INTCon buy of 2026-11-10 show "Approved by the agent (all checks passed)").
 5. Back in the backend terminal: `python scripts\fund_trade.py rules` prints the strategy rules; `python scripts\fund_trade.py holdings` prints what the real-money fund holds.
@@ -131,7 +131,7 @@ Technology investment research mixes verifiable facts, rumours and hype. FUTURES
 ## How NEAR is used (detail)
 
 - All agents call models from the **NEAR AI Cloud** catalogue through its OpenAI-compatible API (`https://cloud-api.near.ai/v1`). Each agent has its own configurable model in `backend/config/model_config.yaml`.
-- After each run, the report's SHA-256 fingerprint is stored on **NEAR testnet** (SocialDB contract `v1.social08.testnet`). Anyone can recompute a report's fingerprint and compare it with the on-chain value, so a report cannot be quietly edited after publication. The research agents never touch a key; real-money trading is a separate, capped part (see the hackathon section above).
+- After each run, the report's SHA-256 fingerprint is stored on **NEAR mainnet** (SocialDB contract `social.near`, signed by the report agent's account when `SEAL_NETWORK=mainnet`; testnet `v1.social08.testnet` otherwise). Each record names its network, and the website re-checks it on that network. Anyone can recompute a report's fingerprint and compare it with the on-chain value, so a report cannot be quietly edited after publication. The research agents never touch a key; real-money trading is a separate, capped part (see the hackathon section above).
 
 ## Full commands (with your own keys)
 
@@ -157,7 +157,8 @@ python scripts\serve.py           # terminal 1, backend folder: API on http://12
 #   see: the dashboard at http://localhost:3000 (saved reports, scores, evidence with sources)
 python scripts\watch.py --once          # see: one autonomous cycle (X scan -> radar -> research trigger), logged to runs\watch_state.json
 # NEAR testnet seal (needs the testnet account from .env.example):
-python scripts\near_record_report.py --latest   # see: the newest report's fingerprint recorded on NEAR testnet
+python scripts\near_record_report.py --latest   # the newest report's fingerprint sealed on the SEAL_NETWORK network
+python scripts\near_record_report.py --all --dry-run   # list reports not yet sealed there; drop --dry-run to seal them
 python scripts\tamper_demo.py                   # see: a sealed report verifies MATCH; change one word in memory -> MISMATCH (nothing saved)
 python scripts\discover_topics.py --dry-run     # see: the paper scout propose new fast-growing topics per sector (nothing added)
 # no keys at all? `python scripts\serve.py` + the dashboard still work: with no runs and no database the API serves

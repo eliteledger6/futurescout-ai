@@ -2,7 +2,7 @@
 
   python scripts\\funds.py                      update every topic that has a scored report
   python scripts\\funds.py --topic "AI agents"  just one topic
-  python scripts\\funds.py --no-seal            do not fingerprint decisions on NEAR testnet (~0.15 testnet NEAR each)
+  python scripts\\funds.py --no-seal            do not fingerprint decisions on NEAR (SEAL_NETWORK picks testnet or mainnet)
   python scripts\\funds.py --max-price-requests 10   fresh Alpha Vantage lookups allowed (free plan: 25/day); else cache
 
 What it does per topic: if there is a newer report (or a staged entry is due for review), the decision agent runs its
@@ -79,8 +79,8 @@ def main() -> int:
     prices = AlphaVantageClient(s.alpha_vantage_key_value()) if s.alpha_vantage_key_value() else None
     book = PriceBook(prices, max_requests=args.max_price_requests, fallback=intents_price_fallback(cfg))
     intents = OneClickClient(cfg.intents.api)
-    creds = None if args.no_seal else s.near_testnet_credentials()
-    recorder = NearRecorder(*creds) if creds else None
+    from app.chain.near_record import make_recorder
+    recorder = None if args.no_seal else make_recorder(s)
     now = datetime.now(timezone.utc)
 
     if args.seal_missing:

@@ -165,7 +165,7 @@ export interface Report {
   } | null;
   usage: { agent: string; model: string; calls: number; prompt_tokens: number; completion_tokens: number; cost_usd: number }[];
   total_cost_usd: number;
-  chain_record: { sha256: string; explorer_url: string | null; account: string } | null;
+  chain_record: { sha256: string; explorer_url: string | null; account: string; network?: string } | null;
   errors: { agent: string; source: string; message: string }[];
 }
 
@@ -237,6 +237,7 @@ export interface Verification {
   explorer_url?: string;
   account?: string;
   detail?: string;
+  network?: string;
 }
 
 export interface Position {
@@ -270,7 +271,7 @@ export interface FundHolding { ticker: string; company: string; tier: string; sh
 export interface FundTrade { day: string; ticker: string; tier: string; side: "buy" | "sell"; shares: number; price: number; usd: number; fee_usd: number }
 export interface FundDecision { at: string; run_id: string; report_date: string; band: string; score: number | null; previous_score: number | null;
   target_invested_pct: number; tier_targets_usd: Record<string, number>; staged_tiers: string[]; waiting_for_price?: string[]; trades: FundTrade[]; reasons: string[];
-  value_before_usd: number; sha256: string | null; chain: { tx_hash?: string | null; explorer_url?: string; key?: string } | null }
+  value_before_usd: number; sha256: string | null; chain: { tx_hash?: string | null; explorer_url?: string; key?: string; network?: string } | null }
 export interface TopicFund { topic: string; slug: string; sector: string | null; created_at: string; start_cash_usd: number; cash_usd: number;
   holdings: FundHolding[]; decisions: FundDecision[]; history: FundValuePoint[]; benchmark: string; benchmark_start_date: string | null;
   updated_at: string | null; notes: string[]; summary: FundSummary; disclaimer: string }
@@ -283,7 +284,7 @@ export interface TradeProposal {
   rationale: string; risks: string[]; confidence: string; model: string | null; model_cost_usd: number;
   ref_close: number | null; ref_close_date: string | null; dry_quote: TradeQuote | null; quote: TradeQuote | null; status: string;
   deposit_tx: string | null; result: { status?: string; amountInFormatted?: string; amountOutFormatted?: string; amountOutUsd?: string } | null; error: string | null;
-  history: { at: string; status: string; note: string }[]; sha256: string | null; chain: { explorer_url?: string } | null;
+  history: { at: string; status: string; note: string }[]; sha256: string | null; chain: { explorer_url?: string; network?: string } | null;
 }
 export interface Trading {
   network: string; account: string | null; key_configured: boolean; trading_enabled: boolean; kill_switch: boolean;

@@ -82,7 +82,7 @@ export default function FundPage() {
         <div className="container stack">
           <h2 className="h2">Decision log</h2>
           <p className="sub">The decision agent follows fixed rules (backend <span className="mono">config/funds.yaml</span>): the fund stays fully invested in the companies the
-            report&apos;s patents and papers name, split into low, medium and high risk; the verdict and confidence are recorded with every decision. Each decision&apos;s fingerprint is stored on NEAR testnet.</p>
+            report&apos;s patents and papers name, split into low, medium and high risk; the verdict and confidence are recorded with every decision. Each decision&apos;s fingerprint is stored on NEAR.</p>
           <ol className="timeline">{[...f.decisions].reverse().map((d, i) => <DecisionItem key={i} d={d} />)}</ol>
           <ul className="small muted">{f.notes.map((n) => <li key={n}>{n}</li>)}</ul>
         </div>
@@ -118,7 +118,7 @@ function DecisionItem({ d }: { d: FundDecision }) {
     <li>
       <div className="fund-row">
         <b>{fmtDate(d.at)} · <span className="band-pill">{d.band}</span>{d.score != null && ` (${d.score})`} → {d.target_invested_pct}% invested</b>
-        {d.chain?.explorer_url ? <a className="small" href={d.chain.explorer_url} target="_blank" rel="noreferrer">sealed on NEAR testnet ↗</a>
+        {d.chain?.explorer_url ? <a className="small" href={d.chain.explorer_url} target="_blank" rel="noreferrer">sealed on NEAR {d.chain.network === "mainnet" ? "mainnet" : "testnet"} ↗</a>
           : <span className="small muted">not sealed</span>}
       </div>
       <div className="small" style={{ marginTop: 6 }}>

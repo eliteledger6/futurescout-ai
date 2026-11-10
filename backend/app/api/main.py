@@ -30,7 +30,7 @@ from pydantic import BaseModel, Field
 from app import service
 from app.api.store import DbStore, FileStore, ReportStore, summarize
 from app.chain import NearRecordError, read_record, report_digest, verify
-from app.chain.near_record import SOCIALDB_TESTNET, TESTNET_RPC
+from app.chain.near_record import MAINNET_RPC, SOCIALDB_TESTNET, TESTNET_RPC, network_of
 from app.config import ConfigError, Settings, get_settings
 from app.graph.workflow import AGENTS_NOT_BUILT
 from app.models.config import load_model_config
@@ -74,7 +74,7 @@ class Job:
 
 def _read_testnet(account: str, key: str, contract: str) -> Optional[dict]:
     with httpx.Client(timeout=20.0) as http:
-        return read_record(http, TESTNET_RPC, contract, account, key)
+        return read_record(http, TESTNET_RPC if network_of(contract) == "testnet" else MAINNET_RPC, contract, account, key)
 
 
 SAMPLES_DIR = service.BACKEND_DIR / "samples"   # real past runs shipped with the repo (scripts/export_samples.py)
@@ -314,7 +314,7 @@ def create_app(
         except NearRecordError as exc:
             return {"status": "unavailable", "detail": str(exc), "sha256": report_digest(report)}
         return {**verify(report, onchain), "explorer_url": rec.get("explorer_url"), "account": rec["account"],
-                "contract": rec.get("contract"), "network": "testnet"}
+                "contract": rec.get("contract"), "network": rec.get("network") or network_of(rec.get("contract") or SOCIALDB_TESTNET)}
 
     @app.post("/api/runs", status_code=202)
     def start_run(req: RunRequest) -> dict:

@@ -202,3 +202,13 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
 - 2026-11-10: report payments can come from the trading agent's near.com (private) balance (`economy.pay_from: private`): signed order NEAR -> report agent's wallet (recipientType DESTINATION_CHAIN), checked before signing like trades, saved before signing, arrival seen on chain (native NEAR or wNEAR; the report agent unwraps wNEAR before staking). Dry quote run live (4.3 NEAR in, 4.3 NEAR out, ~10 s); the signed payment is mock-tested, not yet run live. Prices 3-5 NEAR (owner); report budget 30% of the fund (owner).
 - 2026-11-10 RESTART (owner): the owner sold MRVLon and INTCon by hand in near.com; the trading and economy records were ARCHIVED (backend/runs/*/archive_2026-11-10_before_restart, not deleted; their NEAR fingerprints stay on chain) and the trading agent starts from zero with a fresh $60 budget (owner's yes). The near.com balance is read by the owner's loop (`fund_trade.py balance`, or each live check with auto-approve) and shown on the site; it counts in the fund's value.
 - 2026-11-10 report market (owner): any trading bot can buy early access to a fresh report for its first 24 h (GET /api/market, pay the report agent in NEAR, POST /api/market/buy with the tx hash; checked on chain, redeemed once; 402 until paid; free after 24 h). Mock-tested and live-checked read-only (catalog of 15 reports at 3.8-4.6 NEAR; locked report answers 402); no outside purchase yet.
+
+## 2026-11-10: seals move to NEAR mainnet
+
+- `SEAL_NETWORK=mainnet` (in `.env`, set by the owner) seals every new report, paper-fund decision and trade record in
+  SocialDB `social.near`, signed by the report agent `grandbread5023.near`. Default stays testnet. A mainnet recorder
+  refuses a `.testnet` account or RPC. Mock-tested (301 tests); not yet run live.
+- Old records keep their testnet seal and still verify: the website reads each record from its own network and the badge
+  says which ("Unchanged since recorded on NEAR mainnet / testnet").
+- Moving old reports: `python scripts\near_record_report.py --all --dry-run`, then without `--dry-run` (owner runs it;
+  first seal locks 0.1 NEAR storage, about 0.004 NEAR per seal after that).

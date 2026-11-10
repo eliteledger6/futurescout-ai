@@ -11,7 +11,7 @@ from typing import Callable, Optional
 
 import httpx
 
-from app.chain import NearRecorder, NearRecordError
+from app.chain import NearRecorder, NearRecordError, make_recorder
 from app.config import BACKEND_DIR, Settings
 from app.db import make_engine, make_session_factory, save_report
 from app.graph.workflow import run_research
@@ -65,14 +65,14 @@ def save_to_database(settings: Settings, report: ResearchReport, markdown: str, 
 
 def record_on_testnet(settings: Settings, key: str, report: ResearchReport, warn: Callable[[str], None]) -> Optional[dict]:
     """Store the report fingerprint on NEAR testnet. Never blocks or loses a report if it fails."""
-    creds = settings.near_testnet_credentials()
-    if not creds:
-        warn("(NEAR_TESTNET_ACCOUNT_ID / NEAR_TESTNET_PRIVATE_KEY not set: report not recorded on NEAR testnet)")
-        return None
     try:
-        return NearRecorder(*creds).record(key, report).as_dict()
+        recorder = make_recorder(settings)
+        if recorder is None:
+            warn("(NEAR seal account not set: report not recorded on NEAR)")
+            return None
+        return recorder.record(key, report).as_dict()
     except NearRecordError as exc:
-        warn(f"WARNING: NEAR testnet record failed: {exc}")
+        warn(f"WARNING: NEAR record failed: {exc}")
         return None
 
 

@@ -173,3 +173,37 @@ def test_network_error_is_not_retried_with_a_deposit_but_storage_refusal_is():
             assert calls == [0]
         else:
             assert rec._set({}) == "tx" and calls == [0, STORAGE_DEPOSIT_YOCTO]
+
+
+def test_mainnet_seals_only_through_make_recorder_with_the_report_agent(report, monkeypatch):
+    from app.chain import make_recorder, network_of
+    from app.chain.near_record import MAINNET_RPC, SOCIALDB_MAINNET
+    base = Settings(_env_file=None, near_testnet_account_id=ACCOUNT, near_testnet_private_key=KEY)
+    assert make_recorder(base).network == "testnet"                       # default stays testnet
+    with pytest.raises(NearRecordError, match="REPORT_AGENT"):
+        make_recorder(Settings(_env_file=None, seal_network="mainnet"))  # mainnet needs the report agent's key
+    main = Settings(_env_file=None, seal_network="mainnet", report_agent_account_id="agent-fixture.near",
+                    report_agent_private_key=KEY)
+    r = make_recorder(main)
+    assert (r.network, r.contract, r.rpc, r.account_id) == ("mainnet", SOCIALDB_MAINNET, MAINNET_RPC, "agent-fixture.near")
+    with pytest.raises(NearRecordError, match="mainnet account"):
+        NearRecorder(ACCOUNT, KEY, rpc=MAINNET_RPC, contract=SOCIALDB_MAINNET, network="mainnet")
+    calls = []
+    rec = NearRecorder("agent-fixture.near", KEY, rpc=MAINNET_RPC, contract=SOCIALDB_MAINNET, network="mainnet",
+                       signer=lambda m, a, d: calls.append(a) or "MainTx").record("report_20261108T000000Z", report)
+    assert rec.network == "mainnet" and rec.explorer_url == "https://nearblocks.io/txns/MainTx"
+    assert "agent-fixture.near" in calls[0]["data"] and network_of(SOCIALDB_MAINNET) == "mainnet"
+
+
+def test_api_verify_reads_a_mainnet_record_from_mainnet(tmp_path, report):
+    from app.chain.near_record import MAINNET_RPC, SOCIALDB_MAINNET
+    rec = NearRecorder("agent-fixture.near", KEY, rpc=MAINNET_RPC, contract=SOCIALDB_MAINNET, network="mainnet",
+                       signer=lambda m, a, d: "Tx2").record("report_20261108T000000Z", report)
+    recorded = report.model_copy(deep=True)
+    recorded.chain_record = rec.as_dict()
+    (tmp_path / "report_20261108T000000Z.json").write_text(recorded.model_dump_json(), encoding="utf-8")
+    seen = []
+    app = create_app(Settings(_env_file=None), store=FileStore(tmp_path),
+                     chain_reader=lambda a, k, c: seen.append(c) or {"sha256": rec.sha256})
+    res = TestClient(app).get("/api/runs/report_20261108T000000Z/verify").json()
+    assert res["status"] == "match" and res["network"] == "mainnet" and seen == [SOCIALDB_MAINNET]

@@ -83,7 +83,7 @@ export default function TradingPage() {
               <AgentLog t={t} />
               {eco && <EconomyPanel e={eco} />}
 
-              <h2 className="h2" style={{ margin: "8px 0 0" }}>Real-money trades <span className="muted small">· {live.length} completed, newest first · each record sealed on NEAR testnet</span></h2>
+              <h2 className="h2" style={{ margin: "8px 0 0" }}>Real-money trades <span className="muted small">· {live.length} completed, newest first · each record sealed on NEAR</span></h2>
               {live.length === 0 && <div className="notice">No real trade completed yet.</div>}
               {(t.owner_sales?.length ?? 0) > 0 && (
                 <p className="small muted" style={{ margin: 0 }}>
@@ -329,7 +329,7 @@ function LiveTrade({ p, explorer, animate = true }: { p: TradeProposal; explorer
       <div className="small muted">
         {fmtDate(p.created_at)}
         {p.deposit_tx && <> · <a href={explorer.replace("{tx}", p.deposit_tx)} target="_blank" rel="noopener noreferrer">payment transaction ↗</a></>}
-        {p.chain?.explorer_url && <> · <a href={p.chain.explorer_url} target="_blank" rel="noopener noreferrer">record sealed on NEAR testnet ↗</a></>}
+        {p.chain?.explorer_url && <> · <a href={p.chain.explorer_url} target="_blank" rel="noopener noreferrer">record sealed on NEAR {p.chain.network === "mainnet" ? "mainnet" : "testnet"} ↗</a></>}
       </div>
       <details>
         <summary className="small muted" style={{ cursor: "pointer" }}>Step log</summary>

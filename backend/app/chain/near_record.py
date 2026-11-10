@@ -1,4 +1,11 @@
-"""Tamper-evident record of each research report on NEAR TESTNET.
+"""Tamper-evident record of each research report on NEAR (testnet, or MAINNET when the owner sets SEAL_NETWORK=mainnet).
+
+Owner 2026-11-10: seals move to NEAR mainnet (SocialDB contract social.near), signed by the report agent's own account
+(REPORT_AGENT_ACCOUNT_ID). A seal stores about 300 bytes; the first write locks a 0.1 NEAR storage deposit in the
+contract, later writes cost only gas. Mainnet is used ONLY through make_recorder() with SEAL_NETWORK=mainnet; the
+recorder still refuses a .testnet account or a testnet RPC on mainnet, and a mainnet account or RPC on testnet.
+Older records stay on testnet and keep verifying: each record names its network and contract.
+
 
 What it does: computes a SHA-256 fingerprint of the finished report and stores it, with the topic
 and time, in SocialDB on testnet (contract v1.social08.testnet, same code as social.near on mainnet;
@@ -27,6 +34,10 @@ from app.schemas.research import ResearchReport
 
 TESTNET_RPC = "https://rpc.testnet.fastnear.com"   # rpc.testnet.near.org is deprecated and rate-limits (HTTP 429, 2026-11-09)
 SOCIALDB_TESTNET = "v1.social08.testnet"
+MAINNET_RPC = "https://free.rpc.fastnear.com"
+SOCIALDB_MAINNET = "social.near"
+EXPLORERS = {"testnet": ("https://testnet.nearblocks.io/txns/{tx}", "https://testnet.nearblocks.io/address/{account}"),
+             "mainnet": ("https://nearblocks.io/txns/{tx}", "https://nearblocks.io/address/{account}")}
 APP_KEY = "futurescout"
 # SocialDB refused 0.01 NEAR on the first write ("attached deposit is less than the minimum storage balance",
 # live 2026-11-08); 0.1 testnet NEAR covers the account's initial storage balance and many records.
@@ -78,6 +89,31 @@ def record_key(run_key: str) -> str:
     return key
 
 
+def network_of(contract: str) -> str:
+    return "testnet" if contract.endswith(".testnet") else "mainnet"
+
+
+def check_network(account_id: str, rpc: str, network: str) -> None:
+    if network == "testnet":
+        check_testnet(account_id, rpc)
+        return
+    if network != "mainnet":
+        raise NearRecordError(f"unknown network {network!r}")
+    if account_id.endswith(".testnet") or "testnet" in rpc:
+        raise NearRecordError("refusing: a mainnet seal needs a mainnet account and a mainnet RPC")
+
+
+def make_recorder(settings, http: Optional[httpx.Client] = None) -> Optional["NearRecorder"]:  # noqa: ANN001
+    """The recorder for new seals: mainnet with the report agent's account when SEAL_NETWORK=mainnet, else testnet."""
+    if (getattr(settings, "seal_network", "testnet") or "testnet").lower() == "mainnet":
+        creds = settings.report_agent_credentials()
+        if not creds:
+            raise NearRecordError("SEAL_NETWORK=mainnet but REPORT_AGENT_ACCOUNT_ID / REPORT_AGENT_PRIVATE_KEY are not set")
+        return NearRecorder(*creds, rpc=MAINNET_RPC, contract=SOCIALDB_MAINNET, network="mainnet", http=http)
+    creds = settings.near_testnet_credentials()
+    return NearRecorder(*creds, http=http) if creds else None
+
+
 def check_testnet(account_id: str, rpc: str) -> None:
     if not account_id.endswith(".testnet") and not re.fullmatch(r"[0-9a-f]{64}", account_id):
         raise NearRecordError("refusing: NEAR_TESTNET_ACCOUNT_ID must be a .testnet account (mainnet is not allowed)")
@@ -109,11 +145,13 @@ class NearRecorder:
         contract: str = SOCIALDB_TESTNET,
         http: Optional[httpx.Client] = None,
         signer: Optional[Callable[[str, dict, int], str]] = None,
+        network: str = "testnet",
     ) -> None:
-        check_testnet(account_id, rpc)
+        check_network(account_id, rpc, network)
         if not private_key.startswith("ed25519:"):
-            raise NearRecordError("NEAR_TESTNET_PRIVATE_KEY must look like 'ed25519:...'")
-        self.account_id, self.rpc, self.contract = account_id, rpc, contract
+            raise NearRecordError("the signing key must look like 'ed25519:...'")
+        self.account_id, self.rpc, self.contract, self.network = account_id, rpc, contract, network
+        self._tx_url, self._acc_url = EXPLORERS[network]
         self._key = private_key
         self._http = http or httpx.Client(timeout=30.0)
         self._real_signer = signer is None
@@ -174,7 +212,7 @@ class NearRecorder:
         except NearRecordError:
             raise
         except Exception as exc:  # noqa: BLE001  (message only; never the key)
-            raise NearRecordError(f"could not send the testnet transaction ({type(exc).__name__}: {str(exc)[:200]})".replace(self._key, "***")) from None
+            raise NearRecordError(f"could not send the {self.network} transaction ({type(exc).__name__}: {str(exc)[:200]})".replace(self._key, "***")) from None
 
     def record(self, run_key: str, report: ResearchReport) -> ChainRecord:
         key = record_key(run_key)
@@ -183,16 +221,16 @@ class NearRecorder:
                  "agents_run": ",".join(report.agents_run)}
         args = {"data": {self.account_id: {APP_KEY: {"reports": {key: value}}}}}
         tx = self._set(args)
-        return ChainRecord("testnet", self.contract, self.account_id, key, digest, tx or None,
-                           EXPLORER_TX.format(tx=tx) if tx else EXPLORER_ACCOUNT.format(account=self.account_id))
+        return ChainRecord(self.network, self.contract, self.account_id, key, digest, tx or None,
+                           self._tx_url.format(tx=tx) if tx else self._acc_url.format(account=self.account_id))
 
     def record_fund_decision(self, key: str, value: dict) -> ChainRecord:
         """Fingerprint of one topic-fund decision (paper simulation), under <account>/futurescout/funds/<key>."""
         k = record_key(key)
         args = {"data": {self.account_id: {APP_KEY: {"funds": {k: value}}}}}
         tx = self._set(args)
-        return ChainRecord("testnet", self.contract, self.account_id, f"funds/{k}", str(value.get("sha256", "")), tx or None,
-                           EXPLORER_TX.format(tx=tx) if tx else EXPLORER_ACCOUNT.format(account=self.account_id))
+        return ChainRecord(self.network, self.contract, self.account_id, f"funds/{k}", str(value.get("sha256", "")), tx or None,
+                           self._tx_url.format(tx=tx) if tx else self._acc_url.format(account=self.account_id))
 
     # ---- read (free, no key needed) -----------------------------------------
     def read(self, run_key: str) -> Optional[dict]:
@@ -209,7 +247,7 @@ def read_record(http: httpx.Client, rpc: str, contract: str, account_id: str, ke
         r = http.post(rpc, json=body)
         payload: Any = r.json()
     except (httpx.HTTPError, ValueError) as exc:
-        raise NearRecordError(f"could not read from NEAR testnet ({type(exc).__name__})") from None
+        raise NearRecordError(f"could not read from NEAR ({type(exc).__name__})") from None
     if "error" in payload or "result" not in payload or "result" not in payload["result"]:
         raise NearRecordError(f"NEAR RPC error: {str(payload.get('error', payload))[:200]}")
     data = json.loads(bytes(payload["result"]["result"]).decode() or "{}")
