@@ -761,7 +761,7 @@ def draw_caption(d: ImageDraw.ImageDraw, sc: Scene, t: float) -> None:
         x0, y0 = (W - bw) / 2, H - 56 - bh
         for i, ln in enumerate(lines):
             d.text((W / 2, y0 + 15 + lh * i + lh / 2), ln, font=f, fill=rgba((255, 255, 255), a), anchor="mm",
-                   stroke_width=7, stroke_fill=(0, 0, 0, int(245 * a)))
+                   stroke_width=2, stroke_fill=(0, 0, 0, int(200 * a)))   # thin edge only: the page stays visible behind the words
         return
 
 
