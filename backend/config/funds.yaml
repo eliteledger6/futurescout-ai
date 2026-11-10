@@ -88,7 +88,7 @@ economy:
   budget_share_of_fund: 0.30      # owner 2026-11-10: at most 30% of the live fund's value is spent on reports (was 10%)
   stake_share: 0.70               # owner 2026-11-10: stake 70% of each new payment, keep 30% in a pot
   second_trader_at_usd: 200       # owner 2026-11-10: when the kept pot passes $200 it funds a second trading agent (next step, not built)
-  min_stake_near: 0.25            # owner 2026-11-10: $2-3 reports, so one payment (0.4 NEAR staked) is enough to stake
+  min_stake_near: 1.0             # NEAR AI (stake.dao) refuses less than 1 NEAR (min_lock_amount, seen 2026-11-10): stakes once 70% of payments reach 1 NEAR
   stake_reserve_near: 0.3         # left unstaked in the report agent's wallet for gas and NEAR seals
   market_open: true               # owner 2026-11-10: other trading bots may buy reports (/api/market)
   embargo_hours: null             # owner 2026-11-10: reports are never unlocked without payment (a number = free after N hours)
