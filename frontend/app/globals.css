@@ -475,3 +475,6 @@ a.card:hover { box-shadow: 0 12px 40px -18px color-mix(in srgb, var(--accent) 45
 .edge.planned-edge .edge-base { stroke-dasharray: 5 5; stroke: var(--line-strong); }
 .flow-badge.pot rect { stroke: var(--text-3, #8a8f8d); }
 .flow-badge.pot text { fill: var(--text-2, #b8bdbb); }
+.flow-divider { stroke: var(--line-strong); stroke-dasharray: 2 6; }
+.flow-badge.credit rect { stroke: color-mix(in srgb, var(--accent) 55%, var(--line-strong)); }
+.flow-badge.credit text { fill: var(--text-2, #b8bdbb); }
