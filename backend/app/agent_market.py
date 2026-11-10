@@ -145,6 +145,9 @@ class AgentMarketClient:
     def assignments(self) -> list[dict]:
         return self._call("GET", "/v1/agents/me/assignments").get("assignments", [])
 
+    def messages(self, aid: str) -> list[dict]:
+        return self._call("GET", f"/v1/assignments/{aid}/messages").get("messages", [])
+
     def start(self, aid: str) -> None:
         self._call("POST", f"/v1/assignments/{aid}/start")
 
@@ -169,6 +172,17 @@ def handle(row: dict, *, client: Any, state: MarketState, state_path: Path, cfg:
         return None
     rec = state.jobs.get(aid)
     rework = bool(a.get("submittedAt")) and (a.get("latestMessage") or {}).get("senderSide") == "buyer"
+    buyer_msg = str((a.get("latestMessage") or {}).get("body") or "") if rework else ""
+    if a.get("submittedAt") and not rework and hasattr(client, "messages"):
+        # "Request changes" (seen live 2026-11-10): the row is in_progress again with submittedAt kept and no latestMessage;
+        # the buyer's request is the newest thread message without a senderAgentId, written after our delivery.
+        try:
+            new = [m for m in client.messages(aid) if not m.get("senderAgentId") and str(m.get("createdAt") or "") > str(a["submittedAt"])]
+        except Exception as exc:  # noqa: BLE001
+            log(f"  {aid}: could not read the thread ({str(exc)[:100]})")
+            new = []
+        if new:
+            rework, buyer_msg = True, str(max(new, key=lambda m: str(m.get("createdAt") or "")).get("body") or "")
     redo = not a.get("submittedAt") and bool(a.get("deliverableUrl"))
     if rec and rec.status in ("submitted", "declined") and not (rework or redo):
         return None                                      # already done; nothing new from the buyer
@@ -177,8 +191,7 @@ def handle(row: dict, *, client: Any, state: MarketState, state_path: Path, cfg:
 
     title, desc = str(job.get("title") or ""), str(job.get("description") or "")
     if rework:                                           # the buyer's new message may name a refined topic
-        msg = str((a.get("latestMessage") or {}).get("body") or "")
-        topic = topic_from_brief(msg, "", cfg) or (rec.topic if rec else None) or topic_from_brief(title, desc, cfg)
+        topic = topic_from_brief("", buyer_msg, cfg) or (rec.topic if rec else None) or topic_from_brief(title, desc, cfg)
     else:
         topic = topic_from_brief(title, desc, cfg)
     if not topic:

@@ -95,3 +95,27 @@ def test_deliverable_stays_under_the_size_limit():
     body = deliverable("t", "x" * 400_000, run_id="r", explorer_url=None, reused=False, site_url="https://site.test")
     assert len(body.encode()) <= 250_000 and "online: https://site.test/runs/r" in body
     assert find_recent_report("HBM", [{"id": "x", "topic": "hbm", "score": 1, "generated_at": NOW.isoformat()}], CFG, NOW)
+
+
+def test_request_changes_is_read_from_the_thread(tmp_path):
+    """Live shape (2026-11-10): in_progress again, submittedAt kept, no latestMessage; the request is in the thread."""
+    st = MarketState()
+    run(row("C1", "Test run: FUTURESCOUT Research Agent"), st, tmp_path)         # generic title, no brief: declined
+    st = MarketState()
+    first = row("C2", "solid-state batteries")
+    run(first, st, tmp_path)
+
+    class Threaded(FakeMarket):
+        def messages(self, aid):
+            return [{"body": "high bandwidth memory", "senderAgentId": None, "createdAt": "2026-11-10T14:45:26Z"},
+                    {"body": "Started.", "senderAgentId": "agent", "createdAt": "2026-11-10T14:38:08Z"}]
+    m, ran = Threaded(), []
+    r = row("C2", "solid-state batteries", started="2026-11-10T14:38:06Z", submitted="2026-11-10T14:42:54Z")
+    rec = handle(r, client=m, state=st, state_path=tmp_path / "s.json", cfg=CFG, recent=lambda: RECENT,
+                 load_report=lambda rid: ("# sealed report", "https://nearblocks.io/txns/S"),
+                 run_research=lambda t: ran.append(t) or ("n", "# new", None), now=NOW, log=lambda _: None)
+    assert rec.topic == "high bandwidth memory" and rec.source == "reused" and ran == [] and any(c[0] == "submit" for c in m.calls)
+    r["assignment"]["submittedAt"] = "2026-11-10T14:50:00Z"                      # redelivered after the request: nothing more to do
+    assert handle(r, client=m, state=st, state_path=tmp_path / "s.json", cfg=CFG, recent=lambda: RECENT,
+                  load_report=lambda rid: ("# sealed report", None), run_research=lambda t: ("n", "", None), now=NOW,
+                  log=lambda _: None) is None
