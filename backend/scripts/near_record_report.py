@@ -3,6 +3,7 @@ during the run, or to move old testnet seals to mainnet).
 
   python scripts\\near_record_report.py --run <database run id or report_<time> file name>
   python scripts\\near_record_report.py --latest
+  python scripts\\near_record_report.py --displayed        only the reports the home page shows (newest scored per topic)
   python scripts\\near_record_report.py --all --dry-run    list the reports not yet sealed on the current network
   python scripts\\near_record_report.py --all              seal each of them (one transaction per report)
 
@@ -80,12 +81,25 @@ def all_run_ids(sessions) -> list[str]:  # noqa: ANN001
     return [p.stem for p in sorted(RUNS_DIR.glob("report_*.json"))]
 
 
+def displayed_run_ids(rows: list[dict]) -> list[str]:
+    """Same rule as the website's home page (frontend/lib/runs.ts): per topic, the newest scored run leads."""
+    by: dict[str, list[dict]] = {}
+    for r in rows:
+        by.setdefault(r["topic"].strip().lower(), []).append(r)
+    out = []
+    for runs in by.values():
+        runs = sorted(runs, key=lambda r: str(r["generated_at"]), reverse=True)
+        out.append(next((r for r in runs if r.get("score") is not None), runs[0])["id"])
+    return out
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     g = ap.add_mutually_exclusive_group(required=True)
     g.add_argument("--run")
     g.add_argument("--latest", action="store_true")
     g.add_argument("--all", action="store_true", help="every report not yet sealed on the current network")
+    g.add_argument("--displayed", action="store_true", help="only the reports the home page shows")
     ap.add_argument("--force", action="store_true", help="re-seal even if a record on this network exists")
     ap.add_argument("--dry-run", action="store_true", help="only list what would be sealed")
     ap.add_argument("--pause", type=float, default=4.0, help="seconds between seals (the free RPC rate-limits bursts)")
@@ -107,6 +121,9 @@ def main() -> int:
     ids = all_run_ids(sessions)
     if args.run:
         ids = [args.run]
+    elif args.displayed:
+        from app.api.main import _default_store
+        ids = displayed_run_ids(_default_store(s).list(limit=1000))
     elif args.latest:
         ids = ids[:1] if sessions else ids[-1:]
     if not ids:
@@ -121,7 +138,7 @@ def main() -> int:
             continue
         rec = report.chain_record or {}
         if rec and (rec.get("network") or "testnet") == network and not args.force:
-            if not args.all:
+            if not (args.all or args.displayed):
                 print(f"already sealed on {network}: {rec.get('explorer_url')}  (use --force to re-seal)")
             continue
         todo.append((run_id, report, in_db))

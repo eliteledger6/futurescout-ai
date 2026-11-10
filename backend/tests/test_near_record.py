@@ -233,3 +233,15 @@ def test_batch_reseal_waits_and_retries_when_the_rpc_is_busy(report):
     with pytest.raises(NearRecordError, match="balance"):                      # a real refusal is not retried
         nrr.seal_with_retry(Refused(), "r1", report, sleep=waits.append, log=lambda _: None)
     assert waits == [20, 60]
+
+
+def test_displayed_reports_follow_the_home_page_rule():
+    import importlib.util
+    from pathlib import Path
+    spec = importlib.util.spec_from_file_location("nrr2", Path(__file__).resolve().parents[1] / "scripts" / "near_record_report.py")
+    nrr = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(nrr)
+    rows = [{"id": "a1", "topic": "HBM", "generated_at": "2026-11-09", "score": 70},
+            {"id": "a2", "topic": "hbm ", "generated_at": "2026-11-10", "score": None},   # newer but unscored
+            {"id": "b1", "topic": "6G", "generated_at": "2026-11-08", "score": None}]
+    assert sorted(nrr.displayed_run_ids(rows)) == ["a1", "b1"]
