@@ -131,12 +131,20 @@ SCENES = [
     Scene("10_round", "09", "Real money, end to end", [
         ("Here's a real round. The agent wakes up on its own: a new report, a sharp price move, or its daily review.",
          "Here's a real round. The agent wakes up on its own. A new report, a sharp price move, or its daily review."),
-        ("First, it had to buy the report. It paid 4.6 NEAR for the memory report, straight from its near.com balance.",
-         "First, it had to buy the report. It paid four point six NEAR for the memory report, straight from its near dot com balance."),
-        ("Then it bought Intel with what was left, and approved the order itself, once every check had passed.", None),
-        ("The report agent staked 70% of what it earned with NEAR AI, and kept 30% toward a second trading agent.",
-         "The report agent staked seventy percent of what it earned with NEAR AI, and kept thirty percent toward a second trading agent."),
-        ("And it's not just our agent. Any trading bot can buy a report, paid in NEAR and checked on chain.", None),
+        ("Before it can use a report, it has to buy it. It bought three, at about $2 each, paid in NEAR straight from its near.com balance.",
+         "Before it can use a report, it has to buy it. It bought three, at about two dollars each, paid in NEAR, straight from its near dot com balance."),
+        ("After buying the memory report, it bought Intel, and approved the order itself, once every check had passed.", None),
+        ("The report agent staked 70% of what it earned, 1.3 NEAR, with NEAR AI, and kept the rest toward a second trading agent.",
+         "The report agent staked seventy percent of what it earned, one point three NEAR, with NEAR AI, and kept the rest toward a second trading agent."),
+        ("Every report has a price: $2 to $3, depending on what it cost to make.",
+         "Every report has a price. Two to three dollars, depending on what it cost to make."),
+    ]),
+    Scene("11_market", "10", "Listed on NEAR Agent Market", [
+        ("And it's not just our own agent buying. The report agent is listed on NEAR's Agent Market.", None),
+        ("Anyone can hire it for $3: give it a topic, and it delivers a sealed report.",
+         "Anyone can hire it for three dollars. Give it a topic, and it delivers a sealed report."),
+        ("Other trading bots can buy any report through our API too, paid in NEAR and checked on chain.",
+         "Other trading bots can buy any report through our A P I too, paid in NEAR, and checked on chain."),
     ]),
     Scene("10_close", "", "", [
         ("That's FUTURESCOUT AI: research you can check.", "That's FutureScout AI. Research you can check."),
@@ -395,13 +403,13 @@ def closing_card(t: float, dur: float) -> Image.Image:
             "market, X, patent, price timing, company scout, investment",
             "Real sources: OpenAlex, arXiv, EPO patents, SEC EDGAR, X",
             "Every quote checked against its source",
-            "Reports sold for NEAR, earnings staked for AI",
-            "54 topics, 9 sectors, 15 topics with full reports",
+            "Reports sold for $2-3 in NEAR, earnings staked for AI",
+            "Report agent listed on NEAR Agent Market ($3 a hire)",
         ]),
         (1010, "SIMULATED OR LIMITED", (255, 196, 110), [
             "Topic funds and shadow trades use pretend money",
             "Scores are heuristics: no topic reaches 70% confidence",
-            "Testnet tokens have no value",
+            "Agent Market: one free test hire so far, no paid job yet",
             "Stock prices: free plan, 25 lookups a day",
             "Research activity is not commercial success",
             "Real trades: small budget, the agent approves in limits",
@@ -419,7 +427,7 @@ def closing_card(t: float, dur: float) -> Image.Image:
             ar = ease((t - (t0 + 0.25 + i * 0.1)) / 0.4)
             d.text((x + 34, 440 + i * 56), row, font=font(27, "regular"), fill=rgba(INK, ar), anchor="lm")
     rise(d, (W / 2, 880), "Built for the NEAR Hackathon", font(28, "semibold"), INK, t, 1.9)
-    rise(d, (W / 2, 1010), "Voice generated with ElevenLabs", font(20, "regular"), DIM, t, 2.3)   # free-plan attribution
+    rise(d, (W / 2, 1052), "Voice generated with ElevenLabs", font(20, "regular"), DIM, t, 2.3)   # free-plan attribution
     return img
 
 
@@ -599,6 +607,19 @@ async def rec_round(k: Take) -> None:
     await b.hover(".tr-mini > div", 1, seconds=0.7)
 
 
+async def rec_market(k: Take) -> None:
+    """The public listing on market.near.ai (no sign-in): the top of the page, then the price and Hire box."""
+    b = k.b
+    await k.until(k.sent[1] - 0.6)
+    try:
+        await k.hl(await b.rect("button, a", 0, text="Hire FUTURESCOUT"), seconds=max(2.4, k.sent[2] - k.sent[1] - 0.6), pad=10)
+    except Exception:  # noqa: BLE001  (the marketplace's page changed: the shot still shows the listing)
+        pass
+    await k.until(k.sent[2] + 0.2)
+    await b.scroll_to(420, 1.4)
+    await k.until(k.dur - 0.3)
+
+
 async def rec_evidence(k: Take) -> None:
     b = k.b
     await b.scroll_to(300, 0.9)
@@ -725,6 +746,8 @@ def build_pieces(scenes: list[Scene], rid: str, tamper_lines: list[str]) -> list
                      card=terminal_card(tamper_lines, "python scripts\\tamper_demo.py --run " + rid[:8] + "…"))]
     pieces.append(Piece(s["09_funds"], "09_funds", "rec", dur=s["09_funds"].dur, prep=goto(f"{DASH}/funds", 2.0), action=rec_funds))
     pieces.append(Piece(s["10_round"], "10_round", "rec", dur=s["10_round"].dur, prep=goto(f"{DASH}/trading", 2.5), action=rec_round))
+    pieces.append(Piece(s["11_market"], "11_market", "rec", dur=s["11_market"].dur,
+                        prep=goto("https://market.near.ai/a/futurescout", 5.0), action=rec_market))
     pieces.append(Piece(s["10_close"], "10_close", "card", dur=s["10_close"].dur, card=closing_card))
     pieces = [p for p in pieces if p.scene in scenes]
     t = scenes[0].start
@@ -898,7 +921,7 @@ def mux(video: Path, narration: Path, music: Path, total: float, out: Path) -> N
           "[m][n1]sidechaincompress=threshold=0.03:ratio=5:attack=80:release=900[md];"
           "[md][n2]amix=inputs=2:normalize=0:duration=first,alimiter=limit=0.94[a]")
     run([ffmpeg_exe(), "-y", "-loglevel", "error", "-i", str(video), "-i", str(narration), "-stream_loop", "-1", "-i", str(music),
-         "-filter_complex", fc, "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-t", f"{total:.2f}",
+         "-filter_complex", fc, "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-t", f"{total:.2f}",
          "-movflags", "+faststart", str(out)])
 
 

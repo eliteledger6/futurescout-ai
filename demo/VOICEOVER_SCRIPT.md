@@ -121,15 +121,26 @@ In shadow mode, it also trades pretend money at real quotes, and explains every 
 Here's a real round. The agent wakes up on its own: a new report, a sharp price move, or its daily review.
 *spoken: Here's a real round. The agent wakes up on its own. A new report, a sharp price move, or its daily review.*
 
-First, it had to buy the report. It paid 4.6 NEAR for the memory report, straight from its near.com balance.
-*spoken: First, it had to buy the report. It paid four point six NEAR for the memory report, straight from its near dot com balance.*
+Before it can use a report, it has to buy it. It bought three, at about $2 each, paid in NEAR straight from its near.com balance.
+*spoken: Before it can use a report, it has to buy it. It bought three, at about two dollars each, paid in NEAR, straight from its near dot com balance.*
 
-Then it bought Intel with what was left, and approved the order itself, once every check had passed.
+After buying the memory report, it bought Intel, and approved the order itself, once every check had passed.
 
-The report agent staked 70% of what it earned with NEAR AI, and kept 30% toward a second trading agent.
-*spoken: The report agent staked seventy percent of what it earned with NEAR AI, and kept thirty percent toward a second trading agent.*
+The report agent staked 70% of what it earned, 1.3 NEAR, with NEAR AI, and kept the rest toward a second trading agent.
+*spoken: The report agent staked seventy percent of what it earned, one point three NEAR, with NEAR AI, and kept the rest toward a second trading agent.*
 
-And it's not just our agent. Any trading bot can buy a report, paid in NEAR and checked on chain.
+Every report has a price: $2 to $3, depending on what it cost to make.
+*spoken: Every report has a price. Two to three dollars, depending on what it cost to make.*
+
+## 11_market — Listed on NEAR Agent Market
+
+And it's not just our own agent buying. The report agent is listed on NEAR's Agent Market.
+
+Anyone can hire it for $3: give it a topic, and it delivers a sealed report.
+*spoken: Anyone can hire it for three dollars. Give it a topic, and it delivers a sealed report.*
+
+Other trading bots can buy any report through our API too, paid in NEAR and checked on chain.
+*spoken: Other trading bots can buy any report through our A P I too, paid in NEAR, and checked on chain.*
 
 ## 10_close — Close
 

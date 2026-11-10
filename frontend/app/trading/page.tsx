@@ -232,9 +232,10 @@ function EconomyPanel({ e }: { e: Economy }) {
           return <div key={p.run_id}><b>{p.price_near} Ⓝ</b><span>{p.topic} <span className="why">· ${p.price_usd.toFixed(2)} · {b ? (b.status === "paid" ? "bought" : "payment sent") : "not bought"} {b && link(b.tx_hash)}</span></span></div>;
         })}</div>
       )}
-      {e.stakes.length > 0 && <div className="small muted">{e.stakes.map((s) => <div key={s.id}>{fmtDate(s.at)} · {s.status === "staked"
-        ? <>staked {s.amount_near} NEAR with NEAR AI {link(s.tx_hash)}</>
-        : <>stake of {s.amount_near} NEAR refused{/minimum|min_lock/i.test(s.note) ? ` (under NEAR AI's ${e.limits.min_stake_near} NEAR minimum; nothing was lost)` : ""}</>}</div>)}</div>}
+      {e.stakes.length > 0 && <div className="small muted">
+        {e.stakes.filter((s) => s.status === "staked").map((s) => <div key={s.id}>{fmtDate(s.at)} · staked {s.amount_near} NEAR with NEAR AI {link(s.tx_hash)}</div>)}
+        {e.stakes.some((s) => s.status !== "staked") && <div>{e.stakes.filter((s) => s.status !== "staked").length} stake attempt(s) were refused (under NEAR AI&apos;s {e.limits.min_stake_near} NEAR minimum, or not enough balance); nothing was lost.</div>}
+      </div>}
     </div>
   );
 }
