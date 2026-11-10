@@ -31,3 +31,6 @@ demo/build/
 demo/*.mp4
 demo/*.srt
 demo/build_v4/
+
+# generated voice audio (ElevenLabs cache and samples)
+demo/voiceover/

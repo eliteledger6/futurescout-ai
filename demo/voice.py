@@ -146,8 +146,8 @@ def main() -> int:
     sc = scenes()
     vid = voice_id(client, args.voice)
     if args.sample:
-        secs = render(client, vid, sc["sample"], OUT / "sample.wav")
-        print(f"sample: {OUT / 'sample.wav'}  ({secs:.1f} s, voice {args.voice})")
+        secs = render(client, vid, sc["sample"], OUT / f"sample_{args.voice.lower()}.wav")
+        print(f"sample: {OUT / f'sample_{args.voice.lower()}.wav'}  ({secs:.1f} s, voice {args.voice})")
         return 0
     total = 0.0
     for key, paragraphs in sc.items():

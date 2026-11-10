@@ -10,7 +10,7 @@ What is real in the video: every app shot is a live recording of the dashboard i
 real pages, real data from the API, the app's own animations, real scrolling, hovering and clicking. The terminal
 card shows the actual output of backend/scripts/tamper_demo.py for the report on screen. Added in post, and only
 these: the opening and closing cards, section titles, captions, highlight rings, a drawn mouse pointer (headless
-Chrome renders none), narration (Windows text-to-speech) and background music (synthesised here, so copyright-free).
+Chrome renders none), narration (ElevenLabs, voice Chris, via demo/voice.py) and background music (synthesised here, so copyright-free).
 
 Output: demo/futurescout_hackathon_demo.mp4 (1920x1080, 30 fps, H.264 + AAC), .srt captions and NARRATION.md.
 """
@@ -44,12 +44,12 @@ DASH = os.environ.get("DEMO_DASHBOARD_URL", "http://localhost:3000")
 API = os.environ.get("DEMO_API_URL", "http://localhost:8000")
 W, H, FPS = 1920, 1080, 30
 SR = 44100
-LEAD, GAP, TAIL = 0.45, 0.30, 0.85        # seconds: before speech, between sentences, after speech
+LEAD, GAP, TAIL = 0.45, 0.42, 0.85        # seconds: before speech, between sentences, after speech
 XF = 0.45                                 # crossfade between shots
 MINT, INK, DIM, RED = (0, 236, 151), (240, 243, 242), (150, 160, 156), (255, 110, 100)
 FONT_DIR = Path(r"C:\Windows\Fonts")
-VOICE = "Microsoft David Desktop"
-RATE = 2                                  # SAPI speaking rate: 0 = normal, 2 = about 1.25x (owner 2026-11-10)
+VOICE = "Chris"                           # ElevenLabs premade voice, chosen by the owner 2026-11-10 (free plan: credit ElevenLabs)
+RATE = "el-v8"                            # cache tag for the narration clips
 
 
 # ============================================================================= script
@@ -68,77 +68,79 @@ class Scene:
 
 SCENES = [
     Scene("01_intro", "", "", [
-        ("Which technology is about to take off, and what is the evidence?", None),
-        ("FUTURESCOUT AI answers with a team of AI agents, running on NEAR AI Cloud.",
-         "Future Scout A I answers with a team of A I agents, running on NEAR A I Cloud."),
+        ("So here's the question we kept asking: which technology is about to take off, and what's the actual evidence?",
+         "So here's the question we kept asking. Which technology is about to take off... and what's the actual evidence?"),
+        ("FUTURESCOUT AI answers that with a small team of AI agents, running on NEAR AI Cloud.",
+         "FutureScout AI answers that with a small team of AI agents, running on NEAR AI Cloud."),
     ]),
     Scene("02_radar", "01", "Hot-topic radar", [
-        ("The radar tracks 54 topics across nine technology sectors.", "The radar tracks fifty-four topics across nine technology sectors."),
-        ("It ranks them by counting research papers and patent filings: year over year, and this year so far.", None),
-        ("So you can see which topics are heating up right now.", None),
-        ("A paper scout also proposes new fast-growing topics in each sector.", None),
+        ("This is the radar. It follows 54 topics, across nine sectors.", "This is the radar. It follows fifty-four topics, across nine sectors."),
+        ("For each one, we count research papers and patent filings. Last year against this year, so far.", None),
+        ("That tells you what's heating up right now. Not what was hot last year.", None),
+        ("And a paper scout keeps suggesting new topics that are starting to grow.", None),
     ]),
     Scene("03_agents", "02", "The agent team", [
-        ("Each topic gets a full research run.", None),
-        ("A chief agent plans. Science, risk, patent and X agents work in parallel, on real papers, patents and posts.", None),
-        ("Then the market agent reads the SEC filings of the companies those papers and patents point to. No hand-made company list.",
-         "Then the market agent reads the S E C filings of the companies those papers and patents point to. No hand-made company list."),
-        ("An AI check keeps the paper counts on topic, and the risk agent argues the other side.",
-         "An A I check keeps the paper counts on topic, and the risk agent argues the other side."),
-        ("When a report is sealed, the report agent sells it to the trading agent for NEAR, and a paper fund is invested.", None),
-        ("The report agent stakes 70% of what it earns with NEAR AI, so the staking rewards pay for every agent's models.",
-         "The report agent stakes seventy percent of what it earns with NEAR A I, so the staking rewards pay for every agent's models."),
-        ("It keeps the other 30%. When that pot passes 200 dollars, it funds a second trading agent.",
-         "It keeps the other thirty percent. When that pot passes two hundred dollars, it funds a second trading agent."),
+        ("Pick a topic, and the team gets to work.", None),
+        ("A chief agent makes the plan. Then the science, patent, risk and X agents run in parallel, on real papers, patents and posts.",
+         "A chief agent makes the plan. Then the science, patent, risk and X agents run in parallel... on real papers, real patents, and real posts."),
+        ("The market agent follows the evidence to the companies behind it, and reads their SEC filings. Nobody hands it a list.", None),
+        ("An AI check keeps the counts on topic. And the risk agent's job is to argue the other side.", None),
+        ("Now, here's the part we're proud of: the agents run an economy. The trading agent has to buy each report from the report agent, in NEAR.",
+         "Now, here's the part we're proud of. The agents run an economy. The trading agent has to buy each report from the report agent, in NEAR."),
+        ("The report agent stakes 70% of what it earns with NEAR AI. Those rewards pay for every agent's models.",
+         "The report agent stakes seventy percent of what it earns with NEAR AI. Those rewards pay for every agent's models."),
+        ("It keeps the other 30%. And once that passes $200, it funds a second trading agent.",
+         "It keeps the other thirty percent. And once that passes two hundred dollars, it funds a second trading agent."),
     ]),
     Scene("04_report", "03", "A research report", [
-        ("Here is the report on high bandwidth memory.", None),
-        ("The verdict: strong momentum, with an opportunity score of 80.", "The verdict: strong momentum, with an opportunity score of eighty."),
-        ("But confidence is only 50%. Risk lowers confidence, not the score.",
-         "But confidence is only fifty percent. Risk lowers confidence, not the score."),
-        ("Research is up 106% this year so far, and patents 81%.",
-         "Research is up one hundred and six percent this year so far, and patents eighty-one percent."),
+        ("Let's open one. High bandwidth memory.", None),
+        ("The verdict is strong momentum, with a score of 80.", "The verdict is strong momentum, with a score of eighty."),
+        ("But look at the confidence: only 50%. Risks lower the confidence, not the score.",
+         "But look at the confidence. Only fifty percent. Risks lower the confidence, not the score."),
+        ("Research is up 106% this year. Patents, up 81%.", "Research is up a hundred and six percent this year. Patents, up eighty-one."),
     ]),
     Scene("05_companies", "04", "Companies and price check", [
-        ("It names the companies behind the evidence, including smaller ones.", None),
-        ("And it checks whether their share prices have already run: a risk check, never a buy signal.", None),
+        ("It names the companies behind that evidence, including some smaller ones.", None),
+        ("And it checks how far their share prices have already run. That's a risk check. It's never a buy signal.", None),
     ]),
     Scene("05b_scout", "05", "Company scout", [
-        ("A company scout looks past the big names, for smaller listed companies behind the patents and papers.", None),
-        ("It checks their size, growth and research spending, and ranks the next runners.", None),
+        ("The company scout goes past the big names, to smaller listed companies behind the patents and papers.", None),
+        ("It compares their size, growth and research spending, and ranks the ones to watch.", None),
     ]),
     Scene("06_evidence", "06", "Evidence you can check", [
-        ("The full report opens everything up.", None),
-        ("The agent trace shows which agents ran, on which model, and at what cost.", None),
-        ("Every finding carries a label, and the exact quote from its source.", None),
-        ("A citation guard downgrades anything a source does not support.", None),
+        ("Open the full report, and everything is there.", None),
+        ("Which agents ran, on which model, and what each one cost.", None),
+        ("Every finding has a label, and the exact quote from its source.", None),
+        ("If a source doesn't back a claim up, a citation guard downgrades it.", None),
     ]),
     Scene("07_seal", "07", "Sealed on NEAR", [
-        ("Each report's fingerprint is sealed on NEAR testnet, and re-checked on every page load.", None),
-        ("Change one word, and the seal breaks.", None),
-        ("Fund decisions and every trade are fingerprinted on NEAR the same way.", None),
+        ("When a report is done, its fingerprint is sealed on NEAR mainnet. The site checks it again on every page load.", None),
+        ("Change a single word, and the seal breaks.", None),
+        ("Fund decisions and trades get sealed the same way.", None),
     ], tail=2.4),
     Scene("09_funds", "08", "Funds and trading", [
-        ("Every topic gets a paper fund, fully invested across low, medium and high risk companies.", None),
-        ("Each paper fund lists the reasons for every decision, and is measured against the S&P 500.",
-         "Each paper fund lists the reasons for every decision, and is measured against the S and P five hundred."),
-        ("A trading agent on a strong model trades tokenized stocks with real money, through NEAR Intents.", None),
-        ("Code checks every order: budget, allowed stocks, price and cost. Then the agent approves its own trade.", None),
-        ("In shadow mode it also trades pretend money at real quotes, and explains each choice.", None),
+        ("Every topic also gets a paper fund, spread across low, medium and high-risk companies.", None),
+        ("Each decision comes with its reasons, and the fund is measured against the S&P 500.",
+         "Each decision comes with its reasons, and the fund is measured against the S and P five hundred."),
+        ("Then there's real money: a trading agent on a strong model trades tokenized stocks through NEAR Intents.",
+         "Then there's real money. A trading agent on a strong model trades tokenized stocks through NEAR Intents."),
+        ("Code checks every order first: the budget, the allowed stocks, the price and the cost. Only then does the agent approve its own trade.",
+         "Code checks every order first. The budget, the allowed stocks, the price, and the cost. Only then does the agent approve its own trade."),
+        ("In shadow mode, it also trades pretend money at real quotes, and explains every choice.", None),
     ]),
     Scene("10_round", "09", "Real money, end to end", [
-        ("The agent wakes up on its own: on a new report, a sharp price move, or its daily review.", None),
-        ("First it must buy the report: it paid 4.6 NEAR for the memory report, straight from its near.com balance.",
-         "First it must buy the report: it paid four point six NEAR for the memory report, straight from its near dot com balance."),
-        ("Then it bought Intel with what it had left, and approved the order itself after every code check passed.", None),
-        ("The report agent staked 70% of its earnings with NEAR AI, and keeps 30% to fund a second trading agent.",
-         "The report agent staked seventy percent of its earnings with NEAR A I, and keeps thirty percent to fund a second trading agent."),
-        ("Other trading bots can buy fresh reports too: 24 hours of early access, paid in NEAR and checked on chain.",
-         "Other trading bots can buy fresh reports too: twenty-four hours of early access, paid in NEAR and checked on chain."),
+        ("Here's a real round. The agent wakes up on its own: a new report, a sharp price move, or its daily review.",
+         "Here's a real round. The agent wakes up on its own. A new report, a sharp price move, or its daily review."),
+        ("First, it had to buy the report. It paid 4.6 NEAR for the memory report, straight from its near.com balance.",
+         "First, it had to buy the report. It paid four point six NEAR for the memory report, straight from its near dot com balance."),
+        ("Then it bought Intel with what was left, and approved the order itself, once every check had passed.", None),
+        ("The report agent staked 70% of what it earned with NEAR AI, and kept 30% toward a second trading agent.",
+         "The report agent staked seventy percent of what it earned with NEAR AI, and kept thirty percent toward a second trading agent."),
+        ("And it's not just our agent. Any trading bot can buy a report, paid in NEAR and checked on chain.", None),
     ]),
     Scene("10_close", "", "", [
-        ("FUTURESCOUT AI: evidence-first technology research.", "Future Scout A I: evidence-first technology research."),
-        ("Models on NEAR AI Cloud, reports sealed on NEAR.", "Models on NEAR A I Cloud, reports sealed on NEAR."),
+        ("That's FUTURESCOUT AI: research you can check.", "That's FutureScout AI. Research you can check."),
+        ("Models on NEAR AI Cloud, and every report sealed on NEAR.", None),
         ("Built for the NEAR Hackathon.", None),
     ], tail=2.2),
 ]
@@ -183,23 +185,20 @@ def run(cmd: list[str]) -> None:
         raise RuntimeError(f"command failed: {' '.join(cmd[:6])} ...\n{r.stderr[-1500:]}")
 
 
-# ============================================================================= narration (Windows text-to-speech)
-def synthesize(items: list[tuple[str, Path]]) -> None:
-    AUDIO.mkdir(parents=True, exist_ok=True)
-    spec = AUDIO / "tts_items.json"
-    spec.write_text(json.dumps([{"text": t, "out": str(p)} for t, p in items]), encoding="utf-8")
-    ps1 = AUDIO / "tts.ps1"
-    ps1.write_text(
-        "Add-Type -AssemblyName System.Speech\n"
-        "$s = New-Object System.Speech.Synthesis.SpeechSynthesizer\n"
-        f"try {{ $s.SelectVoice('{VOICE}') }} catch {{}}\n"
-        f"$s.Rate = {RATE}\n"
-        "$fmt = New-Object System.Speech.AudioFormat.SpeechAudioFormatInfo(44100, [System.Speech.AudioFormat.AudioBitsPerSample]::Sixteen, "
-        "[System.Speech.AudioFormat.AudioChannel]::Mono)\n"
-        f"$items = Get-Content -Raw -Encoding UTF8 '{spec}' | ConvertFrom-Json\n"
-        "foreach ($i in $items) { $s.SetOutputToWaveFile($i.out, $fmt); $s.Speak($i.text) }\n"
-        "$s.SetOutputToNull(); $s.Dispose()\n", encoding="utf-8")
-    run(["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", str(ps1)])
+# ============================================================================= narration (ElevenLabs, demo/voice.py)
+def synthesize(items: list[tuple[str, Path]], context: dict[Path, tuple[str, str]]) -> None:
+    """Each sentence from ElevenLabs (voice VOICE), with the neighbouring sentences as context so the intonation flows."""
+    import wave as _wave
+    sys.path.insert(0, str(ROOT))
+    import voice as el
+    client = el.httpx.Client(headers={"xi-api-key": el.api_key()}, timeout=120)
+    vid = el.voice_id(client, VOICE)
+    for text, out in items:
+        prev, nxt = context.get(out, ("", ""))
+        pcm = el.speak(client, vid, text, prev, nxt)
+        with _wave.open(str(out), "wb") as w:
+            w.setnchannels(1); w.setsampwidth(2); w.setframerate(SR)
+            w.writeframes(pcm)
 
 
 def read_trimmed(path: Path) -> array.array:
@@ -225,9 +224,10 @@ def build_narration(scenes: list[Scene], reuse: bool) -> Path:
     for sc in scenes:
         for k, (cap, say) in enumerate(sc.lines):
             items.append((say or cap, wav_path(sc, k)))
+    context = {p: (items[i - 1][0] if i else "", items[i + 1][0] if i + 1 < len(items) else "") for i, (_, p) in enumerate(items)}
     missing = [(t, p) for t, p in items if not p.exists()]
     if missing:
-        synthesize(missing)
+        synthesize(missing, context)
     clips = {p: read_trimmed(p) for _, p in items}
     t = 0.0
     for sc in scenes:
@@ -344,7 +344,7 @@ def title_card(t: float, dur: float) -> Image.Image:
     if k > 0:
         d.line((W / 2 - 150 * k, 640, W / 2 + 150 * k, 640), fill=rgba(MINT, 0.9), width=3)
     rise(d, (W / 2, 702), "Find the next hot technology. Show the evidence.", font(44, "semilight"), (200, 208, 205), t, 1.0)
-    rise(d, (W / 2, 968), "Product demo  ·  recorded from the live application  ·  NEAR testnet", font(24, "regular"), DIM, t, 1.5)
+    rise(d, (W / 2, 968), "Product demo  ·  recorded from the live application  ·  NEAR mainnet", font(24, "regular"), DIM, t, 1.5)
     return img
 
 
@@ -356,7 +356,7 @@ def terminal_card(lines: list[str], command: str) -> Callable[[float, float], Im
         d.rounded_rectangle((x0, y0, x1, y1), radius=20, fill=(9, 12, 11, 245), outline=(52, 60, 57, 255), width=2)
         for i, c in enumerate(((255, 95, 86), (255, 189, 46), (39, 201, 63))):
             d.ellipse((x0 + 30 + i * 32, y0 + 26, x0 + 48 + i * 32, y0 + 44), fill=c)
-        d.text((x0 + 150, y0 + 22), "backend  —  real output, read live from NEAR testnet", font=font(22, "mono"), fill=DIM)
+        d.text((x0 + 150, y0 + 22), "backend  —  real output, read live from NEAR mainnet", font=font(22, "mono"), fill=DIM)
         d.line((x0, y0 + 68, x1, y0 + 68), fill=(40, 47, 45, 255), width=2)
         f, y = font(25, "mono"), y0 + 96
         typed = min(len(command), int(max(0.0, t - 0.25) * 60))
@@ -419,6 +419,7 @@ def closing_card(t: float, dur: float) -> Image.Image:
             ar = ease((t - (t0 + 0.25 + i * 0.1)) / 0.4)
             d.text((x + 34, 440 + i * 56), row, font=font(27, "regular"), fill=rgba(INK, ar), anchor="lm")
     rise(d, (W / 2, 880), "Built for the NEAR Hackathon", font(28, "semibold"), INK, t, 1.9)
+    rise(d, (W / 2, 1010), "Voice generated with ElevenLabs", font(20, "regular"), DIM, t, 2.3)   # free-plan attribution
     return img
 
 
@@ -892,8 +893,8 @@ def render(scenes: list[Scene], pieces: list[Piece], out: Path, t_from: float, t
 
 def mux(video: Path, narration: Path, music: Path, total: float, out: Path) -> None:
     fc = (f"[2:a]atrim=0:{total:.2f},aformat=sample_rates=44100:channel_layouts=stereo,lowpass=f=3400,highpass=f=55,"
-          f"aecho=0.6:0.45:380|760:0.28|0.16,volume=0.30,afade=t=in:d=2.5,afade=t=out:st={total - 3.2:.2f}:d=3.2[m];"
-          "[1:a]aformat=sample_rates=44100:channel_layouts=stereo,volume=1.5,asplit=2[n1][n2];"
+          f"aecho=0.6:0.45:380|760:0.28|0.16,volume=0.22,afade=t=in:d=2.5,afade=t=out:st={total - 3.2:.2f}:d=3.2[m];"
+          "[1:a]aformat=sample_rates=44100:channel_layouts=stereo,loudnorm=I=-16:TP=-1.5:LRA=9,asplit=2[n1][n2];"
           "[m][n1]sidechaincompress=threshold=0.03:ratio=5:attack=80:release=900[md];"
           "[md][n2]amix=inputs=2:normalize=0:duration=first,alimiter=limit=0.94[a]")
     run([ffmpeg_exe(), "-y", "-loglevel", "error", "-i", str(video), "-i", str(narration), "-stream_loop", "-1", "-i", str(music),
@@ -912,7 +913,7 @@ def write_text_outputs(scenes: list[Scene], total: float) -> None:
             n += 1
     OUT.with_suffix(".srt").write_text("\n".join(rows), encoding="utf-8")
     md = ["# FUTURESCOUT AI: demo narration", "",
-          f"Video: `{OUT.name}` · {int(total // 60)}:{int(total % 60):02d} · 1920x1080 · 30 fps. Voice: {VOICE} (Windows text-to-speech).", "",
+          f"Video: `{OUT.name}` · {int(total // 60)}:{int(total % 60):02d} · 1920x1080 · 30 fps. Voice: {VOICE}, generated with ElevenLabs (free plan; credit: ElevenLabs, elevenlabs.io).", "",
           "Every app shot is a live recording of the running dashboard. Cards, titles, captions, highlight rings, the mouse pointer, "
           "narration and music are added by `demo/make_video.py`.", "",
           "| Time | Section | Narration |", "|---|---|---|"]

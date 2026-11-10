@@ -4,7 +4,7 @@
   python scripts\\tamper_demo.py --run <id>      a specific run
 
 1. Loads the report and recomputes its SHA-256 fingerprint.
-2. Reads the fingerprint FUTURESCOUT recorded on NEAR testnet (free RPC read, no key).
+2. Reads the fingerprint FUTURESCOUT recorded on NEAR, on the record's own network (free RPC read, no key).
 3. Shows MATCH.
 4. Changes ONE word of the summary in memory (nothing is saved), recomputes, and shows MISMATCH.
 
@@ -22,7 +22,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import httpx  # noqa: E402
 
 from app.api.main import _default_store  # noqa: E402
-from app.chain.near_record import SOCIALDB_TESTNET, TESTNET_RPC, NearRecordError, read_record, verify  # noqa: E402
+from app.chain.near_record import MAINNET_RPC, SOCIALDB_TESTNET, TESTNET_RPC, NearRecordError, network_of, read_record, verify  # noqa: E402
 from app.config import get_settings  # noqa: E402
 
 
@@ -51,12 +51,14 @@ def main() -> int:
         print(f"{run_id} has no NEAR record")
         return 1
     print(f"Report: {report.topic}  ({run_id})")
-    print(f"Recorded on NEAR testnet by {rec['account']} in {rec.get('contract', SOCIALDB_TESTNET)}")
+    contract = rec.get("contract", SOCIALDB_TESTNET)
+    net = rec.get("network") or network_of(contract)
+    print(f"Recorded on NEAR {net} by {rec['account']} in {contract}")
     print(f"  tx: {rec.get('explorer_url')}")
     try:
-        onchain = read_record(httpx.Client(timeout=30.0), TESTNET_RPC, rec.get("contract", SOCIALDB_TESTNET), rec["account"], rec["key"])
+        onchain = read_record(httpx.Client(timeout=30.0), TESTNET_RPC if net == "testnet" else MAINNET_RPC, contract, rec["account"], rec["key"])
     except NearRecordError as exc:
-        print(f"could not read NEAR testnet: {exc}")
+        print(f"could not read NEAR {net}: {exc}")
         return 1
     v = verify(report, onchain)
     print(f"\n1) Stored report, as saved:\n   computed  {v['sha256']}\n   on chain  {v.get('onchain_sha256')}\n   -> {v['status']}")
