@@ -3,7 +3,7 @@ import type { Report } from "./types";
 
 export type AgentKey =
   | "chief" | "science" | "risk" | "market" | "x" | "patent" | "review" | "timing" | "scout" | "investment" | "near" | "fund" | "trader"
-  | "seller" | "stake";
+  | "seller" | "stake" | "trader2";
 
 export interface AgentInfo {
   key: AgentKey;
@@ -59,6 +59,9 @@ export const AGENTS: Record<AgentKey, AgentInfo> = {
   stake: { key: "stake", name: "NEAR AI staking", role: "Earns credits for AI", icon: "sprout",
     detail: "The report agent stakes 70% of every payment through NEAR AI Cloud's Staking for Inference (stake.dao, validator nearai.pool.near) and keeps 30%; once the kept part passes $200 it funds a second trading agent (next step). The staking rewards become NEAR AI credits that pay for the agents' model calls; the staked NEAR stays withdrawable.",
     sources: "NEAR mainnet · NEAR AI Cloud" },
+  trader2: { key: "trader2", name: "Trading agent 2", role: "Planned: funded at $200", icon: "pulse",
+    detail: "The next step, not built yet. The report agent keeps 30% of every payment in a pot; once that pot passes $200 it funds a second trading agent with its own account and budget, run like the first one. The first trading agent already shows the whole loop working with real money.",
+    sources: "The report agent's kept 30%" },
   trader: { key: "trader", name: "Trading agent", role: "Buys reports, trades", icon: "pulse", modelKey: "trader",
     detail: "Wakes on a new report, a sharp price move or a daily review. It may only use reports it has bought from the report agent, then buys, sells or holds a tokenized stock and explains why. Code checks the budget, the allowed stocks, the price and the cost; then the agent approves its own order, which goes through NEAR Intents from its near.com balance. In shadow mode it places pretend orders at real quotes.",
     sources: "Bought reports · topic funds · NEAR Intents quotes" },
@@ -105,5 +108,6 @@ export function agentStats(r: Report): Record<AgentKey, AgentRunStat> {
     trader: { state: "off", note: "after the report: see Funds & trading" },
     seller: { state: "off", note: "after the report: see Funds & trading" },
     stake: { state: "off", note: "after the report: see Funds & trading" },
+    trader2: { state: "off", note: "planned" },
   };
 }

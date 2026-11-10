@@ -469,3 +469,9 @@ a.card:hover { box-shadow: 0 12px 40px -18px color-mix(in srgb, var(--accent) 45
 .flow-badge.report text { fill: var(--accent); }
 .flow-badge.pay rect { stroke: #e0b04a; }
 .flow-badge.pay text { fill: #e0b04a; }
+/* the planned second trading agent: dashed, dimmer, clearly not running yet */
+.node.planned .node-box { stroke-dasharray: 5 4; opacity: 0.85; }
+.node.planned .node-dot { fill: var(--line-strong) !important; }
+.edge.planned-edge .edge-base { stroke-dasharray: 5 5; stroke: var(--line-strong); }
+.flow-badge.pot rect { stroke: var(--text-3, #8a8f8d); }
+.flow-badge.pot text { fill: var(--text-2, #b8bdbb); }
