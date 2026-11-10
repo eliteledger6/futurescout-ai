@@ -86,11 +86,11 @@ SCENES = [
     ]),
     Scene("04_report", "03", "A research report", [
         ("Here is the report on high bandwidth memory.", None),
-        ("The verdict: strong momentum, with an opportunity score of 72.", "The verdict: strong momentum, with an opportunity score of seventy-two."),
-        ("But confidence is only 47%. Risk lowers confidence, not the score.",
-         "But confidence is only forty-seven percent. Risk lowers confidence, not the score."),
-        ("Research is up 108% this year so far, and patents 81%.",
-         "Research is up one hundred and eight percent this year so far, and patents eighty-one percent."),
+        ("The verdict: strong momentum, with an opportunity score of 80.", "The verdict: strong momentum, with an opportunity score of eighty."),
+        ("But confidence is only 50%. Risk lowers confidence, not the score.",
+         "But confidence is only fifty percent. Risk lowers confidence, not the score."),
+        ("Research is up 106% this year so far, and patents 81%.",
+         "Research is up one hundred and six percent this year so far, and patents eighty-one percent."),
     ]),
     Scene("05_companies", "04", "Companies and price check", [
         ("It names the companies behind the evidence, including smaller ones.", None),
@@ -110,8 +110,8 @@ SCENES = [
         ("Each topic gets a paper fund, split into low, medium and high risk companies.", None),
         ("A trading agent on a strong model then picks tokenized stocks to buy through NEAR Intents.", None),
         ("Safety checks run first, and the owner approves every real order.", None),
-        ("In shadow mode it has placed 6,600 pretend dollars at real quotes, and explains each choice.",
-         "In shadow mode it has placed six thousand six hundred pretend dollars at real quotes, and explains each choice."),
+        ("In shadow mode it has placed 7,100 pretend dollars at real quotes, and explains each choice.",
+         "In shadow mode it has placed seven thousand one hundred pretend dollars at real quotes, and explains each choice."),
     ]),
     Scene("10_close", "", "", [
         ("FUTURESCOUT AI: evidence-first technology research.", "Future Scout A I: evidence-first technology research."),

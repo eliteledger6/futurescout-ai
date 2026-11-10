@@ -1,6 +1,6 @@
 # FUTURESCOUT AI: demo narration
 
-Video: `futurescout_hackathon_demo.mp4` · 2:20 · 1920x1080 · 30 fps. Voice: Microsoft David Desktop (Windows text-to-speech).
+Video: `futurescout_hackathon_demo.mp4` · 2:25 · 1920x1080 · 30 fps. Voice: Microsoft David Desktop (Windows text-to-speech).
 
 Every app shot is a live recording of the running dashboard. Cards, titles, captions, highlight rings, the mouse pointer, narration and music are added by `demo/make_video.py`.
 
@@ -8,10 +8,10 @@ Every app shot is a live recording of the running dashboard. Cards, titles, capt
 |---|---|---|
 | 0:00 | Close | Which technology is about to take off, and what is the evidence? FUTURESCOUT AI answers with a team of AI agents, running on NEAR AI Cloud. |
 | 0:10 | 01 Hot-topic radar | The radar tracks 54 topics across nine technology sectors. It ranks them by counting research papers and patent filings: year over year, and this year so far. So you can see which topics are heating up right now. |
-| 0:25 | 02 The agent team | Each topic gets a full research run. A chief agent plans. Science, risk, market, patent and X agents work in parallel, on real papers, patents, SEC filings and posts. An AI check keeps the paper counts on topic, and the risk agent argues the other side. |
-| 0:45 | 03 A research report | Here is the report on high bandwidth memory. The verdict: strong momentum, with an opportunity score of 72. But confidence is only 47%. Risk lowers confidence, not the score. Research is up 108% this year so far, and patents 81%. |
-| 1:06 | 04 Companies and price check | It names the companies behind the evidence, including smaller ones. And it checks whether their share prices have already run: a risk check, never a buy signal. |
-| 1:17 | 05 Evidence you can check | The full report opens everything up. The agent trace shows which agents ran, on which model, and at what cost. Every finding carries a label, and the exact quote from its source. A citation guard downgrades anything a source does not support. |
-| 1:33 | 06 Sealed on NEAR | Each report's fingerprint is sealed on NEAR testnet, and re-checked on every page load. Change one word, and the seal breaks. |
-| 1:44 | 07 Funds and trading | Each topic gets a paper fund, split into low, medium and high risk companies. A trading agent on a strong model then picks tokenized stocks to buy through NEAR Intents. Safety checks run first, and the owner approves every real order. In shadow mode it has placed 6,600 pretend dollars at real quotes, and explains each choice. |
-| 2:07 | Close | FUTURESCOUT AI: evidence-first technology research. Models on NEAR AI Cloud, reports sealed on NEAR. Research information, not financial advice. |
+| 0:25 | 02 The agent team | Each topic gets a full research run. A chief agent plans. Science, risk, patent and X agents work in parallel, on real papers, patents and posts. Then the market agent reads the SEC filings of the companies those papers and patents point to. No hand-made company list. An AI check keeps the paper counts on topic, and the risk agent argues the other side. |
+| 0:51 | 03 A research report | Here is the report on high bandwidth memory. The verdict: strong momentum, with an opportunity score of 80. But confidence is only 50%. Risk lowers confidence, not the score. Research is up 106% this year so far, and patents 81%. |
+| 1:11 | 04 Companies and price check | It names the companies behind the evidence, including smaller ones. And it checks whether their share prices have already run: a risk check, never a buy signal. |
+| 1:22 | 05 Evidence you can check | The full report opens everything up. The agent trace shows which agents ran, on which model, and at what cost. Every finding carries a label, and the exact quote from its source. A citation guard downgrades anything a source does not support. |
+| 1:38 | 06 Sealed on NEAR | Each report's fingerprint is sealed on NEAR testnet, and re-checked on every page load. Change one word, and the seal breaks. |
+| 1:49 | 07 Funds and trading | Each topic gets a paper fund, split into low, medium and high risk companies. A trading agent on a strong model then picks tokenized stocks to buy through NEAR Intents. Safety checks run first, and the owner approves every real order. In shadow mode it has placed 7,100 pretend dollars at real quotes, and explains each choice. |
+| 2:12 | Close | FUTURESCOUT AI: evidence-first technology research. Models on NEAR AI Cloud, reports sealed on NEAR. Research information, not financial advice. |
