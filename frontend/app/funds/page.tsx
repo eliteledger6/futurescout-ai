@@ -65,7 +65,7 @@ export default function FundsPage() {
                 ))}
               </div>
               <p className="small muted">Solid line = fund, dashed = S&amp;P 500 (SPY) over the same dates, both from $10,000. Returns are price only, after an assumed 0.3% cost per trade.</p>
-              <p className="small muted">Looking for the earlier, simpler test? <Link href="/portfolio" style={{ color: "var(--accent)" }}>Paper portfolio of scout picks →</Link></p>
+
             </>
           )}
         </div>

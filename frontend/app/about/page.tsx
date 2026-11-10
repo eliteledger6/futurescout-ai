@@ -9,7 +9,7 @@ const LABELS: Label[] = ["verified_fact", "ai_interpretation", "forecast", "unve
 const RULES = [
   ["seal", "Sources only from real APIs", "Every URL in a report comes from an API response, never from a model's memory. Invented source ids are removed."],
   ["shield", "Quotes are checked", "A 'verified fact' must quote its source word for word. Headlines and X posts can never verify a fact."],
-  ["building", "Companies come from the evidence", "No hand-made company list: a company is checked because the retrieved patents name it as assignee or its researchers wrote the papers. A filing that merely mentions the topic is shown, but is never a reason to buy."],
+  ["building", "Companies come from the evidence", "No hand-made company list: a company is checked because the retrieved patents name it as assignee or its researchers wrote the papers. Patents and papers come first: a company named only in an SEC filing is used just when a topic has no company with patents or papers, and is then labelled as a fallback."],
   ["swords", "A second agent argues back", "The Risk agent searches independently for limits and failures, then challenges specific findings."],
   ["pulse", "Limits written in code", "The trading agent decides, but code sets the limits: a capped budget, an allowlist of tokenized stocks, a price band around the last close, a cost cap, a kill switch, and an order checked field by field before it is signed."],
   ["coin", "Agents pay their way", "The trading agent must buy a report before it may use it. The report agent stakes what it earns with NEAR AI, and the rewards pay for the agents' model calls."],

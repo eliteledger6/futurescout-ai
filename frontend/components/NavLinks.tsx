@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-// Four tabs. Funds and Trading share one tab (sub-tabs on those pages). "New research" is a button on the Reports page; the older paper portfolio is linked from Funds.
+// Four tabs. Funds and Trading share one tab (sub-tabs on those pages). "New research" is a button on the Reports page. The older paper portfolio (/portfolio) is no longer linked.
 const LINKS = [
   { href: "/", label: "Reports", also: ["/runs", "/research"] },
   { href: "/radar", label: "Radar", also: [] },

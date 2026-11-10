@@ -837,10 +837,10 @@ function ScoutSection({ report, sources }: { report: Report; sources: Map<string
         <p className="small muted" style={{ margin: 0 }}>{s.coverage_note}</p>
         {s.candidates.length > 0 ? (
           <div className="table-wrap"><table className="table radar-table">{head}<tbody>{s.candidates.map((c, i) => <Row key={c.name} c={c} rank={i + 1} />)}</tbody></table></div>
-        ) : <div className="notice small">No SEC-listed company outside the configured big-name list was found in this run&apos;s sources.</div>}
+        ) : <div className="notice small">No SEC-listed company was found in this run&apos;s patents, papers or filings.</div>}
         {s.incumbents.length > 0 && (
           <details>
-            <summary className="small" style={{ cursor: "pointer", color: "var(--text-2)" }}>Configured incumbents that also showed up ({s.incumbents.length})</summary>
+            <summary className="small" style={{ cursor: "pointer", color: "var(--text-2)" }}>Large companies from the earlier fixed list (older reports only) ({s.incumbents.length})</summary>
             <div className="table-wrap" style={{ marginTop: 10 }}><table className="table radar-table">{head}<tbody>{s.incumbents.map((c) => <Row key={c.name} c={c} />)}</tbody></table></div>
           </details>
         )}
