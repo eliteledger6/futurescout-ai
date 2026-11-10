@@ -413,6 +413,23 @@ def _assess(s, cfg, state, toks, triggers, check, shadow, now, pf, closes=None):
         if dropped:
             check.notes.append(f"not usable (report not bought): {', '.join(dropped)}")
             print(f"  reports not bought, so not usable: {', '.join(dropped)}")
+    if not shadow and cfg.live.auto_approve and cfg.live.route == "confidential":
+        # Size by the NEAR really in near.com (after any report payments), not only by the caps (bug seen 2026-11-10:
+        # a $60 order was proposed with 12.465 NEAR, about $45, available; the pre-sign check refused it, nothing was sent).
+        try:
+            priv = refresh_private_balance(s, cfg)
+        except Exception as exc:  # noqa: BLE001
+            priv = None
+            print(f"  near.com balance not readable: {str(exc)[:100]}")
+        if priv is not None:
+            room = max(0.0, (priv - lv.private_reserve_near) * near_price(ex) * 0.99)
+            if fixed and room < fixed:
+                check.notes.append(f"trade size cut from ${fixed:.2f} to ${room:.2f}: near.com holds {priv:.3f} NEAR "
+                                   f"({lv.private_reserve_near} NEAR kept back)")
+                print(f"  near.com holds {priv:.3f} NEAR: trade size cut from ${fixed:.2f} to ${room:.2f}")
+                fixed = round(room, 2) if room >= lv.min_trade_usd else None
+                budget = min(budget, room)
+                can_buy = fixed is not None
     holdings = pf["positions"] if shadow else [{"ticker": h["ticker"], "symbol": h["symbol"], "cost_usd": h["cost_usd"]} for h in state.live_holdings()]
     adds = {}
     for p in state.proposals:

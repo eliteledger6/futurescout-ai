@@ -60,6 +60,7 @@ class LiveConfig(BaseModel):
     pay_with: str = "near"               # "near" (native NEAR, owner's choice 2026-11-09) or "usdc"
     near_asset_id: str = "nep141:wrap.near"   # how 1Click names NEAR; a plain NEAR transfer to the deposit address pays it
     near_reserve: float = 0.05           # NEAR always left in the account for fees
+    private_reserve_near: float = 0.2    # NEAR always left in the near.com balance when a buy is sized from it
     route: str = "wallet"                # "wallet" = pay from the wallet to a deposit address (got stuck 2026-11-09);
                                          # "confidential" = signed order from the private balance, as near.com does
     signed_route_enabled: bool = False   # second switch for the confidential route; false = built but cannot submit
