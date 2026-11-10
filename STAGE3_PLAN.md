@@ -125,3 +125,5 @@ token issuer. Start with an amount you could lose completely without it matterin
 To start step C, the owner writes in chat: which topics, the total budget, the per-trade and per-day caps, and that
 steps A1-A2 are done. Claude then updates `CLAUDE.md` with exactly those limits and builds C. Step D needs a second
 explicit yes.
+
+**Update 2026-11-10:** both real orders COMPLETED (1Click status SUCCESS, re-checked read-only with `fund_trade.py resume`): $10 -> 0.0345 GOOGLon and $25 -> 0.0846 GOOGLon, delivered by `mt_transfer` to `wrongowl2563.near` inside intents.near (tx A3xEUnJFCCCKtgEXYMd1aiHjMquxJ95bsgrXaUMoxEjd for the $25 order). They took about 10 hours, not minutes. At 2026-11-10 ~01:00 UTC the account's public intents.near balance of that token reads 0 and `mt_tokens_for_owner` is empty, so the tokens were moved after delivery (probably into the near.com private balance by the owner; not verified). Total cap $35 is fully used; kill switch ON; wallet holds 0.52 NEAR. A second trade needs the owner to: raise `max_total_usd` (their words), top up NEAR, run `start`, and pick a route (wallet route is proven; the signed route is still untested).
