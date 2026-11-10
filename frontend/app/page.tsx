@@ -32,8 +32,9 @@ export default function Home() {
           <div className="eyebrow">Autonomous research and trading agents on NEAR · 1–5 year horizon</div>
           <h1 className="display">Find the next hot technology. <span className="gradient-text">Show the evidence.</span></h1>
           <p className="lede">AI agents read papers, patents, company filings and X, argue the other side, and write a report where every claim has a label and a source.
-            A trading agent buys those reports in NEAR and trades tokenized stocks through NEAR Intents, inside hard limits. The report agent stakes what it
-            earns, so NEAR AI pays for its models. Every report and trade is sealed on NEAR.</p>
+            Reports are sold for $2–3 each, paid in NEAR: our trading agent buys them and trades tokenized stocks through NEAR Intents, inside hard
+            limits, and any other trading bot can buy them too. The report agent stakes what it earns, so NEAR AI pays for its models. Every report
+            and trade is sealed on NEAR (new seals on mainnet).</p>
           <div className="actions">
             {latest ? <Link className="btn btn-solid" href={`/runs/${latest.id}`}>Open latest report →</Link>
               : <Link className="btn btn-solid" href="/research">Start research →</Link>}

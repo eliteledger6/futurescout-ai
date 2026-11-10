@@ -12,7 +12,7 @@ const RULES = [
   ["building", "Companies come from the evidence", "No hand-made company list: a company is checked because the retrieved patents name it as assignee or its researchers wrote the papers. Patents and papers come first: a company named only in an SEC filing is used just when a topic has no company with patents or papers, and is then labelled as a fallback."],
   ["swords", "A second agent argues back", "The Risk agent searches independently for limits and failures, then challenges specific findings."],
   ["pulse", "Limits written in code", "The trading agent decides, but code sets the limits: a capped budget, an allowlist of tokenized stocks, a price band around the last close, a cost cap, a kill switch, and an order checked field by field before it is signed."],
-  ["coin", "Agents pay their way", "The trading agent must buy a report before it may use it. The report agent stakes what it earns with NEAR AI, and the rewards pay for the agents' model calls."],
+  ["coin", "Agents pay their way", "A report costs what it took to make plus a small margin ($2–3), paid in NEAR, and it is never unlocked without payment. The trading agent must buy a report before it may use it, and any other bot can buy through the API. The report agent stakes 70% of what it earns with NEAR AI, and the rewards pay for the agents' model calls."],
 ] as const;
 
 export default function About() {

@@ -309,7 +309,8 @@ export interface Trading {
 
 export interface Economy {
   enabled: boolean; seller_account: string; staking_contract: string | null;
-  limits: { max_price_near: number; budget_share_of_fund: number; stake_share: number; min_stake_near: number };
+  limits: { max_price_near: number; budget_share_of_fund: number; stake_share: number; min_stake_near: number;
+    min_price_usd?: number | null; max_price_usd?: number | null; margin_usd?: number };
   spent_near: number; report_agent_wallet_near: number | null; report_agent_staked_near: number | null;
   kept_near?: number; second_trader_at_usd?: number;
   prices: { run_id: string; topic: string; price_near: number; price_usd: number; cost_usd: number; basis: string; at: string }[];

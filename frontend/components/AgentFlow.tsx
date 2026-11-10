@@ -134,7 +134,7 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
               <Flow d={SALE.pay} cls="edge on sale-pay" />
               <Flow d={SALE.stake} />
               <Badge x={GAP_MID} y={POS.trader[1] + 62} text="report ▸" tone="report" />
-              <Badge x={GAP_MID} y={POS.seller[1] - 62} text="◂ pays 3–5 NEAR" tone="pay" />
+              <Badge x={GAP_MID} y={POS.seller[1] - 62} text="◂ pays $2–3 in NEAR" tone="pay" />
               <Badge x={GAP_MID} y={POS.seller[1] + 32} text="stakes 70% ▸" tone="credit" />
               <Flow d={CREDITS} cls="edge on credits" />
               <Badge x={(POS.chief[0] + POS.stake[0] + W) / 2} y={CREDIT_Y} text="◂ NEAR AI credits from staking pay every agent's model calls" tone="credit" />

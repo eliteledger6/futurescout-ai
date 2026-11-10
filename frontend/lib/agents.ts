@@ -57,7 +57,7 @@ export const AGENTS: Record<AgentKey, AgentInfo> = {
     detail: "Prices every sealed report at what it cost to make plus a small margin ($2 to $3, paid in NEAR) and sells it to the trading agent. Each payment comes from the trading agent's near.com balance as a signed order, checked before signing and confirmed when it arrives in the report agent's own wallet.",
     sources: "Its own NEAR account · NEAR Intents" },
   stake: { key: "stake", name: "NEAR AI staking", role: "Earns credits for AI", icon: "sprout",
-    detail: "The report agent stakes 70% of every payment through NEAR AI Cloud's Staking for Inference (stake.dao, validator nearai.pool.near) and keeps 30%; once the kept part passes $200 it funds a second trading agent (next step). The staking rewards become NEAR AI credits that pay for the agents' model calls; the staked NEAR stays withdrawable.",
+    detail: "The report agent stakes 70% of every payment through NEAR AI Cloud's Staking for Inference (stake.dao, validator nearai.pool.near; at least 1 NEAR at a time) and keeps 30%; once the kept part passes $200 it funds a second trading agent (next step). The staking rewards become NEAR AI credits that pay for the agents' model calls; the staked NEAR stays withdrawable.",
     sources: "NEAR mainnet · NEAR AI Cloud" },
   trader2: { key: "trader2", name: "Trading agent 2", role: "Planned: funded at $200", icon: "pulse",
     detail: "The next step, not built yet. The report agent keeps 30% of every payment in a pot; once that pot passes $200 it funds a second trading agent with its own account and budget, run like the first one. The first trading agent already shows the whole loop working with real money.",
