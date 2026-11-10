@@ -36,7 +36,7 @@ Technology investing mixes verifiable facts, rumours and hype, and "AI picks" ra
 
 ### Agent economy: agents pay each other and pay for their own AI
 
-The report agent prices each report in NEAR (what it cost to make in AI usage, set by its quality inside a 3-5 NEAR band, never below its AI cost). The trading agent may only use reports it has bought, pays with a NEAR transfer that the code reads back from the chain, and spends at most 10% of its fund on reports. The report agent stakes 80% of what it holds through NEAR AI Cloud's Staking for Inference, so the staking rewards pay for its model usage; it keeps 20% for fees. Commands: `fund_trade.py economy status | price | buy | stake`. Owner switch: `economy.enabled` in `backend/config/funds.yaml`. Honest limit: at these amounts the staking rewards cover only a small part of the real AI bill.
+The report agent prices each report in NEAR (what it cost to make in AI usage, set by its quality inside a 3-5 NEAR band, never below its AI cost). The trading agent may only use reports it has bought, pays with a NEAR transfer that the code reads back from the chain, and spends at most 30% of its fund on reports. The report agent stakes 80% of what it holds through NEAR AI Cloud's Staking for Inference, so the staking rewards pay for its model usage; it keeps 20% for fees. Commands: `fund_trade.py economy status | price | buy | stake`. Owner switch: `economy.enabled` in `backend/config/funds.yaml`. Honest limit: at these amounts the staking rewards cover only a small part of the real AI bill.
 
 ### Safety limits on the trading agent (enforced in code, not by the model)
 

@@ -82,7 +82,7 @@ economy:
   max_price_near: 5.0             # owner 2026-11-10: a report costs 3 to 5 NEAR, set by its quality
   min_price_near: 3.0
   markup: 3.0                     # floor: never below the report's AI cost x 3
-  budget_share_of_fund: 0.10      # owner: at most 10% of the live fund's value is spent on reports
+  budget_share_of_fund: 0.30      # owner 2026-11-10: at most 30% of the live fund's value is spent on reports (was 10%)
   stake_share: 0.80               # owner: the report agent stakes 80% of its NEAR, keeps 20% for fees
   min_stake_near: 1.0
   staking_contract: stake.dao     # NEAR AI's "Stake NEAR" contract, read from the owner's own dashboard stake (2026-11-10)
