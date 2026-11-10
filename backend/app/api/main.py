@@ -133,8 +133,14 @@ def create_app(
     @app.get("/api/health")
     def health() -> dict:
         runs_dir = getattr(store, "runs_dir", None)
+        snap = service.BACKEND_DIR / "site_data"
         return {"ok": True, "store": store.kind, "data": runs_dir.name if runs_dir else None,
-                "reports": len(list(runs_dir.glob("report_*.json"))) if runs_dir else None}
+                "reports": len(list(runs_dir.glob("report_*.json"))) if runs_dir else None,
+                # where the server looks for the hosted snapshot (folder names and counts only, nothing private)
+                "snapshot": {"exists": snap.is_dir(), "files": len(list(snap.iterdir())) if snap.is_dir() else 0,
+                             "reports": len(list(snap.glob("report_*.json"))) if snap.is_dir() else 0,
+                             "data_dir_setting": bool(os.environ.get("FUTURESCOUT_DATA_DIR")),
+                             "backend_folder": service.BACKEND_DIR.name}}
 
     @app.get("/api/config")
     def config() -> dict:
