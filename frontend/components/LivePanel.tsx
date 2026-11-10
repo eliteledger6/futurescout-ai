@@ -25,7 +25,7 @@ export function LivePanel() {
     const t = setInterval(load, 60_000);
     return () => clearInterval(t);
   }, []);
-  if (!w) return null;
+  if (!w || !w.active) return null;   // the watcher is an optional local tool: say nothing when it is not running (e.g. the hosted site)
   const mentions = Object.entries(w.latest_mentions).sort((a, b) => b[1] - a[1]);
   return (
     <div className="live">
