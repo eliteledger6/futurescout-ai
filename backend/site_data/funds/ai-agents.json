@@ -5,14 +5,14 @@
   "sector": "ai_software",
   "created_at": "2026-11-09T11:14:10.603393Z",
   "start_cash_usd": 10000.0,
-  "cash_usd": 4472.65,
+  "cash_usd": 0.0,
   "holdings": [
     {
       "ticker": "MSFT",
       "company": "Microsoft",
       "tier": "low",
-      "shares": 2.3101870892530707,
-      "cost_usd": 1225.808371428572,
+      "shares": 4.099102844728144,
+      "cost_usd": 2201.0894629984723,
       "last_close": 545.18,
       "last_date": "2026-11-09",
       "timing_risk": "moderate",
@@ -22,18 +22,18 @@
         "symbol": "MSFTon",
         "asset_id": "nep141:bnb-0x6bfe75d1ad432050ea973c3a3dcd88f02e2444c3.omdep.near",
         "blockchain": "BNB Chain",
-        "token_price_usd": 551.8004,
-        "checked_at": "2026-11-10T04:48:37.423819Z",
+        "token_price_usd": 549.0765,
+        "checked_at": "2026-11-10T08:16:38.331902Z",
         "note": "listed by the NEAR Intents bridge; the price implied by a dry-run quote matches the stock"
       },
       "quote": {
-        "amount_in_usd": 1258.82,
-        "amount_out_usd": 1249.02,
-        "amount_out": "2.279491588113320817",
-        "cost_pct": 0.778,
+        "amount_in_usd": 2233.78,
+        "amount_out_usd": 2220.8,
+        "amount_out": "4.06791183885615367",
+        "cost_pct": 0.581,
         "time_estimate_s": 25.0,
-        "quoted_at": "2026-11-10T04:48:38.302655Z",
-        "correlation_id": "14c2bd48-0062-4f48-9e83-6e1c10bffc65",
+        "quoted_at": "2026-11-10T08:16:39.458695Z",
+        "correlation_id": "6406af6b-f374-47cf-8891-727ebb359361",
         "error": null
       }
     },
@@ -41,8 +41,8 @@
       "ticker": "NOW",
       "company": "SERVICENOW INC",
       "tier": "low",
-      "shares": 12.023151000636403,
-      "cost_usd": 1235.498996825397,
+      "shares": 21.747264391678563,
+      "cost_usd": 2234.7488888888893,
       "last_close": 102.76,
       "last_date": "2026-11-09",
       "timing_risk": "subdued",
@@ -53,7 +53,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-10T04:48:39.386885Z",
+        "checked_at": "2026-11-10T08:16:40.322754Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -62,8 +62,8 @@
       "ticker": "PANW",
       "company": "PALO ALTO NETWORKS INC",
       "tier": "low",
-      "shares": 3.7338662299416634,
-      "cost_usd": 1235.498996825397,
+      "shares": 6.753751666381243,
+      "cost_usd": 2234.7488888888893,
       "last_close": 330.89,
       "last_date": "2026-11-09",
       "timing_risk": "subdued",
@@ -74,7 +74,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-10T04:48:39.386885Z",
+        "checked_at": "2026-11-10T08:16:40.322754Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -83,8 +83,8 @@
       "ticker": "NTNX",
       "company": "NUTANIX INC",
       "tier": "medium",
-      "shares": 31.152269208910663,
-      "cost_usd": 1853.2484952380955,
+      "shares": 56.12270638747455,
+      "cost_usd": 3338.739802990862,
       "last_close": 59.49,
       "last_date": "2026-11-09",
       "timing_risk": "subdued",
@@ -95,7 +95,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-10T04:48:39.386885Z",
+        "checked_at": "2026-11-10T08:16:40.322754Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -436,6 +436,84 @@
         "tx_hash": "C2k7XkCiPG6WQQ8EF2JnmsB6emHY1rcZZkj33rjF2Lvi",
         "explorer_url": "https://testnet.nearblocks.io/txns/C2k7XkCiPG6WQQ8EF2JnmsB6emHY1rcZZkj33rjF2Lvi"
       }
+    },
+    {
+      "at": "2026-11-10T08:13:52.973291Z",
+      "run_id": "71b787db-4595-4cab-8ae0-9aa6971d2a4b",
+      "report_date": "2026-11-10",
+      "band": "strong",
+      "score": 70.8,
+      "previous_score": 70.8,
+      "confidence_pct": 38.6,
+      "target_invested_pct": 100.0,
+      "tier_targets_usd": {
+        "low": 6704.25,
+        "medium": 3352.12
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "FICO"
+      ],
+      "trades": [
+        {
+          "day": "2026-11-09",
+          "ticker": "NOW",
+          "tier": "low",
+          "side": "buy",
+          "shares": 9.724113,
+          "price": 102.76,
+          "usd": 999.25,
+          "fee_usd": 3.0
+        },
+        {
+          "day": "2026-11-09",
+          "ticker": "PANW",
+          "tier": "low",
+          "side": "buy",
+          "shares": 3.019885,
+          "price": 330.89,
+          "usd": 999.25,
+          "fee_usd": 3.0
+        },
+        {
+          "day": "2026-11-09",
+          "ticker": "MSFT",
+          "tier": "low",
+          "side": "buy",
+          "shares": 1.788916,
+          "price": 545.18,
+          "usd": 975.28,
+          "fee_usd": 2.93
+        },
+        {
+          "day": "2026-11-09",
+          "ticker": "NTNX",
+          "tier": "medium",
+          "side": "buy",
+          "shares": 24.970437,
+          "price": 59.49,
+          "usd": 1485.49,
+          "fee_usd": 4.46
+        }
+      ],
+      "reasons": [
+        "Why now: owner rule 2026-11-10: every paper fund is fully invested.",
+        "Verdict band 'strong' (score 70.8), confidence 39%. Owner rule: every paper fund is fully invested, so all of the fund goes into the basket.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): FICO. Reviewed again after the next price update.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-10."
+      ],
+      "value_before_usd": 10056.37,
+      "sha256": "8a8a853eeb0ca7da3f90e1635f2769148ad18c94505cd6c7fccf561b41eda78c",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_ai-agents_5",
+        "sha256": "8a8a853eeb0ca7da3f90e1635f2769148ad18c94505cd6c7fccf561b41eda78c",
+        "tx_hash": "BDFdVtzxL8tk63V6MDXnWCJPxNwaJeC1Hx6oe2VXWbPe",
+        "explorer_url": "https://testnet.nearblocks.io/txns/BDFdVtzxL8tk63V6MDXnWCJPxNwaJeC1Hx6oe2VXWbPe"
+      }
     }
   ],
   "history": [
@@ -446,14 +524,14 @@
     },
     {
       "day": "2026-11-09",
-      "value_usd": 10056.37,
+      "value_usd": 10042.99,
       "benchmark_value_usd": null
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": null,
   "benchmark_start_date": null,
-  "updated_at": "2026-11-10T04:46:08.575261Z",
+  "updated_at": "2026-11-10T08:13:52.973291Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",

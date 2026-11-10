@@ -5,8 +5,114 @@
   "sector": "semiconductors",
   "created_at": "2026-11-09T11:14:10.603393Z",
   "start_cash_usd": 10000.0,
-  "cash_usd": 10472.86,
-  "holdings": [],
+  "cash_usd": 0.0,
+  "holdings": [
+    {
+      "ticker": "TER",
+      "company": "Teradyne, Inc",
+      "tier": "medium",
+      "shares": 31.929451219512195,
+      "cost_usd": 7854.645,
+      "last_close": 246.0,
+      "last_date": "2026-11-09",
+      "timing_risk": "subdued",
+      "why": "Company Scout: 6 filing(s); mid by revenue; FALLBACK: no company in this report has patents or papers, so its own SEC filings are the evidence",
+      "route": {
+        "available": false,
+        "symbol": null,
+        "asset_id": null,
+        "blockchain": null,
+        "token_price_usd": null,
+        "checked_at": "2026-11-10T08:16:28.490285Z",
+        "note": "no tokenized version in the public NEAR Intents token lists"
+      },
+      "quote": null
+    },
+    {
+      "ticker": "LWLG",
+      "company": "Lightwave Logic, Inc.",
+      "tier": "high",
+      "shares": 133.31033604887983,
+      "cost_usd": 654.55375,
+      "last_close": 4.91,
+      "last_date": "2026-11-09",
+      "timing_risk": "moderate",
+      "why": "Company Scout: 6 filing(s); micro by revenue; FALLBACK: no company in this report has patents or papers, so its own SEC filings are the evidence",
+      "route": {
+        "available": false,
+        "symbol": null,
+        "asset_id": null,
+        "blockchain": null,
+        "token_price_usd": null,
+        "checked_at": "2026-11-10T08:16:28.490285Z",
+        "note": "no tokenized version in the public NEAR Intents token lists"
+      },
+      "quote": null
+    },
+    {
+      "ticker": "FORM",
+      "company": "Formfactor Inc",
+      "tier": "high",
+      "shares": 7.682555751173709,
+      "cost_usd": 654.55375,
+      "last_close": 85.2,
+      "last_date": "2026-11-09",
+      "timing_risk": "subdued",
+      "why": "Company Scout: 4 filing(s); small by revenue; FALLBACK: no company in this report has patents or papers, so its own SEC filings are the evidence",
+      "route": {
+        "available": false,
+        "symbol": null,
+        "asset_id": null,
+        "blockchain": null,
+        "token_price_usd": null,
+        "checked_at": "2026-11-10T08:16:28.490285Z",
+        "note": "no tokenized version in the public NEAR Intents token lists"
+      },
+      "quote": null
+    },
+    {
+      "ticker": "AEHR",
+      "company": "Aehr Test Systems",
+      "tier": "high",
+      "shares": 10.943884801872597,
+      "cost_usd": 654.55375,
+      "last_close": 59.81,
+      "last_date": "2026-11-09",
+      "timing_risk": "subdued",
+      "why": "Company Scout: 3 filing(s); micro by revenue; FALLBACK: no company in this report has patents or papers, so its own SEC filings are the evidence",
+      "route": {
+        "available": false,
+        "symbol": null,
+        "asset_id": null,
+        "blockchain": null,
+        "token_price_usd": null,
+        "checked_at": "2026-11-10T08:16:28.490285Z",
+        "note": "no tokenized version in the public NEAR Intents token lists"
+      },
+      "quote": null
+    },
+    {
+      "ticker": "VECO",
+      "company": "Veeco Instruments Inc",
+      "tier": "high",
+      "shares": 15.738109692387514,
+      "cost_usd": 623.2291438185456,
+      "last_close": 39.6,
+      "last_date": "2026-11-09",
+      "timing_risk": "subdued",
+      "why": "Company Scout: 3 filing(s); small by revenue; FALLBACK: no company in this report has patents or papers, so its own SEC filings are the evidence",
+      "route": {
+        "available": false,
+        "symbol": null,
+        "asset_id": null,
+        "blockchain": null,
+        "token_price_usd": null,
+        "checked_at": "2026-11-10T08:16:28.490285Z",
+        "note": "no tokenized version in the public NEAR Intents token lists"
+      },
+      "quote": null
+    }
+  ],
   "decisions": [
     {
       "at": "2026-11-09T11:14:10.603393Z",
@@ -256,6 +362,91 @@
         "tx_hash": "Hhs5537FmG8CQ7TXv7KkuSxTiAYSogBJwXpRVYHEVhRd",
         "explorer_url": "https://testnet.nearblocks.io/txns/Hhs5537FmG8CQ7TXv7KkuSxTiAYSogBJwXpRVYHEVhRd"
       }
+    },
+    {
+      "at": "2026-11-10T08:13:52.973291Z",
+      "run_id": "c5a2233c-d3da-4bc8-8cf5-7f128e9f6a9e",
+      "report_date": "2026-11-10",
+      "band": "early",
+      "score": 53.8,
+      "previous_score": 53.8,
+      "confidence_pct": 35.0,
+      "target_invested_pct": 100.0,
+      "tier_targets_usd": {
+        "medium": 7854.65,
+        "high": 2618.22
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [],
+      "trades": [
+        {
+          "day": "2026-11-09",
+          "ticker": "TER",
+          "tier": "medium",
+          "side": "buy",
+          "shares": 31.929451,
+          "price": 246.0,
+          "usd": 7854.65,
+          "fee_usd": 23.56
+        },
+        {
+          "day": "2026-11-09",
+          "ticker": "LWLG",
+          "tier": "high",
+          "side": "buy",
+          "shares": 133.310336,
+          "price": 4.91,
+          "usd": 654.55,
+          "fee_usd": 1.96
+        },
+        {
+          "day": "2026-11-09",
+          "ticker": "FORM",
+          "tier": "high",
+          "side": "buy",
+          "shares": 7.682556,
+          "price": 85.2,
+          "usd": 654.55,
+          "fee_usd": 1.96
+        },
+        {
+          "day": "2026-11-09",
+          "ticker": "AEHR",
+          "tier": "high",
+          "side": "buy",
+          "shares": 10.943885,
+          "price": 59.81,
+          "usd": 654.55,
+          "fee_usd": 1.96
+        },
+        {
+          "day": "2026-11-09",
+          "ticker": "VECO",
+          "tier": "high",
+          "side": "buy",
+          "shares": 15.73811,
+          "price": 39.6,
+          "usd": 623.23,
+          "fee_usd": 1.87
+        }
+      ],
+      "reasons": [
+        "Why now: owner rule 2026-11-10: every paper fund is fully invested.",
+        "Verdict band 'early' (score 53.8), confidence 35%. Owner rule: every paper fund is fully invested, so all of the fund goes into the basket.",
+        "No priced company in the low-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-10."
+      ],
+      "value_before_usd": 10472.86,
+      "sha256": "e55afd1440451b28a1e0cc0a2c361b74e951b8688bf96b43b9a729a8e2e5d233",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_silicon-photonics_4",
+        "sha256": "e55afd1440451b28a1e0cc0a2c361b74e951b8688bf96b43b9a729a8e2e5d233",
+        "tx_hash": "5rx7n86mDihyyELEYRSsdjtXqViSgrB69DxRDmAr3GTn",
+        "explorer_url": "https://testnet.nearblocks.io/txns/5rx7n86mDihyyELEYRSsdjtXqViSgrB69DxRDmAr3GTn"
+      }
     }
   ],
   "history": [
@@ -268,12 +459,17 @@
       "day": "2026-11-10",
       "value_usd": 10472.86,
       "benchmark_value_usd": null
+    },
+    {
+      "day": "2026-11-09",
+      "value_usd": 10441.53,
+      "benchmark_value_usd": null
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": null,
   "benchmark_start_date": null,
-  "updated_at": "2026-11-10T04:46:08.575261Z",
+  "updated_at": "2026-11-10T08:13:52.973291Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",

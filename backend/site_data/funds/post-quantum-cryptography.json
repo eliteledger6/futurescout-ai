@@ -5,14 +5,14 @@
   "sector": "cybersecurity",
   "created_at": "2026-11-09T11:14:10.603393Z",
   "start_cash_usd": 10000.0,
-  "cash_usd": 5821.24,
+  "cash_usd": 0.0,
   "holdings": [
     {
       "ticker": "MSFT",
       "company": "Microsoft Corp",
       "tier": "low",
-      "shares": 7.5596985268299335,
-      "cost_usd": 4121.396442857143,
+      "shares": 18.20540914434457,
+      "cost_usd": 9925.224957313774,
       "last_close": 545.18,
       "last_date": "2026-11-09",
       "timing_risk": null,
@@ -22,18 +22,18 @@
         "symbol": "MSFTon",
         "asset_id": "nep141:bnb-0x6bfe75d1ad432050ea973c3a3dcd88f02e2444c3.omdep.near",
         "blockchain": "BNB Chain",
-        "token_price_usd": 551.917,
-        "checked_at": "2026-11-10T04:47:55.662582Z",
+        "token_price_usd": 549.1257,
+        "checked_at": "2026-11-10T08:15:55.155780Z",
         "note": "listed by the NEAR Intents bridge; the price implied by a dry-run quote matches the stock"
       },
       "quote": {
-        "amount_in_usd": 4119.24,
-        "amount_out_usd": 4091.45,
-        "amount_out": "7.464387296639395375",
-        "cost_pct": 0.675,
+        "amount_in_usd": 9920.91,
+        "amount_out_usd": 9860.97,
+        "amount_out": "18.062702102912526033",
+        "cost_pct": 0.604,
         "time_estimate_s": 25.0,
-        "quoted_at": "2026-11-10T04:47:56.741640Z",
-        "correlation_id": "6f5848e6-f9cc-4a7b-9393-c7e465532a94",
+        "quoted_at": "2026-11-10T08:15:56.213118Z",
+        "correlation_id": "e361f2f2-a41c-43eb-92c4-b49f3cf39bd6",
         "error": null
       }
     }
@@ -311,6 +311,51 @@
         "tx_hash": "CnDZhNsiEtzisQywABHoDCXJVix19z64Vep495Cs4HJ3",
         "explorer_url": "https://testnet.nearblocks.io/txns/CnDZhNsiEtzisQywABHoDCXJVix19z64Vep495Cs4HJ3"
       }
+    },
+    {
+      "at": "2026-11-10T08:13:52.973291Z",
+      "run_id": "dcdce958-4595-4478-8f56-0a2d0e19f477",
+      "report_date": "2026-11-10",
+      "band": "building",
+      "score": 68.0,
+      "previous_score": 68.0,
+      "confidence_pct": 38.6,
+      "target_invested_pct": 100.0,
+      "tier_targets_usd": {
+        "low": 9942.64
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [],
+      "trades": [
+        {
+          "day": "2026-11-09",
+          "ticker": "MSFT",
+          "tier": "low",
+          "side": "buy",
+          "shares": 10.645711,
+          "price": 545.18,
+          "usd": 5803.83,
+          "fee_usd": 17.41
+        }
+      ],
+      "reasons": [
+        "Why now: owner rule 2026-11-10: every paper fund is fully invested.",
+        "Verdict band 'building' (score 68.0), confidence 39%. Owner rule: every paper fund is fully invested, so all of the fund goes into the basket.",
+        "No priced company in the medium-risk tier; its share goes to the other tiers.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-10."
+      ],
+      "value_before_usd": 9942.64,
+      "sha256": "b958e8873ebf3ca04ff87c3ac2690e1e0516756c0e2536a222f5af7ba0c2f086",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_post-quantum-cryptography_4",
+        "sha256": "b958e8873ebf3ca04ff87c3ac2690e1e0516756c0e2536a222f5af7ba0c2f086",
+        "tx_hash": "FeWEPPD5bvPtyfhT6WpAvc26bm1VAXzpktZPQcHQEAVX",
+        "explorer_url": "https://testnet.nearblocks.io/txns/FeWEPPD5bvPtyfhT6WpAvc26bm1VAXzpktZPQcHQEAVX"
+      }
     }
   ],
   "history": [
@@ -321,14 +366,14 @@
     },
     {
       "day": "2026-11-09",
-      "value_usd": 9942.64,
+      "value_usd": 9925.22,
       "benchmark_value_usd": null
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": null,
   "benchmark_start_date": null,
-  "updated_at": "2026-11-10T04:46:08.575261Z",
+  "updated_at": "2026-11-10T08:13:52.973291Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",

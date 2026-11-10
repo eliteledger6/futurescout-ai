@@ -5,14 +5,14 @@
   "sector": "semiconductors",
   "created_at": "2026-11-09T11:14:10.603393Z",
   "start_cash_usd": 10000.0,
-  "cash_usd": 5861.38,
+  "cash_usd": 0.0,
   "holdings": [
     {
       "ticker": "INTC",
       "company": "Intel Corp",
       "tier": "low",
-      "shares": 48.24497244880772,
-      "cost_usd": 2864.3040142857144,
+      "shares": 114.06243332771882,
+      "cost_usd": 6771.886666666666,
       "last_close": 59.37,
       "last_date": "2026-11-09",
       "timing_risk": null,
@@ -22,18 +22,18 @@
         "symbol": "INTCon",
         "asset_id": "nep141:bnb-0xa528caaa2f96090e379d43f90834c75df54d6e74.omdep.near",
         "blockchain": "BNB Chain",
-        "token_price_usd": 58.9286,
-        "checked_at": "2026-11-10T04:46:19.858102Z",
+        "token_price_usd": 59.4978,
+        "checked_at": "2026-11-10T08:14:06.389056Z",
         "note": "listed by the NEAR Intents bridge; the price implied by a dry-run quote matches the stock"
       },
       "quote": {
-        "amount_in_usd": 2862.8,
-        "amount_out_usd": 2847.46,
-        "amount_out": "48.657931622938359791",
-        "cost_pct": 0.536,
+        "amount_in_usd": 6769.03,
+        "amount_out_usd": 6712.78,
+        "amount_out": "113.853078360474989609",
+        "cost_pct": 0.831,
         "time_estimate_s": 25.0,
-        "quoted_at": "2026-11-10T04:46:22.327654Z",
-        "correlation_id": "12f2761c-4c05-4691-832c-6ba50e5a5e48",
+        "quoted_at": "2026-11-10T08:14:08.552725Z",
+        "correlation_id": "c5219e28-2f09-4ac5-937c-937509989f94",
         "error": null
       }
     },
@@ -41,8 +41,8 @@
       "ticker": "KEYS",
       "company": "KEYSIGHT TECHNOLOGIES INC",
       "tier": "medium",
-      "shares": 5.262749447480458,
-      "cost_usd": 1432.1520071428572,
+      "shares": 12.37797306213206,
+      "cost_usd": 3368.4178093979976,
       "last_close": 272.13,
       "last_date": "2026-11-06",
       "timing_risk": null,
@@ -53,7 +53,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-10T04:46:23.228201Z",
+        "checked_at": "2026-11-10T08:14:09.401472Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -359,6 +359,64 @@
         "tx_hash": "3iugnMt6nTN3qn3Cjbizvax2z5MYDYyCBCHU699x398J",
         "explorer_url": "https://testnet.nearblocks.io/txns/3iugnMt6nTN3qn3Cjbizvax2z5MYDYyCBCHU699x398J"
       }
+    },
+    {
+      "at": "2026-11-10T08:13:52.973291Z",
+      "run_id": "4a897d91-260c-4c3d-a452-d47f4d80f82c",
+      "report_date": "2026-11-10",
+      "band": "building",
+      "score": 62.2,
+      "previous_score": 62.2,
+      "confidence_pct": 39.4,
+      "target_invested_pct": 100.0,
+      "tier_targets_usd": {
+        "low": 6771.89,
+        "medium": 3385.94
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "CIEN"
+      ],
+      "trades": [
+        {
+          "day": "2026-11-09",
+          "ticker": "INTC",
+          "tier": "low",
+          "side": "buy",
+          "shares": 65.817461,
+          "price": 59.37,
+          "usd": 3907.58,
+          "fee_usd": 11.72
+        },
+        {
+          "day": "2026-11-06",
+          "ticker": "KEYS",
+          "tier": "medium",
+          "side": "buy",
+          "shares": 7.115224,
+          "price": 272.13,
+          "usd": 1936.27,
+          "fee_usd": 5.81
+        }
+      ],
+      "reasons": [
+        "Why now: owner rule 2026-11-10: every paper fund is fully invested.",
+        "Verdict band 'building' (score 62.2), confidence 39%. Owner rule: every paper fund is fully invested, so all of the fund goes into the basket.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): CIEN. Reviewed again after the next price update.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-10."
+      ],
+      "value_before_usd": 10157.83,
+      "sha256": "c2a4173e34939dda40c1e4b71e496e288334f28070e956f740df94b404401e2f",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_co-packaged-optics_4",
+        "sha256": "c2a4173e34939dda40c1e4b71e496e288334f28070e956f740df94b404401e2f",
+        "tx_hash": "9Bo2HfuWk12hzV5KX9P1k2udp4kamHKDJCGnc1GZh5vz",
+        "explorer_url": "https://testnet.nearblocks.io/txns/9Bo2HfuWk12hzV5KX9P1k2udp4kamHKDJCGnc1GZh5vz"
+      }
     }
   ],
   "history": [
@@ -369,14 +427,14 @@
     },
     {
       "day": "2026-11-09",
-      "value_usd": 10157.83,
+      "value_usd": 10140.31,
       "benchmark_value_usd": null
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": null,
   "benchmark_start_date": null,
-  "updated_at": "2026-11-10T04:46:08.575261Z",
+  "updated_at": "2026-11-10T08:13:52.973291Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",

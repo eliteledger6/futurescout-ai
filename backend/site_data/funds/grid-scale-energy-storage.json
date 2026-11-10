@@ -5,16 +5,16 @@
   "sector": "energy",
   "created_at": "2026-11-09T11:14:10.603393Z",
   "start_cash_usd": 10000.0,
-  "cash_usd": 5530.17,
+  "cash_usd": 0.0,
   "holdings": [
     {
       "ticker": "FLNC",
       "company": "Fluence Energy",
       "tier": "medium",
-      "shares": 839.0544957983194,
-      "cost_usd": 4421.817192857143,
-      "last_close": 5.27,
-      "last_date": "2026-11-06",
+      "shares": 1860.0969240690629,
+      "cost_usd": 9935.446305519157,
+      "last_close": 5.4,
+      "last_date": "2026-11-09",
       "timing_risk": null,
       "why": "Company Scout: 5 patent(s), 2 filing(s); mid by revenue",
       "route": {
@@ -23,7 +23,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-10T04:47:33.723163Z",
+        "checked_at": "2026-11-10T08:15:32.852404Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -299,6 +299,56 @@
         "tx_hash": "5RFLwJzNi6wSUYSJa6kEY8qxSQmWpGte7o69RBa1CicC",
         "explorer_url": "https://testnet.nearblocks.io/txns/5RFLwJzNi6wSUYSJa6kEY8qxSQmWpGte7o69RBa1CicC"
       }
+    },
+    {
+      "at": "2026-11-10T08:13:52.973291Z",
+      "run_id": "7642adf4-3490-4df7-be0a-9eba7dc77d26",
+      "report_date": "2026-11-10",
+      "band": "building",
+      "score": 60.0,
+      "previous_score": 60.0,
+      "confidence_pct": 41.4,
+      "target_invested_pct": 100.0,
+      "tier_targets_usd": {
+        "medium": 10061.06
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "GEV",
+        "HMC",
+        "HTHIY"
+      ],
+      "trades": [
+        {
+          "day": "2026-11-09",
+          "ticker": "FLNC",
+          "tier": "medium",
+          "side": "buy",
+          "shares": 1021.042428,
+          "price": 5.4,
+          "usd": 5513.63,
+          "fee_usd": 16.54
+        }
+      ],
+      "reasons": [
+        "Why now: owner rule 2026-11-10: every paper fund is fully invested.",
+        "Verdict band 'building' (score 60.0), confidence 41%. Owner rule: every paper fund is fully invested, so all of the fund goes into the basket.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): GEV, HMC, HTHIY. Reviewed again after the next price update.",
+        "No priced company in the low-risk tier; its share goes to the other tiers.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-10."
+      ],
+      "value_before_usd": 10061.06,
+      "sha256": "043d9014c39ae3c00506f0c2548c92ad1991dcd6ced396db18a0bbf4b4d2ac09",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_grid-scale-energy-storage_4",
+        "sha256": "043d9014c39ae3c00506f0c2548c92ad1991dcd6ced396db18a0bbf4b4d2ac09",
+        "tx_hash": "777kLHBY2eGqAdNPjiZXADkpWjpRnEPkPtbyruT18ied",
+        "explorer_url": "https://testnet.nearblocks.io/txns/777kLHBY2eGqAdNPjiZXADkpWjpRnEPkPtbyruT18ied"
+      }
     }
   ],
   "history": [
@@ -306,12 +356,17 @@
       "day": "2026-11-06",
       "value_usd": 9951.99,
       "benchmark_value_usd": null
+    },
+    {
+      "day": "2026-11-09",
+      "value_usd": 10044.52,
+      "benchmark_value_usd": null
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": null,
   "benchmark_start_date": null,
-  "updated_at": "2026-11-10T04:46:08.575261Z",
+  "updated_at": "2026-11-10T08:13:52.973291Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",

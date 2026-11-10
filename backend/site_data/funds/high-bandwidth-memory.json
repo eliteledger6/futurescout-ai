@@ -5,14 +5,14 @@
   "sector": "semiconductors",
   "created_at": "2026-11-09T11:14:10.603393Z",
   "start_cash_usd": 10000.0,
-  "cash_usd": 3077.77,
+  "cash_usd": 0.0,
   "holdings": [
     {
       "ticker": "MU",
       "company": "Micron Technology",
       "tier": "low",
-      "shares": 3.4284522299406026,
-      "cost_usd": 2419.7654045548657,
+      "shares": 4.827788765373162,
+      "cost_usd": 3445.6889855072463,
       "last_close": 733.15,
       "last_date": "2026-11-09",
       "timing_risk": "subdued",
@@ -23,7 +23,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-10T04:48:49.042682Z",
+        "checked_at": "2026-11-10T08:16:50.342448Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -32,8 +32,8 @@
       "ticker": "MRVL",
       "company": "Marvell Technology",
       "tier": "medium",
-      "shares": 16.2585365613257,
-      "cost_usd": 2323.654036071766,
+      "shares": 22.83497346413296,
+      "cost_usd": 3340.3711812457686,
       "last_close": 154.6,
       "last_date": "2026-11-09",
       "timing_risk": "subdued",
@@ -43,18 +43,18 @@
         "symbol": "MRVLon",
         "asset_id": "nep141:bnb-0x1501ec83ffef405b4331cc4f73277a40fb0c627d.omdep.near",
         "blockchain": "BNB Chain",
-        "token_price_usd": 155.021,
-        "checked_at": "2026-11-10T04:48:49.042682Z",
+        "token_price_usd": 155.7932,
+        "checked_at": "2026-11-10T08:16:50.343452Z",
         "note": "listed by the NEAR Intents bridge; the price implied by a dry-run quote matches the stock"
       },
       "quote": {
-        "amount_in_usd": 2512.27,
-        "amount_out_usd": 2499.56,
-        "amount_out": "16.206720745684091769",
-        "cost_pct": 0.506,
+        "amount_in_usd": 3528.76,
+        "amount_out_usd": 3519.88,
+        "amount_out": "22.657730860281374415",
+        "cost_pct": 0.252,
         "time_estimate_s": 25.0,
-        "quoted_at": "2026-11-10T04:48:49.975859Z",
-        "correlation_id": "6915fcf2-d637-4507-936b-17c22fb22768",
+        "quoted_at": "2026-11-10T08:16:51.588356Z",
+        "correlation_id": "4263cae9-8475-488a-8930-bb6b66077b40",
         "error": null
       }
     },
@@ -62,8 +62,8 @@
       "ticker": "INTC",
       "company": "INTEL CORP",
       "tier": "low",
-      "shares": 42.337371608235685,
-      "cost_usd": 2513.5697523809527,
+      "shares": 59.617539722643315,
+      "cost_usd": 3539.4933333333333,
       "last_close": 59.37,
       "last_date": "2026-11-09",
       "timing_risk": "subdued",
@@ -73,18 +73,18 @@
         "symbol": "INTCon",
         "asset_id": "nep141:bnb-0xa528caaa2f96090e379d43f90834c75df54d6e74.omdep.near",
         "blockchain": "BNB Chain",
-        "token_price_usd": 58.9699,
-        "checked_at": "2026-11-10T04:48:51.265908Z",
+        "token_price_usd": 59.3006,
+        "checked_at": "2026-11-10T08:16:52.311222Z",
         "note": "listed by the NEAR Intents bridge; the price implied by a dry-run quote matches the stock"
       },
       "quote": {
-        "amount_in_usd": 2512.27,
-        "amount_out_usd": 2489.46,
-        "amount_out": "42.504020209631535514",
-        "cost_pct": 0.908,
+        "amount_in_usd": 3537.95,
+        "amount_out_usd": 3518.17,
+        "amount_out": "59.680590029643815158",
+        "cost_pct": 0.559,
         "time_estimate_s": 25.0,
-        "quoted_at": "2026-11-10T04:48:51.928825Z",
-        "correlation_id": "bbb2f420-daf9-4f52-86b6-0e1d09dc0e88",
+        "quoted_at": "2026-11-10T08:16:52.960119Z",
+        "correlation_id": "4d3cf170-8789-4b11-b830-a27f4a0b6a6b",
         "error": null
       }
     }
@@ -394,6 +394,75 @@
         "tx_hash": "DZizSYkH9r4pmbeJFJySdEmg5efWxHxebrmvJHyTp72x",
         "explorer_url": "https://testnet.nearblocks.io/txns/DZizSYkH9r4pmbeJFJySdEmg5efWxHxebrmvJHyTp72x"
       }
+    },
+    {
+      "at": "2026-11-10T08:13:52.973291Z",
+      "run_id": "e5d41d1f-fa56-42ce-bf27-9fccb47298a2",
+      "report_date": "2026-11-10",
+      "band": "strong",
+      "score": 80.0,
+      "previous_score": 80.0,
+      "confidence_pct": 49.6,
+      "target_invested_pct": 100.0,
+      "tier_targets_usd": {
+        "low": 7078.99,
+        "medium": 3539.49
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "SNDK",
+        "SKHY"
+      ],
+      "trades": [
+        {
+          "day": "2026-11-09",
+          "ticker": "MU",
+          "tier": "low",
+          "side": "buy",
+          "shares": 1.399337,
+          "price": 733.15,
+          "usd": 1025.92,
+          "fee_usd": 3.08
+        },
+        {
+          "day": "2026-11-09",
+          "ticker": "INTC",
+          "tier": "low",
+          "side": "buy",
+          "shares": 17.280168,
+          "price": 59.37,
+          "usd": 1025.92,
+          "fee_usd": 3.08
+        },
+        {
+          "day": "2026-11-09",
+          "ticker": "MRVL",
+          "tier": "medium",
+          "side": "buy",
+          "shares": 6.576437,
+          "price": 154.6,
+          "usd": 1016.72,
+          "fee_usd": 3.05
+        }
+      ],
+      "reasons": [
+        "Why now: owner rule 2026-11-10: every paper fund is fully invested.",
+        "Verdict band 'strong' (score 80.0), confidence 50%. Owner rule: every paper fund is fully invested, so all of the fund goes into the basket.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): SNDK, SKHY. Reviewed again after the next price update.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-10."
+      ],
+      "value_before_usd": 10618.48,
+      "sha256": "696a1b8093c24ffa8ca6f2c8169624def5efc366774bcdb90b4804baacdf5f4c",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_high-bandwidth-memory_5",
+        "sha256": "696a1b8093c24ffa8ca6f2c8169624def5efc366774bcdb90b4804baacdf5f4c",
+        "tx_hash": "9p5N38qneerAptX4oiZqiisJ9eZMXXn38km6h1jPLBGR",
+        "explorer_url": "https://testnet.nearblocks.io/txns/9p5N38qneerAptX4oiZqiisJ9eZMXXn38km6h1jPLBGR"
+      }
     }
   ],
   "history": [
@@ -404,14 +473,14 @@
     },
     {
       "day": "2026-11-09",
-      "value_usd": 10618.48,
+      "value_usd": 10609.27,
       "benchmark_value_usd": null
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": null,
   "benchmark_start_date": null,
-  "updated_at": "2026-11-10T04:46:08.575261Z",
+  "updated_at": "2026-11-10T08:13:52.973291Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",

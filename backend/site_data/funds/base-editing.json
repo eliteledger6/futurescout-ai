@@ -5,16 +5,16 @@
   "sector": "biotech_tools",
   "created_at": "2026-11-09T11:14:10.603393Z",
   "start_cash_usd": 10000.0,
-  "cash_usd": 6488.87,
+  "cash_usd": 0.0,
   "holdings": [
     {
       "ticker": "BEAM",
       "company": "Beam Therapeutics",
       "tier": "high",
-      "shares": 132.0963920592849,
-      "cost_usd": 3488.6657142857143,
-      "last_close": 26.41,
-      "last_date": "2026-11-06",
+      "shares": 186.12342709104368,
+      "cost_usd": 4948.4762008438365,
+      "last_close": 27.02,
+      "last_date": "2026-11-09",
       "timing_risk": null,
       "why": "Company Scout: 1 patent(s), 4 filing(s); small by revenue",
       "route": {
@@ -23,7 +23,28 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-10T04:46:53.758168Z",
+        "checked_at": "2026-11-10T08:14:43.108790Z",
+        "note": "no tokenized version in the public NEAR Intents token lists"
+      },
+      "quote": null
+    },
+    {
+      "ticker": "PRME",
+      "company": "PRIME MEDICINE INC",
+      "tier": "high",
+      "shares": 1165.0351461852129,
+      "cost_usd": 5009.651128596415,
+      "last_close": 4.3,
+      "last_date": "2026-11-09",
+      "timing_risk": null,
+      "why": "Company Scout: 1 patent(s), 3 filing(s); micro by revenue",
+      "route": {
+        "available": false,
+        "symbol": null,
+        "asset_id": null,
+        "blockchain": null,
+        "token_price_usd": null,
+        "checked_at": "2026-11-10T08:14:43.108790Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -193,6 +214,61 @@
         "tx_hash": "25o3pZUatxwV5nXaCwXa2XCJUw22JYyMqxQjCu5prC3Y",
         "explorer_url": "https://testnet.nearblocks.io/txns/25o3pZUatxwV5nXaCwXa2XCJUw22JYyMqxQjCu5prC3Y"
       }
+    },
+    {
+      "at": "2026-11-10T08:13:52.973291Z",
+      "run_id": "4991cdda-4e95-4f0b-9bef-6806b6775ee7",
+      "report_date": "2026-11-10",
+      "band": "building",
+      "score": 57.6,
+      "previous_score": 57.6,
+      "confidence_pct": 32.6,
+      "target_invested_pct": 100.0,
+      "tier_targets_usd": {
+        "high": 10058.11
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [],
+      "trades": [
+        {
+          "day": "2026-11-09",
+          "ticker": "BEAM",
+          "tier": "high",
+          "side": "buy",
+          "shares": 54.027035,
+          "price": 27.02,
+          "usd": 1459.81,
+          "fee_usd": 4.38
+        },
+        {
+          "day": "2026-11-09",
+          "ticker": "PRME",
+          "tier": "high",
+          "side": "buy",
+          "shares": 1165.035146,
+          "price": 4.3,
+          "usd": 5009.65,
+          "fee_usd": 15.03
+        }
+      ],
+      "reasons": [
+        "Why now: owner rule 2026-11-10: every paper fund is fully invested.",
+        "Verdict band 'building' (score 57.6), confidence 33%. Owner rule: every paper fund is fully invested, so all of the fund goes into the basket.",
+        "No priced company in the low-risk tier; its share goes to the other tiers.",
+        "No priced company in the medium-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-10."
+      ],
+      "value_before_usd": 10058.11,
+      "sha256": "470a8bd5539b2b12209c3af721329580222db0a049bbaad893f7bf4c3852d6fe",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_base-editing_4",
+        "sha256": "470a8bd5539b2b12209c3af721329580222db0a049bbaad893f7bf4c3852d6fe",
+        "tx_hash": "G24KRRMqF82Yqd7zAakPnWU4AkyQHaLhViXbZdM6Ri59",
+        "explorer_url": "https://testnet.nearblocks.io/txns/G24KRRMqF82Yqd7zAakPnWU4AkyQHaLhViXbZdM6Ri59"
+      }
     }
   ],
   "history": [
@@ -200,12 +276,17 @@
       "day": "2026-11-06",
       "value_usd": 9977.54,
       "benchmark_value_usd": null
+    },
+    {
+      "day": "2026-11-09",
+      "value_usd": 10038.71,
+      "benchmark_value_usd": null
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": null,
   "benchmark_start_date": null,
-  "updated_at": "2026-11-10T04:46:08.575261Z",
+  "updated_at": "2026-11-10T08:13:52.973291Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",

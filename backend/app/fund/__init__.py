@@ -66,6 +66,9 @@ class FundConfig(BaseModel):
     benchmark: str = "SPY"
     tiers: dict[str, TierConfig]
     max_holdings_per_tier: int = 4
+    fully_invested: bool = False          # owner 2026-11-10 ("make sure paper fund got everything invested"): every fund puts all
+                                          # its money in the basket; band, confidence and score drops are recorded, not used to hold cash
+    unknown_size_tier: str = "high"       # a listed company with no revenue data (often a new listing) counts as high risk
     exposure_by_band: dict[str, float]
     score_drop_points: float = 8
     full_confidence_pct: float = 70.0     # confidence needed to invest the band's full share; below it, proportionally less
@@ -213,8 +216,11 @@ def list_funds(funds_dir: Path) -> list[TopicFund]:
 class PriceBook:
     """Daily closes: fresh Alpha Vantage data while the request budget lasts, else the on-disk cache (any age)."""
 
-    def __init__(self, prices=None, *, max_requests: int = 10, cache_dir: Path = PRICE_CACHE_DIR) -> None:  # noqa: ANN001
-        self.prices, self.max_requests, self.cache_dir = prices, max_requests, cache_dir
+    def __init__(self, prices=None, *, max_requests: int = 10, cache_dir: Path = PRICE_CACHE_DIR,  # noqa: ANN001
+                 fallback: Optional[Callable[[str], Optional[Bar]]] = None) -> None:
+        """fallback(ticker) -> Bar: used only when neither Alpha Vantage nor the cache has a close (e.g. the free plan's
+        25 lookups are used up). funds.py passes the NEAR Intents price of the tokenized stock, labelled in Bar.source."""
+        self.prices, self.max_requests, self.cache_dir, self.fallback = prices, max_requests, cache_dir, fallback
         self.requests = 0
         self.notes: list[str] = []
         self._memo: dict[str, list[Bar]] = {}
@@ -238,6 +244,14 @@ class PriceBook:
                     bars = parse_daily(json.loads(path.read_text(encoding="utf-8")), t)
                 except (SourceError, ValueError):
                     bars = []
+        if not bars and self.fallback is not None:
+            try:
+                fb = self.fallback(t)
+            except Exception:  # noqa: BLE001
+                fb = None
+            if fb:
+                bars = [fb]
+                self.notes.append(f"{t}: no daily close available; used the {fb.source} (${fb.close:.2f}, {fb.day.isoformat()})")
         self._memo[t] = bars
         return bars
 
@@ -266,18 +280,24 @@ def build_basket(report: ResearchReport, cfg: FundConfig) -> list[Candidate]:
     cands: list[Candidate] = []
     # Owner decision 2026-11-10: a holding must be backed by patents or papers naming the company. Companies that only
     # mention the topic in an SEC filing (or only appear in news / X posts) are shown in the report but never bought.
+    # Fallback (owner 2026-11-10, every fund must invest): only when NO company has patents or papers, companies whose own
+    # SEC filings describe work on the topic are used instead, and labelled as such.
     pool = [*(report.scout.candidates if report.scout else []), *(report.scout.incumbents if report.scout else [])]
-    for c in pool:
+    listed = [c for c in pool if c.ticker and c.sec_listed and not c.off_sector]
+    proven = [c for c in listed if c.patents or c.papers]
+    fallback = not proven
+    for c in (proven or [c for c in listed if c.filings]):
         size = (c.fundamentals or {}).get("size_class")
-        if not c.ticker or not c.sec_listed or c.off_sector or size not in tier_of or c.ticker.upper() in seen:
+        tier = tier_of.get(size) if size else (cfg.unknown_size_tier if cfg.unknown_size_tier in cfg.tiers else None)
+        if tier is None or c.ticker.upper() in seen:
             continue
-        if not (c.patents or c.papers):
-            continue                                   # filing mentions only: not provable work on the topic
         seen.add(c.ticker.upper())
         parts = [f"{c.patents} patent(s)" if c.patents else "", f"{c.papers} paper(s)" if c.papers else "",
                  f"{c.filings} filing(s)" if c.filings else ""]
-        cands.append(Candidate(ticker=c.ticker.upper(), company=c.name, tier=tier_of[size], rank=float(c.next_runner_score or 0),
-                               why=f"Company Scout: {', '.join(p for p in parts if p) or 'topic activity'}; {size} by revenue",
+        size_txt = f"{size} by revenue" if size else "size unknown (no revenue data), counted as high risk"
+        cands.append(Candidate(ticker=c.ticker.upper(), company=c.name, tier=tier, rank=float(c.next_runner_score or 0),
+                               why=(f"Company Scout: {', '.join(x for x in parts if x) or 'topic activity'}; {size_txt}"
+                                    + ("; FALLBACK: no company in this report has patents or papers, so its own SEC filings are the evidence" if fallback else "")),
                                timing_risk=timing.get(c.ticker.upper())))
     out: list[Candidate] = []
     for key in cfg.tiers:
@@ -322,11 +342,17 @@ def decide(fund: TopicFund, run_id: str, report: ResearchReport, book: PriceBook
             h.last_close, h.last_date = bar.close, bar.day.isoformat()
     value = fund.value()
 
-    exposure = cfg.exposure_by_band.get(band, 0.0)
-    reasons.append(f"Verdict band '{band}'" + (f" (score {score})" if score is not None else "")
-                   + f" -> invest {exposure:.0%} of the fund.")
     conf = verdict.get("confidence_pct")
-    if conf is not None and exposure > 0:
+    if cfg.fully_invested:
+        exposure = 1.0
+        reasons.append(f"Verdict band '{band}'" + (f" (score {score})" if score is not None else "")
+                       + (f", confidence {conf:.0f}%" if conf is not None else "")
+                       + ". Owner rule: every paper fund is fully invested, so all of the fund goes into the basket.")
+    else:
+        exposure = cfg.exposure_by_band.get(band, 0.0)
+        reasons.append(f"Verdict band '{band}'" + (f" (score {score})" if score is not None else "")
+                       + f" -> invest {exposure:.0%} of the fund.")
+    if conf is not None and exposure > 0 and not cfg.fully_invested:
         k = min(1.0, conf / cfg.full_confidence_pct)
         if k < 1:
             exposure *= k
@@ -335,7 +361,7 @@ def decide(fund: TopicFund, run_id: str, report: ResearchReport, book: PriceBook
         else:
             reasons.append(f"Confidence {conf:.0f}% is at or above {cfg.full_confidence_pct:.0f}%: full size.")
     prev_score = prev.score if prev else None
-    if prev_score is not None and score is not None and prev_score - score >= cfg.score_drop_points:
+    if prev_score is not None and score is not None and prev_score - score >= cfg.score_drop_points and not cfg.fully_invested:
         exposure *= 0.5
         reasons.append(f"Score fell {prev_score - score:.1f} points since the last decision -> target halved to {exposure:.0%}.")
 
@@ -348,6 +374,9 @@ def decide(fund: TopicFund, run_id: str, report: ResearchReport, book: PriceBook
             priced.append((c, bar))
         else:
             waiting.append(c.ticker)
+    for c, b in priced:
+        if getattr(b, "source", "daily close") != "daily close":
+            reasons.append(f"{c.ticker}: no daily close yet, so the {b.source} (${b.close:.2f} on {b.day.isoformat()}) is used as its price.")
     if waiting:
         reasons.append(f"Left out for now, no daily close yet (free price plan: 25 lookups a day): {', '.join(waiting)}. "
                        "Reviewed again after the next price update.")
@@ -364,7 +393,7 @@ def decide(fund: TopicFund, run_id: str, report: ResearchReport, book: PriceBook
         members = [(c, b) for c, b in priced if c.tier == k]
         tier_usd = value * exposure * cfg.tiers[k].weight / weight_sum if weight_sum else 0.0
         risks = [c.timing_risk for c, _ in members if c.timing_risk]
-        if risks and sum(1 for r in risks if r == "high") * 2 > len(risks):
+        if risks and sum(1 for r in risks if r == "high") * 2 > len(risks) and not cfg.fully_invested:
             tier_usd *= cfg.stretched_stage_factor
             staged.append(k)
             reasons.append(f"{k.capitalize()}-risk tier: most of its stocks look stretched (timing risk high) -> invest "

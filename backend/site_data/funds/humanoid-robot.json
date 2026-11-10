@@ -5,16 +5,16 @@
   "sector": "robotics_autonomy",
   "created_at": "2026-11-09T11:14:10.603393Z",
   "start_cash_usd": 10000.0,
-  "cash_usd": 7597.45,
+  "cash_usd": 0.0,
   "holdings": [
     {
       "ticker": "CSCO",
       "company": "Cisco Systems, Inc.",
       "tier": "low",
-      "shares": 25.420406423624325,
-      "cost_usd": 2385.7051428571426,
-      "last_close": 93.85,
-      "last_date": "2026-11-06",
+      "shares": 102.20424648984229,
+      "cost_usd": 9960.430965389545,
+      "last_close": 98.65,
+      "last_date": "2026-11-09",
       "timing_risk": null,
       "why": "Company Scout: 1 patent(s); large by revenue",
       "route": {
@@ -23,7 +23,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-10T04:47:03.279020Z",
+        "checked_at": "2026-11-10T08:14:54.011503Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -173,6 +173,55 @@
         "tx_hash": "2pUdJiZdwNh4tuEUBrodSKa3YQbitnowsMhVYYWZNctc",
         "explorer_url": "https://testnet.nearblocks.io/txns/2pUdJiZdwNh4tuEUBrodSKa3YQbitnowsMhVYYWZNctc"
       }
+    },
+    {
+      "at": "2026-11-10T08:13:52.973291Z",
+      "run_id": "2af647d3-915e-4fde-96cc-f0831c149fdf",
+      "report_date": "2026-11-10",
+      "band": "early",
+      "score": 52.0,
+      "previous_score": 52.0,
+      "confidence_pct": 41.8,
+      "target_invested_pct": 100.0,
+      "tier_targets_usd": {
+        "low": 10105.17
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "NVDA",
+        "SFTBF"
+      ],
+      "trades": [
+        {
+          "day": "2026-11-09",
+          "ticker": "CSCO",
+          "tier": "low",
+          "side": "buy",
+          "shares": 76.78384,
+          "price": 98.65,
+          "usd": 7574.73,
+          "fee_usd": 22.72
+        }
+      ],
+      "reasons": [
+        "Why now: owner rule 2026-11-10: every paper fund is fully invested.",
+        "Verdict band 'early' (score 52.0), confidence 42%. Owner rule: every paper fund is fully invested, so all of the fund goes into the basket.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): NVDA, SFTBF. Reviewed again after the next price update.",
+        "No priced company in the medium-risk tier; its share goes to the other tiers.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-10."
+      ],
+      "value_before_usd": 10105.17,
+      "sha256": "237d885f77cabdf594b050f80eb1748e393e1500fce2f35477ef74cdef795c74",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_humanoid-robot_4",
+        "sha256": "237d885f77cabdf594b050f80eb1748e393e1500fce2f35477ef74cdef795c74",
+        "tx_hash": "HraGYeQoe8YrHoDspiXKoiS2KWsRoHGXfZTHUeeVjHCN",
+        "explorer_url": "https://testnet.nearblocks.io/txns/HraGYeQoe8YrHoDspiXKoiS2KWsRoHGXfZTHUeeVjHCN"
+      }
     }
   ],
   "history": [
@@ -180,12 +229,17 @@
       "day": "2026-11-06",
       "value_usd": 9983.16,
       "benchmark_value_usd": null
+    },
+    {
+      "day": "2026-11-09",
+      "value_usd": 10082.45,
+      "benchmark_value_usd": null
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": null,
   "benchmark_start_date": null,
-  "updated_at": "2026-11-10T04:46:08.575261Z",
+  "updated_at": "2026-11-10T08:13:52.973291Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",

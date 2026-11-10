@@ -39,6 +39,7 @@ class Bar:
     high: float
     low: float
     volume: float
+    source: str = "daily close"          # or e.g. "NEAR Intents price of NVDAon" (fallback when no daily close is available)
 
 
 def parse_daily(payload: object, symbol: str) -> list[Bar]:

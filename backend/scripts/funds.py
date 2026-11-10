@@ -46,6 +46,24 @@ def latest_reports(store, only: str | None) -> list[tuple[str, object]]:  # noqa
     return out
 
 
+def intents_price_fallback(cfg):  # noqa: ANN001,ANN201
+    """When no daily close is available: the NEAR Intents price of the Ondo tokenized stock (<TICKER>on), labelled as such."""
+    from app.fund.intents_signed import SignedIntents
+    from app.sources.prices import Bar
+    cache: dict = {}
+
+    def fallback(ticker: str):  # noqa: ANN202
+        if "list" not in cache:
+            cache["list"] = {str(t.get("symbol", "")).upper(): t for t in SignedIntents(cfg.intents.api).tokens()}
+        t = cache["list"].get(f"{ticker.upper()}ON")
+        if not t or not t.get("price"):
+            return None
+        when = datetime.fromisoformat(str(t.get("priceUpdatedAt") or datetime.now(timezone.utc).isoformat()).replace("Z", "+00:00"))
+        px = float(t["price"])
+        return Bar(day=when.date(), close=px, high=px, low=px, volume=0, source=f"NEAR Intents price of {t['symbol']}")
+    return fallback
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--topic")
@@ -59,7 +77,7 @@ def main() -> int:
     s = get_settings()
     cfg = load_fund_config()
     prices = AlphaVantageClient(s.alpha_vantage_key_value()) if s.alpha_vantage_key_value() else None
-    book = PriceBook(prices, max_requests=args.max_price_requests)
+    book = PriceBook(prices, max_requests=args.max_price_requests, fallback=intents_price_fallback(cfg))
     intents = OneClickClient(cfg.intents.api)
     creds = None if args.no_seal else s.near_testnet_credentials()
     recorder = NearRecorder(*creds) if creds else None

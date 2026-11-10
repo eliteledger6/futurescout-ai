@@ -14,6 +14,8 @@ max_holdings_per_tier: 4
 
 # Decision agent (code rules; every reason is written to the decision log and sealed on NEAR testnet).
 # Target share of the fund invested, by the report's verdict band (app/report/verdict.py):
+fully_invested: true           # owner 2026-11-10: every paper fund invests all its money (no cash held back)
+unknown_size_tier: high       # a listed company without revenue data counts as high risk
 exposure_by_band:
   strong: 1.00
   building: 0.75

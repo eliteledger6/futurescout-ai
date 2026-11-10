@@ -14,7 +14,8 @@ from app.fund.intents import OneClickClient
 from app.sources.prices import Bar
 
 NOW = datetime(2026, 11, 9, 12, tzinfo=timezone.utc)
-CFG = load_fund_config()
+CFG = load_fund_config().model_copy(update={"fully_invested": False})   # the band / confidence sizing rules (still available)
+CFG_FULL = load_fund_config()                                                 # owner 2026-11-10: fully invested
 
 
 def co(ticker, size, mentions=2):
@@ -203,3 +204,34 @@ def test_confidence_below_70_shrinks_the_position(verdict):
     verdict.update(confidence_pct=75.0)
     f2 = new_fund("Fixture tech", None, CFG, NOW)
     assert decide(f2, "run1", report(), FakeBook(PRICES), CFG, NOW, "first").target_invested_pct == 100.0
+
+
+# ---------------------------------------------------------------- owner 2026-11-10: every paper fund fully invested
+def test_fully_invested_fund_puts_all_money_in_even_with_a_weak_or_missing_verdict(verdict, tmp_path):
+    verdict.update(band="insufficient", score=None, confidence_pct=20.0)
+    f = new_fund("Fixture tech", "semiconductors", CFG_FULL, NOW)
+    d = decide(f, "run1", report(risks={"SMOL": "high"}), FakeBook(PRICES), CFG_FULL, NOW, "first decision")
+    assert d.target_invested_pct == 100.0 and not d.staged_tiers
+    assert f.cash_usd < 0.01 * CFG_FULL.start_cash_usd                       # only rounding and fees are left
+    assert any("fully invested" in r for r in d.reasons)
+
+
+def test_unknown_size_counts_as_high_risk_and_filings_are_a_labelled_fallback():
+    r = report()
+    r.scout.candidates.append(scout("NEWCO", None, 40))                       # new listing: no revenue data
+    assert ("NEWCO", "high") in [(c.ticker, c.tier) for c in build_basket(r, CFG_FULL)]
+    assert "FILINGS" not in [c.ticker for c in build_basket(r, CFG_FULL)]   # patents / papers exist: filings stay out
+    only_filings = report()
+    only_filings.scout.candidates = [scout("FILINGS", "mid", 90, patents=0, papers=0, filings=3)]
+    only_filings.scout.incumbents = []
+    b = build_basket(only_filings, CFG_FULL)
+    assert [c.ticker for c in b] == ["FILINGS"] and "FALLBACK" in b[0].why
+
+
+def test_fallback_price_is_used_only_without_a_close_and_is_labelled(tmp_path):
+    from app.sources.prices import Bar as B
+    fb = lambda t: B(day=date(2026, 11, 10), close=182.55, high=182.55, low=182.55, volume=0, source=f"NEAR Intents price of {t}on") if t == "NVDA" else None
+    book = PriceBook(None, cache_dir=tmp_path, fallback=fb)
+    bar = book.close_on_or_before("NVDA", date(2026, 11, 10))
+    assert bar.close == 182.55 and bar.source.startswith("NEAR Intents") and "no daily close" in book.notes[0]
+    assert book.bars("DELL") == []

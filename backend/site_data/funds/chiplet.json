@@ -5,14 +5,14 @@
   "sector": "semiconductors",
   "created_at": "2026-11-09T11:14:10.603393Z",
   "start_cash_usd": 10000.0,
-  "cash_usd": 3793.08,
+  "cash_usd": 0.0,
   "holdings": [
     {
       "ticker": "AMD",
       "company": "Advanced Micro Devices",
       "tier": "low",
-      "shares": 13.02034246613821,
-      "cost_usd": 6401.23554026081,
+      "shares": 20.45621252711812,
+      "cost_usd": 10182.970335873972,
       "last_close": 508.58,
       "last_date": "2026-11-09",
       "timing_risk": "moderate",
@@ -23,7 +23,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-10T04:48:19.407589Z",
+        "checked_at": "2026-11-10T08:16:19.370680Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -249,6 +249,54 @@
         "tx_hash": "Hs6aQfLqYHY2fg3fgbwUGAeBuaMJGC2KKvRCTBxcTWE7",
         "explorer_url": "https://testnet.nearblocks.io/txns/Hs6aQfLqYHY2fg3fgbwUGAeBuaMJGC2KKvRCTBxcTWE7"
       }
+    },
+    {
+      "at": "2026-11-10T08:13:52.973291Z",
+      "run_id": "ab3b0896-a403-4181-990f-65bad2f59f13",
+      "report_date": "2026-11-10",
+      "band": "strong",
+      "score": 72.2,
+      "previous_score": 72.2,
+      "confidence_pct": 44.4,
+      "target_invested_pct": 100.0,
+      "tier_targets_usd": {
+        "low": 10414.97
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "NVDA"
+      ],
+      "trades": [
+        {
+          "day": "2026-11-09",
+          "ticker": "AMD",
+          "tier": "low",
+          "side": "buy",
+          "shares": 7.43587,
+          "price": 508.58,
+          "usd": 3781.73,
+          "fee_usd": 11.35
+        }
+      ],
+      "reasons": [
+        "Why now: owner rule 2026-11-10: every paper fund is fully invested.",
+        "Verdict band 'strong' (score 72.2), confidence 44%. Owner rule: every paper fund is fully invested, so all of the fund goes into the basket.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): NVDA. Reviewed again after the next price update.",
+        "No priced company in the medium-risk tier; its share goes to the other tiers.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-10."
+      ],
+      "value_before_usd": 10414.97,
+      "sha256": "34c26028fb95f8301c079f9befd5aef206a26b8cc9127c6c34c2075120a67118",
+      "chain": {
+        "network": "testnet",
+        "contract": "v1.social08.testnet",
+        "account": "futurescoutai.testnet",
+        "key": "funds/fund_chiplet_4",
+        "sha256": "34c26028fb95f8301c079f9befd5aef206a26b8cc9127c6c34c2075120a67118",
+        "tx_hash": "7BrM7imf1AYVkBN7B4Dw8BbtHYP9JFVEkuaCicv2Akkw",
+        "explorer_url": "https://testnet.nearblocks.io/txns/7BrM7imf1AYVkBN7B4Dw8BbtHYP9JFVEkuaCicv2Akkw"
+      }
     }
   ],
   "history": [
@@ -259,14 +307,14 @@
     },
     {
       "day": "2026-11-09",
-      "value_usd": 10414.97,
+      "value_usd": 10403.62,
       "benchmark_value_usd": null
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": null,
   "benchmark_start_date": null,
-  "updated_at": "2026-11-10T04:46:08.575261Z",
+  "updated_at": "2026-11-10T08:13:52.973291Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",
