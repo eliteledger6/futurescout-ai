@@ -1,10 +1,80 @@
 # FUTURESCOUT AI
 
-AI-assisted research on emerging technologies across the whole technology sector (semiconductors, AI software, robotics, quantum, energy, space, biotech tools, cybersecurity, XR). Specialist agents gather evidence from papers, patents, company sources and X posts, a separate risk agent argues the other side, and a final agent writes an evidence-backed report with sources, uncertainty and 1-5 year horizons.
+An automated research and trading agent for emerging technology, built on NEAR. A team of AI agents (models on **NEAR AI Cloud**) reads research papers, patents, SEC filings and X posts for 54 technology topics, argues the other side, and writes a report where every claim has a label and a source. Each report's fingerprint is sealed on **NEAR**. The companies the evidence points to go into a paper fund per topic, and a trading agent buys and sells real tokenized stocks through **NEAR Intents**, inside hard limits written in code.
 
-It produces research, not trading signals. It never places trades and never promises returns.
+Research information, not financial advice. The trading agent uses a small, capped real-money budget.
 
-## Status (read this first)
+## NEAR HACKATHON submission
+
+| | |
+|---|---|
+| Built | During NEAR HACKATHON (development window 2026-11-01 to 2026-11-14). The first live runs are from 2026-11-08; the git history starts 2026-11-09, when the folder became a repository. No code from before the announcement. |
+| Suggested tracks | `defi` (trading agent settling through NEAR Intents), `agents` (an agent that spends and earns real money), `privacy` (private inference on NEAR AI Cloud; orders signed from the Confidential Intents balance), `security` (spending limits, order verification before signing, kill switch) |
+| Demo video | `demo/futurescout_hackathon_demo.mp4` is built locally by `demo/make_video.py` (not committed: large binary); the public demo post on X links it |
+| AI assistance | Code written with Claude Code (Anthropic). Third-party libraries are listed at the end |
+
+### The problem
+
+Technology investing mixes verifiable facts, rumours and hype, and "AI picks" rarely show their evidence. FUTURESCOUT AI keeps the evidence and the money decisions connected and checkable: every claim is labelled (verified fact, AI interpretation, forecast, assumption, unverified claim) with a source URL from a real API response; the companies come from patents and papers that name them, never from a hand-made list; and every report, fund decision and trade is fingerprinted on NEAR so it cannot be edited afterwards.
+
+### How NEAR is used (concretely)
+
+| NEAR piece | What it does here | Where |
+|---|---|---|
+| **NEAR AI Cloud** | Every agent (chief, science, risk, market, X, patent, timing, scout, investment, trading) calls a model from the NEAR AI Cloud catalogue through its OpenAI-compatible API; the trading agent runs on Claude Opus 5.5 there | `backend/config/model_config.yaml`, `backend/app/models/` |
+| **NEAR Intents (1Click), mainnet** | Real swaps NEAR ⇄ Ondo tokenized stocks. Dry quotes for every candidate; real orders are signed (NEP-413) from the account's **Confidential Intents** balance, the way near.com trades. The order is verified before signing: exactly one transfer, exactly the approved amount, to exactly the quote's deposit address | `backend/app/fund/live.py`, `signed_exec.py`, `intents_signed.py` |
+| **NEAR testnet (SocialDB)** | SHA-256 fingerprints of every report, every paper-fund decision and every trade record; the dashboard re-checks them on each page load ("unchanged since recorded") | `backend/app/chain/near_record.py` |
+
+### What is real and what is simulated
+
+| Real (run live) | Simulated or limited |
+|---|---|
+| Multi-agent research on real papers (OpenAlex, arXiv), patents, SEC filings and X posts; 15 topics with full reports | Paper funds (one per topic, fully invested) use pretend money at real closing prices |
+| Report, fund and trade fingerprints on NEAR testnet | Shadow trading: pretend money, real NEAR Intents quotes |
+| Real-money trades on NEAR mainnet through NEAR Intents: 3 buys, then on 2026-11-10 an automatic round where the agent sold all its GOOGLon (report weakened) and put the NEAR into INTCon seconds later | Real-money budget is capped at $60 in total by the owner |
+| Settlement confirmed by reading the private balance | Stock prices: Alpha Vantage free plan (25 lookups a day), NEAR Intents token prices as a labelled fallback |
+
+### Safety limits on the trading agent (enforced in code, not by the model)
+
+- Master switch, kill switch file (`fund_trade.py stop`), a total budget cap, and near.com's $20 minimum per trade.
+- Buys only from an allowlist built from the paper funds and price-checked tokenized stocks; sells only of what the fund holds, at most 2 a day.
+- The quoted price must sit within a band of the stock's last close; quotes that cost more than 2% are refused.
+- The signed order is checked field by field before signing; a proposal is sent at most once; an unclear result is never retried.
+- Selling, re-investing sale money and automatic approval are separate owner-only switches in `backend/config/funds.yaml`.
+- Every decision (including "hold") is stored with its reasons and fingerprinted.
+
+### Try it in 10 minutes (no keys needed)
+
+The repository ships a snapshot of the real data (`backend/site_data`: 59 reports, the radar, 15 paper funds, the trading record). Windows PowerShell shown; Python 3.10+ and Node.js LTS.
+
+```powershell
+cd backend
+python -m venv .venv; .venv\Scripts\Activate.ps1
+python -m pip install -e ".[dev]"
+python -m pytest                                  # see: all tests pass (fixtures and mocks, no network, no key)
+$env:FUTURESCOUT_DATA_DIR = "site_data"
+python scripts\serve.py                           # see: API on http://127.0.0.1:8000 (docs at /docs)
+```
+
+In a second terminal:
+
+```powershell
+cd frontend
+npm install; npm run build; npm run start         # see: the dashboard on http://localhost:3000
+```
+
+Then, in the dashboard:
+
+1. Open **Radar**: see 54 topics in 9 sectors ranked by paper and patent growth.
+2. Open **Reports** and pick *high bandwidth memory*: see the verdict (score 80, confidence 50%), the companies behind the evidence, and "Unchanged since recorded on NEAR testnet". Switch to **Full report**: every finding with its label, quote and source; the agent trace with model and cost per agent; the company scout table.
+3. Open **Funds & trading** → **Paper funds**: 15 fully invested pretend-money funds with their reasons, compared with the S&P 500.
+4. Open **Trading agent**: the pipeline, the agent's latest decisions, and every completed real trade with the agent's own reasoning (the GOOGLon sale and the INTCon buy of 2026-11-10 show "Approved by the agent (all checks passed)").
+5. Back in the backend terminal: `python scripts\fund_trade.py rules` prints the strategy rules; `python scripts\fund_trade.py holdings` prints what the real-money fund holds.
+
+To run new research or trade you need your own keys (see `.env.example` and the full commands below); real trading also needs a funded NEAR mainnet account and is off by default.
+
+## Component status (detailed)
+
 
 Early development. Only the pieces below exist and are tested. Nothing else is claimed.
 
@@ -29,19 +99,19 @@ Early development. Only the pieces below exist and are tested. Nothing else is c
 | Company Scout: every company behind the evidence (patent assignees, paper authors' employers, SEC filers), matched to the SEC ticker file, sized from XBRL, ranked by a transparent "next-runner" heuristic that favours smaller, growing, R&D-heavy names; incumbents listed separately; a forecast label, not a recommendation | Built and tested (2026-11-09); first live run 2026-11-09 |
 | Retraction flags (OpenAlex) honoured by the citation guard; X post engagement recorded | Built, tested |
 | Price & timing risk (part of the Risk agent): run-up, distance from 50-day average, volatility and drawdown over ~100 trading days for the companies whose filings mention the topic; rule-based level elevated / moderate / subdued. A risk input, never a buy/sell signal | Built and tested with fixtures; needs a free Alpha Vantage key; not yet run live |
-| Watch mode (`scripts/watch.py --loop`): scans the approved X accounts every 2 hours, spots rising topics, refreshes the radar, and starts a full research run when a topic is hot and has no fresh report (capped per day); each run is sealed on NEAR and listed for sale; every decision is logged and shown on the dashboard | Built and tested with fakes; first live cycle 2026-11-09 |
+| Watch mode (`scripts/watch.py --loop`): scans the approved X accounts every 2 hours, spots rising topics, refreshes the radar, and starts a full research run when a topic is hot and has no fresh report (capped per day); each run is sealed on NEAR; every decision is logged and shown on the dashboard | Built and tested with fakes; first live cycle 2026-11-09 |
 | NEAR Protocol testnet record: each report's SHA-256 fingerprint is stored in SocialDB on testnet, and the dashboard re-checks it ("unchanged since recorded") | Built, tested and written live on testnet |
 
 ## Problem
 
 Technology investment research mixes verifiable facts, rumours and hype. FUTURESCOUT AI keeps them apart: every claim carries a label (verified fact, AI interpretation, forecast, assumption, unverified claim), a confidence level and source URLs that come from real API responses, never from a model's memory.
 
-## How NEAR is used
+## How NEAR is used (detail)
 
 - All agents call models from the **NEAR AI Cloud** catalogue through its OpenAI-compatible API (`https://cloud-api.near.ai/v1`). Each agent has its own configurable model in `backend/config/model_config.yaml`.
-- After each run, the report's SHA-256 fingerprint is stored on **NEAR testnet** (SocialDB contract `v1.social08.testnet`). Anyone can recompute a report's fingerprint and compare it with the on-chain value, so a report cannot be quietly edited after publication. Testnet only; no trading, no transfers, and the research agents never touch the key.
+- After each run, the report's SHA-256 fingerprint is stored on **NEAR testnet** (SocialDB contract `v1.social08.testnet`). Anyone can recompute a report's fingerprint and compare it with the on-chain value, so a report cannot be quietly edited after publication. The research agents never touch a key; real-money trading is a separate, capped part (see the hackathon section above).
 
-## Try it
+## Full commands (with your own keys)
 
 Requires Python 3.10+ (tested on 3.13). Windows PowerShell shown; adapt paths on other systems. Run everything from the `backend` folder.
 
@@ -110,14 +180,14 @@ backend/tests/                     tests (fixtures are synthetic and labelled)
 PROJECT_STATUS.md                  detailed phase status
 ```
 
-## What is unfinished (honest list, 2026-11-09)
+## What is unfinished (honest list, 2026-11-10)
 
 - **Price & timing risk and the paper portfolio have never run with live prices**: both need a free Alpha Vantage key (`ALPHA_VANTAGE_API_KEY`). Portfolio positions are recorded but stay "pending".
 - **Patent counts are served from cache** (`SERPAPI_CACHE_ONLY=true`) to save the owner's 100-search quota; topics without cached data say "patents: not counted yet" and their radar heat is paper growth alone (marked *). The EPO OPS alternative is built but awaits key approval.
 - **X signals cover semiconductors only**: the 37 approved accounts are chip companies, bodies and press. Other sectors get X signals once the owner approves accounts found by `scripts\x_discover.py`.
 - **GDELT news** has refused requests from the development network (HTTP 429); the Market agent runs without headlines.
-- **Watch mode and the paper scout run only while the owner's laptop is on**; no hosted deployment.
-- **No custom NEAR contract**: records use SocialDB and payments are native transfers verified by reading the chain (near-sdk-js refuses Windows; Rust not installed). Testnet only; mainnet is refused in code.
+- **Watch mode, the paper scout and the trading loop run only while the owner's laptop is on**; a hosted, read-only copy is prepared (HOSTING.md).
+- **No custom NEAR contract**: records use SocialDB on testnet (near-sdk-js refuses Windows; Rust not installed). Real trades use NEAR Intents on mainnet with a small capped budget.
 - **Score weights are initial assumptions**, not fitted to outcomes; the Company Scout's next-runner score is a transparent heuristic.
 - The dashboard has been checked in a browser at desktop and phone widths, not by a designer.
 
@@ -138,4 +208,4 @@ MIT, see [LICENSE](LICENSE). This covers the code in this repository only; retri
 
 ## Third-party libraries
 
-openai (Python SDK), httpx, pydantic, pydantic-settings, PyYAML, LangGraph, SQLAlchemy, Alembic, psycopg, FastAPI, Uvicorn, pytest. Dashboard: Next.js, React, TypeScript; fonts Space Grotesk and Inter (Google Fonts). Visual style inspired by near.org; FUTURESCOUT uses its own name and logo. Optional: a local PostgreSQL server (not needed to run the demo; without `DATABASE_URL` reports are written to files only). Code in this repository was written with AI assistance (Claude).
+openai (Python SDK), httpx, pydantic, py-near, PyNaCl, base58, pydantic-settings, PyYAML, LangGraph, SQLAlchemy, Alembic, psycopg, FastAPI, Uvicorn, pytest. Dashboard: Next.js, React, TypeScript; fonts Space Grotesk and Inter (Google Fonts). Visual style inspired by near.org; FUTURESCOUT uses its own name and logo. Optional: a local PostgreSQL server (not needed to run the demo; without `DATABASE_URL` reports are written to files only). Code in this repository was written with AI assistance (Claude).
