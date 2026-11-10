@@ -132,7 +132,9 @@ def create_app(
 
     @app.get("/api/health")
     def health() -> dict:
-        return {"ok": True, "store": store.kind}
+        runs_dir = getattr(store, "runs_dir", None)
+        return {"ok": True, "store": store.kind, "data": runs_dir.name if runs_dir else None,
+                "reports": len(list(runs_dir.glob("report_*.json"))) if runs_dir else None}
 
     @app.get("/api/config")
     def config() -> dict:
