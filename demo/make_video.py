@@ -85,7 +85,9 @@ SCENES = [
          "Then the market agent reads the S E C filings of the companies those papers and patents point to. No hand-made company list."),
         ("An AI check keeps the paper counts on topic, and the risk agent argues the other side.",
          "An A I check keeps the paper counts on topic, and the risk agent argues the other side."),
-        ("At the end, a fund agent invests a paper fund, and a trading agent trades real tokenized stocks.", None),
+        ("When a report is sealed, the report agent sells it to the trading agent for NEAR, and a paper fund is invested.", None),
+        ("The report agent stakes 70% of what it earns with NEAR AI, so the staking rewards pay for every agent's models.",
+         "The report agent stakes seventy percent of what it earns with NEAR A I, so the staking rewards pay for every agent's models."),
     ]),
     Scene("04_report", "03", "A research report", [
         ("Here is the report on high bandwidth memory.", None),
@@ -120,15 +122,17 @@ SCENES = [
          "Each paper fund lists the reasons for every decision, and is measured against the S and P five hundred."),
         ("A trading agent on a strong model trades tokenized stocks with real money, through NEAR Intents.", None),
         ("Code checks every order: budget, allowed stocks, price and cost. Then the agent approves its own trade.", None),
-        ("In shadow mode it has placed 7,100 pretend dollars at real quotes, and explains each choice.",
-         "In shadow mode it has placed seven thousand one hundred pretend dollars at real quotes, and explains each choice."),
+        ("In shadow mode it also trades pretend money at real quotes, and explains each choice.", None),
     ]),
-    Scene("10_round", "09", "A real trading round", [
+    Scene("10_round", "09", "Real money, end to end", [
         ("The agent wakes up on its own: on a new report, a sharp price move, or its daily review.", None),
-        ("Here it reviewed its holdings. Google's report had weakened, so it sold the whole position, swapping it back into NEAR.", None),
-        ("Seconds later it put the money into Intel, backed by the strongest report: high bandwidth memory.", None),
-        ("The whole round, sale and purchase, took under a minute, with no human in the loop.", None),
-        ("Every real trade is listed with the agent's reasons, and its record is sealed on NEAR.", None),
+        ("First it must buy the report: it paid 4.6 NEAR for the memory report, straight from its near.com balance.",
+         "First it must buy the report: it paid four point six NEAR for the memory report, straight from its near dot com balance."),
+        ("Then it bought Intel with what it had left, and approved the order itself after every code check passed.", None),
+        ("The report agent staked 70% of its earnings with NEAR AI, and keeps 30% to fund a second trading agent.",
+         "The report agent staked seventy percent of its earnings with NEAR A I, and keeps thirty percent to fund a second trading agent."),
+        ("Other trading bots can buy fresh reports too: 24 hours of early access, paid in NEAR and checked on chain.",
+         "Other trading bots can buy fresh reports too: twenty-four hours of early access, paid in NEAR and checked on chain."),
     ]),
     Scene("10_close", "", "", [
         ("FUTURESCOUT AI: evidence-first technology research.", "Future Scout A I: evidence-first technology research."),
@@ -389,11 +393,11 @@ def closing_card(t: float, dur: float) -> Image.Image:
             "market, X, patent, price timing, company scout, investment",
             "Real sources: OpenAlex, arXiv, EPO patents, SEC EDGAR, X",
             "Every quote checked against its source",
-            "Reports and fund decisions sealed on NEAR",
+            "Reports sold for NEAR, earnings staked for AI",
             "54 topics, 9 sectors, 15 topics with full reports",
         ]),
         (1010, "SIMULATED OR LIMITED", (255, 196, 110), [
-            "Topic funds and the portfolio use pretend money",
+            "Topic funds and shadow trades use pretend money",
             "Scores are heuristics: no topic reaches 70% confidence",
             "Testnet tokens have no value",
             "Stock prices: free plan, 25 lookups a day",
@@ -489,9 +493,11 @@ async def rec_agents(k: Take) -> None:
     await b.hover("g.node", text="science", seconds=0.6)
     await b.hover("g.node", text="risk", seconds=0.7)
     await k.until(k.sent[4] + 0.2)
-    await b.hover("g.node", text="topic fund", seconds=0.7)
-    await k.until(k.sent[4] + (k.dur - k.sent[4]) * 0.45)
+    await b.hover("g.node", text="report agent", seconds=0.7)
+    await k.until(k.sent[4] + (k.sent[5] - k.sent[4]) * 0.45)
     await b.hover("g.node", text="trading agent", seconds=0.7)
+    await k.until(k.sent[5] + 0.2)
+    await b.hover("g.node", text="near ai staking", seconds=0.7)
 
 
 async def rec_report(k: Take) -> None:
@@ -564,23 +570,26 @@ async def rec_round(k: Take) -> None:
     await b.hover(".tr-log li", 0, seconds=0.7)
     await k.until(k.sent[1] - 0.9)
     k.cut()
-    await b.scroll_to_el(".tr-card.live", 1.1, offset=110, index=1)          # newest first: the sale is the second card
+    await b.scroll_to_el(".tr-card", 1.1, offset=90, text="Agent economy")       # the report purchase
     await k.until(k.sent[1] + 0.2)
-    await k.hl(await b.rect(".tr-card.live .tr-head", 1), seconds=2.6, pad=8)
-    await b.hover(".tr-card.live .tr-say", 1, seconds=0.8)
+    await k.hl(await b.rect(".tr-card .stat", 0, text="paid for reports"), seconds=2.4, pad=8)
+    await b.hover(".tr-mini > div", 0, seconds=0.7)
     await k.until(k.sent[2] - 0.9)
     k.cut()
-    await b.scroll_to_el(".tr-card.live", 1.0, offset=110, index=0)          # the Intel buy, made with the sale's money
+    await b.scroll_to_el(".tr-card.live", 1.0, offset=110, index=0)            # the Intel buy, approved by the agent
     await k.until(k.sent[2] + 0.2)
     await k.hl(await b.rect(".tr-card.live .tr-head", 0), seconds=2.6, pad=8)
     await b.hover(".tr-card.live .tr-say", 0, seconds=0.8)
-    await k.until(k.sent[3] + 0.1)
-    await b.hover(".tr-card.live .tr-steps, .tr-card.live .tr-say", 0, seconds=0.7)
+    await k.until(k.sent[3] - 0.9)
+    k.cut()
+    await b.scroll_to_el(".tr-card", 1.0, offset=90, text="Agent economy")       # staking and the kept pot
+    await k.until(k.sent[3] + 0.2)
+    await k.hl(await b.rect(".tr-card .stat", 0, text="staked for NEAR AI"), seconds=2.2, pad=8)
+    await asyncio.sleep(1.4)
+    await k.hl(await b.rect(".tr-card .stat", 0, text="kept pot"), seconds=2.0, pad=8)
     await k.until(k.sent[4] + 0.1)
-    r = await b.rect_text("record sealed on NEAR testnet")
-    if r and 60 < r[1] < 680:
-        await k.hl(r, seconds=2.2, pad=6)
-        await b.move_mouse(r[0] + r[2] / 2, r[1] + r[3] / 2, 0.7)
+    await k.hl(await b.rect(".tr-mini"), seconds=max(2.2, k.dur - k.sent[4] - 0.8), pad=8)  # reports priced in NEAR
+    await b.hover(".tr-mini > div", 1, seconds=0.7)
 
 
 async def rec_evidence(k: Take) -> None:

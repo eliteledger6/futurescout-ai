@@ -1,0 +1,76 @@
+{
+  "prices": {
+    "e5d41d1f-fa56-42ce-bf27-9fccb47298a2": {
+      "run_id": "e5d41d1f-fa56-42ce-bf27-9fccb47298a2",
+      "topic": "high bandwidth memory",
+      "price_near": 4.594,
+      "price_usd": 16.5843,
+      "cost_usd": 0.4462,
+      "basis": "quality 0.80 (score 80.0, confidence 49.6%) inside the 3-5 NEAR band = 4.594 NEAR ($16.58); the report cost $0.45 of AI to make",
+      "at": "2026-11-10T10:06:16.310970Z"
+    },
+    "783ab33d-be9b-4dd2-b9db-6e5e48e71b15": {
+      "run_id": "783ab33d-be9b-4dd2-b9db-6e5e48e71b15",
+      "topic": "oled displays",
+      "price_near": 4.414,
+      "price_usd": 15.9345,
+      "cost_usd": 0.4396,
+      "basis": "quality 0.71 (score 71.0, confidence 49.6%) inside the 3-5 NEAR band = 4.414 NEAR ($15.93); the report cost $0.44 of AI to make",
+      "at": "2026-11-10T10:09:33.756330Z"
+    },
+    "71b787db-4595-4cab-8ae0-9aa6971d2a4b": {
+      "run_id": "71b787db-4595-4cab-8ae0-9aa6971d2a4b",
+      "topic": "AI agents",
+      "price_near": 4.255,
+      "price_usd": 15.3605,
+      "cost_usd": 0.5616,
+      "basis": "quality 0.63 (score 70.8, confidence 38.6%) inside the 3-5 NEAR band = 4.255 NEAR ($15.36); the report cost $0.56 of AI to make",
+      "at": "2026-11-10T10:09:33.756330Z"
+    },
+    "f0934784-6b57-49fd-a4dc-09d320bbd16e": {
+      "run_id": "f0934784-6b57-49fd-a4dc-09d320bbd16e",
+      "topic": "6G",
+      "price_near": 3.824,
+      "price_usd": 13.8046,
+      "cost_usd": 0.3724,
+      "basis": "quality 0.41 (score 47.0, confidence 37.7%) inside the 3-5 NEAR band = 3.824 NEAR ($13.80); the report cost $0.37 of AI to make",
+      "at": "2026-11-10T10:09:33.756330Z"
+    },
+    "7a87a2e1-5e88-4679-b03f-a20e042c6497": {
+      "run_id": "7a87a2e1-5e88-4679-b03f-a20e042c6497",
+      "topic": "vision-language-action model",
+      "price_near": 4.27,
+      "price_usd": 15.4147,
+      "cost_usd": 0.2926,
+      "basis": "quality 0.64 (score 80.0, confidence 29.4%) inside the 3-5 NEAR band = 4.27 NEAR ($15.41); the report cost $0.29 of AI to make",
+      "at": "2026-11-10T10:09:33.756330Z"
+    }
+  },
+  "purchases": [
+    {
+      "id": "229cba4088",
+      "run_id": "e5d41d1f-fa56-42ce-bf27-9fccb47298a2",
+      "topic": "high bandwidth memory",
+      "price_near": 4.594,
+      "buyer": "wrongowl2563.near",
+      "seller": "grandbread5023.near",
+      "status": "paid",
+      "tx_hash": null,
+      "note": "paid 4.5940 NEAR from the near.com balance (intent 4378K6GsvC96TKJ4i5absh6kKTc8BzjYAucdWLiehJDe); seen arriving in grandbread5023.near after about 15s",
+      "at": "2026-11-10T10:06:38.116275Z"
+    }
+  ],
+  "stakes": [
+    {
+      "id": "d7d6a7230f",
+      "account": "grandbread5023.near",
+      "contract": "stake.dao",
+      "amount_near": 4.737456,
+      "balance_before_near": 5.92182,
+      "status": "staked",
+      "tx_hash": "G8AeWXAvBPDweraqPqdP6k9NZJrFVhKtzg77c7nenGCG",
+      "note": "staked 4.73746 NEAR (80% of 5.92182); the rest stays for fees",
+      "at": "2026-11-10T10:11:38.104032Z"
+    }
+  ]
+}
