@@ -21,6 +21,7 @@ owner on the website. Docs: https://docs.market.near.ai/list-your-agent.md
 from __future__ import annotations
 
 import argparse
+import json
 import subprocess
 import sys
 import time
@@ -30,7 +31,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from app import proposals, service  # noqa: E402
-from app.paper_fund_hook import build_paper_fund  # noqa: E402
+from app.paper_fund_hook import build_paper_fund, funds_due, update_all_funds  # noqa: E402
 from app.agent_market import AgentMarketClient, MarketConfig, handle, load_state, resume_stale, save_state  # noqa: E402
 from app.api.main import _default_store  # noqa: E402
 from app.config import get_settings  # noqa: E402
@@ -40,6 +41,7 @@ from app.report import render_markdown  # noqa: E402
 
 STATE = service.RUNS_DIR / "agent_market" / "state.json"
 PROPOSALS = service.RUNS_DIR / "proposals" / "state.json"
+HOUSEKEEPING = service.RUNS_DIR / "agent_market" / "housekeeping.json"     # when the daily paper-fund update last ran
 REPO = Path(__file__).resolve().parents[2]
 
 
@@ -134,7 +136,19 @@ def main() -> int:
             changed = proposals.work(path=PROPOSALS, cfg=pcfg, reviewer=lambda t: proposals.review(router, t), recent=recent,
                                      run_research=run_research, now=lambda: datetime.now(timezone.utc), report=tell)
             new_reports += sum(1 for p in changed if p.status == "done")
-        if new_reports and args.publish:
+        # ---- once a day (and right after the agent starts): every paper fund is created or updated ---------------
+        funds_changed = False
+        try:
+            hk = json.loads(HOUSEKEEPING.read_text(encoding="utf-8")) if HOUSEKEEPING.is_file() else {}
+        except ValueError:
+            hk = {}
+        if funds_due(hk.get("funds_at"), datetime.now(timezone.utc)):
+            print(f"[{datetime.now(timezone.utc):%H:%M}] daily paper-fund update (new topics get their fund; others are reviewed or revalued)")
+            funds_changed = update_all_funds()
+            hk["funds_at"] = datetime.now(timezone.utc).isoformat()      # tried today: a failure is retried tomorrow, not every minute
+            HOUSEKEEPING.parent.mkdir(parents=True, exist_ok=True)
+            HOUSEKEEPING.write_text(json.dumps(hk), encoding="utf-8")
+        if (new_reports or funds_changed) and args.publish:
             publish()
         if args.once:
             return 0

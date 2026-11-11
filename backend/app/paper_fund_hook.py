@@ -15,10 +15,47 @@ from __future__ import annotations
 import subprocess
 import sys
 from pathlib import Path
-from typing import Callable
+from datetime import datetime, timedelta, timezone
+from typing import Callable, Optional
 
 BACKEND = Path(__file__).resolve().parents[1]
 MAX_PRICE_REQUESTS = 6          # fresh Alpha Vantage lookups per new fund (free plan: 25 a day); the rest comes from cache
+
+
+def _run_funds(args: list[str], label: str, log: Callable[[str], None], run: Callable[..., subprocess.CompletedProcess],
+               timeout: int) -> bool:
+    cmd = [sys.executable, "scripts/funds.py", *args]
+    try:
+        r = run(cmd, cwd=str(BACKEND), capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=timeout)
+    except subprocess.TimeoutExpired:
+        log(f"  {label}: did not finish in {timeout // 60} min; it is tried again later")
+        return False
+    lines = [ln for ln in ((r.stdout or "") + (r.stderr or "")).splitlines()
+             if ln.strip() and not any(x in ln for x in ("aiohttp", "Unclosed", "connector", "client_session", "Traceback"))]
+    if r.returncode != 0:
+        log(f"  {label}: failed ({(lines[-1] if lines else 'no output')[:160]})")
+        return False
+    log(f"  {label}: " + (lines[-1][:160] if lines else "done"))
+    return True
+
+
+def update_all_funds(log: Callable[[str], None] = print, run: Callable[..., subprocess.CompletedProcess] = subprocess.run,
+                     timeout: int = 1800) -> bool:
+    """Every topic with a scored report: create a missing fund, decide again when a newer report exists or the weekly
+    review is due, otherwise revalue at the latest closes. Run once a day by the report agent."""
+    return _run_funds(["--max-price-requests", "10"], "paper funds (daily update)", log, run, timeout)
+
+
+def funds_due(last_iso: Optional[str], now: datetime, every_hours: float = 24.0) -> bool:
+    """True when the daily paper-fund update has not run in the last `every_hours` (or never)."""
+    if not last_iso:
+        return True
+    try:
+        last = datetime.fromisoformat(last_iso)
+    except ValueError:
+        return True
+    last = last if last.tzinfo else last.replace(tzinfo=timezone.utc)
+    return now - last >= timedelta(hours=every_hours)
 
 
 def build_paper_fund(topic: str, log: Callable[[str], None] = print, run: Callable[..., subprocess.CompletedProcess] = subprocess.run,
@@ -26,16 +63,5 @@ def build_paper_fund(topic: str, log: Callable[[str], None] = print, run: Callab
     """Build or update the paper fund of `topic`. Returns True when funds.py finished without an error."""
     if not (topic or "").strip():
         return False
-    cmd = [sys.executable, "scripts/funds.py", "--topic", topic.strip(), "--max-price-requests", str(MAX_PRICE_REQUESTS)]
-    try:
-        r = run(cmd, cwd=str(BACKEND), capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=timeout)
-    except subprocess.TimeoutExpired:
-        log(f"  paper fund for '{topic}': did not finish in {timeout // 60} min; try again with  python scripts\\funds.py --topic \"{topic}\"")
-        return False
-    lines = [ln for ln in ((r.stdout or "") + (r.stderr or "")).splitlines()
-             if ln.strip() and not any(x in ln for x in ("aiohttp", "Unclosed", "connector", "client_session", "Traceback"))]
-    if r.returncode != 0:
-        log(f"  paper fund for '{topic}': failed ({(lines[-1] if lines else 'no output')[:160]})")
-        return False
-    log(f"  paper fund for '{topic}': " + (lines[-1][:160] if lines else "done"))
-    return True
+    return _run_funds(["--topic", topic.strip(), "--max-price-requests", str(MAX_PRICE_REQUESTS)], f"paper fund for '{topic}'",
+                      log, run, timeout)
