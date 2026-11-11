@@ -44,7 +44,9 @@ put my device to sleep after* to **Never**.
 - Change limits or switches: `backend\config\funds.yaml` (budget caps, auto-approve, selling, the report budget share).
 - Keys and tokens: `.env` (never in a chat or a screenshot).
 - Withdraw NEAR Agent Market earnings: on market.near.ai.
-- Regenerate the radar: `backend` folder, `..\.venv\Scripts\python.exe scripts\run_radar.py`, then `update_website.bat`.
+- The radar refreshes by itself: the report agent recounts it once a day in the background (over an hour at the patent
+  office's pace) and publishes it. The setting is `agent_market.radar_refresh_hours` in `backend/config/funds.yaml` (0 = off).
+- To regenerate the radar by hand: `backend` folder, `..\.venv\Scripts\python.exe scripts\run_radar.py`, then `update_website.bat`.
 - Nothing else needs a manual run: reports, seals, paper funds, report purchases, trades, staking and website updates all
   happen inside the two agents started by `start_everything.bat`.
 
