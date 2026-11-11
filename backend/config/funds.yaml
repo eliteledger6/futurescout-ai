@@ -92,6 +92,8 @@ economy:
   stake_reserve_near: 0.3         # left unstaked in the report agent's wallet for gas and NEAR seals
   market_open: true               # owner 2026-11-10: other trading bots may buy reports (/api/market)
   embargo_hours: null             # owner 2026-11-10: reports are never unlocked without payment (a number = free after N hours)
+  demo_free_from: "2026-11-11T00:00:00+00:00"   # owner 2026-11-11: every report written from this day on is unlocked "for demo
+                                  # purposes only" (the site says so); delete this line to sell new reports again
   always_free:                    # owner 2026-11-10: never locked, for the demo (high bandwidth memory, score 80)
     - e5d41d1f-fa56-42ce-bf27-9fccb47298a2
     - 4a2a3eaa-9841-4174-b38d-0a12e7b52623   # owner 2026-11-11: retrieval-augmented generation (first visitor proposal), free for the demo

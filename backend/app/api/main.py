@@ -202,7 +202,7 @@ def create_app(
 
     # ---------------------------------------------------------------- report market (owner 2026-11-10)
     from app.fund.economy import load_economy, price_report
-    from app.fund.report_market import buy as market_buy, is_locked, load_market, unlock_at
+    from app.fund.report_market import buy as market_buy, demo_free, is_locked, load_market, unlock_at
     econ_path = trading_dir.parent / "economy" / "state.json"
     sales_path = trading_dir.parent / "economy" / "sales.json"
     px_cache: dict = {}
@@ -255,6 +255,8 @@ def create_app(
                 info = lock_info(r["id"], found[0]) if found else None
                 if info:
                     r.update({k: info[k] for k in ("locked", "unlock_at", "price_near")})
+            elif demo_free(datetime.fromisoformat(r["generated_at"]), ec, r["id"]):
+                r["demo_free"] = True                     # open only because the owner unlocked it for the demo
         return rows
 
     # ---- topic proposals (owner 2026-11-11): stored here, reviewed and researched in the owner's loop ----------
@@ -359,7 +361,10 @@ def create_app(
                 msg = ("Paid report: buy access from the report agent in NEAR." if not info["unlock_at"] else
                        "Fresh report: early access is sold to trading bots. It is free here after " + info["unlock_at"])
                 raise HTTPException(402, {"message": msg, **info, "summary": summarize(run_id, report)})
-        return {"summary": summarize(run_id, report), "report": report.model_dump(mode="json"), "markdown": markdown,
+        summary = summarize(run_id, report)
+        if not info and demo_free(report.generated_at, load_fund_config().economy, run_id):
+            summary["demo_free"] = True
+        return {"summary": summary, "report": report.model_dump(mode="json"), "markdown": markdown,
                 "verdict": build_verdict(report)}
 
     @app.get("/api/runs/{run_id}/verify")

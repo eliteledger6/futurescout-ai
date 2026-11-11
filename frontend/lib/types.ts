@@ -13,7 +13,7 @@ export interface RunSummary {
   agents_not_run: string[];
   score: number | null;
   score_reportable: boolean;
-  locked?: boolean; unlock_at?: string | null; price_near?: number | null;   // paid report (unlock_at null = never free)
+  locked?: boolean; unlock_at?: string | null; price_near?: number | null; demo_free?: boolean;   // paid report (unlock_at null = never free)
   score_confidence: Confidence | null;
   coverage: number | null;
   findings: number;

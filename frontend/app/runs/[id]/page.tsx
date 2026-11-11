@@ -93,6 +93,11 @@ function ReportView({ data }: { data: RunDetail }) {
             {r.agents_not_run.map((a) => <span key={a} className="pill" title="No analysed evidence from this agent">{a}: not run</span>)}
           </div>
           <div className="pills" style={{ marginTop: 10 }}><NearBadge runId={data.summary.id} /></div>
+          {data.summary.demo_free && (
+            <div className="notice" style={{ marginTop: 14, maxWidth: 760 }}>
+              <b>Unlocked for demo purposes only.</b> Reports are normally paid: the report agent sells each one for $2–3 in NEAR.
+            </div>
+          )}
           <OtherRuns topic={r.topic} id={data.summary.id} />
         </div>
       </section>

@@ -66,10 +66,24 @@ def unlock_at(generated_at: datetime, cfg: EconomyConfig) -> Optional[datetime]:
     return g + timedelta(hours=cfg.embargo_hours)
 
 
+def demo_free(generated_at: datetime, cfg: EconomyConfig, run_id: str = "") -> bool:
+    """True when a report that would be sold is open only because the owner unlocked it for the demo: it is on the
+    always_free list, or it was written at or after demo_free_from."""
+    if not cfg.market_open:
+        return False
+    if run_id and run_id in cfg.always_free:
+        return True
+    if cfg.demo_free_from is None:
+        return False
+    g = generated_at if generated_at.tzinfo else generated_at.replace(tzinfo=timezone.utc)
+    f = cfg.demo_free_from if cfg.demo_free_from.tzinfo else cfg.demo_free_from.replace(tzinfo=timezone.utc)
+    return g >= f
+
+
 def is_locked(generated_at: datetime, cfg: EconomyConfig, now: datetime, run_id: str = "") -> bool:
     """True while the market is open and the report is not yet free (never free when embargo_hours is null), unless the
     owner made it always free."""
-    if run_id and run_id in cfg.always_free:
+    if demo_free(generated_at, cfg, run_id):
         return False
     until = unlock_at(generated_at, cfg)
     return bool(cfg.market_open) and (until is None or now < until)

@@ -232,3 +232,7 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   `scripts/market_agent.py` (reuses a recent report, else one research run, sealed), `--publish` exports and pushes the
   snapshot. Hosted proposals need PROPOSALS_TOKEN on Render and in `.env`. Mock-tested (316 tests); no real proposal
   researched yet; not deployed until the owner pushes.
+- 2026-11-11 (owner): the first visitor proposal ran live end to end (retrieval-augmented generation: reviewer approved,
+  researched, score 75.4, sealed on mainnet, published by the agent). For the demo, every report written from 2026-11-11 on
+  is unlocked (`economy.demo_free_from` in funds.yaml) and the site marks it "Unlocked for demo purposes only" (card pill and
+  a notice on the report); the two `always_free` reports carry the same mark. Delete `demo_free_from` to sell new reports again.

@@ -62,6 +62,8 @@ class EconomyConfig(BaseModel):
     market_open: bool = False            # owner 2026-11-10: outside bots may buy early access to fresh reports (GET/POST /api/market)
     embargo_hours: Optional[float] = 24.0   # sold for this long, then free on the site; None = never free (owner 2026-11-10)
     second_trader_at_usd: float = 200.0  # owner 2026-11-10: when the kept 30% passes this, it funds a second trading agent (next step)
+    demo_free_from: Optional[datetime] = None   # owner 2026-11-11: reports written at or after this time are unlocked "for demo
+                                                # purposes only" (the site says so); remove it to sell new reports again
     always_free: list[str] = Field(default_factory=list)   # owner: report ids never locked (e.g. the demo report)
 
 

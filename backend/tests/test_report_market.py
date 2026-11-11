@@ -84,3 +84,13 @@ def test_shipped_config_keeps_reports_paid_only():
     from app.fund import load_fund_config
     ec = load_fund_config().economy
     assert ec.market_open and ec.embargo_hours is None                       # owner 2026-11-10: never free without payment
+
+
+def test_new_reports_are_unlocked_for_the_demo_and_marked_so():
+    from app.fund.report_market import demo_free
+    cfg = EconomyConfig(market_open=True, seller_account="r.near", embargo_hours=None, always_free=["demo1"],
+                        demo_free_from=NOW - timedelta(hours=1))
+    assert not is_locked(NOW, cfg, NOW, "new") and demo_free(NOW, cfg, "new")                       # written after the date: open, marked
+    assert is_locked(NOW - timedelta(days=2), cfg, NOW, "old") and not demo_free(NOW - timedelta(days=2), cfg, "old")   # older: still paid
+    assert demo_free(NOW - timedelta(days=2), cfg, "demo1")                                         # listed: open, marked
+    assert not demo_free(NOW, EconomyConfig(seller_account="r.near", demo_free_from=NOW), "x")      # market closed: nothing to mark

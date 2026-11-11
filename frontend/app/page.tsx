@@ -101,6 +101,9 @@ function TopicCard({ g }: { g: TopicGroup<RunSummary> }) {
           {run.unlock_at ? "Early access" : "Paid"}{run.price_near != null ? ` · ${run.price_near} NEAR` : ""}
         </span></div>
       )}
+      {run.demo_free && (
+        <div><span className="pill pill-on" style={{ whiteSpace: "nowrap" }}>Unlocked for demo</span></div>
+      )}
       <div className="row" style={{ alignItems: "flex-start", flexWrap: "nowrap", gap: 14 }}>
         <div className="card-title" style={{ flex: 1 }}>{run.topic}</div>
         {run.score !== null && (
