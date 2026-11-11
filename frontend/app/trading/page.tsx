@@ -217,7 +217,7 @@ function EconomyPanel({ e }: { e: Economy }) {
         {e.limits.max_price_usd
           ? <>The report agent prices every report at what it cost to make (AI models, X reads, patent searches, the NEAR seal) plus ${e.limits.margin_usd?.toFixed(2)}, kept between ${e.limits.min_price_usd} and ${e.limits.max_price_usd}, and paid in NEAR at the live price. The trading agent may only use </>
           : <>The report agent prices every report in NEAR by its quality (score and confidence), at most {e.limits.max_price_near} NEAR and never below what it cost to make. The trading agent may only use </>}
-        reports it has bought, and spends at most {Math.round(e.limits.budget_share_of_fund * 100)}% of its fund on them. Each payment is a signed order from the trading agent's near.com balance, checked before signing, and confirmed when it arrives.
+        reports it has bought, buys one only when it could trade on it now (a stock rated 'strong' or 'building' that NEAR Intents can quote), and spends at most {Math.round(e.limits.budget_share_of_fund * 100)}% of its fund on them. Each payment is a signed order from the trading agent's near.com balance, checked before signing, and confirmed when it arrives.
         The report agent stakes {Math.round(e.limits.stake_share * 100)}% of every payment through NEAR AI&apos;s Staking for Inference (NEAR AI accepts at least {e.limits.min_stake_near} NEAR at a time, so it waits until enough payments add up); the rewards pay for the agents&apos; AI.
         It keeps the other {100 - Math.round(e.limits.stake_share * 100)}%; once that pot passes ${e.second_trader_at_usd ?? 200} it funds a second trading agent (the next step).
       </p>
