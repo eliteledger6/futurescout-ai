@@ -245,3 +245,7 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   live: "this year so far" filled, heat 818 for the top topic). Server setup now also installs the trading agent as a second,
   switched-off service (`futurescout-trader`, `fund_trade.py watch --publish`); both loops publish through one lock, the
   trading loop only after a trade, report purchase or stake. Mock-tested (321 tests); not yet run on a real server.
+- 2026-11-11 (owner): every new report gets its paper fund. `app/paper_fund_hook.py` runs `scripts/funds.py --topic <topic>`
+  right after each research run in the report agent (proposals, Agent Market) and in `scripts/run_research.py` (`--no-fund`
+  to skip); 6 fresh price lookups per fund; a fund problem never breaks the report. That fund is what makes a topic tradable,
+  so the trading agent then sees a "new report" trigger. Mock-tested (323 tests); not yet run live.

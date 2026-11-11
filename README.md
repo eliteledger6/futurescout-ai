@@ -55,7 +55,7 @@ Until then `/api/runs/{run_id}` answers `402 Payment Required` with the price an
 
 On the site's **Request a report** page a visitor can hire the report agent on NEAR Agent Market, or propose a topic for free
 (at most 5 a day). An AI reviewer screens each proposal (is it a real technology worth a research run?); approved topics are
-researched by the agent team, sealed on NEAR and listed on the site. A proposal is only ever used as a short topic name.
+researched by the agent team, sealed on NEAR and listed on the site, and get their paper fund (which also makes the topic tradable for the trading agent). A proposal is only ever used as a short topic name.
 
 ### Hire the report agent on NEAR Agent Market
 

@@ -41,6 +41,7 @@ def main() -> int:
     parser.add_argument("--no-news", action="store_true", help="skip the GDELT news headline search")
     parser.add_argument("--no-x", action="store_true", help="skip the X agent (saves ~$0.15 of X API credit)")
     parser.add_argument("--no-near", action="store_true", help="do not record the report fingerprint on NEAR testnet")
+    parser.add_argument("--no-fund", action="store_true", help="do not build the topic's paper fund after the report")
     parser.add_argument("--no-db", action="store_true", help="do not save the run to PostgreSQL even if DATABASE_URL is set")
     parser.add_argument("-v", "--verbose", action="store_true", help="log each model call (agent, model, tokens, cost)")
     args = parser.parse_args()
@@ -66,6 +67,9 @@ def main() -> int:
     for e in report.errors:
         print(f"  [{e.agent}/{e.source}] {e.message}")
     print(f"Estimated model cost: ${report.total_cost_usd:.5f}")
+    if not args.no_fund and report.investment and report.investment.score:   # every new report gets its paper fund (owner 2026-11-11)
+        from app.paper_fund_hook import build_paper_fund
+        build_paper_fund(report.topic)
     for u in report.usage:
         print(f"  {u['agent']:11} {u['model']:34} calls={u['calls']} tokens={u['prompt_tokens']}/{u['completion_tokens']} ${u['cost_usd']:.5f}")
     print(f"\nReport: {md_path}\nData:   {json_path}")

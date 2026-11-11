@@ -30,6 +30,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from app import proposals, service  # noqa: E402
+from app.paper_fund_hook import build_paper_fund  # noqa: E402
 from app.agent_market import AgentMarketClient, MarketConfig, handle, load_state, resume_stale, save_state  # noqa: E402
 from app.api.main import _default_store  # noqa: E402
 from app.config import get_settings  # noqa: E402
@@ -93,6 +94,7 @@ def main() -> int:
 
     def run_research(topic: str):  # noqa: ANN202
         out = service.execute(topic, s, warn=lambda m: print("   ", m[:160]))
+        build_paper_fund(out.report.topic)               # every new report gets its paper fund (owner 2026-11-11)
         return out.run_id or out.json_path.stem, out.markdown, (out.report.chain_record or {}).get("explorer_url")
 
     print(f"report agent: checking for Agent Market jobs and topic proposals every {cfg.poll_seconds}s; at most "
