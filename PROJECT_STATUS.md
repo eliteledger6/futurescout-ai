@@ -256,3 +256,6 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   it starts and then once a day (`update_all_funds`: missing funds created, newer reports or due reviews decided, the rest
   revalued; 10 fresh price lookups), then publishes. Shadow trading stays at real NEAR Intents quotes only (no fallback).
   Mock-tested (324 tests).
+- 2026-11-11 (owner: "remove the confidence level, the AI agent should think itself"): `strategy.min_confidence_pct: 0`
+  for shadow and live. The agent is told to weigh each report's confidence and size smaller on thinner evidence; code still
+  enforces the verdict rule (strong/building), the caps, the allowlist, the price band and the cost cap.

@@ -31,6 +31,7 @@ Rules that always apply:
   Claude may run `check --shadow`, `check` (live PROPOSALS only) and `watch`; the owner approves each live proposal.
   `live.auto_approve` (funds.yaml): the owner set it to true on 2026-11-10. Claude never changes it. While it is true, a live
   check signs with the owner's key, so Claude does NOT run live `check` or `watch`: the owner runs the loop; Claude may run `check --shadow`.
+  Confidence minimum removed by the owner 2026-11-11 (`strategy.min_confidence_pct: 0`): the agent weighs report confidence.
   Selling (owner's written yes 2026-11-10, "Yes, build selling"): built, mock-tested, dry quotes run live; OFF until the owner sets
   `live.sells_enabled: true`. Re-investing sale money needs `live.budget_mode: net`. Both are owner-only: Claude never sets them.
   Agent economy (owner 2026-11-10): the trading agent buys reports from the report agent (grandbread5023.near) in NEAR ($2-3

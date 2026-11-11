@@ -35,7 +35,7 @@ class StrategyConfig(BaseModel):
     review_hours: int = 24               # a routine review even when nothing moved
     drop_pct: float = 7.0                # one-day fall that wakes the agent
     jump_pct: float = 10.0               # one-day rise that wakes the agent (it must not chase)
-    min_confidence_pct: float = 45.0     # reports below this are "low confidence": no new buys
+    min_confidence_pct: float = 45.0     # reports below this are "low confidence": no new buys; 0 = no minimum, the agent weighs it
     max_adds_per_ticker: int = 2         # buying the dip is allowed at most this many times per ticker
     max_ticker_share_pct: float = 25.0   # shadow mode: one company may not exceed this share of the budget
     price_requests_per_check: int = 6    # Alpha Vantage calls allowed per check (free plan: 25 a day)
@@ -82,7 +82,7 @@ class StrategyDecision(BaseModel):
 
 RULES = [
     "Wake on: a new sealed report for a traded topic; a one-day move beyond the thresholds in a held or allowed stock; a routine review.",
-    "Buy only companies named by the research evidence (patents or papers), from reports with verdict 'strong' or 'building' and confidence at or above the minimum.",
+    "Buy only companies named by the research evidence (patents or papers), from reports with verdict 'strong' or 'building'; the agent weighs each report's confidence itself (code enforces a minimum only when the owner sets one).",
     "On a sharp fall: if the latest report and its findings still support the company and nothing in them explains the fall, the agent may add once more at the lower price (at most the allowed number of adds); if the report weakened or the findings explain the fall, hold.",
     "On a sharp rise: never chase; hold and note it.",
     "Size follows confidence: less confident reports get smaller orders; in live mode the size is fixed by the caps.",
@@ -93,6 +93,14 @@ RULES = [
     "After a sale the agent is woken once more at once and may buy with the money (live: only if the owner counts the budget net of sales).",
     "Every wake-up is recorded with its triggers and reasoning, and the record is fingerprinted.",
 ]
+
+
+def confidence_line(cfg) -> str:  # noqa: ANN001
+    """What the agent is told about report confidence (owner 2026-11-11: no fixed minimum; the agent judges it)."""
+    if cfg.min_confidence_pct > 0:
+        return f"Minimum report confidence for a new buy: {cfg.min_confidence_pct:.0f}%."
+    return ("No minimum report confidence: weigh each report's confidence yourself (below 70% is not confident), say how it "
+            "shaped your choice, and size a buy smaller when the evidence is thinner.")
 
 
 # ------------------------------------------------------------------ triggers (pure code)
@@ -145,7 +153,7 @@ def assess(router: ModelRouter, *, triggers: list[Trigger], candidates: list[Can
                  f"sell a share of a holding (`fraction`, {cfg.min_sell_fraction} to 1); the market's minimum trade is ${min_sale_usd:.2f}." if sells_enabled and sells_left_today > 0
                  else "SELLING is not available now (switched off by the owner or today's sales used up): buy or hold.")
     user = (f"WHY YOU WOKE UP:\n" + "\n".join(f"- {t.kind}: {t.detail}" for t in triggers) + "\n\n"
-            f"{size_line}\n{sell_line}\nMinimum report confidence for a new buy: {cfg.min_confidence_pct:.0f}%. Max adds per ticker: {cfg.max_adds_per_ticker}.\n\n"
+            f"{size_line}\n{sell_line}\n{confidence_line(cfg)} Max adds per ticker: {cfg.max_adds_per_ticker}.\n\n"
             f"WHAT YOU ALREADY HOLD:\n{json.dumps(holdings)}\n\n"
             f"HOLDINGS YOU COULD SELL (with their latest report):\n{json.dumps(sellable, indent=1)}\n\n"
             f"LATEST EVIDENCE PER TOPIC (from the sealed reports; dated, labelled; nothing else was read):\n{json.dumps(context, indent=1)}\n\n"
@@ -203,7 +211,7 @@ def assess(router: ModelRouter, *, triggers: list[Trigger], candidates: list[Can
         notes.append(f"buy of '{d.ticker}' refused by code: not a quotable candidate; turned into hold")
         d.action, d.ticker, d.usd = "hold", None, None
         return d, None, reply.llm_alias, cost, notes
-    if (cand.confidence_pct or 0) < cfg.min_confidence_pct:
+    if cfg.min_confidence_pct > 0 and (cand.confidence_pct or 0) < cfg.min_confidence_pct:
         notes.append(f"buy of {cand.ticker} refused by code: report confidence {cand.confidence_pct}% is below {cfg.min_confidence_pct:.0f}%; turned into hold")
         d.action, d.ticker, d.usd = "hold", None, None
         return d, None, reply.llm_alias, cost, notes

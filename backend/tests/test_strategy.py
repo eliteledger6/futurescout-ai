@@ -137,3 +137,19 @@ def test_a_holding_without_a_current_value_is_not_sold_as_if_worthless():
     sell = {"action": "sell", "ticker": "GOOGL", "fraction": 1.0, "what_changed": "w", "rationale": "r", "confidence": "low"}
     (d, h, *_, notes), _ = sell_run(sell, min_sale_usd=20.0, sellable=[{**HELD[0], "value_usd": None}])
     assert d.action == "hold" and any("could not be quoted" in n for n in notes)       # bug 2026-11-10: a missing price read as $0
+
+
+def test_without_a_confidence_minimum_the_agent_decides_and_is_told_so():
+    from app.fund.strategy import confidence_line
+    free = CFG.model_copy(update={"min_confidence_pct": 0})
+    assert "weigh each report's confidence yourself" in confidence_line(free) and "45%" in confidence_line(CFG)
+    r = FakeRouter({"action": "buy", "ticker": "GOOGL", "usd": 1000, "what_changed": "w", "rationale": "r", "confidence": "low"})
+    d, c, model, cost, notes = assess(r, triggers=[NS(kind="review", ticker="", topic="", detail="routine review")], candidates=cands(),
+                                      holdings=[], context={"hbm": {"verdict": "strong"}}, budget_usd=10000.0, fixed_usd=None, cfg=free,
+                                      adds_so_far={})
+    assert d.action == "buy" and c.ticker == "GOOGL" and not any("below" in n for n in notes)       # a low-confidence report may be bought
+
+
+def test_shipped_strategy_has_no_confidence_minimum():
+    from app.fund import load_fund_config
+    assert load_fund_config().live.strategy.min_confidence_pct == 0

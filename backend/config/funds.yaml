@@ -54,7 +54,7 @@ live:
     review_hours: 24           # routine review even when nothing moved
     drop_pct: 7.0              # one-day fall that wakes the agent ("check the reason")
     jump_pct: 10.0             # one-day rise that wakes the agent (never chase)
-    min_confidence_pct: 45.0   # no new buy from a report below this confidence
+    min_confidence_pct: 0      # owner 2026-11-11: no fixed minimum, the agent weighs each report's confidence itself (was 45)
     max_adds_per_ticker: 2     # buying a dip at most twice per company
     max_ticker_share_pct: 25.0 # shadow mode: one company at most this share of the budget
     price_requests_per_check: 6
