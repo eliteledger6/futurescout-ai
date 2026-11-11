@@ -39,6 +39,9 @@ class MarketConfig(BaseModel):
     max_topic_words: int = 8
     max_topic_chars: int = 80
     poll_seconds: int = 60
+    topic_scout_hours: float = 1.0         # with no job waiting, the Science agent reads a few recent papers this often and may add ONE new radar topic; 0 = never
+    topic_scout_papers: int = 5            # papers read per scouting turn
+    topic_scout_max_per_day: int = 3       # new radar topics a day at most (each one adds patent searches to the radar refresh)
     radar_refresh_hours: float = 24.0      # the Hot-Topic Radar is recounted this often by the report agent's loop; 0 = never
 
 

@@ -46,6 +46,10 @@ put my device to sleep after* to **Never**.
 - Withdraw NEAR Agent Market earnings: on market.near.ai.
 - The radar refreshes by itself: the report agent recounts it once a day in the background (over an hour at the patent
   office's pace) and publishes it. The setting is `agent_market.radar_refresh_hours` in `backend/config/funds.yaml` (0 = off).
+- New radar topics: when the report agent has no job, its Science agent (the same model as in a research run) reads
+  5 recent papers once an hour and may add ONE new topic, only if paper counts confirm it is growing; at most 3 a day.
+  Settings: `agent_market.topic_scout_hours`, `topic_scout_papers`, `topic_scout_max_per_day` (0 hours = off). What it
+  read and decided is in `backend/runs/topic_scout.json`. Cost: about $0.05 of NEAR AI credit a day.
 - To regenerate the radar by hand: `backend` folder, `..\.venv\Scripts\python.exe scripts\run_radar.py`, then `update_website.bat`.
 - Nothing else needs a manual run: reports, seals, paper funds, report purchases, trades, staking and website updates all
   happen inside the two agents started by `start_everything.bat`.

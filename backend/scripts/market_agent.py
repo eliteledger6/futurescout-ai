@@ -32,7 +32,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from app import proposals, service  # noqa: E402
 from app.paper_fund_hook import build_paper_fund, funds_due, update_all_funds  # noqa: E402
+from app.agents.science import topic_scout  # noqa: E402
+from app.radar import load_sectors, load_topics  # noqa: E402
 from app.radar_refresh import RadarRefresh  # noqa: E402
+from app.sources.openalex import OpenAlexClient  # noqa: E402
+from app.watch import add_topics  # noqa: E402
 from app.agent_market import AgentMarketClient, MarketConfig, handle, load_state, resume_stale, save_state  # noqa: E402
 from app.api.main import _default_store  # noqa: E402
 from app.config import get_settings  # noqa: E402
@@ -42,6 +46,7 @@ from app.report import render_markdown  # noqa: E402
 
 STATE = service.RUNS_DIR / "agent_market" / "state.json"
 PROPOSALS = service.RUNS_DIR / "proposals" / "state.json"
+SCOUT = service.RUNS_DIR / "topic_scout.json"                              # what the Science agent read and decided while idle
 HOUSEKEEPING = service.RUNS_DIR / "agent_market" / "housekeeping.json"     # when the daily paper-fund update last ran
 REPO = Path(__file__).resolve().parents[2]
 
@@ -104,7 +109,8 @@ def main() -> int:
           f"{cfg.new_runs_per_day} Agent Market runs and {pcfg.per_day} proposal runs a day. "
           f"Hosted proposals: {'collected from ' + s.public_api_url if remote else 'off (PUBLIC_API_URL / PROPOSALS_TOKEN not set)'}. "
           f"Publishing: {'on' if args.publish else 'off (--publish)'}. "
-          f"Radar refresh: {'every %g h' % cfg.radar_refresh_hours if cfg.radar_refresh_hours > 0 else 'off'}. Ctrl+C stops.")
+          f"Radar refresh: {'every %g h' % cfg.radar_refresh_hours if cfg.radar_refresh_hours > 0 else 'off'}. "
+          f"Idle scouting by the Science agent: {'every %g h, %d papers' % (cfg.topic_scout_hours, cfg.topic_scout_papers) if cfg.topic_scout_hours > 0 else 'off'}. Ctrl+C stops.")
     radar = RadarRefresh(service.RUNS_DIR, service.BACKEND_DIR / "site_data")
     while True:
         now = datetime.now(timezone.utc)
@@ -151,6 +157,21 @@ def main() -> int:
             hk["funds_at"] = datetime.now(timezone.utc).isoformat()      # tried today: a failure is retried tomorrow, not every minute
             HOUSEKEEPING.parent.mkdir(parents=True, exist_ok=True)
             HOUSEKEEPING.write_text(json.dumps(hk), encoding="utf-8")
+        # ---- no job this round: the Science agent reads a few recent papers and may add one new radar topic --------
+        topics_changed = False
+        if (cfg.topic_scout_hours > 0 and not args.once and not rows and not new_reports and s.openalex_key_value()
+                and funds_due(hk.get("scout_at"), datetime.now(timezone.utc), cfg.topic_scout_hours)):
+            try:
+                added = topic_scout.scout_once(
+                    router=router, openalex=OpenAlexClient(s.openalex_key_value()), sectors=load_sectors(), known=load_topics(),
+                    state_path=SCOUT, n_papers=cfg.topic_scout_papers, max_new_per_day=cfg.topic_scout_max_per_day,
+                    add_topic=lambda t: bool(add_topics([t], found_by=topic_scout.FOUND_BY)))
+                topics_changed = bool(added)
+            except Exception as exc:  # noqa: BLE001  (scouting must never stop the loop)
+                print(f"  science agent (idle scouting) failed: {str(exc)[:160]}")
+            hk["scout_at"] = datetime.now(timezone.utc).isoformat()
+            HOUSEKEEPING.parent.mkdir(parents=True, exist_ok=True)
+            HOUSEKEEPING.write_text(json.dumps(hk), encoding="utf-8")
         # ---- the Hot-Topic Radar is recounted in the background (it takes over an hour), then published ----------
         radar_changed = radar.finished() is True
         if (cfg.radar_refresh_hours > 0 and not args.once and not radar.running
@@ -160,7 +181,7 @@ def main() -> int:
             hk["radar_at"] = datetime.now(timezone.utc).isoformat()      # tried now: a failure is retried at the next interval
             HOUSEKEEPING.parent.mkdir(parents=True, exist_ok=True)
             HOUSEKEEPING.write_text(json.dumps(hk), encoding="utf-8")
-        if (new_reports or funds_changed or radar_changed) and args.publish:
+        if (new_reports or funds_changed or radar_changed or topics_changed) and args.publish:
             publish()
         if args.once:
             return 0

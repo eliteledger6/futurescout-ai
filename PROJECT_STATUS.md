@@ -352,3 +352,19 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
 - Topics: the 54 radar topics are 34 written by hand plus 20 added by the paper scout (`scripts/discover_topics.py`,
   code that reads recent paper keywords; not the Chief agent, which plans one research run). Discovery is still started
   by hand; reports from Agent Market jobs and visitor proposals are not added to the radar's topic list.
+
+## 2026-11-11 (night): the Science agent scouts new radar topics while idle (owner: "reuse our current research agent")
+- `app/agents/science/topic_scout.py`: when the report agent's loop has no job, once every
+  `agent_market.topic_scout_hours` (1) the Science agent reads `topic_scout_papers` (5) papers of the last six months
+  from the next sector (a random sample of papers carrying the sector's phrase in title or abstract; never the same
+  paper twice) and may name ONE technology the radar does not track. It is the same agent as in a research run: the
+  `science` model and settings, no second agent.
+- The model only names a candidate. Code decides: the name must point at papers it was really shown, must not be a
+  variant of a tracked topic, and OpenAlex must count at least 20 papers in the earlier year, at most 5000, and 25%
+  growth. At most `topic_scout_max_per_day` (3) topics a day. A new topic is appended to `config/topics.yaml`
+  (`found_by: science agent`, evidence = the paper ids) and counted at the next radar refresh; `topics.yaml` is now
+  published together with the website data. Every turn is recorded in `runs/topic_scout.json`.
+- Mock-tested (343 tests pass). Run live as a dry run that wrote nothing to the topic list (4 turns, real papers, the
+  real Science model, $0.001-0.0025 a turn): it rejected 'nitride ferroelectrics' (9 papers in 2024, too few) and
+  'uav battery-swap' (no counts), and would have added 'quantum annealing' (525 -> 734 papers, +40%) and
+  'assertion generation' (20 -> 33, +65%). Not run inside the report-agent loop by Claude (seals are on mainnet).

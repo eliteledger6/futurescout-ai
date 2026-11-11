@@ -53,7 +53,7 @@ def publish(message: str = "Site data update", log: Callable[[str], None] = prin
     try:
         steps = [(["git", "pull", "-q", "--rebase", "--autostash"], REPO),      # the owner or the other loop may have pushed
                  ([sys.executable, "scripts/export_site.py"], REPO / "backend"),
-                 (["git", "add", "backend/site_data"], REPO),
+                 (["git", "add", "backend/site_data", "backend/config/topics.yaml"], REPO),
                  (["git", "commit", "-q", "-m", message], REPO),
                  (["git", "push", "-q"], REPO)]
         for cmd, cwd in steps:
