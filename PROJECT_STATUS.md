@@ -274,3 +274,6 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
 - 2026-11-11 (owner: "just remove them"): the four shadow test reviews Claude ran were removed from the public record and
   kept in backend/runs/trading/archive_test_reviews_2026-11-11.json (local only; nothing had been bought or sold). The
   `correction` field stays available for future use but no record carries one.
+- 2026-11-11: trading page splits decisions into "Real money" and "Shadow" lists. The shadow side's memory of the
+  retrieval-augmented generation and chiplet reports (set only by the removed test reviews) was cleared, so the shadow side
+  reacts to them at its next hourly check like the real side did.

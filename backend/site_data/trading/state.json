@@ -276,7 +276,7 @@
       "chain": null
     }
   ],
-  "updated_at": "2026-11-11T09:04:44.954058Z",
+  "updated_at": "2026-11-11T09:07:16.406533Z",
   "checks": [
     {
       "id": "665f6b4d47",
@@ -786,8 +786,6 @@
     "AI agents": "71b787db-4595-4cab-8ae0-9aa6971d2a4b",
     "6G": "f0934784-6b57-49fd-a4dc-09d320bbd16e",
     "vision-language-action model": "7a87a2e1-5e88-4679-b03f-a20e042c6497",
-    "retrieval-augmented generation": "4a2a3eaa-9841-4174-b38d-0a12e7b52623",
-    "chiplet": "ab3b0896-a403-4181-990f-65bad2f59f13",
     "live:retrieval-augmented generation": "4a2a3eaa-9841-4174-b38d-0a12e7b52623",
     "live:chiplet": "ab3b0896-a403-4181-990f-65bad2f59f13"
   },

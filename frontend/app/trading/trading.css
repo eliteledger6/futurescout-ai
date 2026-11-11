@@ -118,3 +118,7 @@
   .tp-status .lamp, .tp-node.active .tp-orb::after, .tp-node:not(:last-child)::after, .tr-card.live.working::before, .tr-say .caret, .tr-stop.now i, .tr-dots span { animation: none !important; }
   .sp-donut circle, .sp-row .bar span, .tr-track .fill { transition: none !important; }
 }
+
+/* real-money and shadow decisions side by side; stacked on phones */
+.tr-split { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 18px; }
+.tr-split-col { min-width: 0; }

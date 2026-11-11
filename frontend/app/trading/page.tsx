@@ -259,7 +259,7 @@ function outcome(c: { action: string; usd: number; ticker: string; proposal_id: 
   const p = proposals.find((x) => x.id === c.proposal_id);
   const done = !p || ["success", "shadow_filled", "deposited", "executing", "approved"].includes(p.status);
   if (done) return c.action === "buy" ? `bought ${what}` : `sold ${what}`;
-  const why = p.history.length ? p.history[p.history.length - 1].note.replace(/^shadow: /, "") : p.status;
+  const why = (p.history.length ? p.history[p.history.length - 1].note : p.status).replace(/^shadow: /, "").replace(/^refused (before signing: )?/, "");
   return `decided to ${c.action} ${what}; refused by the code's safety checks: ${why}`;
 }
 
@@ -275,19 +275,30 @@ function AgentLog({ t }: { t: Trading }) {
       <p className="small" style={{ color: "var(--text-2)", margin: 0 }}>
         It checks every {cfg?.check_minutes ?? 60} min and wakes on a new report, a sharp price move or a daily review{t.selling?.enabled ? "; it can buy, sell or hold" : "; it can buy or hold"}.
       </p>
-      {woke.length === 0 ? <div className="small muted">No decision recorded yet.</div> : (
-        <ol className="tr-log" style={{ margin: 0 }}>
-          {woke.slice(0, 5).map((c) => (
-            <li key={c.id}>
-              <b>{fmtDate(c.at)}</b> · <span className="pill" style={{ marginRight: 6 }}>{c.mode === "live" ? "real" : "shadow"}</span>
-              {whyWoke(c.triggers)}{" → "}
-              <b>{outcome(c, t.proposals)}</b>
-              {c.summary && <div className="small muted">{firstSentence(c.summary)}</div>}
-              {c.correction && <div className="small" style={{ color: "#e0b04a" }}>{c.correction}</div>}
-            </li>
-          ))}
-        </ol>
-      )}
+      <div className="tr-split">
+        {(["live", "shadow"] as const).map((mode) => {
+          const rows = woke.filter((c) => c.mode === mode).slice(0, 4);
+          return (
+            <div key={mode} className="tr-split-col">
+              <div className="small" style={{ fontWeight: 600, marginBottom: 6 }}>
+                {mode === "live" ? "Real money" : "Shadow (pretend money, real quotes)"}
+              </div>
+              {rows.length === 0 ? <div className="small muted">No decision yet.</div> : (
+                <ol className="tr-log" style={{ margin: 0 }}>
+                  {rows.map((c) => (
+                    <li key={c.id}>
+                      <b>{fmtDate(c.at)}</b> · {whyWoke(c.triggers)}{" → "}
+                      <b>{outcome(c, t.proposals)}</b>
+                      {c.summary && <div className="small muted">{firstSentence(c.summary)}</div>}
+                      {c.correction && <div className="small" style={{ color: "#e0b04a" }}>{c.correction}</div>}
+                    </li>
+                  ))}
+                </ol>
+              )}
+            </div>
+          );
+        })}
+      </div>
       {(t.strategy?.rules || cfg) && (
         <details><summary className="small muted" style={{ cursor: "pointer" }}>How it decides</summary>
           {t.strategy?.rules && <ul className="small" style={{ color: "var(--text-2)", lineHeight: 1.6 }}>{t.strategy.rules.map((r) => <li key={r}>{r}</li>)}</ul>}
