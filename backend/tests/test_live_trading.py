@@ -391,3 +391,19 @@ def test_shadow_sale_moves_tokens_back_to_cash_at_average_cost():
     assert pos["quantity"] == 40.0 and pos["cost_usd"] == 2000.0                     # half sold: half the cost goes with it
     assert pf["cash_usd"] == 8200.0 and pf["realized_usd"] == 200.0 and pf["value_usd"] == 8200.0 + 40 * 55.0
     assert st.proceeds("shadow") == 2200.0 and st.spent("shadow") == 0.0            # shadow fills are not "spent" live money
+
+
+def test_without_a_price_band_the_code_lets_the_agents_price_through_and_the_agent_sees_the_gap():
+    from types import SimpleNamespace
+    from app.fund.strategy import price_line, price_vs_close
+    q = {"amountInUsd": "5.0", "amountOutUsd": "4.97", "amountOutFormatted": "0.0995"}               # $50.25 per token
+    free = LiveConfig(price_band_pct=0)
+    assert check_quote(q, proposal(5, close=60.0), free, NOW) == []                                 # 16% away: allowed, the agent decided
+    assert check_quote(q, proposal(5, close=None), free, NOW) == []                                 # no close needed either
+    assert "away from the stock" in " ".join(check_quote(q, proposal(5, close=60.0), LiveConfig(), NOW))   # a band still works when set
+    row = price_vs_close(SimpleNamespace(dry_quote=q, last_close=48.0))
+    assert row == {"quoted_price_per_token": 50.25, "gap_vs_last_close_pct": 4.69}
+    assert price_vs_close(SimpleNamespace(dry_quote=None, last_close=48.0))["gap_vs_last_close_pct"] is None
+    assert "No price band in code" in price_line(0) and "3%" in price_line(3.0)
+    from app.fund import load_fund_config
+    assert load_fund_config().live.price_band_pct == 0                                              # owner 2026-11-11

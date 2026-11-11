@@ -67,7 +67,7 @@ live:
   max_day_usd: 60.0            #   max_total_usd and the $20 near.com minimum limit a trade
   max_total_usd: 60       # the whole real-money budget, ever (owner 2026-11-09: per-trade cap 25 on top of the $10 already sent)
   min_trade_usd: 20.0          # near.com enforces a flat $20 minimum on stock trades (owner's screenshot 2026-11-09); the $10 test got stuck
-  price_band_pct: 3.0          # quoted token price must be this close to the stock's last close (close <= 1 day old)
+  price_band_pct: 0            # owner 2026-11-11: no band in code; the agent sees quoted price vs last close and decides (was 3.0)
   band_per_stale_day_pct: 1.5  # +1.5% per extra day of age of that close (Friday's close on a Monday: 6%)
   max_band_pct: 8.0            # never wider than this
   max_cost_pct: 2.0            # refuse quotes that cost more than this

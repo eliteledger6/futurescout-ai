@@ -259,3 +259,7 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
 - 2026-11-11 (owner: "remove the confidence level, the AI agent should think itself"): `strategy.min_confidence_pct: 0`
   for shadow and live. The agent is told to weigh each report's confidence and size smaller on thinner evidence; code still
   enforces the verdict rule (strong/building), the caps, the allowlist, the price band and the cost cap.
+- 2026-11-11 (owner: "let the agent decide ... clearly aware of the last close and the current price"): `live.price_band_pct: 0`
+  for shadow and live. Each candidate now shows the agent `quoted_price_per_token` and `gap_vs_last_close_pct`, and the
+  agent is told it carries that risk. Still in code: verdict rule, budget caps, allowlist, cost cap, kill switch.
+  Shadow review run live: NVDA quoted 3.49% above its close + 0.53% cost; the agent chose to hold (thin evidence).

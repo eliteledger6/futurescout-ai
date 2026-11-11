@@ -469,7 +469,7 @@ def _assess(s, cfg, state, toks, triggers, check, shadow, now, pf, closes=None):
     d, cand, model, cost, notes = assess(ModelRouter(load_model_config(), s), triggers=triggers, candidates=cands, holdings=holdings, context=context,
                                          budget_usd=max(0.0, budget), fixed_usd=fixed, cfg=lv.strategy, adds_so_far=adds, sellable=sellable,
                                          sells_enabled=sells_on, can_buy=can_buy, sells_left_today=sells_left,
-                                         min_sale_usd=0.0 if shadow else lv.min_trade_usd)
+                                         min_sale_usd=0.0 if shadow else lv.min_trade_usd, price_band_pct=lv.price_band_pct)
     check.model, check.cost_usd, check.notes, check.what_changed = model, cost, notes, d.what_changed
     check.action, check.summary = d.action, d.rationale
     for n in notes:

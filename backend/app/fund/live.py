@@ -74,7 +74,8 @@ class LiveConfig(BaseModel):
     max_day_usd: float = 5.0
     max_total_usd: float = 5.0
     min_trade_usd: float = 1.0
-    price_band_pct: float = 3.0          # quoted token price vs the stock's last close (close up to 1 day old)
+    price_band_pct: float = 3.0          # quoted token price vs the stock's last close (close up to 1 day old); 0 = no band in
+                                         # code: the agent sees the gap and decides (owner 2026-11-11)
     band_per_stale_day_pct: float = 1.5  # extra band per further day of age of that close
     max_band_pct: float = 8.0
     max_cost_pct: float = 2.0            # (in - out) / in of the real quote
@@ -287,6 +288,8 @@ def check_sell_quote(q: dict, p: Proposal, cfg: LiveConfig, now: Optional[dateti
     cost = (in_usd - out_usd) / in_usd * 100
     if cost > cfg.max_cost_pct:
         bad.append(f"quoted cost {cost:.2f}% is above the cap {cfg.max_cost_pct:.2f}%")
+    if cfg.price_band_pct <= 0:
+        return bad                                    # owner 2026-11-11: no code band; the agent judged the price itself
     if p.ref_close:
         got = out_usd / q_in
         band = price_band(cfg, p.ref_close_date, now or datetime.now(timezone.utc))
@@ -325,6 +328,8 @@ def check_quote(q: dict, p: Proposal, cfg: LiveConfig, now: Optional[datetime] =
     cost = (a_in - a_out_usd) / a_in * 100
     if cost > cfg.max_cost_pct:
         bad.append(f"quoted cost {cost:.2f}% is above the cap {cfg.max_cost_pct:.2f}%")
+    if cfg.price_band_pct <= 0:
+        return bad                                    # owner 2026-11-11: no code band; the agent judged the price itself
     if p.ref_close:
         implied = a_in / a_out
         off = abs(implied / p.ref_close - 1) * 100

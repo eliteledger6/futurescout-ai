@@ -95,6 +95,27 @@ RULES = [
 ]
 
 
+def price_vs_close(c) -> dict:  # noqa: ANN001
+    """The quoted price per token (from the real dry quote) and how far it is from the stock's last close, for the agent."""
+    q = c.dry_quote or {}
+    try:
+        per_token = float(q["amountInUsd"]) / float(q["amountOutFormatted"])
+    except (KeyError, TypeError, ValueError, ZeroDivisionError):
+        return {"quoted_price_per_token": None, "gap_vs_last_close_pct": None}
+    gap = round((per_token / c.last_close - 1) * 100, 2) if c.last_close else None
+    return {"quoted_price_per_token": round(per_token, 2), "gap_vs_last_close_pct": gap}
+
+
+def price_line(price_band_pct: float) -> str:
+    """What the agent is told about the price it would pay (owner 2026-11-11: no band in code; the agent takes that risk)."""
+    if price_band_pct > 0:
+        return (f"Code refuses a trade whose quoted price is more than {price_band_pct:.0f}% from the stock's last close "
+                "(a little more when the close is older).")
+    return ("No price band in code: for every candidate compare quoted_price_per_token with last_close (gap_vs_last_close_pct; the "
+            "close may be a day or more old, and a tokenized stock can trade at a premium or discount). Decide yourself whether the "
+            "price is acceptable, say so in your reasoning, and take that risk; a sale is filled at the quoted price too.")
+
+
 def confidence_line(cfg) -> str:  # noqa: ANN001
     """What the agent is told about report confidence (owner 2026-11-11: no fixed minimum; the agent judges it)."""
     if cfg.min_confidence_pct > 0:
@@ -134,7 +155,8 @@ def detect_triggers(*, tokens: list[dict], seen_runs: dict[str, str], closes: di
 def assess(router: ModelRouter, *, triggers: list[Trigger], candidates: list[Candidate], holdings: list[dict], context: dict,
            budget_usd: float, fixed_usd: Optional[float], cfg: StrategyConfig, adds_so_far: dict[str, int],
            sellable: Optional[list[dict]] = None, sells_enabled: bool = False, can_buy: bool = True,
-           sells_left_today: int = 0, min_sale_usd: float = 0.0) -> tuple[StrategyDecision, "Optional[Candidate | dict]", Optional[str], float, list[str]]:
+           sells_left_today: int = 0, min_sale_usd: float = 0.0,
+           price_band_pct: float = 0.0) -> tuple[StrategyDecision, "Optional[Candidate | dict]", Optional[str], float, list[str]]:
     """Returns (decision, target, model alias, cost, notes). target: the Candidate to buy, or the holding (dict) to sell.
     `fixed_usd` is set in live mode (size fixed by the caps). `sellable`: holdings with ticker, symbol, asset_id, quantity,
     value_usd, held_hours, report verdict and confidence."""
@@ -144,6 +166,7 @@ def assess(router: ModelRouter, *, triggers: list[Trigger], candidates: list[Can
     listing = [{"ticker": c.ticker, "token": c.symbol, "topic": c.topic, "report_verdict": c.verdict_band, "report_score": c.score,
                 "report_confidence_pct": c.confidence_pct, "company_size_risk": c.tier, "why_in_fund": c.why, "price_stretch": c.price_stretch or "unknown",
                 "last_close": c.last_close, "last_close_date": c.last_close_date, "quotable": c.quotable, "quote_cost_pct": c.quote_cost_pct,
+                **price_vs_close(c),
                 "adds_so_far": adds_so_far.get(c.ticker.upper(), 0)} for c in candidates]
     size_line = (f"Trade size is FIXED at ${fixed_usd:.2f} (live mode)." if fixed_usd else
                  f"Pretend budget available: ${budget_usd:,.2f}; one company may not exceed {cfg.max_ticker_share_pct:.0f}% of the whole budget.")
@@ -153,7 +176,7 @@ def assess(router: ModelRouter, *, triggers: list[Trigger], candidates: list[Can
                  f"sell a share of a holding (`fraction`, {cfg.min_sell_fraction} to 1); the market's minimum trade is ${min_sale_usd:.2f}." if sells_enabled and sells_left_today > 0
                  else "SELLING is not available now (switched off by the owner or today's sales used up): buy or hold.")
     user = (f"WHY YOU WOKE UP:\n" + "\n".join(f"- {t.kind}: {t.detail}" for t in triggers) + "\n\n"
-            f"{size_line}\n{sell_line}\n{confidence_line(cfg)} Max adds per ticker: {cfg.max_adds_per_ticker}.\n\n"
+            f"{size_line}\n{sell_line}\n{confidence_line(cfg)} {price_line(price_band_pct)} Max adds per ticker: {cfg.max_adds_per_ticker}.\n\n"
             f"WHAT YOU ALREADY HOLD:\n{json.dumps(holdings)}\n\n"
             f"HOLDINGS YOU COULD SELL (with their latest report):\n{json.dumps(sellable, indent=1)}\n\n"
             f"LATEST EVIDENCE PER TOPIC (from the sealed reports; dated, labelled; nothing else was read):\n{json.dumps(context, indent=1)}\n\n"
