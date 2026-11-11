@@ -43,22 +43,9 @@ REPO = Path(__file__).resolve().parents[2]
 
 
 def publish() -> None:
-    """Put new reports on the hosted website: export the read-only snapshot, commit it and push (hosts redeploy from git).
-    Only with --publish: pushing is the owner's decision."""
-    steps = [(["git", "pull", "-q", "--rebase", "--autostash"], REPO),     # the owner (or another machine) may have pushed code meanwhile
-             ([sys.executable, "scripts/export_site.py"], REPO / "backend"),
-             (["git", "add", "backend/site_data"], REPO),
-             (["git", "commit", "-q", "-m", "Site data update (new report from the report agent)"], REPO),
-             (["git", "push", "-q"], REPO)]
-    for cmd, cwd in steps:
-        r = subprocess.run(cmd, cwd=str(cwd), capture_output=True, text=True, encoding="utf-8", errors="replace")
-        if r.returncode != 0:
-            if cmd[:2] == ["git", "commit"] and "nothing to commit" in (r.stdout + r.stderr):
-                print("  publish: nothing new to publish")
-                return
-            print(f"  publish stopped at '{' '.join(cmd[:2])}': {(r.stderr or r.stdout).strip()[-200:]}")
-            return
-    print("  published: the hosted site redeploys in a few minutes")
+    """Put new reports on the hosted website (only with --publish: pushing is the owner's decision)."""
+    from app.site_publish import publish as site_publish
+    site_publish("Site data update (new report from the report agent)")
 
 
 def market_config() -> MarketConfig:

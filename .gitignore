@@ -34,3 +34,6 @@ demo/build_v4/
 
 # generated voice audio (ElevenLabs cache and samples)
 demo/voiceover/
+
+# lock used while a loop publishes the site snapshot
+.publish.lock

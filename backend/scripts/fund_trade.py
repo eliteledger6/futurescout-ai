@@ -223,12 +223,15 @@ def cmd_check(s, cfg, shadow: bool, loop: bool) -> int:  # noqa: ANN001
         time.sleep(max(60, cfg.live.strategy.check_minutes * 60))
 
 
-def cmd_watch(s, cfg) -> int:  # noqa: ANN001
+def cmd_watch(s, cfg, publish: bool = False) -> int:  # noqa: ANN001
     """The auto-trading loop (owner request 2026-11-10): every check_minutes, a shadow check (pretend money, fills itself) and a
     live check (real money: a PROPOSAL; executed only after the owner's typed approval, unless the owner has set live.auto_approve)."""
     import time
     print(f"auto-trading loop: shadow + live check every {cfg.live.strategy.check_minutes} min; live.auto_approve is "
-          f"{'ON (owner setting): approved proposals are sent' if cfg.live.auto_approve else 'off: live proposals wait for the owner'}. Ctrl+C stops.")
+          f"{'ON (owner setting): approved proposals are sent' if cfg.live.auto_approve else 'off: live proposals wait for the owner'}. "
+          f"Publishing to the hosted site: {'on (after a trade, a report purchase or a stake)' if publish else 'off (--publish)'}. Ctrl+C stops.")
+    from app.site_publish import publish as site_publish, trade_fingerprint
+    shown = trade_fingerprint(service.RUNS_DIR)
     while True:
         for shadow in (True, False):
             try:
@@ -240,6 +243,14 @@ def cmd_watch(s, cfg) -> int:  # noqa: ANN001
                 cmd_economy(s, cfg, "stake")
             except Exception as exc:  # noqa: BLE001
                 print(f"  stake step failed: {type(exc).__name__}: {str(exc)[:160]}")
+        if publish:
+            now_fp = trade_fingerprint(service.RUNS_DIR)
+            if now_fp != shown:                              # only when the trading page would show something new
+                try:
+                    site_publish("Site data update (trading agent)")
+                    shown = now_fp
+                except Exception as exc:  # noqa: BLE001
+                    print(f"  publish failed: {type(exc).__name__}: {str(exc)[:160]}")
         time.sleep(max(60, cfg.live.strategy.check_minutes * 60))
 
 
@@ -859,6 +870,7 @@ def main() -> int:
     ap.add_argument("--shadow", action="store_true")
     ap.add_argument("--usd", type=float)
     ap.add_argument("--max", type=int, help="with economy buy: buy at most this many new reports (best-scored first)")
+    ap.add_argument("--publish", action="store_true", help="with watch: export, commit and git push backend/site_data after a trade, a report purchase or a stake")
     ap.add_argument("--loop", action="store_true", help="with check: run forever, one check every strategy.check_minutes")
     args = ap.parse_args()
     s, cfg = get_settings(), load_fund_config()
@@ -894,7 +906,7 @@ def main() -> int:
               f"(budget_mode {cfg.live.budget_mode}): ${st.invested('live', cfg.live.budget_mode):.2f} of ${cfg.live.max_total_usd:.2f}")
         return 0
     if args.command == "watch":
-        return cmd_watch(s, cfg)
+        return cmd_watch(s, cfg, args.publish)
     if args.command == "pending":
         return cmd_pending(s, cfg)
     if args.command == "rules":
