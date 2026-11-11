@@ -404,3 +404,18 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   older than the published one until its first refresh ends: it now takes the newest radar first. (3) A NUL character
   in the `/api/runs?topic=` filter gave HTTP 500 with the database store (PostgreSQL refuses it); it is stripped.
 - Mock-tested (353 tests pass); the API fuzz now reports no server error.
+
+## 2026-11-11 (late): both agents run on the cloud server; agent network and content brought up to date
+- Run live (owner's server): the report agent restarted on today's code at 13:53 UTC and at once began its first own
+  report, 'mixture of experts' (a top-5 radar topic without a fresh report). The trading agent was enabled on the server
+  at 13:56 UTC with the laptop's trading and purchase records copied over first; it recognised them (3.599 NEAR received
+  for reports, 2.5193 NEAR staked) and ran a shadow and a live check with no trigger. No agent runs on the laptop any more.
+- Agent network (`AgentFlow.tsx`, `lib/agents.ts`): new first column "Find topics" with a Hot-Topic Radar node (daily
+  recount, top 5 kept fresh, a sale pays for the next report, idle scouting adds topics) next to the Topic reviewer;
+  descriptions of Science (idle scouting), Report agent (runs on a server, own reports), Agent Market and staking (fees
+  join the 70/30 split) and Topic fund (decisions no longer sealed) updated. A single report's trace is unchanged.
+- The agent network is now also on the home page, between the hero and the reports (owner's suggestion), with a link to
+  the rules on How it works. Radar page: one line on the daily recount and idle scouting.
+- README ("Running it day to day", "What is unfinished") and RUNNING.md say where the agents run now, what the report
+  agent does by itself, and state the known limits (payment proof by public hash, seal not write-once, data shared
+  through git). Checked in the browser on this computer: home page diagram and one report's agent trace.

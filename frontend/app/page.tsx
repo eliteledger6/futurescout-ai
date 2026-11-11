@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import { AgentFlow } from "@/components/AgentFlow";
 import { LivePanel } from "@/components/LivePanel";
 import { RadarStrip } from "@/components/RadarStrip";
 import { Reveal } from "@/components/motion";
@@ -47,7 +48,21 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section" style={{ paddingTop: 48 }}>
+      <section className="section" style={{ paddingTop: 48 }} id="how-it-works">
+        <div className="container stack">
+          <div>
+            <div className="eyebrow">How it works</div>
+            <h2 className="h2" style={{ margin: "10px 0 6px" }}>The agent network</h2>
+            <p className="sub" style={{ margin: 0 }}>
+              From finding a topic to a sealed report, a sale and a trade. Hover or tap any agent to see what it does.
+              The rules every agent follows are on <Link href="/about" style={{ color: "var(--accent)" }}>How it works →</Link>
+            </p>
+          </div>
+          <Reveal><AgentFlow /></Reveal>
+        </div>
+      </section>
+
+      <section className="section" style={{ paddingTop: 16 }}>
         <div className="container stack">
           <div className="section-head">
             <div>
@@ -79,7 +94,6 @@ export default function Home() {
       <section className="section" style={{ paddingTop: 16 }}>
         <div className="container stack">
           <LivePanel />
-          <p className="small muted" style={{ margin: 0 }}>How the agents work together, step by step: <Link href="/about" style={{ color: "var(--accent)" }}>How it works →</Link></p>
         </div>
       </section>
     </>

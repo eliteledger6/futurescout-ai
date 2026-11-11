@@ -7,8 +7,12 @@ Everything is double-click. The files are in the main folder `D:\FUTURESCOUT AI`
 | Part | Where it runs | You start it? |
 |---|---|---|
 | **Website** https://futurescout-ai.vercel.app (and its API on Render) | in the cloud, always on | no, it runs by itself |
-| **Report agent**: Agent Market hires, topic proposals, AI reviewer, research, NEAR seals, paper funds, publishing to the website | this computer | `start_everything.bat` |
-| **Trading agent**: buys reports, trades inside your limits, stakes the report agent's earnings | this computer | `start_everything.bat` |
+| **Report agent**: Agent Market hires, topic proposals, AI reviewer, research, its own reports, the daily radar, NEAR seals, paper funds, publishing to the website | the cloud server since 2026-11-11 (service `futurescout-agent`) | no; on this computer instead: `start_everything.bat` |
+| **Trading agent**: buys reports, trades inside your limits, stakes the report agent's earnings | the cloud server since 2026-11-11 (service `futurescout-trader`) | no; on this computer instead: `start_everything.bat` |
+
+Never run an agent in both places at once: two trading agents could pay or trade twice. After you push new code, the
+server needs `sudo -u futurescout git -C /home/futurescout/futurescout pull --rebase && systemctl restart futurescout-agent && systemctl try-restart futurescout-trader`
+(see `deploy/VPS.md`).
 
 ## Every day
 

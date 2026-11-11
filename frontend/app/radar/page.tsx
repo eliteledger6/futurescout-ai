@@ -64,7 +64,7 @@ export default function RadarPage() {
            : radar === null ? <Loading lines={5} /> : (
             <>
               <div className="row small muted" style={{ justifyContent: "space-between" }}>
-                <span>Computed {fmtDate(radar.generated_at)} · {radar.topics.length} topics across {sectorKeys.length} sectors</span>
+                <span>Computed {fmtDate(radar.generated_at)} · {radar.topics.length} topics across {sectorKeys.length} sectors · recounted once a day by the report agent; when idle, its Science agent reads recent papers and adds a topic when paper counts confirm it is growing</span>
                 <span>{heatNote(radar.topics)}</span>
               </div>
               <div className="tabs" role="tablist" aria-label="Sector">

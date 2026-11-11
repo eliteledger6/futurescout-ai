@@ -3,7 +3,7 @@ import type { Report } from "./types";
 
 export type AgentKey =
   | "chief" | "science" | "risk" | "market" | "x" | "patent" | "review" | "timing" | "scout" | "investment" | "near" | "fund" | "trader"
-  | "seller" | "stake" | "trader2" | "intake" | "buyers";
+  | "seller" | "stake" | "trader2" | "intake" | "buyers" | "radar";
 
 export interface AgentInfo {
   key: AgentKey;
@@ -17,17 +17,20 @@ export interface AgentInfo {
 }
 
 export const AGENTS: Record<AgentKey, AgentInfo> = {
+  radar: { key: "radar", name: "Hot-Topic Radar", role: "Picks what to research", icon: "radar",
+    detail: "Ranks every tracked topic by how fast its research papers and patent filings are growing; the counts are computed by code, with no model. The report agent recounts it once a day. From the ranking it writes reports by itself: each of the top 5 topics always has a report from the last 7 days, and every report sold pays for one more, on the next topic down the list (at most 2 a day). The list of topics grows too: when the Science agent has no job it reads 5 recent papers an hour and may add one new topic, but only if paper counts confirm it is growing.",
+    sources: "OpenAlex · EPO and Google Patents · SEC EDGAR" },
   intake: { key: "intake", name: "Topic reviewer", role: "Screens proposed topics", icon: "shield", modelKey: "topic_review",
     detail: "Visitors can propose a topic for free on the Request a report page, at most 5 a day. This agent checks that the proposal is a real technology worth a research run, and rejects prices, coins, single companies, jokes and topics that are far too broad. A proposal is only ever used as a short topic name, never as instructions. Approved topics go to the Chief; a topic with a recent report is linked instead of researched again.",
     sources: "Visitor proposals (short topic only)" },
   buyers: { key: "buyers", name: "Agent Market", role: "Outside buyers hire: $3", icon: "signal",
-    detail: "The report agent is listed on NEAR Agent Market. Anyone can hire it for $3: they give a topic, the marketplace holds the payment, and the agent delivers a sealed report (a recent one when it exists, otherwise a new research run, at most 3 a day). Other trading bots can also buy any report through the API, paid in NEAR and checked on chain.",
+    detail: "The report agent is listed on NEAR Agent Market. Anyone can hire it for $3: they give a topic, the marketplace holds the payment, and the agent delivers a sealed report (a recent one when it exists, otherwise a new research run, at most 3 a day). Once the buyer accepts, the fee joins the same split as report sales: 70% staked, 30% kept. Other trading bots can also buy any report through the API, paid in NEAR and checked on chain.",
     sources: "market.near.ai · the report market API" },
   chief: { key: "chief", name: "Chief", role: "Plans the research", icon: "compass", modelKey: "chief",
     detail: "Turns the topic into paper searches, contrarian searches and the keywords the other agents use.",
     sources: "No data: it only plans" },
   science: { key: "science", name: "Science", role: "Reads the research", icon: "flask", prefix: "S", modelKey: "science",
-    detail: "Finds recent papers and preprints, counts papers per year (Research Acceleration) and writes cited findings.",
+    detail: "Finds recent papers and preprints, counts papers per year (Research Acceleration) and writes cited findings. When there is no job, the same agent scouts: it reads 5 recent papers an hour and may name one technology the radar does not track yet; code adds it only when paper counts confirm real growth.",
     sources: "OpenAlex · arXiv" },
   risk: { key: "risk", name: "Risk", role: "Argues against", icon: "shield", prefix: "R", modelKey: "risk",
     detail: "Searches independently for limits, failures, cost and reliability problems and flags hype. After the Chief review it also challenges specific findings: thin samples, simulations, preprints, overstated labels.",
@@ -57,13 +60,13 @@ export const AGENTS: Record<AgentKey, AgentInfo> = {
     detail: "Stores the report's SHA-256 fingerprint on NEAR (mainnet, signed by the report agent), so anyone can check it was not edited afterwards.",
     sources: "NEAR · SocialDB (social.near)" },
   fund: { key: "fund", name: "Topic fund", role: "Invests a paper fund", icon: "building",
-    detail: "Builds a pretend-money fund for the topic from the companies the patents and papers name, split into low, medium and high risk, and keeps it fully invested. Every decision lists its reasons and is fingerprinted on NEAR.",
+    detail: "Builds a pretend-money fund for the topic from the companies the patents and papers name, split into low, medium and high risk, and keeps it fully invested. Every decision lists its reasons and carries its own fingerprint; the report it is based on is sealed on NEAR.",
     sources: "The sealed report · daily prices · NEAR Intents dry-run quotes" },
   seller: { key: "seller", name: "Report agent", role: "Sells reports for NEAR", icon: "coin",
-    detail: "Prices every sealed report at what it cost to make plus a small margin ($2 to $3, paid in NEAR) and sells it to the trading agent. Each payment comes from the trading agent's near.com balance as a signed order, checked before signing and confirmed when it arrives in the report agent's own wallet.",
+    detail: "Runs by itself on a cloud server: it takes NEAR Agent Market hires and visitors' proposals, keeps the radar's top 5 topics covered, and seals and publishes every report. It prices every sealed report at what it cost to make plus a small margin ($2 to $3, paid in NEAR) and sells it to the trading agent; every sale pays for the next report. Each payment comes from the trading agent's near.com balance as a signed order, checked before signing and confirmed when it arrives in the report agent's own wallet.",
     sources: "Its own NEAR account · NEAR Intents" },
   stake: { key: "stake", name: "NEAR AI staking", role: "Earns credits for AI", icon: "sprout",
-    detail: "The report agent stakes 70% of every payment through NEAR AI Cloud's Staking for Inference (stake.dao, validator nearai.pool.near; at least 1 NEAR at a time) and keeps 30%; once the kept part passes $200 it funds a second trading agent (next step). The staking rewards become NEAR AI credits that pay for the agents' model calls; the staked NEAR stays withdrawable.",
+    detail: "The report agent stakes 70% of everything it earns (report sales and NEAR Agent Market fees) through NEAR AI Cloud's Staking for Inference (stake.dao, validator nearai.pool.near; at least 1 NEAR at a time) and keeps 30%; once the kept part passes $200 it funds a second trading agent (next step). The staking rewards become NEAR AI credits that pay for the agents' model calls; the staked NEAR stays withdrawable.",
     sources: "NEAR mainnet · NEAR AI Cloud" },
   trader2: { key: "trader2", name: "Trading agent 2", role: "Planned: funded at $200", icon: "pulse",
     detail: "The next step, not built yet. The report agent keeps 30% of every payment in a pot; once that pot passes $200 it funds a second trading agent with its own account and budget, run like the first one. The first trading agent already shows the whole loop working with real money.",
@@ -116,6 +119,7 @@ export function agentStats(r: Report): Record<AgentKey, AgentRunStat> {
     stake: { state: "off", note: "after the report: see Funds & trading" },
     trader2: { state: "off", note: "planned" },
     intake: { state: "off", note: "before the report: see Request a report" },
+    radar: { state: "off", note: "before the report: see Radar" },
     buyers: { state: "off", note: "after the report: see NEAR Agent Market" },
   };
 }

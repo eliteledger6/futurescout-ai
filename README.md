@@ -78,9 +78,18 @@ Run live on 2026-11-10: a test hire was picked up, a change request was read fro
 
 ### Running it day to day (the owner)
 
-The website runs in the cloud by itself. The two agents (report agent, trading agent) run on the owner's computer:
-`start_everything.bat` starts both, `status.bat` shows what they did, `pause_trading.bat` is the kill switch. Who triggers
-what, costs and what stays manual: [RUNNING.md](RUNNING.md). Running them on a cloud server instead: [deploy/VPS.md](deploy/VPS.md).
+The website runs in the cloud by itself. Since 2026-11-11 the two agents (report agent, trading agent) run on a small
+cloud server as two services that restart by themselves ([deploy/VPS.md](deploy/VPS.md)); `start_everything.bat` runs
+them on the owner's computer instead (never both places at once). Who triggers what, costs and what stays manual:
+[RUNNING.md](RUNNING.md).
+
+What the report agent does without anyone asking (all in `backend/config/funds.yaml` -> `agent_market`):
+- recounts the Hot-Topic Radar once a day (papers, patents, SEC filers; no model) and publishes it;
+- keeps a report from the last 7 days on each of the radar's top 5 topics, and writes one more report for every report
+  sold (the next topic down the ranking); at most 2 such reports a day;
+- when it has no job, its Science agent reads 5 recent papers an hour and may add ONE new topic to the radar, only if
+  paper counts confirm it is growing (at most 3 a day);
+- records the fee of every accepted NEAR Agent Market hire, so it joins the 70% staked / 30% kept split.
 
 ### Try it in 10 minutes (no keys needed)
 
@@ -223,12 +232,14 @@ PROJECT_STATUS.md                  detailed phase status
 
 ## What is unfinished (honest list, 2026-11-11)
 
-- **The agents run only while the owner's laptop is on.** The hosted website is a read-only snapshot: it shows the data, takes topic proposals and has no key. Research, Agent Market jobs, sealing, paper funds and publishing run in the report agent; trading, report purchases and staking run in the trading agent (`start_everything.bat` starts both; `deploy/VPS.md` moves them to a cloud server). Proposals stored on the hosted API are lost if it restarts before the loop collects them.
-- **Trading is paused**: NEAR Intents refused the fund's orders on 2026-11-10/11, so the trading loop is off and the INTCon holding is valued at its last known value (labelled).
-- **NEAR Agent Market**: listed and tested with one free test hire; no paid job yet.
+- **Two machines share data through git.** The agents run on a cloud server; the hosted website is a read-only snapshot (`backend/site_data`) that the agents commit and push. It shows the data, takes topic proposals and has no key. Proposals stored on the hosted API are lost if it restarts before the loop collects them, and so is the record of reports bought through `/api/market/buy`.
+- **Added on 2026-11-11 and only mock-tested when written**: the daily radar refresh, the agent's own reports (top 5 + one per sale), idle scouting by the Science agent, and the Agent Market fee split. The first own report ('mixture of experts') was started by the server the same evening.
+- **A report payment is proven by a transaction hash and the buyer's name.** Hashes are public, so the proof does not show that the requester is the payer; a signed message from the buyer would. The seal is a SocialDB entry the report agent's key could overwrite: it protects against outsiders, not against the key holder.
+- **One real holding only**: the trading agent runs (hourly checks, real orders inside the caps), but NEAR Intents has had no route for the INTCon token since 2026-11-10, so it cannot add to or sell that holding; it is valued at the live token price.
+- **NEAR Agent Market**: listed ($3 a hire) and tested with two free test hires (the second handled by the cloud server in under 8 minutes); no paid job yet, so no fee has been recorded.
 - **The second trading agent** (funded when the report agent's kept 30% passes $200) is planned, not built. Staking rewards at today's amounts cover only a small part of the AI bill.
 - **Reports written from 2026-11-11 are unlocked for the demo** (`economy.demo_free_from`); the paid lock, payment check and access token are built and tested, and one outside purchase through `/api/market/buy` has not happened yet.
-- **Patent counts are served from cache** (`SERPAPI_CACHE_ONLY=true`) to save the owner's search quota; topics without cached data say "patents: not counted yet" and their radar heat is paper growth alone.
+- **Patent counts come from the European Patent Office's free database** (EPO OPS) since 2026-11-11 for all radar topics; paid Google Patents searches stay off (`SERPAPI_CACHE_ONLY=true`). EPO allows about 5 searches a minute when busy, so a full radar count takes over an hour, and a topic it cannot count keeps its earlier numbers with their date.
 - **X signals depend on the approved accounts** (about 130 on 2026-11-11): a topic none of them posts about gets no X signals, and posts are never treated as facts.
 - **GDELT news** has refused requests from the development network (HTTP 429); the Market agent runs without headlines.
 - **No custom NEAR contract**: fingerprints use SocialDB (`social.near` on mainnet since 2026-11-10; older seals stay on testnet and still verify).
