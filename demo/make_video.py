@@ -74,21 +74,22 @@ SCENES = [
          "FutureScout AI answers that with a small team of AI agents, running on NEAR AI Cloud."),
     ]),
     Scene("02_radar", "01", "Hot-topic radar", [
-        ("This is the radar. It follows 54 topics, across nine sectors.", "This is the radar. It follows fifty-four topics, across nine sectors."),
+        ("This is the radar. It follows more than fifty topics, across nine sectors.", None),
         ("For each one, we count research papers and patent filings. Last year against this year, so far.", None),
         ("That tells you what's heating up right now. Not what was hot last year.", None),
-        ("And a paper scout keeps suggesting new topics that are starting to grow.", None),
+        ("The report agent recounts it every day. And when its science agent has no job, it reads new papers, and adds topics that are really growing.", None),
     ]),
     Scene("03_agents", "02", "The agent team", [
-        ("Pick a topic, and the team gets to work.", None),
+        ("The report agent runs the research. It takes a topic, and hands it to its team of nine AI agents.", None),
         ("A chief agent makes the plan. Then the science, patent, risk and X agents run in parallel, on real papers, patents and posts.",
          "A chief agent makes the plan. Then the science, patent, risk and X agents run in parallel... on real papers, real patents, and real posts."),
         ("The market agent follows the evidence to the companies behind it, and reads their SEC filings. Nobody hands it a list.", None),
         ("An AI check keeps the counts on topic. And the risk agent's job is to argue the other side.", None),
+        ("All their work comes back to the report agent. It seals the report on NEAR, publishes it, and sells it.", None),
         ("Now, here's the part we're proud of: the agents run an economy. The trading agent has to buy each report from the report agent, in NEAR.",
          "Now, here's the part we're proud of. The agents run an economy. The trading agent has to buy each report from the report agent, in NEAR."),
-        ("The report agent stakes 70% of what it earns with NEAR AI. Those rewards pay for every agent's models.",
-         "The report agent stakes seventy percent of what it earns with NEAR AI. Those rewards pay for every agent's models."),
+        ("The report agent stakes 70% of what it earns with NEAR AI. That earns credits toward the agents' models.",
+         "The report agent stakes seventy percent of what it earns with NEAR AI. That earns credits toward the agents' models."),
         ("It keeps the other 30%. And once that passes $200, it funds a second trading agent.",
          "It keeps the other thirty percent. And once that passes two hundred dollars, it funds a second trading agent."),
     ]),
@@ -116,7 +117,7 @@ SCENES = [
     Scene("07_seal", "07", "Sealed on NEAR", [
         ("When a report is done, its fingerprint is sealed on NEAR mainnet. The site checks it again on every page load.", None),
         ("Change a single word, and the seal breaks.", None),
-        ("Fund decisions and trades get sealed the same way.", None),
+        ("Anyone can check a report against its seal, without asking us.", None),
     ], tail=2.4),
     Scene("09_funds", "08", "Funds and trading", [
         ("Every topic also gets a paper fund, spread across low, medium and high-risk companies.", None),
@@ -124,18 +125,18 @@ SCENES = [
          "Each decision comes with its reasons, and the fund is measured against the S and P five hundred."),
         ("Then there's real money: a trading agent on a strong model trades tokenized stocks through NEAR Intents.",
          "Then there's real money. A trading agent on a strong model trades tokenized stocks through NEAR Intents."),
-        ("Code checks every order first: the budget, the allowed stocks, the price and the cost. Only then does the agent approve its own trade.",
-         "Code checks every order first. The budget, the allowed stocks, the price, and the cost. Only then does the agent approve its own trade."),
+        ("Code checks every order first: the budget, the allowed stocks and the cost. The agent weighs the price itself, then approves its own trade.",
+         "Code checks every order first. The budget, the allowed stocks, and the cost. The agent weighs the price itself, then approves its own trade."),
         ("In shadow mode, it also trades pretend money at real quotes, and explains every choice.", None),
     ]),
     Scene("10_round", "09", "Real money, end to end", [
         ("Here's a real round. The agent wakes up on its own: a new report, a sharp price move, or its daily review.",
          "Here's a real round. The agent wakes up on its own. A new report, a sharp price move, or its daily review."),
-        ("Before it can use a report, it has to buy it. It bought three, at about $2 each, paid in NEAR straight from its near.com balance.",
-         "Before it can use a report, it has to buy it. It bought three, at about two dollars each, paid in NEAR, straight from its near dot com balance."),
+        ("Before it can use a report, it has to buy it. It bought six, at about $2 each, paid in NEAR straight from its near.com balance.",
+         "Before it can use a report, it has to buy it. It bought six, at about two dollars each, paid in NEAR, straight from its near dot com balance."),
         ("After buying the memory report, it bought Intel, and approved the order itself, once every check had passed.", None),
-        ("The report agent staked 70% of what it earned, 1.3 NEAR, with NEAR AI, and kept the rest toward a second trading agent.",
-         "The report agent staked seventy percent of what it earned, one point three NEAR, with NEAR AI, and kept the rest toward a second trading agent."),
+        ("The report agent staked 70% of what it earned, 2.5 NEAR, with NEAR AI, and kept the rest toward a second trading agent.",
+         "The report agent staked seventy percent of what it earned, two point five NEAR, with NEAR AI, and kept the rest toward a second trading agent."),
         ("Every report has a price: $2 to $3, depending on what it cost to make.",
          "Every report has a price. Two to three dollars, depending on what it cost to make."),
     ]),
@@ -146,9 +147,15 @@ SCENES = [
         ("Other trading bots can buy any report through our API too, paid in NEAR and checked on chain.",
          "Other trading bots can buy any report through our A P I too, paid in NEAR, and checked on chain."),
     ]),
+    Scene("12_auto", "11", "Runs by itself", [
+        ("Anyone can ask for a report: hire the agent on the market, or propose a topic for free. An AI reviewer screens every proposal.",
+         "Anyone can ask for a report. Hire the agent on the market, or propose a topic for free. An AI reviewer screens every proposal."),
+        ("And nobody starts any of this by hand. Both agents run on a cloud server, around the clock.", None),
+        ("The report agent keeps a fresh report on the radar's top five topics. And every report it sells pays for the next one.", None),
+    ]),
     Scene("10_close", "", "", [
         ("That's FUTURESCOUT AI: research you can check.", "That's FutureScout AI. Research you can check."),
-        ("Models on NEAR AI Cloud, and every report sealed on NEAR.", None),
+        ("Models on NEAR AI Cloud. Reports sealed on NEAR.", None),
         ("Built for the NEAR Hackathon.", None),
     ], tail=2.2),
 ]
@@ -405,11 +412,12 @@ def closing_card(t: float, dur: float) -> Image.Image:
             "Every quote checked against its source",
             "Reports sold for $2-3 in NEAR, earnings staked for AI",
             "Report agent listed on NEAR Agent Market ($3 a hire)",
+            "Both agents run on a cloud server, around the clock",
         ]),
         (1010, "SIMULATED OR LIMITED", (255, 196, 110), [
             "Topic funds and shadow trades use pretend money",
             "Scores are heuristics: no topic reaches 70% confidence",
-            "Agent Market: one free test hire so far, no paid job yet",
+            "Agent Market: two free test hires so far, no paid job yet",
             "Stock prices: free plan, 25 lookups a day",
             "Research activity is not commercial success",
             "Real trades: small budget, the agent approves in limits",
@@ -475,7 +483,7 @@ async def rec_radar(k: Take) -> None:
     b = k.b
     await b.scroll_to(530, 1.3)
     await k.until(k.sent[1] + 0.2)
-    th = await b.rect("th", text="this year so far")
+    th = await b.rect("th", text="this year")
     pt = await b.rect("th", text="patents")
     pa = await b.rect("th", text="papers")
     if pa and pt:
@@ -490,7 +498,9 @@ async def rec_radar(k: Take) -> None:
 
 async def rec_agents(k: Take) -> None:
     b = k.b
-    await b.scroll_to(640, 1.3)
+    await b.scroll_to_el(".flow-legend", 1.3, offset=96)
+    await b.hover("g.node", text="report agent", seconds=0.7)
+    await k.until(k.sent[0] + (k.sent[1] - k.sent[0]) * 0.55)
     await b.hover("g.node", text="chief", seconds=0.7)
     await k.until(k.sent[1])
     span = max(2.0, k.sent[2] - k.sent[1] - 0.6)
@@ -504,14 +514,18 @@ async def rec_agents(k: Take) -> None:
     await b.hover("g.node", text="science", seconds=0.6)
     await b.hover("g.node", text="risk", seconds=0.7)
     await k.until(k.sent[4] + 0.2)
-    await b.hover("g.node", text="report agent", seconds=0.7)
-    await k.until(k.sent[4] + (k.sent[5] - k.sent[4]) * 0.45)
-    await b.hover("g.node", text="trading agent", seconds=0.7)
+    await b.hover("g.node", text="investment", seconds=0.6)                  # all the work arrives at the report agent
+    await b.hover("g.node", text="report agent", seconds=0.8)
+    await k.hl(await b.rect("g.node", text="report agent"), seconds=max(2.0, k.sent[5] - k.sent[4] - 1.8), pad=8)
     await k.until(k.sent[5] + 0.2)
-    await b.hover("g.node", text="near ai staking", seconds=0.7)
-    await k.until(k.sent[6] + 0.2)
     await b.hover("g.node", text="report agent", seconds=0.6)
-    await k.until(k.sent[6] + (k.dur - k.sent[6]) * 0.4)
+    await k.until(k.sent[5] + (k.sent[6] - k.sent[5]) * 0.45)
+    await b.hover("g.node", text="trading agent", seconds=0.7)
+    await k.until(k.sent[6] + 0.2)
+    await b.hover("g.node", text="near ai staking", seconds=0.7)
+    await k.until(k.sent[7] + 0.2)
+    await b.hover("g.node", text="report agent", seconds=0.6)
+    await k.until(k.sent[7] + (k.dur - k.sent[7]) * 0.4)
     await b.hover("g.node", text="trading agent 2", seconds=0.8)
 
 
@@ -618,6 +632,40 @@ async def rec_market(k: Take) -> None:
     await k.until(k.sent[2] + 0.2)
     await b.scroll_to(420, 1.4)
     await k.until(k.dur - 0.3)
+
+
+async def rec_request(k: Take) -> None:
+    """The Request a report page: the paid hire and the free proposal, then the proposals list (the reviewer's verdicts)."""
+    b = k.b
+    await b.scroll_to(250, 1.0)
+    panels = await b.rect(".grid.grid-2")
+    await k.hl(panels, seconds=max(3.0, k.dur * 0.55), pad=10)
+    await b.hover(".panel", 0, seconds=0.8)
+    await k.until(k.dur * 0.38)
+    await b.hover(".panel", 1, seconds=0.8)
+    await k.until(k.dur * 0.66)
+    k.cut()
+    await b.scroll_to(620, 1.1)
+    await b.hover(".pill", text="report ready", seconds=0.7)
+
+
+async def rec_auto(k: Take) -> None:
+    """The agent network on the home page: the radar feeds the report agent's own reports; a sale pays for the next."""
+    b = k.b
+    await b.scroll_to_el(".flow-legend", 1.2, offset=96)
+    await k.hl(await b.rect(".flow-legend-lead"), seconds=max(2.4, k.sent[1] - 0.6), pad=8)
+    await b.hover("g.node", text="report agent", seconds=0.7)
+    await asyncio.sleep(0.5)
+    await b.hover("g.node", text="trading agent", seconds=0.7)
+    await k.until(k.sent[1] + 0.2)
+    radar = await b.rect("g.node", text="hot-topic radar")
+    if radar:
+        await k.hl([radar[0], radar[1], radar[2], radar[3] + 46], seconds=max(2.6, (k.dur - k.sent[1]) * 0.5), pad=8)
+    await b.hover("g.node", text="hot-topic radar", seconds=0.8)
+    await k.until(k.sent[1] + (k.dur - k.sent[1]) * 0.55)
+    await b.hover("g.node", text="report agent", seconds=0.8)
+    await asyncio.sleep(0.6)
+    await b.hover("g.node", text="trading agent", seconds=0.7)
 
 
 async def rec_evidence(k: Take) -> None:
@@ -748,6 +796,9 @@ def build_pieces(scenes: list[Scene], rid: str, tamper_lines: list[str]) -> list
     pieces.append(Piece(s["10_round"], "10_round", "rec", dur=s["10_round"].dur, prep=goto(f"{DASH}/trading", 2.5), action=rec_round))
     pieces.append(Piece(s["11_market"], "11_market", "rec", dur=s["11_market"].dur,
                         prep=goto("https://market.near.ai/a/futurescout", 5.0), action=rec_market))
+    auto_a = s["12_auto"].sent[1][0] - 0.2                                  # the Request a report page, then the network on the home page
+    pieces += [Piece(s["12_auto"], "12_request", "rec", dur=auto_a, prep=goto(f"{DASH}/research", 2.5), action=rec_request),
+               Piece(s["12_auto"], "12_auto", "rec", dur=s["12_auto"].dur - auto_a, prep=goto(f"{DASH}/", 2.5), action=rec_auto)]
     pieces.append(Piece(s["10_close"], "10_close", "card", dur=s["10_close"].dur, card=closing_card))
     pieces = [p for p in pieces if p.scene in scenes]
     t = scenes[0].start

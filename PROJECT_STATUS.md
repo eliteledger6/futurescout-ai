@@ -480,3 +480,17 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   375, 1100, 1270 and 1440 px (the detail panel moves below the table under 1240 px; on phones two columns the detail
   panel repeats are left out). The small charts no longer show a year that has not started.
 - 354 tests pass; the website builds; home page and radar checked in the browser on this computer.
+
+## 2026-11-11 (late): demo video v10 (4:48)
+- `demo/make_video.py` re-recorded and re-rendered against the hosted site (DEMO_DASHBOARD_URL / DEMO_API_URL), which now
+  shows the server's live data. 1920x1080, 30 fps, H.264 + AAC 48 kHz, 48 subtitle entries, no black scene, no silence
+  longer than 2.5 s; a 26 MB copy is `demo/futurescout_hackathon_demo_small.mp4` (neither file is in git).
+- Changed from v9: the Report agent is introduced as the one that runs the research, hands the topic to its 9 AI
+  agents, collects their work and reports it out; 6 reports bought and 2.5 NEAR staked (were 3 and 1.3); the radar is
+  recounted daily and the Science agent adds topics when idle; staking "earns credits toward the agents' models" (was
+  "pays for every agent's models"); "anyone can check a report against its seal" replaces "fund decisions and trades
+  get sealed the same way"; code checks budget, allowed stocks and cost, the agent weighs the price; a new scene "Runs
+  by itself" (Request a report page, both agents on a cloud server, top 5 radar topics kept covered, a sale pays for
+  the next report); the closing card says two free test hires and that both agents run on a cloud server.
+- 15 narration lines were generated new with ElevenLabs (voice Chris, free plan, about 1,650 characters); the rest came
+  from the cache. Checked by still frames at nine points and by sound level; not listened to.

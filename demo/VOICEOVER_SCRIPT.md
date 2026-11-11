@@ -1,5 +1,8 @@
 # FUTURESCOUT AI: voiceover script (v8, natural presenter)
 
+> **Superseded on 2026-11-11 by v10.** The narration now spoken in `futurescout_hackathon_demo.mp4` is in
+> `demo/NARRATION.md` (written by `make_video.py` from its `SCENES` list). This file keeps the v8 text for reference.
+
 Final narration of `futurescout_hackathon_demo.mp4`, voice **Chris** (ElevenLabs, free plan; the video credits ElevenLabs).
 One line per sentence slot of `demo/make_video.py` (each line's clip is timed to the shots). Where the spoken words
 differ from the subtitle (numbers, abbreviations), the spoken version is shown in italics below it.
