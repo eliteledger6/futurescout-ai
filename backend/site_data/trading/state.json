@@ -274,9 +274,50 @@
       "sha256": "f9eeac6f12fe1d31939c37606173da327e91783f9085a0d389ea88afcb1f10b3",
       "correction": null,
       "chain": null
+    },
+    {
+      "id": "be5e636436",
+      "created_at": "2026-11-11T09:38:57.706901Z",
+      "mode": "shadow",
+      "side": "hold",
+      "topic": "",
+      "ticker": "",
+      "symbol": "",
+      "asset_id": "",
+      "usd": 0.0,
+      "fraction": null,
+      "quantity": null,
+      "rationale": "Two new reports arrived. Retrieval-augmented generation is rated strong but with only 35.3% confidence, and its only candidate, MSFT, cannot be quoted right now. Chiplet is rated strong with 44.4% confidence, which is just inside the low range, and its candidate NVDA is quoted at $176.89, 4.74% above the 2026-11-10 close of $168.89, plus a 1.33% quote cost. MSFT and AAPL cannot be bought because they have no quote, and AAPL's 6G report is only 'early' in any case. NVDA is the only buyable option, but its chiplet report has low confidence. None of the verified filing findings name NVIDIA; the only mention is an unverified post about NVHBM. Paying about 6% above the last close, counting the premium and the quote cost, on evidence this thin is not acceptable, so I keep the cash and will look again on a stronger report or a better price. INTC stays: its report is still strong at 49.6% confidence, and the missing quote is not a reason to sell.",
+      "risks": [
+        "A tokenized stock depends on its issuer (Ondo) and the NEAR Intents route; it is not the share itself.",
+        "Holding cash may miss gains if the chiplet theme keeps strengthening.",
+        "The INTC holding cannot be valued or sold at the moment because there is no quote."
+      ],
+      "confidence": "low",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.045552,
+      "ref_close": null,
+      "ref_close_date": null,
+      "dry_quote": null,
+      "status": "hold",
+      "quote": null,
+      "deposit_address": null,
+      "deposit_tx": null,
+      "result": null,
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-11T09:38:57.706901Z",
+          "status": "hold",
+          "note": "strategy check: new_report, new_report"
+        }
+      ],
+      "sha256": "7d051f1d5cff73a98d1a1626e8ea2f84bd7546c99e6432412c6268d3278c844f",
+      "correction": null,
+      "chain": null
     }
   ],
-  "updated_at": "2026-11-11T09:16:55.843192Z",
+  "updated_at": "2026-11-11T09:39:25.513272Z",
   "checks": [
     {
       "id": "665f6b4d47",
@@ -773,6 +814,53 @@
       "cost_usd": 0.0,
       "notes": [],
       "sha256": "e55e4e8913b3510f9d93034ba06e792299752245792a48b62662c20a3bf9376e"
+    },
+    {
+      "id": "c11c107051",
+      "at": "2026-11-11T09:38:57.706901Z",
+      "mode": "shadow",
+      "triggers": [
+        {
+          "kind": "new_report",
+          "ticker": "MSFT",
+          "topic": "retrieval-augmented generation",
+          "detail": "report 4a2a3eaa for 'retrieval-augmented generation' not yet considered (verdict strong, score 75.4, confidence 35.3%)"
+        },
+        {
+          "kind": "new_report",
+          "ticker": "NVDA",
+          "topic": "chiplet",
+          "detail": "report ab3b0896 for 'chiplet' not yet considered (verdict strong, score 72.2, confidence 44.4%)"
+        }
+      ],
+      "action": "hold",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "MSFT and AAPL cannot be bought because they have no quote, and AAPL's 6G report is only 'early' in any case. NVDA is the only buyable option, but its chiplet report has low confidence. None of the verified filing findings name NVIDIA; the only mention is an unverified post about NVHBM. Paying about 6% above the last close, counting the premium and the quote cost, on evidence this thin is not acceptable, so I keep the cash and will look again on a stronger report or a better price. INTC stays: its report is still strong at 49.6% confidence, and the missing quote is not a reason to sell.",
+      "what_changed": "Two new reports arrived. Retrieval-augmented generation is rated strong but with only 35.3% confidence, and its only candidate, MSFT, cannot be quoted right now. Chiplet is rated strong with 44.4% confidence, which is just inside the low range, and its candidate NVDA is quoted at $176.89, 4.74% above the 2026-11-10 close of $168.89, plus a 1.33% quote cost.",
+      "proposal_id": "be5e636436",
+      "model": "claude_opus_5_5",
+      "cost_usd": 0.045552,
+      "notes": [],
+      "sha256": "1b4a8e1465e122fcbebb4a55bfb23735b1845519b536431f1384ad798a974e47",
+      "correction": null
+    },
+    {
+      "id": "c1c96b2808",
+      "at": "2026-11-11T09:39:25.501986Z",
+      "mode": "live",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "49a088b0d51825d38779bba157cddfeca99e06e622acecafc354a20907818f86",
+      "correction": null
     }
   ],
   "seen_runs": {
@@ -787,13 +875,15 @@
     "6G": "f0934784-6b57-49fd-a4dc-09d320bbd16e",
     "vision-language-action model": "7a87a2e1-5e88-4679-b03f-a20e042c6497",
     "live:retrieval-augmented generation": "4a2a3eaa-9841-4174-b38d-0a12e7b52623",
-    "live:chiplet": "ab3b0896-a403-4181-990f-65bad2f59f13"
+    "live:chiplet": "ab3b0896-a403-4181-990f-65bad2f59f13",
+    "retrieval-augmented generation": "4a2a3eaa-9841-4174-b38d-0a12e7b52623",
+    "chiplet": "ab3b0896-a403-4181-990f-65bad2f59f13"
   },
   "seen_closes": {},
-  "last_check_at": "2026-11-11T08:51:25.789875Z",
-  "last_live_check_at": "2026-11-11T08:51:27.001729Z",
+  "last_check_at": "2026-11-11T09:38:57.706901Z",
+  "last_live_check_at": "2026-11-11T09:39:25.501986Z",
   "private_near": 1.7239,
-  "private_checked_at": "2026-11-11T08:51:26.992421Z",
+  "private_checked_at": "2026-11-11T09:39:25.494580Z",
   "last_values": {},
   "hidden": []
 }
