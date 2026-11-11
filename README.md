@@ -9,8 +9,9 @@ Research information, not financial advice. The trading agent uses a small, capp
 | | |
 |---|---|
 | Built | During NEAR HACKATHON (development window 2026-11-01 to 2026-11-14). The first live runs are from 2026-11-08; the git history starts 2026-11-09, when the folder became a repository. No code from before the announcement. |
-| Suggested tracks | `defi` (trading agent settling through NEAR Intents), `agents` (an agent that spends and earns real money), `privacy` (private inference on NEAR AI Cloud; orders signed from the Confidential Intents balance), `security` (spending limits, order verification before signing, kill switch) |
-| Demo video | `demo/futurescout_hackathon_demo.mp4` is built locally by `demo/make_video.py` (not committed: large binary); the public demo post on X links it |
+| Live demo | Website: https://futurescout-ai.vercel.app (read-only copy of the real data; the API behind it: https://futurescout-ai.onrender.com/api/health). The report agent on NEAR Agent Market: https://market.near.ai/a/futurescout |
+| Suggested tracks | `agents` (agents that earn, spend, hire and pay: the trading agent buys reports from the report agent in NEAR, the report agent is hired on NEAR Agent Market and stakes its earnings for AI credits), `business` (an AI-run report business: pricing, sales, treasury split 70/30, limits set by the owner), `swarms` (an agent economy between a research team, a report agent and a trading agent), `defi` (a trading agent settling through NEAR Intents), `security` (spending limits, order verification before signing, kill switch), `privacy` (inference on NEAR AI Cloud; orders signed from the Confidential Intents balance) |
+| Demo video | `demo/futurescout_hackathon_demo.mp4` (4:14) is built locally by `demo/make_video.py` (not committed: large binary); the public demo post on X links it. Narration: ElevenLabs voice (free plan, credited in the video) |
 | AI assistance | Code written with Claude Code (Anthropic). Third-party libraries are listed at the end |
 
 ### The problem
@@ -31,7 +32,9 @@ Technology investing mixes verifiable facts, rumours and hype, and "AI picks" ra
 |---|---|
 | Multi-agent research on real papers (OpenAlex, arXiv), patents, SEC filings and X posts; 15 topics with full reports | Paper funds (one per topic, fully invested) use pretend money at real closing prices |
 | Report, fund and trade fingerprints on NEAR mainnet (older ones on testnet) | Shadow trading: pretend money, real NEAR Intents quotes |
-| Real-money trades on NEAR mainnet through NEAR Intents: 3 buys, then on 2026-11-10 an automatic round where the agent sold all its GOOGLon (report weakened) and put the NEAR into INTCon seconds later | Real-money budget is capped at $60 in total by the owner |
+| Real-money trades on NEAR mainnet through NEAR Intents. Current record: one buy of INTCon ($43.83, approved by the agent after every code check). Earlier rounds (three buys, and on 2026-11-10 an automatic sale of GOOGLon followed by a buy) were archived (kept on the owner's machine, not in the repository) when the owner restarted the fund | Real-money budget is capped at $60 in total by the owner; NEAR Intents refused trades on 2026-11-10/11, so the trading loop is paused |
+| Agent economy with real NEAR (2026-11-10): the trading agent bought 3 reports (1.865 NEAR) from the report agent, which staked 1.3055 NEAR with NEAR AI (Staking for Inference) and kept 0.56 NEAR | At these amounts the staking rewards cover only a small part of the AI bill; the second trading agent (funded when the kept pot passes $200) is planned, not built |
+| NEAR Agent Market listing, live; one free test hire delivered (topic from the brief, change request read from the job thread). A visitor's topic proposal ran end to end on 2026-11-11 (AI reviewer approved "retrieval-augmented generation", researched, sealed on mainnet, published by the agent) | No paid Agent Market job yet. For the demo, reports written from 2026-11-11 are unlocked and marked "Unlocked for demo purposes only" |
 | Settlement confirmed by reading the private balance | Stock prices: Alpha Vantage free plan (25 lookups a day), NEAR Intents token prices as a labelled fallback |
 
 ### Agent economy: agents pay each other and pay for their own AI
@@ -75,15 +78,14 @@ Run live on 2026-11-10: a test hire was picked up, a change request was read fro
 
 ### Try it in 10 minutes (no keys needed)
 
-The repository ships a snapshot of the real data (`backend/site_data`: 59 reports, the radar, 15 paper funds, the trading record). Windows PowerShell shown; Python 3.10+ and Node.js LTS.
+The fastest way is the hosted copy: https://futurescout-ai.vercel.app (the first load can take up to a minute while the free API host wakes up). To run it yourself: the repository ships a snapshot of the real data (`backend/site_data`: the reports, the radar, the paper funds, the trading and agent-economy records), and the API serves it by itself when there is no database and no `backend/runs` folder. Windows PowerShell shown; Python 3.10+ and Node.js LTS. On macOS/Linux use `source .venv/bin/activate` and forward slashes.
 
 ```powershell
 cd backend
 python -m venv .venv; .venv\Scripts\Activate.ps1
 python -m pip install -e ".[dev]"
 python -m pytest                                  # see: all tests pass (fixtures and mocks, no network, no key)
-$env:FUTURESCOUT_DATA_DIR = "site_data"
-python scripts\serve.py                           # see: API on http://127.0.0.1:8000 (docs at /docs)
+python scripts\serve.py                           # see: API on http://127.0.0.1:8000 (docs at /docs); http://127.0.0.1:8000/api/health says "data":"site_data"
 ```
 
 In a second terminal:
@@ -98,8 +100,10 @@ Then, in the dashboard:
 1. Open **Radar**: see 54 topics in 9 sectors ranked by paper and patent growth.
 2. Open **Reports** and pick *high bandwidth memory*: see the verdict (score 80, confidence 50%), the companies behind the evidence, and "Unchanged since recorded on NEAR mainnet". Switch to **Full report**: every finding with its label, quote and source; the agent trace with model and cost per agent; the company scout table.
 3. Open **Funds & trading** → **Paper funds**: 15 fully invested pretend-money funds with their reasons, compared with the S&P 500.
-4. Open **Trading agent**: the pipeline, the agent's latest decisions, and every completed real trade with the agent's own reasoning (the GOOGLon sale and the INTCon buy of 2026-11-10 show "Approved by the agent (all checks passed)").
-5. Back in the backend terminal: `python scripts\fund_trade.py rules` prints the strategy rules; `python scripts\fund_trade.py holdings` prints what the real-money fund holds.
+4. Open **Trading agent**: the pipeline, the agent's latest decisions, the completed real trade with the agent's own reasoning ("Approved by the agent (all checks passed)"), and the **Agent economy** panel: 3 reports bought in NEAR, 1.31 NEAR staked with NEAR AI, the kept pot.
+5. Open **How it works**: the agent network, from the topic reviewer to the trading agent, NEAR AI staking and NEAR Agent Market. Tap an agent to see what it does.
+6. Open **Reports → Request a report**: the link to hire the report agent on NEAR Agent Market, and the free topic proposal form (5 a day, screened by an AI reviewer; the list below it shows what happened to earlier proposals). The form is live on the hosted site; in a local copy it says proposals are closed, because nobody collects them there. Text that looks like an instruction is refused at once and uses no slot.
+7. Back in the backend terminal: `python scripts\fund_trade.py rules` prints the strategy rules; `python scripts\fund_trade.py holdings` prints what the real-money fund holds; `python scripts\tamper_demo.py --run e5d41d1f-fa56-42ce-bf27-9fccb47298a2` reads the report's fingerprint from NEAR mainnet (free read) and shows MATCH, then MISMATCH after changing one word in memory.
 
 To run new research or trade you need your own keys (see `.env.example` and the full commands below); real trading also needs a funded NEAR mainnet account and is off by default.
 
@@ -119,8 +123,8 @@ Early development. Only the pieces below exist and are tested. Nothing else is c
 | PostgreSQL storage of runs, sources, findings, usage (SQLAlchemy + Alembic migrations) | Built; tested on SQLite and checked live on PostgreSQL 18 (save + reload) |
 | FastAPI backend (saved runs, full reports, start a run) | Built; tested; run live against the saved PostgreSQL runs. Starting runs from the dashboard is off unless `ENABLE_RUN_API=true` (each run spends NEAR AI credit) |
 | Next.js dashboard (`frontend/`) | Built and run locally: browse saved reports (score, themes, labelled findings with sources, research activity, filings checked, costs) |
-| X Intelligence agent (read-only; 17 owner-approved company, standards and press accounts; posts are social signals, never facts) | Built and tested with fixtures; first live run 2026-11-08 |
-| Patent agent (EPO Open Patent Services, worldwide; patent counts per year, Patent Acceleration, top applicants) | Built and tested with fixtures; needs a free EPO OPS key; not yet run live |
+| X Intelligence agent (read-only; about 130 approved company, standards, press and analyst accounts, most approved by the owner and a few added by the agent under the owner's rules; posts are social signals, never facts) | Built and tested with fixtures; first live run 2026-11-08 |
+| Patent agent (Google Patents through SerpApi first, EPO Open Patent Services second; patent counts per year, Patent Acceleration, top applicants) | Built and tested with fixtures; run live through SerpApi (the saved reports carry its counts) |
 | Hot-topic radar (`scripts/run_radar.py`, dashboard `/radar`): ranks topics by growth in papers (OpenAlex) and patents (Google Patents), counted by code, no model; small-base topics shown but not ranked; 9 technology sectors (`config/sectors.yaml`), sector tabs on the dashboard | Built, tested, run live on 8 topics (2026-11-08) and 37 topics across 9 sectors (2026-11-09) |
 | Topic discovery: the X watch proposes topics from real posts; the paper scout (`scripts/discover_topics.py`, weekly in watch mode) finds fast-growing keywords in recent papers per sector and verifies each with a real per-year count before adding it | Built, tested; first live dry run 2026-11-09 |
 | Company discovery: SEC full-text search finds every filer whose reports mention the topic, including small companies not on the configured list; marked "discovered" and read like the others | Built, tested, run live (HBM: 34 companies found) |
@@ -130,7 +134,7 @@ Early development. Only the pieces below exist and are tested. Nothing else is c
 | Retraction flags (OpenAlex) honoured by the citation guard; X post engagement recorded | Built, tested |
 | Price & timing risk (part of the Risk agent): run-up, distance from 50-day average, volatility and drawdown over ~100 trading days for the companies whose filings mention the topic; rule-based level elevated / moderate / subdued. A risk input, never a buy/sell signal | Built and tested with fixtures; needs a free Alpha Vantage key; not yet run live |
 | Watch mode (`scripts/watch.py --loop`): scans the approved X accounts every 2 hours, spots rising topics, refreshes the radar, and starts a full research run when a topic is hot and has no fresh report (capped per day); each run is sealed on NEAR; every decision is logged and shown on the dashboard | Built and tested with fakes; first live cycle 2026-11-09 |
-| NEAR Protocol testnet record: each report's SHA-256 fingerprint is stored in SocialDB on testnet, and the dashboard re-checks it ("unchanged since recorded") | Built, tested and written live on testnet |
+| NEAR Protocol record: each report's SHA-256 fingerprint is stored in SocialDB (mainnet `social.near` since 2026-11-10, signed by the report agent; testnet before), and the dashboard re-checks it on the record's own network ("unchanged since recorded") | Built, tested; written live on testnet (2026-11-08) and on mainnet (2026-11-10) |
 
 ## Problem
 
@@ -192,7 +196,7 @@ The dashboard talks to the API through its own origin (`/api/*` is proxied by Ne
 | **One command with Docker** | `docker compose up --build` (reads keys from `.env`; without a database it serves `backend/runs`, or the sample reports when there are none) → http://localhost:3000 | you, or a server you own |
 | **Always-on hosting (set up: see HOSTING.md)** | frontend on Vercel (import the repo, root `frontend`, set `API_INTERNAL_URL` to your API's URL); API on Render/Railway/Fly (Python service, start command `python scripts/serve.py --host 0.0.0.0 --port $PORT`, env vars from `.env.example`). Keys live in the host's environment settings, never in the repo | the public |
 
-What to keep private: `.env` (keys), your NEAR testnet private keys. Sharing the site shares the reports; it never exposes keys. Watch mode (`scripts\watch.py --loop`) only runs where you start it.
+What to keep private: `.env` (keys, tokens, the proposals secret), your NEAR private keys. Sharing the site shares the reports; it never exposes keys. Watch mode (`scripts\watch.py --loop`) only runs where you start it.
 
 ## Layout
 
@@ -211,14 +215,17 @@ backend/tests/                     tests (fixtures are synthetic and labelled)
 PROJECT_STATUS.md                  detailed phase status
 ```
 
-## What is unfinished (honest list, 2026-11-10)
+## What is unfinished (honest list, 2026-11-11)
 
-- **Price & timing risk and the paper portfolio have never run with live prices**: both need a free Alpha Vantage key (`ALPHA_VANTAGE_API_KEY`). Portfolio positions are recorded but stay "pending".
-- **Patent counts are served from cache** (`SERPAPI_CACHE_ONLY=true`) to save the owner's 100-search quota; topics without cached data say "patents: not counted yet" and their radar heat is paper growth alone (marked *). The EPO OPS alternative is built but awaits key approval.
-- **X signals cover semiconductors only**: the 37 approved accounts are chip companies, bodies and press. Other sectors get X signals once the owner approves accounts found by `scripts\x_discover.py`.
+- **The agents run only while the owner's laptop is on.** The hosted website is a read-only snapshot: it shows the data, takes topic proposals and has no key. Research, Agent Market jobs, sealing and publishing run in the owner's report-agent loop (`start_report_agent.bat`); trading runs in a separate loop. Proposals stored on the hosted API are lost if it restarts before the loop collects them.
+- **Trading is paused**: NEAR Intents refused the fund's orders on 2026-11-10/11, so the trading loop is off and the INTCon holding is valued at its last known value (labelled).
+- **NEAR Agent Market**: listed and tested with one free test hire; no paid job yet.
+- **The second trading agent** (funded when the report agent's kept 30% passes $200) is planned, not built. Staking rewards at today's amounts cover only a small part of the AI bill.
+- **Reports written from 2026-11-11 are unlocked for the demo** (`economy.demo_free_from`); the paid lock, payment check and access token are built and tested, and one outside purchase through `/api/market/buy` has not happened yet.
+- **Patent counts are served from cache** (`SERPAPI_CACHE_ONLY=true`) to save the owner's search quota; topics without cached data say "patents: not counted yet" and their radar heat is paper growth alone.
+- **X signals depend on the approved accounts** (about 130 on 2026-11-11): a topic none of them posts about gets no X signals, and posts are never treated as facts.
 - **GDELT news** has refused requests from the development network (HTTP 429); the Market agent runs without headlines.
-- **Watch mode, the paper scout and the trading loop run only while the owner's laptop is on**; a hosted, read-only copy is prepared (HOSTING.md).
-- **No custom NEAR contract**: records use SocialDB on testnet (near-sdk-js refuses Windows; Rust not installed). Real trades use NEAR Intents on mainnet with a small capped budget.
+- **No custom NEAR contract**: fingerprints use SocialDB (`social.near` on mainnet since 2026-11-10; older seals stay on testnet and still verify).
 - **Score weights are initial assumptions**, not fitted to outcomes; the Company Scout's next-runner score is a transparent heuristic.
 - The dashboard has been checked in a browser at desktop and phone widths, not by a designer.
 
