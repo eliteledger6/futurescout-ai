@@ -30,11 +30,11 @@
     "f0934784-6b57-49fd-a4dc-09d320bbd16e": {
       "run_id": "f0934784-6b57-49fd-a4dc-09d320bbd16e",
       "topic": "6G",
-      "price_near": 0.589,
-      "price_usd": 2.1204,
+      "price_near": 0.587,
+      "price_usd": 2.1191,
       "cost_usd": 0.6224,
-      "basis": "cost to make $0.62 (models and X $0.37, 8 patent searches, NEAR seal) + $1.50 margin, kept in the $2-$3 band = $2.12 = 0.589 NEAR at $3.60",
-      "at": "2026-11-10T13:49:13.941900Z"
+      "basis": "cost to make $0.62 (models and X $0.37, 8 patent searches, NEAR seal) + $1.50 margin, kept in the $2-$3 band = $2.12 = 0.587 NEAR at $3.61",
+      "at": "2026-11-11T08:38:22.788792Z"
     },
     "7a87a2e1-5e88-4679-b03f-a20e042c6497": {
       "run_id": "7a87a2e1-5e88-4679-b03f-a20e042c6497",
@@ -44,6 +44,24 @@
       "cost_usd": 0.4926,
       "basis": "cost to make $0.49 (models and X $0.29, 6 patent searches, NEAR seal) + $1.50 margin, kept in the $2-$3 band = $2.00 = 0.556 NEAR at $3.60",
       "at": "2026-11-10T13:49:13.941900Z"
+    },
+    "4a2a3eaa-9841-4174-b38d-0a12e7b52623": {
+      "run_id": "4a2a3eaa-9841-4174-b38d-0a12e7b52623",
+      "topic": "retrieval-augmented generation",
+      "price_near": 0.593,
+      "price_usd": 2.1407,
+      "cost_usd": 0.6448,
+      "basis": "cost to make $0.64 (models and X $0.39, 8 patent searches, NEAR seal) + $1.50 margin, kept in the $2-$3 band = $2.14 = 0.593 NEAR at $3.61",
+      "at": "2026-11-11T08:38:22.788792Z"
+    },
+    "ab3b0896-a403-4181-990f-65bad2f59f13": {
+      "run_id": "ab3b0896-a403-4181-990f-65bad2f59f13",
+      "topic": "chiplet",
+      "price_near": 0.554,
+      "price_usd": 1.9999,
+      "cost_usd": 0.4733,
+      "basis": "cost to make $0.47 (models and X $0.37, 2 patent searches, NEAR seal) + $1.50 margin, kept in the $2-$3 band = $2.00 = 0.554 NEAR at $3.61",
+      "at": "2026-11-11T08:38:22.788792Z"
     }
   },
   "purchases": [
@@ -82,6 +100,42 @@
       "tx_hash": null,
       "note": "paid 0.6420 NEAR from the near.com balance (intent GY436m86zySbFh2iUNpJBeQYmkimjMzRwrwAAqQ6cyiD); seen arriving in grandbread5023.near after about 15s",
       "at": "2026-11-10T13:49:27.412653Z"
+    },
+    {
+      "id": "d20e9416cd",
+      "run_id": "4a2a3eaa-9841-4174-b38d-0a12e7b52623",
+      "topic": "retrieval-augmented generation",
+      "price_near": 0.593,
+      "buyer": "wrongowl2563.near",
+      "seller": "grandbread5023.near",
+      "status": "paid",
+      "tx_hash": null,
+      "note": "paid 0.5930 NEAR from the near.com balance (intent D5Xyh6mt7myAkT3HnTyY91GQugBukUNKNFfaDDSSkUGF); seen arriving in grandbread5023.near after about 15s",
+      "at": "2026-11-11T08:38:44.094415Z"
+    },
+    {
+      "id": "881fe1069b",
+      "run_id": "ab3b0896-a403-4181-990f-65bad2f59f13",
+      "topic": "chiplet",
+      "price_near": 0.554,
+      "buyer": "wrongowl2563.near",
+      "seller": "grandbread5023.near",
+      "status": "paid",
+      "tx_hash": null,
+      "note": "paid 0.5540 NEAR from the near.com balance (intent DNuFzaC7RrYg8vWRXjX6S8PXifZAqfLuSeqkJkL8yzG3); seen arriving in grandbread5023.near after about 15s",
+      "at": "2026-11-11T08:39:09.381698Z"
+    },
+    {
+      "id": "4b4710c392",
+      "run_id": "f0934784-6b57-49fd-a4dc-09d320bbd16e",
+      "topic": "6G",
+      "price_near": 0.587,
+      "buyer": "wrongowl2563.near",
+      "seller": "grandbread5023.near",
+      "status": "paid",
+      "tx_hash": null,
+      "note": "paid 0.5870 NEAR from the near.com balance (intent GnZWk7u1RdPXX6UUSJm7hKoL2hZDjuMkgYPP8ibe7o4X); seen arriving in grandbread5023.near after about 15s",
+      "at": "2026-11-11T08:39:34.051240Z"
     }
   ],
   "stakes": [
@@ -139,7 +193,18 @@
       "tx_hash": null,
       "note": "stake refused: {'balance': '1327518813020314141320433', 'cost': '1362934532245135313056346', 'signer_id': 'grandbread5023.near'}",
       "at": "2026-11-10T15:11:59.449372Z"
+    },
+    {
+      "id": "5b1fbc27c0",
+      "account": "grandbread5023.near",
+      "contract": "stake.dao",
+      "amount_near": 1.2138,
+      "balance_before_near": 4.537985,
+      "status": "staked",
+      "tx_hash": "4BTMiZFUYcQ6AhkCKXDCKfYGYQdvJ7zZXe3MAFdh4NwJ",
+      "note": "staked 1.2138 NEAR (70% of 3.599 NEAR received for reports, minus earlier stakes); kept pot now 1.0797 NEAR",
+      "at": "2026-11-11T08:40:01.764585Z"
     }
   ],
-  "kept_near": 0.5595
+  "kept_near": 1.0797
 }
