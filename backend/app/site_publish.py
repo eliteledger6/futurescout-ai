@@ -79,6 +79,7 @@ def trade_fingerprint(runs_dir: Path) -> str:
         t = json.loads((runs_dir / "trading" / "state.json").read_text(encoding="utf-8"))
         seen.append(sorted((p.get("id"), p.get("status")) for p in t.get("proposals", [])
                            if p.get("status") not in ("proposed", "rejected", "blocked")))
+        seen.append(round(float(t.get("private_near") or 0), 2))          # the near.com balance shown on the trading page
     except (OSError, ValueError):
         pass
     try:

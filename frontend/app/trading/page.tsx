@@ -140,7 +140,7 @@ const ICON: Record<string, ReactNode> = {
 const NODES = [
   { key: "research", name: "Research", sub: "sealed reports, topic funds" },
   { key: "agent", name: "Trading agent", sub: "Claude Opus picks and explains" },
-  { key: "checks", name: "Safety checks", sub: "caps, allowlist, price band" },
+  { key: "checks", name: "Safety checks", sub: "caps, allowlist, cost" },
   { key: "owner", name: "Owner", sub: "approves in their terminal" },
   { key: "swap", name: "NEAR Intents", sub: "NEAR ⇄ tokenized stock" },
   { key: "hold", name: "Holding", sub: "in the fund account" },
@@ -206,6 +206,7 @@ const TRIGGER_WORDS: Record<string, string> = { new_report: "new report", price_
 
 function EconomyPanel({ e }: { e: Economy }) {
   const link = (tx: string | null) => (tx ? <a href={e.explorer_tx.replace("{tx}", tx)} target="_blank" rel="noopener noreferrer">tx ↗</a> : null);
+  const bought = (rid: string) => e.purchases.find((x) => x.run_id === rid && x.status !== "failed");
   return (
     <div className="tr-card">
       <div className="tr-head">
@@ -227,7 +228,7 @@ function EconomyPanel({ e }: { e: Economy }) {
         <div className="stat"><div className="stat-value">{(e.kept_near ?? 0).toFixed(2)} Ⓝ</div><div className="stat-label">kept pot: at ${e.second_trader_at_usd ?? 200} it funds a second trading agent</div></div>
       </div>
       {e.prices.length > 0 && (
-        <div className="tr-mini">{e.prices.slice(0, 6).map((p) => {
+        <div className="tr-mini">{[...e.prices].sort((a, b) => Number(!!bought(b.run_id)) - Number(!!bought(a.run_id))).slice(0, Math.max(6, e.purchases.filter((x) => x.status === "paid").length + 2)).map((p) => {
           const b = e.purchases.find((x) => x.run_id === p.run_id && x.status !== "failed");
           return <div key={p.run_id}><b>{p.price_near} Ⓝ</b><span>{p.topic} <span className="why">· ${p.price_usd.toFixed(2)} · {b ? (b.status === "paid" ? "bought" : "payment sent") : "not bought"} {b && link(b.tx_hash)}</span></span></div>;
         })}</div>
@@ -251,6 +252,17 @@ function firstSentence(text: string): string {
   return one.length > 180 ? one.slice(0, 177).trimEnd() + "…" : one;
 }
 
+// What a decision led to: a decided buy or sale that the code refused (or that failed) is not shown as done.
+function outcome(c: { action: string; usd: number; ticker: string; proposal_id: string | null }, proposals: { id: string; status: string; history: { note: string }[] }[]): string {
+  if (c.action !== "buy" && c.action !== "sell") return "held";
+  const what = c.action === "buy" ? `${usd(c.usd)} of ${c.ticker}` : `about ${usd(c.usd)} of ${c.ticker}`;
+  const p = proposals.find((x) => x.id === c.proposal_id);
+  const done = !p || ["success", "shadow_filled", "deposited", "executing", "approved"].includes(p.status);
+  if (done) return c.action === "buy" ? `bought ${what}` : `sold ${what}`;
+  const why = p.history.length ? p.history[p.history.length - 1].note.replace(/^shadow: /, "") : p.status;
+  return `decided to ${c.action} ${what}; not done: ${why}`;
+}
+
 function AgentLog({ t }: { t: Trading }) {
   const woke = (t.checks ?? []).filter((c) => c.action !== "none" && !c.summary.startsWith("No budget left"));   // the agent was actually called
   const cfg = t.strategy?.config;
@@ -269,7 +281,7 @@ function AgentLog({ t }: { t: Trading }) {
             <li key={c.id}>
               <b>{fmtDate(c.at)}</b> · <span className="pill" style={{ marginRight: 6 }}>{c.mode === "live" ? "real" : "shadow"}</span>
               {whyWoke(c.triggers)}{" → "}
-              <b>{c.action === "buy" ? `bought ${usd(c.usd)} of ${c.ticker}` : c.action === "sell" ? `sold about ${usd(c.usd)} of ${c.ticker}` : "held"}</b>
+              <b>{outcome(c, t.proposals)}</b>
               {c.summary && <div className="small muted">{firstSentence(c.summary)}</div>}
             </li>
           ))}

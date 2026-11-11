@@ -60,3 +60,14 @@ def test_trading_page_fingerprint_ignores_routine_checks(tmp_path):
     assert after_buy != after_trade
     e["stakes"].append({"id": "s2", "status": "staked"})
     assert fp() != after_buy
+
+
+def test_a_changed_near_com_balance_is_published(tmp_path):
+    (tmp_path / "trading").mkdir()
+    f = tmp_path / "trading" / "state.json"
+    f.write_text(json.dumps({"proposals": [], "private_near": 3.4579}))
+    before = sp.trade_fingerprint(tmp_path)
+    f.write_text(json.dumps({"proposals": [], "private_near": 3.4581}))
+    assert sp.trade_fingerprint(tmp_path) == before                               # rounding noise: no publish
+    f.write_text(json.dumps({"proposals": [], "private_near": 1.72}))
+    assert sp.trade_fingerprint(tmp_path) != before                               # money moved: publish

@@ -660,6 +660,11 @@ def economy_buy_reports(s, cfg, toks, cands, now, *, execute: bool, max_new: int
         if p.status == "paid":
             usable.add(c.topic)
     save_economy(state, ECONOMY)
+    if execute and ec.pay_from == "private" and any(p.status == "paid" for p in state.purchases if p.at >= now):
+        try:
+            refresh_private_balance(s, cfg)          # the website shows the balance after these payments, not before
+        except Exception as exc:  # noqa: BLE001
+            print(f"  near.com balance not re-read after paying: {str(exc)[:100]}")
     return usable
 
 
