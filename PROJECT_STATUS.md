@@ -252,3 +252,7 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
 - 2026-11-11 (owner: "I hope I can run everything easily"): one-click files in the main folder: `start_everything.bat`
   (report agent + trading agent, each in a self-restarting window), `start_trading_agent.bat`, `status.bat` (read-only;
   run and checked), `pause_trading.bat` / `resume_trading.bat` (kill switch), `update_website.bat`. Guide: RUNNING.md.
+- 2026-11-11 (owner: everything inside "run everything", no manual steps): the report agent updates every paper fund when
+  it starts and then once a day (`update_all_funds`: missing funds created, newer reports or due reviews decided, the rest
+  revalued; 10 fresh price lookups), then publishes. Shadow trading stays at real NEAR Intents quotes only (no fallback).
+  Mock-tested (324 tests).

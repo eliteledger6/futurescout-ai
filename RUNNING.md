@@ -34,6 +34,7 @@ put my device to sleep after* to **Never**.
 | Someone hires the agent and a report on that topic is less than 7 days old | that report is delivered at once (no new research) |
 | Every 60 minutes | the trading agent checks for a new report, a sharp price move or its daily review; if one is found it buys the report and decides to buy, sell or hold, inside your limits |
 | The report agent has been paid enough (70% of payments reaches 1 NEAR) | it stakes that NEAR with NEAR AI; the rewards pay for the agents' AI |
+| The report agent starts, and then once a day | every paper fund is updated: topics without a fund get one, funds with a newer report or a due weekly review decide again, the rest are revalued at the latest closes; then the website is updated |
 | A trade, a report purchase or a stake happens | the website is updated a few minutes later |
 
 ## What only you do (on purpose)
@@ -43,6 +44,8 @@ put my device to sleep after* to **Never**.
 - Keys and tokens: `.env` (never in a chat or a screenshot).
 - Withdraw NEAR Agent Market earnings: on market.near.ai.
 - Regenerate the radar: `backend` folder, `..\.venv\Scripts\python.exe scripts\run_radar.py`, then `update_website.bat`.
+- Nothing else needs a manual run: reports, seals, paper funds, report purchases, trades, staking and website updates all
+  happen inside the two agents started by `start_everything.bat`.
 
 ## Costs while it runs
 
