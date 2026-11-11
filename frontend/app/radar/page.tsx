@@ -15,6 +15,19 @@ const friendlyError = (e: string) => {
 };
 const pct = (v: number | null | undefined) => (v === null || v === undefined ? "–" : `${v > 0 ? "+" : ""}${v.toFixed(0)}%`);
 
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+// What the heat number covers, read from the data: the last two full years AND this year so far (same dates last year).
+function heatNote(topics: Radar["topics"]): string {
+  const acc = topics.find((t) => t.paper_acceleration)?.paper_acceleration;
+  const ytd = topics.find((t) => t.paper_ytd)?.paper_ytd;
+  const full = acc ? `${acc.previous_year} → ${acc.last_full_year}` : "the last two full years";
+  if (!ytd) return `Heat = average of paper growth and patent growth, ${full}`;
+  const [m, d] = String(ytd.cutoff).split("-").map(Number);
+  const until = m && d ? `${d} ${MONTHS[m - 1]}` : ytd.cutoff;
+  return `Heat = average of paper growth ${full}, papers so far in ${ytd.year} (1 Jan–${until}, against the same dates in ${ytd.previous_year}) and, where counted, patent growth ${full}. The newest 30 days are left out: new papers take weeks to be indexed.`;
+}
+
 export default function RadarPage() {
   const [radar, setRadar] = useState<Radar | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -50,7 +63,7 @@ export default function RadarPage() {
             <>
               <div className="row small muted" style={{ justifyContent: "space-between" }}>
                 <span>Computed {fmtDate(radar.generated_at)} · {radar.topics.length} topics across {sectorKeys.length} sectors</span>
-                <span>Heat = average of paper growth and patent growth, {radar.topics[0]?.paper_acceleration?.previous_year} → {radar.topics[0]?.paper_acceleration?.last_full_year}</span>
+                <span>{heatNote(radar.topics)}</span>
               </div>
               <div className="tabs" role="tablist" aria-label="Sector">
                 <button role="tab" aria-selected={sector === null} className={sector === null ? "tab on" : "tab"} onClick={() => setSector(null)}>All sectors</button>
