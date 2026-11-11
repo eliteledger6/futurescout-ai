@@ -365,7 +365,8 @@ function ShadowPortfolio({ t, orders }: { t: Trading; orders: TradeProposal[] })
   const parts = [...pf.positions.map((p, i) => ({ label: p.symbol, topic: p.topic, v: p.cost_usd, c: COLOURS[i % COLOURS.length] })),
     { label: "Cash", topic: "kept by the agent", v: pf.cash_usd, c: "#3a4240" }];
   let acc = 0;
-  const plan = orders.find((o) => o.model_cost_usd > 0 && o.status !== "hold") ?? orders[0];
+  // the reasoning shown under the portfolio belongs to what it actually holds: the newest FILLED order (a refused buy is in the decision log)
+  const plan = orders.find((o) => o.status === "shadow_filled") ?? orders.find((o) => o.model_cost_usd > 0 && o.status !== "hold" && o.status !== "failed") ?? orders[0];
   return (
     <div className="tr-card">
       <div className="tr-head">
