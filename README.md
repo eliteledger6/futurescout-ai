@@ -24,7 +24,7 @@ Technology investing mixes verifiable facts, rumours and hype, and "AI picks" ra
 |---|---|---|
 | **NEAR AI Cloud** | Every agent (chief, science, risk, market, X, patent, timing, scout, investment, trading) calls a model from the NEAR AI Cloud catalogue through its OpenAI-compatible API; the trading agent runs on Claude Opus 5.5 there | `backend/config/model_config.yaml`, `backend/app/models/` |
 | **NEAR Intents (1Click), mainnet** | Real swaps NEAR ⇄ Ondo tokenized stocks. Dry quotes for every candidate; real orders are signed (NEP-413) from the account's **Confidential Intents** balance, the way near.com trades. The order is verified before signing: exactly one transfer, exactly the approved amount, to exactly the quote's deposit address | `backend/app/fund/live.py`, `signed_exec.py`, `intents_signed.py` |
-| **NEAR mainnet (SocialDB `social.near`)** | SHA-256 fingerprints, signed by the report agent `grandbread5023.near` (older seals stay on testnet and still verify) of every report, every paper-fund decision and every trade record; the dashboard re-checks them on each page load ("unchanged since recorded") | `backend/app/chain/near_record.py` |
+| **NEAR mainnet (SocialDB `social.near`)** | SHA-256 fingerprints, signed by the report agent `grandbread5023.near` (older seals stay on testnet and still verify) of every report; the dashboard re-checks them on each page load. Paper-fund decisions and trade records were sealed too until 2026-11-11; since then only reports are sealed by default, to save NEAR (`SEAL_FUND_DECISIONS=true` / `SEAL_TRADES=true` switch them back on), and the earlier seals still verify ("unchanged since recorded") | `backend/app/chain/near_record.py` |
 
 ### What is real and what is simulated
 

@@ -80,7 +80,8 @@ def main() -> int:
     book = PriceBook(prices, max_requests=args.max_price_requests, fallback=intents_price_fallback(cfg))
     intents = OneClickClient(cfg.intents.api)
     from app.chain.near_record import make_recorder
-    recorder = None if args.no_seal else make_recorder(s)
+    # only reports are sealed by default (owner 2026-11-11); SEAL_FUND_DECISIONS=true or --seal-missing seals decisions
+    recorder = make_recorder(s) if (args.seal_missing or (s.seal_fund_decisions and not args.no_seal)) else None
     now = datetime.now(timezone.utc)
 
     if args.seal_missing:

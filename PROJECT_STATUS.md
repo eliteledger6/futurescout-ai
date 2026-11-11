@@ -368,3 +368,12 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   real Science model, $0.001-0.0025 a turn): it rejected 'nitride ferroelectrics' (9 papers in 2024, too few) and
   'uav battery-swap' (no counts), and would have added 'quantum annealing' (525 -> 734 papers, +40%) and
   'assertion generation' (20 -> 33, +65%). Not run inside the report-agent loop by Claude (seals are on mainnet).
+
+## 2026-11-11 (night): only reports are sealed on NEAR (owner: "only seal report")
+- Radar topics were never sealed. What was sealed besides reports: every paper-fund decision (one fund per topic,
+  reviewed daily, about 0.013 NEAR per seal) and every trade record (real and shadow).
+- Now only reports are sealed. `scripts/funds.py` seals a decision and `fund_trade.py` seals a trade record only when
+  `SEAL_FUND_DECISIONS=true` / `SEAL_TRADES=true` is set in `.env` (default off; `funds.py --seal-missing` still seals on
+  request). Decisions and trade records keep their own fingerprint; earlier seals stay and still verify.
+- Site and docs say so (home, about, trading page heading, README, RUNNING.md, .env.example, CLAUDE.md).
+- Mock-tested (346 tests pass). Takes effect on each machine when its agents restart with this code.

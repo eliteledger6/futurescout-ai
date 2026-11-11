@@ -83,7 +83,7 @@ export default function TradingPage() {
               <AgentLog t={t} />
               {eco && <EconomyPanel e={eco} />}
 
-              <h2 className="h2" style={{ margin: "8px 0 0" }}>Real-money trades <span className="muted small">· {live.length} completed, newest first · each record sealed on NEAR</span></h2>
+              <h2 className="h2" style={{ margin: "8px 0 0" }}>Real-money trades <span className="muted small">· {live.length} completed, newest first</span></h2>
               {live.length === 0 && <div className="notice">No real trade completed yet.</div>}
               {(t.owner_sales?.length ?? 0) > 0 && (
                 <p className="small muted" style={{ margin: 0 }}>

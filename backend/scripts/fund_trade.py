@@ -829,6 +829,10 @@ def evidence_context(s, toks) -> dict:  # noqa: ANN001
 
 
 def seal(s, p: Proposal) -> None:  # noqa: ANN001
+    """Seal a trade record's fingerprint on NEAR, only when the owner switched it on (SEAL_TRADES=true). By default
+    only reports are sealed (owner 2026-11-11); the record keeps its own fingerprint either way."""
+    if not getattr(s, "seal_trades", False):
+        return
     from app.chain.near_record import make_recorder
     try:
         recorder = make_recorder(s)
@@ -840,7 +844,7 @@ def seal(s, p: Proposal) -> None:  # noqa: ANN001
     try:
         p.chain = recorder.record_fund_decision(f"trade_{p.id}", {"sha256": p.sha256, "status": p.status, "symbol": p.symbol,
                                                                               "usd": str(p.usd), "mode": p.mode}).as_dict()
-        print("  record fingerprint sealed on NEAR testnet")
+        print(f"  record fingerprint sealed on NEAR {p.chain.get('network', '')}")
     except NearRecordError as exc:
         print(f"  (record not sealed: {str(exc)[:100]})")
 

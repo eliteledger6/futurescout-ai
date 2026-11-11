@@ -57,7 +57,7 @@ put my device to sleep after* to **Never**.
 ## Costs while it runs
 
 - Research: about $0.40-1.00 per new report (NEAR AI models, X reads); at most 5 proposal runs and 3 Agent Market runs a day.
-- Seals: about 0.013 NEAR per report or fund decision, from the report agent's wallet (keep about 1 NEAR there).
+- Seals: about 0.013 NEAR per report, from the report agent's wallet (keep about 1 NEAR there). Only reports are sealed; paper-fund decisions and trade records are not, unless `SEAL_FUND_DECISIONS=true` or `SEAL_TRADES=true` is set in `.env`.
 - Trading agent: model calls only when something triggers it; reports cost $2-3 each, at most 30% of the fund.
 
 ## If something looks wrong

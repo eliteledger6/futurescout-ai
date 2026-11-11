@@ -77,6 +77,10 @@ class Settings(BaseSettings):
     # NEAR Agent Market (market.near.ai): the report agent's API token (aat_...), made by the owner on the listing page
     agent_market_token: Optional[SecretStr] = None
     seal_network: str = "testnet"                  # owner 2026-11-10: "mainnet" = seals signed by the report agent's account on NEAR mainnet
+    # owner 2026-11-11: "only seal report". Every seal costs NEAR (about 0.013 each on mainnet), and paper-fund decisions
+    # are made for every topic every day. Reports are always sealed; these two are off unless set to true in .env.
+    seal_fund_decisions: bool = False              # SEAL_FUND_DECISIONS=true: also seal each paper-fund decision
+    seal_trades: bool = False                      # SEAL_TRADES=true: also seal each trade record (real and shadow)
     proposals_token: Optional[SecretStr] = None    # shared secret between the hosted API and the owner's report-agent loop
     public_api_url: Optional[str] = None           # the hosted API (e.g. https://futurescout-ai.onrender.com) the loop collects proposals from
     public_site_url: Optional[str] = None          # e.g. the hosted website; put in deliverables as "online: <url>/runs/<id>"

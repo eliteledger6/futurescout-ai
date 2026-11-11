@@ -524,8 +524,8 @@ def new_fund(topic: str, sector: Optional[str], cfg: FundConfig, now: datetime) 
     return TopicFund(topic=topic, slug=slug_of(topic), sector=sector, created_at=now, start_cash_usd=cfg.start_cash_usd,
                      cash_usd=cfg.start_cash_usd, benchmark=cfg.benchmark,
                      notes=["Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
-                            "Basket and decisions are computed by code from the latest sealed report; each decision is "
-                            "fingerprinted on NEAR testnet so it cannot be changed afterwards.",
+                            "Basket and decisions are computed by code from the latest sealed report; each decision carries its own "
+                            "fingerprint (the report it is based on is sealed on NEAR).",
                             "NEAR Intents quotes are dry runs: nothing is reserved or sent.",
                             "Not investment advice."])
 

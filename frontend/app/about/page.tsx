@@ -69,7 +69,7 @@ export default function About() {
               Every agent calls a model from the NEAR AI Cloud catalogue (Qwen, DeepSeek, GLM, Claude), each chosen per agent with
               fallbacks and per-run cost tracking. The trading agent trades through NEAR Intents on mainnet, signing orders from its
               near.com balance; it pays the report agent the same way. The report agent is listed on NEAR Agent Market, where anyone can hire it, and stakes with NEAR AI (Staking for Inference) for
-              model credits. Fingerprints of every report, fund decision and trade are stored on NEAR (new seals on mainnet, signed by the report agent; older ones on testnet).
+              model credits. The fingerprint of every report is stored on NEAR (new seals on mainnet, signed by the report agent; older ones on testnet). Earlier fund decisions and trade records were sealed as well; since 11 November 2026 only reports are, to save NEAR.
             </p>
           </div>
           <div className="card">
