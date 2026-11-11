@@ -23,7 +23,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-11T08:17:49.177771Z",
+        "checked_at": "2026-11-11T10:03:48.211900Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -44,7 +44,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-11T08:17:49.177771Z",
+        "checked_at": "2026-11-11T10:03:48.212278Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -65,7 +65,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-11T08:17:49.177771Z",
+        "checked_at": "2026-11-11T10:03:48.212484Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -86,7 +86,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-11T08:17:49.177771Z",
+        "checked_at": "2026-11-11T10:03:48.212676Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -107,7 +107,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-11T08:17:49.177771Z",
+        "checked_at": "2026-11-11T10:03:48.212867Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -469,7 +469,7 @@
   "benchmark": "SPY",
   "benchmark_start_close": 735.29,
   "benchmark_start_date": "2026-11-06",
-  "updated_at": "2026-11-11T08:15:26.190373Z",
+  "updated_at": "2026-11-11T10:02:46.757533Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",
