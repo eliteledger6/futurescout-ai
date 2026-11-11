@@ -405,3 +405,11 @@ topics:
   evidence:
   - https://openalex.org/W7162686268
   added_on: '2026-11-11'
+- name: quantum annealing
+  sector: quantum
+  terms:
+  - quantum annealing
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7165138791
+  added_on: '2026-11-11'
