@@ -294,6 +294,8 @@ export interface Trading {
   live_holdings?: { ticker: string; symbol: string; topic: string; quantity: number; cost_usd: number; first_bought: string; buys: number }[];
   balances: { account: string; near: number | null; usdc: number | null; holdings: { symbol: string; ticker: string; quantity: number; value_usd: number | null }[]; errors: string[] } | null;
   allowlist: { ticker: string; symbol: string; topic: string; band: string | null; score: number | null; price: number | null }[];
+  performance?: { live_pct: number | null; shadow_pct: number | null; live_positions: Record<string, number | null>;
+    shadow_positions: Record<string, number | null>; priced_at: string | null; basis: string };
   proposals: TradeProposal[]; explorer_tx: string; approval: string; disclaimer: string;
   pay_with: string;
   pending_live: string[]; auto_approve: boolean;

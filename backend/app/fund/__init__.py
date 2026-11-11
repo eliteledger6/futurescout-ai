@@ -275,6 +275,17 @@ class Candidate(BaseModel):
     timing_risk: Optional[str] = None
 
 
+
+
+def latest_closes(funds_dir: Path) -> dict[str, tuple[float, str]]:
+    """ticker -> (latest daily close, its date) across all topic funds (the daily fund update refreshes them)."""
+    out: dict[str, tuple[float, str]] = {}
+    for f in list_funds(funds_dir):
+        for h in f.holdings:
+            if h.last_close and h.last_date and (h.ticker not in out or str(h.last_date) > out[h.ticker][1]):
+                out[h.ticker] = (float(h.last_close), str(h.last_date))
+    return out
+
 def build_basket(report: ResearchReport, cfg: FundConfig) -> list[Candidate]:
     tier_of = {sc: key for key, t in cfg.tiers.items() for sc in t.size_classes}
     timing = {m.ticker.upper(): m.timing_risk for m in (report.timing.metrics if report.timing else [])}

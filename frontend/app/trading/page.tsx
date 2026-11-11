@@ -263,6 +263,18 @@ function outcome(c: { action: string; usd: number; ticker: string; proposal_id: 
   return `decided to ${c.action} ${what}; refused by the code's safety checks: ${why}`;
 }
 
+// How the fund is doing since it bought, in percent only (owner 2026-11-11: amounts are small), at the latest daily close.
+function Gain({ pct, perf }: { pct: number | null | undefined; perf?: Trading["performance"] }) {
+  if (pct == null || !perf) return null;
+  const up = pct >= 0;
+  return (
+    <span className="pill" title={`Since bought: ${perf.basis}${perf.priced_at ? ` (close of ${perf.priced_at})` : ""}.`}
+          style={{ color: up ? "var(--accent)" : "var(--l-danger)", borderColor: up ? "var(--accent)" : "var(--l-danger)", fontWeight: 600 }}>
+      {up ? "+" : ""}{pct.toFixed(2)}% since bought
+    </span>
+  );
+}
+
 function AgentLog({ t }: { t: Trading }) {
   const woke = (t.checks ?? []).filter((c) => c.action !== "none" && !c.summary.startsWith("No budget left"));   // the agent was actually called
   const cfg = t.strategy?.config;
@@ -280,8 +292,9 @@ function AgentLog({ t }: { t: Trading }) {
           const rows = woke.filter((c) => c.mode === mode).slice(0, 4);
           return (
             <div key={mode} className="tr-split-col">
-              <div className="small" style={{ fontWeight: 600, marginBottom: 6 }}>
-                {mode === "live" ? "Real money" : "Shadow (pretend money, real quotes)"}
+              <div className="small" style={{ fontWeight: 600, marginBottom: 6, display: "flex", gap: 8, flexWrap: "wrap", alignItems: "baseline" }}>
+                <span>{mode === "live" ? "Real money" : "Shadow (pretend money, real quotes)"}</span>
+                <Gain pct={mode === "live" ? t.performance?.live_pct : t.performance?.shadow_pct} perf={t.performance} />
               </div>
               {rows.length === 0 ? <div className="small muted">No decision yet.</div> : (
                 <ol className="tr-log" style={{ margin: 0 }}>

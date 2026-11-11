@@ -35,9 +35,9 @@ from app.chain.near_record import MAINNET_RPC, SOCIALDB_TESTNET, TESTNET_RPC, ne
 from app.config import ConfigError, Settings, get_settings
 from app.graph.workflow import AGENTS_NOT_BUILT
 from app.models.config import load_model_config
-from app.fund import DISCLAIMER as FUND_DISCLAIMER, fund_payload, list_funds, load_fund, load_fund_config, tradable_tokens
+from app.fund import DISCLAIMER as FUND_DISCLAIMER, fund_payload, latest_closes, list_funds, load_fund, load_fund_config, tradable_tokens
 from app.fund.strategy import RULES as STRATEGY_RULES
-from app.fund.live import DISCLAIMER as LIVE_DISCLAIMER, load_state as load_trading_state, read_balances, shadow_portfolio
+from app.fund.live import DISCLAIMER as LIVE_DISCLAIMER, load_state as load_trading_state, performance, read_balances, shadow_portfolio
 from app.portfolio import load_portfolio, portfolio_payload, save_portfolio, sync_from_store
 from app.radar import load_radar
 from app.watch import load_state as load_watch_state
@@ -502,6 +502,7 @@ def create_app(
                     balances = {"account": account, "near": None, "usdc": None, "holdings": [], "errors": [type(exc).__name__]}
                 trading_cache[account] = (time.time(), balances)
         today = datetime.now(timezone.utc).date().isoformat()
+        closes = latest_closes(service.RUNS_DIR / "funds")
         return {
             "network": "NEAR mainnet (NEAR Intents has no testnet)", "account": account,
             "key_configured": settings.fund_mainnet_credentials() is not None,
@@ -514,7 +515,9 @@ def create_app(
             "selling": {"enabled": lv.sells_enabled, "budget_mode": lv.budget_mode, "max_sells_per_day": lv.max_sells_per_day},
             "live_holdings": state.live_holdings(),
             "balances": balances,
-            "shadow_portfolio": shadow_portfolio(state, {t["symbol"]: t["price"] for t in tokens if t.get("price")}, lv.shadow_budget_usd),
+            "shadow_portfolio": shadow_portfolio(state, {**{f"{t}on": c for t, (c, _d) in closes.items()},
+                                                          **{t["symbol"]: t["price"] for t in tokens if t.get("price")}}, lv.shadow_budget_usd),
+            "performance": performance(state, closes, lv.shadow_budget_usd),
             "pay_with": lv.pay_with,
             "strategy": {"rules": STRATEGY_RULES, "config": lv.strategy.model_dump(), "last_check_at": state.last_check_at.isoformat() if state.last_check_at else None},
             "checks": list(reversed((state.checks or [])[-40:])),

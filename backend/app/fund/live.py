@@ -685,6 +685,33 @@ class Executor:
         raise RuntimeError("the swap did not finish within the polling window; funds are with 1Click or being refunded. Run resume later.")
 
 
+def performance(state: TradingState, closes: dict[str, tuple[float, str]], shadow_budget: float) -> dict:
+    """How the real-money fund and the shadow fund are doing, in PERCENT only (owner 2026-11-11: the amounts are small).
+
+    Holdings are valued at each stock's latest daily close (`closes`: ticker -> (close, date), from the topic funds); a
+    tokenized stock tracks one share. Real money: (value of holdings + money back from sales) vs money put in. Shadow: the
+    same on the money it placed. Report purchases are not counted here (they are the agent economy). None when unpriced."""
+    def pct(value: float, cost: float) -> Optional[float]:
+        return round((value / cost - 1) * 100, 2) if cost > 0 else None
+
+    live_rows = state.live_holdings()
+    priced = [h for h in live_rows if h["ticker"] in closes]
+    put_in = sum(p.usd for p in state.proposals if p.mode == "live" and p.status == "success" and p.side != "sell")
+    live_value = sum(h["quantity"] * closes[h["ticker"]][0] for h in priced) + state.proceeds("live")
+    live_ok = len(priced) == len(live_rows) and put_in > 0
+    pf = shadow_portfolio(state, {f"{t}on": c for t, (c, _d) in closes.items()}, shadow_budget)
+    sh_cost = sum(r["cost_usd"] for r in pf["positions"])
+    sh_ok = pf["positions"] and all(r["value_usd"] is not None for r in pf["positions"])
+    sh_value = sum(r["value_usd"] for r in pf["positions"] if r["value_usd"] is not None) + pf["realized_usd"]
+    dates = sorted({closes[h["ticker"]][1] for h in priced} | {closes[r["ticker"]][1] for r in pf["positions"] if r["ticker"] in closes})
+    return {"live_pct": pct(live_value, put_in) if live_ok else None,
+            "shadow_pct": pct(sh_value, sh_cost) if sh_ok else None,
+            "shadow_positions": {r["symbol"]: r["change_pct"] for r in pf["positions"]},
+            "live_positions": {h["symbol"]: pct(h["quantity"] * closes[h["ticker"]][0], h["cost_usd"]) for h in priced},
+            "priced_at": dates[-1] if dates else None,
+            "basis": "each holding at the stock's latest daily close; report purchases not included"}
+
+
 def shadow_portfolio(state: TradingState, prices: dict[str, float], budget: float) -> dict:
     """Pretend positions built from shadow fills: quantity and cost per token, valued at the given token prices.
     A shadow sale removes tokens at their average cost and adds what the quote paid to the cash."""

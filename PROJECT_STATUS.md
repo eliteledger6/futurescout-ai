@@ -277,3 +277,6 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
 - 2026-11-11: trading page splits decisions into "Real money" and "Shadow" lists. The shadow side's memory of the
   retrieval-augmented generation and chiplet reports (set only by the removed test reviews) was cleared, so the shadow side
   reacts to them at its next hourly check like the real side did.
+- 2026-11-11 (owner: "show how much it earns, by % only"): `/api/trading` returns `performance` (live_pct, shadow_pct,
+  per holding), valued at each stock's latest daily close from the topic funds; report purchases not included. The trading
+  page shows "x% since bought" next to "Real money" and "Shadow". Today: real -1.96%, shadow -1.83% (INTC at the 2026-11-10 close).

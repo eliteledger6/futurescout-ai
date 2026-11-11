@@ -407,3 +407,20 @@ def test_without_a_price_band_the_code_lets_the_agents_price_through_and_the_age
     assert "No price band in code" in price_line(0) and "3%" in price_line(3.0)
     from app.fund import load_fund_config
     assert load_fund_config().live.price_band_pct == 0                                              # owner 2026-11-11
+
+
+def test_performance_is_in_percent_at_the_latest_close():
+    from datetime import timedelta
+    from app.fund.live import Proposal, TradingState, performance
+    st = TradingState()
+    real = Proposal(id="r1", created_at=NOW - timedelta(days=1), mode="live", side="buy", topic="hbm", ticker="INTC", symbol="INTCon",
+                    asset_id="a", usd=43.83, rationale="r", risks=[], confidence="low", model=None)
+    real.status, real.quote = "success", {"amountOutFormatted": "0.73919"}
+    sh = Proposal(id="s1", created_at=NOW - timedelta(days=1), mode="shadow", side="buy", topic="hbm", ticker="INTC", symbol="INTCon",
+                  asset_id="a", usd=1200.0, rationale="r", risks=[], confidence="low", model=None)
+    sh.status, sh.quote = "shadow_filled", {"amountOutFormatted": "20.266"}
+    st.proposals = [real, sh]
+    perf = performance(st, {"INTC": (58.13, "2026-11-10")}, 10_000)
+    assert perf["live_pct"] == -1.97 or perf["live_pct"] == -1.96                       # 0.73919 x 58.13 vs 43.83
+    assert perf["shadow_pct"] == round((20.266 * 58.13 / 1200 - 1) * 100, 2) and perf["priced_at"] == "2026-11-10"
+    assert "amount" not in str(perf).lower() and performance(TradingState(), {}, 10_000)["live_pct"] is None   # nothing held: no number
