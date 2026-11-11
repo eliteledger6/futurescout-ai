@@ -94,3 +94,43 @@ def test_new_reports_are_unlocked_for_the_demo_and_marked_so():
     assert is_locked(NOW - timedelta(days=2), cfg, NOW, "old") and not demo_free(NOW - timedelta(days=2), cfg, "old")   # older: still paid
     assert demo_free(NOW - timedelta(days=2), cfg, "demo1")                                         # listed: open, marked
     assert not demo_free(NOW, EconomyConfig(seller_account="r.near", demo_free_from=NOW), "x")      # market closed: nothing to mark
+
+
+def test_api_sells_a_report_for_a_payment_checked_on_chain(tmp_path, monkeypatch):
+    """The whole purchase route (it answered 500 for every request from 2026-11-10 to 2026-11-11: an argument had
+    slipped into a comment, and only the function underneath was tested)."""
+    from fastapi.testclient import TestClient
+    import app.api.main as api_main
+    import app.fund.economy as economy
+    from app.api.store import FileStore
+    from app.config import Settings
+    from app.fund.live import OneClickLive
+    from tests.test_portfolio_treasury import report
+    fc = api_main.load_fund_config()
+    fc.economy = CFG
+    monkeypatch.setattr(api_main, "load_fund_config", lambda: fc)
+    monkeypatch.setattr(OneClickLive, "price_usd", lambda self, asset: 2.5)
+    runs = tmp_path / "runs"
+    runs.mkdir()
+    (runs / "report_fresh1.json").write_text(report(day=datetime.now(timezone.utc)).model_dump_json(), encoding="utf-8")
+    client = TestClient(api_main.create_app(Settings(_env_file=None, near_ai_api_key="k"), store=FileStore(runs),
+                                            trading_dir=tmp_path / "trading"))
+    price = client.get("/api/runs").json()[0]["price_near"]
+    assert price and price > 0
+
+    def chain(amount_near, signer="bot.near", to="report-agent.near"):
+        return lambda http, rpc, h, who: {"result": {"status": {"SuccessValue": ""}, "transaction": {
+            "hash": h, "signer_id": signer, "receiver_id": to, "actions": [{"Transfer": {"deposit": str(int(amount_near * 1e24))}}]}}}
+
+    body = {"run_id": "report_fresh1", "tx_hash": "TXPAID", "buyer": "bot.near"}
+    monkeypatch.setattr(economy, "read_tx", chain(price / 2))
+    assert client.post("/api/market/buy", json=body).status_code == 402                      # paid too little
+    monkeypatch.setattr(economy, "read_tx", chain(price, to="someone-else.near"))
+    assert client.post("/api/market/buy", json=body).status_code == 402                      # paid somebody else
+    monkeypatch.setattr(economy, "read_tx", chain(price))
+    r = client.post("/api/market/buy", json=body)
+    assert r.status_code == 200 and r.json()["report"]["topic"] and r.json()["access_token"]
+    token = r.json()["access_token"]
+    assert client.get(f"/api/runs/report_fresh1?access={token}").status_code == 200          # the token opens the report
+    assert client.get("/api/runs/report_fresh1").status_code == 402                          # still locked for everyone else
+    assert client.post("/api/market/buy", json={**body, "buyer": "other.near"}).status_code == 402   # the payment cannot be used twice

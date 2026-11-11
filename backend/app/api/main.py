@@ -370,7 +370,8 @@ def create_app(
         try:
             with httpx.Client(timeout=60.0) as http:
                 sale = market_buy(state=load_market(sales_path), path=sales_path, run_id=req.run_id, buyer=req.buyer, tx_hash=req.tx_hash,
-                                  price_near=info["price_near"] * 0.97, cfg=ec,   # 3% leeway: the NEAR price moves between quote and payment read=lambda h, who: read_tx(http, ec.rpc, h, who),
+                                  price_near=info["price_near"] * 0.97, cfg=ec,   # 3% leeway: the NEAR price moves between quote and payment
+                                  read=lambda h, who: read_tx(http, ec.rpc, h, who),
                                   now=datetime.now(timezone.utc))
         except ValueError as exc:
             raise HTTPException(402, {"message": str(exc), **info}) from None
