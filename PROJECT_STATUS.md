@@ -249,3 +249,6 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   right after each research run in the report agent (proposals, Agent Market) and in `scripts/run_research.py` (`--no-fund`
   to skip); 6 fresh price lookups per fund; a fund problem never breaks the report. That fund is what makes a topic tradable,
   so the trading agent then sees a "new report" trigger. Mock-tested (323 tests); not yet run live.
+- 2026-11-11 (owner: "I hope I can run everything easily"): one-click files in the main folder: `start_everything.bat`
+  (report agent + trading agent, each in a self-restarting window), `start_trading_agent.bat`, `status.bat` (read-only;
+  run and checked), `pause_trading.bat` / `resume_trading.bat` (kill switch), `update_website.bat`. Guide: RUNNING.md.

@@ -76,6 +76,12 @@ Run live on 2026-11-10: a test hire was picked up, a change request was read fro
 - Selling, re-investing sale money and automatic approval are separate owner-only switches in `backend/config/funds.yaml`.
 - Every decision (including "hold") is stored with its reasons and fingerprinted.
 
+### Running it day to day (the owner)
+
+The website runs in the cloud by itself. The two agents (report agent, trading agent) run on the owner's computer:
+`start_everything.bat` starts both, `status.bat` shows what they did, `pause_trading.bat` is the kill switch. Who triggers
+what, costs and what stays manual: [RUNNING.md](RUNNING.md). Running them on a cloud server instead: [deploy/VPS.md](deploy/VPS.md).
+
 ### Try it in 10 minutes (no keys needed)
 
 The fastest way is the hosted copy: https://futurescout-ai.vercel.app (the first load can take up to a minute while the free API host wakes up). To run it yourself: the repository ships a snapshot of the real data (`backend/site_data`: the reports, the radar, the paper funds, the trading and agent-economy records), and the API serves it by itself when there is no database and no `backend/runs` folder. Windows PowerShell shown; Python 3.10+ and Node.js LTS. On macOS/Linux use `source .venv/bin/activate` and forward slashes.

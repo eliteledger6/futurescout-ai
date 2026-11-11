@@ -76,3 +76,7 @@ collection are lost when it redeploys or restarts, so keep the report agent runn
   put my device to sleep after": Never). A sleeping laptop answers nothing.
 - While the agent runs it contacts the hosted API every minute, which also keeps the free Render service awake.
 - The trading loop (`scriptsund_trade.py watch`) is separate and started by hand, only when NEAR Intents works.
+
+## Everyday running (2026-11-11)
+`start_everything.bat` starts the report agent and the trading agent in two windows (each restarts itself). Put a shortcut to
+it in the Startup folder instead of `start_report_agent.bat`. Day-to-day guide: RUNNING.md.
