@@ -288,3 +288,9 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   every app module imports; 332 tests; hosted endpoints answer and both checked seals match on mainnet. Fixed: the site
   export no longer copies `economy/sales.json` (buyers' access tokens). Known leftovers, harmless: one `if True:` block in
   `fund_trade.run_check`; ESLint is not configured for the frontend (TypeScript check and build pass).
+- 2026-11-11 consistency pass (owner): site text and docs brought in line with the current rules (no price band, no
+  confidence minimum, agent decides; `start_everything.bat`; 16 topics; research page says new reports are free for the demo;
+  HANDOFF.md marked historical; home page uses the radar's sector names). Every page clicked through on the local build:
+  home (16 cards, sector filter), radar (54 rows, tabs, detail), free and paid report, 16 fund pages, trading, how it works
+  (18 agents), request a report (form, injection refused). Cloud kit: `scripts/preflight.py` + `check_setup.bat`
+  (read-only readiness check, run on the laptop: READY) and the VPS guide step 4b.

@@ -16,6 +16,7 @@ Everything is double-click. The files are in the main folder `D:\FUTURESCOUT AI`
 |---|---|
 | Start everything | `start_everything.bat` (two windows open: report agent, trading agent; leave them open) |
 | See what happened | `status.bat` (read-only) |
+| Check that everything is set up | `check_setup.bat` (read-only: keys present, data, connections; never shows a key) |
 | Pause real trading at once | `pause_trading.bat` (the kill switch; the loops keep running) |
 | Resume real trading | `resume_trading.bat` |
 | Put the newest data on the website now | `update_website.bat` (the agents do this by themselves after a new report or trade) |

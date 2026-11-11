@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Project: FUTURESCOUT AI (semiconductor research platform). **Read `HANDOFF.md` first**, then `PROJECT_STATUS.md`.
+Project: FUTURESCOUT AI (emerging-technology research agents, a report agent and a trading agent on NEAR). Read `README.md` and `RUNNING.md` for the current state, the end of `PROJECT_STATUS.md` for the latest changes; `HANDOFF.md` is the early history.
 
 Commands (run from `backend/`, Windows PowerShell, venv at `..\.venv`):
 - Install: `python -m pip install -e ".[dev]"`

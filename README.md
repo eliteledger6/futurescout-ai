@@ -30,7 +30,7 @@ Technology investing mixes verifiable facts, rumours and hype, and "AI picks" ra
 
 | Real (run live) | Simulated or limited |
 |---|---|
-| Multi-agent research on real papers (OpenAlex, arXiv), patents, SEC filings and X posts; 15 topics with full reports | Paper funds (one per topic, fully invested) use pretend money at real closing prices |
+| Multi-agent research on real papers (OpenAlex, arXiv), patents, SEC filings and X posts; 16 topics with full reports | Paper funds (one per topic, fully invested) use pretend money at real closing prices |
 | Report, fund and trade fingerprints on NEAR mainnet (older ones on testnet) | Shadow trading: pretend money, real NEAR Intents quotes |
 | Real-money trades on NEAR mainnet through NEAR Intents. Current record: one buy of INTCon ($43.83, approved by the agent after every code check). Earlier rounds (three buys, and on 2026-11-10 an automatic sale of GOOGLon followed by a buy) were archived (kept on the owner's machine, not in the repository) when the owner restarted the fund | Real-money budget is capped at $60 in total by the owner; NEAR Intents refused trades on 2026-11-10/11, so the trading loop is paused |
 | Agent economy with real NEAR (2026-11-10): the trading agent bought 3 reports (1.865 NEAR) from the report agent, which staked 1.3055 NEAR with NEAR AI (Staking for Inference) and kept 0.56 NEAR | At these amounts the staking rewards cover only a small part of the AI bill; the second trading agent (funded when the kept pot passes $200) is planned, not built |
@@ -71,7 +71,7 @@ Run live on 2026-11-10: a test hire was picked up, a change request was read fro
 
 - Master switch, kill switch file (`fund_trade.py stop`), a total budget cap, and near.com's $20 minimum per trade.
 - Buys only from an allowlist built from the paper funds and price-checked tokenized stocks; sells only of what the fund holds, at most 2 a day.
-- The quoted price must sit within a band of the stock's last close; quotes that cost more than 2% are refused.
+- Only stocks from reports rated strong or building can be bought; quotes that cost more than 2% are refused. Since 2026-11-11 (owner's decision) there is no fixed confidence minimum and no fixed price band: the agent is shown each report's confidence, the quoted price, the stock's last close and the gap between them, and writes its judgement into the decision record.
 - The signed order is checked field by field before signing; a proposal is sent at most once; an unclear result is never retried.
 - Selling, re-investing sale money and automatic approval are separate owner-only switches in `backend/config/funds.yaml`.
 - Every decision (including "hold") is stored with its reasons and fingerprinted.
@@ -105,7 +105,7 @@ Then, in the dashboard:
 
 1. Open **Radar**: see 54 topics in 9 sectors ranked by paper and patent growth.
 2. Open **Reports** and pick *high bandwidth memory*: see the verdict (score 80, confidence 50%), the companies behind the evidence, and "Unchanged since recorded on NEAR mainnet". Switch to **Full report**: every finding with its label, quote and source; the agent trace with model and cost per agent; the company scout table.
-3. Open **Funds & trading** → **Paper funds**: 15 fully invested pretend-money funds with their reasons, compared with the S&P 500.
+3. Open **Funds & trading** → **Paper funds**: one fully invested pretend-money fund per topic with their reasons, compared with the S&P 500.
 4. Open **Trading agent**: the pipeline, the agent's latest decisions, the completed real trade with the agent's own reasoning ("Approved by the agent (all checks passed)"), and the **Agent economy** panel: 3 reports bought in NEAR, 1.31 NEAR staked with NEAR AI, the kept pot.
 5. Open **How it works**: the agent network, from the topic reviewer to the trading agent, NEAR AI staking and NEAR Agent Market. Tap an agent to see what it does.
 6. Open **Reports → Request a report**: the link to hire the report agent on NEAR Agent Market, and the free topic proposal form (5 a day, screened by an AI reviewer; the list below it shows what happened to earlier proposals). The form is live on the hosted site; in a local copy it says proposals are closed, because nobody collects them there. Text that looks like an instruction is refused at once and uses no slot.
@@ -223,7 +223,7 @@ PROJECT_STATUS.md                  detailed phase status
 
 ## What is unfinished (honest list, 2026-11-11)
 
-- **The agents run only while the owner's laptop is on.** The hosted website is a read-only snapshot: it shows the data, takes topic proposals and has no key. Research, Agent Market jobs, sealing and publishing run in the owner's report-agent loop (`start_report_agent.bat`); trading runs in a separate loop. Proposals stored on the hosted API are lost if it restarts before the loop collects them.
+- **The agents run only while the owner's laptop is on.** The hosted website is a read-only snapshot: it shows the data, takes topic proposals and has no key. Research, Agent Market jobs, sealing, paper funds and publishing run in the report agent; trading, report purchases and staking run in the trading agent (`start_everything.bat` starts both; `deploy/VPS.md` moves them to a cloud server). Proposals stored on the hosted API are lost if it restarts before the loop collects them.
 - **Trading is paused**: NEAR Intents refused the fund's orders on 2026-11-10/11, so the trading loop is off and the INTCon holding is valued at its last known value (labelled).
 - **NEAR Agent Market**: listed and tested with one free test hire; no paid job yet.
 - **The second trading agent** (funded when the report agent's kept 30% passes $200) is planned, not built. Staking rewards at today's amounts cover only a small part of the AI bill.

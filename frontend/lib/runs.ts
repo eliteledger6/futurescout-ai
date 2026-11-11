@@ -19,4 +19,7 @@ export function latestPerTopic<T extends { topic: string; generated_at: string; 
     .sort((a, b) => b.latest.generated_at.localeCompare(a.latest.generated_at));
 }
 
-export const sectorLabel = (key?: string | null) => (key ? key.replace(/_/g, " ") : "technology");
+// Sector names as the radar shows them ("AI models & software"), filled from /api/sectors by useSectorNames();
+// until then (or for an unknown key) the key itself with spaces.
+export const SECTOR_NAMES: Record<string, string> = {};
+export const sectorLabel = (key?: string | null) => (key ? SECTOR_NAMES[key] ?? key.replace(/_/g, " ") : "technology");

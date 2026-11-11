@@ -69,7 +69,7 @@ export const AGENTS: Record<AgentKey, AgentInfo> = {
     detail: "The next step, not built yet. The report agent keeps 30% of every payment in a pot; once that pot passes $200 it funds a second trading agent with its own account and budget, run like the first one. The first trading agent already shows the whole loop working with real money.",
     sources: "The report agent's kept 30%" },
   trader: { key: "trader", name: "Trading agent", role: "Buys reports, trades", icon: "pulse", modelKey: "trader",
-    detail: "Wakes on a new report, a sharp price move or a daily review. It may only use reports it has bought from the report agent, then buys, sells or holds a tokenized stock and explains why. Code checks the budget, the allowed stocks, the price and the cost; then the agent approves its own order, which goes through NEAR Intents from its near.com balance. In shadow mode it places pretend orders at real quotes.",
+    detail: "Wakes on a new report, a sharp price move or a daily review. It may only use reports it has bought from the report agent (it buys one only when it could trade on it now), then buys, sells or holds a tokenized stock and explains why. It weighs each report's confidence and the quoted price against the stock's last close itself, and writes that judgement into the decision. Code checks the budget, the allowed stocks (reports rated strong or building) and the cost; then the agent approves its own order, which goes through NEAR Intents from its near.com balance. In shadow mode it places pretend orders at real quotes.",
     sources: "Bought reports · topic funds · NEAR Intents quotes" },
 };
 

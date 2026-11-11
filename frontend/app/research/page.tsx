@@ -116,7 +116,7 @@ export default function Research() {
               <h3 className="h3" style={{ margin: 0 }}>Propose a topic</h3>
               <p className="small" style={{ color: "var(--text-2)", margin: 0 }}>
                 An AI reviewer checks that the topic is a real technology worth a research run. If it is, the team researches it and the
-                report appears on this site (reports cost $2–3 in NEAR to open). At most {list.per_day} proposals are accepted a day.
+                report appears on this site. During the demo new reports are free to read here; normally a report costs $2–3 in NEAR. At most {list.per_day} proposals are accepted a day.
               </p>
               <form onSubmit={propose} className="stack" style={{ gap: 10 }}>
                 <input className="input" value={topic} onChange={(e) => setTopic(e.target.value)} placeholder="solid-state batteries"

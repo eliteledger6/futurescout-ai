@@ -39,8 +39,8 @@ from pydantic import BaseModel, Field
 
 from app.fund.strategy import StrategyConfig
 
-DISCLAIMER = ("Real money with a small budget capped by the owner; orders run after the code checks, either on the agent's own "
-              "approval (owner's setting live.auto_approve) or the owner's typed approval. Tokenized stocks are issued by Ondo and are "
+DISCLAIMER = ("Real money with a small budget capped by the owner; orders run after the code checks on the agent's own approval "
+              "(the owner's setting live.auto_approve; without it each order waits for the owner). Tokenized stocks are issued by Ondo and are "
               "not the shares themselves. Not investment advice.")
 FINAL = {"success", "refunded", "failed", "rejected", "shadow_filled", "hold"}
 SPENT = {"executing", "deposited", "success"}          # statuses that count against the caps

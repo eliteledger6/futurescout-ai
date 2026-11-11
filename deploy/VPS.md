@@ -7,8 +7,8 @@ and publishes them to the website. After this the laptop can be off.
 The **trading agent** can run there too (owner's decision, 2026-11-11). It is installed switched off, because its key
 controls real money: read "Trading agent" below before you turn it on.
 
-Built 2026-11-11. The setup script was syntax-checked and the publishing step was tested on the owner's laptop; the
-script itself has **not been run on a real server yet**: the first run is the test.
+Built 2026-11-11. Checked on the owner's laptop: the script's syntax, the file-based data path on a clean copy of the repository, publishing,
+and the pre-flight check. The setup script itself has **not been run on a real server yet**: the first run is the test.
 
 ## What you need
 - A small Linux server ("VPS") with **Ubuntu 24.04**, 1 CPU and 2 GB memory is enough (about $5-6 a month at Hetzner,
@@ -72,8 +72,16 @@ file, never into a chat:
 Leave `DATABASE_URL` **empty** (the server keeps reports as files). Leave `FUND_MAINNET_ACCOUNT_ID`,
 `FUND_MAINNET_PRIVATE_KEY` and `ONECLICK_API_KEY` empty unless you turn the trading agent on (see below). Save with Ctrl+O, Enter, then Ctrl+X.
 
-**4. Stop the report agent on your laptop** (close the `start_report_agent.bat` window, and remove its shortcut from the
+**4. Stop the agents on your laptop** (close the report agent and trading agent windows, and remove the `start_everything.bat` shortcut from the
 Startup folder). Two agents would both take the same jobs.
+
+**4b. Check that everything is in place** (read-only; it prints `ok` or `MISSING` for each item, never a key):
+
+```
+sudo -u futurescout bash -c "cd ~/futurescout/backend && ../.venv/bin/python scripts/preflight.py --no-trading"
+```
+
+Go on when it says `READY`. (Drop `--no-trading` once you have added the trading key.)
 
 **5. Start the agent on the server and watch it:**
 
@@ -141,4 +149,4 @@ not after every hourly check).
 - **Before you push code from the laptop, run `git pull --rebase`**: the server pushes site data by itself.
 - **Costs keep running while you are away**: at most 5 proposal runs and 3 Agent Market runs a day (about $0.60-1.00 each).
 - To move back to the laptop: `systemctl disable --now futurescout-agent` on the server, `git pull` on the laptop, and
-  start `start_report_agent.bat` again.
+  start `start_everything.bat` again.

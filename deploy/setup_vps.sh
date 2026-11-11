@@ -109,7 +109,8 @@ systemctl enable -q futurescout-agent
 echo
 echo "Installed. The agent is NOT started yet: it needs your keys."
 echo "  1. Fill in the keys:   sudo -u ${APP_USER} nano ${APP_DIR}/.env      (see deploy/VPS.md for the list)"
-echo "  2. Start it:           systemctl start futurescout-agent"
-echo "  3. Watch it:           journalctl -u futurescout-agent -f"
+echo "  2. Check it:           sudo -u ${APP_USER} bash -c 'cd ${APP_DIR}/backend && ../.venv/bin/python scripts/preflight.py --no-trading'"
+echo "  3. Start it:           systemctl start futurescout-agent"
+echo "  4. Watch it:           journalctl -u futurescout-agent -f"
 echo "Stop the report agent on your laptop first: two agents would both take the same jobs."
 echo "The trading agent is installed but off. To use it, read 'Trading agent' in deploy/VPS.md first."

@@ -7,16 +7,18 @@ import { RadarStrip } from "@/components/RadarStrip";
 import { Reveal } from "@/components/motion";
 import { ErrorNotice, Loading } from "@/components/ui";
 import { api, fmtDate } from "@/lib/api";
-import { latestPerTopic, sectorLabel, type TopicGroup } from "@/lib/runs";
+import { latestPerTopic, SECTOR_NAMES, sectorLabel, type TopicGroup } from "@/lib/runs";
 import type { RunSummary } from "@/lib/types";
 
 export default function Home() {
   const [runs, setRuns] = useState<RunSummary[] | null>(null);
+  const [, setNamesReady] = useState(0);            // re-render once the sector names have loaded
   const [error, setError] = useState<string | null>(null);
   const [sector, setSector] = useState<string | null>(null);
 
   useEffect(() => {
     api.runs().then(setRuns).catch((e: Error) => setError(e.message));
+    api.sectors().then((list) => { for (const x of list) SECTOR_NAMES[x.key] = x.name; setNamesReady((n) => n + 1); }).catch(() => undefined);
   }, []);
 
   const groups = useMemo(() => latestPerTopic(runs ?? []), [runs]);

@@ -88,8 +88,8 @@ RULES = [
     "On a sharp rise: never chase; hold and note it.",
     "Size follows confidence: less confident reports get smaller orders; in live mode the size is fixed by the caps.",
     "Diversify: in shadow mode one company stays under the share cap; keeping cash is allowed and must be explained.",
-    "Sell only a holding kept at least the minimum time, and only when its report weakened (verdict below 'building' or confidence "
-    "under the minimum), when the evidence explains a fall as a real problem, or to rotate into a clearly better-evidenced candidate "
+    "Sell only a holding kept at least the minimum time, and only when its report weakened (verdict below 'building', or below the "
+    "confidence minimum when the owner sets one), when the evidence explains a fall as a real problem, or to rotate into a clearly better-evidenced candidate "
     "when there is no cash; never sell in panic on a fall the evidence does not explain. Selling is the owner's switch (live.sells_enabled).",
     "After a sale the agent is woken once more at once and may buy with the money (live: only if the owner counts the budget net of sales).",
     "Every wake-up is recorded with its triggers and reasoning, and the record is fingerprinted.",

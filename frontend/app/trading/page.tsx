@@ -99,8 +99,13 @@ export default function TradingPage() {
                 <div className="grid grid-2" style={{ background: "transparent", border: 0, gap: 24, marginTop: 12 }}>
                   <ul className="small" style={{ color: "var(--text-2)", lineHeight: 1.7, background: "transparent", margin: 0 }}>
                     <li>At most {usd(t.limits.max_trade_usd)} per trade, {usd(t.limits.max_day_usd)} per day, {usd(t.limits.max_total_usd)} in total.</li>
-                    <li>{t.selling?.enabled ? `Buys of the tokens listed here; sales only of what the fund holds (at most ${t.selling.max_sells_per_day} a day, never far below the last close).` : "Buys only, and only the tokens listed here."}</li>
-                    <li>The quoted price must be within {t.limits.price_band_pct}% of the stock&apos;s last close (a little wider when that close is days old).</li>
+                    <li>{t.selling?.enabled ? `Buys of the tokens listed here; sales only of what the fund holds (at most ${t.selling.max_sells_per_day} a day).` : "Buys only, and only the tokens listed here."}</li>
+                    <li>{t.limits.price_band_pct > 0
+                      ? <>The quoted price must be within {t.limits.price_band_pct}% of the stock&apos;s last close (a little wider when that close is days old).</>
+                      : <>No fixed price limit: for every candidate the agent sees the quoted price next to the stock&apos;s last close and the gap between them, and decides itself whether to pay it.</>}</li>
+                    <li>{(t.strategy?.config?.min_confidence_pct ?? 0) > 0
+                      ? <>No new buy from a report below {t.strategy?.config?.min_confidence_pct}% confidence.</>
+                      : <>No fixed confidence minimum: the agent weighs each report&apos;s confidence itself and buys smaller on thinner evidence. Only stocks from reports rated strong or building can be bought.</>}</li>
                     <li>Real quotes costing more than {t.limits.max_cost_pct}% are refused.</li>
                     <li>Each proposal can be sent once. A kill switch stops everything.</li>
                     <li>No control on this site can approve or send a trade.</li>

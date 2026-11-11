@@ -1,5 +1,10 @@
 # HANDOFF: FUTURESCOUT AI (for continuing in Claude Code)
 
+> **Historical document (2026-11-08 to 2026-11-10).** It records how the project was built, step by step, and parts of it
+> are superseded: the project now includes a trading agent with real money inside owner-set limits, an agent economy
+> (reports bought in NEAR, earnings staked with NEAR AI), seals on NEAR mainnet, a NEAR Agent Market listing and hosting.
+> For the current state read `README.md`, `RUNNING.md` and the dated entries at the end of `PROJECT_STATUS.md`.
+
 Written 2026-11-08 17:59 (Malaysia time). Read this first, then `CLAUDE.md`, `PROJECT_STATUS.md` and `README.md`.
 
 ## 1. What this project is
