@@ -102,6 +102,13 @@ economy:
 
 # NEAR Agent Market (owner 2026-11-10): the report agent takes paid research jobs at market.near.ai (scripts\market_agent.py).
 # The price per job and the delivery window are set by the owner on the listing page, not here.
+# Topic proposals from website visitors (owner 2026-11-11): free, limited, screened by an AI reviewer before any research run.
+proposals:
+  enabled: true
+  per_day: 5                      # proposals accepted a day, and research runs started from them a day
+  reuse_hours: 168                # a report this recent on the topic is linked instead of a new run
+  agent_market_url: https://market.near.ai/a/futurescout
+
 agent_market:
   new_runs_per_day: 3             # new research runs a day (each costs about $0.30-0.50 of NEAR AI credit); others are declined and refunded
   reuse_hours: 168                # a sealed report this recent on the same topic is delivered instead of a new run

@@ -52,7 +52,7 @@ export default function Home() {
               <h2 className="h2">Reports</h2>
               <p className="sub">The newest report for each technology. {runs && runs.length > groups.length ? `${runs.length - groups.length} earlier runs are kept and linked from each report.` : ""}</p>
             </div>
-            <Link className="btn btn-ghost" href="/research">New research</Link>
+            <Link className="btn btn-ghost" href="/research">Request a report</Link>
           </div>
           {sectors.length > 1 && (
             <div className="chips" role="tablist" aria-label="Sector">

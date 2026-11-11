@@ -18,5 +18,7 @@ services:
         value: site_data
       - key: ENABLE_RUN_API
         value: "false"
+      - key: PROPOSALS_TOKEN            # shared secret with the owner's report-agent loop (topic proposals); set it in the dashboard
+        sync: false
       - key: FUND_MAINNET_ACCOUNT_ID   # public account name only (shows balances); never add the private key here
         sync: false

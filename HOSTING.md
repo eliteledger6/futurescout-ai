@@ -55,3 +55,15 @@ Render and Vercel redeploy by themselves within a few minutes.
 - Render builds the Docker image, so anything the hosted API needs must be copied in `backend/Dockerfile` (it ships `site_data`).
 - `/api/health` shows which data folder is served and how many reports it holds (`"data":"site_data","reports":59`).
 - A manually created Render service may not redeploy on push: use **Manual Deploy -> Deploy latest commit**, or turn Auto-Deploy on.
+
+## Topic proposals on the hosted site (2026-11-11)
+Visitors can propose a topic on `/research`. The hosted API only stores proposals; the report agent on the owner's laptop
+collects them, lets the AI reviewer screen them, researches the approved ones and (with `--publish`) puts the reports online.
+
+1. Make a secret (any long random text). From the `backend` folder: `..\.venv\Scripts\python.exe -c "import secrets; print(secrets.token_urlsafe(32))"`
+2. Render -> the API service -> **Environment** -> add `PROPOSALS_TOKEN` = that secret -> save (it redeploys).
+3. In the laptop's `.env` add the same `PROPOSALS_TOKEN=...` and `PUBLIC_API_URL=https://futurescout-ai.onrender.com`.
+4. Run the report agent: `..\.venv\Scripts\python.exe scripts\market_agent.py --publish`
+
+Without `PROPOSALS_TOKEN` on Render the hosted page says proposals are closed. Proposals stored on Render since the last
+collection are lost when it redeploys or restarts, so keep the report agent running when you expect visitors.

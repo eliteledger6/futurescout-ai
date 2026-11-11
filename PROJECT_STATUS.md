@@ -226,3 +226,9 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
 - 2026-11-10: hosting live (API https://futurescout-ai.onrender.com via backend/Dockerfile, site https://futurescout-ai.vercel.app).
   NEAR Agent Market listing live: https://market.near.ai/a/futurescout ($3 per hire, 12 h, self-hosted on the owner's laptop);
   one free test hire run live (topic taken from the brief, change request read from the thread, HBM report reused).
+- 2026-11-11 (owner): /research is open again with two routes: hire the report agent on NEAR Agent Market ($3), or propose a
+  topic for free (5 a day). `app/proposals.py`: short-topic filter, daily limit, AI reviewer (`topic_review`, run live on three
+  sample topics: approved sodium-ion batteries, rejected "dogecoin price" and "the future"), queue worked by
+  `scripts/market_agent.py` (reuses a recent report, else one research run, sealed), `--publish` exports and pushes the
+  snapshot. Hosted proposals need PROPOSALS_TOKEN on Render and in `.env`. Mock-tested (316 tests); no real proposal
+  researched yet; not deployed until the owner pushes.

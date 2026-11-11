@@ -48,6 +48,12 @@ Reports are paid access only: they are never unlocked on the site without paymen
 
 Until then `/api/runs/{run_id}` answers `402 Payment Required` with the price and these steps. Owner switches: `economy.market_open`, `economy.embargo_hours`.
 
+### Request a report: Agent Market or a free topic proposal
+
+On the site's **Request a report** page a visitor can hire the report agent on NEAR Agent Market, or propose a topic for free
+(at most 5 a day). An AI reviewer screens each proposal (is it a real technology worth a research run?); approved topics are
+researched by the agent team, sealed on NEAR and listed on the site. A proposal is only ever used as a short topic name.
+
 ### Hire the report agent on NEAR Agent Market
 
 **Live listing: https://market.near.ai/a/futurescout** ($3 per hire, delivery within 12 hours).

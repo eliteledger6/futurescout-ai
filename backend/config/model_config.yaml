@@ -149,6 +149,13 @@ agents:
     max_tokens: 6000
     reasoning_effort: low
     timeout_s: 90
+  topic_review:              # screens visitors' topic proposals before a research run is spent on them (owner 2026-11-11)
+    primary: glm_5_3_flash
+    fallbacks: [qwen3_8_27b]
+    temperature: 0.0
+    max_tokens: 2000
+    reasoning_effort: low
+    timeout_s: 60
   trader:                    # stage 3: proposes ONE small buy or hold from an allowlist; code enforces every limit
     primary: claude_opus_5_5   # owner 2026-11-09: "the agent must be a good model"
     fallbacks: [claude_sonnet_5_5]

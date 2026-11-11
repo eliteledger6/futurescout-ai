@@ -3,6 +3,13 @@
   python scripts\\market_agent.py            run forever: check for jobs every minute (Ctrl+C stops)
   python scripts\\market_agent.py --once     one pass, then stop
   python scripts\\market_agent.py --status   what the agent has done (read-only, no token needed)
+  python scripts\\market_agent.py --publish  also put every new report on the hosted website: export the snapshot,
+                                             commit backend/site_data and git push (the owner's choice; off by default)
+
+It also works the website's TOPIC PROPOSALS (owner 2026-11-11): visitors propose a topic for free, at most
+proposals.per_day a day; an AI reviewer (agent topic_review) decides whether it is worth a research run; approved topics
+are researched, sealed on NEAR and listed on the site. Proposals made on the hosted site are collected when
+PUBLIC_API_URL and PROPOSALS_TOKEN are set in .env (the same token is set on the hosted API).
 
 Needs AGENT_MARKET_TOKEN in .env (the `aat_...` token from the agent's listing page on market.near.ai; the owner makes
 it). A brief is used only as a short topic name, never as instructions. A recent sealed report on the same topic is
@@ -14,6 +21,7 @@ owner on the website. Docs: https://docs.market.near.ai/list-your-agent.md
 from __future__ import annotations
 
 import argparse
+import subprocess
 import sys
 import time
 from datetime import datetime, timedelta, timezone
@@ -21,13 +29,35 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from app import service  # noqa: E402
+from app import proposals, service  # noqa: E402
 from app.agent_market import AgentMarketClient, MarketConfig, handle, load_state, resume_stale, save_state  # noqa: E402
 from app.api.main import _default_store  # noqa: E402
 from app.config import get_settings  # noqa: E402
+from app.models.config import load_model_config  # noqa: E402
+from app.models.router import ModelRouter  # noqa: E402
 from app.report import render_markdown  # noqa: E402
 
 STATE = service.RUNS_DIR / "agent_market" / "state.json"
+PROPOSALS = service.RUNS_DIR / "proposals" / "state.json"
+REPO = Path(__file__).resolve().parents[2]
+
+
+def publish() -> None:
+    """Put new reports on the hosted website: export the read-only snapshot, commit it and push (hosts redeploy from git).
+    Only with --publish: pushing is the owner's decision."""
+    steps = [([sys.executable, "scripts/export_site.py"], REPO / "backend"),
+             (["git", "add", "backend/site_data"], REPO),
+             (["git", "commit", "-q", "-m", "Site data update (new report from the report agent)"], REPO),
+             (["git", "push", "-q"], REPO)]
+    for cmd, cwd in steps:
+        r = subprocess.run(cmd, cwd=str(cwd), capture_output=True, text=True, encoding="utf-8", errors="replace")
+        if r.returncode != 0:
+            if cmd[:2] == ["git", "commit"] and "nothing to commit" in (r.stdout + r.stderr):
+                print("  publish: nothing new to publish")
+                return
+            print(f"  publish stopped at '{' '.join(cmd[:2])}': {(r.stderr or r.stdout).strip()[-200:]}")
+            return
+    print("  published: the hosted site redeploys in a few minutes")
 
 
 def market_config() -> MarketConfig:
@@ -41,6 +71,7 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--once", action="store_true")
     ap.add_argument("--status", action="store_true")
+    ap.add_argument("--publish", action="store_true", help="export, commit and git push backend/site_data after every new report")
     args = ap.parse_args()
     s, cfg = get_settings(), market_config()
     state = load_state(STATE)
@@ -49,11 +80,17 @@ def main() -> int:
             print("no Agent Market job yet")
         for j in sorted(state.jobs.values(), key=lambda x: x.at):
             print(f"{j.at:%m-%d %H:%M} {j.assignment_id[:12]:12} {j.status:9} {j.source:8} {j.topic[:40]:40} {j.note[:60]}")
+        for p in sorted(proposals.load_state(PROPOSALS).proposals, key=lambda x: x.created_at):
+            print(f"{p.created_at:%m-%d %H:%M} proposal     {p.status:9} {'':8} {p.topic[:40]:40} {p.reason[:60]}")
         return 0
-    if not s.agent_market_token:
-        print("AGENT_MARKET_TOKEN is not set in .env: make the token on the agent's listing page at market.near.ai")
-        return 1
-    client = AgentMarketClient(s.agent_market_token.get_secret_value().strip(), cfg.base_url)
+    client = AgentMarketClient(s.agent_market_token.get_secret_value().strip(), cfg.base_url) if s.agent_market_token else None
+    if client is None:
+        print("AGENT_MARKET_TOKEN is not set in .env: Agent Market jobs are skipped (topic proposals still run)")
+    pcfg = proposals.load_config()
+    remote = None
+    if s.public_api_url and s.proposals_token:
+        remote = proposals.RemoteProposals(s.public_api_url, s.proposals_token.get_secret_value().strip())
+    router = ModelRouter(load_model_config(), s)
     store = _default_store(s)
 
     def recent() -> list[dict]:
@@ -70,20 +107,45 @@ def main() -> int:
         out = service.execute(topic, s, warn=lambda m: print("   ", m[:160]))
         return out.run_id or out.json_path.stem, out.markdown, (out.report.chain_record or {}).get("explorer_url")
 
-    print(f"report agent on NEAR Agent Market: checking for jobs every {cfg.poll_seconds}s; "
-          f"at most {cfg.new_runs_per_day} new research runs a day. Ctrl+C stops.")
+    print(f"report agent: checking for Agent Market jobs and topic proposals every {cfg.poll_seconds}s; at most "
+          f"{cfg.new_runs_per_day} Agent Market runs and {pcfg.per_day} proposal runs a day. "
+          f"Hosted proposals: {'collected from ' + s.public_api_url if remote else 'off (PUBLIC_API_URL / PROPOSALS_TOKEN not set)'}. "
+          f"Publishing: {'on' if args.publish else 'off (--publish)'}. Ctrl+C stops.")
     while True:
         now = datetime.now(timezone.utc)
         if resume_stale(state, timedelta(hours=1), now):
             save_state(state, STATE)
+        new_reports = 0
         try:
-            rows = client.assignments()
+            rows = client.assignments() if client else []
         except Exception as exc:  # noqa: BLE001
             print(f"[{now:%H:%M}] could not reach the marketplace: {str(exc)[:160]}")
             rows = []
         for row in rows:
-            handle(row, client=client, state=state, state_path=STATE, cfg=cfg, recent=recent, load_report=load_report,
-                   run_research=run_research, now=datetime.now(timezone.utc), site_url=s.public_site_url)
+            rec = handle(row, client=client, state=state, state_path=STATE, cfg=cfg, recent=recent, load_report=load_report,
+                         run_research=run_research, now=datetime.now(timezone.utc), site_url=s.public_site_url)
+            new_reports += 1 if rec and rec.status == "submitted" and rec.source == "new_run" else 0
+
+        # ---- topic proposals from the website -----------------------------------------------------------------
+        if pcfg.enabled:
+            def tell(p):  # noqa: ANN001, ANN202
+                if remote:
+                    try:
+                        remote.sync([{"id": p.id, "status": p.status, "reason": p.reason, "run_id": p.run_id}])
+                    except Exception as exc:  # noqa: BLE001
+                        print(f"  could not update the hosted site: {str(exc)[:120]}")
+            if remote:
+                try:
+                    got = proposals.pull_remote(PROPOSALS, remote.sync([]))
+                    if got:
+                        print(f"[{now:%H:%M}] {got} new topic proposal(s) from the hosted site")
+                except Exception as exc:  # noqa: BLE001
+                    print(f"[{now:%H:%M}] could not reach the hosted site for proposals: {str(exc)[:120]}")
+            changed = proposals.work(path=PROPOSALS, cfg=pcfg, reviewer=lambda t: proposals.review(router, t), recent=recent,
+                                     run_research=run_research, now=lambda: datetime.now(timezone.utc), report=tell)
+            new_reports += sum(1 for p in changed if p.status == "done")
+        if new_reports and args.publish:
+            publish()
         if args.once:
             return 0
         time.sleep(max(30, cfg.poll_seconds))

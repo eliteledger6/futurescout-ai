@@ -1,4 +1,4 @@
-import type { ApiConfig, FundListItem, Job, Portfolio, TopicFund, Trading, Radar, RunDetail, RunSummary, Sector, Verification, WatchStatus, Economy } from "./types";
+import type { ApiConfig, FundListItem, Job, Portfolio, TopicFund, Trading, Radar, RunDetail, RunSummary, Sector, Verification, WatchStatus, Economy, Proposal, ProposalList } from "./types";
 
 // Empty (default) = same origin: Next proxies /api/* to the FastAPI server (API_INTERNAL_URL, see next.config.mjs).
 // Set NEXT_PUBLIC_API_URL to talk to an API directly, e.g. http://127.0.0.1:8001 for a second dev server.
@@ -32,6 +32,17 @@ export const api = {
   trading: () => get<Trading>("/api/trading"),
   economy: () => get<Economy>("/api/economy"),
   fund: (slug: string) => get<TopicFund>(`/api/funds/${encodeURIComponent(slug)}`),
+  proposals: () => get<ProposalList>("/api/proposals"),
+  async propose(topic: string): Promise<Proposal> {
+    const res = await fetch(`${API_URL}/api/proposals`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ topic }),
+    });
+    const body = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(typeof body.detail === "string" ? body.detail : `HTTP ${res.status}`);
+    return body as Proposal;
+  },
   async start(topic: string, question?: string): Promise<Job> {
     const res = await fetch(`${API_URL}/api/runs`, {
       method: "POST",

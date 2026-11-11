@@ -81,6 +81,16 @@ def _read_testnet(account: str, key: str, contract: str) -> Optional[dict]:
 SAMPLES_DIR = service.BACKEND_DIR / "samples"   # real past runs shipped with the repo (scripts/export_samples.py)
 
 
+class ProposalRequest(BaseModel):
+    """A visitor proposes a technology topic (free; limited per day; screened by an AI reviewer)."""
+    topic: str = Field(min_length=2, max_length=200)
+
+
+class ProposalSync(BaseModel):
+    """The owner's report-agent loop reports what happened to proposals and collects new ones."""
+    updates: list[dict] = Field(default_factory=list, max_length=200)
+
+
 class BuyRequest(BaseModel):
     """A trading bot redeems its NEAR payment for early access to a fresh report."""
     run_id: str = Field(max_length=80)
@@ -246,6 +256,45 @@ def create_app(
                 if info:
                     r.update({k: info[k] for k in ("locked", "unlock_at", "price_near")})
         return rows
+
+    # ---- topic proposals (owner 2026-11-11): stored here, reviewed and researched in the owner's loop ----------
+    proposals_path = trading_dir.parent / "proposals" / "state.json"
+
+    def proposals_open() -> bool:
+        """Open when enabled and somebody will collect them: locally always; on the hosted snapshot only with the shared secret."""
+        from app.proposals import load_config
+        hosted = service.RUNS_DIR.name == "site_data"
+        return load_config().enabled and (not hosted or bool(settings.proposals_token))
+
+    @app.get("/api/proposals")
+    def list_proposals() -> dict:
+        from app.proposals import left_today, load_config, load_state, public_view
+        pc, st = load_config(), load_state(proposals_path)
+        return {"open": proposals_open(), "per_day": pc.per_day, "left_today": left_today(st, pc, datetime.now(timezone.utc)),
+                "agent_market_url": pc.agent_market_url, "proposals": public_view(st)}
+
+    @app.post("/api/proposals", status_code=201)
+    def propose(req: ProposalRequest) -> dict:
+        from app.proposals import load_config, submit
+        if not proposals_open():
+            raise HTTPException(503, "Topic proposals are closed right now. You can hire the report agent on NEAR Agent Market.")
+        try:
+            p = submit(proposals_path, req.topic, load_config(), datetime.now(timezone.utc))
+        except OverflowError as exc:
+            raise HTTPException(429, str(exc)) from None
+        except ValueError as exc:
+            raise HTTPException(400, str(exc)) from None
+        return p.model_dump(mode="json")
+
+    @app.post("/api/proposals/sync")
+    def sync_proposals(req: ProposalSync, x_proposals_token: Optional[str] = Header(None)) -> dict:
+        import hmac
+        from app.proposals import apply_updates
+        secret = settings.proposals_token.get_secret_value().strip() if settings.proposals_token else ""
+        if not secret or not hmac.compare_digest(secret, (x_proposals_token or "").strip()):
+            raise HTTPException(401, "not allowed")
+        st = apply_updates(proposals_path, req.updates, datetime.now(timezone.utc))
+        return {"proposals": [p.model_dump(mode="json") for p in st.proposals]}
 
     @app.get("/api/market")
     def market() -> dict:

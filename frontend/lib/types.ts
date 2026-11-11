@@ -323,3 +323,10 @@ export interface LockedReport {
   message: string; locked: true; unlock_at: string | null; pay_to: string; network: string; price_near: number | null; price_usd: number | null;
   how_to_buy: string[]; summary?: RunSummary;
 }
+
+// Topic proposals from visitors: free, limited per day, screened by an AI reviewer, researched by the owner's report agent.
+export interface Proposal {
+  id: string; topic: string; status: "queued" | "approved" | "rejected" | "covered" | "done" | "failed";
+  reason: string; run_id: string | null; created_at: string; updated_at: string;
+}
+export interface ProposalList { open: boolean; per_day: number; left_today: number; agent_market_url: string; proposals: Proposal[] }

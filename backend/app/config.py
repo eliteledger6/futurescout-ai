@@ -77,6 +77,8 @@ class Settings(BaseSettings):
     # NEAR Agent Market (market.near.ai): the report agent's API token (aat_...), made by the owner on the listing page
     agent_market_token: Optional[SecretStr] = None
     seal_network: str = "testnet"                  # owner 2026-11-10: "mainnet" = seals signed by the report agent's account on NEAR mainnet
+    proposals_token: Optional[SecretStr] = None    # shared secret between the hosted API and the owner's report-agent loop
+    public_api_url: Optional[str] = None           # the hosted API (e.g. https://futurescout-ai.onrender.com) the loop collects proposals from
     public_site_url: Optional[str] = None          # e.g. the hosted website; put in deliverables as "online: <url>/runs/<id>"
 
     # Agent economy (owner 2026-11-10): the report agent's own mainnet account; it is paid for reports and stakes for AI credits
