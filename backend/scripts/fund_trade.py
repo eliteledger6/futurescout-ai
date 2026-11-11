@@ -361,12 +361,29 @@ def holding_value(ex, h: dict, account: str = "intents.near") -> float | None:  
         return None
 
 
+def fund_reports_by_ticker() -> dict:
+    """Every company any topic fund holds, with that fund's latest report verdict and confidence: also the ones NEAR Intents
+    cannot trade right now (bug seen 2026-11-11: a holding whose route was down looked like 'no report names it any more')."""
+    from app.fund import list_funds
+    out: dict = {}
+    for f in list_funds(service.RUNS_DIR / "funds"):
+        last = f.decisions[-1] if f.decisions else None
+        for h in f.holdings:
+            row = {"ticker": h.ticker, "topic": f.topic, "band": last.band if last else None,
+                   "confidence_pct": last.confidence_pct if last else None, "score": last.score if last else None,
+                   "tradable_now": bool(h.route and h.route.available and h.route.asset_id)}
+            if h.ticker not in out or (row["score"] or 0) > (out[h.ticker]["score"] or 0):
+                out[h.ticker] = row
+    return out
+
+
 def _sellable(state, toks, pf, shadow, closes, now, ex):  # noqa: ANN001,ANN201
     """Holdings the agent may consider selling, each with its latest report (or a note that no fund includes it any more)."""
     rows = pf["positions"] if shadow else state.live_holdings()
     out = []
+    in_funds = fund_reports_by_ticker()
     for h in rows:
-        tok = next((t for t in toks if t["ticker"] == h["ticker"]), None) or next((t for t in toks if t["topic"] == h.get("topic")), None)
+        tok = next((t for t in toks if t["ticker"] == h["ticker"]), None) or in_funds.get(h["ticker"])
         try:
             first = datetime.fromisoformat(str(h.get("first_bought")))
             hours = (now - first).total_seconds() / 3600
@@ -381,7 +398,10 @@ def _sellable(state, toks, pf, shadow, closes, now, ex):  # noqa: ANN001,ANN201
                     "report_verdict": (tok or {}).get("band") if tok and tok["ticker"] == h["ticker"] else None,
                     "report_confidence_pct": (tok or {}).get("confidence_pct") if tok and tok["ticker"] == h["ticker"] else None,
                     "still_in_a_fund": bool(tok and tok["ticker"] == h["ticker"]),
-                    "note": "" if tok and tok["ticker"] == h["ticker"] else "no topic fund includes this company any more (its report no longer names it)"})
+                    "note": ("" if tok and tok["ticker"] == h["ticker"] and tok.get("tradable_now", True) else
+                             "its report still names it, but NEAR Intents cannot trade it right now (no quote): not a reason to sell"
+                             if tok and tok["ticker"] == h["ticker"] else
+                             "no topic fund includes this company any more (its report no longer names it)")})
     return out
 
 
