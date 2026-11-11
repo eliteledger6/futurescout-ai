@@ -478,3 +478,24 @@ a.card:hover { box-shadow: 0 12px 40px -18px color-mix(in srgb, var(--accent) 45
 .flow-divider { stroke: var(--line-strong); stroke-dasharray: 2 6; }
 .flow-badge.credit rect { stroke: color-mix(in srgb, var(--accent) 55%, var(--line-strong)); }
 .flow-badge.credit text { fill: var(--text-2, #b8bdbb); }
+
+/* agent network: what each box is (owner 2026-11-11: only some boxes are AI agents, and it must be obvious) */
+.flow-legend { display: flex; flex-wrap: wrap; gap: 8px 22px; padding: 16px 20px 0; font-size: 13px; color: var(--text-2); }
+.flow-legend span { display: inline-flex; align-items: center; gap: 8px; }
+.kind-chip { display: inline-block; font: 700 10px var(--font-mono, ui-monospace, monospace); letter-spacing: 0.06em; padding: 2px 7px; border-radius: 999px;
+  border: 1px solid var(--line-strong); color: var(--text-2); background: var(--bg); line-height: 1.4; }
+.kind-chip.ai { background: var(--accent); border-color: var(--accent); color: var(--accent-ink, #00110a); }
+.kind-chip.service { border-color: #7c5cff; color: #b3a2ff; }
+.kind-chip.planned { border-style: dashed; }
+.node-kind rect { fill: var(--bg); stroke: var(--line-strong); stroke-width: 1; }
+.node-kind text { font: 700 9.5px var(--font-mono, ui-monospace, monospace); letter-spacing: 0.06em; fill: var(--text-2); }
+.node-kind.ai rect { fill: var(--accent); stroke: var(--accent); }
+.node-kind.ai text { fill: var(--accent-ink, #00110a); }
+.node-kind.service rect { stroke: #7c5cff; }
+.node-kind.service text { fill: #b3a2ff; }
+.node-kind.planned rect { stroke-dasharray: 3 3; }
+.node.kind-ai .node-box { stroke: color-mix(in srgb, var(--accent) 60%, var(--line-strong)); }
+.node.kind-code .node-box, .node.kind-service .node-box { fill: color-mix(in srgb, var(--text) 3%, var(--bg)); }
+.node.kind-code .node-icon, .node.kind-service .node-icon { color: var(--text-2); }
+.node.off .node-kind, .node.not_run .node-kind { opacity: 0.6; }
+.kind-pill.ai { border-color: var(--accent); color: var(--accent); }

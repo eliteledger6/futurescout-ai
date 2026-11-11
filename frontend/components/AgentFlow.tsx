@@ -3,7 +3,7 @@
 // Animated network of the FUTURESCOUT agents. Without `stats` it explains the system; with `stats`
 // (one saved report) it becomes that run's agent trace: which agents ran, what each produced and cost.
 import { useState } from "react";
-import { AGENTS, type AgentKey, type AgentRunStat } from "@/lib/agents";
+import { AGENTS, KIND_LABEL, KIND_TEXT, kindOf, type AgentKey, type AgentRunStat, type NodeKind } from "@/lib/agents";
 import { fmtUsd } from "@/lib/api";
 import { AgentIcon } from "./AgentIcon";
 
@@ -96,6 +96,8 @@ function Badge({ x, y, text, tone }: { x: number; y: number; text: string; tone:
   );
 }
 
+const KIND_W: Record<NodeKind, number> = { ai: 26, code: 42, service: 60, planned: 62 };
+
 function Flow({ d, cls = "edge on" }: { d: string; cls?: string }) {
   return <g className={cls}><path d={d} className="edge-base" /><path d={d} className="edge-flow" /></g>;
 }
@@ -105,9 +107,17 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
   const live = (k: AgentKey) => !stats || stats[k].state === "ran" || stats[k].state === "partial";
   const info = AGENTS[active];
   const stat = stats?.[active];
+  const shown = (Object.keys(POS) as AgentKey[]).filter((k) => !stats || !AFTER_REPORT.includes(k));
+  const count = (kind: NodeKind) => shown.filter((k) => kindOf(k) === kind && k !== "review").length;   // Chief review = the Chief again
 
   return (
     <div className="flow">
+      <div className="flow-legend" aria-label="What the boxes are">
+        <span><b className="kind-chip ai">AI</b> {count("ai")} AI agents: each calls a model on NEAR AI Cloud (Chief review is the Chief&apos;s second pass)</span>
+        <span><b className="kind-chip code">CODE</b> {count("code")} code steps: fixed rules and counts, no model</span>
+        {count("service") > 0 && <span><b className="kind-chip service">SERVICE</b> {count("service")} outside NEAR services</span>}
+        {count("planned") > 0 && <span><b className="kind-chip planned">PLANNED</b> not built yet</span>}
+      </div>
       <div className="flow-swipe">Swipe sideways to see the whole network. Tap an agent for details.</div>
       <div className="flow-canvas">
         <svg className="flow-svg" viewBox={stats ? "214 0 1062 450" : "0 0 1824 545"} role="img"
@@ -166,8 +176,8 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
             const s = stats?.[k];
             const state = s?.state ?? "ran";
             return (
-              <g key={k} className={`node ${state} ${active === k ? "active" : ""} ${PLANNED.includes(k) ? "planned" : ""}`} transform={`translate(${x} ${y - H / 2})`}
-                 tabIndex={0} role="button" aria-label={`${a.name}: ${a.role}`}
+              <g key={k} className={`node ${state} kind-${kindOf(k)} ${active === k ? "active" : ""} ${PLANNED.includes(k) ? "planned" : ""}`} transform={`translate(${x} ${y - H / 2})`}
+                 tabIndex={0} role="button" aria-label={`${a.name} (${KIND_TEXT[kindOf(k)]}): ${a.role}`}
                  onMouseEnter={() => setActive(k)} onFocus={() => setActive(k)} onClick={() => setActive(k)}>
                 {active === k && <ellipse cx={W / 2} cy={H / 2} rx={W * 0.75} ry={H * 1.1} fill="url(#nodeGlow)" />}
                 <rect width={W} height={H} rx={8} className="node-box" />
@@ -179,6 +189,10 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
                   {s ? statLine(k, s) : a.role}
                 </text>
                 <circle cx={W - 12} cy={12} r={4} className={`node-dot ${state}`} />
+                <g className={`node-kind ${kindOf(k)}`} transform="translate(10 -8)">
+                  <rect width={KIND_W[kindOf(k)]} height={16} rx={8} />
+                  <text x={KIND_W[kindOf(k)] / 2} y={11.5} textAnchor="middle">{KIND_LABEL[kindOf(k)]}</text>
+                </g>
               </g>
             );
           })}
@@ -191,7 +205,7 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
           <li key={i}>
             {stage.map((k) => (
               <button key={k} className={`flow-chip ${stats?.[k]?.state ?? "ran"} ${active === k ? "active" : ""}`} onClick={() => setActive(k)}>
-                <AgentIcon name={AGENTS[k].icon} size={15} /> {AGENTS[k].name}
+                <AgentIcon name={AGENTS[k].icon} size={15} /> {AGENTS[k].name} <b className={`kind-chip ${kindOf(k)}`}>{KIND_LABEL[kindOf(k)]}</b>
               </button>
             ))}
           </li>
@@ -209,6 +223,7 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
         </div>
         <p style={{ color: "var(--text-2)", margin: "12px 0" }}>{info.detail}</p>
         <div className="pills">
+          <span className={`pill kind-pill ${kindOf(active)}`}>{KIND_TEXT[kindOf(active)]}</span>
           <span className="pill">Data: {info.sources}</span>
           {info.modelKey && models?.[info.modelKey] && <span className="pill">Model: {models[info.modelKey]}</span>}
           {stat?.models?.map((m) => <span key={m} className="pill">Ran on: {m}</span>)}

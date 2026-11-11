@@ -419,3 +419,13 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
 - README ("Running it day to day", "What is unfinished") and RUNNING.md say where the agents run now, what the report
   agent does by itself, and state the known limits (payment proof by public hash, seal not write-once, data shared
   through git). Checked in the browser on this computer: home page diagram and one report's agent trace.
+
+## 2026-11-11 (late): the agent network says which boxes are AI agents (owner: "it seems many agents but in fact it is not")
+- Every box now carries a tag and the diagram has a legend with counts: **AI** (calls a model on NEAR AI Cloud): Topic
+  reviewer, Chief, Science, Patent, Risk, X signals, Market, Price & timing, Investment, Trading agent = 10 agents
+  (Chief review is the Chief's second pass and is tagged AI but not counted again); **CODE** (fixed rules and counts,
+  no model): Hot-Topic Radar, Company scout, NEAR record, Topic fund, Report agent (the program and account, no model of
+  its own) = 5; **SERVICE** (outside NEAR services): NEAR AI staking, Agent Market = 2; **PLANNED**: Trading agent 2.
+  The kind is derived from whether the box has a model assigned (`kindOf` in `frontend/lib/agents.ts`), so it cannot
+  drift from the configuration. The detail panel and the phone list show the same tag.
+- Checked in the browser on this computer (home page); the website builds.

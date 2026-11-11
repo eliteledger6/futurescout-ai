@@ -16,6 +16,21 @@ export interface AgentInfo {
   icon: string;           // id of an icon in AgentIcon
 }
 
+// What a box in the network really is. Only "ai" boxes call a model; the rest must not be counted as agents.
+export type NodeKind = "ai" | "code" | "service" | "planned";
+export const KIND_LABEL: Record<NodeKind, string> = { ai: "AI", code: "CODE", service: "SERVICE", planned: "PLANNED" };
+export const KIND_TEXT: Record<NodeKind, string> = {
+  ai: "AI agent: calls a model on NEAR AI Cloud",
+  code: "Code step: fixed rules and counts, no model",
+  service: "Outside service on NEAR, not ours",
+  planned: "Planned, not built",
+};
+export function kindOf(k: AgentKey): NodeKind {
+  if (k === "trader2") return "planned";
+  if (k === "stake" || k === "buyers") return "service";
+  return AGENTS[k].modelKey ? "ai" : "code";
+}
+
 export const AGENTS: Record<AgentKey, AgentInfo> = {
   radar: { key: "radar", name: "Hot-Topic Radar", role: "Picks what to research", icon: "radar",
     detail: "Ranks every tracked topic by how fast its research papers and patent filings are growing; the counts are computed by code, with no model. The report agent recounts it once a day. From the ranking it writes reports by itself: each of the top 5 topics always has a report from the last 7 days, and every report sold pays for one more, on the next topic down the list (at most 2 a day). The list of topics grows too: when the Science agent has no job it reads 5 recent papers an hour and may add one new topic, but only if paper counts confirm it is growing.",
@@ -45,7 +60,7 @@ export const AGENTS: Record<AgentKey, AgentInfo> = {
     detail: "Counts patent publications per year (Patent Acceleration), lists top applicants and reads the newest filings.",
     sources: "Google Patents (SerpApi) · EPO" },
   review: { key: "review", name: "Chief review", role: "Checks for gaps", icon: "search", modelKey: "chief",
-    detail: "Looks at everything gathered, names what is missing and may order one extra paper search (bounded).",
+    detail: "The Chief agent's second pass, not a separate agent. Looks at everything gathered, names what is missing and may order one extra paper search (bounded).",
     sources: "The agents' findings" },
   timing: { key: "timing", name: "Price & timing", role: "Run-up risk", icon: "pulse", prefix: "T", modelKey: "timing",
     detail: "Computes how far the related stocks have already moved and labels timing risk by fixed rules. A risk input, never a buy signal.",
@@ -63,7 +78,7 @@ export const AGENTS: Record<AgentKey, AgentInfo> = {
     detail: "Builds a pretend-money fund for the topic from the companies the patents and papers name, split into low, medium and high risk, and keeps it fully invested. Every decision lists its reasons and carries its own fingerprint; the report it is based on is sealed on NEAR.",
     sources: "The sealed report · daily prices · NEAR Intents dry-run quotes" },
   seller: { key: "seller", name: "Report agent", role: "Sells reports for NEAR", icon: "coin",
-    detail: "Runs by itself on a cloud server: it takes NEAR Agent Market hires and visitors' proposals, keeps the radar's top 5 topics covered, and seals and publishes every report. It prices every sealed report at what it cost to make plus a small margin ($2 to $3, paid in NEAR) and sells it to the trading agent; every sale pays for the next report. Each payment comes from the trading agent's near.com balance as a signed order, checked before signing and confirmed when it arrives in the report agent's own wallet.",
+    detail: "The program and NEAR account the research team works under; it calls no model of its own. It runs by itself on a cloud server: it takes NEAR Agent Market hires and visitors' proposals, keeps the radar's top 5 topics covered, and seals and publishes every report. It prices every sealed report at what it cost to make plus a small margin ($2 to $3, paid in NEAR) and sells it to the trading agent; every sale pays for the next report. Each payment comes from the trading agent's near.com balance as a signed order, checked before signing and confirmed when it arrives in the report agent's own wallet.",
     sources: "Its own NEAR account · NEAR Intents" },
   stake: { key: "stake", name: "NEAR AI staking", role: "Earns credits for AI", icon: "sprout",
     detail: "The report agent stakes 70% of everything it earns (report sales and NEAR Agent Market fees) through NEAR AI Cloud's Staking for Inference (stake.dao, validator nearai.pool.near; at least 1 NEAR at a time) and keeps 30%; once the kept part passes $200 it funds a second trading agent (next step). The staking rewards become NEAR AI credits that pay for the agents' model calls; the staked NEAR stays withdrawable.",
