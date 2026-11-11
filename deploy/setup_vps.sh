@@ -73,6 +73,7 @@ Wants=network-online.target
 [Service]
 User=${APP_USER}
 WorkingDirectory=${APP_DIR}/backend
+ExecStartPre=-/usr/bin/git -C ${APP_DIR} pull -q --rebase --autostash
 ExecStart=${APP_DIR}/.venv/bin/python scripts/market_agent.py --publish
 Environment=PYTHONUNBUFFERED=1
 Restart=always
@@ -92,6 +93,7 @@ Wants=network-online.target
 [Service]
 User=${APP_USER}
 WorkingDirectory=${APP_DIR}/backend
+ExecStartPre=-/usr/bin/git -C ${APP_DIR} pull -q --rebase --autostash
 ExecStart=${APP_DIR}/.venv/bin/python scripts/fund_trade.py watch --publish
 Environment=PYTHONUNBUFFERED=1
 Restart=always

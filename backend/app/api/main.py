@@ -279,6 +279,7 @@ def create_app(
 
     @app.get("/api/runs")
     def runs(limit: int = Query(50, ge=1, le=200), topic: Optional[str] = Query(None, max_length=120)) -> list[dict]:
+        topic = (topic or "").replace("\x00", "").strip() or None      # PostgreSQL refuses NUL in text (seen as HTTP 500)
         rows = store.list(limit=limit, topic=topic)
         ec = load_fund_config().economy
         now = datetime.now(timezone.utc)

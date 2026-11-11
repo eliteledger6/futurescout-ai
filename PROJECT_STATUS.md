@@ -392,3 +392,15 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   70% is staked only once that NEAR is in the report agent's wallet. `/api/economy` shows `market_income`.
 - Mock-tested (352 tests pass). Not run live: the loop seals and spends, so the owner runs it. Both test hires so far
   paid 0, so no fee has been recorded yet.
+
+## 2026-11-11 (night): second bug hunt (after the purchase-route fix)
+- Checked: every Python file for names used but never defined (none); every API route with odd and hostile input on a
+  copy of the site data; the report queue against the real radar and reports (it would write 'mixture of experts',
+  then 'supervised fine-tuning', then 'zero-knowledge proof' for a sale); adding a scouted topic to a copy of
+  `topics.yaml` (earlier topics unchanged, duplicate refused); the website's type check (passes).
+- Fixed: (1) the server's services never fetched new code: a restart ran whatever was last pulled. Both systemd units
+  now pull before starting (`deploy/setup_vps.sh`; an already installed server still needs the manual pull-and-restart
+  line from `deploy/VPS.md` once). (2) The report queue ranked by this machine's own radar copy, which on the server is
+  older than the published one until its first refresh ends: it now takes the newest radar first. (3) A NUL character
+  in the `/api/runs?topic=` filter gave HTTP 500 with the database store (PostgreSQL refuses it); it is stripped.
+- Mock-tested (353 tests pass); the API fuzz now reports no server error.

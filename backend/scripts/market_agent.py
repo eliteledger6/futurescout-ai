@@ -35,7 +35,7 @@ from app.paper_fund_hook import build_paper_fund, funds_due, update_all_funds  #
 from app.agents.science import topic_scout  # noqa: E402
 from app import market_income, report_queue  # noqa: E402
 from app.radar import load_radar, load_sectors, load_topics  # noqa: E402
-from app.radar_refresh import RadarRefresh  # noqa: E402
+from app.radar_refresh import RadarRefresh, adopt_newer_snapshot  # noqa: E402
 from app.sources.openalex import OpenAlexClient  # noqa: E402
 from app.watch import add_topics  # noqa: E402
 from app.agent_market import AgentMarketClient, MarketConfig, handle, load_state, resume_stale, save_state  # noqa: E402
@@ -181,6 +181,7 @@ def main() -> int:
         if cfg.auto_runs_per_day > 0 and not args.once and not rows and not new_reports:
             try:
                 q, t0 = report_queue.load_state(QUEUE), datetime.now(timezone.utc)
+                adopt_newer_snapshot(service.RUNS_DIR, SNAPSHOT, log=lambda m: None)     # rank by the newest radar there is
                 first = q.sales_used is None
                 pick = report_queue.next_report(
                     radar=load_radar(), rows=recent(), state=q, cfg=cfg, now=t0, failed_recently=report_queue.failed_topics(q, t0),
