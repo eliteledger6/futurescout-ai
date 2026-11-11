@@ -1,0 +1,69 @@
+{
+ "made_at": "2026-11-09T09:13:20.353911+00:00",
+ "basis": {
+  "phrases": [
+   "high bandwidth memory"
+  ],
+  "checks": [
+   {
+    "phrase": "high bandwidth memory",
+    "source": "topic",
+    "matches": 961,
+    "sampled": 8,
+    "relevant": 4,
+    "kept": true,
+    "reason": "the topic name itself (4/8 sampled works on-topic)"
+   },
+   {
+    "phrase": "HBM",
+    "source": "config",
+    "matches": 5449,
+    "sampled": 8,
+    "relevant": 1,
+    "kept": false,
+    "reason": "only 1/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "high-bandwidth memory",
+    "source": "ai_suggested",
+    "matches": 961,
+    "sampled": 8,
+    "relevant": 4,
+    "kept": false,
+    "reason": "only 4/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "HBM2",
+    "source": "ai_suggested",
+    "matches": 66,
+    "sampled": 8,
+    "relevant": 5,
+    "kept": false,
+    "reason": "only 5/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "HBM3",
+    "source": "ai_suggested",
+    "matches": 105,
+    "sampled": 8,
+    "relevant": 5,
+    "kept": false,
+    "reason": "only 5/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "stacked memory bandwidth",
+    "source": "ai_suggested",
+    "matches": 0,
+    "sampled": 0,
+    "relevant": 0,
+    "kept": false,
+    "reason": "only 0 matching works"
+   }
+  ],
+  "precision_sampled": 20,
+  "precision_relevant": 14,
+  "precision_pct": 70.0,
+  "llm_alias": "glm_5_3_flash",
+  "note": "Counted: works whose title or abstract contains any of 'high bandwidth memory' (singular and plural forms match automatically; a work matching several phrases is counted once). Not counted, because too few sampled works were about this topic: 'HBM', 'high-bandwidth memory', 'HBM2', 'HBM3', 'stacked memory bandwidth'. An AI check of 20 random counted works found 14 (70%) mainly about the topic."
+ }
+}

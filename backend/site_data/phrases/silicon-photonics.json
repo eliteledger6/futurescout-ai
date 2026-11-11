@@ -1,0 +1,60 @@
+{
+ "made_at": "2026-11-09T10:57:26.749526+00:00",
+ "basis": {
+  "phrases": [
+   "silicon photonics"
+  ],
+  "checks": [
+   {
+    "phrase": "silicon photonics",
+    "source": "topic",
+    "matches": 4937,
+    "sampled": 8,
+    "relevant": 5,
+    "kept": true,
+    "reason": "the topic name itself (5/8 sampled works on-topic)"
+   },
+   {
+    "phrase": "photonic integrated circuit",
+    "source": "config",
+    "matches": 4730,
+    "sampled": 8,
+    "relevant": 1,
+    "kept": false,
+    "reason": "only 1/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "silicon photonic",
+    "source": "ai_suggested",
+    "matches": 4937,
+    "sampled": 8,
+    "relevant": 5,
+    "kept": false,
+    "reason": "only 5/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "integrated photonics",
+    "source": "ai_suggested",
+    "matches": 5803,
+    "sampled": 8,
+    "relevant": 0,
+    "kept": false,
+    "reason": "only 0/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "silicon-based photonics",
+    "source": "ai_suggested",
+    "matches": 159,
+    "sampled": 8,
+    "relevant": 5,
+    "kept": false,
+    "reason": "only 5/8 sampled works on-topic (needs 75%)"
+   }
+  ],
+  "precision_sampled": 20,
+  "precision_relevant": 17,
+  "precision_pct": 85.0,
+  "llm_alias": "glm_5_3_flash",
+  "note": "Counted: works whose title or abstract contains any of 'silicon photonics' (singular and plural forms match automatically; a work matching several phrases is counted once). Not counted, because too few sampled works were about this topic: 'photonic integrated circuit', 'silicon photonic', 'integrated photonics', 'silicon-based photonics'. An AI check of 20 random counted works found 17 (85%) mainly about the topic."
+ }
+}

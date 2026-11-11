@@ -42,7 +42,6 @@ export default function RadarPage() {
     api.sectors().then(setSectors).catch(() => setSectors([]));
   }, []);
 
-  const maxHeat = radar ? Math.max(...radar.topics.map((t) => Math.abs(t.heat ?? 0)), 1) : 1;
   const sectorKeys = radar ? [...new Set(radar.topics.map((t) => t.sector ?? "semiconductors"))] : [];
   const sectorName = (k: string) => sectors.find((s) => s.key === k)?.name ?? k;
 
@@ -78,7 +77,7 @@ export default function RadarPage() {
               <div className="radar-grid">
                 <div className="table-wrap">
                   <table className="table radar-table">
-                    <thead><tr><th>#</th><th>Topic</th><th>Heat</th><th className="num">Papers</th><th className="num">This year so far</th><th className="num">Patents</th>{radar.topics.some((t) => Object.keys(t.filer_counts).length) && <th className="num">SEC filers</th>}</tr></thead>
+                    <thead><tr><th>#</th><th>Topic</th><th className="num">Heat</th><th className="num">Papers</th><th className="num" title="1 January to the cutoff date, against the same dates last year">This year</th><th className="num">Patents</th>{radar.topics.some((t) => Object.keys(t.filer_counts).length) && <th className="num">SEC filers</th>}</tr></thead>
                     <tbody>
                       {radar.topics.filter((t) => sector === null || (t.sector ?? "semiconductors") === sector).map((t) => {
                         const pa = t.paper_acceleration, pt = t.patent_acceleration;
@@ -87,19 +86,14 @@ export default function RadarPage() {
                           <tr key={t.topic} className={active?.topic === t.topic ? "on" : ""} onClick={() => setActive(t)} style={{ cursor: "pointer" }}>
                             <td className="mono">{t.rank ?? "–"}</td>
                             <td><strong>{t.topic}</strong>
-                              {t.small_base && <div className="small muted">small base: fewer than 20 documents in the earlier year, so not ranked</div>}
+                              {t.small_base && <div className="small muted" title="fewer than 20 papers or patents in the earlier year: growth from so few is noise, so the topic is not ranked">small base · not ranked</div>}
                               {t.errors.length > 0 && <div className="small guard" title={t.errors.join("; ")}>{t.errors.map(friendlyError).join(" · ")}</div>}</td>
-                            <td style={{ minWidth: 160 }}>
-                              <div className="heat-row">
-                                <div className="track" style={{ flex: 1 }}>
-                                  <div className={`bar ${(t.heat ?? 0) < 0 ? "bar-neg" : ""}`} style={{ width: `${Math.min(100, Math.abs(t.heat ?? 0) / maxHeat * 100)}%` }} />
-                                </div>
-                                <span className="mono small" style={{ width: 52, textAlign: "right" }} title={t.heat_basis ?? undefined}>{pct(t.heat)}{t.heat_basis && !t.heat_basis.includes("patents") ? <span className="muted" title="patents not counted for this topic: heat uses papers only">*</span> : null}</span>
-                              </div>
+                            <td className={`num heat-num ${(t.heat ?? 0) < 0 ? "neg" : ""}`} title={t.heat_basis ?? undefined}>
+                              {pct(t.heat)}{t.heat_basis && !t.heat_basis.includes("patents") ? <span className="muted" title="patents not counted for this topic: heat uses papers only">*</span> : null}
                             </td>
                             <td className="num">{pa ? <>{pa.previous_year_count} → {pa.last_full_year_count}<div className="small muted">{pct(pa.yoy_growth_pct)}</div></> : "–"}</td>
                             <td className="num">{t.paper_ytd ? <>{t.paper_ytd.previous_count} → {t.paper_ytd.count}<div className="small"><TrendChip t={t.paper_ytd} /></div></> : "–"}</td>
-                            <td className="num">{pt ? <>{pt.previous_year_count} → {pt.last_full_year_count}<div className="small muted" title={`Counted by ${patentSource(t.patent_source)}`}>{pct(pt.yoy_growth_pct)}{/EPO/i.test(t.patent_source ?? "") ? " · EPO" : ""}</div></> : "–"}</td>
+                            <td className="num">{pt ? <>{pt.previous_year_count} → {pt.last_full_year_count}<div className="small muted" title={`Counted by ${patentSource(t.patent_source)}`}>{pct(pt.yoy_growth_pct)}</div></> : "–"}</td>
                             {Object.keys(t.filer_counts).length > 0 && <td className="num">{lastYear ? t.filer_counts[String(lastYear)] ?? "–" : "–"}</td>}
                           </tr>
                         );
@@ -129,7 +123,7 @@ function TrendChip({ t }: { t: Ytd }) {
 }
 
 function Spark({ counts, label, partialFrom }: { counts: Record<string, number>; label: string; partialFrom: number }) {
-  const entries = Object.entries(counts).map(([y, c]) => [Number(y), c] as const).sort((a, b) => a[0] - b[0]);
+  const entries = Object.entries(counts).map(([y, c]) => [Number(y), c] as const).filter(([y]) => y <= new Date().getFullYear()).sort((a, b) => a[0] - b[0]);
   const max = Math.max(...entries.map(([, c]) => c), 1);
   return (
     <div>

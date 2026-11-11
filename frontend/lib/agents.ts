@@ -18,12 +18,12 @@ export interface AgentInfo {
 
 // What a box in the network really is. Only "ai" boxes call a model; the rest must not be counted as agents.
 export type NodeKind = "ai" | "team" | "code" | "service" | "planned";
-export const KIND_LABEL: Record<NodeKind, string> = { ai: "AI", team: "AI TEAM", code: "CODE", service: "SERVICE", planned: "PLANNED" };
+export const KIND_LABEL: Record<NodeKind, string> = { ai: "AI", team: "AI TEAM", code: "CODE", service: "NEAR", planned: "PLANNED" };
 export const KIND_TEXT: Record<NodeKind, string> = {
   ai: "AI agent: calls a model on NEAR AI Cloud",
   team: "The Report agent: its 9 AI agents do the research; it collects their work and reports it out",
   code: "Code step: fixed rules and counts, no model",
-  service: "Outside service on NEAR, not ours",
+  service: "NEAR ecosystem service the agents use",
   planned: "Planned, not built",
 };
 // The Report agent = one agent with its own NEAR account, made of these AI agents working as a team (plus code steps).
@@ -85,7 +85,7 @@ export const AGENTS: Record<AgentKey, AgentInfo> = {
     detail: "The agent everything reports to. It takes a topic (from the radar, a visitor's proposal or a hire on NEAR Agent Market), hands it to its team of 9 AI agents, and collects their work into the finished report. Then it reports it out: it seals the report's fingerprint on NEAR, builds the topic's paper fund, publishes the report on this site, delivers it to whoever hired it, and sells it for $2 to $3 in NEAR to the trading agent or any other bot. It runs by itself on a cloud server under its own NEAR account, keeps the radar's top 5 topics covered, and every sale pays for the next report. A payment from the trading agent comes as a signed order from its near.com balance, checked before signing and confirmed when it arrives in the report agent's wallet.",
     sources: "Its own NEAR account · NEAR Intents" },
   stake: { key: "stake", name: "NEAR AI staking", role: "Earns credits for AI", icon: "sprout",
-    detail: "The report agent stakes 70% of everything it earns (report sales and NEAR Agent Market fees) through NEAR AI Cloud's Staking for Inference (stake.dao, validator nearai.pool.near; at least 1 NEAR at a time) and keeps 30%; once the kept part passes $200 it funds a second trading agent (next step). The staking rewards become NEAR AI credits that pay for the agents' model calls; the staked NEAR stays withdrawable.",
+    detail: "The report agent stakes 70% of everything it earns (report sales and NEAR Agent Market fees) through NEAR AI Cloud's Staking for Inference (stake.dao, validator nearai.pool.near; at least 1 NEAR at a time) and keeps 30%; once the kept part passes $200 it funds a second trading agent (next step). The staking rewards become NEAR AI credits that go toward the agents' model calls (at today's amounts they cover a small part of the bill; the owner tops up the rest); the staked NEAR stays withdrawable.",
     sources: "NEAR mainnet · NEAR AI Cloud" },
   trader2: { key: "trader2", name: "Trading agent 2", role: "Planned: funded at $200", icon: "pulse",
     detail: "The next step, not built yet. The report agent keeps 30% of every payment in a pot; once that pot passes $200 it funds a second trading agent with its own account and budget, run like the first one. The first trading agent already shows the whole loop working with real money.",

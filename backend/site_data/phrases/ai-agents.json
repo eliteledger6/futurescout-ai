@@ -1,0 +1,80 @@
+{
+ "made_at": "2026-11-09T09:05:28.093499+00:00",
+ "basis": {
+  "phrases": [
+   "AI agents",
+   "LLM agents",
+   "agentic AI"
+  ],
+  "checks": [
+   {
+    "phrase": "AI agents",
+    "source": "topic",
+    "matches": 21232,
+    "sampled": 8,
+    "relevant": 5,
+    "kept": true,
+    "reason": "the topic name itself (5/8 sampled works on-topic)"
+   },
+   {
+    "phrase": "LLM agents",
+    "source": "config",
+    "matches": 10550,
+    "sampled": 8,
+    "relevant": 8,
+    "kept": true,
+    "reason": "8/8 sampled works on-topic"
+   },
+   {
+    "phrase": "agentic AI",
+    "source": "config",
+    "matches": 13569,
+    "sampled": 8,
+    "relevant": 6,
+    "kept": true,
+    "reason": "6/8 sampled works on-topic"
+   },
+   {
+    "phrase": "autonomous agents",
+    "source": "ai_suggested",
+    "matches": 8577,
+    "sampled": 8,
+    "relevant": 5,
+    "kept": false,
+    "reason": "only 5/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "intelligent agents",
+    "source": "ai_suggested",
+    "matches": 5541,
+    "sampled": 8,
+    "relevant": 5,
+    "kept": false,
+    "reason": "only 5/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "software agents",
+    "source": "ai_suggested",
+    "matches": 999,
+    "sampled": 8,
+    "relevant": 4,
+    "kept": false,
+    "reason": "only 4/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "agent-based systems",
+    "source": "ai_suggested",
+    "matches": 584,
+    "sampled": 8,
+    "relevant": 3,
+    "kept": false,
+    "reason": "only 3/8 sampled works on-topic (needs 75%)"
+   }
+  ],
+  "precision_sampled": 20,
+  "precision_relevant": 13,
+  "precision_pct": 65.0,
+  "llm_alias": "glm_5_3_flash",
+  "note": "Counted: works whose title or abstract contains any of 'AI agents', 'LLM agents', 'agentic AI' (singular and plural forms match automatically; a work matching several phrases is counted once). Not counted, because too few sampled works were about this topic: 'autonomous agents', 'intelligent agents', 'software agents', 'agent-based systems'. An AI check of 20 random counted works found 13 (65%) mainly about the topic."
+ }
+}

@@ -1,0 +1,61 @@
+{
+ "made_at": "2026-11-09T10:00:01.146888+00:00",
+ "basis": {
+  "phrases": [
+   "grid-scale energy storage",
+   "bulk energy storage"
+  ],
+  "checks": [
+   {
+    "phrase": "grid-scale energy storage",
+    "source": "topic",
+    "matches": 1371,
+    "sampled": 8,
+    "relevant": 3,
+    "kept": true,
+    "reason": "the topic name itself (3/8 sampled works on-topic)"
+   },
+   {
+    "phrase": "utility-scale energy storage",
+    "source": "ai_suggested",
+    "matches": 55,
+    "sampled": 8,
+    "relevant": 5,
+    "kept": false,
+    "reason": "only 5/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "grid energy storage",
+    "source": "ai_suggested",
+    "matches": 672,
+    "sampled": 8,
+    "relevant": 2,
+    "kept": false,
+    "reason": "only 2/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "large-scale battery storage",
+    "source": "ai_suggested",
+    "matches": 43,
+    "sampled": 8,
+    "relevant": 5,
+    "kept": false,
+    "reason": "only 5/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "bulk energy storage",
+    "source": "ai_suggested",
+    "matches": 44,
+    "sampled": 8,
+    "relevant": 7,
+    "kept": true,
+    "reason": "7/8 sampled works on-topic"
+   }
+  ],
+  "precision_sampled": 20,
+  "precision_relevant": 19,
+  "precision_pct": 95.0,
+  "llm_alias": "glm_5_3_flash",
+  "note": "Counted: works whose title or abstract contains any of 'grid-scale energy storage', 'bulk energy storage' (singular and plural forms match automatically; a work matching several phrases is counted once). Not counted, because too few sampled works were about this topic: 'utility-scale energy storage', 'grid energy storage', 'large-scale battery storage'. An AI check of 20 random counted works found 19 (95%) mainly about the topic."
+ }
+}

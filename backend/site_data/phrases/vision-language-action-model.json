@@ -1,0 +1,92 @@
+{
+ "made_at": "2026-11-10T04:33:50.900194+00:00",
+ "basis": {
+  "phrases": [
+   "vision-language-action model",
+   "vision-language-action",
+   "vision-language-action models",
+   "vision language action",
+   "VLA model",
+   "generalist robot policy"
+  ],
+  "checks": [
+   {
+    "phrase": "vision-language-action model",
+    "source": "topic",
+    "matches": 1392,
+    "sampled": 8,
+    "relevant": 8,
+    "kept": true,
+    "reason": "the topic name itself (8/8 sampled works on-topic)"
+   },
+   {
+    "phrase": "vision-language-action",
+    "source": "config",
+    "matches": 3351,
+    "sampled": 8,
+    "relevant": 8,
+    "kept": true,
+    "reason": "8/8 sampled works on-topic"
+   },
+   {
+    "phrase": "VLA model",
+    "source": "config",
+    "matches": 1935,
+    "sampled": 8,
+    "relevant": 6,
+    "kept": true,
+    "reason": "6/8 sampled works on-topic"
+   },
+   {
+    "phrase": "robot foundation model",
+    "source": "config",
+    "matches": 179,
+    "sampled": 8,
+    "relevant": 3,
+    "kept": false,
+    "reason": "only 3/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "vision-language-action models",
+    "source": "ai_suggested",
+    "matches": 1392,
+    "sampled": 8,
+    "relevant": 8,
+    "kept": true,
+    "reason": "8/8 sampled works on-topic"
+   },
+   {
+    "phrase": "VLA",
+    "source": "ai_suggested",
+    "matches": 4701,
+    "sampled": 8,
+    "relevant": 2,
+    "kept": false,
+    "reason": "only 2/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "vision language action",
+    "source": "ai_suggested",
+    "matches": 3351,
+    "sampled": 8,
+    "relevant": 8,
+    "kept": true,
+    "reason": "8/8 sampled works on-topic"
+   },
+   {
+    "phrase": "generalist robot policy",
+    "source": "ai_suggested",
+    "matches": 128,
+    "sampled": 8,
+    "relevant": 6,
+    "kept": true,
+    "reason": "6/8 sampled works on-topic"
+   }
+  ],
+  "precision_sampled": 20,
+  "precision_relevant": 20,
+  "precision_pct": 100.0,
+  "llm_alias": "glm_5_3_flash",
+  "note": "Counted: works whose title or abstract contains any of 'vision-language-action model', 'vision-language-action', 'vision-language-action models', 'vision language action', 'VLA model', 'generalist robot policy' (singular and plural forms match automatically; a work matching several phrases is counted once). Not counted, because too few sampled works were about this topic: 'robot foundation model', 'VLA'. An AI check of 20 random counted works found 20 (100%) mainly about the topic."
+ }
+}

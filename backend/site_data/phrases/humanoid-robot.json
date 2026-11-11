@@ -1,0 +1,70 @@
+{
+ "made_at": "2026-11-09T10:41:49.695251+00:00",
+ "basis": {
+  "phrases": [
+   "humanoid robot",
+   "bipedal humanoid"
+  ],
+  "checks": [
+   {
+    "phrase": "humanoid robot",
+    "source": "topic",
+    "matches": 6058,
+    "sampled": 8,
+    "relevant": 5,
+    "kept": true,
+    "reason": "the topic name itself (5/8 sampled works on-topic)"
+   },
+   {
+    "phrase": "humanoid robots",
+    "source": "config",
+    "matches": 6058,
+    "sampled": 8,
+    "relevant": 5,
+    "kept": false,
+    "reason": "only 5/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "humanoid robotics",
+    "source": "ai_suggested",
+    "matches": 6058,
+    "sampled": 8,
+    "relevant": 5,
+    "kept": false,
+    "reason": "only 5/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "bipedal humanoid",
+    "source": "ai_suggested",
+    "matches": 64,
+    "sampled": 8,
+    "relevant": 8,
+    "kept": true,
+    "reason": "8/8 sampled works on-topic"
+   },
+   {
+    "phrase": "human-like robot",
+    "source": "ai_suggested",
+    "matches": 210,
+    "sampled": 8,
+    "relevant": 1,
+    "kept": false,
+    "reason": "only 1/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "anthropomorphic robot",
+    "source": "ai_suggested",
+    "matches": 470,
+    "sampled": 8,
+    "relevant": 1,
+    "kept": false,
+    "reason": "only 1/8 sampled works on-topic (needs 75%)"
+   }
+  ],
+  "precision_sampled": 20,
+  "precision_relevant": 15,
+  "precision_pct": 75.0,
+  "llm_alias": "glm_5_3_flash",
+  "note": "Counted: works whose title or abstract contains any of 'humanoid robot', 'bipedal humanoid' (singular and plural forms match automatically; a work matching several phrases is counted once). Not counted, because too few sampled works were about this topic: 'humanoid robots', 'humanoid robotics', 'human-like robot', 'anthropomorphic robot'. An AI check of 20 random counted works found 15 (75%) mainly about the topic."
+ }
+}

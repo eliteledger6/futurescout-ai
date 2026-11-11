@@ -452,3 +452,31 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   report and trades on it. Each of the two has its own NEAR account." Box tags unchanged otherwise (10 AI, 4 code,
   2 services, 1 planned).
 - Checked in the browser on this computer (home page, narrow window: the diagram scrolls sideways); the website builds.
+
+## 2026-11-11 (late): last check of the claims in the agent network and on the site, against what the server did
+- **Confirmed live (owner's server, from the published data and the hosted API):** the report agent wrote its own reports
+  'mixture of experts' (13:58 UTC) and 'supervised fine-tuning' (14:06 UTC) because they were top-5 radar topics without
+  a fresh report, each with all 9 AI agents, sealed on NEAR mainnet (hosted /verify: match), then stopped at the cap of
+  2 a day; the daily radar refresh ran and was published at 14:18 UTC without overwriting anything; the new paper-fund
+  decisions are not sealed (only reports are); the trading agent ran its checks on the server with the copied record;
+  3.599 NEAR received, 2.5193 NEAR staked = 70.0%; the listing price is $3; proposals are open (5 a day).
+- **Built and mock-tested, not yet seen live:** a sale paying for the next report (no sale since), a scouted topic being
+  added (no topic added yet), an Agent Market fee joining the split (both hires were free test runs), an outside purchase.
+- **Corrected wording that said more than is true:** "NEAR AI credits from staking pay every agent's model calls" ->
+  "staking earns NEAR AI credits, which go toward the agents' model calls" (they cover a small part of the bill);
+  "never unlocked without payment" -> opened only by a payment, with new reports open for the demo; "every report is
+  sealed" -> each topic's report (the first day's three test runs are not sealed; every topic's latest report is);
+  the two service boxes are "NEAR ecosystem services the agents use" (owner), not "outside" services.
+- **Bugs found by the check and fixed:** (1) the radar's paper counts used search phrases cached only on the machine
+  that researched a topic, so the server counted 'AI agents' by its name alone (1082 -> 4494 papers; the laptop, with the
+  checked phrases, 1691 -> 8204). The checked phrases are now published (`site_data/phrases`) and used by any machine,
+  and the radar no longer drops them after 7 days. The published radar still has the server's numbers until its next
+  refresh. (2) Newest-wins compared the latest time inside two files, and a quote deadline two days ahead sat in both
+  copies of the trading record, so the laptop's older copy replaced the server's newer one in an export here (caught
+  before any commit). Future times are now ignored and, when equal, the copy with more history is kept; `--mine` forces
+  this machine's copy. (3) The queue record was named `report_queue.json`, which matches the pattern of report files
+  (the hosted health count was one too high); it is `auto_reports.json` now, and the loop renames an existing one.
+- Radar page (owner): the heat bar is gone, heat is a coloured number; the table fits without a sideways scroll bar at
+  375, 1100, 1270 and 1440 px (the detail panel moves below the table under 1240 px; on phones two columns the detail
+  panel repeats are left out). The small charts no longer show a year that has not started.
+- 354 tests pass; the website builds; home page and radar checked in the browser on this computer.

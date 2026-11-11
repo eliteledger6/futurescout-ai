@@ -82,8 +82,18 @@ def test_an_older_copy_never_replaces_a_newer_one_in_the_snapshot(tmp_path):
     snap.write_text('{"generated_at": "2026-11-11T11:47:15.813Z", "topics": [1]}', encoding="utf-8")
     assert newest_stamp(mine) == "2026-11-09T06:53:54" and newest_stamp(tmp_path / "missing.json") == ""
     assert copy_unless_older(mine, snap) is False and '"topics": [1]' in snap.read_text(encoding="utf-8")   # snapshot kept
-    mine.write_text('{"generated_at": "2026-11-12T01:00:00Z", "topics": [2]}', encoding="utf-8")
+    mine.write_text('{"generated_at": "2026-11-11T12:00:00Z", "topics": [2]}', encoding="utf-8")
     assert copy_unless_older(mine, snap) is True and '"topics": [2]' in snap.read_text(encoding="utf-8")    # newer: copied
-    mine.write_text('{"generated_at": "2026-11-12T01:00:00Z", "topics": []}', encoding="utf-8")             # same time (an entry removed): this machine's copy
+    mine.write_text('{"generated_at": "2026-11-11T12:00:00Z", "topics": []}', encoding="utf-8")             # same time, same number of entries: this machine's copy
     assert copy_unless_older(mine, snap) is True and '"topics": []' in snap.read_text(encoding="utf-8")
+    # a deadline in the future is in both copies (an order valid until 2099): it must not make them look equally new
+    snap.write_text('{"checks": ["2026-11-11T13:56:48Z"], "deadline": "2099-01-01T00:00:00Z", "who": "server"}', encoding="utf-8")
+    mine.write_text('{"checks": ["2026-11-11T12:39:37Z"], "deadline": "2099-01-01T00:00:00Z", "who": "laptop"}', encoding="utf-8")
+    assert newest_stamp(mine) == "2026-11-11T12:39:37"
+    assert copy_unless_older(mine, snap) is False and "server" in snap.read_text(encoding="utf-8")
+    # equally recent: the copy with more dated entries (more history) is kept
+    mine.write_text('{"checks": ["2026-11-11T12:39:37Z"], "who": "laptop"}', encoding="utf-8")
+    snap.write_text('{"checks": ["2026-11-11T10:00:00Z", "2026-11-11T12:39:37Z"], "who": "server"}', encoding="utf-8")
+    assert copy_unless_older(mine, snap) is False and "server" in snap.read_text(encoding="utf-8")
+    assert copy_unless_older(mine, snap, force=True) is True and "laptop" in snap.read_text(encoding="utf-8")   # on purpose
     assert copy_unless_older(mine, tmp_path / "site_data" / "funds" / "new.json") is True                   # nothing there yet: copied

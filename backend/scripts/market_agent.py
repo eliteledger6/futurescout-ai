@@ -47,7 +47,7 @@ from app.report import render_markdown  # noqa: E402
 
 STATE = service.RUNS_DIR / "agent_market" / "state.json"
 PROPOSALS = service.RUNS_DIR / "proposals" / "state.json"
-QUEUE = service.RUNS_DIR / "report_queue.json"                             # reports the agent wrote by itself, and sales already used
+QUEUE = service.RUNS_DIR / "auto_reports.json"                             # reports the agent wrote by itself, and sales already used
 INCOME = service.RUNS_DIR / market_income.FILE                            # Agent Market fees (joins the 70/30 split)
 SNAPSHOT = service.BACKEND_DIR / "site_data"
 SCOUT = service.RUNS_DIR / "topic_scout.json"                              # what the Science agent read and decided while idle
@@ -117,6 +117,12 @@ def main() -> int:
           f"Own reports: {'top %d radar topics kept fresh, one more per report sold, at most %d a day' % (cfg.auto_top_n, cfg.auto_runs_per_day) if cfg.auto_runs_per_day > 0 else 'off'}. "
           f"Idle scouting by the Science agent: {'every %g h, %d papers' % (cfg.topic_scout_hours, cfg.topic_scout_papers) if cfg.topic_scout_hours > 0 else 'off'}. Ctrl+C stops.")
     radar = RadarRefresh(service.RUNS_DIR, service.BACKEND_DIR / "site_data")
+    old_queue = service.RUNS_DIR / "report_queue.json"        # first name: it matched report_*.json, the pattern of report files
+    if old_queue.is_file():
+        if not QUEUE.is_file():
+            old_queue.replace(QUEUE)
+        else:
+            old_queue.unlink()
     while True:
         now = datetime.now(timezone.utc)
         if resume_stale(state, timedelta(hours=1), now):

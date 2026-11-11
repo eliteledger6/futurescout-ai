@@ -70,7 +70,7 @@ const SALE = (() => {
   };
 })();
 
-// NEAR AI credits: from staking along the bottom back to the Chief (they pay every agent's model calls).
+// NEAR AI credits: from staking along the bottom back to the Chief (they go toward the agents' model calls).
 const CREDIT_Y = 526;
 const CREDITS = (() => {
   const [sx, sy] = POS.stake, [cx, cy] = POS.chief, r = 12;
@@ -96,7 +96,7 @@ function Badge({ x, y, text, tone }: { x: number; y: number; text: string; tone:
   );
 }
 
-const KIND_W: Record<NodeKind, number> = { ai: 26, team: 62, code: 42, service: 60, planned: 62 };
+const KIND_W: Record<NodeKind, number> = { ai: 26, team: 62, code: 42, service: 44, planned: 62 };
 
 function Flow({ d, cls = "edge on" }: { d: string; cls?: string }) {
   return <g className={cls}><path d={d} className="edge-base" /><path d={d} className="edge-flow" /></g>;
@@ -118,7 +118,7 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
           Each of the two has its own NEAR account.</span>}
         <span><b className="kind-chip ai">AI</b> {count("ai")} boxes call a model on NEAR AI Cloud (Chief review is the Chief&apos;s second pass)</span>
         <span><b className="kind-chip code">CODE</b> {count("code")} code steps: fixed rules and counts, no model</span>
-        {count("service") > 0 && <span><b className="kind-chip service">SERVICE</b> {count("service")} outside NEAR services</span>}
+        {count("service") > 0 && <span><b className="kind-chip service">NEAR</b> {count("service")} NEAR ecosystem services the agents use: NEAR AI staking and NEAR Agent Market</span>}
         {count("planned") > 0 && <span><b className="kind-chip planned">PLANNED</b> not built yet</span>}
       </div>
       <div className="flow-swipe">Swipe sideways to see the whole network. Tap an agent for details.</div>
@@ -157,7 +157,7 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
               <Badge x={GAP_MID} y={POS.seller[1] - 62} text="◂ pays $2–3 in NEAR" tone="pay" />
               <Badge x={GAP_MID} y={POS.seller[1] + 32} text="stakes 70% ▸" tone="credit" />
               <Flow d={CREDITS} cls="edge on credits" />
-              <Badge x={(POS.chief[0] + POS.stake[0] + W) / 2} y={CREDIT_Y} text="◂ NEAR AI credits from staking pay every agent's model calls" tone="credit" />
+              <Badge x={(POS.chief[0] + POS.stake[0] + W) / 2} y={CREDIT_Y} text="◂ staking earns NEAR AI credits, which go toward the agents' model calls" tone="credit" />
               <g className="edge planned-edge"><path d={POT} className="edge-base" /></g>
               <Badge x={GAP_MID - 26} y={POS.trader2[1] - 14} text="keeps 30% · at $200 ▸" tone="pot" />
               <Badge x={(COL[4] + W + COL[5]) / 2} y={POS.investment[1] + 52} text="all the work ▸" tone="report" />

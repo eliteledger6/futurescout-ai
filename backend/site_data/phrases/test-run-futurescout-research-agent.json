@@ -1,0 +1,60 @@
+{
+ "made_at": "2026-11-10T14:38:51.439910+00:00",
+ "basis": {
+  "phrases": [
+   "Test run FUTURESCOUT Research Agent"
+  ],
+  "checks": [
+   {
+    "phrase": "Test run FUTURESCOUT Research Agent",
+    "source": "topic",
+    "matches": 0,
+    "sampled": 0,
+    "relevant": 0,
+    "kept": true,
+    "reason": "the topic name itself (0/0 sampled works on-topic)"
+   },
+   {
+    "phrase": "FUTURESCOUT agent",
+    "source": "ai_suggested",
+    "matches": 0,
+    "sampled": 0,
+    "relevant": 0,
+    "kept": false,
+    "reason": "only 0 matching works"
+   },
+   {
+    "phrase": "Research Agent FUTURESCOUT",
+    "source": "ai_suggested",
+    "matches": 0,
+    "sampled": 0,
+    "relevant": 0,
+    "kept": false,
+    "reason": "only 0 matching works"
+   },
+   {
+    "phrase": "FUTURESCOUT system",
+    "source": "ai_suggested",
+    "matches": 0,
+    "sampled": 0,
+    "relevant": 0,
+    "kept": false,
+    "reason": "only 0 matching works"
+   },
+   {
+    "phrase": "automated research agent",
+    "source": "ai_suggested",
+    "matches": 7,
+    "sampled": 7,
+    "relevant": 5,
+    "kept": false,
+    "reason": "only 5/7 sampled works on-topic (needs 75%)"
+   }
+  ],
+  "precision_sampled": 0,
+  "precision_relevant": 0,
+  "precision_pct": null,
+  "llm_alias": "glm_5_3_flash",
+  "note": "Counted: works whose title or abstract contains any of 'Test run FUTURESCOUT Research Agent' (singular and plural forms match automatically; a work matching several phrases is counted once). Not counted, because too few sampled works were about this topic: 'FUTURESCOUT agent', 'Research Agent FUTURESCOUT', 'FUTURESCOUT system', 'automated research agent'."
+ }
+}

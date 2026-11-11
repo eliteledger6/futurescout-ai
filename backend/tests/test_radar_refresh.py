@@ -48,6 +48,6 @@ def test_refresh_builds_on_the_newest_published_radar(tmp_path):
     (snap / "radar.json").write_text('{"generated_at": "2026-11-11T11:47:15Z", "who": "published"}', encoding="utf-8")
     assert adopt_newer_snapshot(runs, snap, log=lambda m: None) is True
     assert "published" in (runs / "radar.json").read_text(encoding="utf-8")
-    (runs / "radar.json").write_text('{"generated_at": "2026-11-12T00:00:00Z", "who": "mine"}', encoding="utf-8")
+    (runs / "radar.json").write_text('{"generated_at": "2026-11-11T12:00:00Z", "who": "mine"}', encoding="utf-8")
     assert adopt_newer_snapshot(runs, snap, log=lambda m: None) is False      # this machine's is newer: kept
     assert "mine" in (runs / "radar.json").read_text(encoding="utf-8")

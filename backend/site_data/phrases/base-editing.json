@@ -1,0 +1,80 @@
+{
+ "made_at": "2026-11-09T10:30:42.931514+00:00",
+ "basis": {
+  "phrases": [
+   "base editing",
+   "base editor systems",
+   "programmable base editing"
+  ],
+  "checks": [
+   {
+    "phrase": "base editing",
+    "source": "topic",
+    "matches": 3474,
+    "sampled": 8,
+    "relevant": 2,
+    "kept": true,
+    "reason": "the topic name itself (2/8 sampled works on-topic)"
+   },
+   {
+    "phrase": "base editor",
+    "source": "config",
+    "matches": 1798,
+    "sampled": 8,
+    "relevant": 5,
+    "kept": false,
+    "reason": "only 5/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "prime editing",
+    "source": "config",
+    "matches": 1716,
+    "sampled": 8,
+    "relevant": 0,
+    "kept": false,
+    "reason": "only 0/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "base editor systems",
+    "source": "ai_suggested",
+    "matches": 24,
+    "sampled": 8,
+    "relevant": 6,
+    "kept": true,
+    "reason": "6/8 sampled works on-topic"
+   },
+   {
+    "phrase": "C-to-T base conversion",
+    "source": "ai_suggested",
+    "matches": 0,
+    "sampled": 0,
+    "relevant": 0,
+    "kept": false,
+    "reason": "only 0 matching works"
+   },
+   {
+    "phrase": "adenine base editor",
+    "source": "ai_suggested",
+    "matches": 472,
+    "sampled": 8,
+    "relevant": 3,
+    "kept": false,
+    "reason": "only 3/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "programmable base editing",
+    "source": "ai_suggested",
+    "matches": 4,
+    "sampled": 4,
+    "relevant": 3,
+    "kept": true,
+    "reason": "3/4 sampled works on-topic"
+   }
+  ],
+  "precision_sampled": 19,
+  "precision_relevant": 10,
+  "precision_pct": 52.6,
+  "llm_alias": "glm_5_3_flash",
+  "note": "Counted: works whose title or abstract contains any of 'base editing', 'base editor systems', 'programmable base editing' (singular and plural forms match automatically; a work matching several phrases is counted once). Not counted, because too few sampled works were about this topic: 'base editor', 'prime editing', 'C-to-T base conversion', 'adenine base editor'. An AI check of 19 random counted works found 10 (53%) mainly about the topic."
+ }
+}

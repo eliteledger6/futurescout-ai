@@ -166,8 +166,9 @@ def compute_radar(
         sig = TopicSignal(topic=t.name, terms=t.terms, sector=t.sector)
         if openalex:
             try:
-                from app.agents.science.phrases import load_cached
-                basis = load_cached(t.name)      # phrases a research run checked (synonyms kept after an AI sample check)
+                from app.agents.science.phrases import SNAPSHOT_DIR, load_cached
+                # phrases a research run checked (synonyms kept after an AI sample check): this machine's or the published ones
+                basis = load_cached(t.name, any_age=True, snapshot_dir=SNAPSHOT_DIR)
                 phrases = basis.phrases if basis and basis.phrases else t.name
                 sig.paper_counts = openalex.count_by_year(phrases, start)
                 sig.paper_acceleration = compute_acceleration(sig.paper_counts, year, phrase=phrases)

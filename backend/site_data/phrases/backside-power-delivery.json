@@ -1,0 +1,72 @@
+{
+ "made_at": "2026-11-09T09:40:32.211745+00:00",
+ "basis": {
+  "phrases": [
+   "backside power delivery",
+   "backside power",
+   "BSPDN",
+   "backside power distribution network"
+  ],
+  "checks": [
+   {
+    "phrase": "backside power delivery",
+    "source": "topic",
+    "matches": 172,
+    "sampled": 8,
+    "relevant": 7,
+    "kept": true,
+    "reason": "the topic name itself (7/8 sampled works on-topic)"
+   },
+   {
+    "phrase": "backside power",
+    "source": "config",
+    "matches": 196,
+    "sampled": 8,
+    "relevant": 8,
+    "kept": true,
+    "reason": "8/8 sampled works on-topic"
+   },
+   {
+    "phrase": "BSPDN",
+    "source": "ai_suggested",
+    "matches": 111,
+    "sampled": 8,
+    "relevant": 8,
+    "kept": true,
+    "reason": "8/8 sampled works on-topic"
+   },
+   {
+    "phrase": "backside power distribution network",
+    "source": "ai_suggested",
+    "matches": 6,
+    "sampled": 6,
+    "relevant": 5,
+    "kept": true,
+    "reason": "5/6 sampled works on-topic"
+   },
+   {
+    "phrase": "backside power supply",
+    "source": "ai_suggested",
+    "matches": 1,
+    "sampled": 0,
+    "relevant": 0,
+    "kept": false,
+    "reason": "only 1 matching works"
+   },
+   {
+    "phrase": "power delivery from the wafer backside",
+    "source": "ai_suggested",
+    "matches": 0,
+    "sampled": 0,
+    "relevant": 0,
+    "kept": false,
+    "reason": "only 0 matching works"
+   }
+  ],
+  "precision_sampled": 20,
+  "precision_relevant": 12,
+  "precision_pct": 60.0,
+  "llm_alias": "glm_5_3_flash",
+  "note": "Counted: works whose title or abstract contains any of 'backside power delivery', 'backside power', 'BSPDN', 'backside power distribution network' (singular and plural forms match automatically; a work matching several phrases is counted once). Not counted, because too few sampled works were about this topic: 'backside power supply', 'power delivery from the wafer backside'. An AI check of 20 random counted works found 12 (60%) mainly about the topic."
+ }
+}

@@ -111,3 +111,25 @@ def test_find_filers_and_counts_send_quoted_phrase_and_date_window():
     assert counts == {2024: 3, 2025: 3, 2026: 3}
     with pytest.raises(SourceError, match="contact email"):
         EdgarFullTextClient("no-email")
+
+
+def test_radar_phrases_come_from_this_machine_or_the_published_copy_and_do_not_expire(tmp_path):
+    """Seen 2026-11-11: the server counted 'AI agents' by its name alone because the checked phrases lived only on the laptop."""
+    import json
+    from datetime import datetime, timedelta, timezone
+    from app.agents.science.phrases import load_cached
+    now = datetime(2026, 11, 20, tzinfo=timezone.utc)
+    mine, snap = tmp_path / "cache", tmp_path / "site_data"
+    mine.mkdir(); snap.mkdir()
+
+    def entry(folder, phrases, made):
+        (folder / "ai-agents.json").write_text(json.dumps({"made_at": made.isoformat(), "basis": {"phrases": phrases, "checks": []}}), encoding="utf-8")
+
+    entry(snap, ["AI agents", "LLM agents", "agentic AI"], now - timedelta(days=11))
+    assert load_cached("AI agents", now=now, cache_dir=mine) is None                                   # nothing on this machine
+    assert load_cached("AI agents", now=now, cache_dir=mine, snapshot_dir=snap) is None                # too old for a research run
+    got = load_cached("AI agents", now=now, cache_dir=mine, snapshot_dir=snap, any_age=True)           # the radar keeps using it
+    assert got.phrases == ["AI agents", "LLM agents", "agentic AI"]
+    entry(mine, ["AI agents", "agentic AI"], now - timedelta(days=1))                                  # this machine re-checked later
+    assert load_cached("AI agents", now=now, cache_dir=mine, snapshot_dir=snap, any_age=True).phrases == ["AI agents", "agentic AI"]
+    assert load_cached("AI agents", now=now, cache_dir=mine).phrases == ["AI agents", "agentic AI"]

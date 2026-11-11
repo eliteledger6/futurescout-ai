@@ -36,7 +36,7 @@ export default function Home() {
           <h1 className="display">Find the next hot technology. <span className="gradient-text">Show the evidence.</span></h1>
           <p className="lede">AI agents read papers, patents, company filings and X, argue the other side, and write a report where every claim has a label and a source.
             Reports are sold for $2–3 each, paid in NEAR: our trading agent buys them and trades tokenized stocks through NEAR Intents, inside hard
-            limits, and any other trading bot can buy them too. The report agent stakes what it earns, so NEAR AI pays for its models. Every report
+            limits, and any other trading bot can buy them too. The report agent stakes 70% of what it earns with NEAR AI, which earns credits toward its models. Each topic's report
             is sealed on NEAR (new seals on mainnet).</p>
           <div className="actions">
             {latest ? <Link className="btn btn-solid" href={`/runs/${latest.id}`}>Open latest report →</Link>

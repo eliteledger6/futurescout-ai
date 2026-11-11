@@ -44,6 +44,10 @@ MAX_PHRASES = 6
 LOOKBACK_YEARS = 3
 CACHE_DAYS = 7
 CACHE_DIR = BACKEND_DIR / "cache" / "phrases"
+# The checked phrases are also published with the website data (scripts/export_site.py), because the radar counts
+# papers with them: without that, a machine that never researched a topic counted only the topic's name and the radar's
+# numbers depended on where it was computed (seen 2026-11-11: laptop 1691 -> 8204 papers for 'AI agents', server 1082 -> 4494).
+SNAPSHOT_DIR = BACKEND_DIR / "site_data" / "phrases"
 
 
 class _Suggestions(BaseModel):
@@ -71,18 +75,29 @@ def configured_terms(topic: str) -> list[str]:
     return []
 
 
-def load_cached(topic: str, *, now: Optional[datetime] = None, cache_dir: Path = CACHE_DIR) -> Optional[CountingBasis]:
-    path = cache_dir / f"{_slug(topic)}.json"
-    if not path.is_file():
-        return None
-    try:
-        data = json.loads(path.read_text(encoding="utf-8"))
-        made = datetime.fromisoformat(data["made_at"])
-        if (now or datetime.now(timezone.utc)) - made > timedelta(days=CACHE_DAYS):
-            return None
-        return CountingBasis.model_validate(data["basis"])
-    except (KeyError, ValueError, TypeError):
-        return None
+def load_cached(topic: str, *, now: Optional[datetime] = None, cache_dir: Path = CACHE_DIR, any_age: bool = False,
+                snapshot_dir: Optional[Path] = None) -> Optional[CountingBasis]:
+    """The checked phrases of a topic. A research run re-checks them after CACHE_DAYS; the radar (`any_age=True`) keeps
+    using the last checked set, so its numbers do not jump when a cache entry ages out. `snapshot_dir`: the published
+    copy, read when this machine has no entry of its own (the newer of the two wins)."""
+    best: Optional[tuple[datetime, CountingBasis]] = None
+    for folder in (cache_dir, snapshot_dir):
+        if folder is None:
+            continue
+        path = folder / f"{_slug(topic)}.json"
+        if not path.is_file():
+            continue
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+            made = datetime.fromisoformat(data["made_at"])
+            if not any_age and (now or datetime.now(timezone.utc)) - made > timedelta(days=CACHE_DAYS):
+                continue
+            basis = CountingBasis.model_validate(data["basis"])
+        except (KeyError, ValueError, TypeError):
+            continue
+        if best is None or made > best[0]:
+            best = (made, basis)
+    return best[1] if best else None
 
 
 def _save(topic: str, basis: CountingBasis, now: datetime, cache_dir: Path) -> None:

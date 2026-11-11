@@ -1,0 +1,62 @@
+{
+ "made_at": "2026-11-09T09:31:02.274688+00:00",
+ "basis": {
+  "phrases": [
+   "large language model inference",
+   "LLM serving",
+   "language model inference"
+  ],
+  "checks": [
+   {
+    "phrase": "large language model inference",
+    "source": "topic",
+    "matches": 612,
+    "sampled": 8,
+    "relevant": 6,
+    "kept": true,
+    "reason": "the topic name itself (6/8 sampled works on-topic)"
+   },
+   {
+    "phrase": "LLM inference",
+    "source": "ai_suggested",
+    "matches": 4126,
+    "sampled": 8,
+    "relevant": 4,
+    "kept": false,
+    "reason": "only 4/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "LLM serving",
+    "source": "ai_suggested",
+    "matches": 1118,
+    "sampled": 8,
+    "relevant": 7,
+    "kept": true,
+    "reason": "7/8 sampled works on-topic"
+   },
+   {
+    "phrase": "language model inference",
+    "source": "ai_suggested",
+    "matches": 896,
+    "sampled": 8,
+    "relevant": 6,
+    "kept": true,
+    "reason": "6/8 sampled works on-topic"
+   },
+   {
+    "phrase": "LLM decoding",
+    "source": "ai_suggested",
+    "matches": 350,
+    "sampled": 8,
+    "relevant": 1,
+    "kept": false,
+    "reason": "only 1/8 sampled works on-topic (needs 75%)"
+   }
+  ],
+  "precision_sampled": 20,
+  "precision_relevant": 16,
+  "precision_pct": 80.0,
+  "llm_alias": "glm_5_3_flash",
+  "note": "Counted: works whose title or abstract contains any of 'large language model inference', 'LLM serving', 'language model inference' (singular and plural forms match automatically; a work matching several phrases is counted once). Not counted, because too few sampled works were about this topic: 'LLM inference', 'LLM decoding'. An AI check of 20 random counted works found 16 (80%) mainly about the topic."
+ }
+}

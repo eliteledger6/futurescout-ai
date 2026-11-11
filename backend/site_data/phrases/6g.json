@@ -1,0 +1,91 @@
+{
+ "made_at": "2026-11-09T10:23:59.726441+00:00",
+ "basis": {
+  "phrases": [
+   "6G",
+   "sixth generation mobile",
+   "6G wireless",
+   "sixth generation wireless",
+   "6G communications"
+  ],
+  "checks": [
+   {
+    "phrase": "6G",
+    "source": "topic",
+    "matches": 35354,
+    "sampled": 8,
+    "relevant": 6,
+    "kept": true,
+    "reason": "the topic name itself (6/8 sampled works on-topic)"
+   },
+   {
+    "phrase": "6G network",
+    "source": "config",
+    "matches": 9009,
+    "sampled": 8,
+    "relevant": 3,
+    "kept": false,
+    "reason": "only 3/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "6G wireless",
+    "source": "config",
+    "matches": 3972,
+    "sampled": 8,
+    "relevant": 7,
+    "kept": true,
+    "reason": "7/8 sampled works on-topic"
+   },
+   {
+    "phrase": "sixth generation wireless",
+    "source": "config",
+    "matches": 255,
+    "sampled": 8,
+    "relevant": 7,
+    "kept": true,
+    "reason": "7/8 sampled works on-topic"
+   },
+   {
+    "phrase": "sixth generation mobile",
+    "source": "ai_suggested",
+    "matches": 233,
+    "sampled": 8,
+    "relevant": 8,
+    "kept": true,
+    "reason": "8/8 sampled works on-topic"
+   },
+   {
+    "phrase": "6G communications",
+    "source": "ai_suggested",
+    "matches": 1025,
+    "sampled": 8,
+    "relevant": 6,
+    "kept": true,
+    "reason": "6/8 sampled works on-topic"
+   },
+   {
+    "phrase": "beyond 5G",
+    "source": "ai_suggested",
+    "matches": 2744,
+    "sampled": 8,
+    "relevant": 3,
+    "kept": false,
+    "reason": "only 3/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "6G networks",
+    "source": "ai_suggested",
+    "matches": 9009,
+    "sampled": 8,
+    "relevant": 3,
+    "kept": false,
+    "reason": "only 3/8 sampled works on-topic (needs 75%)"
+   }
+  ],
+  "precision_sampled": 20,
+  "precision_relevant": 15,
+  "precision_pct": 75.0,
+  "llm_alias": "glm_5_3_flash",
+  "note": "Counted: works whose title or abstract contains any of '6G', 'sixth generation mobile', '6G wireless', 'sixth generation wireless', '6G communications' (singular and plural forms match automatically; a work matching several phrases is counted once). Not counted, because too few sampled works were about this topic: '6G network', 'beyond 5G', '6G networks'. An AI check of 20 random counted works found 15 (75%) mainly about the topic."
+ }
+}

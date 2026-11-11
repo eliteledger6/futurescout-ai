@@ -16,8 +16,9 @@ import shutil
 import subprocess
 import sys
 import time
+from datetime import datetime, timezone
 from pathlib import Path
-from typing import Callable
+from typing import Callable, Optional
 
 REPO = Path(__file__).resolve().parents[2]
 LOCK = REPO / ".publish.lock"
@@ -76,21 +77,34 @@ def publish(message: str = "Site data update", log: Callable[[str], None] = prin
 _STAMP = re.compile(r"20\d\d-\d\d-\d\dT\d\d:\d\d:\d\d")
 
 
-def newest_stamp(path: Path) -> str:
-    """The latest date-and-time written anywhere inside a data file ("" when there is none or it cannot be read)."""
+def newest_stamp(path: Path, now: Optional[datetime] = None) -> str:
+    """The latest date-and-time written anywhere inside a data file that is not in the future ("" when there is none or
+    the file cannot be read). Future times are left out: a file also holds deadlines (an order valid until the day after
+    tomorrow), and two copies sharing one looked equally new (seen 2026-11-11: an older trading record replaced a newer one)."""
+    limit = (now or datetime.now(timezone.utc)).strftime("%Y-%m-%dT%H:%M:%S")
     try:
-        return max(_STAMP.findall(path.read_text(encoding="utf-8", errors="replace")), default="")
+        return max((s for s in _STAMP.findall(path.read_text(encoding="utf-8", errors="replace")) if s <= limit), default="")
     except OSError:
         return ""
 
 
-def copy_unless_older(src: Path, dst: Path) -> bool:
+def _entries(path: Path) -> int:
+    try:
+        return len(_STAMP.findall(path.read_text(encoding="utf-8", errors="replace")))
+    except OSError:
+        return 0
+
+
+def copy_unless_older(src: Path, dst: Path, force: bool = False) -> bool:
     """Copy a shared data file into the snapshot, unless the snapshot's copy holds later entries. The report agent and
     the trading agent may publish from different machines, each with its own copy of files the other one writes (the
     radar, the trading record, the paper funds): a machine's older copy must never replace the other's newer one.
-    Returns True when copied."""
-    if dst.is_file() and newest_stamp(dst) > newest_stamp(src):
-        return False
+    `force`: this machine's copy wins regardless (after entries were removed here on purpose). Returns True when copied."""
+    if dst.is_file() and not force:
+        mine, theirs = newest_stamp(src), newest_stamp(dst)
+        # equally recent: the copy with more dated entries holds more history (a record only grows)
+        if theirs > mine or (theirs == mine and _entries(dst) > _entries(src)):
+            return False
     dst.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy(src, dst)
     return True

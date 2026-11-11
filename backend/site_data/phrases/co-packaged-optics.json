@@ -1,0 +1,70 @@
+{
+ "made_at": "2026-11-09T09:14:40.982478+00:00",
+ "basis": {
+  "phrases": [
+   "co-packaged optics",
+   "co-packaged optical interconnects"
+  ],
+  "checks": [
+   {
+    "phrase": "co-packaged optics",
+    "source": "topic",
+    "matches": 484,
+    "sampled": 8,
+    "relevant": 8,
+    "kept": true,
+    "reason": "the topic name itself (8/8 sampled works on-topic)"
+   },
+   {
+    "phrase": "CPO",
+    "source": "config",
+    "matches": 4695,
+    "sampled": 8,
+    "relevant": 1,
+    "kept": false,
+    "reason": "only 1/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "co-packaged optical interconnects",
+    "source": "ai_suggested",
+    "matches": 10,
+    "sampled": 8,
+    "relevant": 7,
+    "kept": true,
+    "reason": "7/8 sampled works on-topic"
+   },
+   {
+    "phrase": "copackaged optics",
+    "source": "ai_suggested",
+    "matches": 19,
+    "sampled": 8,
+    "relevant": 4,
+    "kept": false,
+    "reason": "only 4/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "optical engines",
+    "source": "ai_suggested",
+    "matches": 329,
+    "sampled": 8,
+    "relevant": 0,
+    "kept": false,
+    "reason": "only 0/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "co-packaged transceivers",
+    "source": "ai_suggested",
+    "matches": 0,
+    "sampled": 0,
+    "relevant": 0,
+    "kept": false,
+    "reason": "only 0 matching works"
+   }
+  ],
+  "precision_sampled": 20,
+  "precision_relevant": 14,
+  "precision_pct": 70.0,
+  "llm_alias": "glm_5_3_flash",
+  "note": "Counted: works whose title or abstract contains any of 'co-packaged optics', 'co-packaged optical interconnects' (singular and plural forms match automatically; a work matching several phrases is counted once). Not counted, because too few sampled works were about this topic: 'CPO', 'copackaged optics', 'optical engines', 'co-packaged transceivers'. An AI check of 20 random counted works found 14 (70%) mainly about the topic."
+ }
+}

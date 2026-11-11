@@ -34,6 +34,8 @@ OUT = Path(__file__).resolve().parents[1] / "site_data"
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--prune", action="store_true", help="remove snapshot reports that this machine does not have")
+    ap.add_argument("--mine", action="store_true", help="this machine's shared files replace the snapshot's even when those look newer "
+                                                        "(after you removed entries here on purpose)")
     args = ap.parse_args()
     src = service.RUNS_DIR
     if OUT.resolve() == src.resolve():
@@ -66,12 +68,16 @@ def main() -> int:
     if stale.is_file():
         stale.unlink()
     for rel in ("radar.json", "portfolio.json", "trading/state.json", "economy/state.json", "proposals/state.json",
-                "agent_market/income.json", "report_queue.json"):
+                "agent_market/income.json", "auto_reports.json"):
         f = src / rel
         if f.is_file():
-            print(f"  {rel}" if copy_unless_older(f, OUT / rel) else f"  {rel}: kept the snapshot's copy (it is newer than this machine's)")
+            print(f"  {rel}" if copy_unless_older(f, OUT / rel, force=args.mine) else f"  {rel}: kept the snapshot's copy (it is newer than this machine's)")
+    phrases = Path(__file__).resolve().parents[1] / "cache" / "phrases"      # the radar's checked search phrases (see phrases.SNAPSHOT_DIR)
+    if phrases.is_dir():
+        n_ph = sum(copy_unless_older(f, OUT / "phrases" / f.name) for f in sorted(phrases.glob("*.json")))
+        print(f"  phrases/ ({len(list((OUT / 'phrases').glob('*.json')))} topics, {n_ph} from this machine)")
     if (src / "funds").is_dir():
-        kept = sum(not copy_unless_older(f, OUT / "funds" / f.name) for f in sorted((src / "funds").glob("*.json")))
+        kept = sum(not copy_unless_older(f, OUT / "funds" / f.name, force=args.mine) for f in sorted((src / "funds").glob("*.json")))
         print(f"  funds/ ({len(list((OUT / 'funds').glob('*.json')))} topic funds" + (f"; {kept} newer in the snapshot, kept" if kept else "") + ")")
     size = sum(p.stat().st_size for p in OUT.rglob("*") if p.is_file()) / 1e6
     print(f"snapshot in {OUT} ({size:.1f} MB). Next: git add backend/site_data, commit, push.")

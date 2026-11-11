@@ -514,3 +514,19 @@ a.card:hover { box-shadow: 0 12px 40px -18px color-mix(in srgb, var(--accent) 45
 .node.kind-team .node-box { stroke: var(--accent); stroke-width: 2.2; fill: color-mix(in srgb, var(--accent) 10%, var(--bg)); filter: drop-shadow(0 0 10px color-mix(in srgb, var(--accent) 45%, transparent)); }
 .node.kind-team .node-name { fill: var(--accent); }
 .kind-pill.team { border-color: var(--accent); color: var(--accent); }
+
+/* radar table: compact, heat as a number, no sideways scrolling on a normal screen (owner 2026-11-11) */
+.radar-table { font-size: 13px; }
+.radar-table th { padding: 9px 8px; letter-spacing: 0.04em; }
+.radar-table td { padding: 9px 8px; }
+.radar-table td:first-child, .radar-table th:first-child { padding-left: 12px; width: 1%; }
+.radar-table .heat-num { font-weight: 600; color: var(--accent); }
+.radar-table .heat-num.neg { color: var(--l-danger, #ff6b6b); }
+@media (max-width: 1240px) { .radar-grid { grid-template-columns: 1fr; } }      /* the table gets the full width before it would need to scroll */
+@media (max-width: 640px) {                                                       /* phones: the two columns the detail panel shows anyway are left out */
+  .radar-table th:nth-child(5), .radar-table td:nth-child(5), .radar-table th:nth-child(7), .radar-table td:nth-child(7) { display: none; }
+  .radar-table th, .radar-table td { padding: 8px 3px; }
+  .radar-table td:first-child, .radar-table th:first-child { padding-left: 8px; }
+  .radar-table { font-size: 11px; }
+  .radar-table th { font-size: 10px; letter-spacing: 0; }
+}

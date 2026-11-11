@@ -1,0 +1,81 @@
+{
+ "made_at": "2026-11-11T00:55:30.461835+00:00",
+ "basis": {
+  "phrases": [
+   "retrieval-augmented generation",
+   "retrieval-augmented LMs",
+   "retrieval augmented language models",
+   "RAG"
+  ],
+  "checks": [
+   {
+    "phrase": "retrieval-augmented generation",
+    "source": "topic",
+    "matches": 26344,
+    "sampled": 8,
+    "relevant": 5,
+    "kept": true,
+    "reason": "the topic name itself (5/8 sampled works on-topic)"
+   },
+   {
+    "phrase": "retrieval augmented generation",
+    "source": "config",
+    "matches": 26344,
+    "sampled": 8,
+    "relevant": 5,
+    "kept": false,
+    "reason": "only 5/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "RAG",
+    "source": "config",
+    "matches": 30794,
+    "sampled": 8,
+    "relevant": 6,
+    "kept": true,
+    "reason": "6/8 sampled works on-topic"
+   },
+   {
+    "phrase": "retrieval-augmented LMs",
+    "source": "ai_suggested",
+    "matches": 9,
+    "sampled": 8,
+    "relevant": 7,
+    "kept": true,
+    "reason": "7/8 sampled works on-topic"
+   },
+   {
+    "phrase": "retrieval augmented language models",
+    "source": "ai_suggested",
+    "matches": 245,
+    "sampled": 8,
+    "relevant": 7,
+    "kept": true,
+    "reason": "7/8 sampled works on-topic"
+   },
+   {
+    "phrase": "augmented generation with retrieval",
+    "source": "ai_suggested",
+    "matches": 2,
+    "sampled": 0,
+    "relevant": 0,
+    "kept": false,
+    "reason": "only 2 matching works"
+   },
+   {
+    "phrase": "retrieval-enhanced generation",
+    "source": "ai_suggested",
+    "matches": 120,
+    "sampled": 8,
+    "relevant": 4,
+    "kept": false,
+    "reason": "only 4/8 sampled works on-topic (needs 75%)"
+   }
+  ],
+  "precision_sampled": 20,
+  "precision_relevant": 12,
+  "precision_pct": 60.0,
+  "llm_alias": "glm_5_3_flash",
+  "note": "Counted: works whose title or abstract contains any of 'retrieval-augmented generation', 'retrieval-augmented LMs', 'retrieval augmented language models', 'RAG' (singular and plural forms match automatically; a work matching several phrases is counted once). Not counted, because too few sampled works were about this topic: 'retrieval augmented generation', 'augmented generation with retrieval', 'retrieval-enhanced generation'. An AI check of 20 random counted works found 12 (60%) mainly about the topic."
+ }
+}
