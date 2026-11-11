@@ -11,6 +11,8 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
+import shutil
 import subprocess
 import sys
 import time
@@ -69,6 +71,29 @@ def publish(message: str = "Site data update", log: Callable[[str], None] = prin
             LOCK.unlink()
         except FileNotFoundError:
             pass
+
+
+_STAMP = re.compile(r"20\d\d-\d\d-\d\dT\d\d:\d\d:\d\d")
+
+
+def newest_stamp(path: Path) -> str:
+    """The latest date-and-time written anywhere inside a data file ("" when there is none or it cannot be read)."""
+    try:
+        return max(_STAMP.findall(path.read_text(encoding="utf-8", errors="replace")), default="")
+    except OSError:
+        return ""
+
+
+def copy_unless_older(src: Path, dst: Path) -> bool:
+    """Copy a shared data file into the snapshot, unless the snapshot's copy holds later entries. The report agent and
+    the trading agent may publish from different machines, each with its own copy of files the other one writes (the
+    radar, the trading record, the paper funds): a machine's older copy must never replace the other's newer one.
+    Returns True when copied."""
+    if dst.is_file() and newest_stamp(dst) > newest_stamp(src):
+        return False
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy(src, dst)
+    return True
 
 
 def trade_fingerprint(runs_dir: Path) -> str:

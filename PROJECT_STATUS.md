@@ -325,3 +325,18 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   leftover `if True:` removed from `fund_trade.run_check` (indentation only); `cp -n` warning in `deploy/setup_vps.sh`.
 - Still open from the audit: video behind the product, patent evidence missing in 29 of 60 reports, paid reports readable
   in the snapshot once the repository is public, only 2 of 60 reports open to a visitor, unknown report address returns 200.
+
+## 2026-11-11 (night): Agent Market hire handled by the server; publishing from two machines made safe
+- Run live: a test hire on NEAR Agent Market (brief "confidential computing", created 12:39:30 UTC) was picked up by the
+  report agent on the cloud server at 12:40:24, researched with all 9 agents (cost $0.32, one GDELT rate-limit note),
+  sealed on NEAR mainnet (tx 5QvRePUW...), given a paper fund, submitted at 12:47:14 and published (commit 3813744).
+- Problem found: the export rebuilt the whole snapshot from the publishing machine's own files. The server's publish
+  therefore replaced the new Radar (EPO, 11 Nov) with its own older copy (9 Nov) and set the trading record back by four
+  checks; a publish from the laptop would have deleted the server's new report.
+- Fix (mock-tested, 336 tests pass; the export itself run live on the laptop): `export_site.py` now adds to the snapshot
+  and never takes away. Reports only the other machine has are kept (`--prune` removes them on purpose), and a shared
+  file (radar, portfolio, trading record, economy, proposals, each paper fund) is replaced only when this machine's copy
+  is not older than the snapshot's (`site_publish.copy_unless_older`, by the latest time written inside the file).
+  The Radar and the trading record in the snapshot are restored.
+- Known limit: the trading agent on the laptop does not see reports made on the server (they are not in its own data),
+  so it cannot buy them until trading runs on the server as well.

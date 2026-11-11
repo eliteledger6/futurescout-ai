@@ -71,3 +71,19 @@ def test_a_changed_near_com_balance_is_published(tmp_path):
     assert sp.trade_fingerprint(tmp_path) == before                               # rounding noise: no publish
     f.write_text(json.dumps({"proposals": [], "private_near": 1.72}))
     assert sp.trade_fingerprint(tmp_path) != before                               # money moved: publish
+
+
+def test_an_older_copy_never_replaces_a_newer_one_in_the_snapshot(tmp_path):
+    """Two machines publish (report agent on a server, trading agent on a laptop): each has a stale copy of the other's files."""
+    from app.site_publish import copy_unless_older, newest_stamp
+    mine, snap = tmp_path / "runs" / "radar.json", tmp_path / "site_data" / "radar.json"
+    mine.parent.mkdir(); snap.parent.mkdir()
+    mine.write_text('{"generated_at": "2026-11-09T06:53:54.555Z", "topics": []}', encoding="utf-8")
+    snap.write_text('{"generated_at": "2026-11-11T11:47:15.813Z", "topics": [1]}', encoding="utf-8")
+    assert newest_stamp(mine) == "2026-11-09T06:53:54" and newest_stamp(tmp_path / "missing.json") == ""
+    assert copy_unless_older(mine, snap) is False and '"topics": [1]' in snap.read_text(encoding="utf-8")   # snapshot kept
+    mine.write_text('{"generated_at": "2026-11-12T01:00:00Z", "topics": [2]}', encoding="utf-8")
+    assert copy_unless_older(mine, snap) is True and '"topics": [2]' in snap.read_text(encoding="utf-8")    # newer: copied
+    mine.write_text('{"generated_at": "2026-11-12T01:00:00Z", "topics": []}', encoding="utf-8")             # same time (an entry removed): this machine's copy
+    assert copy_unless_older(mine, snap) is True and '"topics": []' in snap.read_text(encoding="utf-8")
+    assert copy_unless_older(mine, tmp_path / "site_data" / "funds" / "new.json") is True                   # nothing there yet: copied
