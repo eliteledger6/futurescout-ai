@@ -278,7 +278,7 @@ export interface TopicFund { topic: string; slug: string; sector: string | null;
 
 /* ---- stage 3: live-trading test + shadow mode (read-only view) */
 export interface TradeQuote { amountInUsd?: string; amountOutUsd?: string; amountOutFormatted?: string; depositAddress?: string; quotedAt?: string; dry?: boolean; route?: string }
-export interface TradeProposal {
+export interface TradeProposal { correction?: string | null;
   id: string; created_at: string; mode: "live" | "shadow"; side: "buy" | "sell" | "hold"; topic: string; ticker: string; symbol: string; usd: number;
   fraction?: number | null; quantity?: number | null;
   rationale: string; risks: string[]; confidence: string; model: string | null; model_cost_usd: number;
@@ -302,7 +302,7 @@ export interface Trading {
   strategy: { rules: string[]; config: { check_minutes: number; review_hours: number; drop_pct: number; jump_pct: number; min_confidence_pct: number;
     max_adds_per_ticker: number; max_ticker_share_pct: number }; last_check_at: string | null };
   checks: { id: string; at: string; mode: "live" | "shadow"; triggers: { kind: string; ticker: string; topic: string; detail: string }[]; action: string;
-    ticker: string; usd: number; summary: string; what_changed: string; proposal_id: string | null; model: string | null; cost_usd: number; notes: string[] }[];
+    ticker: string; usd: number; summary: string; what_changed: string; proposal_id: string | null; model: string | null; cost_usd: number; notes: string[]; correction?: string | null }[];
   shadow_portfolio: { budget_usd: number; invested_usd: number; cash_usd: number; value_usd: number; realized_usd?: number;
     positions: { symbol: string; ticker: string; topic: string; quantity: number; cost_usd: number; orders: number; value_usd: number | null; change_pct: number | null }[] };
 }

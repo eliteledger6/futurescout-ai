@@ -266,3 +266,8 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
 - 2026-11-11 (owner): the trading agent buys a report only when it could act on it now: one of its stocks is rated
   'strong' or 'building' AND NEAR Intents quotes it (the 6G report, rated 'early', had been bought for nothing). Reports
   already bought stay usable. The trading page also shows refused buys with the reason and every bought report. Mock-tested.
+- 2026-11-11 (owner: "make sure all your wordings are correct"): an extra review is now named "extra review, outside the
+  hourly schedule" (never "the owner asked"); refused orders say "refused by the code's safety checks". The four shadow
+  reviews Claude ran for testing (4:11-4:35 PM) keep the agent's original words, with a visible correction (field
+  `correction`, not part of the record's fingerprint): started by the developer, not the owner; the NVDA refusal came
+  from the price band that the owner removed minutes later; the 4:26 "no fund includes INTC" came from a bug since fixed.

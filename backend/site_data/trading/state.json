@@ -60,6 +60,7 @@
         }
       ],
       "sha256": null,
+      "correction": null,
       "chain": null
     },
     {
@@ -152,6 +153,7 @@
         }
       ],
       "sha256": "00e984e76326a4bd67ae69ac09dc2cf5ad874cceb7b362cc21390a5b5a90cd27",
+      "correction": null,
       "chain": {
         "network": "testnet",
         "contract": "v1.social08.testnet",
@@ -229,6 +231,7 @@
         }
       ],
       "sha256": "eed81448c69af27e34888f3d8c59ea67379bf7c9a2abe026257d152bfbd12252",
+      "correction": null,
       "chain": null
     },
     {
@@ -269,6 +272,7 @@
         }
       ],
       "sha256": "23f82626aa9dec26316f33cbf16ee084192bfa3adacf6bd91ac37494428107d6",
+      "correction": "Correction: this extra review was started by the developer (Claude) to test a change, outside the hourly schedule. The agent was told 'the owner asked for a full review', which was not accurate; nobody accepted or rejected anything by hand.",
       "chain": null
     },
     {
@@ -309,6 +313,7 @@
         }
       ],
       "sha256": "1bd1aa22a9408931301ef9270f14fd8e8ae0934fd520694b18998819ef063722",
+      "correction": "Correction: this extra review was started by the developer (Claude) to test a change, outside the hourly schedule. The agent was told 'the owner asked for a full review', which was not accurate; nobody accepted or rejected anything by hand. Its statement that no topic fund includes INTC came from a bug in what the agent was shown (fixed minutes later): the high bandwidth memory fund still held INTC; NEAR Intents just could not quote it.",
       "chain": null
     },
     {
@@ -378,6 +383,7 @@
         }
       ],
       "sha256": "872ba289d0f4137e7d856efb4fecd116a49813521d4f381260f206c30a86e4e0",
+      "correction": "Correction: this extra review was started by the developer (Claude) to test a change, outside the hourly schedule. The agent was told 'the owner asked for a full review', which was not accurate; nobody accepted or rejected anything by hand. The buy was refused by the code's price check (3% band), which was in place at 4:27 PM; the owner removed that check a few minutes later, and since then the agent judges the price gap itself.",
       "chain": null
     },
     {
@@ -418,6 +424,7 @@
         }
       ],
       "sha256": "4a2d49421287dbb1e36e34af450528fe945b280de220b150c0ab8123bfbd94a8",
+      "correction": "Correction: this extra review was started by the developer (Claude) to test a change, outside the hourly schedule. The agent was told 'the owner asked for a full review', which was not accurate; nobody accepted or rejected anything by hand.",
       "chain": null
     },
     {
@@ -458,10 +465,11 @@
         }
       ],
       "sha256": "f9eeac6f12fe1d31939c37606173da327e91783f9085a0d389ea88afcb1f10b3",
+      "correction": null,
       "chain": null
     }
   ],
-  "updated_at": "2026-11-11T08:51:27.014683Z",
+  "updated_at": "2026-11-11T09:00:53.699821Z",
   "checks": [
     {
       "id": "665f6b4d47",
@@ -871,7 +879,8 @@
       "model": "claude_opus_5_5",
       "cost_usd": 0.050756,
       "notes": [],
-      "sha256": "556485b52e0cc88ade5f5e50357842b8e4bf96d7509b67856fab970deffdf31b"
+      "sha256": "556485b52e0cc88ade5f5e50357842b8e4bf96d7509b67856fab970deffdf31b",
+      "correction": "Correction: this extra review was started by the developer (Claude) to test a change, outside the hourly schedule. The agent was told 'the owner asked for a full review', which was not accurate; nobody accepted or rejected anything by hand."
     },
     {
       "id": "923b8ac772",
@@ -940,7 +949,8 @@
       "notes": [
         "sale of 'INTC' refused by code: the holding's current value could not be quoted; turned into hold"
       ],
-      "sha256": "3c0252a48193725171bc1e3b0d5b104dcffad61187f20801ed6a409cefeea03c"
+      "sha256": "3c0252a48193725171bc1e3b0d5b104dcffad61187f20801ed6a409cefeea03c",
+      "correction": "Correction: this extra review was started by the developer (Claude) to test a change, outside the hourly schedule. The agent was told 'the owner asked for a full review', which was not accurate; nobody accepted or rejected anything by hand. Its statement that no topic fund includes INTC came from a bug in what the agent was shown (fixed minutes later): the high bandwidth memory fund still held INTC; NEAR Intents just could not quote it."
     },
     {
       "id": "4b036a253f",
@@ -963,7 +973,8 @@
       "model": "claude_opus_5_5",
       "cost_usd": 0.043228,
       "notes": [],
-      "sha256": "d8bef1450c2d2c58055e597b85de0751a650ecba32b61bf49b3a18dfe0fb26ab"
+      "sha256": "d8bef1450c2d2c58055e597b85de0751a650ecba32b61bf49b3a18dfe0fb26ab",
+      "correction": "Correction: this extra review was started by the developer (Claude) to test a change, outside the hourly schedule. The agent was told 'the owner asked for a full review', which was not accurate; nobody accepted or rejected anything by hand. The buy was refused by the code's price check (3% band), which was in place at 4:27 PM; the owner removed that check a few minutes later, and since then the agent judges the price gap itself."
     },
     {
       "id": "572328322a",
@@ -986,7 +997,8 @@
       "model": "claude_opus_5_5",
       "cost_usd": 0.045924,
       "notes": [],
-      "sha256": "dc125d0082e7429a928b1bc3cd88e53579e9752948798ed924a19af8d4f077d6"
+      "sha256": "dc125d0082e7429a928b1bc3cd88e53579e9752948798ed924a19af8d4f077d6",
+      "correction": "Correction: this extra review was started by the developer (Claude) to test a change, outside the hourly schedule. The agent was told 'the owner asked for a full review', which was not accurate; nobody accepted or rejected anything by hand."
     },
     {
       "id": "d10f87f825",

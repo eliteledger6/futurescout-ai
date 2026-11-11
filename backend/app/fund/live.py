@@ -122,6 +122,7 @@ class Proposal(BaseModel):
     error: Optional[str] = None
     history: list[Event] = Field(default_factory=list)
     sha256: Optional[str] = None               # fingerprint of the finished record
+    correction: Optional[str] = None           # a later, clearly marked correction of the record's wording (not part of the fingerprint)
     chain: Optional[dict] = None               # NEAR testnet record of that fingerprint
 
     def mark(self, status: str, note: str = "", now: Optional[datetime] = None) -> None:
@@ -234,7 +235,7 @@ def new_id() -> str:
 
 
 def fingerprint(p: Proposal) -> str:
-    data = p.model_dump(mode="json", exclude={"sha256", "chain"})
+    data = p.model_dump(mode="json", exclude={"sha256", "chain", "correction"})
     return hashlib.sha256(json.dumps(data, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
 
 

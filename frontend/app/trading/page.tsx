@@ -202,7 +202,7 @@ function Elapsed({ since }: { since: string }) {
   return <span className="mono">{Math.floor(s / 60)}:{String(s % 60).padStart(2, "0")}</span>;
 }
 
-const TRIGGER_WORDS: Record<string, string> = { new_report: "new report", price_drop: "sharp fall", price_jump: "sharp rise", review: "daily review", manual: "review on request", after_sale: "after a sale" };
+const TRIGGER_WORDS: Record<string, string> = { new_report: "new report", price_drop: "sharp fall", price_jump: "sharp rise", review: "daily review", manual: "extra review", after_sale: "after a sale" };
 
 function EconomyPanel({ e }: { e: Economy }) {
   const link = (tx: string | null) => (tx ? <a href={e.explorer_tx.replace("{tx}", tx)} target="_blank" rel="noopener noreferrer">tx ↗</a> : null);
@@ -260,7 +260,7 @@ function outcome(c: { action: string; usd: number; ticker: string; proposal_id: 
   const done = !p || ["success", "shadow_filled", "deposited", "executing", "approved"].includes(p.status);
   if (done) return c.action === "buy" ? `bought ${what}` : `sold ${what}`;
   const why = p.history.length ? p.history[p.history.length - 1].note.replace(/^shadow: /, "") : p.status;
-  return `decided to ${c.action} ${what}; not done: ${why}`;
+  return `decided to ${c.action} ${what}; refused by the code's safety checks: ${why}`;
 }
 
 function AgentLog({ t }: { t: Trading }) {
@@ -283,6 +283,7 @@ function AgentLog({ t }: { t: Trading }) {
               {whyWoke(c.triggers)}{" → "}
               <b>{outcome(c, t.proposals)}</b>
               {c.summary && <div className="small muted">{firstSentence(c.summary)}</div>}
+              {c.correction && <div className="small" style={{ color: "#e0b04a" }}>{c.correction}</div>}
             </li>
           ))}
         </ol>
@@ -331,6 +332,7 @@ function LiveTrade({ p, explorer, animate = true }: { p: TradeProposal; explorer
         <div className="tr-avatar">{ICON.agent}</div>
         <div>
           <div className="tr-model">{manual ? "OWNER · MANUAL SALE IN NEAR.COM" : `TRADING AGENT · ${(p.model ?? "model").replace(/_/g, " ").toUpperCase()}`}</div>
+          {p.correction && <p className="small" style={{ color: "#e0b04a", margin: "0 0 6px" }}>{p.correction}</p>}
           <p className="tr-say">{animate ? typed : p.rationale}{animate && typed.length < p.rationale.length && <span className="caret" />}</p>
           {p.risks.length > 0 && <ul className="tr-risks">{p.risks.map((r) => <li key={r}>{r}</li>)}</ul>}
         </div>

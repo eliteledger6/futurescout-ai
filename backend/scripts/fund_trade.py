@@ -8,7 +8,7 @@
   python scripts\\fund_trade.py reject <id>
   python scripts\\fund_trade.py resume <id>            re-check a deposit that was sent but not finished (sends nothing)
   python scripts\\fund_trade.py stop | start           kill switch on / off
-  python scripts\\fund_trade.py check [--shadow] [--review]   strategy wake-up (--review: the owner asks for a full keep/sell/buy review)
+  python scripts\\fund_trade.py check [--shadow] [--review]   strategy wake-up (--review: an extra full keep/sell/buy review now)
   python scripts\\fund_trade.py watch                  shadow + live checks every hour (live executes only with live.auto_approve)
   python scripts\\fund_trade.py holdings               what the live fund holds according to its records
 
@@ -325,7 +325,7 @@ def run_check(s, cfg, shadow: bool, extra: list | None = None, depth: int = 0) -
             state.last_check_at = now
         else:
             state.last_live_check_at = now
-        check.sha256 = hashlib.sha256(json.dumps(check.model_dump(mode="json", exclude={"sha256"}), sort_keys=True).encode()).hexdigest()
+        check.sha256 = hashlib.sha256(json.dumps(check.model_dump(mode="json", exclude={"sha256", "correction"}), sort_keys=True).encode()).hexdigest()
         state.checks = (state.checks or [])[-199:] + [check.model_dump(mode="json")]
         save_state(state, STATE)
         print(f"  -> {check.action}: {check.summary[:200]}")
@@ -900,7 +900,7 @@ def main() -> int:
     ap.add_argument("command", choices=["status", "propose", "list", "approve", "reject", "resume", "confirm", "refunded", "stop", "start", "register-usdc", "check", "rules", "watch", "pending", "holdings", "economy", "record-sale", "balance"])
     ap.add_argument("--near", type=float, help="with record-sale: NEAR the owner received (from near.com); else estimated")
     ap.add_argument("--why", default="to pay for research reports (the agent economy)", help="with record-sale: the owner's reason")
-    ap.add_argument("--review", action="store_true", help="with check: the owner asks the agent for a full keep / sell / buy review now")
+    ap.add_argument("--review", action="store_true", help="with check: an extra full keep / sell / buy review now, outside the hourly schedule")
     ap.add_argument("id", nargs="?")
     ap.add_argument("--shadow", action="store_true")
     ap.add_argument("--usd", type=float)
@@ -917,7 +917,7 @@ def main() -> int:
         return cmd_propose(s, cfg, args.shadow, args.usd)
     if args.command == "check":
         if args.review:
-            return run_check(s, cfg, args.shadow, extra=[Trigger(kind="manual", detail="the owner asked for a full review now: keep, sell (part of) a holding, or buy")])
+            return run_check(s, cfg, args.shadow, extra=[Trigger(kind="manual", detail="an extra full review, outside the hourly schedule: keep, sell (part of) a holding, or buy")])
         return cmd_check(s, cfg, args.shadow, args.loop)
     if args.command == "balance":
         near = refresh_private_balance(s, cfg)

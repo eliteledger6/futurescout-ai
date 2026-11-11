@@ -66,6 +66,7 @@ class Check(BaseModel):
     cost_usd: float = 0.0
     notes: list[str] = Field(default_factory=list)
     sha256: Optional[str] = None
+    correction: Optional[str] = None             # a later, clearly marked correction of the wording (not part of the fingerprint)
 
 
 class StrategyDecision(BaseModel):
@@ -114,6 +115,12 @@ def price_line(price_band_pct: float) -> str:
     return ("No price band in code: for every candidate compare quoted_price_per_token with last_close (gap_vs_last_close_pct; the "
             "close may be a day or more old, and a tokenized stock can trade at a premium or discount). Decide yourself whether the "
             "price is acceptable, say so in your reasoning, and take that risk; a sale is filled at the quoted price too.")
+
+
+# How each wake-up reason is named to the agent (and so in its reasoning). "manual" is only the internal name of an
+# extra review started from the command line; it is not a person's decision.
+TRIGGER_NAMES = {"new_report": "new report", "price_drop": "sharp fall", "price_jump": "sharp rise", "review": "daily review",
+                 "manual": "extra review", "after_sale": "after a sale"}
 
 
 def confidence_line(cfg) -> str:  # noqa: ANN001
@@ -175,7 +182,7 @@ def assess(router: ModelRouter, *, triggers: list[Trigger], candidates: list[Can
     sell_line = (f"SELLING is allowed: up to {sells_left_today} sale(s) left today; a holding must have been held at least {cfg.min_hold_hours:.0f} h; "
                  f"sell a share of a holding (`fraction`, {cfg.min_sell_fraction} to 1); the market's minimum trade is ${min_sale_usd:.2f}." if sells_enabled and sells_left_today > 0
                  else "SELLING is not available now (switched off by the owner or today's sales used up): buy or hold.")
-    user = (f"WHY YOU WOKE UP:\n" + "\n".join(f"- {t.kind}: {t.detail}" for t in triggers) + "\n\n"
+    user = (f"WHY YOU WOKE UP:\n" + "\n".join(f"- {TRIGGER_NAMES.get(t.kind, t.kind)}: {t.detail}" for t in triggers) + "\n\n"
             f"{size_line}\n{sell_line}\n{confidence_line(cfg)} {price_line(price_band_pct)} Max adds per ticker: {cfg.max_adds_per_ticker}.\n\n"
             f"WHAT YOU ALREADY HOLD:\n{json.dumps(holdings)}\n\n"
             f"HOLDINGS YOU COULD SELL (with their latest report):\n{json.dumps(sellable, indent=1)}\n\n"
