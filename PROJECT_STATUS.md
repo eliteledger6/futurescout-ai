@@ -377,3 +377,18 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   request). Decisions and trade records keep their own fingerprint; earlier seals stay and still verify.
 - Site and docs say so (home, about, trading page heading, README, RUNNING.md, .env.example, CLAUDE.md).
 - Mock-tested (346 tests pass). Takes effect on each machine when its agents restart with this code.
+
+## 2026-11-11 (night): how reports get written by themselves; Agent Market fees join the 70/30 split (owner's decision)
+- `app/report_queue.py`, in the report agent's loop: one queue = the radar's ranking without topics that have a report
+  from the last `auto_fresh_days` (7). (1) Each of the top `auto_top_n` (5) topics gets a report when it has no fresh
+  one. (2) Every report sold on the report market (a paid purchase in the economy record, read from this machine and
+  from the published snapshot) pays for one more: the next topic in the queue below the top 5. At most
+  `auto_runs_per_day` (2) a day, one per pass, only when no job is waiting; sales made before the first start fund
+  nothing; a failed run is retried after a day and does not use up a sale. Record: `runs/report_queue.json`.
+- `app/market_income.py`: the fee of every accepted, paid NEAR Agent Market hire (`escrowAmount` in USD; test hires
+  are 0 and are not income) is recorded once with its value in NEAR at the live price, published with the site data,
+  and counted by the staking step as received (`extra_received_near`): 70% staked, 30% kept. The listing shows $3.00
+  (checked on the public page today). The fee stays in the marketplace balance until the owner withdraws it, so the
+  70% is staked only once that NEAR is in the report agent's wallet. `/api/economy` shows `market_income`.
+- Mock-tested (352 tests pass). Not run live: the loop seals and spends, so the owner runs it. Both test hires so far
+  paid 0, so no fee has been recorded yet.

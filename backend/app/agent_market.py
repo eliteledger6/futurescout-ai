@@ -39,6 +39,9 @@ class MarketConfig(BaseModel):
     max_topic_words: int = 8
     max_topic_chars: int = 80
     poll_seconds: int = 60
+    auto_top_n: int = 5                    # each of the radar's top N topics always has a fresh report
+    auto_fresh_days: float = 7.0           # "fresh" = a report this recent on the topic
+    auto_runs_per_day: int = 2             # reports the agent writes by itself a day (top-N guarantee + one per report sold); 0 = never
     topic_scout_hours: float = 1.0         # with no job waiting, the Science agent reads a few recent papers this often and may add ONE new radar topic; 0 = never
     topic_scout_papers: int = 5            # papers read per scouting turn
     topic_scout_max_per_day: int = 3       # new radar topics a day at most (each one adds patent searches to the radar refresh)
@@ -149,6 +152,10 @@ class AgentMarketClient:
 
     def assignments(self) -> list[dict]:
         return self._call("GET", "/v1/agents/me/assignments").get("assignments", [])
+
+    def all_assignments(self) -> list[dict]:
+        """Every assignment, finished ones included (the plain list holds only the open ones)."""
+        return self._call("GET", "/v1/agents/me/assignments?status=all").get("assignments", [])
 
     def messages(self, aid: str) -> list[dict]:
         return self._call("GET", f"/v1/assignments/{aid}/messages").get("messages", [])

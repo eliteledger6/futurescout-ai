@@ -116,6 +116,9 @@ agent_market:
   new_runs_per_day: 3             # new research runs a day (each costs about $0.30-0.50 of NEAR AI credit); others are declined and refunded
   reuse_hours: 168                # a sealed report this recent on the same topic is delivered instead of a new run
   poll_seconds: 60
+  auto_top_n: 5                   # the report agent keeps a fresh report on each of the radar's top 5 topics...
+  auto_fresh_days: 7              #   ...fresh = written in the last 7 days
+  auto_runs_per_day: 2            # reports it writes by itself a day at most (top 5 + one for every report sold); 0 = off. About $0.35-0.45 each.
   topic_scout_hours: 1            # with no job waiting, the Science agent (same model as in a research run) reads a few recent papers this often
   topic_scout_papers: 5           #   and may add ONE new topic to the radar, if paper counts confirm it is growing; 0 hours = off
   topic_scout_max_per_day: 3      # new radar topics a day at most

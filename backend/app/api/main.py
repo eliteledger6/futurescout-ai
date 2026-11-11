@@ -485,6 +485,12 @@ def create_app(
         from app.fund.economy import YOCTO, account_near, load_economy, staked_amount
         ec = load_fund_config().economy
         st = load_economy(trading_dir.parent / "economy" / "state.json")
+
+        def market_income_summary() -> dict:
+            """Fees of accepted NEAR Agent Market hires (recorded by the report agent); they join the 70/30 split."""
+            from app import market_income
+            inc = market_income.load(trading_dir.parent / market_income.FILE)
+            return {"hires": len(inc.fees), "usd": inc.usd(), "near": inc.near()}
         wallet = staked = None
         if ec.seller_account:
             hit = economy_cache.get(ec.seller_account)
@@ -506,6 +512,7 @@ def create_app(
                        "min_price_usd": ec.min_price_usd, "max_price_usd": ec.max_price_usd, "margin_usd": ec.margin_usd},
             "spent_near": st.spent_near(), "report_agent_wallet_near": wallet, "report_agent_staked_near": staked,
             "kept_near": st.kept_near, "second_trader_at_usd": ec.second_trader_at_usd,
+            "market_income": market_income_summary(),
             "prices": sorted((p.model_dump(mode="json") for p in st.prices.values()), key=lambda p: -p["price_near"]),
             "purchases": [p.model_dump(mode="json") for p in reversed(st.purchases[-30:])],
             "stakes": [e.model_dump(mode="json") for e in reversed(st.stakes[-10:])],

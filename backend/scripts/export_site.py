@@ -65,7 +65,8 @@ def main() -> int:
     stale = OUT / "economy" / "sales.json"
     if stale.is_file():
         stale.unlink()
-    for rel in ("radar.json", "portfolio.json", "trading/state.json", "economy/state.json", "proposals/state.json"):
+    for rel in ("radar.json", "portfolio.json", "trading/state.json", "economy/state.json", "proposals/state.json",
+                "agent_market/income.json", "report_queue.json"):
         f = src / rel
         if f.is_file():
             print(f"  {rel}" if copy_unless_older(f, OUT / rel) else f"  {rel}: kept the snapshot's copy (it is newer than this machine's)")

@@ -766,14 +766,21 @@ def cmd_economy(s, cfg, what: str, max_new: int | None = None) -> int:  # noqa: 
             print(f"unwrapped {wrapped / YOCTO:.4f} wNEAR into NEAR (tx {tx})")
         liquid, _ = account_near(httpx.Client(timeout=30), ec.rpc, creds[0])
         st0 = load_economy(ECONOMY)
-        if stake_amount_yocto(liquid, ec, st0) is None:
-            owed = st0.received_near() * ec.stake_share - st0.staked_near()
-            print(f"nothing to stake: {ec.stake_share:.0%} of the {st0.received_near():g} NEAR received for reports, minus "
+        # Agent Market fees join the same split (owner 2026-11-11); the report agent records them, maybe on another machine
+        from app import market_income
+        fees = market_income.best(service.RUNS_DIR / market_income.FILE, service.BACKEND_DIR / "site_data" / market_income.FILE)
+        extra = fees.near()
+        if extra:
+            print(f"Agent Market fees counted as received: ${fees.usd():.2f} = {extra:g} NEAR ({len(fees.fees)} hire(s))")
+        if stake_amount_yocto(liquid, ec, st0, extra) is None:
+            owed = (st0.received_near() + extra) * ec.stake_share - st0.staked_near()
+            print(f"nothing to stake: {ec.stake_share:.0%} of the {st0.received_near() + extra:g} NEAR received for reports, minus "
                   f"{st0.staked_near():g} NEAR already staked, is {max(0.0, owed):.3f} NEAR (minimum {ec.min_stake_near} NEAR; "
                   f"wallet {liquid / YOCTO:.3f} NEAR, {ec.stake_reserve_near} NEAR always kept for gas). Other NEAR in the wallet is never staked.")
             return 0
         state = load_economy(ECONOMY)
-        ev = stake(state=state, path=ECONOMY, account=creds[0], balance_yocto=liquid, cfg=ec, call=signer.call, now=now)
+        ev = stake(state=state, path=ECONOMY, account=creds[0], balance_yocto=liquid, cfg=ec, call=signer.call, now=now,
+                   extra_received_near=extra)
         print(f"{ev.status}: {ev.note} (tx {ev.tx_hash})")
         return 0 if ev.status == "staked" else 1
     state = load_economy(ECONOMY)

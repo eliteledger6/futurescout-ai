@@ -33,7 +33,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from app import proposals, service  # noqa: E402
 from app.paper_fund_hook import build_paper_fund, funds_due, update_all_funds  # noqa: E402
 from app.agents.science import topic_scout  # noqa: E402
-from app.radar import load_sectors, load_topics  # noqa: E402
+from app import market_income, report_queue  # noqa: E402
+from app.radar import load_radar, load_sectors, load_topics  # noqa: E402
 from app.radar_refresh import RadarRefresh  # noqa: E402
 from app.sources.openalex import OpenAlexClient  # noqa: E402
 from app.watch import add_topics  # noqa: E402
@@ -46,6 +47,9 @@ from app.report import render_markdown  # noqa: E402
 
 STATE = service.RUNS_DIR / "agent_market" / "state.json"
 PROPOSALS = service.RUNS_DIR / "proposals" / "state.json"
+QUEUE = service.RUNS_DIR / "report_queue.json"                             # reports the agent wrote by itself, and sales already used
+INCOME = service.RUNS_DIR / market_income.FILE                            # Agent Market fees (joins the 70/30 split)
+SNAPSHOT = service.BACKEND_DIR / "site_data"
 SCOUT = service.RUNS_DIR / "topic_scout.json"                              # what the Science agent read and decided while idle
 HOUSEKEEPING = service.RUNS_DIR / "agent_market" / "housekeeping.json"     # when the daily paper-fund update last ran
 REPO = Path(__file__).resolve().parents[2]
@@ -110,6 +114,7 @@ def main() -> int:
           f"Hosted proposals: {'collected from ' + s.public_api_url if remote else 'off (PUBLIC_API_URL / PROPOSALS_TOKEN not set)'}. "
           f"Publishing: {'on' if args.publish else 'off (--publish)'}. "
           f"Radar refresh: {'every %g h' % cfg.radar_refresh_hours if cfg.radar_refresh_hours > 0 else 'off'}. "
+          f"Own reports: {'top %d radar topics kept fresh, one more per report sold, at most %d a day' % (cfg.auto_top_n, cfg.auto_runs_per_day) if cfg.auto_runs_per_day > 0 else 'off'}. "
           f"Idle scouting by the Science agent: {'every %g h, %d papers' % (cfg.topic_scout_hours, cfg.topic_scout_papers) if cfg.topic_scout_hours > 0 else 'off'}. Ctrl+C stops.")
     radar = RadarRefresh(service.RUNS_DIR, service.BACKEND_DIR / "site_data")
     while True:
@@ -157,6 +162,45 @@ def main() -> int:
             hk["funds_at"] = datetime.now(timezone.utc).isoformat()      # tried today: a failure is retried tomorrow, not every minute
             HOUSEKEEPING.parent.mkdir(parents=True, exist_ok=True)
             HOUSEKEEPING.write_text(json.dumps(hk), encoding="utf-8")
+        # ---- Agent Market fees of accepted hires are recorded, so they join the 70% staked / 30% kept split ---------
+        income_changed = False
+        if client and funds_due(hk.get("income_at"), datetime.now(timezone.utc), 1 / 6):
+            try:
+                def near_usd() -> float:
+                    from app.fund import load_fund_config
+                    from app.fund.live import OneClickLive
+                    fc = load_fund_config()
+                    return OneClickLive(fc.intents.api).price_usd(fc.live.near_asset_id)
+                income_changed = bool(market_income.collect(client.all_assignments(), INCOME, near_usd, datetime.now(timezone.utc)))
+            except Exception as exc:  # noqa: BLE001
+                print(f"  Agent Market fees could not be read: {str(exc)[:140]}")
+            hk["income_at"] = datetime.now(timezone.utc).isoformat()
+            HOUSEKEEPING.parent.mkdir(parents=True, exist_ok=True)
+            HOUSEKEEPING.write_text(json.dumps(hk), encoding="utf-8")
+        # ---- reports the agent writes by itself: the radar's top topics, and one more for every report sold -------
+        if cfg.auto_runs_per_day > 0 and not args.once and not rows and not new_reports:
+            try:
+                q, t0 = report_queue.load_state(QUEUE), datetime.now(timezone.utc)
+                first = q.sales_used is None
+                pick = report_queue.next_report(
+                    radar=load_radar(), rows=recent(), state=q, cfg=cfg, now=t0, failed_recently=report_queue.failed_topics(q, t0),
+                    sales=report_queue.sales_count(service.RUNS_DIR / "economy" / "state.json", SNAPSHOT / "economy" / "state.json"))
+                if first:
+                    report_queue.save_state(q, QUEUE)
+                if pick:
+                    topic, reason = pick
+                    why = ("a report was sold: the next topic on the radar is researched" if reason == "sale"
+                           else "it is one of the radar's top topics and has no fresh report")
+                    print(f"[{t0:%H:%M}] writing a report on '{topic}' ({why})")
+                    try:
+                        run_id, _, _ = run_research(topic)
+                        report_queue.record(q, QUEUE, topic=topic, reason=reason, run_id=run_id, note="report written", now=datetime.now(timezone.utc))
+                        new_reports += 1
+                    except Exception as exc:  # noqa: BLE001  (tried again after a day, not every minute)
+                        report_queue.record(q, QUEUE, topic=topic, reason=reason, run_id=None, note=str(exc), now=datetime.now(timezone.utc))
+                        print(f"  the report on '{topic}' failed: {str(exc)[:160]}")
+            except Exception as exc:  # noqa: BLE001
+                print(f"  report queue failed: {str(exc)[:160]}")
         # ---- no job this round: the Science agent reads a few recent papers and may add one new radar topic --------
         topics_changed = False
         if (cfg.topic_scout_hours > 0 and not args.once and not rows and not new_reports and s.openalex_key_value()
@@ -181,7 +225,7 @@ def main() -> int:
             hk["radar_at"] = datetime.now(timezone.utc).isoformat()      # tried now: a failure is retried at the next interval
             HOUSEKEEPING.parent.mkdir(parents=True, exist_ok=True)
             HOUSEKEEPING.write_text(json.dumps(hk), encoding="utf-8")
-        if (new_reports or funds_changed or radar_changed or topics_changed) and args.publish:
+        if (new_reports or funds_changed or radar_changed or topics_changed or income_changed) and args.publish:
             publish()
         if args.once:
             return 0
