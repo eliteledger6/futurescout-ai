@@ -67,3 +67,12 @@ collects them, lets the AI reviewer screen them, researches the approved ones an
 
 Without `PROPOSALS_TOKEN` on Render the hosted page says proposals are closed. Proposals stored on Render since the last
 collection are lost when it redeploys or restarts, so keep the report agent running when you expect visitors.
+
+## Keeping everything alive (2026-11-11)
+- The website (Vercel + Render) runs by itself. The agents run on the owner's laptop while `start_report_agent.bat` is open:
+  double-click it (it restarts the report agent if it ever stops). To start it with Windows: press Win+R, type
+  `shell:startup`, and put a shortcut to `start_report_agent.bat` in the folder that opens.
+- Keep the laptop plugged in and stop it from sleeping (Settings -> System -> Power -> Screen and sleep -> "When plugged in,
+  put my device to sleep after": Never). A sleeping laptop answers nothing.
+- While the agent runs it contacts the hosted API every minute, which also keeps the free Render service awake.
+- The trading loop (`scriptsund_trade.py watch`) is separate and started by hand, only when NEAR Intents works.
