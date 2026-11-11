@@ -48,8 +48,9 @@ Rules that always apply:
   (`scripts\market_agent.py`, `--publish` also exports and pushes `backend/site_data`): Claude does not run that loop while
   seals are on mainnet, and never pushes for the owner. PROPOSALS_TOKEN is a secret (laptop `.env` and the hosted API).
 - Cloud server (owner 2026-11-11): the report agent may run on the owner's VPS (`deploy/VPS.md`). The owner creates the
-  server, adds the GitHub deploy key and types every key into the server's `.env`; Claude never handles those keys and never
-  puts the trading key (FUND_MAINNET_*) on a server.
+  server, adds the GitHub deploy key and types every key into the server's `.env`; Claude never handles those keys. The
+  trading agent may run there as well (owner's decision 2026-11-11, "include the trading agent and everything"): installed
+  switched off, the owner adds the trading key and enables it; limits still change only through `funds.yaml`.
 - Hosting (2026-11-10): Render (API, read-only snapshot `backend/site_data`, no key) + Vercel (website). See HOSTING.md.
 - Say "mock-tested" vs "run live" honestly; never call a feature complete without a test.
 - Do not push, make the repo public, post on X, submit to the hackathon or spend on mainnet without the owner's explicit yes.

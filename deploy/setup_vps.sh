@@ -9,8 +9,11 @@
 # snapshot (backend/site_data) into backend/runs as the starting data, and installs a service that keeps
 # `scripts/market_agent.py --publish` running and restarts it after a crash or a reboot.
 #
+# It also installs a second service for the TRADING agent (`scripts/fund_trade.py watch --publish`), which is left
+# switched OFF: the owner turns it on only after deciding to put the trading key on the server (see deploy/VPS.md).
+#
 # What it does NOT do: it never writes a key or a secret. You create /home/futurescout/futurescout/.env yourself
-# (see deploy/VPS.md) and then start the service. The TRADING agent and its key stay on the owner's own computer.
+# (see deploy/VPS.md) and then start the services.
 set -euo pipefail
 
 REPO="${1:?usage: bash setup_vps.sh git@github.com:OWNER/futurescout-ai.git}"
@@ -80,8 +83,28 @@ PrivateTmp=true
 [Install]
 WantedBy=multi-user.target
 UNIT
+cat > /etc/systemd/system/futurescout-trader.service <<UNIT
+[Unit]
+Description=FUTURESCOUT AI trading agent (buys reports, trades inside the owner's limits, stakes the report agent's earnings)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=${APP_USER}
+WorkingDirectory=${APP_DIR}/backend
+ExecStart=${APP_DIR}/.venv/bin/python scripts/fund_trade.py watch --publish
+Environment=PYTHONUNBUFFERED=1
+Restart=always
+RestartSec=60
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+UNIT
 systemctl daemon-reload
 systemctl enable -q futurescout-agent
+# futurescout-trader is installed but NOT enabled: the owner switches it on (deploy/VPS.md, "Trading agent")
 
 echo
 echo "Installed. The agent is NOT started yet: it needs your keys."
@@ -89,3 +112,4 @@ echo "  1. Fill in the keys:   sudo -u ${APP_USER} nano ${APP_DIR}/.env      (se
 echo "  2. Start it:           systemctl start futurescout-agent"
 echo "  3. Watch it:           journalctl -u futurescout-agent -f"
 echo "Stop the report agent on your laptop first: two agents would both take the same jobs."
+echo "The trading agent is installed but off. To use it, read 'Trading agent' in deploy/VPS.md first."

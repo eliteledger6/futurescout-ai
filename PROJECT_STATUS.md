@@ -241,3 +241,7 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   GitHub deploy key, keys entered by the owner). `publish()` now pulls before it exports and pushes. Checked: script syntax,
   the file-based data path on a scratch clone (60 reports, export round trip changes nothing). NOT yet run on a real server.
   The trading agent and its key stay on the owner's computer.
+- 2026-11-11: hosted Radar fixed (the API served the old sample radar instead of the snapshot; now snapshot first; checked
+  live: "this year so far" filled, heat 818 for the top topic). Server setup now also installs the trading agent as a second,
+  switched-off service (`futurescout-trader`, `fund_trade.py watch --publish`); both loops publish through one lock, the
+  trading loop only after a trade, report purchase or stake. Mock-tested (321 tests); not yet run on a real server.
