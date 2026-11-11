@@ -230,9 +230,49 @@
       ],
       "sha256": "eed81448c69af27e34888f3d8c59ea67379bf7c9a2abe026257d152bfbd12252",
       "chain": null
+    },
+    {
+      "id": "82803ea8cc",
+      "created_at": "2026-11-11T08:11:45.483537Z",
+      "mode": "shadow",
+      "side": "hold",
+      "topic": "",
+      "ticker": "",
+      "symbol": "",
+      "asset_id": "",
+      "usd": 0.0,
+      "fraction": null,
+      "quantity": null,
+      "rationale": "The owner asked for a full review; no new report or sharp price move triggered it. The high bandwidth memory report for INTC is still rated 'strong' at 49.6% confidence, above the 45% minimum. The only candidate that can be bought today, NVDA, has an 'insufficient' report at 29.4% confidence. INTC has no reason to be sold: its latest report is still 'strong' and above the confidence minimum, and we have cash, so rotation does not apply. Every candidate with a 'strong' report (INTC, MRVL, META, MSFT) is marked not quotable, so none can be bought today. NVDA is quotable, but its 'insufficient' verdict and 29.4% confidence fall below the buying rules. We keep the $8,800 in cash until a well-supported candidate can actually be bought.",
+      "risks": [
+        "A tokenized stock (INTCon) depends on its issuer, Ondo, and is not the share itself.",
+        "The HBM report's confidence is only just above the minimum and rests mostly on unverified X claims; none of its findings name Intel directly.",
+        "Holding cash means missing any move in candidates we cannot buy today."
+      ],
+      "confidence": "medium",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.050756,
+      "ref_close": null,
+      "ref_close_date": null,
+      "dry_quote": null,
+      "status": "hold",
+      "quote": null,
+      "deposit_address": null,
+      "deposit_tx": null,
+      "result": null,
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-11T08:11:45.483537Z",
+          "status": "hold",
+          "note": "strategy check: manual"
+        }
+      ],
+      "sha256": "23f82626aa9dec26316f33cbf16ee084192bfa3adacf6bd91ac37494428107d6",
+      "chain": null
     }
   ],
-  "updated_at": "2026-11-10T15:11:59.434366Z",
+  "updated_at": "2026-11-11T08:15:25.284814Z",
   "checks": [
     {
       "id": "665f6b4d47",
@@ -556,6 +596,125 @@
       "cost_usd": 0.0,
       "notes": [],
       "sha256": "c9ef97d37f50879183d3d4b1b49f563af2a008c4576270e2b2d0efd264579588"
+    },
+    {
+      "id": "464c0e1b0d",
+      "at": "2026-11-11T07:50:52.123686Z",
+      "mode": "shadow",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "fc7e12a4605400efcd9c51c3a7985188e489b1d6ede2b9ce38b8484955736884"
+    },
+    {
+      "id": "aa84124f9e",
+      "at": "2026-11-11T07:51:00.671094Z",
+      "mode": "live",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "2f36545763e1267f02723c1ee3ecf99a200c7714f471b44cd093d36ce79c86ef"
+    },
+    {
+      "id": "d61596fd4d",
+      "at": "2026-11-11T08:07:31.252435Z",
+      "mode": "shadow",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "a3e5941d3a3a636d8cc378184322657f483b2a464d33fdfc1f4c5ad78b45ee37"
+    },
+    {
+      "id": "e8606f814c",
+      "at": "2026-11-11T08:07:32.518366Z",
+      "mode": "live",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "9f36e402057e71e748aa2fa9385e8a0b0a8bdb25b1faec33ed054fa7a5f518ed"
+    },
+    {
+      "id": "ca60c87f9d",
+      "at": "2026-11-11T08:11:45.483537Z",
+      "mode": "shadow",
+      "triggers": [
+        {
+          "kind": "manual",
+          "ticker": "",
+          "topic": "",
+          "detail": "the owner asked for a full review now: keep, sell (part of) a holding, or buy"
+        }
+      ],
+      "action": "hold",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "INTC has no reason to be sold: its latest report is still 'strong' and above the confidence minimum, and we have cash, so rotation does not apply. Every candidate with a 'strong' report (INTC, MRVL, META, MSFT) is marked not quotable, so none can be bought today. NVDA is quotable, but its 'insufficient' verdict and 29.4% confidence fall below the buying rules. We keep the $8,800 in cash until a well-supported candidate can actually be bought.",
+      "what_changed": "The owner asked for a full review; no new report or sharp price move triggered it. The high bandwidth memory report for INTC is still rated 'strong' at 49.6% confidence, above the 45% minimum. The only candidate that can be bought today, NVDA, has an 'insufficient' report at 29.4% confidence.",
+      "proposal_id": "82803ea8cc",
+      "model": "claude_opus_5_5",
+      "cost_usd": 0.050756,
+      "notes": [],
+      "sha256": "556485b52e0cc88ade5f5e50357842b8e4bf96d7509b67856fab970deffdf31b"
+    },
+    {
+      "id": "923b8ac772",
+      "at": "2026-11-11T08:15:23.623317Z",
+      "mode": "shadow",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "7e0e62ea033b2709357594a506241223f0f07ffbf65bd72a14dabd8fff76e80d"
+    },
+    {
+      "id": "91c31e642e",
+      "at": "2026-11-11T08:15:25.268877Z",
+      "mode": "live",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "fe0deae8629047ecd2f2e2e38ab578e8d7bb2d74e1b26d76cade1bce41ecf469"
     }
   ],
   "seen_runs": {
@@ -571,9 +730,10 @@
     "vision-language-action model": "7a87a2e1-5e88-4679-b03f-a20e042c6497"
   },
   "seen_closes": {},
-  "last_check_at": "2026-11-10T15:11:53.307354Z",
-  "last_live_check_at": "2026-11-10T15:11:59.384603Z",
+  "last_check_at": "2026-11-11T08:15:23.623317Z",
+  "last_live_check_at": "2026-11-11T08:15:25.268877Z",
   "private_near": 3.4579,
-  "private_checked_at": "2026-11-10T15:11:59.374605Z",
+  "private_checked_at": "2026-11-11T08:15:25.253298Z",
+  "last_values": {},
   "hidden": []
 }

@@ -23,7 +23,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-10T08:16:28.490285Z",
+        "checked_at": "2026-11-11T08:17:49.177771Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -44,7 +44,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-10T08:16:28.490285Z",
+        "checked_at": "2026-11-11T08:17:49.177771Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -65,7 +65,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-10T08:16:28.490285Z",
+        "checked_at": "2026-11-11T08:17:49.177771Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -86,7 +86,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-10T08:16:28.490285Z",
+        "checked_at": "2026-11-11T08:17:49.177771Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -107,7 +107,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-10T08:16:28.490285Z",
+        "checked_at": "2026-11-11T08:17:49.177771Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -463,13 +463,13 @@
     {
       "day": "2026-11-09",
       "value_usd": 10441.53,
-      "benchmark_value_usd": null
+      "benchmark_value_usd": 10198.97
     }
   ],
   "benchmark": "SPY",
-  "benchmark_start_close": null,
-  "benchmark_start_date": null,
-  "updated_at": "2026-11-10T08:13:52.973291Z",
+  "benchmark_start_close": 735.29,
+  "benchmark_start_date": "2026-11-06",
+  "updated_at": "2026-11-11T08:15:26.190373Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",

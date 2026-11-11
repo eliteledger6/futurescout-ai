@@ -11,38 +11,29 @@
       "ticker": "INTC",
       "company": "Intel",
       "tier": "low",
-      "shares": 37.437576698188124,
-      "cost_usd": 1964.1461445324408,
-      "last_close": 59.37,
-      "last_date": "2026-11-09",
+      "shares": 26.23201445036986,
+      "cost_usd": 1312.766811066765,
+      "last_close": 58.13,
+      "last_date": "2026-11-10",
       "timing_risk": "subdued",
       "why": "Company Scout: 2 patent(s), 2 paper(s), 1 filing(s); large by revenue",
       "route": {
-        "available": true,
+        "available": false,
         "symbol": "INTCon",
         "asset_id": "nep141:bnb-0xa528caaa2f96090e379d43f90834c75df54d6e74.omdep.near",
         "blockchain": "BNB Chain",
-        "token_price_usd": 59.3498,
-        "checked_at": "2026-11-10T08:15:21.374250Z",
-        "note": "listed by the NEAR Intents bridge; the price implied by a dry-run quote matches the stock"
+        "token_price_usd": null,
+        "checked_at": "2026-11-11T08:16:44.131357Z",
+        "note": "listed by the NEAR Intents bridge, but no quote could be obtained right now"
       },
-      "quote": {
-        "amount_in_usd": 2221.73,
-        "amount_out_usd": 2209.24,
-        "amount_out": "37.470106609175941618",
-        "cost_pct": 0.562,
-        "time_estimate_s": 25.0,
-        "quoted_at": "2026-11-10T08:15:22.219944Z",
-        "correlation_id": "c0ed46a6-2644-4e8b-9c43-6433f663bf4a",
-        "error": null
-      }
+      "quote": null
     },
     {
       "ticker": "MU",
       "company": "Micron Technology Inc",
       "tier": "low",
-      "shares": 3.0316700928478877,
-      "cost_usd": 2222.6689285714288,
+      "shares": 2.0798840619245724,
+      "cost_usd": 1524.8670000000002,
       "last_close": 733.15,
       "last_date": "2026-11-09",
       "timing_risk": null,
@@ -53,7 +44,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-10T08:15:23.013377Z",
+        "checked_at": "2026-11-11T08:16:47.702250Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -62,8 +53,8 @@
       "ticker": "AMAT",
       "company": "Applied Materials Inc /De",
       "tier": "low",
-      "shares": 5.521252192686548,
-      "cost_usd": 2045.9000000000003,
+      "shares": 4.115145054648496,
+      "cost_usd": 1524.867,
       "last_close": 370.55,
       "last_date": "2026-11-09",
       "timing_risk": null,
@@ -74,7 +65,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-10T08:15:23.013377Z",
+        "checked_at": "2026-11-11T08:16:47.702250Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -95,7 +86,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-10T08:15:23.013377Z",
+        "checked_at": "2026-11-11T08:16:47.702250Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -116,7 +107,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-10T08:15:23.013377Z",
+        "checked_at": "2026-11-11T08:16:47.702250Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -137,7 +128,58 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-10T08:15:23.013377Z",
+        "checked_at": "2026-11-11T08:16:47.702250Z",
+        "note": "no tokenized version in the public NEAR Intents token lists"
+      },
+      "quote": null
+    },
+    {
+      "ticker": "NVDA",
+      "company": "Nvidia Corp",
+      "tier": "low",
+      "shares": 9.028758363431821,
+      "cost_usd": 1524.8670000000002,
+      "last_close": 168.89,
+      "last_date": "2026-11-10",
+      "timing_risk": null,
+      "why": "Company Scout: 1 paper(s); large by revenue",
+      "route": {
+        "available": true,
+        "symbol": "NVDAon",
+        "asset_id": "nep141:bnb-0xa9ee28c80f960b889dfbd1902055218cba016f75.omdep.near",
+        "blockchain": "BNB Chain",
+        "token_price_usd": 174.9265,
+        "checked_at": "2026-11-11T08:16:47.702250Z",
+        "note": "listed by the NEAR Intents bridge; the price implied by a dry-run quote matches the stock"
+      },
+      "quote": {
+        "amount_in_usd": 1524.07,
+        "amount_out_usd": 1509.47,
+        "amount_out": "8.712665432155566025",
+        "cost_pct": 0.958,
+        "time_estimate_s": 12.0,
+        "quoted_at": "2026-11-11T08:16:48.446094Z",
+        "correlation_id": "d8eba180-577b-4844-a98f-5541365e3a88",
+        "error": null
+      }
+    },
+    {
+      "ticker": "IFNNY",
+      "company": "Infineon Technologies Ag",
+      "tier": "high",
+      "shares": 5.988522215628978,
+      "cost_usd": 334.159539632097,
+      "last_close": 55.8,
+      "last_date": "2026-11-09",
+      "timing_risk": null,
+      "why": "Company Scout: 1 patent(s); size unknown (no revenue data), counted as high risk",
+      "route": {
+        "available": false,
+        "symbol": null,
+        "asset_id": null,
+        "blockchain": null,
+        "token_price_usd": null,
+        "checked_at": "2026-11-11T08:16:49.221510Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -374,6 +416,91 @@
         "tx_hash": "3nwEgFDwHDwKny7xVpbUnmWjTTeqQjNxhaBJnLNXk1Mp",
         "explorer_url": "https://testnet.nearblocks.io/txns/3nwEgFDwHDwKny7xVpbUnmWjTTeqQjNxhaBJnLNXk1Mp"
       }
+    },
+    {
+      "at": "2026-11-11T08:15:26.190373Z",
+      "run_id": "96fe1ca7-750d-4e5d-9bd8-d3dc7312b94c",
+      "report_date": "2026-11-10",
+      "band": "building",
+      "score": 63.3,
+      "previous_score": 63.3,
+      "confidence_pct": 40.5,
+      "target_invested_pct": 100.0,
+      "tier_targets_usd": {
+        "low": 6099.47,
+        "medium": 3049.73,
+        "high": 1016.58
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [],
+      "trades": [
+        {
+          "day": "2026-11-10",
+          "ticker": "INTC",
+          "tier": "low",
+          "side": "sell",
+          "shares": 11.205562,
+          "price": 58.13,
+          "usd": 651.38,
+          "fee_usd": 1.95
+        },
+        {
+          "day": "2026-11-09",
+          "ticker": "MU",
+          "tier": "low",
+          "side": "sell",
+          "shares": 0.951786,
+          "price": 733.15,
+          "usd": 697.8,
+          "fee_usd": 2.09
+        },
+        {
+          "day": "2026-11-09",
+          "ticker": "AMAT",
+          "tier": "low",
+          "side": "sell",
+          "shares": 1.406107,
+          "price": 370.55,
+          "usd": 521.03,
+          "fee_usd": 1.56
+        },
+        {
+          "day": "2026-11-10",
+          "ticker": "NVDA",
+          "tier": "low",
+          "side": "buy",
+          "shares": 9.028758,
+          "price": 168.89,
+          "usd": 1524.87,
+          "fee_usd": 4.57
+        },
+        {
+          "day": "2026-11-09",
+          "ticker": "IFNNY",
+          "tier": "high",
+          "side": "buy",
+          "shares": 5.988522,
+          "price": 55.8,
+          "usd": 334.16,
+          "fee_usd": 1.0
+        }
+      ],
+      "reasons": [
+        "Why now: price review: 1 company(ies) were waiting for a daily close.",
+        "Verdict band 'building' (score 63.3), confidence 40%. Owner rule: every paper fund is fully invested, so all of the fund goes into the basket.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-11."
+      ],
+      "value_before_usd": 10165.78,
+      "sha256": "4fb2380aaf0f152589fcd39d24c8b12dca531308b1b01a418399f424f7a28742",
+      "chain": {
+        "network": "mainnet",
+        "contract": "social.near",
+        "account": "grandbread5023.near",
+        "key": "funds/fund_backside-power-delivery_5",
+        "sha256": "4fb2380aaf0f152589fcd39d24c8b12dca531308b1b01a418399f424f7a28742",
+        "tx_hash": "4u4WmT6fz6HGxHXJVwai5n9NAvt9qGB676Qu7uTu7YNB",
+        "explorer_url": "https://nearblocks.io/txns/4u4WmT6fz6HGxHXJVwai5n9NAvt9qGB676Qu7uTu7YNB"
+      }
     }
   ],
   "history": [
@@ -386,12 +513,17 @@
       "day": "2026-11-09",
       "value_usd": 10212.2,
       "benchmark_value_usd": null
+    },
+    {
+      "day": "2026-11-10",
+      "value_usd": 10154.6,
+      "benchmark_value_usd": 10000.0
     }
   ],
   "benchmark": "SPY",
-  "benchmark_start_close": null,
-  "benchmark_start_date": null,
-  "updated_at": "2026-11-10T08:13:52.973291Z",
+  "benchmark_start_close": 749.92,
+  "benchmark_start_date": "2026-11-10",
+  "updated_at": "2026-11-11T08:15:26.190373Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",

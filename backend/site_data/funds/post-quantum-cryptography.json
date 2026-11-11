@@ -13,8 +13,8 @@
       "tier": "low",
       "shares": 18.20540914434457,
       "cost_usd": 9925.224957313774,
-      "last_close": 545.18,
-      "last_date": "2026-11-09",
+      "last_close": 533.16,
+      "last_date": "2026-11-10",
       "timing_risk": null,
       "why": "Company Scout: 2 patent(s); large by revenue",
       "route": {
@@ -22,19 +22,19 @@
         "symbol": "MSFTon",
         "asset_id": "nep141:bnb-0x6bfe75d1ad432050ea973c3a3dcd88f02e2444c3.omdep.near",
         "blockchain": "BNB Chain",
-        "token_price_usd": 549.1257,
-        "checked_at": "2026-11-10T08:15:55.155780Z",
+        "token_price_usd": 539.2519,
+        "checked_at": "2026-11-11T08:17:16.790214Z",
         "note": "listed by the NEAR Intents bridge; the price implied by a dry-run quote matches the stock"
       },
       "quote": {
-        "amount_in_usd": 9920.91,
-        "amount_out_usd": 9860.97,
-        "amount_out": "18.062702102912526033",
-        "cost_pct": 0.604,
-        "time_estimate_s": 25.0,
-        "quoted_at": "2026-11-10T08:15:56.213118Z",
-        "correlation_id": "e361f2f2-a41c-43eb-92c4-b49f3cf39bd6",
-        "error": null
+        "amount_in_usd": 9706.4,
+        "amount_out_usd": null,
+        "amount_out": null,
+        "cost_pct": null,
+        "time_estimate_s": null,
+        "quoted_at": "2026-11-11T08:17:17.566847Z",
+        "correlation_id": null,
+        "error": "No liquidity available"
       }
     }
   ],
@@ -368,12 +368,17 @@
       "day": "2026-11-09",
       "value_usd": 9925.22,
       "benchmark_value_usd": null
+    },
+    {
+      "day": "2026-11-10",
+      "value_usd": 9706.4,
+      "benchmark_value_usd": 10198.97
     }
   ],
   "benchmark": "SPY",
-  "benchmark_start_close": null,
-  "benchmark_start_date": null,
-  "updated_at": "2026-11-10T08:13:52.973291Z",
+  "benchmark_start_close": 735.29,
+  "benchmark_start_date": "2026-11-06",
+  "updated_at": "2026-11-11T08:15:26.190373Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",

@@ -13,7 +13,7 @@
       "tier": "low",
       "shares": 54.61566546594126,
       "cost_usd": 9970.089730807578,
-      "last_close": 182.55,
+      "last_close": 168.89,
       "last_date": "2026-11-10",
       "timing_risk": null,
       "why": "Company Scout: 1 patent(s); large by revenue",
@@ -22,19 +22,19 @@
         "symbol": "NVDAon",
         "asset_id": "nep141:bnb-0xa9ee28c80f960b889dfbd1902055218cba016f75.omdep.near",
         "blockchain": "BNB Chain",
-        "token_price_usd": 183.1113,
-        "checked_at": "2026-11-10T08:18:19.756290Z",
+        "token_price_usd": 174.9565,
+        "checked_at": "2026-11-11T08:16:14.663474Z",
         "note": "listed by the NEAR Intents bridge; the price implied by a dry-run quote matches the stock"
       },
       "quote": {
-        "amount_in_usd": 9965.59,
-        "amount_out_usd": 9931.59,
-        "amount_out": "54.404742433340331889",
-        "cost_pct": 0.341,
-        "time_estimate_s": 25.0,
-        "quoted_at": "2026-11-10T08:18:21.838171Z",
-        "correlation_id": "f807363b-3c76-41ff-8720-6744a21ccaa9",
-        "error": null
+        "amount_in_usd": 9224.04,
+        "amount_out_usd": null,
+        "amount_out": null,
+        "cost_pct": null,
+        "time_estimate_s": null,
+        "quoted_at": "2026-11-11T08:16:15.424881Z",
+        "correlation_id": null,
+        "error": "No liquidity available"
       }
     }
   ],
@@ -236,14 +236,14 @@
     },
     {
       "day": "2026-11-10",
-      "value_usd": 9970.09,
-      "benchmark_value_usd": 10000.0
+      "value_usd": 9224.04,
+      "benchmark_value_usd": 9888.32
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": 758.39,
   "benchmark_start_date": "2026-11-10",
-  "updated_at": "2026-11-10T08:18:07.467741Z",
+  "updated_at": "2026-11-11T08:15:26.190373Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",
