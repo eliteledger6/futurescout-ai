@@ -263,3 +263,6 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   for shadow and live. Each candidate now shows the agent `quoted_price_per_token` and `gap_vs_last_close_pct`, and the
   agent is told it carries that risk. Still in code: verdict rule, budget caps, allowlist, cost cap, kill switch.
   Shadow review run live: NVDA quoted 3.49% above its close + 0.53% cost; the agent chose to hold (thin evidence).
+- 2026-11-11 (owner): the trading agent buys a report only when it could act on it now: one of its stocks is rated
+  'strong' or 'building' AND NEAR Intents quotes it (the 6G report, rated 'early', had been bought for nothing). Reports
+  already bought stay usable. The trading page also shows refused buys with the reason and every bought report. Mock-tested.

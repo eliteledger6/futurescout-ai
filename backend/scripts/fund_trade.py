@@ -437,7 +437,7 @@ def _assess(s, cfg, state, toks, triggers, check, shadow, now, pf, closes=None):
         cands.append(c)
     context = evidence_context(s, toks)
     if not shadow and cfg.economy.enabled:
-        bought = economy_buy_reports(s, cfg, toks, cands, now, execute=cfg.live.auto_approve)
+        bought = economy_buy_reports(s, cfg, toks, cands, now, execute=cfg.live.auto_approve, only_actionable=True)
         dropped = sorted({c.ticker for c in cands if c.topic not in bought})
         cands = [c for c in cands if c.topic in bought]
         context = {k: v for k, v in context.items() if k in bought}
@@ -576,7 +576,8 @@ def private_near_balance(s, cfg) -> float | None:  # noqa: ANN001
     return held(api.balances(token), WNEAR) / 1e24
 
 
-def economy_buy_reports(s, cfg, toks, cands, now, *, execute: bool, max_new: int | None = None) -> set:  # noqa: ANN001
+def economy_buy_reports(s, cfg, toks, cands, now, *, execute: bool, max_new: int | None = None,  # noqa: ANN001
+                        only_actionable: bool = False) -> set:
     """Make sure the trading agent holds the reports behind its candidates: price each one (report agent) and, when
     `execute` (the owner's own loop with live.auto_approve, or `economy buy`), pay for it in NEAR. Returns the usable topics."""
     from app.fund.economy import (account_near, buy_report, load_economy, price_report, purchase_blocks, read_tx,
@@ -606,6 +607,15 @@ def economy_buy_reports(s, cfg, toks, cands, now, *, execute: bool, max_new: int
         if state.bought(rid):
             usable.add(c.topic)
             continue
+        if only_actionable:
+            # owner 2026-11-11: buy a report only when the agent could act on it now: a stock from it is rated
+            # 'strong' or 'building' AND NEAR Intents quotes it (the 6G report, rated 'early', was bought for nothing)
+            mine = [x for x in cands if x.topic == c.topic]
+            if not any(x.verdict_band in ("strong", "building") and x.quotable for x in mine):
+                why = ("rated '" + str(c.verdict_band) + "'" if all(x.verdict_band not in ("strong", "building") for x in mine)
+                       else "NEAR Intents cannot quote its stocks right now")
+                print(f"  report '{c.topic}': not bought ({why}; nothing the agent could trade from it now)")
+                continue
         found = store.get(rid)
         if not found:
             continue
