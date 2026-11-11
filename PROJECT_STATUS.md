@@ -271,3 +271,6 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   reviews Claude ran for testing (4:11-4:35 PM) keep the agent's original words, with a visible correction (field
   `correction`, not part of the record's fingerprint): started by the developer, not the owner; the NVDA refusal came
   from the price band that the owner removed minutes later; the 4:26 "no fund includes INTC" came from a bug since fixed.
+- 2026-11-11 (owner: "just remove them"): the four shadow test reviews Claude ran were removed from the public record and
+  kept in backend/runs/trading/archive_test_reviews_2026-11-11.json (local only; nothing had been bought or sold). The
+  `correction` field stays available for future use but no record carries one.
