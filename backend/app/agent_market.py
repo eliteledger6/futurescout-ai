@@ -39,6 +39,7 @@ class MarketConfig(BaseModel):
     max_topic_words: int = 8
     max_topic_chars: int = 80
     poll_seconds: int = 60
+    radar_refresh_hours: float = 24.0      # the Hot-Topic Radar is recounted this often by the report agent's loop; 0 = never
 
 
 class JobRecord(BaseModel):

@@ -32,6 +32,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from app import proposals, service  # noqa: E402
 from app.paper_fund_hook import build_paper_fund, funds_due, update_all_funds  # noqa: E402
+from app.radar_refresh import RadarRefresh  # noqa: E402
 from app.agent_market import AgentMarketClient, MarketConfig, handle, load_state, resume_stale, save_state  # noqa: E402
 from app.api.main import _default_store  # noqa: E402
 from app.config import get_settings  # noqa: E402
@@ -102,7 +103,9 @@ def main() -> int:
     print(f"report agent: checking for Agent Market jobs and topic proposals every {cfg.poll_seconds}s; at most "
           f"{cfg.new_runs_per_day} Agent Market runs and {pcfg.per_day} proposal runs a day. "
           f"Hosted proposals: {'collected from ' + s.public_api_url if remote else 'off (PUBLIC_API_URL / PROPOSALS_TOKEN not set)'}. "
-          f"Publishing: {'on' if args.publish else 'off (--publish)'}. Ctrl+C stops.")
+          f"Publishing: {'on' if args.publish else 'off (--publish)'}. "
+          f"Radar refresh: {'every %g h' % cfg.radar_refresh_hours if cfg.radar_refresh_hours > 0 else 'off'}. Ctrl+C stops.")
+    radar = RadarRefresh(service.RUNS_DIR, service.BACKEND_DIR / "site_data")
     while True:
         now = datetime.now(timezone.utc)
         if resume_stale(state, timedelta(hours=1), now):
@@ -148,7 +151,16 @@ def main() -> int:
             hk["funds_at"] = datetime.now(timezone.utc).isoformat()      # tried today: a failure is retried tomorrow, not every minute
             HOUSEKEEPING.parent.mkdir(parents=True, exist_ok=True)
             HOUSEKEEPING.write_text(json.dumps(hk), encoding="utf-8")
-        if (new_reports or funds_changed) and args.publish:
+        # ---- the Hot-Topic Radar is recounted in the background (it takes over an hour), then published ----------
+        radar_changed = radar.finished() is True
+        if (cfg.radar_refresh_hours > 0 and not args.once and not radar.running
+                and funds_due(hk.get("radar_at"), datetime.now(timezone.utc), cfg.radar_refresh_hours)):
+            print(f"[{datetime.now(timezone.utc):%H:%M}] radar refresh is due")
+            radar.start()
+            hk["radar_at"] = datetime.now(timezone.utc).isoformat()      # tried now: a failure is retried at the next interval
+            HOUSEKEEPING.parent.mkdir(parents=True, exist_ok=True)
+            HOUSEKEEPING.write_text(json.dumps(hk), encoding="utf-8")
+        if (new_reports or funds_changed or radar_changed) and args.publish:
             publish()
         if args.once:
             return 0

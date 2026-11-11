@@ -340,3 +340,15 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   The Radar and the trading record in the snapshot are restored.
 - Known limit: the trading agent on the laptop does not see reports made on the server (they are not in its own data),
   so it cannot buy them until trading runs on the server as well.
+
+## 2026-11-11 (night): the Radar refreshes by itself
+- The report agent's loop (`scripts/market_agent.py`) now recounts the Hot-Topic Radar every
+  `agent_market.radar_refresh_hours` (24; 0 = off) with `scripts/run_radar.py` as a background process
+  (`app/radar_refresh.py`), so jobs and proposals are still served while it counts, and publishes it when it ends well.
+  It first takes the newest published radar as its base (a refresh keeps earlier patent numbers for topics it cannot
+  count) and is started with SERPAPI_CACHE_ONLY=true, so it never buys a Google Patents search.
+- Mock-tested (339 tests pass). Not run live: Claude does not run the report-agent loop while seals are on mainnet. It
+  starts on the server at the first loop after the code arrives and the service restarts.
+- Topics: the 54 radar topics are 34 written by hand plus 20 added by the paper scout (`scripts/discover_topics.py`,
+  code that reads recent paper keywords; not the Chief agent, which plans one research run). Discovery is still started
+  by hand; reports from Agent Market jobs and visitor proposals are not added to the radar's topic list.
