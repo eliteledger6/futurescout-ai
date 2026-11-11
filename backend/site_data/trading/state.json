@@ -461,7 +461,7 @@
       "chain": null
     }
   ],
-  "updated_at": "2026-11-11T08:40:01.751379Z",
+  "updated_at": "2026-11-11T08:51:27.014683Z",
   "checks": [
     {
       "id": "665f6b4d47",
@@ -1032,6 +1032,38 @@
       "cost_usd": 0.041144,
       "notes": [],
       "sha256": "6626d1bda48bc957080ee296d74211e910c1de9489f467fca27c59d182484971"
+    },
+    {
+      "id": "60a6d3e777",
+      "at": "2026-11-11T08:51:25.789875Z",
+      "mode": "shadow",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "41cc7c2e3d06541017cc073f41a9f622ed98273dd9b37823252289d3ae4000f3"
+    },
+    {
+      "id": "e9d9a39ad5",
+      "at": "2026-11-11T08:51:27.001729Z",
+      "mode": "live",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "e55e4e8913b3510f9d93034ba06e792299752245792a48b62662c20a3bf9376e"
     }
   ],
   "seen_runs": {
@@ -1051,10 +1083,10 @@
     "live:chiplet": "ab3b0896-a403-4181-990f-65bad2f59f13"
   },
   "seen_closes": {},
-  "last_check_at": "2026-11-11T08:38:19.048676Z",
-  "last_live_check_at": "2026-11-11T08:38:22.788792Z",
-  "private_near": 3.4579,
-  "private_checked_at": "2026-11-11T08:38:22.788792Z",
+  "last_check_at": "2026-11-11T08:51:25.789875Z",
+  "last_live_check_at": "2026-11-11T08:51:27.001729Z",
+  "private_near": 1.7239,
+  "private_checked_at": "2026-11-11T08:51:26.992421Z",
   "last_values": {},
   "hidden": []
 }
