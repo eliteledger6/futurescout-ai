@@ -3,7 +3,7 @@ import type { Report } from "./types";
 
 export type AgentKey =
   | "chief" | "science" | "risk" | "market" | "x" | "patent" | "review" | "timing" | "scout" | "investment" | "near" | "fund" | "trader"
-  | "seller" | "stake" | "trader2";
+  | "seller" | "stake" | "trader2" | "intake" | "buyers";
 
 export interface AgentInfo {
   key: AgentKey;
@@ -17,6 +17,12 @@ export interface AgentInfo {
 }
 
 export const AGENTS: Record<AgentKey, AgentInfo> = {
+  intake: { key: "intake", name: "Topic reviewer", role: "Screens proposed topics", icon: "shield", modelKey: "topic_review",
+    detail: "Visitors can propose a topic for free on the Request a report page, at most 5 a day. This agent checks that the proposal is a real technology worth a research run, and rejects prices, coins, single companies, jokes and topics that are far too broad. A proposal is only ever used as a short topic name, never as instructions. Approved topics go to the Chief; a topic with a recent report is linked instead of researched again.",
+    sources: "Visitor proposals (short topic only)" },
+  buyers: { key: "buyers", name: "Agent Market", role: "Outside buyers hire: $3", icon: "signal",
+    detail: "The report agent is listed on NEAR Agent Market. Anyone can hire it for $3: they give a topic, the marketplace holds the payment, and the agent delivers a sealed report (a recent one when it exists, otherwise a new research run, at most 3 a day). Other trading bots can also buy any report through the API, paid in NEAR and checked on chain.",
+    sources: "market.near.ai · the report market API" },
   chief: { key: "chief", name: "Chief", role: "Plans the research", icon: "compass", modelKey: "chief",
     detail: "Turns the topic into paper searches, contrarian searches and the keywords the other agents use.",
     sources: "No data: it only plans" },
@@ -109,5 +115,7 @@ export function agentStats(r: Report): Record<AgentKey, AgentRunStat> {
     seller: { state: "off", note: "after the report: see Funds & trading" },
     stake: { state: "off", note: "after the report: see Funds & trading" },
     trader2: { state: "off", note: "planned" },
+    intake: { state: "off", note: "before the report: see Request a report" },
+    buyers: { state: "off", note: "after the report: see NEAR Agent Market" },
   };
 }

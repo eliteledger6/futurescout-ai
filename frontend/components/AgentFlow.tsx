@@ -22,8 +22,10 @@ const POS: Record<AgentKey, [number, number]> = {
   fund: [COL[5], 160], seller: [COL[5], 360],
   trader: [COL[6], 160], stake: [COL[6], 360],
   trader2: [COL[6], 460],
+  intake: [COL[0], 130],                    // visitor proposals are screened before the Chief plans
+  buyers: [COL[4], 430],                    // outside buyers (NEAR Agent Market, other bots) hire or buy from the report agent
 };
-const AFTER_REPORT: AgentKey[] = ["fund", "trader", "seller", "stake", "trader2"];   // overview only, hidden in one report's trace
+const AFTER_REPORT: AgentKey[] = ["fund", "trader", "seller", "stake", "trader2", "intake", "buyers"];   // overview only, hidden in one report's trace
 const PLANNED: AgentKey[] = ["trader2"];                                              // drawn dashed: the next step, not running yet
 const EDGES: [AgentKey, AgentKey][] = [
   ["chief", "science"], ["chief", "patent"], ["chief", "risk"], ["chief", "x"],
@@ -33,9 +35,10 @@ const EDGES: [AgentKey, AgentKey][] = [
   ["timing", "investment"], ["scout", "investment"],
   ["investment", "near"],
   ["near", "fund"], ["near", "seller"], ["fund", "trader"],
+  ["intake", "chief"], ["buyers", "seller"],
 ];
-const ORDER: AgentKey[][] = [["chief"], ["science", "patent", "risk", "x"], ["market"], ["review"], ["timing", "scout"], ["investment"], ["near"],
-  ["fund", "seller"], ["trader"], ["stake"], ["trader2"]];
+const ORDER: AgentKey[][] = [["intake"], ["chief"], ["science", "patent", "risk", "x"], ["market"], ["review"], ["timing", "scout"], ["investment"], ["near"],
+  ["fund", "seller", "buyers"], ["trader"], ["stake"], ["trader2"]];
 
 function edgePath(a: AgentKey, b: AgentKey): string {
   const [ax, ay] = POS[a], [bx, by] = POS[b];
@@ -105,7 +108,7 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
       <div className="flow-swipe">Swipe sideways to see the whole network. Tap an agent for details.</div>
       <div className="flow-canvas">
         <svg className="flow-svg" viewBox={stats ? "0 0 1062 450" : "0 0 1610 545"} role="img"
-             aria-label="Agent network, left to right: Chief plans; Science and Patent research, and the Market agent reads the SEC filings of the companies they point to; Risk and X signals research in parallel and the Chief reviews; price timing is checked while the Company scout finds the companies behind the patents and papers; Investment writes the report and its fingerprint is recorded on NEAR; the topic fund invests a paper fund and the report agent sells the report to the trading agent, which pays $2 to $3 in NEAR and trades tokenized stocks through NEAR Intents; the report agent stakes 70% of each payment with NEAR AI, whose credits pay every agent's model calls, and keeps 30%, which funds a planned second trading agent at $200.">
+             aria-label="Agent network, left to right: a topic reviewer screens topics that visitors propose, then the Chief plans; Science and Patent research, and the Market agent reads the SEC filings of the companies they point to; Risk and X signals research in parallel and the Chief reviews; price timing is checked while the Company scout finds the companies behind the patents and papers; Investment writes the report and its fingerprint is recorded on NEAR; the topic fund invests a paper fund and the report agent sells the report to the trading agent, which pays $2 to $3 in NEAR and trades tokenized stocks through NEAR Intents; the report agent stakes 70% of each payment with NEAR AI, whose credits pay every agent's model calls, and keeps 30%, which funds a planned second trading agent at $200; outside buyers hire the report agent on NEAR Agent Market for $3.">
           <defs>
             <radialGradient id="nodeGlow" cx="50%" cy="50%" r="60%">
               <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.28" />
@@ -113,7 +116,7 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
             </radialGradient>
           </defs>
           {/* stage labels */}
-          {([["Plan", 0], ["Research in parallel", 1], ["Companies & review", 2], ["Timing & scout", 3], ["Write & seal", 4],
+          {([[stats ? "Plan" : "Screen & plan", 0], ["Research in parallel", 1], ["Companies & review", 2], ["Timing & scout", 3], ["Write & seal", 4],
              ...(stats ? [] : [["Sell & fund", 5], ["Trade & stake", 6]])] as [string, number][]).map(([t, i]) => (
             <text key={t} x={COL[i] + W / 2} y={14} className="flow-stage" textAnchor="middle">{t}</text>
           ))}
@@ -140,6 +143,8 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
               <Badge x={(POS.chief[0] + POS.stake[0] + W) / 2} y={CREDIT_Y} text="◂ NEAR AI credits from staking pay every agent's model calls" tone="credit" />
               <g className="edge planned-edge"><path d={POT} className="edge-base" /></g>
               <Badge x={GAP_MID - 26} y={POS.trader2[1] - 14} text="keeps 30% · at $200 ▸" tone="pot" />
+              <Badge x={POS.intake[0] + W / 2} y={POS.intake[1] - 48} text="▾ proposals · 5 a day" tone="report" />
+              <Badge x={POS.buyers[0] + W / 2} y={POS.buyers[1] + 46} text="hires · $3 ▸" tone="pay" />
             </>
           )}
           <g className="edge loop">
