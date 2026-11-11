@@ -205,9 +205,14 @@ def save_radar(radar: Radar, path: Path = RADAR_FILE) -> Path:
 SAMPLE_RADAR_FILE = BACKEND_DIR / "samples" / "radar.json"   # shipped with the repo for fresh clones
 
 
+SNAPSHOT_RADAR_FILE = BACKEND_DIR / "site_data" / "radar.json"   # the hosted copy's snapshot (scripts/export_site.py)
+
+
 def load_radar(path: Path = RADAR_FILE) -> Optional[Radar]:
+    """The radar in runs/; on a copy without runs/ (the hosted site, a fresh clone) the exported snapshot, and only
+    when there is none the older sample. (Bug seen 2026-11-11: the hosted site showed the sample, not the snapshot.)"""
+    if not path.is_file() and path == RADAR_FILE:
+        path = next((f for f in (SNAPSHOT_RADAR_FILE, SAMPLE_RADAR_FILE) if f.is_file()), path)
     if not path.is_file():
-        path = SAMPLE_RADAR_FILE if path == RADAR_FILE and SAMPLE_RADAR_FILE.is_file() else path
-        if not path.is_file():
-            return None
+        return None
     return Radar.model_validate(json.loads(path.read_text(encoding="utf-8")))
