@@ -1,0 +1,60 @@
+{
+ "made_at": "2026-11-11T14:01:26.941085+00:00",
+ "basis": {
+  "phrases": [
+   "supervised fine-tuning"
+  ],
+  "checks": [
+   {
+    "phrase": "supervised fine-tuning",
+    "source": "topic",
+    "matches": 7073,
+    "sampled": 8,
+    "relevant": 3,
+    "kept": true,
+    "reason": "the topic name itself (3/8 sampled works on-topic)"
+   },
+   {
+    "phrase": "SFT",
+    "source": "ai_suggested",
+    "matches": 7914,
+    "sampled": 8,
+    "relevant": 2,
+    "kept": false,
+    "reason": "only 2/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "instruction tuning",
+    "source": "ai_suggested",
+    "matches": 5810,
+    "sampled": 8,
+    "relevant": 0,
+    "kept": false,
+    "reason": "only 0/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "fine-tuning on labeled data",
+    "source": "ai_suggested",
+    "matches": 13,
+    "sampled": 8,
+    "relevant": 0,
+    "kept": false,
+    "reason": "only 0/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "supervised tuning",
+    "source": "ai_suggested",
+    "matches": 36,
+    "sampled": 8,
+    "relevant": 2,
+    "kept": false,
+    "reason": "only 2/8 sampled works on-topic (needs 75%)"
+   }
+  ],
+  "precision_sampled": 20,
+  "precision_relevant": 5,
+  "precision_pct": 25.0,
+  "llm_alias": "glm_5_3_flash",
+  "note": "Counted: works whose title or abstract contains any of 'supervised fine-tuning' (singular and plural forms match automatically; a work matching several phrases is counted once). Not counted, because too few sampled works were about this topic: 'SFT', 'instruction tuning', 'fine-tuning on labeled data', 'supervised tuning'. An AI check of 20 random counted works found 5 (25%) mainly about the topic."
+ }
+}

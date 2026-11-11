@@ -397,3 +397,11 @@ topics:
   - https://openalex.org/W4409061193
   - https://openalex.org/W7118329343
   added_on: '2026-11-09'
+- name: assertion generation
+  sector: ai_software
+  terms:
+  - assertion generation
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7162686268
+  added_on: '2026-11-11'

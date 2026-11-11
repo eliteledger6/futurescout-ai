@@ -1,0 +1,69 @@
+{
+ "made_at": "2026-11-11T12:41:41.915660+00:00",
+ "basis": {
+  "phrases": [
+   "confidential computing"
+  ],
+  "checks": [
+   {
+    "phrase": "confidential computing",
+    "source": "topic",
+    "matches": 691,
+    "sampled": 8,
+    "relevant": 6,
+    "kept": true,
+    "reason": "the topic name itself (6/8 sampled works on-topic)"
+   },
+   {
+    "phrase": "trusted execution environment",
+    "source": "config",
+    "matches": 1981,
+    "sampled": 8,
+    "relevant": 4,
+    "kept": false,
+    "reason": "only 4/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "TEE",
+    "source": "ai_suggested",
+    "matches": 20968,
+    "sampled": 8,
+    "relevant": 0,
+    "kept": false,
+    "reason": "only 0/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "secure enclaves",
+    "source": "ai_suggested",
+    "matches": 269,
+    "sampled": 8,
+    "relevant": 3,
+    "kept": false,
+    "reason": "only 3/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "hardware-assisted isolation",
+    "source": "ai_suggested",
+    "matches": 10,
+    "sampled": 8,
+    "relevant": 2,
+    "kept": false,
+    "reason": "only 2/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "enclave computing",
+    "source": "ai_suggested",
+    "matches": 2,
+    "sampled": 0,
+    "relevant": 0,
+    "kept": false,
+    "reason": "only 2 matching works"
+   }
+  ],
+  "precision_sampled": 19,
+  "precision_relevant": 15,
+  "precision_pct": 78.9,
+  "llm_alias": "glm_5_3_flash",
+  "note": "Counted: works whose title or abstract contains any of 'confidential computing' (singular and plural forms match automatically; a work matching several phrases is counted once). Not counted, because too few sampled works were about this topic: 'trusted execution environment', 'TEE', 'secure enclaves', 'hardware-assisted isolation', 'enclave computing'. An AI check of 19 random counted works found 15 (79%) mainly about the topic."
+ }
+}

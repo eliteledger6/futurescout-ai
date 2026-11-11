@@ -1,0 +1,82 @@
+{
+ "made_at": "2026-11-11T13:54:13.599740+00:00",
+ "basis": {
+  "phrases": [
+   "mixture of experts",
+   "sparse mixture of experts",
+   "expert routing",
+   "MoE model",
+   "MoE layer"
+  ],
+  "checks": [
+   {
+    "phrase": "mixture of experts",
+    "source": "topic",
+    "matches": 8629,
+    "sampled": 8,
+    "relevant": 5,
+    "kept": true,
+    "reason": "the topic name itself (5/8 sampled works on-topic)"
+   },
+   {
+    "phrase": "mixture-of-experts",
+    "source": "config",
+    "matches": 8629,
+    "sampled": 8,
+    "relevant": 5,
+    "kept": false,
+    "reason": "only 5/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "MoE model",
+    "source": "config",
+    "matches": 1418,
+    "sampled": 8,
+    "relevant": 7,
+    "kept": true,
+    "reason": "7/8 sampled works on-topic"
+   },
+   {
+    "phrase": "MoE layer",
+    "source": "ai_suggested",
+    "matches": 282,
+    "sampled": 8,
+    "relevant": 6,
+    "kept": true,
+    "reason": "6/8 sampled works on-topic"
+   },
+   {
+    "phrase": "sparse mixture of experts",
+    "source": "ai_suggested",
+    "matches": 593,
+    "sampled": 8,
+    "relevant": 8,
+    "kept": true,
+    "reason": "8/8 sampled works on-topic"
+   },
+   {
+    "phrase": "expert routing",
+    "source": "ai_suggested",
+    "matches": 839,
+    "sampled": 8,
+    "relevant": 8,
+    "kept": true,
+    "reason": "8/8 sampled works on-topic"
+   },
+   {
+    "phrase": "gated mixture of experts",
+    "source": "ai_suggested",
+    "matches": 147,
+    "sampled": 8,
+    "relevant": 5,
+    "kept": false,
+    "reason": "only 5/8 sampled works on-topic (needs 75%)"
+   }
+  ],
+  "precision_sampled": 20,
+  "precision_relevant": 8,
+  "precision_pct": 40.0,
+  "llm_alias": "glm_5_3_flash",
+  "note": "Counted: works whose title or abstract contains any of 'mixture of experts', 'sparse mixture of experts', 'expert routing', 'MoE model', 'MoE layer' (singular and plural forms match automatically; a work matching several phrases is counted once). Not counted, because too few sampled works were about this topic: 'mixture-of-experts', 'gated mixture of experts'. An AI check of 20 random counted works found 8 (40%) mainly about the topic."
+ }
+}
