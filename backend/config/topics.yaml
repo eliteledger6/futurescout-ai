@@ -413,3 +413,11 @@ topics:
   evidence:
   - https://openalex.org/W7165138791
   added_on: '2026-11-11'
+- name: movable antenna
+  sector: space_comms
+  terms:
+  - movable antenna
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7220695008
+  added_on: '2026-11-11'
