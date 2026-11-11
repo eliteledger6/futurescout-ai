@@ -429,3 +429,14 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   The kind is derived from whether the box has a model assigned (`kindOf` in `frontend/lib/agents.ts`), so it cannot
   drift from the configuration. The detail panel and the phone list show the same tag.
 - Checked in the browser on this computer (home page); the website builds.
+
+## 2026-11-11 (late): the Report agent is the framed AI team (owner: "report agent is an AI agent that generates the report")
+- The earlier tagging called the "Report agent" box CODE, which read as if the report agent were not an AI agent. The
+  diagram now draws a dashed frame around everything the Report agent is ("REPORT AGENT · one NEAR account · 9 AI agents
+  working as a team": Topic reviewer, Chief, Science, Patent, Risk, X signals, Market, Price & timing, Investment, plus
+  its code steps), and the small box is renamed "Sales & wallet" (its NEAR account and selling step, code).
+- The legend opens with the plain statement: two agents, each with its own NEAR account, do business with each other:
+  the Report agent (the framed team) and the Trading agent (1 AI agent). Then the box tags as before.
+- Company scout stays tagged CODE: `app/scout` makes no model call (it merges company names from patents, papers and
+  filings, matches SEC tickers and scores with a fixed heuristic); its K-findings are written by code.
+- Checked in the browser on this computer (home page); the website builds.

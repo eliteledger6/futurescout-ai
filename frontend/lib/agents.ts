@@ -25,6 +25,8 @@ export const KIND_TEXT: Record<NodeKind, string> = {
   service: "Outside service on NEAR, not ours",
   planned: "Planned, not built",
 };
+// The Report agent = one agent with its own NEAR account, made of these AI agents working as a team (plus code steps).
+export const REPORT_TEAM: AgentKey[] = ["intake", "chief", "science", "patent", "risk", "x", "market", "timing", "investment"];
 export function kindOf(k: AgentKey): NodeKind {
   if (k === "trader2") return "planned";
   if (k === "stake" || k === "buyers") return "service";
@@ -77,8 +79,8 @@ export const AGENTS: Record<AgentKey, AgentInfo> = {
   fund: { key: "fund", name: "Topic fund", role: "Invests a paper fund", icon: "building",
     detail: "Builds a pretend-money fund for the topic from the companies the patents and papers name, split into low, medium and high risk, and keeps it fully invested. Every decision lists its reasons and carries its own fingerprint; the report it is based on is sealed on NEAR.",
     sources: "The sealed report · daily prices · NEAR Intents dry-run quotes" },
-  seller: { key: "seller", name: "Report agent", role: "Sells reports for NEAR", icon: "coin",
-    detail: "The program and NEAR account the research team works under; it calls no model of its own. It runs by itself on a cloud server: it takes NEAR Agent Market hires and visitors' proposals, keeps the radar's top 5 topics covered, and seals and publishes every report. It prices every sealed report at what it cost to make plus a small margin ($2 to $3, paid in NEAR) and sells it to the trading agent; every sale pays for the next report. Each payment comes from the trading agent's near.com balance as a signed order, checked before signing and confirmed when it arrives in the report agent's own wallet.",
+  seller: { key: "seller", name: "Sales & wallet", role: "Report agent's NEAR account", icon: "coin",
+    detail: "The Report agent is the whole AI team inside the frame; this box is its NEAR account and selling step, which is code. The Report agent runs by itself on a cloud server: it takes NEAR Agent Market hires and visitors' proposals, keeps the radar's top 5 topics covered, and seals and publishes every report. It prices every sealed report at what it cost to make plus a small margin ($2 to $3, paid in NEAR) and sells it to the trading agent; every sale pays for the next report. Each payment comes from the trading agent's near.com balance as a signed order, checked before signing and confirmed when it arrives in the report agent's own wallet.",
     sources: "Its own NEAR account · NEAR Intents" },
   stake: { key: "stake", name: "NEAR AI staking", role: "Earns credits for AI", icon: "sprout",
     detail: "The report agent stakes 70% of everything it earns (report sales and NEAR Agent Market fees) through NEAR AI Cloud's Staking for Inference (stake.dao, validator nearai.pool.near; at least 1 NEAR at a time) and keeps 30%; once the kept part passes $200 it funds a second trading agent (next step). The staking rewards become NEAR AI credits that pay for the agents' model calls; the staked NEAR stays withdrawable.",

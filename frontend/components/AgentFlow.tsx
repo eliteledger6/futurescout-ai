@@ -3,7 +3,7 @@
 // Animated network of the FUTURESCOUT agents. Without `stats` it explains the system; with `stats`
 // (one saved report) it becomes that run's agent trace: which agents ran, what each produced and cost.
 import { useState } from "react";
-import { AGENTS, KIND_LABEL, KIND_TEXT, kindOf, type AgentKey, type AgentRunStat, type NodeKind } from "@/lib/agents";
+import { AGENTS, KIND_LABEL, KIND_TEXT, REPORT_TEAM, kindOf, type AgentKey, type AgentRunStat, type NodeKind } from "@/lib/agents";
 import { fmtUsd } from "@/lib/api";
 import { AgentIcon } from "./AgentIcon";
 
@@ -24,9 +24,9 @@ const POS: Record<AgentKey, [number, number]> = {
   fund: [COL[5], 160], seller: [COL[5], 360],
   trader: [COL[6], 160], stake: [COL[6], 360],
   trader2: [COL[6], 460],
-  intake: [X0, 150],                        // visitor proposals are screened before the Chief plans
-  radar: [X0, 370],                         // the radar's ranking decides which reports the agent writes by itself
-  buyers: [COL[4], 430],                    // outside buyers (NEAR Agent Market, other bots) hire or buy from the report agent
+  intake: [X0, 140],                        // visitor proposals are screened before the Chief plans
+  radar: [X0, 330],                         // the radar's ranking decides which reports the agent writes by itself
+  buyers: [COL[4], 470],                    // outside buyers (NEAR Agent Market, other bots) hire or buy from the report agent
 };
 const AFTER_REPORT: AgentKey[] = ["fund", "trader", "seller", "stake", "trader2", "intake", "buyers", "radar"];   // overview only, hidden in one report's trace
 const PLANNED: AgentKey[] = ["trader2"];                                              // drawn dashed: the next step, not running yet
@@ -113,7 +113,9 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
   return (
     <div className="flow">
       <div className="flow-legend" aria-label="What the boxes are">
-        <span><b className="kind-chip ai">AI</b> {count("ai")} AI agents: each calls a model on NEAR AI Cloud (Chief review is the Chief&apos;s second pass)</span>
+        {!stats && <span className="flow-legend-lead">Two agents, each with its own NEAR account, do business with each other: the <b>Report agent</b> (everything inside the frame:
+          a team of {REPORT_TEAM.length} AI agents plus code steps, which writes, seals and sells the reports) and the <b>Trading agent</b> (1 AI agent, which buys them and trades).</span>}
+        <span><b className="kind-chip ai">AI</b> {count("ai")} boxes call a model on NEAR AI Cloud (Chief review is the Chief&apos;s second pass)</span>
         <span><b className="kind-chip code">CODE</b> {count("code")} code steps: fixed rules and counts, no model</span>
         {count("service") > 0 && <span><b className="kind-chip service">SERVICE</b> {count("service")} outside NEAR services</span>}
         {count("planned") > 0 && <span><b className="kind-chip planned">PLANNED</b> not built yet</span>}
@@ -128,6 +130,16 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
               <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
             </radialGradient>
           </defs>
+          {/* the Report agent: one agent with its own NEAR account, made of the AI agents and code steps inside this frame */}
+          {!stats && (
+            <g className="team-frame">
+              <rect x={X0 - 8} y={34} width={COL[5] + W + 16 - X0} height={402} rx={14} />
+              <g transform={`translate(${COL[2]} 25)`}>
+                <rect className="team-tag" width={470} height={18} rx={9} />
+                <text x={235} y={12.5} textAnchor="middle">REPORT AGENT · one NEAR account · {REPORT_TEAM.length} AI agents working as a team</text>
+              </g>
+            </g>
+          )}
           {/* stage labels */}
           {!stats && <text x={X0 + W / 2} y={14} className="flow-stage" textAnchor="middle">Find topics</text>}
           {([["Plan", 0], ["Research in parallel", 1], ["Companies & review", 2], ["Timing & scout", 3], ["Write & seal", 4],
@@ -160,7 +172,7 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
               <Badge x={POS.intake[0] + W / 2} y={POS.intake[1] - 48} text="▾ proposals · 5 a day" tone="report" />
               <Badge x={POS.radar[0] + W / 2} y={POS.radar[1] + 46} text="top 5 kept fresh · daily" tone="report" />
               <Badge x={POS.radar[0] + W / 2} y={POS.radar[1] + 70} text="a sale pays for the next" tone="pay" />
-              <Badge x={POS.buyers[0] + W / 2} y={POS.buyers[1] + 46} text="hires · $3 ▸" tone="pay" />
+              <Badge x={(COL[4] + W + COL[5]) / 2} y={(POS.buyers[1] + POS.seller[1]) / 2 + 14} text="hires · $3 ▸" tone="pay" />
             </>
           )}
           <g className="edge loop">

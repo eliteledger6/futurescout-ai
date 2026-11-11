@@ -499,3 +499,10 @@ a.card:hover { box-shadow: 0 12px 40px -18px color-mix(in srgb, var(--accent) 45
 .node.kind-code .node-icon, .node.kind-service .node-icon { color: var(--text-2); }
 .node.off .node-kind, .node.not_run .node-kind { opacity: 0.6; }
 .kind-pill.ai { border-color: var(--accent); color: var(--accent); }
+
+/* the Report agent = the framed team (owner 2026-11-11) */
+.team-frame > rect { fill: color-mix(in srgb, var(--accent) 2.5%, transparent); stroke: color-mix(in srgb, var(--accent) 45%, var(--line-strong)); stroke-width: 1.2; stroke-dasharray: 7 5; }
+.team-frame .team-tag { fill: var(--bg); stroke: var(--accent); stroke-width: 1.2; }
+.team-frame text { font: 700 10.5px var(--font-mono, ui-monospace, monospace); letter-spacing: 0.08em; fill: var(--accent); }
+.flow-legend span.flow-legend-lead { display: block; flex-basis: 100%; color: var(--text); line-height: 1.5; }
+.flow-legend-lead b { color: var(--accent); font-weight: 600; }
