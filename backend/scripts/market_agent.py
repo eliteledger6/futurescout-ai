@@ -45,7 +45,8 @@ REPO = Path(__file__).resolve().parents[2]
 def publish() -> None:
     """Put new reports on the hosted website: export the read-only snapshot, commit it and push (hosts redeploy from git).
     Only with --publish: pushing is the owner's decision."""
-    steps = [([sys.executable, "scripts/export_site.py"], REPO / "backend"),
+    steps = [(["git", "pull", "-q", "--rebase", "--autostash"], REPO),     # the owner (or another machine) may have pushed code meanwhile
+             ([sys.executable, "scripts/export_site.py"], REPO / "backend"),
              (["git", "add", "backend/site_data"], REPO),
              (["git", "commit", "-q", "-m", "Site data update (new report from the report agent)"], REPO),
              (["git", "push", "-q"], REPO)]

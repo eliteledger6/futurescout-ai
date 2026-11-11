@@ -236,3 +236,8 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   researched, score 75.4, sealed on mainnet, published by the agent). For the demo, every report written from 2026-11-11 on
   is unlocked (`economy.demo_free_from` in funds.yaml) and the site marks it "Unlocked for demo purposes only" (card pill and
   a notice on the report); the two `always_free` reports carry the same mark. Delete `demo_free_from` to sell new reports again.
+- 2026-11-11 (owner chose a small cloud server for the report agent): `deploy/setup_vps.sh` + `deploy/VPS.md` put
+  `market_agent.py --publish` on an Ubuntu server as a self-restarting service (file-based data seeded from the snapshot,
+  GitHub deploy key, keys entered by the owner). `publish()` now pulls before it exports and pushes. Checked: script syntax,
+  the file-based data path on a scratch clone (60 reports, export round trip changes nothing). NOT yet run on a real server.
+  The trading agent and its key stay on the owner's computer.
