@@ -17,10 +17,11 @@ export interface AgentInfo {
 }
 
 // What a box in the network really is. Only "ai" boxes call a model; the rest must not be counted as agents.
-export type NodeKind = "ai" | "code" | "service" | "planned";
-export const KIND_LABEL: Record<NodeKind, string> = { ai: "AI", code: "CODE", service: "SERVICE", planned: "PLANNED" };
+export type NodeKind = "ai" | "team" | "code" | "service" | "planned";
+export const KIND_LABEL: Record<NodeKind, string> = { ai: "AI", team: "AI TEAM", code: "CODE", service: "SERVICE", planned: "PLANNED" };
 export const KIND_TEXT: Record<NodeKind, string> = {
   ai: "AI agent: calls a model on NEAR AI Cloud",
+  team: "The Report agent: its 9 AI agents do the research; it collects their work and reports it out",
   code: "Code step: fixed rules and counts, no model",
   service: "Outside service on NEAR, not ours",
   planned: "Planned, not built",
@@ -29,6 +30,7 @@ export const KIND_TEXT: Record<NodeKind, string> = {
 export const REPORT_TEAM: AgentKey[] = ["intake", "chief", "science", "patent", "risk", "x", "market", "timing", "investment"];
 export function kindOf(k: AgentKey): NodeKind {
   if (k === "trader2") return "planned";
+  if (k === "seller") return "team";
   if (k === "stake" || k === "buyers") return "service";
   return AGENTS[k].modelKey ? "ai" : "code";
 }
@@ -79,8 +81,8 @@ export const AGENTS: Record<AgentKey, AgentInfo> = {
   fund: { key: "fund", name: "Topic fund", role: "Invests a paper fund", icon: "building",
     detail: "Builds a pretend-money fund for the topic from the companies the patents and papers name, split into low, medium and high risk, and keeps it fully invested. Every decision lists its reasons and carries its own fingerprint; the report it is based on is sealed on NEAR.",
     sources: "The sealed report · daily prices · NEAR Intents dry-run quotes" },
-  seller: { key: "seller", name: "Sales & wallet", role: "Report agent's NEAR account", icon: "coin",
-    detail: "The Report agent is the whole AI team inside the frame; this box is its NEAR account and selling step, which is code. The Report agent runs by itself on a cloud server: it takes NEAR Agent Market hires and visitors' proposals, keeps the radar's top 5 topics covered, and seals and publishes every report. It prices every sealed report at what it cost to make plus a small margin ($2 to $3, paid in NEAR) and sells it to the trading agent; every sale pays for the next report. Each payment comes from the trading agent's near.com balance as a signed order, checked before signing and confirmed when it arrives in the report agent's own wallet.",
+  seller: { key: "seller", name: "Report agent", role: "Collects & reports out", icon: "doc",
+    detail: "The agent everything reports to. It takes a topic (from the radar, a visitor's proposal or a hire on NEAR Agent Market), hands it to its team of 9 AI agents, and collects their work into the finished report. Then it reports it out: it seals the report's fingerprint on NEAR, builds the topic's paper fund, publishes the report on this site, delivers it to whoever hired it, and sells it for $2 to $3 in NEAR to the trading agent or any other bot. It runs by itself on a cloud server under its own NEAR account, keeps the radar's top 5 topics covered, and every sale pays for the next report. A payment from the trading agent comes as a signed order from its near.com balance, checked before signing and confirmed when it arrives in the report agent's wallet.",
     sources: "Its own NEAR account · NEAR Intents" },
   stake: { key: "stake", name: "NEAR AI staking", role: "Earns credits for AI", icon: "sprout",
     detail: "The report agent stakes 70% of everything it earns (report sales and NEAR Agent Market fees) through NEAR AI Cloud's Staking for Inference (stake.dao, validator nearai.pool.near; at least 1 NEAR at a time) and keeps 30%; once the kept part passes $200 it funds a second trading agent (next step). The staking rewards become NEAR AI credits that pay for the agents' model calls; the staked NEAR stays withdrawable.",

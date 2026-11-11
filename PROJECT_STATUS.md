@@ -440,3 +440,15 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
 - Company scout stays tagged CODE: `app/scout` makes no model call (it merges company names from patents, papers and
   filings, matches SEC tickers and scores with a fixed heuristic); its K-findings are written by code.
 - Checked in the browser on this computer (home page); the website builds.
+
+## 2026-11-11 (late): Report agent drawn as the box all the work flows into (owner: "all the output go to him and report it out")
+- The frame is gone. The box in the last research column is "Report agent" again (tag AI TEAM, highlighted), under the
+  stage label "Report out": Investment (the written report), NEAR record (the seal), Topic fund and NEAR Agent Market
+  (hires) all lead into it, and it reports out to the Trading agent (report for NEAR) and to staking. This matches the
+  program: `scripts/market_agent.py` takes the topic, runs the research team, collects the finished report, seals it,
+  builds the fund, publishes, delivers and sells.
+- Legend lead: "The Report agent runs the research: it takes a topic, hands it to its team of 9 AI agents, collects all
+  their work into one report, and reports it out: sealed on NEAR, published here, and sold. The Trading agent buys the
+  report and trades on it. Each of the two has its own NEAR account." Box tags unchanged otherwise (10 AI, 4 code,
+  2 services, 1 planned).
+- Checked in the browser on this computer (home page, narrow window: the diagram scrolls sideways); the website builds.

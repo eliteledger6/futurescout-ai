@@ -506,3 +506,11 @@ a.card:hover { box-shadow: 0 12px 40px -18px color-mix(in srgb, var(--accent) 45
 .team-frame text { font: 700 10.5px var(--font-mono, ui-monospace, monospace); letter-spacing: 0.08em; fill: var(--accent); }
 .flow-legend span.flow-legend-lead { display: block; flex-basis: 100%; color: var(--text); line-height: 1.5; }
 .flow-legend-lead b { color: var(--accent); font-weight: 600; }
+
+/* the Report agent box: where all the team's work arrives and is reported out (owner 2026-11-11) */
+.kind-chip.team { background: var(--accent); border-color: var(--accent); color: var(--accent-ink, #00110a); }
+.node-kind.team rect { fill: var(--accent); stroke: var(--accent); }
+.node-kind.team text { fill: var(--accent-ink, #00110a); }
+.node.kind-team .node-box { stroke: var(--accent); stroke-width: 2.2; fill: color-mix(in srgb, var(--accent) 10%, var(--bg)); filter: drop-shadow(0 0 10px color-mix(in srgb, var(--accent) 45%, transparent)); }
+.node.kind-team .node-name { fill: var(--accent); }
+.kind-pill.team { border-color: var(--accent); color: var(--accent); }

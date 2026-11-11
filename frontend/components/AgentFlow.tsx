@@ -37,7 +37,7 @@ const EDGES: [AgentKey, AgentKey][] = [
   ["review", "timing"], ["review", "scout"],
   ["timing", "investment"], ["scout", "investment"],
   ["investment", "near"],
-  ["near", "fund"], ["near", "seller"], ["fund", "trader"],
+  ["investment", "seller"], ["near", "seller"], ["fund", "seller"], ["fund", "trader"],   // everything ends at the Report agent, which reports it out
   ["intake", "chief"], ["radar", "chief"], ["buyers", "seller"],
 ];
 const ORDER: AgentKey[][] = [["radar", "intake"], ["chief"], ["science", "patent", "risk", "x"], ["market"], ["review"], ["timing", "scout"], ["investment"], ["near"],
@@ -96,7 +96,7 @@ function Badge({ x, y, text, tone }: { x: number; y: number; text: string; tone:
   );
 }
 
-const KIND_W: Record<NodeKind, number> = { ai: 26, code: 42, service: 60, planned: 62 };
+const KIND_W: Record<NodeKind, number> = { ai: 26, team: 62, code: 42, service: 60, planned: 62 };
 
 function Flow({ d, cls = "edge on" }: { d: string; cls?: string }) {
   return <g className={cls}><path d={d} className="edge-base" /><path d={d} className="edge-flow" /></g>;
@@ -113,8 +113,9 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
   return (
     <div className="flow">
       <div className="flow-legend" aria-label="What the boxes are">
-        {!stats && <span className="flow-legend-lead">Two agents, each with its own NEAR account, do business with each other: the <b>Report agent</b> (everything inside the frame:
-          a team of {REPORT_TEAM.length} AI agents plus code steps, which writes, seals and sells the reports) and the <b>Trading agent</b> (1 AI agent, which buys them and trades).</span>}
+        {!stats && <span className="flow-legend-lead">The <b>Report agent</b> runs the research: it takes a topic, hands it to its team of {REPORT_TEAM.length} AI agents,
+          collects all their work into one report, and reports it out: sealed on NEAR, published here, and sold. The <b>Trading agent</b> buys the report and trades on it.
+          Each of the two has its own NEAR account.</span>}
         <span><b className="kind-chip ai">AI</b> {count("ai")} boxes call a model on NEAR AI Cloud (Chief review is the Chief&apos;s second pass)</span>
         <span><b className="kind-chip code">CODE</b> {count("code")} code steps: fixed rules and counts, no model</span>
         {count("service") > 0 && <span><b className="kind-chip service">SERVICE</b> {count("service")} outside NEAR services</span>}
@@ -130,20 +131,10 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
               <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
             </radialGradient>
           </defs>
-          {/* the Report agent: one agent with its own NEAR account, made of the AI agents and code steps inside this frame */}
-          {!stats && (
-            <g className="team-frame">
-              <rect x={X0 - 8} y={34} width={COL[5] + W + 16 - X0} height={402} rx={14} />
-              <g transform={`translate(${COL[2]} 25)`}>
-                <rect className="team-tag" width={470} height={18} rx={9} />
-                <text x={235} y={12.5} textAnchor="middle">REPORT AGENT · one NEAR account · {REPORT_TEAM.length} AI agents working as a team</text>
-              </g>
-            </g>
-          )}
           {/* stage labels */}
           {!stats && <text x={X0 + W / 2} y={14} className="flow-stage" textAnchor="middle">Find topics</text>}
           {([["Plan", 0], ["Research in parallel", 1], ["Companies & review", 2], ["Timing & scout", 3], ["Write & seal", 4],
-             ...(stats ? [] : [["Sell & fund", 5], ["Trade & stake", 6]])] as [string, number][]).map(([t, i]) => (
+             ...(stats ? [] : [["Report out", 5], ["Trade & stake", 6]])] as [string, number][]).map(([t, i]) => (
             <text key={t} x={COL[i] + W / 2} y={14} className="flow-stage" textAnchor="middle">{t}</text>
           ))}
           {/* edges */}
@@ -169,6 +160,7 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
               <Badge x={(POS.chief[0] + POS.stake[0] + W) / 2} y={CREDIT_Y} text="◂ NEAR AI credits from staking pay every agent's model calls" tone="credit" />
               <g className="edge planned-edge"><path d={POT} className="edge-base" /></g>
               <Badge x={GAP_MID - 26} y={POS.trader2[1] - 14} text="keeps 30% · at $200 ▸" tone="pot" />
+              <Badge x={(COL[4] + W + COL[5]) / 2} y={POS.investment[1] + 52} text="all the work ▸" tone="report" />
               <Badge x={POS.intake[0] + W / 2} y={POS.intake[1] - 48} text="▾ proposals · 5 a day" tone="report" />
               <Badge x={POS.radar[0] + W / 2} y={POS.radar[1] + 46} text="top 5 kept fresh · daily" tone="report" />
               <Badge x={POS.radar[0] + W / 2} y={POS.radar[1] + 70} text="a sale pays for the next" tone="pay" />
