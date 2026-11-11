@@ -13,6 +13,8 @@ const friendlyError = (e: string) => {
   if (/rate|429|timeout|timed out|unavailable|connection/i.test(e)) return `${source}: source unavailable right now`;
   return `${source}: not counted`;
 };
+// "EPO OPS" is the European Patent Office's worldwide database; older radar files have no source and came from Google Patents.
+const patentSource = (src?: string | null) => (!src ? "Google Patents" : /EPO/i.test(src) ? "European Patent Office, worldwide" : "Google Patents");
 const pct = (v: number | null | undefined) => (v === null || v === undefined ? "–" : `${v > 0 ? "+" : ""}${v.toFixed(0)}%`);
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -97,7 +99,7 @@ export default function RadarPage() {
                             </td>
                             <td className="num">{pa ? <>{pa.previous_year_count} → {pa.last_full_year_count}<div className="small muted">{pct(pa.yoy_growth_pct)}</div></> : "–"}</td>
                             <td className="num">{t.paper_ytd ? <>{t.paper_ytd.previous_count} → {t.paper_ytd.count}<div className="small"><TrendChip t={t.paper_ytd} /></div></> : "–"}</td>
-                            <td className="num">{pt ? <>{pt.previous_year_count} → {pt.last_full_year_count}<div className="small muted">{pct(pt.yoy_growth_pct)}</div></> : "–"}</td>
+                            <td className="num">{pt ? <>{pt.previous_year_count} → {pt.last_full_year_count}<div className="small muted" title={`Counted by ${patentSource(t.patent_source)}`}>{pct(pt.yoy_growth_pct)}{/EPO/i.test(t.patent_source ?? "") ? " · EPO" : ""}</div></> : "–"}</td>
                             {Object.keys(t.filer_counts).length > 0 && <td className="num">{lastYear ? t.filer_counts[String(lastYear)] ?? "–" : "–"}</td>}
                           </tr>
                         );
@@ -156,7 +158,7 @@ function TopicDetail({ t }: { t: TopicSignal }) {
       </div>
       <div className="stat-value" style={{ fontSize: 48 }}>{pct(t.heat)}<span className="small muted" style={{ fontFamily: "var(--font-body)", letterSpacing: 0, marginLeft: 10 }}>heat</span></div>
       {Object.keys(t.paper_counts).length > 0 && <Spark counts={t.paper_counts} label="Papers per year (OpenAlex)" partialFrom={year} />}
-      {Object.keys(t.patent_counts).length > 0 && <Spark counts={t.patent_counts} label="Patent publications per year (Google Patents)" partialFrom={year - 1} />}
+      {Object.keys(t.patent_counts).length > 0 && <Spark counts={t.patent_counts} label={`Patent publications per year (${patentSource(t.patent_source)}${t.patent_counted_at ? `, counted ${t.patent_counted_at}` : ""})`} partialFrom={year - 1} />}
       {Object.keys(t.filer_counts).length > 0 && <Spark counts={t.filer_counts} label="SEC filers mentioning it, per year" partialFrom={year} />}
       <Link className="btn btn-ghost" href={`/research?topic=${encodeURIComponent(t.topic)}`}>Research this topic →</Link>
     </div>

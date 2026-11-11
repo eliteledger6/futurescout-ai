@@ -3,6 +3,9 @@
   python scripts\\run_radar.py                 all topics (5 SerpApi searches per topic, cached 24 h)
   python scripts\\run_radar.py --no-patents    papers only (free)
 
+Patents: Google Patents through SerpApi first (saved results only while SERPAPI_CACHE_ONLY=true); a topic it cannot count is
+counted by EPO OPS (free) when the EPO keys are set. Each topic records which source counted it.
+
 Writes backend/runs/radar.json, which the dashboard shows at /radar. No model calls.
 Needs OPENALEX_API_KEY; patents need SERPAPI_API_KEY (or EPO keys); filer counts need EDGAR_USER_AGENT.
 """
@@ -18,7 +21,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import httpx  # noqa: E402
 
 from app.config import get_settings, quiet_network_logs  # noqa: E402
-from app.radar import compute_radar, load_topics, save_radar  # noqa: E402
+from app.radar import carry_over_patents, compute_radar, load_radar, load_topics, save_radar  # noqa: E402
 from app.sources.base import SourceError  # noqa: E402
 from app.sources.edgar_fulltext import EdgarFullTextClient  # noqa: E402
 from app.sources.epo import EpoOpsClient  # noqa: E402
@@ -41,10 +44,13 @@ def main() -> int:
         topics = [t for t in topics if t.name.lower() in wanted]
     http = httpx.Client(timeout=30.0, headers={"User-Agent": s.http_user_agent}, follow_redirects=True)
     openalex = OpenAlexClient(s.openalex_key_value(), http=http) if s.openalex_key_value() else None
-    patents = None
+    patents = fallback = None
     if not args.no_patents:
         if s.serpapi_key_value():
             patents = SerpApiPatentsClient(s.serpapi_key_value() or "", cache_only=s.serpapi_cache_only)
+            if s.epo_credentials():      # free: counts the topics Google Patents has no saved result for (owner 2026-11-11)
+                from app.sources.base import RateLimiter
+                fallback = EpoOpsClient(*s.epo_credentials(), limiter=RateLimiter(4.0))  # type: ignore[misc]  # EPO fair use: slow and steady
         elif s.epo_credentials():
             patents = EpoOpsClient(*s.epo_credentials())  # type: ignore[misc]
         else:
@@ -57,7 +63,12 @@ def main() -> int:
             print(f"Filer counts skipped: {exc}")
 
     print(f"Radar over {len(topics)} topics (patents: {'yes' if patents else 'no'}, filers: {'yes' if filers else 'no'})...")
-    radar = compute_radar(topics, openalex=openalex, patents=patents, filers=filers)
+    previous = load_radar()
+    radar = compute_radar(topics, openalex=openalex, patents=patents, filers=filers, patents_fallback=fallback)
+    if not args.topic:
+        kept = carry_over_patents(radar, previous)
+        if kept:
+            print(f"patent numbers kept from the earlier radar for {kept} topic(s) this run could not count")
     path = save_radar(radar)
     print(f"\n{'#':>2}  {'topic':28} {'papers Y-1->Y':>16} {'patents Y-1->Y':>16} {'heat':>7}")
     for t in radar.topics:

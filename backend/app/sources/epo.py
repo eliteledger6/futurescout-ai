@@ -143,6 +143,7 @@ class EpoOpsClient:
         self._key, self._secret = consumer_key, consumer_secret
         self._http = http or httpx.Client(timeout=40.0)
         self._limiter = limiter or RateLimiter(1.5)  # be gentle: fair-use throttling is per minute
+        self._base_interval = self._limiter.min_interval
         self._sleep, self._clock, self._now = sleep, clock, now
         self._token: Optional[str] = None
         self._token_expiry = 0.0
@@ -178,10 +179,18 @@ class EpoOpsClient:
                           404: "no results", 413: "query too broad (too many results)"},
         )
         self.requests += 1
+        self._follow_throttle(r.headers.get("X-Throttling-Control", ""))
         try:
             return r.json()
         except ValueError:
             raise SourceError(SOURCE, "response was not JSON") from None
+
+    def _follow_throttle(self, header: str) -> None:
+        """EPO states how many searches a minute it allows right now, e.g. `busy (search=yellow:15, ...)`; it shrinks when
+        their service is loaded, and going over it gets the key blocked for minutes (seen live 2026-11-11). Stay under it."""
+        m = re.search(r"search=\w+:(\d+)", header or "")
+        if m and int(m.group(1)) > 0:
+            self._limiter.min_interval = round(max(self._base_interval, 60.0 / int(m.group(1)) * 1.3), 2)
 
     def search(self, terms: list[str], *, from_year: Optional[int] = None, max_results: int = 25) -> tuple[int, list[SourceRecord]]:
         """Most recent publications matching the terms in title/abstract."""

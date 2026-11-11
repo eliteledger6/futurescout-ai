@@ -294,3 +294,9 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   home (16 cards, sector filter), radar (54 rows, tabs, detail), free and paid report, 16 fund pages, trading, how it works
   (18 agents), request a report (form, injection refused). Cloud kit: `scripts/preflight.py` + `check_setup.bat`
   (read-only readiness check, run on the laptop: READY) and the VPS guide step 4b.
+- 2026-11-11 radar patents (owner: "yes go ahead"): EPO OPS (free) is the fallback for topics Google Patents (SerpApi,
+  paused) cannot count; each topic records `patent_source`. First run: EPO counted 6 topics, then blocked the key for about
+  12 minutes (`search=black`, their service was "overloaded"; our 1.5 s pace was too fast), and the 8 saved Google results
+  had expired. The previous radar (2026-11-09) was restored. Now: the EPO client follows the rate EPO states in each reply,
+  a refused source is not asked again in the same run, and a run that cannot count a topic's patents keeps the earlier
+  numbers with their date (`carry_over_patents`). Mock-tested (335 tests). The full recompute is still to do.

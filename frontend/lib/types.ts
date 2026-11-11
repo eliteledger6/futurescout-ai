@@ -210,6 +210,8 @@ export interface TopicSignal {
   paper_acceleration: Acceleration | null;
   patent_counts: Record<string, number>;
   patent_acceleration: Acceleration | null;
+  patent_counted_at?: string | null;  // set when the patent numbers were kept from an earlier radar run
+  patent_source?: string | null;      // which source counted the patents (Google Patents or EPO OPS; they count differently)
   filer_counts: Record<string, number>;
   heat: number | null;
   small_base: boolean;

@@ -59,6 +59,8 @@ class TopicSignal(BaseModel):
     paper_acceleration: Optional[AccelerationMetric] = None
     patent_counts: dict[int, int] = Field(default_factory=dict)
     patent_acceleration: Optional[AccelerationMetric] = None
+    patent_source: Optional[str] = None  # which source counted this topic's patents (they count differently; added 2026-11-11)
+    patent_counted_at: Optional[str] = None  # set when the patent numbers were kept from an earlier radar run (its date)
     filer_counts: dict[int, int] = Field(default_factory=dict)   # SEC filers mentioning the topic, per year
     heat: Optional[float] = None       # average of the available YoY growth rates (%): papers and patents, or papers alone
     heat_basis: Optional[str] = None   # which growth rates went into heat, e.g. "papers 2025 + papers YTD + patents 2025"
@@ -77,7 +79,9 @@ class Radar(BaseModel):
     basis: str = (
         "Heat is the average of the code-computed growth rates available between the two most recent complete years: "
         "papers (OpenAlex works with the exact topic phrase in title or abstract) and patent publications "
-        "(Google Patents, topic terms in title or abstract); when patents have not been counted for a topic, heat is the "
+        "(Google Patents where a saved result exists, otherwise EPO OPS, the European Patent Office's worldwide database; topic "
+        "terms in title or abstract; each topic names its source, and the two count differently, so compare growth, not "
+        "totals); when patents have not been counted for a topic, heat is the "
         "paper growth alone and is marked 'papers only'. Papers so far this year are also compared with the SAME dates last "
         "year (the last 30 days left out of both, for indexing delay), so a topic that is fading in the current year loses "
         "heat immediately and is marked 'cooling'. It measures how much more is being written and "
@@ -152,8 +156,10 @@ def compute_radar(
     patents,                        # SerpApiPatentsClient | EpoOpsClient | None (count_by_year)
     filers=None,                    # EdgarFullTextClient | None (count_filers_by_year)
     now: Callable[[], datetime] = lambda: datetime.now(timezone.utc),
+    patents_fallback=None,          # a second patent source, used for a topic the first cannot count (e.g. paused, no saved result)
 ) -> Radar:
     year = now().year
+    fallback_blocked = False
     start = year - COUNT_YEARS
     out: list[TopicSignal] = []
     for t in topics:
@@ -172,17 +178,26 @@ def compute_radar(
                 sig.trend = sig.paper_ytd.trend if sig.paper_ytd else None
             except SourceError as exc:
                 sig.errors.append(f"papers (year to date): {exc.message}")
-        if patents:
+        first_error = None
+        for src in [p for p in (patents, None if fallback_blocked else patents_fallback) if p]:
             try:
-                sig.patent_counts = patents.count_by_year(t.terms, start)
+                sig.patent_counts = src.count_by_year(t.terms, start)
                 sig.patent_acceleration = compute_acceleration(sig.patent_counts, year)
+                sig.patent_source = getattr(src, "SOURCE", "patent source")
                 if sig.patent_acceleration:
                     sig.patent_acceleration.basis = (
                         f"Patent publications per year with any of {t.terms} in title or abstract "
-                        f"({getattr(patents, 'SOURCE', 'patent source')}). Recent years undercounted by publication delay.")
-                sig.patent_ytd = patent_ytd(patents, t.terms, now().date())
+                        f"({sig.patent_source}). Recent years undercounted by publication delay.")
+                sig.patent_ytd = patent_ytd(src, t.terms, now().date())
+                first_error = None
+                break
             except SourceError as exc:
-                sig.errors.append(f"patents: {exc.message}")
+                sig.patent_counts, sig.patent_acceleration, sig.patent_ytd, sig.patent_source = {}, None, None, None
+                first_error = first_error or f"patents: {exc.message}"
+                if src is patents_fallback and getattr(exc, "status", None) in (403, 429):
+                    fallback_blocked = True          # the source's fair-use limit: stop asking it for the rest of this run
+        if first_error:
+            sig.errors.append(first_error)
         if filers:
             try:
                 sig.filer_counts = filers.count_filers_by_year(t.name, start)
@@ -194,6 +209,32 @@ def compute_radar(
                              for a in (sig.paper_acceleration, sig.patent_acceleration))
         out.append(sig)
     return Radar(generated_at=now(), topics=rank_topics(out), searches_used=getattr(patents, "searches_used", 0) or 0)
+
+
+def carry_over_patents(new: Radar, old: Optional[Radar]) -> int:
+    """Keep the patent numbers of an earlier run for topics this run could not count (a paused or rate-limited source must
+    not erase data). The topic says when those numbers were counted. Heat and ranks are recomputed. Returns how many were kept."""
+    if old is None:
+        return 0
+    before = {t.topic: t for t in old.topics}
+    kept = 0
+    for t in new.topics:
+        o = before.get(t.topic)
+        if t.patent_counts or o is None or not o.patent_counts:
+            continue
+        t.patent_counts, t.patent_acceleration, t.patent_ytd = o.patent_counts, o.patent_acceleration, o.patent_ytd
+        t.patent_source = o.patent_source or "Google Patents (SerpApi)"
+        t.patent_counted_at = o.patent_counted_at or old.generated_at.date().isoformat()
+        t.errors = [e for e in t.errors if not e.startswith("patents:")]
+        t.heat = heat_of(t.paper_acceleration, t.patent_acceleration, t.paper_ytd, t.patent_ytd)
+        t.heat_basis = heat_basis_of(t.paper_acceleration, t.patent_acceleration, t.paper_ytd, t.patent_ytd)
+        t.small_base = any(a is not None and a.previous_year_count < MIN_BASE for a in (t.paper_acceleration, t.patent_acceleration))
+        kept += 1
+    if kept:
+        for t in new.topics:
+            t.rank = None
+        new.topics = rank_topics(new.topics)
+    return kept
 
 
 def save_radar(radar: Radar, path: Path = RADAR_FILE) -> Path:
