@@ -117,6 +117,28 @@
       "tx_hash": "EghVv4gXrufmxRDhmhmce9G8BWeSypSuJkioL2vFyXpW",
       "note": "staked 1.3055 NEAR (70% of 1.865 NEAR received for reports, minus earlier stakes); kept pot now 0.5595 NEAR",
       "at": "2026-11-10T13:50:03.899932Z"
+    },
+    {
+      "id": "cd29d27f69",
+      "account": "grandbread5023.near",
+      "contract": "stake.dao",
+      "amount_near": 1.0625,
+      "balance_before_near": 1.328124,
+      "status": "failed",
+      "tx_hash": null,
+      "note": "stake refused: {'balance': '1328124429085524341320433', 'cost': '1363419025097303473056346', 'signer_id': 'grandbread5023.near'}",
+      "at": "2026-11-10T14:11:52.308146Z"
+    },
+    {
+      "id": "b82f04742f",
+      "account": "grandbread5023.near",
+      "contract": "stake.dao",
+      "amount_near": 1.062015,
+      "balance_before_near": 1.327519,
+      "status": "failed",
+      "tx_hash": null,
+      "note": "stake refused: {'balance': '1327518813020314141320433', 'cost': '1362934532245135313056346', 'signer_id': 'grandbread5023.near'}",
+      "at": "2026-11-10T15:11:59.449372Z"
     }
   ],
   "kept_near": 0.5595
