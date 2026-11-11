@@ -94,6 +94,7 @@ economy:
   embargo_hours: null             # owner 2026-11-10: reports are never unlocked without payment (a number = free after N hours)
   always_free:                    # owner 2026-11-10: never locked, for the demo (high bandwidth memory, score 80)
     - e5d41d1f-fa56-42ce-bf27-9fccb47298a2
+    - 4a2a3eaa-9841-4174-b38d-0a12e7b52623   # owner 2026-11-11: retrieval-augmented generation (first visitor proposal), free for the demo
   pay_from: private               # owner 2026-11-10: pay reports from the near.com (private) balance; "wallet" = plain transfer
   staking_contract: stake.dao     # NEAR AI's "Stake NEAR" contract, read from the owner's own dashboard stake (2026-11-10)
   stake_method: stake
