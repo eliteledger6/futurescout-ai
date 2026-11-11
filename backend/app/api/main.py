@@ -207,6 +207,25 @@ def create_app(
     sales_path = trading_dir.parent / "economy" / "sales.json"
     px_cache: dict = {}
 
+    def live_token_prices() -> dict:
+        """ticker -> (price, when, source) for the Ondo tokenized stocks, from the public NEAR Intents token list (no key);
+        cached 10 minutes. Empty when the list cannot be read."""
+        hit = px_cache.get("tokens")
+        if hit and time.time() - hit[0] < 600:
+            return hit[1]
+        out = {}
+        try:
+            from app.fund.intents_signed import SignedIntents
+            for t in SignedIntents(load_fund_config().intents.api).tokens():
+                sym = str(t.get("symbol") or "")
+                if sym.endswith("on") and sym[:-2].isupper() and t.get("price"):
+                    out[sym[:-2]] = (float(t["price"]), str(t.get("priceUpdatedAt") or "")[:16].replace("T", " ") + " UTC",
+                                     "NEAR Intents price of the tokenized stock")
+        except Exception:  # noqa: BLE001  (no live price: the latest close is used)
+            out = {}
+        px_cache["tokens"] = (time.time(), out)
+        return out
+
     def near_usd() -> float:
         hit = px_cache.get("near")
         if hit and time.time() - hit[0] < 600:
@@ -503,6 +522,8 @@ def create_app(
                 trading_cache[account] = (time.time(), balances)
         today = datetime.now(timezone.utc).date().isoformat()
         closes = latest_closes(service.RUNS_DIR / "funds")
+        prices = {t: (c, d, "latest daily close") for t, (c, d) in closes.items()}
+        prices.update(live_token_prices())                           # live NEAR Intents prices win (as near.com shows)
         return {
             "network": "NEAR mainnet (NEAR Intents has no testnet)", "account": account,
             "key_configured": settings.fund_mainnet_credentials() is not None,
@@ -515,9 +536,8 @@ def create_app(
             "selling": {"enabled": lv.sells_enabled, "budget_mode": lv.budget_mode, "max_sells_per_day": lv.max_sells_per_day},
             "live_holdings": state.live_holdings(),
             "balances": balances,
-            "shadow_portfolio": shadow_portfolio(state, {**{f"{t}on": c for t, (c, _d) in closes.items()},
-                                                          **{t["symbol"]: t["price"] for t in tokens if t.get("price")}}, lv.shadow_budget_usd),
-            "performance": performance(state, closes, lv.shadow_budget_usd),
+            "shadow_portfolio": shadow_portfolio(state, {f"{t}on": v[0] for t, v in prices.items()}, lv.shadow_budget_usd),
+            "performance": performance(state, prices, lv.shadow_budget_usd),
             "pay_with": lv.pay_with,
             "strategy": {"rules": STRATEGY_RULES, "config": lv.strategy.model_dump(), "last_check_at": state.last_check_at.isoformat() if state.last_check_at else None},
             "checks": list(reversed((state.checks or [])[-40:])),

@@ -420,7 +420,10 @@ def test_performance_is_in_percent_at_the_latest_close():
                   asset_id="a", usd=1200.0, rationale="r", risks=[], confidence="low", model=None)
     sh.status, sh.quote = "shadow_filled", {"amountOutFormatted": "20.266"}
     st.proposals = [real, sh]
-    perf = performance(st, {"INTC": (58.13, "2026-11-10")}, 10_000)
-    assert perf["live_pct"] == -1.97 or perf["live_pct"] == -1.96                       # 0.73919 x 58.13 vs 43.83
-    assert perf["shadow_pct"] == round((20.266 * 58.13 / 1200 - 1) * 100, 2) and perf["priced_at"] == "2026-11-10"
+    perf = performance(st, {"INTC": (60.76, "2026-11-11 09:14 UTC", "NEAR Intents price of the tokenized stock")}, 10_000)
+    assert perf["live_pct"] == round((0.73919 * 60.76 / 43.83 - 1) * 100, 2)            # +2.47%, as near.com showed
+    assert perf["shadow_pct"] == round((20.266 * 60.76 / 1200 - 1) * 100, 2) and perf["priced_at"] == "2026-11-11 09:14 UTC"
+    assert perf["basis"] == "NEAR Intents price of the tokenized stock"
+    old = performance(st, {"INTC": (58.13, "2026-11-10", "latest daily close")}, 10_000)
+    assert old["live_pct"] < 0 and old["basis"] == "latest daily close"              # only when no live price exists
     assert "amount" not in str(perf).lower() and performance(TradingState(), {}, 10_000)["live_pct"] is None   # nothing held: no number

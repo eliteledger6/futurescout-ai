@@ -518,6 +518,23 @@ def near_price(ex) -> float:  # noqa: ANN001
     return ex.oneclick.price_usd(ex.cfg.near_asset_id)
 
 
+_TOKEN_PRICES: dict = {}
+
+
+def token_price(ex, symbol: str) -> float | None:  # noqa: ANN001
+    """Live price of a tokenized stock from the public NEAR Intents token list (cached 10 minutes); None if unavailable."""
+    import time
+    if not _TOKEN_PRICES or time.time() - _TOKEN_PRICES.get("_at", 0) > 600:
+        try:
+            from app.fund.intents_signed import SignedIntents
+            _TOKEN_PRICES.clear()
+            _TOKEN_PRICES.update({str(t.get("symbol") or "").upper(): float(t["price"]) for t in SignedIntents(load_fund_config().intents.api).tokens() if t.get("price")})
+            _TOKEN_PRICES["_at"] = time.time()
+        except Exception:  # noqa: BLE001
+            return None
+    return _TOKEN_PRICES.get(symbol.upper())
+
+
 def valued_holding(state, ex, h: dict, now: datetime | None = None) -> tuple[float, str]:  # noqa: ANN001
     """(USD value, how it was valued) of one live holding: a real dry sale quote when NEAR Intents answers (saved as the
     last known value); otherwise the last known quote, else what it cost. Owner 2026-11-10: a holding that cannot be
@@ -526,6 +543,9 @@ def valued_holding(state, ex, h: dict, now: datetime | None = None) -> tuple[flo
     if v is not None:
         state.last_values[h["symbol"]] = {"usd": v, "at": (now or datetime.now(timezone.utc)).isoformat()}
         return v, "live quote"
+    px = token_price(ex, h["symbol"])
+    if px:                                             # the live NEAR Intents price (as near.com shows) when no swap quote exists
+        return round(h["quantity"] * px, 2), "NEAR Intents price of the tokenized stock"
     last = state.last_values.get(h["symbol"])
     if last:
         return float(last["usd"]), f"last known quote ({str(last['at'])[:16]})"
@@ -543,7 +563,7 @@ def live_fund_value(s, cfg, ex, private_near: float = 0.0) -> float:  # noqa: AN
         v, how = valued_holding(state, ex, h)
         value += v
         if how != "live quote":
-            print(f"  {h['symbol']}: NEAR Intents gave no quote; counted at {how}: ${v:.2f}")
+            print(f"  {h['symbol']}: no swap quote from NEAR Intents; valued at the {how}: ${v:.2f}")
     save_state(state, STATE)
     acc = (s.fund_mainnet_account_id or "").strip()
     if acc:

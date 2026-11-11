@@ -268,7 +268,7 @@ function Gain({ pct, perf }: { pct: number | null | undefined; perf?: Trading["p
   if (pct == null || !perf) return null;
   const up = pct >= 0;
   return (
-    <span className="pill" title={`Since bought: ${perf.basis}${perf.priced_at ? ` (close of ${perf.priced_at})` : ""}.`}
+    <span className="pill" title={`Since bought, valued at the ${perf.basis}${perf.priced_at ? ` (${perf.priced_at})` : ""}; ${perf.note ?? "report purchases not included"}.`}
           style={{ color: up ? "var(--accent)" : "var(--l-danger)", borderColor: up ? "var(--accent)" : "var(--l-danger)", fontWeight: 600 }}>
       {up ? "+" : ""}{pct.toFixed(2)}% since bought
     </span>

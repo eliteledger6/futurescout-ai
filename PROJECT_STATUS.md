@@ -280,3 +280,6 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
 - 2026-11-11 (owner: "show how much it earns, by % only"): `/api/trading` returns `performance` (live_pct, shadow_pct,
   per holding), valued at each stock's latest daily close from the topic funds; report purchases not included. The trading
   page shows "x% since bought" next to "Real money" and "Shadow". Today: real -1.96%, shadow -1.83% (INTC at the 2026-11-10 close).
+- 2026-11-11 (owner spotted it on near.com): performance and the agent's own valuation use the LIVE NEAR Intents price of
+  the tokenized stock (public token list, the price near.com shows; cached 10 min); the latest daily close only when missing.
+  INTCon $60.76 -> real +2.47%, shadow +2.62% (near.com showed $44.91 for the holding). The swap quote still fails ("No liquidity").
