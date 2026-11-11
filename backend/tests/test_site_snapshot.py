@@ -25,3 +25,15 @@ def test_filestore_keeps_database_ids_and_sorts_by_date(tmp_path):
     assert store.get(ids[0]) is not None and store.get(f"report_{ids[0]}") is not None
     assert store.get("../secrets") is None and store.get("nonsense") is None
     assert store.list(limit=1)[0]["id"] == ids[1]
+
+
+def test_export_never_publishes_buyers_access_tokens():
+    """The snapshot goes to git and the hosted copy: the report-market sales file (access tokens) must not be in it."""
+    from pathlib import Path
+    src = (Path(__file__).resolve().parents[1] / "scripts" / "export_site.py").read_text(encoding="utf-8")
+    listed = src[src.index("for rel in ("):src.index("):", src.index("for rel in ("))]
+    assert "sales.json" not in listed and "stale.unlink()" in src
+    snap = Path(__file__).resolve().parents[1] / "site_data"
+    assert not (snap / "economy" / "sales.json").exists()
+    for f in snap.rglob("*.json"):
+        assert '"access_token"' not in f.read_text(encoding="utf-8", errors="ignore"), f.name

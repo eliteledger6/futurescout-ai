@@ -45,7 +45,11 @@ def main() -> int:
         (OUT / f"{name}.md").write_text(md or render_markdown(report), encoding="utf-8")
         n += 1
     print(f"  {n} reports (from the {store.kind})")
-    for rel in ("radar.json", "portfolio.json", "trading/state.json", "economy/state.json", "economy/sales.json", "proposals/state.json"):
+    # economy/sales.json is NOT exported: it holds buyers' access tokens, and the snapshot is published (git, hosted copy).
+    stale = OUT / "economy" / "sales.json"
+    if stale.is_file():
+        stale.unlink()
+    for rel in ("radar.json", "portfolio.json", "trading/state.json", "economy/state.json", "proposals/state.json"):
         f = src / rel
         if f.is_file():
             (OUT / rel).parent.mkdir(parents=True, exist_ok=True)

@@ -283,3 +283,8 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
 - 2026-11-11 (owner spotted it on near.com): performance and the agent's own valuation use the LIVE NEAR Intents price of
   the tokenized stock (public token list, the price near.com shows; cached 10 min); the latest daily close only when missing.
   INTCon $60.76 -> real +2.47%, shadow +2.62% (near.com showed $44.91 for the holding). The swap quote still fails ("No liquidity").
+- 2026-11-11 audit (owner: "make sure nothing is hidden or hardcoded"): no key or token in tracked files or git history;
+  `.env`, `runs/`, caches and media are not tracked; no account name hardcoded in code (config only); `hidden` list empty;
+  every app module imports; 332 tests; hosted endpoints answer and both checked seals match on mainnet. Fixed: the site
+  export no longer copies `economy/sales.json` (buyers' access tokens). Known leftovers, harmless: one `if True:` block in
+  `fund_trade.run_check`; ESLint is not configured for the frontend (TypeScript check and build pass).
