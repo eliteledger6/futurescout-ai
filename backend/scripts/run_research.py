@@ -8,9 +8,10 @@ EDGAR_USER_AGENT (your name + contact email) enables the Market agent's SEC fili
 Outputs go to backend/runs/: report_<time>.md (readable) and report_<time>.json (full data).
 If DATABASE_URL is set, the run is also saved to PostgreSQL (see scripts/db_check.py).
 
-Which agents run: Chief, Science, Risk (independent + challenge), Market (SEC filings +
-GDELT news headlines; use --no-news to skip news) and Investment.
-Patent and X agents are not built yet; the report says so.
+Which agents run: Chief, Science, Patent, Market (SEC filings + GDELT news headlines; --no-news skips news),
+X (--no-x skips it), Risk (independent + challenge, price timing) and Investment. An agent whose source is not
+configured or refuses the request is listed in the report as having no analysed evidence.
+The report's fingerprint is sealed on NEAR (the network in SEAL_NETWORK) unless --no-near is given.
 """
 
 from __future__ import annotations
@@ -40,7 +41,7 @@ def main() -> int:
     parser.add_argument("--max-papers", type=int, default=12)
     parser.add_argument("--no-news", action="store_true", help="skip the GDELT news headline search")
     parser.add_argument("--no-x", action="store_true", help="skip the X agent (saves ~$0.15 of X API credit)")
-    parser.add_argument("--no-near", action="store_true", help="do not record the report fingerprint on NEAR testnet")
+    parser.add_argument("--no-near", action="store_true", help="do not seal the report fingerprint on NEAR")
     parser.add_argument("--no-fund", action="store_true", help="do not build the topic's paper fund after the report")
     parser.add_argument("--no-db", action="store_true", help="do not save the run to PostgreSQL even if DATABASE_URL is set")
     parser.add_argument("-v", "--verbose", action="store_true", help="log each model call (agent, model, tokens, cost)")
@@ -76,7 +77,7 @@ def main() -> int:
     if run_id:
         print(f"Saved to database as run {run_id}")
     if report.chain_record:
-        print(f"Fingerprint recorded on NEAR testnet: {report.chain_record['sha256'][:16]}…  {report.chain_record['explorer_url']}")
+        print(f"Fingerprint recorded on NEAR {report.chain_record.get('network', 'testnet')}: {report.chain_record['sha256'][:16]}…  {report.chain_record['explorer_url']}")
     return 0 if report.investment and report.investment.draft else 2
 
 

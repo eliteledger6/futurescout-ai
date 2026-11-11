@@ -312,3 +312,16 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
 - A topic's error now lists every patent source that was asked (before, a failed fallback was hidden behind the first
   source's message). Mock-tested: 335 tests pass.
 - Backups kept locally: `runs/radar_backup_2026-11-09.json`, `runs/radar_epo_51_2026-11-11.json`.
+
+## 2026-11-11 (night): final audit and its code fixes
+- `FINAL_AUDIT_REPORT.md`: audit of the whole project (78/100, no critical issue). Run live: one call to each of the 7
+  NEAR AI models, all 55 source links of the newest chiplet report (all genuine), every hosted page and read route, the
+  mainnet seal check, the write routes' refusals, a secrets scan. Not done: a fresh end-to-end research run and the
+  browser test (both stopped by the owner), listening to the video.
+- Fixes from the audit (mock-tested, 335 tests pass; timing measured locally against the site snapshot):
+  the report list and the report market no longer open every locked report and re-read `funds.yaml` per report
+  (`/api/runs?limit=200`: about 1.9 s -> 0.7 s locally; it took 10-11 s on the hosted API); `run_research.py` help text
+  matches the current agents and seal network; the comment on `live.auto_approve` matches its value (value untouched);
+  leftover `if True:` removed from `fund_trade.run_check` (indentation only); `cp -n` warning in `deploy/setup_vps.sh`.
+- Still open from the audit: video behind the product, patent evidence missing in 29 of 60 reports, paid reports readable
+  in the snapshot once the repository is public, only 2 of 60 reports open to a visitor, unknown report address returns 200.

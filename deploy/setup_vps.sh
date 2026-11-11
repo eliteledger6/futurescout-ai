@@ -57,7 +57,7 @@ sudo -u "${APP_USER}" git -C "${APP_DIR}" config user.email "${MAIL}"
 echo "== 5/6 Python environment and starting data"
 sudo -u "${APP_USER}" bash -c "cd '${APP_DIR}' && python3 -m venv .venv && .venv/bin/python -m pip install -q --upgrade pip && .venv/bin/python -m pip install -q -e backend"
 # starting data: the published snapshot becomes backend/runs (never overwrites files that are already there)
-sudo -u "${APP_USER}" bash -c "mkdir -p '${APP_DIR}/backend/runs' && cp -rn '${APP_DIR}/backend/site_data/.' '${APP_DIR}/backend/runs/'"
+sudo -u "${APP_USER}" bash -c "mkdir -p '${APP_DIR}/backend/runs' && cp -r --update=none '${APP_DIR}/backend/site_data/.' '${APP_DIR}/backend/runs/'"
 if [ ! -f "${APP_DIR}/.env" ]; then
   sudo -u "${APP_USER}" cp "${APP_DIR}/.env.example" "${APP_DIR}/.env"
   chmod 600 "${APP_DIR}/.env"

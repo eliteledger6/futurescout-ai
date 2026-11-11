@@ -206,6 +206,7 @@ def create_app(
     econ_path = trading_dir.parent / "economy" / "state.json"
     sales_path = trading_dir.parent / "economy" / "sales.json"
     px_cache: dict = {}
+    price_inputs: dict = {}      # run id -> (when read, what the report's price is made from)
 
     def live_token_prices() -> dict:
         """ticker -> (price, when, source) for the Ondo tokenized stocks, from the public NEAR Intents token list (no key);
@@ -236,27 +237,40 @@ def create_app(
         px_cache["near"] = (time.time(), px)
         return px
 
-    def report_price(run_id: str, report) -> dict:  # noqa: ANN001
-        ec = load_fund_config().economy
+    def report_price(run_id: str, report, ec=None) -> dict:  # noqa: ANN001
+        ec = ec or load_fund_config().economy
         known = None if ec.max_price_usd else load_economy(econ_path).prices.get(run_id)   # dollar prices follow the live NEAR price
         if known:
             return {"price_near": known.price_near, "price_usd": known.price_usd}
-        v = build_verdict(report)
-        searches = int(((report.patent.source_usage or {}).get("requests") or 0) if report.patent else 0)
-        p = price_report(run_id=run_id, topic=report.topic, cost_usd=report.total_cost_usd or 0.0, score=v.get("score"),
-                         confidence_pct=v.get("confidence_pct"), near_usd=near_usd(), cfg=ec, now=datetime.now(timezone.utc),
-                         patent_searches=searches)
+        # What a price is made from does not change for a saved report, so it is read from the report once an hour at
+        # most (the report list would otherwise open every locked report on every request). The NEAR price stays live.
+        hit = price_inputs.get(run_id)
+        if not hit or time.time() - hit[0] > 3600:
+            if report is None:
+                found = store.get(run_id)
+                if not found:
+                    raise KeyError(run_id)
+                report = found[0]
+            v = build_verdict(report)
+            searches = int(((report.patent.source_usage or {}).get("requests") or 0) if report.patent else 0)
+            hit = (time.time(), {"topic": report.topic, "cost_usd": report.total_cost_usd or 0.0, "score": v.get("score"),
+                                 "confidence_pct": v.get("confidence_pct"), "patent_searches": searches})
+            price_inputs[run_id] = hit
+        p = price_report(run_id=run_id, near_usd=near_usd(), cfg=ec, now=datetime.now(timezone.utc), **hit[1])
         return {"price_near": p.price_near, "price_usd": p.price_usd}
 
-    def lock_info(run_id: str, report) -> Optional[dict]:  # noqa: ANN001
-        ec = load_fund_config().economy
-        if not is_locked(report.generated_at, ec, datetime.now(timezone.utc), run_id):
+    def lock_info(run_id: str, report, generated_at: Optional[datetime] = None, ec=None) -> Optional[dict]:  # noqa: ANN001
+        """`report` may be None when only the list row is at hand: then `generated_at` is given and the report is opened
+        only if its price inputs are not remembered yet. `ec`: the economy settings, when the caller has read them already."""
+        ec = ec or load_fund_config().economy
+        generated_at = generated_at or report.generated_at
+        if not is_locked(generated_at, ec, datetime.now(timezone.utc), run_id):
             return None
         try:
-            price = report_price(run_id, report)
+            price = report_price(run_id, report, ec)
         except Exception:  # noqa: BLE001  (no price feed: still locked, price shown as unknown)
             price = {"price_near": None, "price_usd": None}
-        until = unlock_at(report.generated_at, ec)
+        until = unlock_at(generated_at, ec)
         return {"locked": True, "unlock_at": until.isoformat() if until else None, "pay_to": ec.seller_account,
                 "network": "NEAR mainnet", **price,
                 "how_to_buy": ["Send price_near NEAR to pay_to with an ordinary NEAR transfer (mainnet).",
@@ -270,8 +284,7 @@ def create_app(
         now = datetime.now(timezone.utc)
         for r in rows:
             if is_locked(datetime.fromisoformat(r["generated_at"]), ec, now, r["id"]):
-                found = store.get(r["id"])
-                info = lock_info(r["id"], found[0]) if found else None
+                info = lock_info(r["id"], None, datetime.fromisoformat(r["generated_at"]), ec)
                 if info:
                     r.update({k: info[k] for k in ("locked", "unlock_at", "price_near")})
             elif demo_free(datetime.fromisoformat(r["generated_at"]), ec, r["id"]):
@@ -328,8 +341,7 @@ def create_app(
             seen.add(r["topic"])
             if not is_locked(datetime.fromisoformat(r["generated_at"]), ec, datetime.now(timezone.utc), r["id"]):
                 continue
-            found = store.get(r["id"])
-            info = lock_info(r["id"], found[0]) if found else None
+            info = lock_info(r["id"], None, datetime.fromisoformat(r["generated_at"]), ec)
             if info:
                 items.append({"run_id": r["id"], "topic": r["topic"], "sector": r.get("sector"), "generated_at": r["generated_at"],
                               "score": r.get("score"), **{k: info[k] for k in ("unlock_at", "price_near", "price_usd")}})

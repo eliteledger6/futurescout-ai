@@ -44,7 +44,7 @@ intents:
 live:
   trading_enabled: true       # master switch; the owner turns it on for the first trade
   route: confidential          # owner 2026-11-09: trade like near.com (signed order from the private balance); "wallet" = old route
-  auto_approve: true          # FUTURE (owner-only): true = a live proposal from `fund_trade.py watch` is sent without the typed approval. Keep false for now.
+  auto_approve: true          # OWNER-ONLY (set true by the owner 2026-11-10): true = a live proposal from `fund_trade.py watch` is sent without the typed approval.
   sells_enabled: true        # OWNER-ONLY. true = the agent may SELL (part of) a holding for NEAR (owner's written yes 2026-11-10)
   budget_mode: net          # OWNER-ONLY. spent = max_total_usd counts every dollar ever spent on buys;
                               #             net   = it counts buys MINUS sale proceeds (sale money can be invested again)
