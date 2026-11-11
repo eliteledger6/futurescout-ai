@@ -300,3 +300,15 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   had expired. The previous radar (2026-11-09) was restored. Now: the EPO client follows the rate EPO states in each reply,
   a refused source is not asked again in the same run, and a run that cannot count a topic's patents keeps the earlier
   numbers with their date (`carry_over_patents`). Mock-tested (335 tests). The full recompute is still to do.
+
+## 2026-11-11 (evening): Radar patents counted for all 54 topics (run live)
+- `scripts/run_radar.py` ran at EPO's allowed pace (about 5 searches a minute while their service is overloaded): 51 topics
+  counted by EPO OPS; the last 3 (mixture of experts, post-quantum cryptography, confidential computing) failed on a passing
+  EPO error during the run and were counted afterwards and merged in. All 54 topics now have patent numbers from one source
+  (EPO OPS); none says "not counted yet". Papers run to 12 October 2026.
+- Effect on the ranking: 34 topics ranked, 20 marked "small base" (fewer than 20 papers or patents in the earlier year).
+  Some topics that were ranked on papers alone are now unranked because their patent base is tiny, e.g.
+  vision-language-action model (0 patents in 2024, 32 in 2025).
+- A topic's error now lists every patent source that was asked (before, a failed fallback was hidden behind the first
+  source's message). Mock-tested: 335 tests pass.
+- Backups kept locally: `runs/radar_backup_2026-11-09.json`, `runs/radar_epo_51_2026-11-11.json`.

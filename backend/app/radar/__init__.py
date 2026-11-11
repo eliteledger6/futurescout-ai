@@ -178,7 +178,7 @@ def compute_radar(
                 sig.trend = sig.paper_ytd.trend if sig.paper_ytd else None
             except SourceError as exc:
                 sig.errors.append(f"papers (year to date): {exc.message}")
-        first_error = None
+        source_errors: list[str] = []
         for src in [p for p in (patents, None if fallback_blocked else patents_fallback) if p]:
             try:
                 sig.patent_counts = src.count_by_year(t.terms, start)
@@ -189,15 +189,15 @@ def compute_radar(
                         f"Patent publications per year with any of {t.terms} in title or abstract "
                         f"({sig.patent_source}). Recent years undercounted by publication delay.")
                 sig.patent_ytd = patent_ytd(src, t.terms, now().date())
-                first_error = None
+                source_errors = []
                 break
             except SourceError as exc:
                 sig.patent_counts, sig.patent_acceleration, sig.patent_ytd, sig.patent_source = {}, None, None, None
-                first_error = first_error or f"patents: {exc.message}"
+                source_errors.append(f"{getattr(src, 'SOURCE', 'patent source')}: {exc.message}")
                 if src is patents_fallback and getattr(exc, "status", None) in (403, 429):
                     fallback_blocked = True          # the source's fair-use limit: stop asking it for the rest of this run
-        if first_error:
-            sig.errors.append(first_error)
+        if source_errors:                      # every source that was asked, so a failed fallback is not hidden
+            sig.errors.append("patents: " + "; ".join(source_errors))
         if filers:
             try:
                 sig.filer_counts = filers.count_filers_by_year(t.name, start)

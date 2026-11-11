@@ -41,7 +41,7 @@ def test_heat_ranks_hot_above_cold_and_tolerates_failures():
     assert "not whether it is a good investment" in radar.basis
     broken = compute_radar(topics, openalex=FakeCounter(PAPERS), patents=FakeCounter(PATENTS, fail=True), now=lambda: NOW)
     # patents down: heat falls back to paper growth alone, visibly marked, so topics can still be ranked
-    assert all(t.heat_basis == "papers 2025" and "patents: fixture outage" in t.errors[0] for t in broken.topics)
+    assert all(t.heat_basis == "papers 2025" and t.errors[0].startswith("patents: ") and "fixture outage" in t.errors[0] for t in broken.topics)
     assert [t.topic for t in broken.topics] == ["hot topic", "cold topic"] and broken.topics[0].heat == 100.0 and broken.topics[0].rank == 1
     assert hot.heat_basis == "papers 2025 + patents 2025"
 
