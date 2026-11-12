@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-11T14:18:02.254085Z",
+  "generated_at": "2026-11-12T14:13:36.847849Z",
   "topics": [
     {
       "topic": "AI agents",
@@ -10,19 +10,20 @@
       ],
       "sector": "ai_software",
       "paper_counts": {
-        "2022": 309,
-        "2023": 495,
-        "2024": 1082,
-        "2025": 4494,
-        "2026": 15411
+        "2022": 327,
+        "2023": 598,
+        "2024": 1696,
+        "2025": 8224,
+        "2026": 32267,
+        "2027": 1
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 4494,
+        "last_full_year_count": 8224,
         "previous_year": 2024,
-        "previous_year_count": 1082,
-        "yoy_growth_pct": 315.3,
-        "basis": "OpenAlex works whose title or abstract contains the exact phrase \"AI agents\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
+        "previous_year_count": 1696,
+        "yoy_growth_pct": 384.9,
+        "basis": "OpenAlex works whose title or abstract contains any of the exact phrases \"AI agents\", \"LLM agents\", \"agentic AI\", per publication year (singular and plural forms match; each work counted once). The synonyms and abbreviations were kept only after an AI check of sampled papers. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
       "patent_counts": {
         "2022": 9,
@@ -48,17 +49,17 @@
         "2025": 61,
         "2026": 58
       },
-      "heat": 353.1,
+      "heat": 391.6,
       "heat_basis": "papers 2025 + papers YTD + patents 2025 + patents YTD",
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 13383,
-        "previous_count": 3003,
-        "growth_pct": 345.7,
+        "cutoff": "10-13",
+        "count": 28483,
+        "previous_count": 5373,
+        "growth_pct": 430.1,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"AI agents\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with any of the exact phrases \"AI agents\", \"LLM agents\", \"agentic AI\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -84,19 +85,19 @@
       ],
       "sector": "ai_software",
       "paper_counts": {
-        "2022": 18,
-        "2023": 151,
-        "2024": 2351,
-        "2025": 8316,
-        "2026": 15625
+        "2022": 649,
+        "2023": 890,
+        "2024": 3501,
+        "2025": 10690,
+        "2026": 21438
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 8316,
+        "last_full_year_count": 10690,
         "previous_year": 2024,
-        "previous_year_count": 2351,
-        "yoy_growth_pct": 253.7,
-        "basis": "OpenAlex works whose title or abstract contains the exact phrase \"retrieval-augmented generation\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
+        "previous_year_count": 3501,
+        "yoy_growth_pct": 205.3,
+        "basis": "OpenAlex works whose title or abstract contains any of the exact phrases \"retrieval-augmented generation\", \"retrieval-augmented LMs\", \"retrieval augmented language models\", \"RAG\", per publication year (singular and plural forms match; each work counted once). The synonyms and abbreviations were kept only after an AI check of sampled papers. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
       "patent_counts": {
         "2022": 239,
@@ -122,17 +123,17 @@
         "2025": 17,
         "2026": 20
       },
-      "heat": 182.4,
+      "heat": 174.4,
       "heat_basis": "papers 2025 + papers YTD + patents 2025 + patents YTD",
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 14442,
-        "previous_count": 5865,
-        "growth_pct": 146.2,
+        "cutoff": "10-13",
+        "count": 19773,
+        "previous_count": 7533,
+        "growth_pct": 162.5,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"retrieval-augmented generation\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with any of the exact phrases \"retrieval-augmented generation\", \"retrieval-augmented LMs\", \"retrieval augmented language models\", \"RAG\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -158,17 +159,17 @@
       ],
       "sector": "ai_software",
       "paper_counts": {
-        "2022": 209,
-        "2023": 277,
-        "2024": 767,
-        "2025": 2336,
-        "2026": 5762
+        "2022": 210,
+        "2023": 278,
+        "2024": 768,
+        "2025": 2339,
+        "2026": 5789
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 2336,
+        "last_full_year_count": 2339,
         "previous_year": 2024,
-        "previous_year_count": 767,
+        "previous_year_count": 768,
         "yoy_growth_pct": 204.6,
         "basis": "OpenAlex works whose title or abstract contains any of the exact phrases \"mixture of experts\", \"sparse mixture of experts\", \"expert routing\", \"MoE model\", \"MoE layer\", per publication year (singular and plural forms match; each work counted once). The synonyms and abbreviations were kept only after an AI check of sampled papers. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
@@ -188,7 +189,7 @@
         "basis": "Patent publications per year with any of ['mixture of experts', 'mixture-of-experts', 'MoE model'] in title or abstract (EPO OPS). Recent years undercounted by publication delay."
       },
       "patent_source": "EPO OPS",
-      "patent_counted_at": null,
+      "patent_counted_at": "2026-11-11",
       "filer_counts": {
         "2022": 0,
         "2023": 0,
@@ -201,12 +202,12 @@
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 5248,
-        "previous_count": 1548,
-        "growth_pct": 239.0,
+        "cutoff": "10-13",
+        "count": 5280,
+        "previous_count": 1558,
+        "growth_pct": 238.9,
         "trend": "rising",
-        "basis": "OpenAlex works with any of the exact phrases \"mixture of experts\", \"sparse mixture of experts\", \"expert routing\", \"MoE model\", \"MoE layer\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with any of the exact phrases \"mixture of experts\", \"sparse mixture of experts\", \"expert routing\", \"MoE model\", \"MoE layer\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -224,6 +225,58 @@
       "errors": []
     },
     {
+      "topic": "movable antenna",
+      "terms": [
+        "movable antenna"
+      ],
+      "sector": "space_comms",
+      "paper_counts": {
+        "2022": 2,
+        "2023": 17,
+        "2024": 92,
+        "2025": 285,
+        "2026": 413
+      },
+      "paper_acceleration": {
+        "last_full_year": 2025,
+        "last_full_year_count": 285,
+        "previous_year": 2024,
+        "previous_year_count": 92,
+        "yoy_growth_pct": 209.8,
+        "basis": "OpenAlex works whose title or abstract contains the exact phrase \"movable antenna\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
+      },
+      "patent_counts": {},
+      "patent_acceleration": null,
+      "patent_source": null,
+      "patent_counted_at": null,
+      "filer_counts": {
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0,
+        "2026": 0
+      },
+      "heat": 159.8,
+      "heat_basis": "papers 2025 + papers YTD",
+      "paper_ytd": {
+        "year": 2026,
+        "previous_year": 2025,
+        "cutoff": "10-13",
+        "count": 388,
+        "previous_count": 185,
+        "growth_pct": 109.7,
+        "trend": "rising",
+        "basis": "OpenAlex works with the exact phrase \"movable antenna\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+      },
+      "patent_ytd": null,
+      "trend": "rising",
+      "small_base": false,
+      "rank": 4,
+      "errors": [
+        "patents: Google Patents (SerpApi): patent search is paused to save the SerpApi quota (SERPAPI_CACHE_ONLY=true) and this query is not in the local cache"
+      ]
+    },
+    {
       "topic": "supervised fine-tuning",
       "terms": [
         "supervised fine-tuning"
@@ -232,17 +285,17 @@
       "paper_counts": {
         "2022": 72,
         "2023": 167,
-        "2024": 613,
-        "2025": 2010,
-        "2026": 4283,
+        "2024": 615,
+        "2025": 2011,
+        "2026": 4296,
         "2027": 1
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 2010,
+        "last_full_year_count": 2011,
         "previous_year": 2024,
-        "previous_year_count": 613,
-        "yoy_growth_pct": 227.9,
+        "previous_year_count": 615,
+        "yoy_growth_pct": 227.0,
         "basis": "OpenAlex works whose title or abstract contains the exact phrase \"supervised fine-tuning\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
       "patent_counts": {
@@ -269,17 +322,17 @@
         "2025": 3,
         "2026": 2
       },
-      "heat": 153.3,
+      "heat": 153.4,
       "heat_basis": "papers 2025 + papers YTD + patents 2025 + patents YTD",
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 3917,
-        "previous_count": 1475,
-        "growth_pct": 165.6,
+        "cutoff": "10-13",
+        "count": 3949,
+        "previous_count": 1479,
+        "growth_pct": 167.0,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"supervised fine-tuning\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"supervised fine-tuning\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -290,80 +343,6 @@
         "growth_pct": 90.0,
         "trend": "rising",
         "basis": "EPO OPS patent publications matching any of ['supervised fine-tuning'] published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new publications take weeks to be indexed. Applications and grants count; one invention can appear several times."
-      },
-      "trend": "rising",
-      "small_base": false,
-      "rank": 4,
-      "errors": []
-    },
-    {
-      "topic": "quantum error correction",
-      "terms": [
-        "quantum error correction",
-        "surface code",
-        "logical qubit"
-      ],
-      "sector": "quantum",
-      "paper_counts": {
-        "2022": 282,
-        "2023": 336,
-        "2024": 434,
-        "2025": 987,
-        "2026": 2705
-      },
-      "paper_acceleration": {
-        "last_full_year": 2025,
-        "last_full_year_count": 987,
-        "previous_year": 2024,
-        "previous_year_count": 434,
-        "yoy_growth_pct": 127.4,
-        "basis": "OpenAlex works whose title or abstract contains the exact phrase \"quantum error correction\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
-      },
-      "patent_counts": {
-        "2022": 78,
-        "2023": 81,
-        "2024": 144,
-        "2025": 162,
-        "2026": 179
-      },
-      "patent_acceleration": {
-        "last_full_year": 2025,
-        "last_full_year_count": 162,
-        "previous_year": 2024,
-        "previous_year_count": 144,
-        "yoy_growth_pct": 12.5,
-        "basis": "Patent publications per year with any of ['quantum error correction', 'surface code', 'logical qubit'] in title or abstract (EPO OPS). Recent years undercounted by publication delay."
-      },
-      "patent_source": "EPO OPS",
-      "patent_counted_at": "2026-11-11",
-      "filer_counts": {
-        "2022": 1,
-        "2023": 2,
-        "2024": 2,
-        "2025": 2,
-        "2026": 8
-      },
-      "heat": 110.7,
-      "heat_basis": "papers 2025 + papers YTD + patents 2025 + patents YTD",
-      "paper_ytd": {
-        "year": 2026,
-        "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 2465,
-        "previous_count": 672,
-        "growth_pct": 266.8,
-        "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"quantum error correction\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
-      },
-      "patent_ytd": {
-        "year": 2026,
-        "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 170,
-        "previous_count": 125,
-        "growth_pct": 36.0,
-        "trend": "rising",
-        "basis": "EPO OPS patent publications matching any of ['quantum error correction', 'surface code', 'logical qubit'] published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new publications take weeks to be indexed. Applications and grants count; one invention can appear several times."
       },
       "trend": "rising",
       "small_base": false,
@@ -379,19 +358,19 @@
       ],
       "sector": "cybersecurity",
       "paper_counts": {
-        "2022": 363,
-        "2023": 529,
-        "2024": 847,
-        "2025": 1916,
-        "2026": 3189
+        "2022": 365,
+        "2023": 533,
+        "2024": 850,
+        "2025": 1928,
+        "2026": 3222
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 1916,
+        "last_full_year_count": 1928,
         "previous_year": 2024,
-        "previous_year_count": 847,
-        "yoy_growth_pct": 126.2,
-        "basis": "OpenAlex works whose title or abstract contains the exact phrase \"post-quantum cryptography\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
+        "previous_year_count": 850,
+        "yoy_growth_pct": 126.8,
+        "basis": "OpenAlex works whose title or abstract contains any of the exact phrases \"post-quantum cryptography\", \"post-quantum crypto\", per publication year (singular and plural forms match; each work counted once). The synonyms and abbreviations were kept only after an AI check of sampled papers. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
       "patent_counts": {
         "2022": 60,
@@ -417,17 +396,17 @@
         "2025": 13,
         "2026": 30
       },
-      "heat": 108.5,
+      "heat": 108.4,
       "heat_basis": "papers 2025 + papers YTD + patents 2025 + patents YTD",
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 2907,
-        "previous_count": 1292,
-        "growth_pct": 125.0,
+        "cutoff": "10-13",
+        "count": 2935,
+        "previous_count": 1310,
+        "growth_pct": 124.0,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"post-quantum cryptography\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with any of the exact phrases \"post-quantum cryptography\", \"post-quantum crypto\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -445,6 +424,80 @@
       "errors": []
     },
     {
+      "topic": "quantum error correction",
+      "terms": [
+        "quantum error correction",
+        "surface code",
+        "logical qubit"
+      ],
+      "sector": "quantum",
+      "paper_counts": {
+        "2022": 446,
+        "2023": 518,
+        "2024": 705,
+        "2025": 1379,
+        "2026": 4021
+      },
+      "paper_acceleration": {
+        "last_full_year": 2025,
+        "last_full_year_count": 1379,
+        "previous_year": 2024,
+        "previous_year_count": 705,
+        "yoy_growth_pct": 95.6,
+        "basis": "OpenAlex works whose title or abstract contains any of the exact phrases \"quantum error correction\", \"quantum error-correcting codes\", \"stabilizer codes\", \"surface code\", per publication year (singular and plural forms match; each work counted once). The synonyms and abbreviations were kept only after an AI check of sampled papers. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
+      },
+      "patent_counts": {
+        "2022": 78,
+        "2023": 81,
+        "2024": 144,
+        "2025": 162,
+        "2026": 179
+      },
+      "patent_acceleration": {
+        "last_full_year": 2025,
+        "last_full_year_count": 162,
+        "previous_year": 2024,
+        "previous_year_count": 144,
+        "yoy_growth_pct": 12.5,
+        "basis": "Patent publications per year with any of ['quantum error correction', 'surface code', 'logical qubit'] in title or abstract (EPO OPS). Recent years undercounted by publication delay."
+      },
+      "patent_source": "EPO OPS",
+      "patent_counted_at": "2026-11-11",
+      "filer_counts": {
+        "2022": 1,
+        "2023": 2,
+        "2024": 2,
+        "2025": 2,
+        "2026": 8
+      },
+      "heat": 105.1,
+      "heat_basis": "papers 2025 + papers YTD + patents 2025 + patents YTD",
+      "paper_ytd": {
+        "year": 2026,
+        "previous_year": 2025,
+        "cutoff": "10-13",
+        "count": 3565,
+        "previous_count": 948,
+        "growth_pct": 276.1,
+        "trend": "rising",
+        "basis": "OpenAlex works with any of the exact phrases \"quantum error correction\", \"quantum error-correcting codes\", \"stabilizer codes\", \"surface code\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+      },
+      "patent_ytd": {
+        "year": 2026,
+        "previous_year": 2025,
+        "cutoff": "10-12",
+        "count": 170,
+        "previous_count": 125,
+        "growth_pct": 36.0,
+        "trend": "rising",
+        "basis": "EPO OPS patent publications matching any of ['quantum error correction', 'surface code', 'logical qubit'] published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new publications take weeks to be indexed. Applications and grants count; one invention can appear several times."
+      },
+      "trend": "rising",
+      "small_base": false,
+      "rank": 7,
+      "errors": []
+    },
+    {
       "topic": "high bandwidth memory",
       "terms": [
         "high bandwidth memory",
@@ -455,15 +508,15 @@
         "2022": 105,
         "2023": 117,
         "2024": 168,
-        "2025": 277,
-        "2026": 403
+        "2025": 279,
+        "2026": 408
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 277,
+        "last_full_year_count": 279,
         "previous_year": 2024,
         "previous_year_count": 168,
-        "yoy_growth_pct": 64.9,
+        "yoy_growth_pct": 66.1,
         "basis": "OpenAlex works whose title or abstract contains the exact phrase \"high bandwidth memory\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
       "patent_counts": {
@@ -471,7 +524,7 @@
         "2023": 72,
         "2024": 105,
         "2025": 206,
-        "2026": 275
+        "2026": 276
       },
       "patent_acceleration": {
         "last_full_year": 2025,
@@ -490,31 +543,31 @@
         "2025": 19,
         "2026": 32
       },
-      "heat": 87.0,
+      "heat": 86.7,
       "heat_basis": "papers 2025 + papers YTD + patents 2025 + patents YTD",
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 357,
-        "previous_count": 173,
-        "growth_pct": 106.4,
+        "cutoff": "10-13",
+        "count": 361,
+        "previous_count": 177,
+        "growth_pct": 104.0,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"high bandwidth memory\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"high bandwidth memory\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
+        "cutoff": "10-13",
         "count": 260,
         "previous_count": 144,
         "growth_pct": 80.6,
         "trend": "rising",
-        "basis": "EPO OPS patent publications matching any of ['high bandwidth memory', 'HBM'] published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new publications take weeks to be indexed. Applications and grants count; one invention can appear several times."
+        "basis": "EPO OPS patent publications matching any of ['high bandwidth memory', 'HBM'] published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new publications take weeks to be indexed. Applications and grants count; one invention can appear several times."
       },
       "trend": "rising",
       "small_base": false,
-      "rank": 7,
+      "rank": 8,
       "errors": []
     },
     {
@@ -525,19 +578,19 @@
       ],
       "sector": "robotics_autonomy",
       "paper_counts": {
-        "2022": 911,
-        "2023": 937,
-        "2024": 1140,
-        "2025": 1757,
-        "2026": 2253
+        "2022": 913,
+        "2023": 938,
+        "2024": 1142,
+        "2025": 1762,
+        "2026": 2278
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 1757,
+        "last_full_year_count": 1762,
         "previous_year": 2024,
-        "previous_year_count": 1140,
-        "yoy_growth_pct": 54.1,
-        "basis": "OpenAlex works whose title or abstract contains the exact phrase \"humanoid robot\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
+        "previous_year_count": 1142,
+        "yoy_growth_pct": 54.3,
+        "basis": "OpenAlex works whose title or abstract contains any of the exact phrases \"humanoid robot\", \"bipedal humanoid\", per publication year (singular and plural forms match; each work counted once). The synonyms and abbreviations were kept only after an AI check of sampled papers. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
       "patent_counts": {
         "2022": 116,
@@ -563,17 +616,17 @@
         "2025": 3,
         "2026": 5
       },
-      "heat": 85.3,
+      "heat": 85.4,
       "heat_basis": "papers 2025 + papers YTD + patents 2025 + patents YTD",
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 2051,
-        "previous_count": 1277,
-        "growth_pct": 60.6,
+        "cutoff": "10-13",
+        "count": 2067,
+        "previous_count": 1284,
+        "growth_pct": 61.0,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"humanoid robot\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with any of the exact phrases \"humanoid robot\", \"bipedal humanoid\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -587,7 +640,7 @@
       },
       "trend": "rising",
       "small_base": false,
-      "rank": 8,
+      "rank": 9,
       "errors": []
     },
     {
@@ -598,19 +651,19 @@
       ],
       "sector": "semiconductors",
       "paper_counts": {
-        "2022": 56,
+        "2022": 57,
         "2023": 61,
-        "2024": 84,
-        "2025": 149,
-        "2026": 191
+        "2024": 86,
+        "2025": 150,
+        "2026": 196
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 149,
+        "last_full_year_count": 150,
         "previous_year": 2024,
-        "previous_year_count": 84,
-        "yoy_growth_pct": 77.4,
-        "basis": "OpenAlex works whose title or abstract contains the exact phrase \"co-packaged optics\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
+        "previous_year_count": 86,
+        "yoy_growth_pct": 74.4,
+        "basis": "OpenAlex works whose title or abstract contains any of the exact phrases \"co-packaged optics\", \"co-packaged optical interconnects\", per publication year (singular and plural forms match; each work counted once). The synonyms and abbreviations were kept only after an AI check of sampled papers. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
       "patent_counts": {
         "2022": 38,
@@ -636,32 +689,84 @@
         "2025": 9,
         "2026": 16
       },
-      "heat": 81.7,
+      "heat": 81.0,
       "heat_basis": "papers 2025 + papers YTD + patents 2025 + patents YTD",
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 182,
-        "previous_count": 98,
-        "growth_pct": 85.7,
+        "cutoff": "10-13",
+        "count": 186,
+        "previous_count": 100,
+        "growth_pct": 86.0,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"co-packaged optics\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with any of the exact phrases \"co-packaged optics\", \"co-packaged optical interconnects\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
+        "cutoff": "10-13",
         "count": 154,
         "previous_count": 94,
         "growth_pct": 63.8,
         "trend": "rising",
-        "basis": "EPO OPS patent publications matching any of ['co-packaged optics', 'CPO'] published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new publications take weeks to be indexed. Applications and grants count; one invention can appear several times."
+        "basis": "EPO OPS patent publications matching any of ['co-packaged optics', 'CPO'] published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new publications take weeks to be indexed. Applications and grants count; one invention can appear several times."
       },
       "trend": "rising",
       "small_base": false,
-      "rank": 9,
+      "rank": 10,
       "errors": []
+    },
+    {
+      "topic": "assertion generation",
+      "terms": [
+        "assertion generation"
+      ],
+      "sector": "ai_software",
+      "paper_counts": {
+        "2022": 3,
+        "2023": 6,
+        "2024": 20,
+        "2025": 33,
+        "2026": 60
+      },
+      "paper_acceleration": {
+        "last_full_year": 2025,
+        "last_full_year_count": 33,
+        "previous_year": 2024,
+        "previous_year_count": 20,
+        "yoy_growth_pct": 65.0,
+        "basis": "OpenAlex works whose title or abstract contains the exact phrase \"assertion generation\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
+      },
+      "patent_counts": {},
+      "patent_acceleration": null,
+      "patent_source": null,
+      "patent_counted_at": null,
+      "filer_counts": {
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0,
+        "2026": 0
+      },
+      "heat": 79.2,
+      "heat_basis": "papers 2025 + papers YTD",
+      "paper_ytd": {
+        "year": 2026,
+        "previous_year": 2025,
+        "cutoff": "10-13",
+        "count": 58,
+        "previous_count": 30,
+        "growth_pct": 93.3,
+        "trend": "rising",
+        "basis": "OpenAlex works with the exact phrase \"assertion generation\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+      },
+      "patent_ytd": null,
+      "trend": "rising",
+      "small_base": false,
+      "rank": 11,
+      "errors": [
+        "patents: Google Patents (SerpApi): patent search is paused to save the SerpApi quota (SERPAPI_CACHE_ONLY=true) and this query is not in the local cache"
+      ]
     },
     {
       "topic": "zero-knowledge proof",
@@ -672,18 +777,18 @@
       ],
       "sector": "cybersecurity",
       "paper_counts": {
-        "2022": 340,
-        "2023": 490,
+        "2022": 342,
+        "2023": 491,
         "2024": 788,
-        "2025": 1490,
-        "2026": 1809
+        "2025": 1492,
+        "2026": 1824
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 1490,
+        "last_full_year_count": 1492,
         "previous_year": 2024,
         "previous_year_count": 788,
-        "yoy_growth_pct": 89.1,
+        "yoy_growth_pct": 89.3,
         "basis": "OpenAlex works whose title or abstract contains the exact phrase \"zero-knowledge proof\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
       "patent_counts": {
@@ -710,17 +815,17 @@
         "2025": 3,
         "2026": 6
       },
-      "heat": 70.8,
+      "heat": 71.1,
       "heat_basis": "papers 2025 + papers YTD + patents 2025 + patents YTD",
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 1674,
-        "previous_count": 1036,
-        "growth_pct": 61.6,
+        "cutoff": "10-13",
+        "count": 1684,
+        "previous_count": 1037,
+        "growth_pct": 62.4,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"zero-knowledge proof\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"zero-knowledge proof\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -734,8 +839,60 @@
       },
       "trend": "rising",
       "small_base": false,
-      "rank": 10,
+      "rank": 12,
       "errors": []
+    },
+    {
+      "topic": "quantum annealing",
+      "terms": [
+        "quantum annealing"
+      ],
+      "sector": "quantum",
+      "paper_counts": {
+        "2022": 368,
+        "2023": 391,
+        "2024": 530,
+        "2025": 734,
+        "2026": 1101
+      },
+      "paper_acceleration": {
+        "last_full_year": 2025,
+        "last_full_year_count": 734,
+        "previous_year": 2024,
+        "previous_year_count": 530,
+        "yoy_growth_pct": 38.5,
+        "basis": "OpenAlex works whose title or abstract contains the exact phrase \"quantum annealing\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
+      },
+      "patent_counts": {},
+      "patent_acceleration": null,
+      "patent_source": null,
+      "patent_counted_at": null,
+      "filer_counts": {
+        "2022": 1,
+        "2023": 1,
+        "2024": 2,
+        "2025": 1,
+        "2026": 1
+      },
+      "heat": 64.5,
+      "heat_basis": "papers 2025 + papers YTD",
+      "paper_ytd": {
+        "year": 2026,
+        "previous_year": 2025,
+        "cutoff": "10-13",
+        "count": 1031,
+        "previous_count": 541,
+        "growth_pct": 90.6,
+        "trend": "rising",
+        "basis": "OpenAlex works with the exact phrase \"quantum annealing\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+      },
+      "patent_ytd": null,
+      "trend": "rising",
+      "small_base": false,
+      "rank": 13,
+      "errors": [
+        "patents: Google Patents (SerpApi): patent search is paused to save the SerpApi quota (SERPAPI_CACHE_ONLY=true) and this query is not in the local cache"
+      ]
     },
     {
       "topic": "small modular reactor",
@@ -746,17 +903,17 @@
       "sector": "energy",
       "paper_counts": {
         "2022": 263,
-        "2023": 388,
-        "2024": 520,
-        "2025": 712,
-        "2026": 980
+        "2023": 389,
+        "2024": 524,
+        "2025": 714,
+        "2026": 985
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 712,
+        "last_full_year_count": 714,
         "previous_year": 2024,
-        "previous_year_count": 520,
-        "yoy_growth_pct": 36.9,
+        "previous_year_count": 524,
+        "yoy_growth_pct": 36.3,
         "basis": "OpenAlex works whose title or abstract contains the exact phrase \"small modular reactor\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
       "patent_counts": {
@@ -781,19 +938,19 @@
         "2023": 8,
         "2024": 11,
         "2025": 14,
-        "2026": 23
+        "2026": 24
       },
       "heat": 64.0,
       "heat_basis": "papers 2025 + papers YTD + patents 2025 + patents YTD",
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 917,
-        "previous_count": 545,
-        "growth_pct": 68.3,
+        "cutoff": "10-13",
+        "count": 924,
+        "previous_count": 547,
+        "growth_pct": 68.9,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"small modular reactor\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"small modular reactor\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -807,80 +964,7 @@
       },
       "trend": "rising",
       "small_base": false,
-      "rank": 11,
-      "errors": []
-    },
-    {
-      "topic": "confidential computing",
-      "terms": [
-        "confidential computing",
-        "trusted execution environment"
-      ],
-      "sector": "cybersecurity",
-      "paper_counts": {
-        "2022": 49,
-        "2023": 77,
-        "2024": 113,
-        "2025": 193,
-        "2026": 310
-      },
-      "paper_acceleration": {
-        "last_full_year": 2025,
-        "last_full_year_count": 193,
-        "previous_year": 2024,
-        "previous_year_count": 113,
-        "yoy_growth_pct": 70.8,
-        "basis": "OpenAlex works whose title or abstract contains the exact phrase \"confidential computing\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
-      },
-      "patent_counts": {
-        "2022": 424,
-        "2023": 451,
-        "2024": 536,
-        "2025": 516,
-        "2026": 610
-      },
-      "patent_acceleration": {
-        "last_full_year": 2025,
-        "last_full_year_count": 516,
-        "previous_year": 2024,
-        "previous_year_count": 536,
-        "yoy_growth_pct": -3.7,
-        "basis": "Patent publications per year with any of ['confidential computing', 'trusted execution environment'] in title or abstract (EPO OPS). Recent years undercounted by publication delay."
-      },
-      "patent_source": "EPO OPS",
-      "patent_counted_at": "2026-11-11",
-      "filer_counts": {
-        "2022": 1,
-        "2023": 2,
-        "2024": 1,
-        "2025": 2,
-        "2026": 5
-      },
-      "heat": 52.7,
-      "heat_basis": "papers 2025 + papers YTD + patents 2025 + patents YTD",
-      "paper_ytd": {
-        "year": 2026,
-        "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 270,
-        "previous_count": 139,
-        "growth_pct": 94.2,
-        "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"confidential computing\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
-      },
-      "patent_ytd": {
-        "year": 2026,
-        "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 584,
-        "previous_count": 391,
-        "growth_pct": 49.4,
-        "trend": "rising",
-        "basis": "EPO OPS patent publications matching any of ['confidential computing', 'trusted execution environment'] published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new publications take weeks to be indexed. Applications and grants count; one invention can appear several times."
-      },
-      "trend": "rising",
-      "small_base": false,
-      "rank": 12,
+      "rank": 14,
       "errors": []
     },
     {
@@ -894,7 +978,7 @@
         "2023": 263,
         "2024": 434,
         "2025": 767,
-        "2026": 1007
+        "2026": 1010
       },
       "paper_acceleration": {
         "last_full_year": 2025,
@@ -926,19 +1010,19 @@
         "2023": 0,
         "2024": 4,
         "2025": 32,
-        "2026": 57
+        "2026": 56
       },
-      "heat": 52.6,
+      "heat": 52.7,
       "heat_basis": "papers 2025 + papers YTD + patents 2025 + patents YTD",
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 940,
+        "cutoff": "10-13",
+        "count": 942,
         "previous_count": 531,
-        "growth_pct": 77.0,
+        "growth_pct": 77.4,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"data poisoning\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"data poisoning\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -952,7 +1036,80 @@
       },
       "trend": "rising",
       "small_base": false,
-      "rank": 13,
+      "rank": 15,
+      "errors": []
+    },
+    {
+      "topic": "confidential computing",
+      "terms": [
+        "confidential computing",
+        "trusted execution environment"
+      ],
+      "sector": "cybersecurity",
+      "paper_counts": {
+        "2022": 50,
+        "2023": 77,
+        "2024": 115,
+        "2025": 193,
+        "2026": 313
+      },
+      "paper_acceleration": {
+        "last_full_year": 2025,
+        "last_full_year_count": 193,
+        "previous_year": 2024,
+        "previous_year_count": 115,
+        "yoy_growth_pct": 67.8,
+        "basis": "OpenAlex works whose title or abstract contains the exact phrase \"confidential computing\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
+      },
+      "patent_counts": {
+        "2022": 424,
+        "2023": 451,
+        "2024": 536,
+        "2025": 516,
+        "2026": 610
+      },
+      "patent_acceleration": {
+        "last_full_year": 2025,
+        "last_full_year_count": 516,
+        "previous_year": 2024,
+        "previous_year_count": 536,
+        "yoy_growth_pct": -3.7,
+        "basis": "Patent publications per year with any of ['confidential computing', 'trusted execution environment'] in title or abstract (EPO OPS). Recent years undercounted by publication delay."
+      },
+      "patent_source": "EPO OPS",
+      "patent_counted_at": "2026-11-11",
+      "filer_counts": {
+        "2022": 1,
+        "2023": 2,
+        "2024": 1,
+        "2025": 2,
+        "2026": 5
+      },
+      "heat": 52.3,
+      "heat_basis": "papers 2025 + papers YTD + patents 2025 + patents YTD",
+      "paper_ytd": {
+        "year": 2026,
+        "previous_year": 2025,
+        "cutoff": "10-13",
+        "count": 274,
+        "previous_count": 140,
+        "growth_pct": 95.7,
+        "trend": "rising",
+        "basis": "OpenAlex works with the exact phrase \"confidential computing\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+      },
+      "patent_ytd": {
+        "year": 2026,
+        "previous_year": 2025,
+        "cutoff": "10-12",
+        "count": 584,
+        "previous_count": 391,
+        "growth_pct": 49.4,
+        "trend": "rising",
+        "basis": "EPO OPS patent publications matching any of ['confidential computing', 'trusted execution environment'] published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new publications take weeks to be indexed. Applications and grants count; one invention can appear several times."
+      },
+      "trend": "rising",
+      "small_base": false,
+      "rank": 16,
       "errors": []
     },
     {
@@ -963,18 +1120,18 @@
       ],
       "sector": "semiconductors",
       "paper_counts": {
-        "2022": 121,
+        "2022": 122,
         "2023": 203,
         "2024": 288,
-        "2025": 420,
-        "2026": 543
+        "2025": 421,
+        "2026": 545
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 420,
+        "last_full_year_count": 421,
         "previous_year": 2024,
         "previous_year_count": 288,
-        "yoy_growth_pct": 45.8,
+        "yoy_growth_pct": 46.2,
         "basis": "OpenAlex works whose title or abstract contains the exact phrase \"compute-in-memory\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
       "patent_counts": {
@@ -1001,31 +1158,31 @@
         "2025": 1,
         "2026": 1
       },
-      "heat": 46.7,
+      "heat": 46.6,
       "heat_basis": "papers 2025 + papers YTD + patents 2025 + patents YTD",
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 516,
-        "previous_count": 303,
-        "growth_pct": 70.3,
+        "cutoff": "10-13",
+        "count": 517,
+        "previous_count": 305,
+        "growth_pct": 69.5,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"compute-in-memory\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"compute-in-memory\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
+        "cutoff": "10-13",
         "count": 103,
         "previous_count": 89,
         "growth_pct": 15.7,
         "trend": "rising",
-        "basis": "EPO OPS patent publications matching any of ['compute-in-memory', 'computing-in-memory'] published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new publications take weeks to be indexed. Applications and grants count; one invention can appear several times."
+        "basis": "EPO OPS patent publications matching any of ['compute-in-memory', 'computing-in-memory'] published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new publications take weeks to be indexed. Applications and grants count; one invention can appear several times."
       },
       "trend": "rising",
       "small_base": false,
-      "rank": 14,
+      "rank": 17,
       "errors": []
     },
     {
@@ -1037,17 +1194,17 @@
       ],
       "sector": "biotech_tools",
       "paper_counts": {
-        "2022": 2277,
-        "2023": 2525,
-        "2024": 3018,
-        "2025": 4279,
-        "2026": 5004
+        "2022": 2278,
+        "2023": 2522,
+        "2024": 3021,
+        "2025": 4285,
+        "2026": 5022
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 4279,
+        "last_full_year_count": 4285,
         "previous_year": 2024,
-        "previous_year_count": 3018,
+        "previous_year_count": 3021,
         "yoy_growth_pct": 41.8,
         "basis": "OpenAlex works whose title or abstract contains the exact phrase \"brain-computer interface\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
@@ -1075,17 +1232,17 @@
         "2025": 5,
         "2026": 7
       },
-      "heat": 45.4,
+      "heat": 45.5,
       "heat_basis": "papers 2025 + papers YTD + patents 2025 + patents YTD",
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 4640,
-        "previous_count": 3242,
-        "growth_pct": 43.1,
+        "cutoff": "10-13",
+        "count": 4659,
+        "previous_count": 3249,
+        "growth_pct": 43.4,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"brain-computer interface\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"brain-computer interface\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -1099,7 +1256,7 @@
       },
       "trend": "rising",
       "small_base": false,
-      "rank": 15,
+      "rank": 18,
       "errors": []
     },
     {
@@ -1112,17 +1269,17 @@
       "paper_counts": {
         "2022": 166,
         "2023": 349,
-        "2024": 495,
+        "2024": 496,
         "2025": 752,
-        "2026": 856
+        "2026": 860
       },
       "paper_acceleration": {
         "last_full_year": 2025,
         "last_full_year_count": 752,
         "previous_year": 2024,
-        "previous_year_count": 495,
-        "yoy_growth_pct": 51.9,
-        "basis": "OpenAlex works whose title or abstract contains the exact phrase \"chiplet\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
+        "previous_year_count": 496,
+        "yoy_growth_pct": 51.6,
+        "basis": "OpenAlex works whose title or abstract contains any of the exact phrases \"chiplet\", \"chiplet architecture\", per publication year (singular and plural forms match; each work counted once). The synonyms and abbreviations were kept only after an AI check of sampled papers. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
       "patent_counts": {
         "2022": 112,
@@ -1153,26 +1310,26 @@
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 805,
-        "previous_count": 539,
+        "cutoff": "10-13",
+        "count": 810,
+        "previous_count": 542,
         "growth_pct": 49.4,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"chiplet\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with any of the exact phrases \"chiplet\", \"chiplet architecture\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 332,
+        "cutoff": "10-13",
+        "count": 333,
         "previous_count": 267,
-        "growth_pct": 24.3,
+        "growth_pct": 24.7,
         "trend": "rising",
-        "basis": "EPO OPS patent publications matching any of ['chiplet', 'chiplets'] published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new publications take weeks to be indexed. Applications and grants count; one invention can appear several times."
+        "basis": "EPO OPS patent publications matching any of ['chiplet', 'chiplets'] published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new publications take weeks to be indexed. Applications and grants count; one invention can appear several times."
       },
       "trend": "rising",
       "small_base": false,
-      "rank": 16,
+      "rank": 19,
       "errors": []
     },
     {
@@ -1185,15 +1342,15 @@
         "2022": 493,
         "2023": 601,
         "2024": 848,
-        "2025": 1486,
-        "2026": 1703
+        "2025": 1487,
+        "2026": 1710
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 1486,
+        "last_full_year_count": 1487,
         "previous_year": 2024,
         "previous_year_count": 848,
-        "yoy_growth_pct": 75.2,
+        "yoy_growth_pct": 75.4,
         "basis": "OpenAlex works whose title or abstract contains the exact phrase \"model compression\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
       "patent_counts": {
@@ -1220,17 +1377,17 @@
         "2025": 2,
         "2026": 2
       },
-      "heat": 41.5,
+      "heat": 41.6,
       "heat_basis": "papers 2025 + papers YTD + patents 2025 + patents YTD",
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 1609,
-        "previous_count": 1080,
-        "growth_pct": 49.0,
+        "cutoff": "10-13",
+        "count": 1615,
+        "previous_count": 1082,
+        "growth_pct": 49.3,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"model compression\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"model compression\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -1244,7 +1401,7 @@
       },
       "trend": "rising",
       "small_base": false,
-      "rank": 17,
+      "rank": 20,
       "errors": []
     },
     {
@@ -1258,16 +1415,16 @@
       "paper_counts": {
         "2022": 1261,
         "2023": 1551,
-        "2024": 2055,
-        "2025": 2658,
-        "2026": 2653
+        "2024": 2057,
+        "2025": 2663,
+        "2026": 2669
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 2658,
+        "last_full_year_count": 2663,
         "previous_year": 2024,
-        "previous_year_count": 2055,
-        "yoy_growth_pct": 29.3,
+        "previous_year_count": 2057,
+        "yoy_growth_pct": 29.5,
         "basis": "OpenAlex works whose title or abstract contains the exact phrase \"solid-state battery\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
       "patent_counts": {
@@ -1299,12 +1456,12 @@
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 2467,
-        "previous_count": 1918,
+        "cutoff": "10-13",
+        "count": 2479,
+        "previous_count": 1927,
         "growth_pct": 28.6,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"solid-state battery\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"solid-state battery\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -1318,7 +1475,7 @@
       },
       "trend": "rising",
       "small_base": false,
-      "rank": 18,
+      "rank": 21,
       "errors": []
     },
     {
@@ -1330,20 +1487,20 @@
       ],
       "sector": "space_comms",
       "paper_counts": {
-        "2022": 4108,
-        "2023": 5502,
-        "2024": 7396,
-        "2025": 10657,
-        "2026": 11909,
+        "2022": 4140,
+        "2023": 5550,
+        "2024": 7451,
+        "2025": 10730,
+        "2026": 12034,
         "2027": 3
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 10657,
+        "last_full_year_count": 10730,
         "previous_year": 2024,
-        "previous_year_count": 7396,
-        "yoy_growth_pct": 44.1,
-        "basis": "OpenAlex works whose title or abstract contains the exact phrase \"6G\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
+        "previous_year_count": 7451,
+        "yoy_growth_pct": 44.0,
+        "basis": "OpenAlex works whose title or abstract contains any of the exact phrases \"6G\", \"sixth generation mobile\", \"6G wireless\", \"sixth generation wireless\", \"6G communications\", per publication year (singular and plural forms match; each work counted once). The synonyms and abbreviations were kept only after an AI check of sampled papers. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
       "patent_counts": {
         "2022": 37,
@@ -1369,17 +1526,17 @@
         "2025": 46,
         "2026": 55
       },
-      "heat": 40.3,
+      "heat": 40.2,
       "heat_basis": "papers 2025 + papers YTD + patents 2025 + patents YTD",
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 11338,
-        "previous_count": 7565,
-        "growth_pct": 49.9,
+        "cutoff": "10-13",
+        "count": 11450,
+        "previous_count": 7652,
+        "growth_pct": 49.6,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"6G\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with any of the exact phrases \"6G\", \"sixth generation mobile\", \"6G wireless\", \"sixth generation wireless\", \"6G communications\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -1393,7 +1550,7 @@
       },
       "trend": "rising",
       "small_base": false,
-      "rank": 19,
+      "rank": 22,
       "errors": []
     },
     {
@@ -1405,20 +1562,20 @@
       ],
       "sector": "biotech_tools",
       "paper_counts": {
-        "2022": 443,
-        "2023": 570,
+        "2022": 446,
+        "2023": 574,
         "2024": 637,
-        "2025": 935,
-        "2026": 1342,
+        "2025": 937,
+        "2026": 1350,
         "2027": 1
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 935,
+        "last_full_year_count": 937,
         "previous_year": 2024,
         "previous_year_count": 637,
-        "yoy_growth_pct": 46.8,
-        "basis": "OpenAlex works whose title or abstract contains the exact phrase \"base editing\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
+        "yoy_growth_pct": 47.1,
+        "basis": "OpenAlex works whose title or abstract contains any of the exact phrases \"base editing\", \"base editor systems\", \"programmable base editing\", per publication year (singular and plural forms match; each work counted once). The synonyms and abbreviations were kept only after an AI check of sampled papers. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
       "patent_counts": {
         "2022": 152,
@@ -1449,12 +1606,12 @@
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 1225,
-        "previous_count": 636,
-        "growth_pct": 92.6,
+        "cutoff": "10-13",
+        "count": 1234,
+        "previous_count": 642,
+        "growth_pct": 92.2,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"base editing\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with any of the exact phrases \"base editing\", \"base editor systems\", \"programmable base editing\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -1468,8 +1625,60 @@
       },
       "trend": "rising",
       "small_base": false,
-      "rank": 20,
+      "rank": 23,
       "errors": []
+    },
+    {
+      "topic": "homomorphic encryption",
+      "terms": [
+        "homomorphic encryption"
+      ],
+      "sector": "cybersecurity",
+      "paper_counts": {
+        "2022": 1014,
+        "2023": 1340,
+        "2024": 1902,
+        "2025": 2956,
+        "2026": 2785
+      },
+      "paper_acceleration": {
+        "last_full_year": 2025,
+        "last_full_year_count": 2956,
+        "previous_year": 2024,
+        "previous_year_count": 1902,
+        "yoy_growth_pct": 55.4,
+        "basis": "OpenAlex works whose title or abstract contains the exact phrase \"homomorphic encryption\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
+      },
+      "patent_counts": {},
+      "patent_acceleration": null,
+      "patent_source": null,
+      "patent_counted_at": null,
+      "filer_counts": {
+        "2022": 1,
+        "2023": 2,
+        "2024": 2,
+        "2025": 0,
+        "2026": 0
+      },
+      "heat": 38.8,
+      "heat_basis": "papers 2025 + papers YTD",
+      "paper_ytd": {
+        "year": 2026,
+        "previous_year": 2025,
+        "cutoff": "10-13",
+        "count": 2612,
+        "previous_count": 2139,
+        "growth_pct": 22.1,
+        "trend": "rising",
+        "basis": "OpenAlex works with the exact phrase \"homomorphic encryption\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+      },
+      "patent_ytd": null,
+      "trend": "rising",
+      "small_base": false,
+      "rank": 24,
+      "errors": [
+        "patents: Google Patents (SerpApi): patent search is paused to save the SerpApi quota (SERPAPI_CACHE_ONLY=true) and this query is not in the local cache"
+      ]
     },
     {
       "topic": "robot control",
@@ -1478,18 +1687,18 @@
       ],
       "sector": "robotics_autonomy",
       "paper_counts": {
-        "2022": 1013,
+        "2022": 1012,
         "2023": 1111,
-        "2024": 1421,
-        "2025": 1782,
-        "2026": 2164
+        "2024": 1423,
+        "2025": 1788,
+        "2026": 2179
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 1782,
+        "last_full_year_count": 1788,
         "previous_year": 2024,
-        "previous_year_count": 1421,
-        "yoy_growth_pct": 25.4,
+        "previous_year_count": 1423,
+        "yoy_growth_pct": 25.7,
         "basis": "OpenAlex works whose title or abstract contains the exact phrase \"robot control\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
       "patent_counts": {
@@ -1516,17 +1725,17 @@
         "2025": 2,
         "2026": 1
       },
-      "heat": 37.4,
+      "heat": 37.5,
       "heat_basis": "papers 2025 + papers YTD + patents 2025 + patents YTD",
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 2001,
-        "previous_count": 1300,
-        "growth_pct": 53.9,
+        "cutoff": "10-13",
+        "count": 2010,
+        "previous_count": 1308,
+        "growth_pct": 53.7,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"robot control\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"robot control\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -1540,7 +1749,7 @@
       },
       "trend": "rising",
       "small_base": false,
-      "rank": 21,
+      "rank": 25,
       "errors": []
     },
     {
@@ -1550,18 +1759,18 @@
       ],
       "sector": "energy",
       "paper_counts": {
-        "2022": 1403,
-        "2023": 2439,
-        "2024": 3843,
-        "2025": 5239,
-        "2026": 5286
+        "2022": 1402,
+        "2023": 2438,
+        "2024": 3846,
+        "2025": 5250,
+        "2026": 5314
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 5239,
+        "last_full_year_count": 5250,
         "previous_year": 2024,
-        "previous_year_count": 3843,
-        "yoy_growth_pct": 36.3,
+        "previous_year_count": 3846,
+        "yoy_growth_pct": 36.5,
         "basis": "OpenAlex works whose title or abstract contains the exact phrase \"green hydrogen\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
       "patent_counts": {
@@ -1593,12 +1802,12 @@
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 4912,
-        "previous_count": 3922,
-        "growth_pct": 25.2,
+        "cutoff": "10-13",
+        "count": 4930,
+        "previous_count": 3946,
+        "growth_pct": 24.9,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"green hydrogen\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"green hydrogen\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -1612,80 +1821,7 @@
       },
       "trend": "rising",
       "small_base": false,
-      "rank": 22,
-      "errors": []
-    },
-    {
-      "topic": "backside power delivery",
-      "terms": [
-        "backside power delivery",
-        "backside power"
-      ],
-      "sector": "semiconductors",
-      "paper_counts": {
-        "2022": 9,
-        "2023": 17,
-        "2024": 29,
-        "2025": 57,
-        "2026": 68
-      },
-      "paper_acceleration": {
-        "last_full_year": 2025,
-        "last_full_year_count": 57,
-        "previous_year": 2024,
-        "previous_year_count": 29,
-        "yoy_growth_pct": 96.6,
-        "basis": "OpenAlex works whose title or abstract contains the exact phrase \"backside power delivery\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
-      },
-      "patent_counts": {
-        "2022": 54,
-        "2023": 76,
-        "2024": 189,
-        "2025": 194,
-        "2026": 118
-      },
-      "patent_acceleration": {
-        "last_full_year": 2025,
-        "last_full_year_count": 194,
-        "previous_year": 2024,
-        "previous_year_count": 189,
-        "yoy_growth_pct": 2.6,
-        "basis": "Patent publications per year with any of ['backside power delivery', 'backside power'] in title or abstract (EPO OPS). Recent years undercounted by publication delay."
-      },
-      "patent_source": "EPO OPS",
-      "patent_counted_at": null,
-      "filer_counts": {
-        "2022": 1,
-        "2023": 1,
-        "2024": 2,
-        "2025": 1,
-        "2026": 1
-      },
-      "heat": 32.0,
-      "heat_basis": "papers 2025 + papers YTD + patents 2025 + patents YTD",
-      "paper_ytd": {
-        "year": 2026,
-        "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 66,
-        "previous_count": 43,
-        "growth_pct": 53.5,
-        "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"backside power delivery\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
-      },
-      "patent_ytd": {
-        "year": 2026,
-        "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 113,
-        "previous_count": 150,
-        "growth_pct": -24.7,
-        "trend": "cooling",
-        "basis": "EPO OPS patent publications matching any of ['backside power delivery', 'backside power'] published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new publications take weeks to be indexed. Applications and grants count; one invention can appear several times."
-      },
-      "trend": "rising",
-      "small_base": false,
-      "rank": 23,
+      "rank": 26,
       "errors": []
     },
     {
@@ -1696,11 +1832,11 @@
       ],
       "sector": "semiconductors",
       "paper_counts": {
-        "2022": 974,
-        "2023": 1076,
+        "2022": 975,
+        "2023": 1077,
         "2024": 1156,
         "2025": 1303,
-        "2026": 1416
+        "2026": 1424
       },
       "paper_acceleration": {
         "last_full_year": 2025,
@@ -1715,7 +1851,7 @@
         "2023": 347,
         "2024": 351,
         "2025": 443,
-        "2026": 453
+        "2026": 454
       },
       "patent_acceleration": {
         "last_full_year": 2025,
@@ -1739,26 +1875,99 @@
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 1310,
-        "previous_count": 1031,
-        "growth_pct": 27.1,
+        "cutoff": "10-13",
+        "count": 1318,
+        "previous_count": 1034,
+        "growth_pct": 27.5,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"silicon photonics\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"silicon photonics\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
+        "cutoff": "10-13",
         "count": 418,
         "previous_count": 350,
         "growth_pct": 19.4,
         "trend": "rising",
-        "basis": "EPO OPS patent publications matching any of ['silicon photonics', 'photonic integrated circuit'] published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new publications take weeks to be indexed. Applications and grants count; one invention can appear several times."
+        "basis": "EPO OPS patent publications matching any of ['silicon photonics', 'photonic integrated circuit'] published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new publications take weeks to be indexed. Applications and grants count; one invention can appear several times."
       },
       "trend": "rising",
       "small_base": false,
-      "rank": 24,
+      "rank": 27,
+      "errors": []
+    },
+    {
+      "topic": "backside power delivery",
+      "terms": [
+        "backside power delivery",
+        "backside power"
+      ],
+      "sector": "semiconductors",
+      "paper_counts": {
+        "2022": 13,
+        "2023": 23,
+        "2024": 48,
+        "2025": 77,
+        "2026": 87
+      },
+      "paper_acceleration": {
+        "last_full_year": 2025,
+        "last_full_year_count": 77,
+        "previous_year": 2024,
+        "previous_year_count": 48,
+        "yoy_growth_pct": 60.4,
+        "basis": "OpenAlex works whose title or abstract contains any of the exact phrases \"backside power delivery\", \"backside power\", \"BSPDN\", \"backside power distribution network\", per publication year (singular and plural forms match; each work counted once). The synonyms and abbreviations were kept only after an AI check of sampled papers. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
+      },
+      "patent_counts": {
+        "2022": 54,
+        "2023": 76,
+        "2024": 189,
+        "2025": 194,
+        "2026": 119
+      },
+      "patent_acceleration": {
+        "last_full_year": 2025,
+        "last_full_year_count": 194,
+        "previous_year": 2024,
+        "previous_year_count": 189,
+        "yoy_growth_pct": 2.6,
+        "basis": "Patent publications per year with any of ['backside power delivery', 'backside power'] in title or abstract (EPO OPS). Recent years undercounted by publication delay."
+      },
+      "patent_source": "EPO OPS",
+      "patent_counted_at": null,
+      "filer_counts": {
+        "2022": 1,
+        "2023": 1,
+        "2024": 2,
+        "2025": 1,
+        "2026": 1
+      },
+      "heat": 19.9,
+      "heat_basis": "papers 2025 + papers YTD + patents 2025 + patents YTD",
+      "paper_ytd": {
+        "year": 2026,
+        "previous_year": 2025,
+        "cutoff": "10-13",
+        "count": 85,
+        "previous_count": 60,
+        "growth_pct": 41.7,
+        "trend": "rising",
+        "basis": "OpenAlex works with any of the exact phrases \"backside power delivery\", \"backside power\", \"BSPDN\", \"backside power distribution network\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+      },
+      "patent_ytd": {
+        "year": 2026,
+        "previous_year": 2025,
+        "cutoff": "10-13",
+        "count": 113,
+        "previous_count": 151,
+        "growth_pct": -25.2,
+        "trend": "cooling",
+        "basis": "EPO OPS patent publications matching any of ['backside power delivery', 'backside power'] published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new publications take weeks to be indexed. Applications and grants count; one invention can appear several times."
+      },
+      "trend": "rising",
+      "small_base": false,
+      "rank": 28,
       "errors": []
     },
     {
@@ -1768,18 +1977,18 @@
       ],
       "sector": "energy",
       "paper_counts": {
-        "2022": 2078,
+        "2022": 2080,
         "2023": 2940,
-        "2024": 4047,
-        "2025": 5343,
-        "2026": 5674,
+        "2024": 4049,
+        "2025": 5344,
+        "2026": 5697,
         "2027": 1
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 5343,
+        "last_full_year_count": 5344,
         "previous_year": 2024,
-        "previous_year_count": 4047,
+        "previous_year_count": 4049,
         "yoy_growth_pct": 32.0,
         "basis": "OpenAlex works whose title or abstract contains the exact phrase \"hydrogen storage\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
@@ -1807,17 +2016,17 @@
         "2025": 15,
         "2026": 12
       },
-      "heat": 17.0,
+      "heat": 16.9,
       "heat_basis": "papers 2025 + papers YTD + patents 2025 + patents YTD",
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 5273,
-        "previous_count": 4086,
-        "growth_pct": 29.1,
+        "cutoff": "10-13",
+        "count": 5287,
+        "previous_count": 4108,
+        "growth_pct": 28.7,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"hydrogen storage\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"hydrogen storage\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -1831,7 +2040,7 @@
       },
       "trend": "rising",
       "small_base": false,
-      "rank": 25,
+      "rank": 29,
       "errors": []
     },
     {
@@ -1843,17 +2052,17 @@
       ],
       "sector": "energy",
       "paper_counts": {
-        "2022": 3979,
-        "2023": 4825,
-        "2024": 5657,
-        "2025": 6486,
-        "2026": 5695
+        "2022": 3985,
+        "2023": 4826,
+        "2024": 5660,
+        "2025": 6490,
+        "2026": 5711
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 6486,
+        "last_full_year_count": 6490,
         "previous_year": 2024,
-        "previous_year_count": 5657,
+        "previous_year_count": 5660,
         "yoy_growth_pct": 14.7,
         "basis": "OpenAlex works whose title or abstract contains the exact phrase \"perovskite solar cell\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
@@ -1886,12 +2095,12 @@
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 5341,
-        "previous_count": 5063,
+        "cutoff": "10-13",
+        "count": 5357,
+        "previous_count": 5078,
         "growth_pct": 5.5,
         "trend": "flat",
-        "basis": "OpenAlex works with the exact phrase \"perovskite solar cell\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"perovskite solar cell\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -1905,7 +2114,7 @@
       },
       "trend": "flat",
       "small_base": false,
-      "rank": 26,
+      "rank": 30,
       "errors": []
     },
     {
@@ -1918,17 +2127,17 @@
       "sector": "energy",
       "paper_counts": {
         "2022": 1809,
-        "2023": 2009,
+        "2023": 2010,
         "2024": 3056,
-        "2025": 4272,
-        "2026": 4121
+        "2025": 4274,
+        "2026": 4135
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 4272,
+        "last_full_year_count": 4274,
         "previous_year": 2024,
         "previous_year_count": 3056,
-        "yoy_growth_pct": 39.8,
+        "yoy_growth_pct": 39.9,
         "basis": "OpenAlex works whose title or abstract contains the exact phrase \"sodium-ion battery\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
       "patent_counts": {
@@ -1960,12 +2169,12 @@
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 3817,
-        "previous_count": 3288,
+        "cutoff": "10-13",
+        "count": 3834,
+        "previous_count": 3301,
         "growth_pct": 16.1,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"sodium-ion battery\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"sodium-ion battery\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -1979,7 +2188,7 @@
       },
       "trend": "rising",
       "small_base": false,
-      "rank": 27,
+      "rank": 31,
       "errors": []
     },
     {
@@ -2009,7 +2218,7 @@
         "basis": "Patent publications per year with any of ['high bandwidth compute (hbc)', 'HBC', 'High Bandwidth Compute', 'Qualcomm HBC'] in title or abstract (EPO OPS). Recent years undercounted by publication delay."
       },
       "patent_source": "EPO OPS",
-      "patent_counted_at": null,
+      "patent_counted_at": "2026-11-11",
       "filer_counts": {
         "2022": 0,
         "2023": 0,
@@ -2022,12 +2231,12 @@
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
+        "cutoff": "10-13",
         "count": 0,
         "previous_count": 0,
         "growth_pct": null,
         "trend": null,
-        "basis": "OpenAlex works with the exact phrase \"high bandwidth compute (hbc)\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"high bandwidth compute (hbc)\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -2041,7 +2250,7 @@
       },
       "trend": null,
       "small_base": false,
-      "rank": 28,
+      "rank": 32,
       "errors": []
     },
     {
@@ -2054,15 +2263,15 @@
         "2022": 112,
         "2023": 123,
         "2024": 146,
-        "2025": 198,
+        "2025": 199,
         "2026": 185
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 198,
+        "last_full_year_count": 199,
         "previous_year": 2024,
         "previous_year_count": 146,
-        "yoy_growth_pct": 35.6,
+        "yoy_growth_pct": 36.3,
         "basis": "OpenAlex works whose title or abstract contains the exact phrase \"flexible antenna\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
       "patent_counts": {
@@ -2089,17 +2298,17 @@
         "2025": 0,
         "2026": 0
       },
-      "heat": 7.8,
+      "heat": 7.5,
       "heat_basis": "papers 2025 + papers YTD + patents 2025 + patents YTD",
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
+        "cutoff": "10-13",
         "count": 177,
-        "previous_count": 145,
-        "growth_pct": 22.1,
+        "previous_count": 147,
+        "growth_pct": 20.4,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"flexible antenna\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"flexible antenna\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -2113,7 +2322,7 @@
       },
       "trend": "rising",
       "small_base": false,
-      "rank": 29,
+      "rank": 33,
       "errors": []
     },
     {
@@ -2125,17 +2334,17 @@
       ],
       "sector": "semiconductors",
       "paper_counts": {
-        "2022": 956,
+        "2022": 957,
         "2023": 1130,
-        "2024": 1268,
-        "2025": 1496,
-        "2026": 1319
+        "2024": 1270,
+        "2025": 1498,
+        "2026": 1324
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 1496,
+        "last_full_year_count": 1498,
         "previous_year": 2024,
-        "previous_year_count": 1268,
+        "previous_year_count": 1270,
         "yoy_growth_pct": 18.0,
         "basis": "OpenAlex works whose title or abstract contains the exact phrase \"gallium nitride\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
@@ -2163,31 +2372,31 @@
         "2025": 32,
         "2026": 36
       },
-      "heat": 6.7,
+      "heat": 6.6,
       "heat_basis": "papers 2025 + papers YTD + patents 2025 + patents YTD",
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 1255,
-        "previous_count": 1139,
-        "growth_pct": 10.2,
-        "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"gallium nitride\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "cutoff": "10-13",
+        "count": 1258,
+        "previous_count": 1144,
+        "growth_pct": 10.0,
+        "trend": "flat",
+        "basis": "OpenAlex works with the exact phrase \"gallium nitride\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
+        "cutoff": "10-13",
         "count": 820,
-        "previous_count": 879,
-        "growth_pct": -6.7,
+        "previous_count": 880,
+        "growth_pct": -6.8,
         "trend": "flat",
-        "basis": "EPO OPS patent publications matching any of ['gallium nitride', 'GaN transistor', 'GaN power'] published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new publications take weeks to be indexed. Applications and grants count; one invention can appear several times."
+        "basis": "EPO OPS patent publications matching any of ['gallium nitride', 'GaN transistor', 'GaN power'] published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new publications take weeks to be indexed. Applications and grants count; one invention can appear several times."
       },
-      "trend": "rising",
+      "trend": "flat",
       "small_base": false,
-      "rank": 30,
+      "rank": 34,
       "errors": []
     },
     {
@@ -2203,7 +2412,7 @@
         "2023": 56,
         "2024": 60,
         "2025": 67,
-        "2026": 53
+        "2026": 54
       },
       "paper_acceleration": {
         "last_full_year": 2025,
@@ -2242,12 +2451,12 @@
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
+        "cutoff": "10-13",
         "count": 49,
         "previous_count": 58,
         "growth_pct": -15.5,
         "trend": "cooling",
-        "basis": "OpenAlex works with the exact phrase \"augmented reality glasses\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"augmented reality glasses\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -2261,7 +2470,7 @@
       },
       "trend": "cooling",
       "small_base": false,
-      "rank": 31,
+      "rank": 35,
       "errors": []
     },
     {
@@ -2291,7 +2500,7 @@
         "basis": "Patent publications per year with any of ['diamond wafer for chip cooling', 'diamond wafer', 'single-crystal diamond', 'diamond thermal substrate'] in title or abstract (EPO OPS). Recent years undercounted by publication delay."
       },
       "patent_source": "EPO OPS",
-      "patent_counted_at": null,
+      "patent_counted_at": "2026-11-11",
       "filer_counts": {
         "2022": 0,
         "2023": 0,
@@ -2304,12 +2513,12 @@
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
+        "cutoff": "10-13",
         "count": 0,
         "previous_count": 0,
         "growth_pct": null,
         "trend": null,
-        "basis": "OpenAlex works with the exact phrase \"diamond wafer for chip cooling\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"diamond wafer for chip cooling\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -2323,7 +2532,7 @@
       },
       "trend": null,
       "small_base": false,
-      "rank": 32,
+      "rank": 36,
       "errors": []
     },
     {
@@ -2378,12 +2587,12 @@
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
+        "cutoff": "10-13",
         "count": 33,
         "previous_count": 22,
         "growth_pct": 50.0,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"waveguide display\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"waveguide display\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -2397,7 +2606,7 @@
       },
       "trend": "rising",
       "small_base": false,
-      "rank": 33,
+      "rank": 37,
       "errors": []
     },
     {
@@ -2413,7 +2622,7 @@
         "2023": 47,
         "2024": 56,
         "2025": 34,
-        "2026": 17
+        "2026": 18
       },
       "paper_acceleration": {
         "last_full_year": 2025,
@@ -2447,17 +2656,17 @@
         "2025": 2,
         "2026": 1
       },
-      "heat": -12.5,
+      "heat": -11.6,
       "heat_basis": "papers 2025 + papers YTD + patents 2025 + patents YTD",
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 16,
+        "cutoff": "10-13",
+        "count": 17,
         "previous_count": 28,
-        "growth_pct": -42.9,
+        "growth_pct": -39.3,
         "trend": "cooling",
-        "basis": "OpenAlex works with the exact phrase \"microLED display\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"microLED display\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -2471,7 +2680,7 @@
       },
       "trend": "cooling",
       "small_base": false,
-      "rank": 34,
+      "rank": 38,
       "errors": []
     },
     {
@@ -2483,19 +2692,19 @@
       ],
       "sector": "robotics_autonomy",
       "paper_counts": {
-        "2022": 1,
-        "2023": 1,
-        "2024": 22,
-        "2025": 260,
-        "2026": 1121
+        "2022": 2,
+        "2023": 4,
+        "2024": 50,
+        "2025": 540,
+        "2026": 2976
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 260,
+        "last_full_year_count": 540,
         "previous_year": 2024,
-        "previous_year_count": 22,
-        "yoy_growth_pct": 1081.8,
-        "basis": "OpenAlex works whose title or abstract contains the exact phrase \"vision-language-action model\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
+        "previous_year_count": 50,
+        "yoy_growth_pct": 980.0,
+        "basis": "OpenAlex works whose title or abstract contains any of the exact phrases \"vision-language-action model\", \"vision-language-action\", \"vision-language-action models\", \"vision language action\", \"VLA model\", \"generalist robot policy\", per publication year (singular and plural forms match; each work counted once). The synonyms and abbreviations were kept only after an AI check of sampled papers. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
       "patent_counts": {
         "2022": 0,
@@ -2521,17 +2730,17 @@
         "2025": 0,
         "2026": 0
       },
-      "heat": 817.4,
+      "heat": 863.0,
       "heat_basis": "papers 2025 + papers YTD",
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 986,
-        "previous_count": 151,
-        "growth_pct": 553.0,
+        "cutoff": "10-13",
+        "count": 2597,
+        "previous_count": 307,
+        "growth_pct": 745.9,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"vision-language-action model\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with any of the exact phrases \"vision-language-action model\", \"vision-language-action\", \"vision-language-action models\", \"vision language action\", \"VLA model\", \"generalist robot policy\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -2549,24 +2758,96 @@
       "errors": []
     },
     {
+      "topic": "large language model inference",
+      "terms": [
+        "large language model inference"
+      ],
+      "sector": "semiconductors",
+      "paper_counts": {
+        "2022": 1,
+        "2023": 23,
+        "2024": 163,
+        "2025": 404,
+        "2026": 1433
+      },
+      "paper_acceleration": {
+        "last_full_year": 2025,
+        "last_full_year_count": 404,
+        "previous_year": 2024,
+        "previous_year_count": 163,
+        "yoy_growth_pct": 147.9,
+        "basis": "OpenAlex works whose title or abstract contains any of the exact phrases \"large language model inference\", \"LLM serving\", \"language model inference\", per publication year (singular and plural forms match; each work counted once). The synonyms and abbreviations were kept only after an AI check of sampled papers. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
+      },
+      "patent_counts": {
+        "2022": 0,
+        "2023": 0,
+        "2024": 3,
+        "2025": 16,
+        "2026": 53
+      },
+      "patent_acceleration": {
+        "last_full_year": 2025,
+        "last_full_year_count": 16,
+        "previous_year": 2024,
+        "previous_year_count": 3,
+        "yoy_growth_pct": 433.3,
+        "basis": "Patent publications per year with any of ['large language model inference'] in title or abstract (EPO OPS). Recent years undercounted by publication delay."
+      },
+      "patent_source": "EPO OPS",
+      "patent_counted_at": "2026-11-11",
+      "filer_counts": {
+        "2022": 0,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0,
+        "2026": 1
+      },
+      "heat": 324.5,
+      "heat_basis": "papers 2025 + papers YTD + patents 2025",
+      "paper_ytd": {
+        "year": 2026,
+        "previous_year": 2025,
+        "cutoff": "10-13",
+        "count": 1280,
+        "previous_count": 260,
+        "growth_pct": 392.3,
+        "trend": "rising",
+        "basis": "OpenAlex works with any of the exact phrases \"large language model inference\", \"LLM serving\", \"language model inference\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+      },
+      "patent_ytd": {
+        "year": 2026,
+        "previous_year": 2025,
+        "cutoff": "10-12",
+        "count": 47,
+        "previous_count": 10,
+        "growth_pct": 370.0,
+        "trend": null,
+        "basis": "EPO OPS patent publications matching any of ['large language model inference'] published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new publications take weeks to be indexed. Applications and grants count; one invention can appear several times."
+      },
+      "trend": "rising",
+      "small_base": true,
+      "rank": null,
+      "errors": []
+    },
+    {
       "topic": "world models",
       "terms": [
         "world models"
       ],
       "sector": "robotics_autonomy",
       "paper_counts": {
-        "2022": 320,
-        "2023": 439,
-        "2024": 667,
-        "2025": 1437,
-        "2026": 5322
+        "2022": 322,
+        "2023": 440,
+        "2024": 669,
+        "2025": 1440,
+        "2026": 5348
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 1437,
+        "last_full_year_count": 1440,
         "previous_year": 2024,
-        "previous_year_count": 667,
-        "yoy_growth_pct": 115.4,
+        "previous_year_count": 669,
+        "yoy_growth_pct": 115.2,
         "basis": "OpenAlex works whose title or abstract contains the exact phrase \"world models\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
       "patent_counts": {
@@ -2593,17 +2874,17 @@
         "2025": 1,
         "2026": 3
       },
-      "heat": 243.4,
+      "heat": 243.7,
       "heat_basis": "papers 2025 + papers YTD + patents 2025",
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 4622,
-        "previous_count": 898,
-        "growth_pct": 414.7,
+        "cutoff": "10-13",
+        "count": 4670,
+        "previous_count": 905,
+        "growth_pct": 416.0,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"world models\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"world models\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -2630,15 +2911,15 @@
         "2022": 1,
         "2023": 8,
         "2024": 91,
-        "2025": 287,
-        "2026": 867
+        "2025": 288,
+        "2026": 874
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 287,
+        "last_full_year_count": 288,
         "previous_year": 2024,
         "previous_year_count": 91,
-        "yoy_growth_pct": 215.4,
+        "yoy_growth_pct": 216.5,
         "basis": "OpenAlex works whose title or abstract contains the exact phrase \"speculative decoding\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
       "patent_counts": {
@@ -2665,17 +2946,17 @@
         "2025": 0,
         "2026": 0
       },
-      "heat": 217.8,
+      "heat": 217.3,
       "heat_basis": "papers 2025 + papers YTD + patents 2025",
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 745,
-        "previous_count": 210,
-        "growth_pct": 254.8,
+        "cutoff": "10-13",
+        "count": 750,
+        "previous_count": 213,
+        "growth_pct": 252.1,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"speculative decoding\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"speculative decoding\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -2693,78 +2974,6 @@
       "errors": []
     },
     {
-      "topic": "large language model inference",
-      "terms": [
-        "large language model inference"
-      ],
-      "sector": "semiconductors",
-      "paper_counts": {
-        "2022": 1,
-        "2023": 11,
-        "2024": 59,
-        "2025": 132,
-        "2026": 412
-      },
-      "paper_acceleration": {
-        "last_full_year": 2025,
-        "last_full_year_count": 132,
-        "previous_year": 2024,
-        "previous_year_count": 59,
-        "yoy_growth_pct": 123.7,
-        "basis": "OpenAlex works whose title or abstract contains the exact phrase \"large language model inference\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
-      },
-      "patent_counts": {
-        "2022": 0,
-        "2023": 0,
-        "2024": 3,
-        "2025": 16,
-        "2026": 53
-      },
-      "patent_acceleration": {
-        "last_full_year": 2025,
-        "last_full_year_count": 16,
-        "previous_year": 2024,
-        "previous_year_count": 3,
-        "yoy_growth_pct": 433.3,
-        "basis": "Patent publications per year with any of ['large language model inference'] in title or abstract (EPO OPS). Recent years undercounted by publication delay."
-      },
-      "patent_source": "EPO OPS",
-      "patent_counted_at": "2026-11-11",
-      "filer_counts": {
-        "2022": 0,
-        "2023": 0,
-        "2024": 0,
-        "2025": 0,
-        "2026": 1
-      },
-      "heat": 300.4,
-      "heat_basis": "papers 2025 + papers YTD + patents 2025",
-      "paper_ytd": {
-        "year": 2026,
-        "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 382,
-        "previous_count": 86,
-        "growth_pct": 344.2,
-        "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"large language model inference\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
-      },
-      "patent_ytd": {
-        "year": 2026,
-        "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 47,
-        "previous_count": 10,
-        "growth_pct": 370.0,
-        "trend": null,
-        "basis": "EPO OPS patent publications matching any of ['large language model inference'] published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new publications take weeks to be indexed. Applications and grants count; one invention can appear several times."
-      },
-      "trend": "rising",
-      "small_base": true,
-      "rank": null,
-      "errors": []
-    },
-    {
       "topic": "inference efficiency",
       "terms": [
         "inference efficiency"
@@ -2772,17 +2981,17 @@
       "sector": "ai_software",
       "paper_counts": {
         "2022": 113,
-        "2023": 190,
+        "2023": 191,
         "2024": 366,
-        "2025": 1063,
-        "2026": 2825
+        "2025": 1065,
+        "2026": 2834
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 1063,
+        "last_full_year_count": 1065,
         "previous_year": 2024,
         "previous_year_count": 366,
-        "yoy_growth_pct": 190.4,
+        "yoy_growth_pct": 191.0,
         "basis": "OpenAlex works whose title or abstract contains the exact phrase \"inference efficiency\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
       "patent_counts": {
@@ -2809,17 +3018,17 @@
         "2025": 1,
         "2026": 3
       },
-      "heat": 159.7,
+      "heat": 159.5,
       "heat_basis": "papers 2025 + papers YTD + patents 2025",
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 2655,
-        "previous_count": 727,
-        "growth_pct": 265.2,
+        "cutoff": "10-13",
+        "count": 2665,
+        "previous_count": 732,
+        "growth_pct": 264.1,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"inference efficiency\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"inference efficiency\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -2845,16 +3054,16 @@
       "paper_counts": {
         "2022": 105,
         "2023": 590,
-        "2024": 2128,
-        "2025": 6710,
-        "2026": 13130
+        "2024": 2131,
+        "2025": 6721,
+        "2026": 13185
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 6710,
+        "last_full_year_count": 6721,
         "previous_year": 2024,
-        "previous_year_count": 2128,
-        "yoy_growth_pct": 215.3,
+        "previous_year_count": 2131,
+        "yoy_growth_pct": 215.4,
         "basis": "OpenAlex works whose title or abstract contains the exact phrase \"vision-language models\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
       "patent_counts": {
@@ -2881,17 +3090,17 @@
         "2025": 1,
         "2026": 8
       },
-      "heat": 169.2,
+      "heat": 169.3,
       "heat_basis": "papers 2025 + papers YTD + patents 2025",
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 12002,
-        "previous_count": 4527,
-        "growth_pct": 165.1,
+        "cutoff": "10-13",
+        "count": 12084,
+        "previous_count": 4555,
+        "growth_pct": 165.3,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"vision-language models\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"vision-language models\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -2920,7 +3129,7 @@
         "2023": 40,
         "2024": 101,
         "2025": 238,
-        "2026": 385
+        "2026": 389
       },
       "paper_acceleration": {
         "last_full_year": 2025,
@@ -2954,17 +3163,17 @@
         "2025": 0,
         "2026": 0
       },
-      "heat": 312.8,
+      "heat": 314.0,
       "heat_basis": "papers 2025 + papers YTD + patents 2025",
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 354,
+        "cutoff": "10-13",
+        "count": 359,
         "previous_count": 140,
-        "growth_pct": 152.9,
+        "growth_pct": 156.4,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"end-to-end autonomous driving\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"end-to-end autonomous driving\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -2982,24 +3191,96 @@
       "errors": []
     },
     {
+      "topic": "robotic manipulation",
+      "terms": [
+        "robotic manipulation"
+      ],
+      "sector": "robotics_autonomy",
+      "paper_counts": {
+        "2022": 519,
+        "2023": 617,
+        "2024": 847,
+        "2025": 1636,
+        "2026": 3268
+      },
+      "paper_acceleration": {
+        "last_full_year": 2025,
+        "last_full_year_count": 1636,
+        "previous_year": 2024,
+        "previous_year_count": 847,
+        "yoy_growth_pct": 93.2,
+        "basis": "OpenAlex works whose title or abstract contains the exact phrase \"robotic manipulation\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
+      },
+      "patent_counts": {
+        "2022": 18,
+        "2023": 28,
+        "2024": 15,
+        "2025": 26,
+        "2026": 25
+      },
+      "patent_acceleration": {
+        "last_full_year": 2025,
+        "last_full_year_count": 26,
+        "previous_year": 2024,
+        "previous_year_count": 15,
+        "yoy_growth_pct": 73.3,
+        "basis": "Patent publications per year with any of ['robotic manipulation'] in title or abstract (EPO OPS). Recent years undercounted by publication delay."
+      },
+      "patent_source": "EPO OPS",
+      "patent_counted_at": "2026-11-11",
+      "filer_counts": {
+        "2022": 1,
+        "2023": 0,
+        "2024": 0,
+        "2025": 0,
+        "2026": 0
+      },
+      "heat": 84.7,
+      "heat_basis": "papers 2025 + papers YTD + patents 2025 + patents YTD",
+      "paper_ytd": {
+        "year": 2026,
+        "previous_year": 2025,
+        "cutoff": "10-13",
+        "count": 2966,
+        "previous_count": 1131,
+        "growth_pct": 162.2,
+        "trend": "rising",
+        "basis": "OpenAlex works with the exact phrase \"robotic manipulation\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+      },
+      "patent_ytd": {
+        "year": 2026,
+        "previous_year": 2025,
+        "cutoff": "10-12",
+        "count": 22,
+        "previous_count": 20,
+        "growth_pct": 10.0,
+        "trend": "flat",
+        "basis": "EPO OPS patent publications matching any of ['robotic manipulation'] published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new publications take weeks to be indexed. Applications and grants count; one invention can appear several times."
+      },
+      "trend": "rising",
+      "small_base": true,
+      "rank": null,
+      "errors": []
+    },
+    {
       "topic": "mathematical reasoning",
       "terms": [
         "mathematical reasoning"
       ],
       "sector": "ai_software",
       "paper_counts": {
-        "2022": 383,
-        "2023": 524,
-        "2024": 808,
-        "2025": 1706,
-        "2026": 3343
+        "2022": 384,
+        "2023": 526,
+        "2024": 809,
+        "2025": 1707,
+        "2026": 3353
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 1706,
+        "last_full_year_count": 1707,
         "previous_year": 2024,
-        "previous_year_count": 808,
-        "yoy_growth_pct": 111.1,
+        "previous_year_count": 809,
+        "yoy_growth_pct": 111.0,
         "basis": "OpenAlex works whose title or abstract contains the exact phrase \"mathematical reasoning\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
       "patent_counts": {
@@ -3031,12 +3312,12 @@
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 3057,
-        "previous_count": 1257,
-        "growth_pct": 143.2,
+        "cutoff": "10-13",
+        "count": 3073,
+        "previous_count": 1263,
+        "growth_pct": 143.3,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"mathematical reasoning\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"mathematical reasoning\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -3054,97 +3335,25 @@
       "errors": []
     },
     {
-      "topic": "robotic manipulation",
-      "terms": [
-        "robotic manipulation"
-      ],
-      "sector": "robotics_autonomy",
-      "paper_counts": {
-        "2022": 519,
-        "2023": 616,
-        "2024": 846,
-        "2025": 1629,
-        "2026": 3250
-      },
-      "paper_acceleration": {
-        "last_full_year": 2025,
-        "last_full_year_count": 1629,
-        "previous_year": 2024,
-        "previous_year_count": 846,
-        "yoy_growth_pct": 92.6,
-        "basis": "OpenAlex works whose title or abstract contains the exact phrase \"robotic manipulation\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
-      },
-      "patent_counts": {
-        "2022": 18,
-        "2023": 28,
-        "2024": 15,
-        "2025": 26,
-        "2026": 25
-      },
-      "patent_acceleration": {
-        "last_full_year": 2025,
-        "last_full_year_count": 26,
-        "previous_year": 2024,
-        "previous_year_count": 15,
-        "yoy_growth_pct": 73.3,
-        "basis": "Patent publications per year with any of ['robotic manipulation'] in title or abstract (EPO OPS). Recent years undercounted by publication delay."
-      },
-      "patent_source": "EPO OPS",
-      "patent_counted_at": "2026-11-11",
-      "filer_counts": {
-        "2022": 1,
-        "2023": 0,
-        "2024": 0,
-        "2025": 0,
-        "2026": 0
-      },
-      "heat": 84.3,
-      "heat_basis": "papers 2025 + papers YTD + patents 2025 + patents YTD",
-      "paper_ytd": {
-        "year": 2026,
-        "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 2940,
-        "previous_count": 1125,
-        "growth_pct": 161.3,
-        "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"robotic manipulation\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
-      },
-      "patent_ytd": {
-        "year": 2026,
-        "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 22,
-        "previous_count": 20,
-        "growth_pct": 10.0,
-        "trend": "flat",
-        "basis": "EPO OPS patent publications matching any of ['robotic manipulation'] published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new publications take weeks to be indexed. Applications and grants count; one invention can appear several times."
-      },
-      "trend": "rising",
-      "small_base": true,
-      "rank": null,
-      "errors": []
-    },
-    {
       "topic": "grid-scale energy storage",
       "terms": [
         "grid-scale energy storage"
       ],
       "sector": "energy",
       "paper_counts": {
-        "2022": 194,
-        "2023": 198,
-        "2024": 236,
-        "2025": 376,
-        "2026": 554
+        "2022": 206,
+        "2023": 216,
+        "2024": 243,
+        "2025": 384,
+        "2026": 565
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 376,
+        "last_full_year_count": 384,
         "previous_year": 2024,
-        "previous_year_count": 236,
-        "yoy_growth_pct": 59.3,
-        "basis": "OpenAlex works whose title or abstract contains the exact phrase \"grid-scale energy storage\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
+        "previous_year_count": 243,
+        "yoy_growth_pct": 58.0,
+        "basis": "OpenAlex works whose title or abstract contains any of the exact phrases \"grid-scale energy storage\", \"bulk energy storage\", per publication year (singular and plural forms match; each work counted once). The synonyms and abbreviations were kept only after an AI check of sampled papers. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
       "patent_counts": {
         "2022": 1,
@@ -3168,19 +3377,19 @@
         "2023": 10,
         "2024": 9,
         "2025": 9,
-        "2026": 7
+        "2026": 8
       },
-      "heat": 38.4,
+      "heat": 38.5,
       "heat_basis": "papers 2025 + papers YTD + patents 2025",
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 521,
-        "previous_count": 266,
-        "growth_pct": 95.9,
+        "cutoff": "10-13",
+        "count": 533,
+        "previous_count": 270,
+        "growth_pct": 97.4,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"grid-scale energy storage\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with any of the exact phrases \"grid-scale energy storage\", \"bulk energy storage\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -3243,17 +3452,17 @@
         "2025": 0,
         "2026": 1
       },
-      "heat": 29.7,
+      "heat": 29.1,
       "heat_basis": "papers 2025 + papers YTD + patents 2025",
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 124,
+        "cutoff": "10-13",
+        "count": 123,
         "previous_count": 54,
-        "growth_pct": 129.6,
+        "growth_pct": 127.8,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"photonic quantum computing\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"photonic quantum computing\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -3277,18 +3486,18 @@
       ],
       "sector": "ai_software",
       "paper_counts": {
-        "2022": 714,
+        "2022": 715,
         "2023": 1050,
-        "2024": 1369,
-        "2025": 1878,
-        "2026": 2494
+        "2024": 1371,
+        "2025": 1883,
+        "2026": 2504
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 1878,
+        "last_full_year_count": 1883,
         "previous_year": 2024,
-        "previous_year_count": 1369,
-        "yoy_growth_pct": 37.2,
+        "previous_year_count": 1371,
+        "yoy_growth_pct": 37.3,
         "basis": "OpenAlex works whose title or abstract contains the exact phrase \"data curation\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
       "patent_counts": {
@@ -3315,17 +3524,17 @@
         "2025": 11,
         "2026": 11
       },
-      "heat": 90.5,
+      "heat": 90.2,
       "heat_basis": "papers 2025 + papers YTD + patents 2025",
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 2314,
-        "previous_count": 1256,
-        "growth_pct": 84.2,
+        "cutoff": "10-13",
+        "count": 2327,
+        "previous_count": 1269,
+        "growth_pct": 83.4,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"data curation\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"data curation\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -3350,17 +3559,17 @@
       "sector": "biotech_tools",
       "paper_counts": {
         "2022": 165,
-        "2023": 245,
-        "2024": 449,
+        "2023": 246,
+        "2024": 450,
         "2025": 659,
-        "2026": 773
+        "2026": 776
       },
       "paper_acceleration": {
         "last_full_year": 2025,
         "last_full_year_count": 659,
         "previous_year": 2024,
-        "previous_year_count": 449,
-        "yoy_growth_pct": 46.8,
+        "previous_year_count": 450,
+        "yoy_growth_pct": 46.4,
         "basis": "OpenAlex works whose title or abstract contains the exact phrase \"artificial intelligence in healthcare\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
       "patent_counts": {
@@ -3387,17 +3596,17 @@
         "2025": 4,
         "2026": 10
       },
-      "heat": 46.1,
+      "heat": 46.3,
       "heat_basis": "papers 2025 + papers YTD",
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 729,
+        "cutoff": "10-13",
+        "count": 733,
         "previous_count": 501,
-        "growth_pct": 45.5,
+        "growth_pct": 46.3,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"artificial intelligence in healthcare\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"artificial intelligence in healthcare\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -3421,19 +3630,19 @@
       ],
       "sector": "xr_devices",
       "paper_counts": {
-        "2022": 200,
-        "2023": 225,
-        "2024": 320,
-        "2025": 422,
-        "2026": 563
+        "2022": 263,
+        "2023": 274,
+        "2024": 395,
+        "2025": 469,
+        "2026": 654
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 422,
+        "last_full_year_count": 469,
         "previous_year": 2024,
-        "previous_year_count": 320,
-        "yoy_growth_pct": 31.9,
-        "basis": "OpenAlex works whose title or abstract contains the exact phrase \"oled displays\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
+        "previous_year_count": 395,
+        "yoy_growth_pct": 18.7,
+        "basis": "OpenAlex works whose title or abstract contains any of the exact phrases \"oled displays\", \"AMOLED display\", per publication year (singular and plural forms match; each work counted once). The synonyms and abbreviations were kept only after an AI check of sampled papers. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
       "patent_counts": {
         "2022": 39,
@@ -3459,17 +3668,17 @@
         "2025": 13,
         "2026": 12
       },
-      "heat": 51.1,
+      "heat": 49.8,
       "heat_basis": "papers 2025 + papers YTD + patents 2025 + patents YTD",
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 519,
-        "previous_count": 325,
-        "growth_pct": 59.7,
+        "cutoff": "10-13",
+        "count": 608,
+        "previous_count": 363,
+        "growth_pct": 67.5,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"oled displays\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with any of the exact phrases \"oled displays\", \"AMOLED display\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -3536,22 +3745,22 @@
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
+        "cutoff": "10-13",
         "count": 38,
         "previous_count": 22,
         "growth_pct": 72.7,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"glass core substrate\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"glass core substrate\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
+        "cutoff": "10-13",
         "count": 33,
         "previous_count": 16,
         "growth_pct": 106.2,
         "trend": null,
-        "basis": "EPO OPS patent publications matching any of ['glass core substrate', 'glass substrate packaging'] published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new publications take weeks to be indexed. Applications and grants count; one invention can appear several times."
+        "basis": "EPO OPS patent publications matching any of ['glass core substrate', 'glass substrate packaging'] published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new publications take weeks to be indexed. Applications and grants count; one invention can appear several times."
       },
       "trend": "rising",
       "small_base": true,
@@ -3567,18 +3776,18 @@
       ],
       "sector": "semiconductors",
       "paper_counts": {
-        "2022": 10,
+        "2022": 13,
         "2023": 15,
         "2024": 31,
-        "2025": 50,
-        "2026": 69
+        "2025": 51,
+        "2026": 70
       },
       "paper_acceleration": {
         "last_full_year": 2025,
-        "last_full_year_count": 50,
+        "last_full_year_count": 51,
         "previous_year": 2024,
         "previous_year_count": 31,
-        "yoy_growth_pct": 61.3,
+        "yoy_growth_pct": 64.5,
         "basis": "OpenAlex works whose title or abstract contains the exact phrase \"3d dram\", per publication year (singular and plural forms match; each work counted once). Synonyms and abbreviations are not counted. The number is not normalised for overall growth in publishing. The current (partial) year is excluded."
       },
       "patent_counts": {
@@ -3605,27 +3814,27 @@
         "2025": 0,
         "2026": 0
       },
-      "heat": 98.8,
+      "heat": 99.9,
       "heat_basis": "papers 2025 + papers YTD + patents 2025 + patents YTD",
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 60,
-        "previous_count": 38,
-        "growth_pct": 57.9,
+        "cutoff": "10-13",
+        "count": 62,
+        "previous_count": 39,
+        "growth_pct": 59.0,
         "trend": "rising",
-        "basis": "OpenAlex works with the exact phrase \"3d dram\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"3d dram\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
+        "cutoff": "10-13",
         "count": 55,
         "previous_count": 21,
         "growth_pct": 161.9,
         "trend": "rising",
-        "basis": "EPO OPS patent publications matching any of ['3d dram', '3D stacked DRAM', 'DRAM stacking'] published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new publications take weeks to be indexed. Applications and grants count; one invention can appear several times."
+        "basis": "EPO OPS patent publications matching any of ['3d dram', '3D stacked DRAM', 'DRAM stacking'] published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new publications take weeks to be indexed. Applications and grants count; one invention can appear several times."
       },
       "trend": "rising",
       "small_base": true,
@@ -3684,12 +3893,12 @@
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
+        "cutoff": "10-13",
         "count": 35,
-        "previous_count": 10,
-        "growth_pct": 250.0,
+        "previous_count": 11,
+        "growth_pct": 218.2,
         "trend": null,
-        "basis": "OpenAlex works with the exact phrase \"neutral atom quantum computing\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"neutral atom quantum computing\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -3756,12 +3965,12 @@
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
+        "cutoff": "10-13",
         "count": 10,
         "previous_count": 7,
         "growth_pct": 42.9,
         "trend": null,
-        "basis": "OpenAlex works with the exact phrase \"direct-to-cell satellite\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"direct-to-cell satellite\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -3830,12 +4039,12 @@
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
+        "cutoff": "10-13",
         "count": 12,
         "previous_count": 7,
         "growth_pct": 71.4,
         "trend": null,
-        "basis": "OpenAlex works with the exact phrase \"optical inter-satellite link\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"optical inter-satellite link\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,
@@ -3904,12 +4113,12 @@
       "paper_ytd": {
         "year": 2026,
         "previous_year": 2025,
-        "cutoff": "10-12",
-        "count": 58,
+        "cutoff": "10-13",
+        "count": 59,
         "previous_count": 19,
-        "growth_pct": 205.3,
+        "growth_pct": 210.5,
         "trend": null,
-        "basis": "OpenAlex works with the exact phrase \"AI drug discovery\" in title or abstract published 1 Jan–12 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
+        "basis": "OpenAlex works with the exact phrase \"AI drug discovery\" in title or abstract published 1 Jan–13 Oct 2026 vs the same dates in 2025. The last 30 days are left out of both years because new papers take weeks to be indexed."
       },
       "patent_ytd": {
         "year": 2026,

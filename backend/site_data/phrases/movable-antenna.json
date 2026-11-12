@@ -1,0 +1,64 @@
+{
+ "made_at": "2026-11-12T14:15:42.413267+00:00",
+ "basis": {
+  "phrases": [
+   "movable antenna",
+   "fluid antenna",
+   "movable antennas",
+   "fluid antenna system",
+   "antenna position optimization"
+  ],
+  "checks": [
+   {
+    "phrase": "movable antenna",
+    "source": "topic",
+    "matches": 807,
+    "sampled": 8,
+    "relevant": 8,
+    "kept": true,
+    "reason": "the topic name itself (8/8 sampled works on-topic)"
+   },
+   {
+    "phrase": "fluid antenna",
+    "source": "ai_suggested",
+    "matches": 862,
+    "sampled": 8,
+    "relevant": 8,
+    "kept": true,
+    "reason": "8/8 sampled works on-topic"
+   },
+   {
+    "phrase": "movable antennas",
+    "source": "ai_suggested",
+    "matches": 807,
+    "sampled": 8,
+    "relevant": 8,
+    "kept": true,
+    "reason": "8/8 sampled works on-topic"
+   },
+   {
+    "phrase": "fluid antenna system",
+    "source": "ai_suggested",
+    "matches": 571,
+    "sampled": 8,
+    "relevant": 8,
+    "kept": true,
+    "reason": "8/8 sampled works on-topic"
+   },
+   {
+    "phrase": "antenna position optimization",
+    "source": "ai_suggested",
+    "matches": 121,
+    "sampled": 8,
+    "relevant": 8,
+    "kept": true,
+    "reason": "8/8 sampled works on-topic"
+   }
+  ],
+  "precision_sampled": 20,
+  "precision_relevant": 19,
+  "precision_pct": 95.0,
+  "llm_alias": "glm_5_3_flash",
+  "note": "Counted: works whose title or abstract contains any of 'movable antenna', 'fluid antenna', 'movable antennas', 'fluid antenna system', 'antenna position optimization' (singular and plural forms match automatically; a work matching several phrases is counted once). An AI check of 20 random counted works found 19 (95%) mainly about the topic."
+ }
+}
