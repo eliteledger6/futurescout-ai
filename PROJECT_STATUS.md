@@ -647,3 +647,17 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   those then stay owed or unbought until NEAR is added. `private_reserve_near` is the owner's setting to raise.
 - Site (Trading, About), README, the trading disclaimer and CLAUDE.md say so. Mock-tested (365 tests pass). Takes
   effect when the server's trader is restarted on this code; not run by Claude.
+
+## 2026-11-12: Agent economy panel counts the daily briefs; Radar detail stays beside the table (owner)
+- Agent economy panel: the two $0.50 brief payments (0.1385 and 0.1404 NEAR) were in the total "paid" figure but not in
+  the list under it (the list was built from report prices only), and the "kept pot" was the figure saved at the last
+  stake (1.08 NEAR), so it ignored payments made since. Now each brief payment is listed with its date and "paid", the
+  total is labelled "reports and daily briefs", the kept pot is 30% of everything received (1.1634 of 3.8779 NEAR),
+  and the staked figure says how much of the 70% still waits for NEAR AI's 1 NEAR minimum (0.1952 NEAR).
+- Radar: on laptop screens (1920 px at 125-150% Windows scaling = 1230-1540 px) the topic detail had dropped below the
+  table, because the single-column layout started under 1240 px. The detail now stays beside the table down to
+  1060 px (table 641 px and detail 377 px at 1100 px wide, no sideways scrolling); below that it moves under the table.
+- Checked: the Radar in the browser at 1000, 1100, 1231 and 1536 px; the economy numbers on the server's published
+  data through the API. 365 tests pass; the site builds. The economy panel's new rows were not seen in the browser
+  with real data (this computer's local data has no brief payments).
+- The demo video re-record is paused at the owner's request.

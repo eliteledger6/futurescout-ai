@@ -522,7 +522,10 @@ a.card:hover { box-shadow: 0 12px 40px -18px color-mix(in srgb, var(--accent) 45
 .radar-table td:first-child, .radar-table th:first-child { padding-left: 12px; width: 1%; }
 .radar-table .heat-num { font-weight: 600; color: var(--accent); }
 .radar-table .heat-num.neg { color: var(--l-danger, #ff6b6b); }
-@media (max-width: 1240px) { .radar-grid { grid-template-columns: 1fr; } }      /* the table gets the full width before it would need to scroll */
+/* the topic detail stays BESIDE the table on laptop screens (owner 2026-11-12: at 125-150% Windows scaling a 1920 screen is
+   1230-1540 px wide and the detail had dropped below the table); only under 1060 px does it move below */
+@media (max-width: 1500px) { .radar-grid { grid-template-columns: minmax(0, 1.7fr) minmax(300px, 1fr); gap: 18px; } }
+@media (max-width: 1060px) { .radar-grid { grid-template-columns: 1fr; } }
 @media (max-width: 640px) {                                                       /* phones: the two columns the detail panel shows anyway are left out */
   .radar-table th:nth-child(5), .radar-table td:nth-child(5), .radar-table th:nth-child(7), .radar-table td:nth-child(7) { display: none; }
   .radar-table th, .radar-table td { padding: 8px 3px; }

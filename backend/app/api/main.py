@@ -520,7 +520,12 @@ def create_app(
                        "stake_share": ec.stake_share, "min_stake_near": ec.min_stake_near,
                        "min_price_usd": ec.min_price_usd, "max_price_usd": ec.max_price_usd, "margin_usd": ec.margin_usd},
             "spent_near": st.spent_near(), "report_agent_wallet_near": wallet, "report_agent_staked_near": staked,
-            "kept_near": st.kept_near, "second_trader_at_usd": ec.second_trader_at_usd,
+            # The kept pot is the report agent's share of everything it was paid (reports and daily briefs). It used to
+            # be the figure saved at the last stake, so a payment made since then was missing (seen 2026-11-12).
+            "kept_near": round(st.received_near() * (1 - ec.stake_share), 4),
+            "received_near": st.received_near(),
+            "stake_waiting_near": round(max(0.0, st.received_near() * ec.stake_share - st.staked_near()), 4),
+            "second_trader_at_usd": ec.second_trader_at_usd,
             "market_income": market_income_summary(),
             "prices": sorted((p.model_dump(mode="json") for p in st.prices.values()), key=lambda p: -p["price_near"]),
             "purchases": [p.model_dump(mode="json") for p in reversed(st.purchases[-30:])],

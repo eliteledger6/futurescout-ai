@@ -261,7 +261,7 @@ function EconomyPanel({ e }: { e: Economy }) {
   return (
     <div className="tr-card">
       <div className="tr-head">
-        <h2 className="tr-title" style={{ minWidth: 0, overflowWrap: "anywhere" }}>Agent economy <span className="muted small">· reports bought in NEAR</span></h2>
+        <h2 className="tr-title" style={{ minWidth: 0, overflowWrap: "anywhere" }}>Agent economy <span className="muted small">· reports and daily briefs bought in NEAR</span></h2>
         <div className="pills"><span className="pill">{e.enabled ? "on: real NEAR" : "off"}</span></div>
       </div>
       <p className="small" style={{ color: "var(--text-2)", margin: 0 }}>
@@ -273,9 +273,9 @@ function EconomyPanel({ e }: { e: Economy }) {
         It keeps the other {100 - Math.round(e.limits.stake_share * 100)}%; once that pot passes ${e.second_trader_at_usd ?? 200} it funds a second trading agent (the next step).
       </p>
       <div className="stats" style={{ marginTop: 4, gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 140px), 1fr))", overflowWrap: "anywhere" }}>
-        <div className="stat"><div className="stat-value">{e.spent_near.toFixed(3)} Ⓝ</div><div className="stat-label">paid for reports by the trading agent</div></div>
+        <div className="stat"><div className="stat-value">{e.spent_near.toFixed(3)} Ⓝ</div><div className="stat-label">paid to the report agent by the trading agent (reports and daily briefs)</div></div>
         <div className="stat"><div className="stat-value">{e.report_agent_wallet_near != null ? `${e.report_agent_wallet_near.toFixed(2)} Ⓝ` : "–"}</div><div className="stat-label">report agent wallet ({e.seller_account})</div></div>
-        <div className="stat"><div className="stat-value">{e.report_agent_staked_near != null ? `${e.report_agent_staked_near.toFixed(2)} Ⓝ` : "–"}</div><div className="stat-label">staked for NEAR AI credits</div></div>
+        <div className="stat"><div className="stat-value">{e.report_agent_staked_near != null ? `${e.report_agent_staked_near.toFixed(2)} Ⓝ` : "–"}</div><div className="stat-label">staked for NEAR AI credits{(e.stake_waiting_near ?? 0) > 0 ? ` (${e.stake_waiting_near!.toFixed(2)} more waits for the ${e.limits.min_stake_near} NEAR minimum)` : ""}</div></div>
         <div className="stat"><div className="stat-value">{(e.kept_near ?? 0).toFixed(2)} Ⓝ</div><div className="stat-label">kept pot: at ${e.second_trader_at_usd ?? 200} it funds a second trading agent</div></div>
       </div>
       {e.prices.length > 0 && (
@@ -283,6 +283,11 @@ function EconomyPanel({ e }: { e: Economy }) {
           const b = e.purchases.find((x) => x.run_id === p.run_id && x.status !== "failed");
           return <div key={p.run_id}><b>{p.price_near} Ⓝ</b><span>{p.topic} <span className="why">· ${p.price_usd.toFixed(2)} · {b ? (b.status === "paid" ? "bought" : "payment sent") : "not bought"} {b && link(b.tx_hash)}</span></span></div>;
         })}</div>
+      )}
+      {e.purchases.some((x) => x.run_id.startsWith("briefs_") && x.status !== "failed") && (
+        <div className="tr-mini">{e.purchases.filter((x) => x.run_id.startsWith("briefs_") && x.status !== "failed").map((x) => (
+          <div key={x.id}><b>{x.price_near} Ⓝ</b><span>{x.topic.replace("holding briefs:", "daily holding brief ·")} <span className="why">· {fmtDate(x.at)} · {x.status === "paid" ? "paid" : "payment sent"} {link(x.tx_hash)}</span></span></div>
+        ))}</div>
       )}
       {e.stakes.length > 0 && <div className="small muted">
         {e.stakes.filter((s) => s.status === "staked").map((s) => <div key={s.id}>{fmtDate(s.at)} · staked {s.amount_near} NEAR with NEAR AI {link(s.tx_hash)}</div>)}
