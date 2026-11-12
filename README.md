@@ -1,6 +1,6 @@
 # FUTURESCOUT AI
 
-An automated research and trading agent for emerging technology, built on NEAR. A team of AI agents (models on **NEAR AI Cloud**) reads research papers, patents, SEC filings and X posts for 54 technology topics, argues the other side, and writes a report where every claim has a label and a source. Each report's fingerprint is sealed on **NEAR**. The companies the evidence points to go into a paper fund per topic, and a trading agent buys and sells real tokenized stocks through **NEAR Intents**, inside hard limits written in code.
+An automated research and trading agent for emerging technology, built on NEAR. A team of AI agents (models on **NEAR AI Cloud**) reads research papers, patents, SEC filings and X posts for more than 50 technology topics (the list grows by itself), argues the other side, and writes a report where every claim has a label and a source. Each report's fingerprint is sealed on **NEAR**. The companies the evidence points to go into a paper fund per topic, and a trading agent buys and sells real tokenized stocks through **NEAR Intents**, inside hard limits written in code.
 
 Research information, not financial advice. The trading agent uses a small, capped real-money budget.
 
@@ -32,9 +32,9 @@ Technology investing mixes verifiable facts, rumours and hype, and "AI picks" ra
 |---|---|
 | Multi-agent research on real papers (OpenAlex, arXiv), patents, SEC filings and X posts; 16 topics with full reports | Paper funds (one per topic, fully invested) use pretend money at real closing prices |
 | Report, fund and trade fingerprints on NEAR mainnet (older ones on testnet) | Shadow trading: pretend money, real NEAR Intents quotes |
-| Real-money trades on NEAR mainnet through NEAR Intents. Current record: one buy of INTCon ($43.83, approved by the agent after every code check). Earlier rounds (three buys, and on 2026-11-10 an automatic sale of GOOGLon followed by a buy) were archived (kept on the owner's machine, not in the repository) when the owner restarted the fund | Real-money budget is capped at $60 in total by the owner; NEAR Intents refused trades on 2026-11-10/11, so the trading loop is paused |
-| Agent economy with real NEAR (2026-11-10): the trading agent bought 3 reports (1.865 NEAR) from the report agent, which staked 1.3055 NEAR with NEAR AI (Staking for Inference) and kept 0.56 NEAR | At these amounts the staking rewards cover only a small part of the AI bill; the second trading agent (funded when the kept pot passes $200) is planned, not built |
-| NEAR Agent Market listing, live; one free test hire delivered (topic from the brief, change request read from the job thread). A visitor's topic proposal ran end to end on 2026-11-11 (AI reviewer approved "retrieval-augmented generation", researched, sealed on mainnet, published by the agent) | No paid Agent Market job yet. For the demo, reports written from 2026-11-11 are unlocked and marked "Unlocked for demo purposes only" |
+| Real-money trades on NEAR mainnet through NEAR Intents. Current record: one buy of INTCon ($43.83, approved by the agent after every code check). Earlier rounds (three buys, and on 2026-11-10 an automatic sale of GOOGLon followed by a buy) were archived (kept on the owner's machine, not in the repository) when the owner restarted the fund | Real-money budget is capped at $60 in total by the owner. The trading loop runs on the cloud server (hourly checks, a daily review of the holding: "hold" on 2026-11-12); NEAR Intents has had no swap route for the INTCon token since 2026-11-10, so that holding cannot be added to or sold for now |
+| Agent economy with real NEAR (state on 2026-11-12): the trading agent bought 6 reports (3.599 NEAR) and 1 daily holding brief (0.1385 NEAR, $0.50) from the report agent, which staked 2.5193 NEAR (70%) with NEAR AI (Staking for Inference) and kept the rest | At these amounts the staking rewards cover only a small part of the AI bill; the second trading agent (funded when the kept pot passes $200) is planned, not built |
+| NEAR Agent Market listing, live; two free test hires delivered (topic from the brief, change request read from the job thread; the second by the cloud server in under 8 minutes). A visitor's topic proposal ran end to end on 2026-11-11 (AI reviewer approved "retrieval-augmented generation", researched, sealed on mainnet, published by the agent) | No paid Agent Market job yet. For the demo, reports written from 2026-11-11 are unlocked and marked "Unlocked for demo purposes only" |
 | Settlement confirmed by reading the private balance | Stock prices: Alpha Vantage free plan (25 lookups a day), NEAR Intents token prices as a labelled fallback |
 
 ### Agent economy: agents pay each other and pay for their own AI
@@ -65,7 +65,7 @@ The report agent takes paid jobs on NEAR's Agent Market: a buyer gives a technol
 the marketplace holds the payment, and the agent delivers a sealed report (reusing a recent one when it exists, otherwise
 running the research team, at most 3 new runs a day). The brief is used only as a short topic, never as instructions.
 Run it with `python scripts\market_agent.py`; setup and the listing text are in [AGENT_MARKET.md](AGENT_MARKET.md).
-Run live on 2026-11-10: a test hire was picked up, a change request was read from the job thread, and the sealed high bandwidth memory report was delivered. The agent answers while the owner's laptop runs it.
+Run live on 2026-11-10: a test hire was picked up, a change request was read from the job thread, and the sealed high bandwidth memory report was delivered. Since 2026-11-11 the agent runs on a cloud server, so it answers around the clock (a second test hire was delivered from there in under 8 minutes).
 
 ### Safety limits on the trading agent (enforced in code, not by the model)
 
@@ -112,7 +112,7 @@ npm install; npm run build; npm run start         # see: the dashboard on http:/
 
 Then, in the dashboard:
 
-1. Open **Radar**: see 54 topics in 9 sectors ranked by paper and patent growth.
+1. Open **Radar**: see more than 50 topics in 9 sectors ranked by paper and patent growth (the list grows: the Science agent added three on 2026-11-11).
 2. Open **Reports** and pick *high bandwidth memory*: see the verdict (score 80, confidence 50%), the companies behind the evidence, and "Unchanged since recorded on NEAR mainnet". Switch to **Full report**: every finding with its label, quote and source; the agent trace with model and cost per agent; the company scout table.
 3. Open **Funds & trading** → **Paper funds**: one fully invested pretend-money fund per topic with their reasons, compared with the S&P 500.
 4. Open **Trading agent**: the pipeline, the agent's latest decisions, the completed real trade with the agent's own reasoning ("Approved by the agent (all checks passed)"), and the **Agent economy** panel: 3 reports bought in NEAR, 1.31 NEAR staked with NEAR AI, the kept pot.
@@ -233,7 +233,8 @@ PROJECT_STATUS.md                  detailed phase status
 ## What is unfinished (honest list, 2026-11-11)
 
 - **Two machines share data through git.** The agents run on a cloud server; the hosted website is a read-only snapshot (`backend/site_data`) that the agents commit and push. It shows the data, takes topic proposals and has no key. Proposals stored on the hosted API are lost if it restarts before the loop collects them, and so is the record of reports bought through `/api/market/buy`.
-- **Added on 2026-11-11 and only mock-tested when written**: the daily radar refresh, the agent's own reports (top 5 + one per sale), idle scouting by the Science agent, and the Agent Market fee split. The first own report ('mixture of experts') was started by the server the same evening.
+- **Seen live on the cloud server (2026-11-11/12)**: the daily radar refresh; two own reports for top-5 radar topics ('mixture of experts', 'supervised fine-tuning'), then the stop at 2 a day; three topics added by the Science agent while idle ('assertion generation', 'quantum annealing', 'movable antenna'); the hourly live price of the holding; the first daily holding brief, written for $0.05 and paid with 0.1385 NEAR; the daily review ("hold"). **Built and mock-tested, not yet seen live**: a report sale paying for the next report, an Agent Market fee joining the 70/30 split (both hires were free tests), a purchase by an outside bot.
+- **Radar numbers are in transition**: the refresh of 2026-11-11 14:18 UTC counted papers by each topic's name alone; the checked search phrases are now shared between machines, and the next daily refresh uses them and adds the three new topics.
 - **A report payment is proven by a transaction hash and the buyer's name.** Hashes are public, so the proof does not show that the requester is the payer; a signed message from the buyer would. The seal is a SocialDB entry the report agent's key could overwrite: it protects against outsiders, not against the key holder.
 - **One real holding only**: the trading agent runs (hourly checks, real orders inside the caps), but NEAR Intents has had no route for the INTCon token since 2026-11-10, so it cannot add to or sell that holding; it is valued at the live token price.
 - **NEAR Agent Market**: listed ($3 a hire) and tested with two free test hires (the second handled by the cloud server in under 8 minutes); no paid job yet, so no fee has been recorded.

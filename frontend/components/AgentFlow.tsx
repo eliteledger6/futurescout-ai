@@ -114,8 +114,8 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
     <div className="flow">
       <div className="flow-legend" aria-label="What the boxes are">
         {!stats && <span className="flow-legend-lead">The <b>Report agent</b> runs the research: it takes a topic, hands it to its team of {REPORT_TEAM.length} AI agents,
-          collects all their work into one report, and reports it out: sealed on NEAR, published here, and sold. The <b>Trading agent</b> buys the report and trades on it.
-          Each of the two has its own NEAR account.</span>}
+          collects all their work into one report, and reports it out: sealed on NEAR, published here, and sold. The <b>Trading agent</b> buys the report and trades on it; it reads the price of what it holds
+          every hour, and once a day buys a short brief on each holding from the Report agent. Each of the two has its own NEAR account.</span>}
         <span><b className="kind-chip ai">AI</b> {count("ai")} boxes call a model on NEAR AI Cloud (Chief review is the Chief&apos;s second pass)</span>
         <span><b className="kind-chip code">CODE</b> {count("code")} code steps: fixed rules and counts, no model</span>
         {count("service") > 0 && <span><b className="kind-chip service">NEAR</b> {count("service")} NEAR ecosystem services the agents use: NEAR AI staking and NEAR Agent Market</span>}
@@ -155,6 +155,7 @@ export function AgentFlow({ stats, models }: { stats?: Record<AgentKey, AgentRun
               <Flow d={SALE.stake} />
               <Badge x={GAP_MID} y={POS.trader[1] + 62} text="report ▸" tone="report" />
               <Badge x={GAP_MID} y={POS.seller[1] - 62} text="◂ pays $2–3 in NEAR" tone="pay" />
+              <Badge x={GAP_MID} y={(POS.trader[1] + POS.seller[1]) / 2} text="daily brief · $0.50" tone="pay" />
               <Badge x={GAP_MID} y={POS.seller[1] + 32} text="stakes 70% ▸" tone="credit" />
               <Flow d={CREDITS} cls="edge on credits" />
               <Badge x={(POS.chief[0] + POS.stake[0] + W) / 2} y={CREDIT_Y} text="◂ staking earns NEAR AI credits, which go toward the agents' model calls" tone="credit" />

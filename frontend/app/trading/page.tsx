@@ -210,7 +210,7 @@ function Elapsed({ since }: { since: string }) {
   return <span className="mono">{Math.floor(s / 60)}:{String(s % 60).padStart(2, "0")}</span>;
 }
 
-const TRIGGER_WORDS: Record<string, string> = { new_report: "new report", price_drop: "sharp fall", price_jump: "sharp rise", review: "daily review", manual: "extra review", after_sale: "after a sale" };
+const TRIGGER_WORDS: Record<string, string> = { new_report: "new report", price_drop: "sharp fall", price_jump: "sharp rise", review: "daily review", manual: "extra review", after_sale: "after a sale", holding_brief: "urgent holding brief" };
 
 // Daily holding briefs: for each share it holds, the trading agent buys a short check-up from the report agent.
 function BriefsPanel({ b }: { b: NonNullable<Trading["briefs"]> }) {
@@ -328,7 +328,7 @@ function AgentLog({ t }: { t: Trading }) {
         <div className="pills"><span className="pill">{t.strategy?.last_check_at ? `last check ${fmtDate(t.strategy.last_check_at)}` : "no check yet"}</span></div>
       </div>
       <p className="small" style={{ color: "var(--text-2)", margin: 0 }}>
-        It checks every {cfg?.check_minutes ?? 60} min and wakes on a new report, a sharp price move or a daily review{t.selling?.enabled ? "; it can buy, sell or hold" : "; it can buy or hold"}.
+        It checks every {cfg?.check_minutes ?? 60} min and wakes on a new report, a sharp price move (also in the live price of a share it holds), an urgent holding brief or a daily review{t.selling?.enabled ? "; it can buy, sell or hold" : "; it can buy or hold"}.
       </p>
       <div className="tr-split">
         {(["live", "shadow"] as const).map((mode) => {

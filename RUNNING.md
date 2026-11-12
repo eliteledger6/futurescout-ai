@@ -14,7 +14,22 @@ Never run an agent in both places at once: two trading agents could pay or trade
 server needs `sudo -u futurescout git -C /home/futurescout/futurescout pull --rebase && systemctl restart futurescout-agent && systemctl try-restart futurescout-trader`
 (see `deploy/VPS.md`).
 
-## Every day
+## Every day, while the agents run on the cloud server (the case since 2026-11-11)
+
+Nothing has to be started. On the server (as root):
+
+| I want to... | Command |
+|---|---|
+| See that both agents run | `systemctl is-active futurescout-agent futurescout-trader` |
+| See what the report agent did | `journalctl -u futurescout-agent -n 40 --no-pager` |
+| See what the trading agent did | `journalctl -u futurescout-trader -n 40 --no-pager` |
+| Pause real trading at once (kill switch) | `sudo -u futurescout bash -c "cd ~/futurescout/backend && ../.venv/bin/python scripts/fund_trade.py stop"` |
+| Resume real trading | the same with `start` instead of `stop` |
+| Get new code after a push | `sudo -u futurescout git -C /home/futurescout/futurescout pull --rebase && systemctl restart futurescout-agent futurescout-trader` |
+
+Do NOT start the agents on this computer while the server runs them.
+
+## Every day, if the agents run on this computer instead (stop the server's two services first)
 
 | I want to... | Double-click |
 |---|---|
@@ -37,7 +52,8 @@ put my device to sleep after* to **Never**.
 | A visitor proposes a topic on the website (max 5 a day) | within a minute the report agent collects it; the AI reviewer approves or rejects it with a reason |
 | A topic is approved, or someone hires the agent on NEAR Agent Market and no recent report exists | the research team writes the report (5-15 min) -> sealed on NEAR mainnet -> its paper fund is built -> the website is updated (a few minutes later) |
 | Someone hires the agent and a report on that topic is less than 7 days old | that report is delivered at once (no new research) |
-| Every 60 minutes | the trading agent checks for a new report, a sharp price move or its daily review; if one is found it buys the report and decides to buy, sell or hold, inside your limits |
+| Every 60 minutes | the trading agent reads the live price of each share it holds and checks for a new report, a sharp price move, an urgent holding brief or its daily review (24 hours after it last looked); if one is found it buys the report and decides to buy, sell or hold, inside your limits |
+| Once every 24 hours per holding | the trading agent buys a holding brief from the report agent for $0.50 in NEAR (X signals and a short risk note) |
 | The report agent has been paid enough (70% of payments reaches 1 NEAR) | it stakes that NEAR with NEAR AI; the rewards pay for the agents' AI |
 | The report agent starts, and then once a day | every paper fund is updated: topics without a fund get one, funds with a newer report or a due weekly review decide again, the rest are revalued at the latest closes; then the website is updated |
 | A trade, a report purchase or a stake happens | the website is updated a few minutes later |

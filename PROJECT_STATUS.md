@@ -541,3 +541,21 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   review comes due at the next check. Mock-tested (362 tests pass). Takes effect when the server's trader restarts.
 - Run live on the owner's server at 01:00 UTC: the trader restarted on the code with the live price watch and the
   daily holding briefs; its first pass was still running when the log was pasted.
+
+## 2026-11-12: everything brought up to date and checked against the live data
+- Run live on the owner's server (log of 01:00-01:15 UTC): the first daily holding brief on INTC (10 posts, $0.051 to
+  make) was paid with 0.1385 NEAR from the near.com balance and arrived in the report agent's account after about 15 s;
+  the live price is printed at every check; after the review fix the daily review fired: real money "hold" on INTC
+  (price $60.91 stated, the brief read), shadow "buy" of $600 MSFT (pretend). Each review cost about $0.05.
+- Agent network: a "daily brief · $0.50" badge between the Trading agent and the Report agent; the legend says the
+  Trading agent reads the price of what it holds every hour and buys a daily brief. Trading page: "urgent holding
+  brief" as a wake-up reason. README: opening line, the "runs live" rows (6 reports and 1 brief bought, 2.5193 NEAR
+  staked, two test hires, trading loop on the server), the demo walk-through, and the "what is unfinished" list now
+  separates what was seen live from what is only mock-tested. RUNNING.md: the server's everyday commands come first.
+- Claims check against the hosted API (script, run live): 9 AI agents in the report team plus the trading agent, all
+  on NEAR AI Cloud model ids; proposals 5 a day and open; Agent Market price $3.00; 14 reports on sale at $2.00-2.31;
+  each of the radar's top 5 topics has a report from the last 2 days; the radar is under 24 hours old; the 4 newest
+  reports match their seal on NEAR; the brief costs $0.50 and the latest is paid; the holding's live price is under 90
+  minutes old; trading enabled, kill switch off; 67.4% of 3.7375 NEAR received is staked (0.097 NEAR of the 70% waits
+  for the 1 NEAR minimum); all six pages load. All held.
+- 362 tests pass; the website builds; the diagram's badges do not overlap (checked in the browser at 1440 px).
