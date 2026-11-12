@@ -559,3 +559,22 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   minutes old; trading enabled, kill switch off; 67.4% of 3.7375 NEAR received is staked (0.097 NEAR of the 70% waits
   for the 1 NEAR minimum); all six pages load. All held.
 - 362 tests pass; the website builds; the diagram's badges do not overlap (checked in the browser at 1440 px).
+
+## 2026-11-12: final browser check of the hosted site, and demo video v11 (4:58)
+- Browser check (hosted site, 1440 px and 375 px): home, radar, request a report, funds, a fund, portfolio, trading,
+  how it works, a demo-unlocked report, a paid report and an unknown report address all load with the expected content
+  and no page is wider than the screen, except the fund detail page on a phone (385 px on 375). No console error apart
+  from the expected 402 (paid report) and 404 (unknown report).
+- Fixed after the check: (1) the first real holding brief says "live price and gain/loss data were not provided":
+  it was written before that pass had read the price. A brief now reads the live price itself. The brief already
+  published keeps its text until the next day's brief. (2) Funds created before 2026-11-11 carried the note "each
+  decision is fingerprinted on NEAR testnet"; the fund page now says decisions up to 11 November were sealed and later
+  ones are not. (3) The fund page's four figures fit a phone. (4) Trading page: staking rewards "earn NEAR AI credits
+  that go toward the agents' AI" (was "pay for the agents' AI"). 362 tests pass; the site builds.
+- Demo video v11, recorded from the hosted site: 4:57.9, 1920x1080, 30 fps, H.264 + AAC 48 kHz, no black scene, no
+  silence over 2.5 s. New against v10: one line in the real-money scene ("It reads the price of what it holds every
+  hour. And once a day, it buys a short brief on each holding from the report agent, for 50 cents."), shown on the
+  Trading page's brief panel with its "paid" label; the closing card lists the daily brief. Three narration lines were
+  generated new. Checked by still frames and sound level; not listened to. The brief on screen carries the sentence
+  from fix (1), and the economy panel's small print still has the old wording of fix (4): both were recorded before
+  those fixes were deployed.

@@ -135,6 +135,8 @@ SCENES = [
         ("Before it can use a report, it has to buy it. It bought six, at about $2 each, paid in NEAR straight from its near.com balance.",
          "Before it can use a report, it has to buy it. It bought six, at about two dollars each, paid in NEAR, straight from its near dot com balance."),
         ("After buying the memory report, it bought Intel, and approved the order itself, once every check had passed.", None),
+        ("It reads the price of what it holds every hour. And once a day, it buys a short brief on each holding from the report agent, for 50 cents.",
+         "It reads the price of what it holds every hour. And once a day, it buys a short brief on each holding from the report agent, for fifty cents."),
         ("The report agent staked 70% of what it earned, 2.5 NEAR, with NEAR AI, and kept the rest toward a second trading agent.",
          "The report agent staked seventy percent of what it earned, two point five NEAR, with NEAR AI, and kept the rest toward a second trading agent."),
         ("Every report has a price: $2 to $3, depending on what it cost to make.",
@@ -413,6 +415,7 @@ def closing_card(t: float, dur: float) -> Image.Image:
             "Reports sold for $2-3 in NEAR, earnings staked for AI",
             "Report agent listed on NEAR Agent Market ($3 a hire)",
             "Both agents run on a cloud server, around the clock",
+            "Daily holding brief bought for $0.50 in NEAR",
         ]),
         (1010, "SIMULATED OR LIMITED", (255, 196, 110), [
             "Topic funds and shadow trades use pretend money",
@@ -428,13 +431,13 @@ def closing_card(t: float, dur: float) -> Image.Image:
         a = ease((t - t0) / 0.5)
         if a <= 0:
             continue
-        d.rounded_rectangle((x, 320, x + 760, 800), radius=18, fill=(10, 14, 13, int(225 * a)), outline=rgba((52, 60, 57), a), width=2)
+        d.rounded_rectangle((x, 320, x + 760, 862), radius=18, fill=(10, 14, 13, int(225 * a)), outline=rgba((52, 60, 57), a), width=2)
         d.rectangle((x, 344, x + 5, 384), fill=rgba(colour, a))
         d.text((x + 34, 364), head, font=font(24, "mono"), fill=rgba(colour, a), anchor="lm")
         for i, row in enumerate(rows):
             ar = ease((t - (t0 + 0.25 + i * 0.1)) / 0.4)
             d.text((x + 34, 440 + i * 56), row, font=font(27, "regular"), fill=rgba(INK, ar), anchor="lm")
-    rise(d, (W / 2, 880), "Built for the NEAR Hackathon", font(28, "semibold"), INK, t, 1.9)
+    rise(d, (W / 2, 916), "Built for the NEAR Hackathon", font(28, "semibold"), INK, t, 1.9)
     rise(d, (W / 2, 1052), "Voice generated with ElevenLabs", font(20, "regular"), DIM, t, 2.3)   # free-plan attribution
     return img
 
@@ -611,13 +614,21 @@ async def rec_round(k: Take) -> None:
     await b.hover(".tr-card.live .tr-say", 0, seconds=0.8)
     await k.until(k.sent[3] - 0.9)
     k.cut()
-    await b.scroll_to_el(".tr-card", 1.0, offset=90, text="Agent economy")       # staking and the kept pot
+    await b.scroll_to_el(".tr-card", 1.0, offset=110, text="Daily holding briefs")   # the daily brief bought from the report agent
     await k.until(k.sent[3] + 0.2)
+    await k.hl(await b.rect(".tr-card .tr-head", 0, text="Daily holding briefs"), seconds=max(2.4, (k.sent[4] - k.sent[3]) * 0.45), pad=8)
+    await k.until(k.sent[3] + (k.sent[4] - k.sent[3]) * 0.5)
+    await k.hl(await b.rect(".pill", 0, text="NEAR · paid"), seconds=max(2.0, (k.sent[4] - k.sent[3]) * 0.4), pad=6)
+    await b.hover(".pill", 0, text="NEAR · paid", seconds=0.7)
+    await k.until(k.sent[4] - 0.9)
+    k.cut()
+    await b.scroll_to_el(".tr-card", 1.0, offset=90, text="Agent economy")       # staking and the kept pot
+    await k.until(k.sent[4] + 0.2)
     await k.hl(await b.rect(".tr-card .stat", 0, text="staked for NEAR AI"), seconds=2.2, pad=8)
     await asyncio.sleep(1.4)
     await k.hl(await b.rect(".tr-card .stat", 0, text="kept pot"), seconds=2.0, pad=8)
-    await k.until(k.sent[4] + 0.1)
-    await k.hl(await b.rect(".tr-mini"), seconds=max(2.2, k.dur - k.sent[4] - 0.8), pad=8)  # reports priced in NEAR
+    await k.until(k.sent[5] + 0.1)
+    await k.hl(await b.rect(".tr-mini"), seconds=max(2.2, k.dur - k.sent[5] - 0.8), pad=8)  # reports priced in NEAR
     await b.hover(".tr-mini > div", 1, seconds=0.7)
 
 
