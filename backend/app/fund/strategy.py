@@ -44,7 +44,7 @@ class StrategyConfig(BaseModel):
 
 
 class Trigger(BaseModel):
-    kind: Literal["new_report", "price_drop", "price_jump", "review", "manual", "after_sale"]
+    kind: Literal["new_report", "price_drop", "price_jump", "review", "manual", "after_sale", "holding_brief"]
     ticker: str = ""
     topic: str = ""
     detail: str = ""
@@ -120,7 +120,8 @@ def price_line(price_band_pct: float) -> str:
 # How each wake-up reason is named to the agent (and so in its reasoning). "manual" is only the internal name of an
 # extra review started from the command line; it is not a person's decision.
 TRIGGER_NAMES = {"new_report": "new report", "price_drop": "sharp fall", "price_jump": "sharp rise", "review": "daily review",
-                 "manual": "extra review", "after_sale": "after a sale"}
+                 "manual": "extra review", "after_sale": "after a sale",
+                 "holding_brief": "urgent holding brief"}
 
 
 def confidence_line(cfg) -> str:  # noqa: ANN001

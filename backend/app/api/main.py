@@ -521,6 +521,19 @@ def create_app(
             "explorer_tx": "https://nearblocks.io/txns/{tx}",
         }
 
+    def holding_briefs() -> dict:
+        """The newest daily holding briefs the trading agent bought from the report agent (read-only)."""
+        from app.fund import holding_brief as hb
+        st = hb.load_state(trading_dir.parent / "briefs" / "state.json")
+        ec = load_fund_config().economy
+        rows = [{"id": b.id, "ticker": b.ticker, "topic": b.topic, "at": b.at.isoformat(), "price_now": b.price_now, "gain_pct": b.gain_pct,
+                 "posts_read": b.posts_read, "summary": b.note.summary if b.note else None, "what_changed": b.note.what_changed if b.note else None,
+                 "risks": b.note.risks if b.note else [], "urgency": b.note.urgency if b.note else None,
+                 "signals": [s.model_dump() for s in b.signals[:5]], "price_usd": b.price_usd, "price_near": b.price_near, "status": b.status,
+                 "errors": b.errors} for b in reversed(st.briefs[-6:])]
+        return {"price_usd": ec.brief_usd, "every_hours": ec.brief_hours, "enabled": ec.enabled and ec.brief_usd > 0,
+                "owed_near": round(sum(b.price_near for b in st.owed()), 4), "briefs": rows}
+
     @app.get("/api/trading")
     def trading() -> dict:
         """Stage 3 live-trading test + shadow mode: READ-ONLY view (limits, balances, proposals). Trades are approved
@@ -560,6 +573,7 @@ def create_app(
             "balances": balances,
             "shadow_portfolio": shadow_portfolio(state, {f"{t}on": v[0] for t, v in prices.items()}, lv.shadow_budget_usd),
             "performance": performance(state, prices, lv.shadow_budget_usd),
+            "briefs": holding_briefs(),
             "pay_with": lv.pay_with,
             "strategy": {"rules": STRATEGY_RULES, "config": lv.strategy.model_dump(), "last_check_at": state.last_check_at.isoformat() if state.last_check_at else None},
             "checks": list(reversed((state.checks or [])[-40:])),

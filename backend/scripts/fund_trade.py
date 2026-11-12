@@ -50,6 +50,7 @@ from app.models.router import ModelRouter  # noqa: E402
 FUNDS_DIR = service.RUNS_DIR / "funds"
 ECONOMY = service.RUNS_DIR / "economy" / "state.json"
 STATE = service.RUNS_DIR / "trading" / "state.json"
+BRIEFS = service.RUNS_DIR / "briefs" / "state.json"          # daily holding briefs bought from the report agent
 
 
 def tradable_tokens() -> list[dict]:
@@ -233,6 +234,11 @@ def cmd_watch(s, cfg, publish: bool = False) -> int:  # noqa: ANN001
     from app.site_publish import publish as site_publish, trade_fingerprint
     shown = trade_fingerprint(service.RUNS_DIR)
     while True:
+        if cfg.economy.enabled and cfg.economy.brief_usd > 0:
+            try:
+                cmd_briefs(s, cfg, execute=cfg.live.auto_approve)
+            except Exception as exc:  # noqa: BLE001  (a failed brief must not stop the checks)
+                print(f"  holding briefs failed: {type(exc).__name__}: {str(exc)[:160]}")
         for shadow in (True, False):
             try:
                 run_check(s, cfg, shadow)
@@ -320,6 +326,15 @@ def run_check(s, cfg, shadow: bool, extra: list | None = None, depth: int = 0) -
                   + f", {r.get('since_seen_pct', 0):+.1f}% since the agent last looked")
         else:
             print(f"  holding {h['ticker']}: live price not readable right now (last read {str(r.get('at') or 'never')[:16]})")
+    if not shadow:
+        from app.fund import holding_brief as hb
+        bst = hb.load_state(BRIEFS)
+        for h in rows_held:
+            b = bst.last_for(h["ticker"])
+            if b and b.note and b.note.urgency == "high" and state.seen_runs.get("live:brief:" + h["ticker"]) != b.id:
+                triggers.append(Trigger(kind="holding_brief", ticker=h["ticker"],
+                                        detail=f"the report agent's daily brief on {h['ticker']} is marked urgent: {b.note.what_changed or b.note.summary}"[:400]))
+                state.seen_runs["live:brief:" + h["ticker"]] = b.id
     triggers += list(extra or [])
     check = Check(id=new_id(), at=now, mode=mode, triggers=triggers)
     print(f"[{now:%Y-%m-%d %H:%M} UTC] {mode} check: " + (", ".join(f"{t.kind} {t.ticker or t.topic}".strip() for t in triggers) or "no trigger"))
@@ -457,6 +472,10 @@ def _assess(s, cfg, state, toks, triggers, check, shadow, now, pf, closes=None):
         dropped = sorted({c.ticker for c in cands if c.topic not in bought})
         cands = [c for c in cands if c.topic in bought]
         context = {k: v for k, v in context.items() if k in bought}
+        from app.fund import holding_brief as hb
+        briefs = hb.for_agent(hb.load_state(BRIEFS), [h["ticker"] for h in state.live_holdings()], now)
+        if briefs:
+            context["DAILY BRIEFS ON YOUR HOLDINGS (bought from the report agent: its X signals and Risk agents)"] = briefs
         if dropped:
             check.notes.append(f"not usable (report not bought): {', '.join(dropped)}")
             print(f"  reports not bought, so not usable: {', '.join(dropped)}")
@@ -610,6 +629,109 @@ def private_near_balance(s, cfg) -> float | None:  # noqa: ANN001
     api = SignedIntents(cfg.intents.api, api_key=s.oneclick_api_key.get_secret_value().strip())
     token = api.login(creds[0], creds[1], str(rpc_view_salt(cfg)))["accessToken"]
     return held(api.balances(token), WNEAR) / 1e24
+
+
+def cmd_briefs(s, cfg, execute: bool) -> int:  # noqa: ANN001
+    """Daily holding briefs (owner 2026-11-12): for each share the live fund holds and whose brief is due, the report
+    agent's X signals and Risk agents write a short check-up; the trading agent then pays for everything it owes in one
+    NEAR payment through the same checks as a report purchase. `execute` False (not the owner's loop): nothing is paid,
+    and no new brief is written either (a brief costs the report agent X reads)."""
+    from app.fund import holding_brief as hb, list_funds
+    from app.fund.economy import Price, load_economy, purchase_blocks, report_budget_near
+    ec = cfg.economy
+    now = datetime.now(timezone.utc)
+    tstate = load_state(STATE)
+    held = tstate.live_holdings()
+    bst = hb.load_state(BRIEFS)
+    if not held:
+        return 0
+    ex = make_executor(s, cfg, with_signer=False)
+    px = near_price(ex)
+    due = [h for h in held if hb.due(bst, h["ticker"], now, ec.brief_hours)]
+    if due and not execute:
+        print(f"  holding briefs due for {', '.join(h['ticker'] for h in due)}: written and paid only in the owner's loop")
+        return 0
+    if due and len(bst.owed()) >= ec.brief_max_owed:
+        print(f"  holding briefs: {len(bst.owed())} are unpaid, so the report agent writes no new one until they are paid")
+        due = []
+    if due:
+        from app.agents.x import XAgent
+        from app.api.main import _default_store
+        from app.models.config import load_model_config
+        from app.models.router import ModelRouter
+        from app.sources.x import XClient
+        router = ModelRouter(load_model_config(), s)
+        token = s.x_token_value()
+        from app.agents.x import load_watchlist
+        approved = load_watchlist()
+        store = _default_store(s)
+        funds = list_funds(FUNDS_DIR)
+        for h in due:
+            fund = next((f for f in funds if any(x.ticker == h["ticker"] for x in f.holdings)), None)
+            company = next((x.company for x in fund.holdings if x.ticker == h["ticker"]), h["ticker"]) if fund else h["ticker"]
+            risks: list[str] = []
+            rid = fund.decisions[-1].run_id if fund and fund.decisions else None
+            found = store.get(rid) if rid else None
+            if found:
+                risks = hb.report_risks(found[0])
+            x_agent = XAgent(router, XClient(token) if token else None, watchlist=hb.brief_accounts(approved, company),
+                             max_posts=ec.brief_max_posts)                      # one search: the company's account, press, analysts
+            b = hb.make_brief(router=router, x_agent=x_agent, holding={**h, "topic": h.get("topic") or (fund.topic if fund else "")},
+                              watch=tstate.holding_prices.get("live:" + h["ticker"]), risks=risks, company=company, now=now,
+                              price_usd=ec.brief_usd, near_usd=px)
+            bst.briefs.append(b)
+            hb.save_state(bst, BRIEFS)
+            print(f"  holding brief on {b.ticker}: {b.posts_read} posts read, urgency {b.note.urgency if b.note else 'n/a'}, "
+                  f"cost ${b.cost_usd:.3f} to make, price ${b.price_usd:.2f} = {b.price_near:g} NEAR"
+                  + (f"; notes: {'; '.join(b.errors)[:160]}" if b.errors else ""))
+    owed = bst.owed()
+    if not owed or not execute:
+        return 0
+    # ---- one payment for everything owed, through the same checks as a report purchase
+    total = round(sum(b.price_near for b in owed), 4)
+    econ = load_economy(ECONOMY)
+    price = Price(run_id=f"briefs_{now:%Y%m%dT%H%M%S}", topic="holding briefs: " + ", ".join(sorted({b.ticker for b in owed})),
+                  price_near=total, price_usd=round(sum(b.price_usd for b in owed), 2), cost_usd=round(sum(b.cost_usd for b in owed), 4),
+                  basis=f"{len(owed)} daily holding brief(s) at ${ec.brief_usd:.2f} each (X signals and a risk note per holding)", at=now)
+    creds = s.fund_mainnet_credentials()
+    try:
+        priv = refresh_private_balance(s, cfg) or 0.0
+    except Exception:  # noqa: BLE001
+        priv = 0.0
+    budget = report_budget_near(fund_value_usd=live_fund_value(s, cfg, ex, priv), near_usd=px, state=econ, cfg=ec)
+    blocks = purchase_blocks(state=econ, price=price, budget_near=budget, wallet_near=None, cfg=ec,
+                             trading_enabled=cfg.live.trading_enabled, kill_switch=ex.kill_switch())
+    if not creds:
+        blocks.append("FUND_MAINNET_ACCOUNT_ID / FUND_MAINNET_PRIVATE_KEY are not set")
+    if ec.pay_from != "private" or not cfg.live.signed_route_enabled or not s.oneclick_api_key:
+        blocks.append("briefs are paid from the near.com balance (economy.pay_from: private, live.signed_route_enabled, ONECLICK_API_KEY)")
+    if blocks:
+        print(f"  holding briefs: {total:g} NEAR owed for {len(owed)} brief(s), not paid now: " + "; ".join(blocks))
+        return 0
+    from app.fund.economy_pay import pay_from_private, seller_total_reader
+    api_key = s.oneclick_api_key.get_secret_value().strip()
+    http = httpx.Client(timeout=40)
+    try:
+        p = pay_from_private(state=econ, path=ECONOMY, price=price, account=creds[0], private_key=creds[1], cfg=ec,
+                             api=SignedIntents(cfg.intents.api, api_key=api_key), salt_reader=lambda: str(rpc_view_salt(cfg)),
+                             submit=lambda order, key: submit_signed_order(http, cfg.intents.api, api_key, order, key),
+                             allowed_recipients=cfg.live.order_recipients,
+                             read_seller_total=seller_total_reader(httpx.Client(timeout=30), ec.rpc, ec.seller_account),
+                             now=lambda: datetime.now(timezone.utc))
+        status = p.status
+        print(f"  holding briefs: paid {total:g} NEAR for {len(owed)} brief(s): {p.status} {p.note}"[:300])
+    except Exception as exc:  # noqa: BLE001
+        # a purchase record is saved BEFORE anything is signed: if one exists the payment may be under way and is never repeated
+        started = load_economy(ECONOMY).bought(price.run_id)
+        status = "sending" if started else "owed"
+        p = started
+        print(f"  holding briefs: payment of {total:g} NEAR " + ("may be under way (check the report agent's account); not repeated"
+              if started else "not sent, still owed") + f": {str(exc)[:200]}")
+    if status in ("paid", "sending"):
+        for b in owed:
+            b.status, b.payment_id = status, (p.id if p else None)
+        hb.save_state(bst, BRIEFS)
+    return 0
 
 
 def economy_buy_reports(s, cfg, toks, cands, now, *, execute: bool, max_new: int | None = None,  # noqa: ANN001

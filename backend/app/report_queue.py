@@ -62,7 +62,9 @@ def sales_count(*economy_files: Path) -> int:
             data = json.loads(f.read_text(encoding="utf-8"))
         except (OSError, ValueError):
             continue
-        best = max(best, sum(1 for p in data.get("purchases", []) if p.get("status") == "paid"))
+        # a payment for daily holding briefs is income, but not a report sale: it does not pay for a new report
+        best = max(best, sum(1 for p in data.get("purchases", [])
+                             if p.get("status") == "paid" and not str(p.get("run_id", "")).startswith("briefs_")))
     return best
 
 

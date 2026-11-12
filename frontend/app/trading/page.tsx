@@ -84,6 +84,7 @@ export default function TradingPage() {
               )}
               <AgentLog t={t} />
               {eco && <EconomyPanel e={eco} />}
+              {t.briefs && (t.briefs.enabled || t.briefs.briefs.length > 0) && <BriefsPanel b={t.briefs} />}
 
               <h2 className="h2" style={{ margin: "8px 0 0" }}>Real-money trades <span className="muted small">· {live.length} completed, newest first</span></h2>
               {live.length === 0 && <div className="notice">No real trade completed yet.</div>}
@@ -210,6 +211,41 @@ function Elapsed({ since }: { since: string }) {
 }
 
 const TRIGGER_WORDS: Record<string, string> = { new_report: "new report", price_drop: "sharp fall", price_jump: "sharp rise", review: "daily review", manual: "extra review", after_sale: "after a sale" };
+
+// Daily holding briefs: for each share it holds, the trading agent buys a short check-up from the report agent.
+function BriefsPanel({ b }: { b: NonNullable<Trading["briefs"]> }) {
+  const paid: Record<string, string> = { owed: "not paid yet", sending: "payment under way", paid: "paid", failed: "payment failed" };
+  return (
+    <div className="tr-card">
+      <div className="tr-head">
+        <div><div className="eyebrow">Daily holding briefs</div>
+          <div className="small muted">Once every {b.every_hours} hours, for each share it holds, the trading agent buys a short check-up from the report agent
+            for ${b.price_usd.toFixed(2)}, paid in NEAR: the report agent&apos;s X signals agent reads recent posts from approved accounts, and its Risk agent
+            writes a short note. Posts are what accounts say, not verified facts.{b.owed_near > 0 ? ` Owed now: ${b.owed_near} NEAR.` : ""}</div></div>
+      </div>
+      {b.briefs.length === 0 && <div className="notice">No brief written yet. The first one comes with the trading agent&apos;s next check while it holds a share.</div>}
+      {b.briefs.map((x) => (
+        <div key={x.id} style={{ borderTop: "1px solid var(--line)", paddingTop: 12, marginTop: 12 }}>
+          <div className="row" style={{ justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
+            <strong>{x.ticker} <span className="muted small">· {x.topic} · {fmtDate(x.at)}</span></strong>
+            <span className="row" style={{ gap: 8 }}>
+              {x.urgency && <span className="pill" style={x.urgency === "high" ? { color: "var(--l-danger)", borderColor: "var(--l-danger)" } : undefined}>urgency: {x.urgency}</span>}
+              <span className="pill">${x.price_usd.toFixed(2)} = {x.price_near} NEAR · {paid[x.status]}</span>
+            </span>
+          </div>
+          {x.summary && <p style={{ margin: "8px 0 4px", color: "var(--text-2)" }}>{x.summary}</p>}
+          {x.what_changed && <p className="small" style={{ margin: "0 0 4px" }}><b>What changed:</b> {x.what_changed}</p>}
+          {x.risks.length > 0 && <ul className="small muted" style={{ margin: "4px 0 4px 18px" }}>{x.risks.map((r, i) => <li key={i}>{r}</li>)}</ul>}
+          {x.signals.length > 0 && (
+            <div className="small muted">{x.posts_read} posts read · sources:{" "}
+              {x.signals.filter((s) => s.url).map((s, i) => <span key={i}>{i > 0 ? ", " : ""}<a href={s.url!} target="_blank" rel="noopener noreferrer">{s.account ?? "post"} ↗</a></span>)}</div>
+          )}
+          {x.errors.length > 0 && <div className="small guard">{x.errors.join(" · ")}</div>}
+        </div>
+      ))}
+    </div>
+  );
+}
 
 function EconomyPanel({ e }: { e: Economy }) {
   const link = (tx: string | null) => (tx ? <a href={e.explorer_tx.replace("{tx}", tx)} target="_blank" rel="noopener noreferrer">tx ↗</a> : null);

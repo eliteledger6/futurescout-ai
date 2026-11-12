@@ -54,6 +54,12 @@ put my device to sleep after* to **Never**.
   every report sold on the report market pays for one more (the next topic on the radar below the top 5). At most 2 a
   day, about $0.35-0.45 each. Settings: `agent_market.auto_top_n`, `auto_fresh_days`, `auto_runs_per_day` (0 = off). The
   record is `backend/runs/auto_reports.json`.
+- The trading agent and its holdings: every hourly check reads the live price of each share it holds; a move of 7% down
+  or 10% up since it last looked wakes it. Once every 24 hours it buys a "holding brief" on each share from the report
+  agent for $0.50, paid in NEAR from the near.com balance (the report agent's X signals agent reads about 10 recent posts,
+  its Risk agent writes a short note on a small model; about $0.05 to make). A brief that cannot be paid stays owed and is
+  paid with the next one; after 3 unpaid briefs no new one is written. Settings: `economy.brief_usd` (0 = off),
+  `brief_hours`, `brief_max_posts`, `brief_max_owed`. The record is `backend/runs/briefs/state.json`.
 - NEAR Agent Market fees ($3 a hire; test hires pay nothing): once the buyer accepts, the fee is recorded in
   `backend/runs/agent_market/income.json` and joins the same split as report sales: 70% staked, 30% kept. The fee sits
   in the agent's marketplace balance until you withdraw it; the 70% is staked once that NEAR is in the report agent's wallet.

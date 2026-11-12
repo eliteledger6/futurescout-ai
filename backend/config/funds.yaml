@@ -82,6 +82,10 @@ economy:
   min_price_usd: 2.0              # owner 2026-11-10 (later): a report costs $2-3 depending on what it cost to make,
   max_price_usd: 3.0              #   paid in NEAR at the live price: full cost (models, X, patent searches, seal) + $1.50
   margin_usd: 1.50
+  brief_usd: 0.5                  # owner 2026-11-12 ("$0.50 a day"): what the trading agent pays the report agent for one daily holding brief
+  brief_hours: 24                 #   (X signals + a short risk note on each share it holds); one per holding this often; brief_usd 0 = off
+  brief_max_posts: 10             # X posts read per brief (about half a cent each; 10 is the X API's minimum per search)
+  brief_max_owed: 3               # no new brief while this many are unpaid
   max_price_near: 1.5             # safety limit on one report payment (about $5 at today's NEAR price)
   min_price_near: 0.5             # (unused while the dollar band is set)
   markup: 3.0                     # (older quality rule only)

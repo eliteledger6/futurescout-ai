@@ -127,4 +127,9 @@ def trade_fingerprint(runs_dir: Path) -> str:
         seen.append(sorted((x.get("id"), x.get("status")) for x in e.get("stakes", []) if x.get("status") == "staked"))
     except (OSError, ValueError):
         pass
+    try:                                                   # a new daily holding brief, or one that was paid
+        b = json.loads((runs_dir / "briefs" / "state.json").read_text(encoding="utf-8"))
+        seen.append(sorted((x.get("id"), x.get("status")) for x in b.get("briefs", [])))
+    except (OSError, ValueError):
+        pass
     return hashlib.sha1(json.dumps(seen, sort_keys=True, default=str).encode()).hexdigest()

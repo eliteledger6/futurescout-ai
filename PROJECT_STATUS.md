@@ -509,3 +509,25 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   $59.29 a share. Not run in the trading loop by Claude (it signs); it takes effect when the server's trader restarts.
 - Not built yet (needs the owner's numbers): a daily "holding brief" bought from the report agent (X signals and a
   risk note on each holding), paid in NEAR.
+
+## 2026-11-12: daily holding briefs, bought from the report agent for $0.50 (owner: "$0.50 a day")
+- `app/fund/holding_brief.py` + `fund_trade.cmd_briefs`, first step of every pass of the trading loop: for each share
+  the live fund holds whose brief is older than `economy.brief_hours` (24), the report agent's X signals agent reads the
+  newest posts of the company's own account, press and analysts (one search of at most 14 accounts; 10 posts is the X
+  API's minimum) and its Risk agent in brief mode (`risk_brief`, a small model) writes a short note: summary starting
+  with the live price and gain, what changed against the risks the latest report named, up to three risks, and an
+  urgency. Posts stay labelled as unverified claims. A brief marked "high" wakes the trading agent; whenever the agent
+  is woken it reads the newest brief of each holding.
+- Payment: `economy.brief_usd` (0.5) per brief in NEAR at the live price, one payment for everything owed, from the
+  near.com balance through `pay_from_private` and the same checks as a report purchase (economy switch, trading switch,
+  kill switch, price cap, report budget). It is recorded as a purchase, so it joins the 70% staked / 30% kept split,
+  but it is not counted as a report sale (it does not pay for a new report). A payment that cannot be sent leaves the
+  briefs owed; after `brief_max_owed` (3) unpaid briefs no new one is written; a payment that may be under way is
+  never repeated. Written and paid only in the owner's loop (`live.auto_approve`).
+- Site: the Trading page shows the briefs (summary, what changed, risks, urgency, post links, price, paid or owed) and
+  the last price the agent read for each holding; the Trading agent's description says both.
+- Mock-tested (361 tests pass). Run live as a dry run on this computer, with nothing saved and nothing paid: a real
+  brief on INTC read 10 posts (TrendForce, Jon Peddie Research, Intel's own account), cost $0.05 to make (X reads
+  $0.05, models $0.0008), is priced $0.50 = 0.139 NEAR, urgency "low". The first test with the whole watchlist read 26
+  posts ($0.13), which is why a brief now reads a short account list. The payment itself has not run: it signs with
+  the owner's key, and near.com may refuse so small an amount (then briefs add up until one payment goes through).

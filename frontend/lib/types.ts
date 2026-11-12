@@ -297,6 +297,11 @@ export interface Trading {
     watch?: { price: number; at: string; cost_per_share: number | null; gain_pct: number | null; since_seen_pct?: number } | null }[];
   balances: { account: string; near: number | null; usdc: number | null; holdings: { symbol: string; ticker: string; quantity: number; value_usd: number | null }[]; errors: string[] } | null;
   allowlist: { ticker: string; symbol: string; topic: string; band: string | null; score: number | null; price: number | null }[];
+  briefs?: { price_usd: number; every_hours: number; enabled: boolean; owed_near: number;
+    briefs: { id: string; ticker: string; topic: string; at: string; price_now: number | null; gain_pct: number | null; posts_read: number;
+      summary: string | null; what_changed: string | null; risks: string[]; urgency: "low" | "medium" | "high" | null;
+      signals: { claim: string; label: string; url: string | null; account: string | null; published_at: string | null }[];
+      price_usd: number; price_near: number; status: "owed" | "sending" | "paid" | "failed"; errors: string[] }[] };
   performance?: { live_pct: number | null; shadow_pct: number | null; live_positions: Record<string, number | null>;
     shadow_positions: Record<string, number | null>; priced_at: string | null; basis: string; note?: string };
   proposals: TradeProposal[]; explorer_tx: string; approval: string; disclaimer: string;
