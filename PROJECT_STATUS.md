@@ -604,3 +604,10 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   the GitHub no-reply address. Nothing was rewritten and nothing was force-pushed today.
 - The backup branch was never pushed and a plain `git push` does not push it. It can be deleted on the laptop with
   `git branch -D backup-before-author-rewrite` if the owner wants no copy of those commits at all.
+
+## 2026-11-12: `fund_trade.py brief` (a holding brief on request)
+- The owner wants to record the demo video today, and the brief on the site opens with "price not provided" (written
+  before the fix). New command: `python scripts/fund_trade.py brief --publish` writes a brief on every share the fund
+  holds now, whenever the last one was written, pays for it like the daily one (`economy.brief_usd`, in NEAR, same
+  checks) and publishes. It pays real NEAR, so only the owner runs it, with the trading service stopped so two
+  payments cannot cross. Mock-tested (363 tests pass); not run by Claude.

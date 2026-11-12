@@ -41,7 +41,7 @@ Rules that always apply:
   Restart 2026-11-10 (owner): trading/economy records archived, fresh $60 budget approved by the owner in chat.
   Holding briefs (owner 2026-11-12, "$0.50 a day"): once a day the trading agent buys a short check-up on each share it holds
   from the report agent (`economy.brief_usd: 0.5`, X signals + a risk note), paid in NEAR in the owner's loop through the same
-  checks as a report purchase. Claude never changes `brief_usd` without the owner's words and never runs the paying loop.
+  checks as a report purchase. Claude never changes `brief_usd` without the owner's words and never runs the paying loop or `fund_trade.py brief` (it pays).
   Agent Market (owner 2026-11-10): the report agent takes jobs at market.near.ai via scripts/market_agent.py; the owner makes the
   account, approves the public listing and holds the token (AGENT_MARKET_TOKEN); withdrawals are the owner's.
 - Seals on mainnet (owner 2026-11-10, "use the report agent"): `SEAL_NETWORK=mainnet` seals report, fund and trade

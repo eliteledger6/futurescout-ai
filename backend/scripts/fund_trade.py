@@ -635,7 +635,7 @@ def private_near_balance(s, cfg) -> float | None:  # noqa: ANN001
     return held(api.balances(token), WNEAR) / 1e24
 
 
-def cmd_briefs(s, cfg, execute: bool) -> int:  # noqa: ANN001
+def cmd_briefs(s, cfg, execute: bool, force: bool = False) -> int:  # noqa: ANN001
     """Daily holding briefs (owner 2026-11-12): for each share the live fund holds and whose brief is due, the report
     agent's X signals and Risk agents write a short check-up; the trading agent then pays for everything it owes in one
     NEAR payment through the same checks as a report purchase. `execute` False (not the owner's loop): nothing is paid,
@@ -651,7 +651,8 @@ def cmd_briefs(s, cfg, execute: bool) -> int:  # noqa: ANN001
         return 0
     ex = make_executor(s, cfg, with_signer=False)
     px = near_price(ex)
-    due = [h for h in held if hb.due(bst, h["ticker"], now, ec.brief_hours)]
+    # force (the owner's `brief` command): a brief on every holding now, whenever the last one was written
+    due = list(held) if force else [h for h in held if hb.due(bst, h["ticker"], now, ec.brief_hours)]
     if due and not execute:
         print(f"  holding briefs due for {', '.join(h['ticker'] for h in due)}: written and paid only in the owner's loop")
         return 0
@@ -1076,7 +1077,7 @@ def cmd_approve(s, cfg, pid: str, *, auto: bool = False) -> int:  # noqa: ANN001
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("command", choices=["status", "propose", "list", "approve", "reject", "resume", "confirm", "refunded", "stop", "start", "register-usdc", "check", "rules", "watch", "pending", "holdings", "economy", "record-sale", "balance"])
+    ap.add_argument("command", choices=["status", "propose", "list", "approve", "reject", "resume", "confirm", "refunded", "stop", "start", "register-usdc", "check", "rules", "watch", "pending", "holdings", "economy", "record-sale", "balance", "brief"])
     ap.add_argument("--near", type=float, help="with record-sale: NEAR the owner received (from near.com); else estimated")
     ap.add_argument("--why", default="to pay for research reports (the agent economy)", help="with record-sale: the owner's reason")
     ap.add_argument("--review", action="store_true", help="with check: an extra full keep / sell / buy review now, outside the hourly schedule")
@@ -1084,7 +1085,7 @@ def main() -> int:
     ap.add_argument("--shadow", action="store_true")
     ap.add_argument("--usd", type=float)
     ap.add_argument("--max", type=int, help="with economy buy: buy at most this many new reports (best-scored first)")
-    ap.add_argument("--publish", action="store_true", help="with watch: export, commit and git push backend/site_data after a trade, a report purchase or a stake")
+    ap.add_argument("--publish", action="store_true", help="with watch or brief: export, commit and git push backend/site_data after a trade, a report purchase or a stake")
     ap.add_argument("--loop", action="store_true", help="with check: run forever, one check every strategy.check_minutes")
     args = ap.parse_args()
     s, cfg = get_settings(), load_fund_config()
@@ -1119,6 +1120,18 @@ def main() -> int:
         print(f"spent on buys ${st.spent('live'):.2f}; sale proceeds ${st.proceeds('live'):.2f}; counted against the total cap "
               f"(budget_mode {cfg.live.budget_mode}): ${st.invested('live', cfg.live.budget_mode):.2f} of ${cfg.live.max_total_usd:.2f}")
         return 0
+    if args.command == "brief":
+        # The owner asks for a holding brief NOW (it is written and paid like the daily one: economy.brief_usd per holding,
+        # in NEAR, through the same checks). Run it while the trading loop is stopped, so two payments cannot cross.
+        if not cfg.economy.enabled or cfg.economy.brief_usd <= 0:
+            print("holding briefs are switched off (economy.enabled / economy.brief_usd in config/funds.yaml)")
+            return 1
+        print(f"writing a holding brief on every share the fund holds now; each costs ${cfg.economy.brief_usd:.2f}, paid in NEAR to the report agent")
+        rc = cmd_briefs(s, cfg, execute=True, force=True)
+        if args.publish:
+            from app.site_publish import publish as site_publish
+            site_publish("Site data update (trading agent)")
+        return rc
     if args.command == "watch":
         return cmd_watch(s, cfg, args.publish)
     if args.command == "pending":

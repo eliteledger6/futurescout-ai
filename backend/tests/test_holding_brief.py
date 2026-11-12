@@ -104,3 +104,11 @@ def test_a_brief_reads_few_accounts_so_it_needs_one_search():
     assert got[:2] == ["intel", "IntelFoundry"] and "nvidia" not in got and "someone" not in got      # its own accounts first, then press and analysts
     assert "eetimes" in got and "SemiAnalysis_" in got and len(got) == 14
     assert [a.handle for a in hb.brief_accounts(wl, "")][:1] == ["eetimes"]
+
+
+def test_the_owner_can_ask_for_a_brief_now():
+    """`fund_trade.py brief` writes a brief on every holding regardless of the daily schedule (the owner runs it)."""
+    from pathlib import Path
+    src = (Path(__file__).resolve().parents[1] / "scripts" / "fund_trade.py").read_text(encoding="utf-8")
+    assert 'due = list(held) if force else [h for h in held if hb.due(bst, h["ticker"], now, ec.brief_hours)]' in src
+    assert 'rc = cmd_briefs(s, cfg, execute=True, force=True)' in src and '"balance", "brief"]' in src
