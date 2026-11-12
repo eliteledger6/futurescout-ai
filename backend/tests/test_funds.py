@@ -235,3 +235,23 @@ def test_fallback_price_is_used_only_without_a_close_and_is_labelled(tmp_path):
     bar = book.close_on_or_before("NVDA", date(2026, 11, 10))
     assert bar.close == 182.55 and bar.source.startswith("NEAR Intents") and "no daily close" in book.notes[0]
     assert book.bars("DELL") == []
+
+
+def test_the_benchmark_starts_on_the_first_trade_day_even_if_its_price_came_later(verdict):
+    """Seen 2026-11-12: funds that began on the 6th were compared with an S&P counted from the 10th ("0.00%")."""
+    f = new_fund("Fixture tech", None, CFG, NOW)
+    no_spy = {k: v for k, v in PRICES.items() if k != "SPY"}
+    decide(f, "run1", report(), FakeBook(no_spy), CFG, NOW, "first")           # no benchmark price on the first day
+    mark_to_market(f, FakeBook(no_spy), NOW)
+    assert f.benchmark_start_close is None and f.history[-1].benchmark_value_usd is None
+    f.benchmark_start_close, f.benchmark_start_date = 660.0, "2026-11-10"      # the old code started it at a later decision
+
+    class Later(FakeBook):
+        def bars(self, ticker):
+            if ticker.upper() != "SPY":
+                return super().bars(ticker)
+            return [Bar(day=date(2026, 11, 6), close=600.0, high=600.0, low=600.0, volume=1),
+                    Bar(day=date(2026, 11, 10), close=660.0, high=660.0, low=660.0, volume=1)]
+    mark_to_market(f, Later(PRICES), datetime(2026, 11, 11, 12, tzinfo=timezone.utc))
+    assert (f.benchmark_start_date, f.benchmark_start_close) == ("2026-11-06", 600.0)
+    assert f.summary()["benchmark_return_pct"] == 10.0                           # 600 -> 660, counted from the first trade day

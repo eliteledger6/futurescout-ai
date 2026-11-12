@@ -39,7 +39,7 @@ Technology investing mixes verifiable facts, rumours and hype, and "AI picks" ra
 
 ### Agent economy: agents pay each other and pay for their own AI
 
-The report agent prices each report at what it cost to make (models and X reads, patent searches, the NEAR seal) plus $1.50, kept between $2 and $3 and paid in NEAR at the live price (owner 2026-11-10). The trading agent may only use reports it has bought, pays with a NEAR transfer that the code reads back from the chain, and spends at most 30% of its fund on reports. The report agent stakes 70% of every payment through NEAR AI Cloud's Staking for Inference, so the staking rewards pay for the agents' model usage; it keeps 30%, and once that pot passes $200 it funds a second trading agent (the next step, not built yet). Commands: `fund_trade.py economy status | price | buy | stake`. Owner switch: `economy.enabled` in `backend/config/funds.yaml`. Honest limit: at these amounts the staking rewards cover only a small part of the real AI bill.
+The report agent prices each report at what it cost to make (models and X reads, patent searches, the NEAR seal) plus $1.50, kept between $2 and $3 and paid in NEAR at the live price (owner 2026-11-10). The trading agent may only use reports it has bought, pays with a NEAR transfer that the code reads back from the chain, and spends at most 30% of its fund on reports. The report agent stakes 70% of every payment through NEAR AI Cloud's Staking for Inference, so the staking rewards go toward the agents' model usage; it keeps 30%, and once that pot passes $200 it funds a second trading agent (the next step, not built yet). Commands: `fund_trade.py economy status | price | buy | stake`. Owner switch: `economy.enabled` in `backend/config/funds.yaml`. Honest limit: at these amounts the staking rewards cover only a small part of the real AI bill.
 
 ### Report market: any trading bot can buy a report
 
@@ -69,7 +69,7 @@ Run live on 2026-11-10: a test hire was picked up, a change request was read fro
 
 ### Safety limits on the trading agent (enforced in code, not by the model)
 
-- Master switch, kill switch file (`fund_trade.py stop`), a total budget cap, and near.com's $20 minimum per trade.
+- Master switch, kill switch file (`fund_trade.py stop`), a budget that is only what the agent's near.com balance holds above a 0.2 NEAR reserve (no fixed dollar cap since 2026-11-12, the owner's decision), and near.com's $20 minimum per trade.
 - Buys only from an allowlist built from the paper funds and price-checked tokenized stocks; sells only of what the fund holds, at most 2 a day.
 - Only stocks from reports rated strong or building can be bought; quotes that cost more than 2% are refused. Since 2026-11-11 (owner's decision) there is no fixed confidence minimum and no fixed price band: the agent is shown each report's confidence, the quoted price, the stock's last close and the gap between them, and writes its judgement into the decision record.
 - The signed order is checked field by field before signing; a proposal is sent at most once; an unclear result is never retried.

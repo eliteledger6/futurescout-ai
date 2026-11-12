@@ -585,10 +585,9 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   anywhere. The only matches are four NEAR account NAMES, which are public by nature. `.env` was never committed and is
   not in a fresh clone. The published data holds no access token; buyers and accounts in it are public NEAR names and
   public X handles.
-- Privacy: 67 early commits (9-10 November) are authored as "jingxanchew <...@hotmail.com>"; the later 181 use the
-  GitHub no-reply address. The repository is still private (GitHub answers 404 without a login), so nothing has leaked,
-  but that name and address would be readable once it is public. Removing them means rewriting history and a force
-  push: the owner's decision, not done. `.claude/launch.json` (this computer's folder paths, no secret) is no longer
+- Privacy: every commit on GitHub is authored with the GitHub no-reply address (checked again 2026-11-12: one author
+  on `origin/main`). An earlier note here said early commits carried a personal address; that was wrong, those exist
+  only in a local backup branch that was never pushed. `.claude/launch.json` (this computer's folder paths, no secret) is no longer
   tracked. `config/x_watchlist.yaml` quotes public X profile texts, two of which contain those accounts' own emails.
 - Runs from a fresh copy: cloned from GitHub into an empty folder, new Python 3.10 environment, no `.env`:
   `pip install -e ".[dev]"` works, 362 tests pass, the API answers 200 on all 14 read routes from the snapshot (63
@@ -661,3 +660,18 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   data through the API. 365 tests pass; the site builds. The economy panel's new rows were not seen in the browser
   with real data (this computer's local data has no brief payments).
 - The demo video re-record is paused at the owner's request.
+
+## 2026-11-12: judge and validator pass (repo, hosted API, every page in the browser)
+
+- Checked: local = GitHub, one commit author (no-reply address), no key, token or `.env` in tracked files; 366 tests pass;
+  the site type-checks and builds; all 18 hosted API routes answer; hostile requests are refused (start a run 403,
+  proposals sync 401, bad bodies 422, path tricks 404, a fake payment hash 402 with the report still locked); all 63
+  reports open or stay locked as intended; no console errors; no sideways overflow at phone width on any page.
+- Fixed, paper funds: the S&P 500 comparison started when a benchmark price was first found (10 Nov) while 11 funds began
+  on 6 Nov, so they showed "S&P 0.00%". It now starts on the first trade day (`start_benchmark`), a late start is moved
+  back and the history recounted. Published fund files corrected from the cached SPY closes (0.00% -> +1.99%). Mock-tested.
+- Fixed, wording: Funds page said every decision is fingerprinted on NEAR (only reports are sealed since 11 Nov);
+  How it works and README said staking rewards "pay for" the models (now "go toward"); Trading page said "caps" and
+  "CLAUDE OPUS 5 5"; README still named a total budget cap; a privacy note here was wrong and named the owner.
+- Not changed: the Radar still says 54 topics until the server's next daily recount picks up the 3 topics the Science
+  agent added. The server must pull this commit, or its next funds run publishes the old comparison again.

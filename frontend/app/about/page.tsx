@@ -12,7 +12,7 @@ const RULES = [
   ["building", "Companies come from the evidence", "No hand-made company list: a company is checked because the retrieved patents name it as assignee or its researchers wrote the papers. Patents and papers come first: a company named only in an SEC filing is used just when a topic has no company with patents or papers, and is then labelled as a fallback."],
   ["swords", "A second agent argues back", "The Risk agent searches independently for limits and failures, then challenges specific findings."],
   ["pulse", "Limits written in code", "The trading agent decides, but code sets the limits: a budget that is only what the owner puts into the agent's balance, an allowlist of tokenized stocks from reports rated strong or building, a cost cap, a kill switch, and an order checked field by field before it is signed. How confident a report is and whether the quoted price is acceptable against the last close are the agent's own judgement, written into every decision."],
-  ["coin", "Agents pay their way", "A report costs what it took to make plus a small margin ($2–3), paid in NEAR, and is opened only by a payment (reports written since 11 November 2026 are open for the demo and marked so). The trading agent must buy a report before it may use it, and any other bot can buy through the API. The report agent stakes 70% of what it earns with NEAR AI, and the rewards pay for the agents' model calls."],
+  ["coin", "Agents pay their way", "A report costs what it took to make plus a small margin ($2–3), paid in NEAR, and is opened only by a payment (reports written since 11 November 2026 are open for the demo and marked so). The trading agent must buy a report before it may use it, and any other bot can buy through the API. The report agent stakes 70% of what it earns with NEAR AI, and the rewards earn NEAR AI credits that go toward the agents' model calls."],
 ] as const;
 
 export default function About() {
@@ -23,7 +23,7 @@ export default function About() {
         <div className="container">
           <div className="eyebrow">How it works</div>
           <h1 className="display" style={{ fontSize: "clamp(40px, 6vw, 76px)" }}>A team of agents, <span className="gradient-text">one rule: show the evidence</span></h1>
-          <p className="lede">A hot technology shows up first in research papers and patent filings, then in company reports. FUTURESCOUT measures all three, argues the other side, and names the companies the evidence points to. Then the agents act on it: a report agent sells each report for NEAR, a trading agent buys it and trades tokenized stocks through NEAR Intents, and the report agent&apos;s earnings are staked so NEAR AI pays for the models.</p>
+          <p className="lede">A hot technology shows up first in research papers and patent filings, then in company reports. FUTURESCOUT measures all three, argues the other side, and names the companies the evidence points to. Then the agents act on it: a report agent sells each report for NEAR, a trading agent buys it and trades tokenized stocks through NEAR Intents, and the report agent&apos;s earnings are staked with NEAR AI, which earns credits toward the models.</p>
         </div>
       </section>
 

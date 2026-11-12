@@ -147,10 +147,12 @@ const ICON: Record<string, ReactNode> = {
   swap: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M4 8h14l-3-3M20 16H6l3 3" /></svg>,
   hold: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19V9l8-5 8 5v10z" /><path d="M9 19v-6h6v6" /></svg>,
 };
+// "claude_opus_5_5" -> "CLAUDE OPUS 5.5"
+const modelLabel = (m?: string | null) => (m ?? "model").replace(/_(\d+)_(\d+)$/, " $1.$2").replace(/_/g, " ").toUpperCase();
 const NODES = [
   { key: "research", name: "Research", sub: "sealed reports, topic funds" },
   { key: "agent", name: "Trading agent", sub: "Claude Opus picks and explains" },
-  { key: "checks", name: "Safety checks", sub: "caps, allowlist, cost" },
+  { key: "checks", name: "Safety checks", sub: "balance, allowlist, cost" },
   { key: "owner", name: "Owner", sub: "approves in their terminal" },
   { key: "swap", name: "NEAR Intents", sub: "NEAR ⇄ tokenized stock" },
   { key: "hold", name: "Holding", sub: "in the fund account" },
@@ -411,7 +413,7 @@ function LiveTrade({ p, explorer, animate = true }: { p: TradeProposal; explorer
       <div className="tr-agent">
         <div className="tr-avatar">{ICON.agent}</div>
         <div>
-          <div className="tr-model">{manual ? "OWNER · MANUAL SALE IN NEAR.COM" : `TRADING AGENT · ${(p.model ?? "model").replace(/_/g, " ").toUpperCase()}`}</div>
+          <div className="tr-model">{manual ? "OWNER · MANUAL SALE IN NEAR.COM" : `TRADING AGENT · ${modelLabel(p.model)}`}</div>
           {p.correction && <p className="small" style={{ color: "#e0b04a", margin: "0 0 6px" }}>{p.correction}</p>}
           <p className="tr-say">{animate ? typed : p.rationale}{animate && typed.length < p.rationale.length && <span className="caret" />}</p>
           {p.risks.length > 0 && <ul className="tr-risks">{p.risks.map((r) => <li key={r}>{r}</li>)}</ul>}
@@ -484,7 +486,7 @@ function ShadowPortfolio({ t, orders }: { t: Trading; orders: TradeProposal[] })
         <div className="tr-agent">
           <div className="tr-avatar">{ICON.agent}</div>
           <div>
-            <div className="tr-model">TRADING AGENT · {(plan.model ?? "model").replace(/_/g, " ").toUpperCase()} · sizes are its own choice</div>
+            <div className="tr-model">TRADING AGENT · {modelLabel(plan.model)} · sizes are its own choice</div>
             <p className="tr-say" style={{ minHeight: 0 }}>{plan.rationale}</p>
           </div>
         </div>

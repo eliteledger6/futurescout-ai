@@ -471,11 +471,25 @@ def decide(fund: TopicFund, run_id: str, report: ResearchReport, book: PriceBook
                  staged_tiers=staged, waiting_for_price=waiting, trades=trades, reasons=reasons, value_before_usd=value)
     d.sha256 = _digest(d)
     fund.decisions.append(d)
-    if fund.benchmark_start_close is None:          # the benchmark starts when the fund first decides
-        bench = book.close_on_or_before(fund.benchmark, today)
-        if bench:
-            fund.benchmark_start_close, fund.benchmark_start_date = bench.close, bench.day.isoformat()
+    start_benchmark(fund, book, today)
     return d
+
+
+def start_benchmark(fund: TopicFund, book: PriceBook, today: date) -> None:
+    """The comparison starts on the fund's first trade day. It used to start at whatever decision first found a benchmark
+    price, so a fund that began on the 6th was compared with an index counted from the 10th (seen 2026-11-12: "S&P 0.00%").
+    A start that is later than the first trade day is moved back and the stored history is recounted."""
+    first = next((t.day for d in fund.decisions for t in d.trades), None)
+    start = book.close_on_or_before(fund.benchmark, date.fromisoformat(first) if first else today)
+    if not start:
+        return
+    day = start.day.isoformat()
+    if fund.benchmark_start_close is not None and (fund.benchmark_start_date or "") <= day:
+        return                                       # already starts on (or before) the first trade day
+    fund.benchmark_start_close, fund.benchmark_start_date = start.close, day
+    for p in fund.history:
+        bar = book.close_on_or_before(fund.benchmark, date.fromisoformat(p.day))
+        p.benchmark_value_usd = round(fund.start_cash_usd * bar.close / start.close, 2) if bar and bar.day >= start.day else None
 
 
 def mark_to_market(fund: TopicFund, book: PriceBook, now: datetime) -> None:
@@ -485,10 +499,7 @@ def mark_to_market(fund: TopicFund, book: PriceBook, now: datetime) -> None:
         if bar:
             h.last_close, h.last_date = bar.close, bar.day.isoformat()
     bench_bar = book.close_on_or_before(fund.benchmark, today)
-    if fund.benchmark_start_close is None and bench_bar:
-        first = fund.decisions[0].trades[0].day if fund.decisions and fund.decisions[0].trades else bench_bar.day.isoformat()
-        start = book.close_on_or_before(fund.benchmark, date.fromisoformat(first)) or bench_bar
-        fund.benchmark_start_close, fund.benchmark_start_date = start.close, start.day.isoformat()
+    start_benchmark(fund, book, today)
     bench_value = (fund.start_cash_usd * bench_bar.close / fund.benchmark_start_close
                    if bench_bar and fund.benchmark_start_close else None)
     day = max([h.last_date for h in fund.holdings if h.last_date] or [today.isoformat()])
