@@ -331,9 +331,11 @@ def run_check(s, cfg, shadow: bool, extra: list | None = None, depth: int = 0) -
         bst = hb.load_state(BRIEFS)
         for h in rows_held:
             b = bst.last_for(h["ticker"])
-            if b and b.note and b.note.urgency == "high" and state.seen_runs.get("live:brief:" + h["ticker"]) != b.id:
+            # owner 2026-11-12: the agent pays for the brief, so it reads every new one and decides (hold, sell or buy)
+            if b and state.seen_runs.get("live:brief:" + h["ticker"]) != b.id:
+                said = (b.note.what_changed or b.note.summary) if b.note else "the brief has no note (see its errors)"
                 triggers.append(Trigger(kind="holding_brief", ticker=h["ticker"],
-                                        detail=f"the report agent's daily brief on {h['ticker']} is marked urgent: {b.note.what_changed or b.note.summary}"[:400]))
+                                        detail=f"new brief on {h['ticker']} from the report agent (urgency {b.note.urgency if b.note else 'unknown'}): {said}"[:400]))
                 state.seen_runs["live:brief:" + h["ticker"]] = b.id
     triggers += list(extra or [])
     check = Check(id=new_id(), at=now, mode=mode, triggers=triggers)

@@ -119,6 +119,8 @@ def trade_fingerprint(runs_dir: Path) -> str:
         seen.append(sorted((p.get("id"), p.get("status")) for p in t.get("proposals", [])
                            if p.get("status") not in ("proposed", "rejected", "blocked")))
         seen.append(round(float(t.get("private_near") or 0), 2))          # the near.com balance shown on the trading page
+        # every look of the agent that ended in a decision (also "hold"): the page shows what it decided after a brief or a review
+        seen.append(sorted(str(c.get("id")) for c in t.get("checks", []) if isinstance(c, dict) and c.get("action") in ("buy", "sell", "hold")))
     except (OSError, ValueError):
         pass
     try:

@@ -301,7 +301,8 @@ export interface Trading {
     briefs: { id: string; ticker: string; topic: string; at: string; price_now: number | null; gain_pct: number | null; posts_read: number;
       summary: string | null; what_changed: string | null; risks: string[]; urgency: "low" | "medium" | "high" | null;
       signals: { claim: string; label: string; url: string | null; account: string | null; published_at: string | null }[];
-      price_usd: number; price_near: number; status: "owed" | "sending" | "paid" | "failed"; errors: string[] }[] };
+      price_usd: number; price_near: number; status: "owed" | "sending" | "paid" | "failed"; errors: string[];
+      decision?: { at: string; action: "buy" | "sell" | "hold"; ticker: string | null; summary: string | null; why_woken: string[] } | null }[] };
   performance?: { live_pct: number | null; shadow_pct: number | null; live_positions: Record<string, number | null>;
     shadow_positions: Record<string, number | null>; priced_at: string | null; basis: string; note?: string };
   proposals: TradeProposal[]; explorer_tx: string; approval: string; disclaimer: string;

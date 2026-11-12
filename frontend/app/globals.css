@@ -534,3 +534,7 @@ a.card:hover { box-shadow: 0 12px 40px -18px color-mix(in srgb, var(--accent) 45
 /* phones: the four fund figures never push the page wider than the screen (seen 2026-11-12 on a fund page, 385 px on a 375 px screen) */
 .stat { min-width: 0; }
 @media (max-width: 480px) { .stat { padding: 16px 14px; } .stat-value { font-size: 30px; overflow-wrap: anywhere; } }
+
+/* under each holding brief: what the trading agent decided after reading it */
+.brief-decision { margin-top: 10px; padding: 10px 12px; border-left: 2px solid var(--accent); background: color-mix(in srgb, var(--accent) 5%, var(--bg)); font-size: 13px; color: var(--text-2); border-radius: 0 8px 8px 0; }
+.brief-decision b { color: var(--text); font-weight: 600; }

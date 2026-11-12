@@ -40,7 +40,7 @@ def test_only_one_publish_at_a_time_and_a_dead_one_is_taken_over(tmp_path, monke
 def test_trading_page_fingerprint_ignores_routine_checks(tmp_path):
     (tmp_path / "trading").mkdir()
     (tmp_path / "economy").mkdir()
-    t = {"proposals": [{"id": "a", "status": "proposed"}], "checks": [1]}
+    t = {"proposals": [{"id": "a", "status": "proposed"}], "checks": [{"id": "c1", "action": "none"}]}
     e = {"purchases": [], "stakes": [{"id": "s0", "status": "failed"}]}
 
     def fp():
@@ -48,7 +48,7 @@ def test_trading_page_fingerprint_ignores_routine_checks(tmp_path):
         (tmp_path / "economy" / "state.json").write_text(json.dumps(e))
         return sp.trade_fingerprint(tmp_path)
     base = fp()
-    t["checks"].append(2)
+    t["checks"].append({"id": "c2", "action": "none"})               # an hourly check that found nothing
     t["proposals"].append({"id": "b", "status": "blocked"})
     e["stakes"].append({"id": "s1", "status": "failed"})
     assert fp() == base                                                           # checks, waiting or refused things: no publish
@@ -59,7 +59,10 @@ def test_trading_page_fingerprint_ignores_routine_checks(tmp_path):
     after_buy = fp()
     assert after_buy != after_trade
     e["stakes"].append({"id": "s2", "status": "staked"})
-    assert fp() != after_buy
+    after_stake = fp()
+    assert after_stake != after_buy
+    t["checks"].append({"id": "c3", "action": "hold"})               # the agent looked and decided to hold: shown on the page
+    assert fp() != after_stake
 
 
 def test_a_changed_near_com_balance_is_published(tmp_path):

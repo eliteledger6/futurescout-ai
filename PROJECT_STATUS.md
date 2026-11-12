@@ -622,3 +622,15 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   with its "paid" label, and the economy panel with the corrected staking wording. The 01:00 UTC brief (with the
   "price not provided" sentence) is still listed below the new one. Checked by six still frames and sound level; not
   listened to. A smaller copy is `demo/futurescout_hackathon_demo_small.mp4`; neither file is in git.
+
+## 2026-11-12: every holding brief is read and decided on, and the site shows the decision (owner)
+- Before: only a brief marked "high" woke the trading agent; a normal brief was read at the next daily review, and the
+  Trading page showed briefs and decisions in two separate places.
+- Now: every new brief wakes the trading agent at its next hourly check (wake-up reason "new holding brief", once per
+  brief). It reads the brief with the live price and decides to hold, sell or buy; that look also counts as the day's
+  review. The Trading page shows under each brief what the agent decided when it read it (its first real-money look
+  at or after the brief): "read it and decided to hold" with its reason, or "not read yet". A decision to hold is now
+  published too (it used to wait for the next trade, purchase or stake).
+- Checked on the server's published data: the 01:00 UTC brief is linked to the 01:14 UTC decision "hold"; the 03:18 UTC
+  brief is "not read yet" (the agent on the server still runs the earlier code). Mock-tested (364 tests pass); the site
+  builds. Not yet seen in the browser with real data: that needs the push.

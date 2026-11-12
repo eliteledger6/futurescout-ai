@@ -210,7 +210,7 @@ function Elapsed({ since }: { since: string }) {
   return <span className="mono">{Math.floor(s / 60)}:{String(s % 60).padStart(2, "0")}</span>;
 }
 
-const TRIGGER_WORDS: Record<string, string> = { new_report: "new report", price_drop: "sharp fall", price_jump: "sharp rise", review: "daily review", manual: "extra review", after_sale: "after a sale", holding_brief: "urgent holding brief" };
+const TRIGGER_WORDS: Record<string, string> = { new_report: "new report", price_drop: "sharp fall", price_jump: "sharp rise", review: "daily review", manual: "extra review", after_sale: "after a sale", holding_brief: "new holding brief" };
 
 // Daily holding briefs: for each share it holds, the trading agent buys a short check-up from the report agent.
 function BriefsPanel({ b }: { b: NonNullable<Trading["briefs"]> }) {
@@ -221,7 +221,7 @@ function BriefsPanel({ b }: { b: NonNullable<Trading["briefs"]> }) {
         <div><div className="eyebrow">Daily holding briefs</div>
           <div className="small muted">Once every {b.every_hours} hours, for each share it holds, the trading agent buys a short check-up from the report agent
             for ${b.price_usd.toFixed(2)}, paid in NEAR: the report agent&apos;s X signals agent reads recent posts from approved accounts, and its Risk agent
-            writes a short note. Posts are what accounts say, not verified facts.{b.owed_near > 0 ? ` Owed now: ${b.owed_near} NEAR.` : ""}</div></div>
+            writes a short note. The trading agent then reads the brief and decides to hold, sell or buy; its decision is shown under each brief. Posts are what accounts say, not verified facts.{b.owed_near > 0 ? ` Owed now: ${b.owed_near} NEAR.` : ""}</div></div>
       </div>
       {b.briefs.length === 0 && <div className="notice">No brief written yet. The first one comes with the trading agent&apos;s next check while it holds a share.</div>}
       {b.briefs.map((x) => (
@@ -241,6 +241,12 @@ function BriefsPanel({ b }: { b: NonNullable<Trading["briefs"]> }) {
               {x.signals.filter((s) => s.url).map((s, i) => <span key={i}>{i > 0 ? ", " : ""}<a href={s.url!} target="_blank" rel="noopener noreferrer">{s.account ?? "post"} ↗</a></span>)}</div>
           )}
           {x.errors.length > 0 && <div className="small guard">{x.errors.join(" · ")}</div>}
+          <div className="brief-decision">
+            {x.decision
+              ? <><b>Trading agent, {fmtDate(x.decision.at)}: {x.decision.action === "hold" ? `read it and decided to hold${x.decision.ticker ? ` ${x.decision.ticker}` : ""}`
+                  : `read it and decided to ${x.decision.action}${x.decision.ticker ? ` ${x.decision.ticker}` : ""}`}.</b>{" "}{x.decision.summary}</>
+              : <><b>Trading agent:</b> not read yet. It reads every new brief at its next hourly check and then decides to hold, sell or buy.</>}
+          </div>
         </div>
       ))}
     </div>
@@ -328,7 +334,7 @@ function AgentLog({ t }: { t: Trading }) {
         <div className="pills"><span className="pill">{t.strategy?.last_check_at ? `last check ${fmtDate(t.strategy.last_check_at)}` : "no check yet"}</span></div>
       </div>
       <p className="small" style={{ color: "var(--text-2)", margin: 0 }}>
-        It checks every {cfg?.check_minutes ?? 60} min and wakes on a new report, a sharp price move (also in the live price of a share it holds), an urgent holding brief or a daily review{t.selling?.enabled ? "; it can buy, sell or hold" : "; it can buy or hold"}.
+        It checks every {cfg?.check_minutes ?? 60} min and wakes on a new report, a sharp price move (also in the live price of a share it holds), a new holding brief or a daily review{t.selling?.enabled ? "; it can buy, sell or hold" : "; it can buy or hold"}.
       </p>
       <div className="tr-split">
         {(["live", "shadow"] as const).map((mode) => {

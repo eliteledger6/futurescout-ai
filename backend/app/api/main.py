@@ -528,8 +528,9 @@ def create_app(
             "explorer_tx": "https://nearblocks.io/txns/{tx}",
         }
 
-    def holding_briefs() -> dict:
-        """The newest daily holding briefs the trading agent bought from the report agent (read-only)."""
+    def holding_briefs(checks: Optional[list] = None) -> dict:
+        """The newest daily holding briefs the trading agent bought from the report agent (read-only), each with what
+        the trading agent decided when it read it: its first real-money look at or after the brief."""
         from app.fund import holding_brief as hb
         st = hb.load_state(trading_dir.parent / "briefs" / "state.json")
         ec = load_fund_config().economy
@@ -538,6 +539,12 @@ def create_app(
                  "risks": b.note.risks if b.note else [], "urgency": b.note.urgency if b.note else None,
                  "signals": [s.model_dump() for s in b.signals[:5]], "price_usd": b.price_usd, "price_near": b.price_near, "status": b.status,
                  "errors": b.errors} for b in reversed(st.briefs[-6:])]
+        looks = sorted((c for c in (checks or []) if c.get("mode") == "live" and c.get("action") in ("buy", "sell", "hold")),
+                       key=lambda c: str(c.get("at")))
+        for row in rows:
+            hit = next((c for c in looks if str(c.get("at")) >= row["at"][:19]), None)
+            row["decision"] = ({"at": hit["at"], "action": hit["action"], "ticker": hit.get("ticker"), "summary": hit.get("summary"),
+                                "why_woken": [t.get("kind") for t in hit.get("triggers", [])]} if hit else None)
         return {"price_usd": ec.brief_usd, "every_hours": ec.brief_hours, "enabled": ec.enabled and ec.brief_usd > 0,
                 "owed_near": round(sum(b.price_near for b in st.owed()), 4), "briefs": rows}
 
@@ -580,7 +587,7 @@ def create_app(
             "balances": balances,
             "shadow_portfolio": shadow_portfolio(state, {f"{t}on": v[0] for t, v in prices.items()}, lv.shadow_budget_usd),
             "performance": performance(state, prices, lv.shadow_budget_usd),
-            "briefs": holding_briefs(),
+            "briefs": holding_briefs(state.checks),
             "pay_with": lv.pay_with,
             "strategy": {"rules": STRATEGY_RULES, "config": lv.strategy.model_dump(), "last_check_at": state.last_check_at.isoformat() if state.last_check_at else None},
             "checks": list(reversed((state.checks or [])[-40:])),

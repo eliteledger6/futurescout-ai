@@ -112,3 +112,35 @@ def test_the_owner_can_ask_for_a_brief_now():
     src = (Path(__file__).resolve().parents[1] / "scripts" / "fund_trade.py").read_text(encoding="utf-8")
     assert 'due = list(held) if force else [h for h in held if hb.due(bst, h["ticker"], now, ec.brief_hours)]' in src
     assert 'rc = cmd_briefs(s, cfg, execute=True, force=True)' in src and '"balance", "brief"]' in src
+
+
+def test_every_new_brief_wakes_the_agent_and_the_site_links_the_decision(tmp_path):
+    """Owner 2026-11-12: the agent pays for the brief, so it reads each new one and decides; the page shows that decision."""
+    from pathlib import Path
+    from fastapi.testclient import TestClient
+    import app.api.main as api_main
+    from app.api.store import FileStore
+    from app.config import Settings
+    from app.site_publish import trade_fingerprint
+    src = (Path(__file__).resolve().parents[1] / "scripts" / "fund_trade.py").read_text(encoding="utf-8")
+    assert 'if b and state.seen_runs.get("live:brief:" + h["ticker"]) != b.id:' in src          # any urgency, once per brief
+    runs = tmp_path / "runs"
+    (runs / "trading").mkdir(parents=True); (runs / "briefs").mkdir()
+    b1 = brief(Router(hb.BriefNote(summary="s1", urgency="low")), XAgent()); b1.at = NOW
+    b2 = brief(Router(hb.BriefNote(summary="s2", urgency="low")), XAgent()); b2.at = NOW + timedelta(hours=2)
+    hb.save_state(hb.BriefState(briefs=[b1, b2]), runs / "briefs" / "state.json")
+    checks = [{"id": "c0", "at": (NOW - timedelta(hours=1)).isoformat(), "mode": "live", "triggers": [], "action": "hold", "ticker": "INTC", "summary": "earlier look"},
+              {"id": "c1", "at": (NOW + timedelta(minutes=14)).isoformat(), "mode": "shadow", "triggers": [{"kind": "review"}], "action": "buy", "ticker": "MSFT", "summary": "pretend"},
+              {"id": "c2", "at": (NOW + timedelta(minutes=14)).isoformat(), "mode": "live", "triggers": [{"kind": "holding_brief"}], "action": "hold", "ticker": "INTC", "summary": "read the brief; no reason to sell"},
+              {"id": "c3", "at": (NOW + timedelta(minutes=74)).isoformat(), "mode": "live", "triggers": [], "action": "none", "summary": "no trigger"}]
+    (runs / "trading" / "state.json").write_text(json.dumps({"proposals": [], "checks": checks}), encoding="utf-8")
+    client = TestClient(api_main.create_app(Settings(_env_file=None, near_ai_api_key="k"), store=FileStore(runs), trading_dir=runs / "trading"))
+    rows = client.get("/api/trading").json()["briefs"]["briefs"]
+    assert [r["id"] for r in rows] == [b2.id, b1.id]                                              # newest first
+    assert rows[1]["decision"]["action"] == "hold" and rows[1]["decision"]["summary"].startswith("read the brief")   # the real-money look after it
+    assert rows[1]["decision"]["why_woken"] == ["holding_brief"]
+    assert rows[0]["decision"] is None                                                            # the newer brief has not been read yet
+    before = trade_fingerprint(runs)
+    checks.append({"id": "c4", "at": (NOW + timedelta(hours=3)).isoformat(), "mode": "live", "triggers": [{"kind": "holding_brief"}], "action": "hold", "summary": "x"})
+    (runs / "trading" / "state.json").write_text(json.dumps({"proposals": [], "checks": checks}), encoding="utf-8")
+    assert trade_fingerprint(runs) != before                                                      # a "hold" decision is published too

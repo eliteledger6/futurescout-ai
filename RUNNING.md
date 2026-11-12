@@ -73,7 +73,8 @@ put my device to sleep after* to **Never**.
 - The trading agent and its holdings: every hourly check reads the live price of each share it holds; a move of 7% down
   or 10% up since it last looked wakes it. Once every 24 hours it buys a "holding brief" on each share from the report
   agent for $0.50, paid in NEAR from the near.com balance (the report agent's X signals agent reads about 10 recent posts,
-  its Risk agent writes a short note on a small model; about $0.05 to make). A brief that cannot be paid stays owed and is
+  its Risk agent writes a short note on a small model; about $0.05 to make). The trading agent reads every new brief at its next check and decides to hold, sell or buy (shown under the
+  brief on the Trading page). A brief that cannot be paid stays owed and is
   paid with the next one; after 3 unpaid briefs no new one is written. Settings: `economy.brief_usd` (0 = off),
   `brief_hours`, `brief_max_posts`, `brief_max_owed`. The record is `backend/runs/briefs/state.json`.
 - NEAR Agent Market fees ($3 a hire; test hires pay nothing): once the buyer accepts, the fee is recorded in
