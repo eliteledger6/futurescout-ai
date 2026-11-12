@@ -530,3 +530,7 @@ a.card:hover { box-shadow: 0 12px 40px -18px color-mix(in srgb, var(--accent) 45
   .radar-table { font-size: 11px; }
   .radar-table th { font-size: 10px; letter-spacing: 0; }
 }
+
+/* phones: the four fund figures never push the page wider than the screen (seen 2026-11-12 on a fund page, 385 px on a 375 px screen) */
+.stat { min-width: 0; }
+@media (max-width: 480px) { .stat { padding: 16px 14px; } .stat-value { font-size: 30px; overflow-wrap: anywhere; } }

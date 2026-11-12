@@ -680,8 +680,14 @@ def cmd_briefs(s, cfg, execute: bool) -> int:  # noqa: ANN001
                 risks = hb.report_risks(found[0])
             x_agent = XAgent(router, XClient(token) if token else None, watchlist=hb.brief_accounts(approved, company),
                              max_posts=ec.brief_max_posts)                      # one search: the company's account, press, analysts
+            watch = dict(tstate.holding_prices.get("live:" + h["ticker"]) or {})
+            px_now = token_price(None, h["symbol"])                                 # read now: the brief opens with the price
+            if px_now:
+                per = h["cost_usd"] / h["quantity"] if h.get("quantity") and h.get("cost_usd") else None
+                watch.update({"price": round(px_now, 4), "cost_per_share": round(per, 4) if per else None,
+                              "gain_pct": round((px_now / per - 1) * 100, 2) if per else None})
             b = hb.make_brief(router=router, x_agent=x_agent, holding={**h, "topic": h.get("topic") or (fund.topic if fund else "")},
-                              watch=tstate.holding_prices.get("live:" + h["ticker"]), risks=risks, company=company, now=now,
+                              watch=watch or None, risks=risks, company=company, now=now,
                               price_usd=ec.brief_usd, near_usd=px)
             bst.briefs.append(b)
             hb.save_state(bst, BRIEFS)

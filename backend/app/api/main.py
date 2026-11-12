@@ -475,7 +475,14 @@ def create_app(
         f = load_fund(funds_dir / f"{slug}.json")
         if f is None:
             raise HTTPException(status_code=404, detail="fund not found")
-        return fund_payload(f)
+        out = fund_payload(f)
+        old = "each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards."
+        new = ("decisions made up to 11 November 2026 were sealed on NEAR (the link next to each one); later ones carry "
+               "their own fingerprint only, because only reports are sealed now.")
+        notes = (out.get("fund") or out).get("notes")
+        if isinstance(notes, list):
+            notes[:] = [n.replace(old, new) if isinstance(n, str) else n for n in notes]
+        return out
 
     trading_cache: dict = {}
     economy_cache: dict = {}
