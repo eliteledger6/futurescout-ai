@@ -595,3 +595,12 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   reports), refuses to start a run (403) and the proposals sync (401), 32 of 33 scripts show their help
   (`x_lookup.py` stops with "X_BEARER_TOKEN is not set", as intended), `preflight.py` says exactly which keys are
   missing, and the website installs (`npm ci`) and builds all 10 routes.
+
+## 2026-11-12: correction to the repository check (the personal email is NOT on GitHub)
+- The entry above says 67 early commits carry the owner's name and Hotmail address and would be readable once the
+  repository is public. That is wrong. The count came from `git log --all`, which also reads a branch that exists only
+  on the owner's laptop: `backup-before-author-rewrite`, kept from the author rewrite done on 2026-11-10 before the
+  first push. Checked properly: GitHub has one branch (`main`), and all of its commits are authored and committed with
+  the GitHub no-reply address. Nothing was rewritten and nothing was force-pushed today.
+- The backup branch was never pushed and a plain `git push` does not push it. It can be deleted on the laptop with
+  `git branch -D backup-before-author-rewrite` if the owner wants no copy of those commits at all.
