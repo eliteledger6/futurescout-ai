@@ -357,7 +357,7 @@ def create_app(
     @app.post("/api/market/buy")
     def market_buy_endpoint(req: BuyRequest) -> dict:
         """Grant access after checking the buyer's NEAR payment on chain (reads only; nothing is signed here)."""
-        from app.fund.economy import read_tx
+        from app.fund import economy as econ
         found = store.get(req.run_id)
         if found is None:
             raise HTTPException(404, "run not found")
@@ -372,8 +372,12 @@ def create_app(
             with httpx.Client(timeout=60.0) as http:
                 sale = market_buy(state=load_market(sales_path), path=sales_path, run_id=req.run_id, buyer=req.buyer, tx_hash=req.tx_hash,
                                   price_near=info["price_near"] * 0.97, cfg=ec,   # 3% leeway: the NEAR price moves between quote and payment
-                                  read=lambda h, who: read_tx(http, ec.rpc, h, who),
-                                  now=datetime.now(timezone.utc))
+                                  read=lambda h, who: econ.read_tx(http, ec.rpc, h, who),
+                                  now=datetime.now(timezone.utc),
+                                  # an old or in-house transfer cannot open a report (security pass 2026-11-12)
+                                  paid_at=lambda payload: econ.tx_block_time(http, ec.rpc, payload),
+                                  not_before=report.generated_at,
+                                  own_accounts=((settings.fund_mainnet_account_id or "").strip(),))
         except ValueError as exc:
             raise HTTPException(402, {"message": str(exc), **info}) from None
         return {"access_token": sale.token, "paid_near": sale.amount_near, "tx_hash": sale.tx_hash,

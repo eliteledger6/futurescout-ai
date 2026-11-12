@@ -225,6 +225,17 @@ def read_tx(http: httpx.Client, rpc: str, tx_hash: str, sender: str) -> Any:
     return http.post(rpc, json=body, timeout=60).json()
 
 
+def tx_block_time(http: httpx.Client, rpc: str, payload: Any) -> Optional[datetime]:
+    """When a transaction (a `tx` RPC result) entered the chain: the time of its block. None when it cannot be read."""
+    try:
+        block_hash = payload["result"]["transaction_outcome"]["block_hash"]
+        body = {"jsonrpc": "2.0", "id": "fs-econ", "method": "block", "params": {"block_id": block_hash}}
+        nanos = int(http.post(rpc, json=body, timeout=30).json()["result"]["header"]["timestamp"])
+        return datetime.fromtimestamp(nanos / 1e9, tz=timezone.utc)
+    except Exception:  # noqa: BLE001
+        return None
+
+
 def buy_report(*, state: EconomyState, path: Path, price: Price, buyer: str, cfg: EconomyConfig,
                send: Callable[[str, int], str], read: Callable[[str, str], Any], now: datetime) -> Purchase:
     """Pay the report agent exactly once, then confirm the payment on chain. `send(receiver, yocto) -> tx hash` signs."""

@@ -675,3 +675,24 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   "CLAUDE OPUS 5 5"; README still named a total budget cap; a privacy note here was wrong and named the owner.
 - Not changed: the Radar still says 54 topics until the server's next daily recount picks up the 3 topics the Science
   agent added. The server must pull this commit, or its next funds run publishes the old comparison again.
+
+## 2026-11-12: security pass (can an API be used to exploit or hack the agents?)
+
+- Checked: all 20 API routes; the whole git history (264 commits) for keys and tokens: none; no shell command, `eval`
+  or unsafe YAML fed by outside text; the website never renders report text as HTML; the server that holds the keys
+  runs no web API (nothing listens for visitors); the hosted API holds no private key. Hostile requests run live against
+  the hosted API were all refused (path tricks 404, start a run 403, proposals sync 401 with no or an empty token,
+  oversized body 422, no CORS header for a foreign site).
+- Money: no outside text chooses where money goes. The trading model answers only buy / sell / hold with a ticker; code
+  accepts only tickers on the allowlist, and every order is addressed to the fund's own account (refund and recipient)
+  or to `intents.near`. Report payments go to the seller named in `funds.yaml`.
+- Fixed, report paywall (`POST /api/market/buy`): any old transfer to the report agent (all are public on chain) could
+  be handed in by anybody to open any paid report, again after every redeploy (the hosted disk forgets redeemed
+  payments), and one payment could open two reports through two requests at once. Now the payment must be newer than
+  the report and at most 24 hours old (block time read from the chain), may not come from our own accounts, the hash and
+  account name are checked before any chain call, and purchases are checked one at a time against the saved sales.
+  Mock-tested (3 new tests, 368 pass); the block-time read was run live (read-only). Not live until pushed.
+- Known and left as is: a watcher who sees a fresh payment on chain can redeem it before the payer does (a signed
+  claim would close this; about $2.50 per report at stake). One visitor can use all 5 daily topic proposals. Text from
+  X posts reaches the trading agent as evidence: it can at worst sway a buy of an allowlisted stock, never a transfer.
+  The server pulls code from GitHub at start, so the GitHub account is the key to guard (two-factor sign-in).

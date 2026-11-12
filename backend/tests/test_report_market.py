@@ -122,7 +122,9 @@ def test_api_sells_a_report_for_a_payment_checked_on_chain(tmp_path, monkeypatch
         return lambda http, rpc, h, who: {"result": {"status": {"SuccessValue": ""}, "transaction": {
             "hash": h, "signer_id": signer, "receiver_id": to, "actions": [{"Transfer": {"deposit": str(int(amount_near * 1e24))}}]}}}
 
-    body = {"run_id": "report_fresh1", "tx_hash": "TXPAID", "buyer": "bot.near"}
+    paid = {"at": datetime.now(timezone.utc)}                                                # when the payment entered the chain
+    monkeypatch.setattr(economy, "tx_block_time", lambda http, rpc, payload: paid["at"])
+    body = {"run_id": "report_fresh1", "tx_hash": "9" * 44, "buyer": "bot.near"}
     monkeypatch.setattr(economy, "read_tx", chain(price / 2))
     assert client.post("/api/market/buy", json=body).status_code == 402                      # paid too little
     monkeypatch.setattr(economy, "read_tx", chain(price, to="someone-else.near"))
@@ -134,3 +136,33 @@ def test_api_sells_a_report_for_a_payment_checked_on_chain(tmp_path, monkeypatch
     assert client.get(f"/api/runs/report_fresh1?access={token}").status_code == 200          # the token opens the report
     assert client.get("/api/runs/report_fresh1").status_code == 402                          # still locked for everyone else
     assert client.post("/api/market/buy", json={**body, "buyer": "other.near"}).status_code == 402   # the payment cannot be used twice
+    # security pass 2026-11-12: every transfer to the report agent is public, so an old one must not open a report
+    paid["at"] = datetime.now(timezone.utc) - timedelta(days=3)
+    old = client.post("/api/market/buy", json={**body, "tx_hash": "8" * 44})
+    assert old.status_code == 402 and "before the report was written" in old.json()["detail"]["message"]
+    paid["at"] = None                                                                        # time unreadable: refused, not waved through
+    assert client.post("/api/market/buy", json={**body, "tx_hash": "7" * 44}).status_code == 402
+    assert client.post("/api/market/buy", json={**body, "tx_hash": "not a hash"}).status_code == 402
+
+
+def test_an_old_or_in_house_payment_cannot_open_a_report(tmp_path):
+    kw = dict(path=tmp_path / "s.json", run_id="r1", price_near=4.0, cfg=CFG, now=NOW, not_before=NOW - timedelta(hours=30))
+    h = "5" * 44
+    with pytest.raises(ValueError, match="older than 24 hours"):                             # written 30 h ago, paid 25 h ago
+        buy(state=MarketState(), buyer="bot.near", tx_hash=h, read=lambda a, b: tx(h=h), paid_at=lambda p: NOW - timedelta(hours=25), **kw)
+    with pytest.raises(ValueError, match="before the report was written"):
+        buy(state=MarketState(), buyer="bot.near", tx_hash=h, read=lambda a, b: tx(h=h), paid_at=lambda p: NOW - timedelta(hours=31), **kw)
+    for own in ("report-agent.near", "our-trader.near"):                                     # our own accounts' transfers are not sales
+        with pytest.raises(ValueError, match="own"):
+            buy(state=MarketState(), buyer=own, tx_hash=h, read=lambda a, b, o=own: tx(signer=o, h=h),
+                paid_at=lambda p: NOW, own_accounts=("our-trader.near",), **kw)
+    ok = buy(state=MarketState(), buyer="bot.near", tx_hash=h, read=lambda a, b: tx(h=h), paid_at=lambda p: NOW - timedelta(hours=1), **kw)
+    assert ok.token
+
+
+def test_one_payment_cannot_open_two_reports_through_two_requests(tmp_path):
+    """Each request loads the sales file by itself: the second one must see the sale the first one just saved."""
+    h, path = "4" * 44, tmp_path / "s.json"
+    buy(state=MarketState(), path=path, run_id="r1", buyer="bot.near", tx_hash=h, price_near=4.0, cfg=CFG, read=lambda a, b: tx(h=h), now=NOW)
+    with pytest.raises(ValueError, match="already used"):
+        buy(state=MarketState(), path=path, run_id="r2", buyer="bot.near", tx_hash=h, price_near=4.0, cfg=CFG, read=lambda a, b: tx(h=h), now=NOW)
