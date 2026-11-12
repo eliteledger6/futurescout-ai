@@ -507,27 +507,27 @@
     {
       "day": "2026-11-06",
       "value_usd": 9985.88,
-      "benchmark_value_usd": 10000.0
+      "benchmark_value_usd": null
     },
     {
       "day": "2026-11-09",
       "value_usd": 10212.2,
-      "benchmark_value_usd": 10236.64
+      "benchmark_value_usd": null
     },
     {
       "day": "2026-11-10",
       "value_usd": 10154.6,
-      "benchmark_value_usd": 10198.97
+      "benchmark_value_usd": 10000.0
     },
     {
       "day": "2026-11-11",
       "value_usd": 10223.49,
-      "benchmark_value_usd": 10198.97
+      "benchmark_value_usd": 10000.0
     }
   ],
   "benchmark": "SPY",
-  "benchmark_start_close": 735.29,
-  "benchmark_start_date": "2026-11-06",
+  "benchmark_start_close": 749.92,
+  "benchmark_start_date": "2026-11-10",
   "updated_at": "2026-11-11T10:02:46.757533Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
