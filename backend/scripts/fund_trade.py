@@ -312,7 +312,7 @@ def run_check(s, cfg, shadow: bool, extra: list | None = None, depth: int = 0) -
     seen_runs = {k[len(kp):]: v for k, v in state.seen_runs.items() if k.startswith(kp) and (shadow and not k.startswith("live:") or not shadow)}
     seen_closes = {k[len(kp):]: v for k, v in state.seen_closes.items() if k.startswith(kp) and (shadow and not k.startswith("live:") or not shadow)}
     triggers = detect_triggers(tokens=toks, seen_runs=seen_runs, closes=closes, seen_closes=seen_closes,
-                               last_check=state.last_check_at if shadow else state.last_live_check_at, now=now, cfg=st_cfg, held=held)
+                               last_check=state.last_review_at if shadow else state.last_live_review_at, now=now, cfg=st_cfg, held=held)
     # every check: the live price of each share the agent holds (owner 2026-11-12); a sharp move since its last look wakes it
     from app.fund.strategy import mark_seen, watch_holdings
     rows_held = pf["positions"] if shadow else state.live_holdings()
@@ -344,6 +344,10 @@ def run_check(s, cfg, shadow: bool, extra: list | None = None, depth: int = 0) -
     else:
         check = _assess(s, cfg, state, toks, triggers, check, shadow, now, pf, closes)
         mark_seen(state.holding_prices, prefix=kp)             # the agent has seen these prices: later moves count from here
+        if shadow:                                             # the daily review is due review_hours after the agent last looked
+            state.last_review_at = now
+        else:
+            state.last_live_review_at = now
     for t in triggers:                       # remember what was reacted to, so the same event does not wake the agent twice
         if t.kind == "new_report":
             state.seen_runs[kp + t.topic] = next((x.get("run_id") for x in toks if x["topic"] == t.topic), "") or ""

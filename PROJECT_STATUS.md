@@ -531,3 +531,13 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   $0.05, models $0.0008), is priced $0.50 = 0.139 NEAR, urgency "low". The first test with the whole watchlist read 26
   posts ($0.13), which is why a brief now reads a short account list. The payment itself has not run: it signs with
   the owner's key, and near.com may refuse so small an amount (then briefs add up until one payment goes through).
+
+## 2026-11-12: the daily review of holdings never came due (bug found in the server's log, fixed)
+- The server's trading log showed "no review due" at every hourly check since the loop started. Cause: the 24-hour
+  review counted from the last CHECK, and the hourly loop renewed that time every hour. The published record confirms
+  it: the only "review" wake-ups are the first ones on 2026-11-10; the agent had not looked at its INTC holding since.
+- Fix: the review counts from when the agent last actually looked (`TradingState.last_review_at` /
+  `last_live_review_at`, set whenever the agent is called). A record from before the fix has no such time, so the
+  review comes due at the next check. Mock-tested (362 tests pass). Takes effect when the server's trader restarts.
+- Run live on the owner's server at 01:00 UTC: the trader restarted on the code with the live price watch and the
+  daily holding briefs; its first pass was still running when the log was pasted.

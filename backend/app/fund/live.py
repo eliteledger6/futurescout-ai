@@ -142,6 +142,11 @@ class TradingState(BaseModel):
     holding_prices: dict[str, dict] = Field(default_factory=dict)
     last_check_at: Optional[datetime] = None
     last_live_check_at: Optional[datetime] = None          # live and shadow react to the same events separately
+    # When the agent last actually looked (was called), per mode. The daily review counts from here. It used to count
+    # from the last CHECK, which the hourly loop renews every hour, so the review never came due (seen 2026-11-12: no
+    # review since 2026-11-10).
+    last_review_at: Optional[datetime] = None
+    last_live_review_at: Optional[datetime] = None
     private_near: Optional[float] = None                   # NEAR in the near.com (private) balance, read by the owner's loop after a
     private_checked_at: Optional[datetime] = None          # signed login; the read-only site shows this snapshot
     last_values: dict[str, dict] = Field(default_factory=dict)   # symbol -> {"usd", "at"}: last good dry-quote value of a holding,

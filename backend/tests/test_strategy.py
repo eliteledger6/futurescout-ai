@@ -184,3 +184,23 @@ def test_the_agent_always_knows_the_live_price_of_what_it_holds():
     rec["NVDA"] = {"price": 100.0, "seen_price": 100.0}
     assert watch_holdings([], {}, rec, t0, cfg, prefix="live:") == [] and "live:INTC" not in rec and "NVDA" in rec
     assert watch_holdings([], {}, rec, t0, cfg, prefix="") == [] and rec == {}
+
+
+def test_the_daily_review_counts_from_the_agents_last_look_not_from_the_last_hourly_check():
+    """Seen 2026-11-12 on the server: the loop checked every hour and renewed 'last check' each time, so the 24-hour
+    review never came due and the agent had not reviewed its holding since 2026-11-10."""
+    from datetime import datetime, timedelta, timezone
+    from pathlib import Path
+    from app.fund.live import TradingState
+    from app.fund.strategy import StrategyConfig, detect_triggers
+    cfg = StrategyConfig(review_hours=24)
+    now = datetime(2026, 11, 12, 1, 0, tzinfo=timezone.utc)
+    args = dict(tokens=[], seen_runs={}, closes={}, seen_closes={}, now=now, cfg=cfg, held=set())
+    assert [t.kind for t in detect_triggers(last_check=None, **args)] == ["review"]                       # never looked: review now
+    assert detect_triggers(last_check=now - timedelta(hours=1), **args) == []                             # looked an hour ago
+    assert [t.kind for t in detect_triggers(last_check=now - timedelta(hours=25), **args)] == ["review"]  # a day since it looked
+    st = TradingState()
+    assert st.last_review_at is None and st.last_live_review_at is None                                   # a record from before the fix: review is due
+    src = (Path(__file__).resolve().parents[1] / "scripts" / "fund_trade.py").read_text(encoding="utf-8")
+    assert "last_check=state.last_review_at if shadow else state.last_live_review_at" in src              # the loop passes the last LOOK
+    assert "state.last_live_review_at = now" in src and "state.last_review_at = now" in src
