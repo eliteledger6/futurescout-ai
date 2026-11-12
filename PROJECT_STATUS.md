@@ -578,3 +578,20 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   generated new. Checked by still frames and sound level; not listened to. The brief on screen carries the sentence
   from fix (1), and the economy panel's small print still has the old wording of fix (4): both were recorded before
   those fixes were deployed.
+
+## 2026-11-12: repository check before going public (leaks, and "does a fresh copy run?")
+- Secrets: the VALUE of each of the 21 secrets and account settings in `.env` was searched in all 462 tracked files and
+  in every object of the git history (2,917 objects, 45 MB). No key, token, database address or contact string occurs
+  anywhere. The only matches are four NEAR account NAMES, which are public by nature. `.env` was never committed and is
+  not in a fresh clone. The published data holds no access token; buyers and accounts in it are public NEAR names and
+  public X handles.
+- Privacy: 67 early commits (9-10 November) are authored as "jingxanchew <...@hotmail.com>"; the later 181 use the
+  GitHub no-reply address. The repository is still private (GitHub answers 404 without a login), so nothing has leaked,
+  but that name and address would be readable once it is public. Removing them means rewriting history and a force
+  push: the owner's decision, not done. `.claude/launch.json` (this computer's folder paths, no secret) is no longer
+  tracked. `config/x_watchlist.yaml` quotes public X profile texts, two of which contain those accounts' own emails.
+- Runs from a fresh copy: cloned from GitHub into an empty folder, new Python 3.10 environment, no `.env`:
+  `pip install -e ".[dev]"` works, 362 tests pass, the API answers 200 on all 14 read routes from the snapshot (63
+  reports), refuses to start a run (403) and the proposals sync (401), 32 of 33 scripts show their help
+  (`x_lookup.py` stops with "X_BEARER_TOKEN is not set", as intended), `preflight.py` says exactly which keys are
+  missing, and the website installs (`npm ci`) and builds all 10 routes.

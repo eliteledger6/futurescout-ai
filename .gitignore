@@ -37,3 +37,6 @@ demo/voiceover/
 
 # lock used while a loop publishes the site snapshot
 .publish.lock
+
+# local editor / preview settings (machine-specific paths)
+.claude/
