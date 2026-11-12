@@ -31,6 +31,25 @@ from app.site_publish import copy_unless_older  # noqa: E402
 OUT = Path(__file__).resolve().parents[1] / "site_data"
 
 
+def repair_fund_benchmarks(folder: Path) -> int:
+    """A fund's S&P 500 comparison must start on its first trade day (see app.fund.start_benchmark). Funds saved before
+    2026-11-12 may start it later; they are corrected here from the price cache alone (no price request), so a machine
+    that has not re-run its funds yet cannot publish the old comparison again."""
+    from datetime import date
+    from app.fund import PriceBook, load_fund, save_fund, start_benchmark
+    book, fixed = PriceBook(None), 0
+    for f in sorted(folder.glob("*.json")):
+        fund = load_fund(f)
+        if fund is None:
+            continue
+        before = (fund.benchmark_start_date, fund.benchmark_start_close)
+        start_benchmark(fund, book, date.today())
+        if (fund.benchmark_start_date, fund.benchmark_start_close) != before:
+            save_fund(fund, folder)
+            fixed += 1
+    return fixed
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--prune", action="store_true", help="remove snapshot reports that this machine does not have")
@@ -77,6 +96,9 @@ def main() -> int:
         n_ph = sum(copy_unless_older(f, OUT / "phrases" / f.name) for f in sorted(phrases.glob("*.json")))
         print(f"  phrases/ ({len(list((OUT / 'phrases').glob('*.json')))} topics, {n_ph} from this machine)")
     if (src / "funds").is_dir():
+        fixed = repair_fund_benchmarks(src / "funds")
+        if fixed:
+            print(f"  funds/: S&P comparison moved back to the first trade day in {fixed} fund(s)")
         kept = sum(not copy_unless_older(f, OUT / "funds" / f.name, force=args.mine) for f in sorted((src / "funds").glob("*.json")))
         print(f"  funds/ ({len(list((OUT / 'funds').glob('*.json')))} topic funds" + (f"; {kept} newer in the snapshot, kept" if kept else "") + ")")
     size = sum(p.stat().st_size for p in OUT.rglob("*") if p.is_file()) / 1e6

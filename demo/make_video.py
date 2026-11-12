@@ -44,7 +44,9 @@ DASH = os.environ.get("DEMO_DASHBOARD_URL", "http://localhost:3000")
 API = os.environ.get("DEMO_API_URL", "http://localhost:8000")
 W, H, FPS = 1920, 1080, 30
 SR = 44100
-LEAD, GAP, TAIL = 0.45, 0.42, 0.85        # seconds: before speech, between sentences, after speech
+LEAD, GAP, TAIL = 0.42, 0.36, 0.8         # seconds: before speech, between sentences, after speech
+SPEED = 1.08                              # the voice is played this much faster, pitch kept (owner 2026-11-12: "slightly faster")
+STAKE_SHOT = ROOT / "near_ai_stake.png"   # the report agent's stake on NEAR AI Cloud (the Farmed panel of the Credits page)
 XF = 0.45                                 # crossfade between shots
 MINT, INK, DIM, RED = (0, 236, 151), (240, 243, 242), (150, 160, 156), (255, 110, 100)
 FONT_DIR = Path(r"C:\Windows\Fonts")
@@ -137,11 +139,13 @@ SCENES = [
         ("After buying the memory report, it bought Intel, and approved the order itself, once every check had passed.", None),
         ("It reads the price of what it holds every hour. And once a day, it buys a short brief on each holding from the report agent, for 50 cents.",
          "It reads the price of what it holds every hour. And once a day, it buys a short brief on each holding from the report agent, for fifty cents."),
-        ("The report agent staked 70% of what it earned, 2.5 NEAR, with NEAR AI, and kept the rest toward a second trading agent.",
-         "The report agent staked seventy percent of what it earned, two point five NEAR, with NEAR AI, and kept the rest toward a second trading agent."),
         ("Every report has a price: $2 to $3, depending on what it cost to make.",
          "Every report has a price. Two to three dollars, depending on what it cost to make."),
-    ]),
+        ("The report agent staked 70% of what it earned, 2.5 NEAR, with NEAR AI, and kept the rest toward a second trading agent.",
+         "The report agent staked seventy percent of what it earned, two point five NEAR, with NEAR AI, and kept the rest toward a second trading agent."),
+        ("And here it is on NEAR AI Cloud: the report agent's account, with 2.52 NEAR staked, farming credits for the models.",
+         "And here it is, on NEAR AI Cloud. The report agent's account, with two point five two NEAR staked, farming credits for the models."),
+    ], tail=1.5),
     Scene("11_market", "10", "Listed on NEAR Agent Market", [
         ("And it's not just our own agent buying. The report agent is listed on NEAR's Agent Market.", None),
         ("Anyone can hire it for $3: give it a topic, and it delivers a sealed report.",
@@ -230,6 +234,16 @@ def read_trimmed(path: Path) -> array.array:
     return a[max(0, i - keep): min(len(a), j + keep)]
 
 
+def faster(path: Path) -> Path:
+    """The same clip played SPEED times faster with the pitch kept (ffmpeg atempo); made once and kept beside it."""
+    if abs(SPEED - 1.0) < 1e-6:
+        return path
+    out = path.with_name(f"{path.stem}.x{int(round(SPEED * 100))}.wav")
+    if not out.exists():
+        run([ffmpeg_exe(), "-y", "-i", str(path), "-filter:a", f"atempo={SPEED}", "-ar", str(SR), "-ac", "1", "-c:a", "pcm_s16le", str(out)])
+    return out
+
+
 def wav_path(sc: Scene, k: int) -> Path:
     import hashlib
     text = sc.lines[k][1] or sc.lines[k][0]
@@ -245,7 +259,7 @@ def build_narration(scenes: list[Scene], reuse: bool) -> Path:
     missing = [(t, p) for t, p in items if not p.exists()]
     if missing:
         synthesize(missing, context)
-    clips = {p: read_trimmed(p) for _, p in items}
+    clips = {p: read_trimmed(faster(p)) for _, p in items}
     t = 0.0
     for sc in scenes:
         sc.start, sc.sent, local = t, [], LEAD
@@ -362,6 +376,34 @@ def title_card(t: float, dur: float) -> Image.Image:
         d.line((W / 2 - 150 * k, 640, W / 2 + 150 * k, 640), fill=rgba(MINT, 0.9), width=3)
     rise(d, (W / 2, 702), "Find the next hot technology. Show the evidence.", font(44, "semilight"), (200, 208, 205), t, 1.0)
     rise(d, (W / 2, 968), "Product demo  ·  recorded from the live application  ·  NEAR mainnet", font(24, "regular"), DIM, t, 1.5)
+    return img
+
+
+_STAKE: list = []
+
+
+def stake_card(t: float, dur: float) -> Image.Image:
+    """The Farmed panel of NEAR AI Cloud's Credits page, as captured from the dashboard: the report agent's account and its stake."""
+    if not _STAKE:
+        _STAKE.append(Image.open(STAKE_SHOT).convert("RGB"))
+    shot = _STAKE[0]
+    img = background()
+    d = ImageDraw.Draw(img, "RGBA")
+    rise(d, (W / 2, 96), "NEAR AI CLOUD  ·  STAKING FOR INFERENCE  ·  cloud.near.ai", font(26, "mono"), MINT, t, 0.1, spacing=3)
+    z = 0.84 + 0.04 * ease(t / max(dur, 0.1))                       # a slow push in
+    w, h = int(shot.width * z), int(shot.height * z)
+    x, y = (W - w) // 2, 150 + (740 - h) // 2
+    a = ease(t / 0.5)
+    panel = Image.new("RGBA", (w + 36, h + 36), (0, 0, 0, 0))
+    ImageDraw.Draw(panel).rounded_rectangle((0, 0, w + 35, h + 35), radius=26, fill=(255, 255, 255, int(255 * a)))
+    img.paste(panel, (x - 18, y - 18), panel)
+    small = shot.resize((w, h), Image.LANCZOS)
+    small.putalpha(int(255 * a))
+    img.paste(small, (x, y), small)
+    k = env(t, 1.3, dur, 0.35, 0.3)                                 # ring around "STAKED 2.52 NEAR"
+    if k > 0:
+        d = ImageDraw.Draw(img, "RGBA")
+        d.rounded_rectangle((x + 66 * z, y + 598 * z, x + 560 * z, y + 742 * z), radius=14, outline=rgba(MINT, k), width=5)
     return img
 
 
@@ -604,7 +646,7 @@ async def rec_round(k: Take) -> None:
     k.cut()
     await b.scroll_to_el(".tr-card", 1.1, offset=90, text="Agent economy")       # the report purchase
     await k.until(k.sent[1] + 0.2)
-    await k.hl(await b.rect(".tr-card .stat", 0, text="paid for reports"), seconds=2.4, pad=8)
+    await k.hl(await b.rect(".tr-card .stat", 0, text="paid to the report agent"), seconds=2.4, pad=8)
     await b.hover(".tr-mini > div", 0, seconds=0.7)
     await k.until(k.sent[2] - 0.9)
     k.cut()
@@ -622,14 +664,15 @@ async def rec_round(k: Take) -> None:
     await b.hover(".pill", 0, text="NEAR · paid", seconds=0.7)
     await k.until(k.sent[4] - 0.9)
     k.cut()
-    await b.scroll_to_el(".tr-card", 1.0, offset=90, text="Agent economy")       # staking and the kept pot
-    await k.until(k.sent[4] + 0.2)
+    await b.scroll_to_el(".tr-card", 1.0, offset=90, text="Agent economy")       # reports priced in NEAR, then staking and the kept pot
+    await k.until(k.sent[4] + 0.1)
+    await k.hl(await b.rect(".tr-mini"), seconds=max(2.0, k.sent[5] - k.sent[4] - 0.8), pad=8)
+    await b.hover(".tr-mini > div", 1, seconds=0.7)
+    await k.until(k.sent[5] + 0.2)
     await k.hl(await b.rect(".tr-card .stat", 0, text="staked for NEAR AI"), seconds=2.2, pad=8)
     await asyncio.sleep(1.4)
     await k.hl(await b.rect(".tr-card .stat", 0, text="kept pot"), seconds=2.0, pad=8)
-    await k.until(k.sent[5] + 0.1)
-    await k.hl(await b.rect(".tr-mini"), seconds=max(2.2, k.dur - k.sent[5] - 0.8), pad=8)  # reports priced in NEAR
-    await b.hover(".tr-mini > div", 1, seconds=0.7)
+    await k.until(k.dur - 0.2)
 
 
 async def rec_market(k: Take) -> None:
@@ -804,7 +847,9 @@ def build_pieces(scenes: list[Scene], rid: str, tamper_lines: list[str]) -> list
                Piece(s["07_seal"], "07_tamper", "card", dur=s["07_seal"].dur - seal_rec,
                      card=terminal_card(tamper_lines, "python scripts\\tamper_demo.py --run " + rid[:8] + "…"))]
     pieces.append(Piece(s["09_funds"], "09_funds", "rec", dur=s["09_funds"].dur, prep=goto(f"{DASH}/funds", 2.0), action=rec_funds))
-    pieces.append(Piece(s["10_round"], "10_round", "rec", dur=s["10_round"].dur, prep=goto(f"{DASH}/trading", 2.5), action=rec_round))
+    stake_at = s["10_round"].sent[6][0] - 0.2                               # the last sentence: the stake on NEAR AI Cloud itself
+    pieces += [Piece(s["10_round"], "10_round", "rec", dur=stake_at, prep=goto(f"{DASH}/trading", 2.5), action=rec_round),
+               Piece(s["10_round"], "10_stake", "card", dur=s["10_round"].dur - stake_at, card=stake_card)]
     pieces.append(Piece(s["11_market"], "11_market", "rec", dur=s["11_market"].dur,
                         prep=goto("https://market.near.ai/a/futurescout", 5.0), action=rec_market))
     auto_a = s["12_auto"].sent[1][0] - 0.2                                  # the Request a report page, then the network on the home page
