@@ -494,3 +494,18 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   the next report); the closing card says two free test hires and that both agents run on a cloud server.
 - 15 narration lines were generated new with ElevenLabs (voice Chris, free plan, about 1,650 characters); the rest came
   from the cache. Checked by still frames at nine points and by sound level; not listened to.
+
+## 2026-11-12: the trading agent always knows the live price of what it holds (owner)
+- Before: the agent reviewed its holdings once a day (`review_hours: 24`) and was woken by a sharp move between two
+  daily closes (Alpha Vantage). The live token price was used only to value the fund on the website.
+- Now, on every check (hourly): the live NEAR Intents price of each holding is read and saved
+  (`TradingState.holding_prices`: price, time, cost per share, gain since bought, move since the agent's last look). A
+  move of `drop_pct` (7%) down or `jump_pct` (10%) up since the agent last looked wakes it (`strategy.watch_holdings`),
+  so a slow slide over several checks adds up; after the agent has looked, the count restarts (`mark_seen`). When woken
+  for any reason the agent is given, per holding, `price_now`, `price_read_at`, `cost_per_share`,
+  `gain_pct_since_bought` and `move_pct_since_your_last_look`, and is told to state each holding's current price.
+- The loop prints the price of each holding at every check, and the Trading page shows the last price the agent read.
+- Mock-tested (355 tests pass). Run live read-only on this computer: INTC read at $61.00, +2.9% against its cost of
+  $59.29 a share. Not run in the trading loop by Claude (it signs); it takes effect when the server's trader restarts.
+- Not built yet (needs the owner's numbers): a daily "holding brief" bought from the report agent (X signals and a
+  risk note on each holding), paid in NEAR.

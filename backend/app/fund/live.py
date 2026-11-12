@@ -136,6 +136,10 @@ class TradingState(BaseModel):
     checks: list = Field(default_factory=list)            # strategy wake-ups (app.fund.strategy.Check), newest last
     seen_runs: dict[str, str] = Field(default_factory=dict)     # topic -> report run id already considered
     seen_closes: dict[str, str] = Field(default_factory=dict)   # ticker -> close date already reacted to
+    # owner 2026-11-12: "the trading agent should always be aware of the price of the share it is holding". Every check
+    # reads each holding's live token price. key = ticker (live holdings: "live:" + ticker) -> {price, at, cost_per_share,
+    # gain_pct, seen_price, seen_at, since_seen_pct}; seen_* = the price when the agent last looked at the holding.
+    holding_prices: dict[str, dict] = Field(default_factory=dict)
     last_check_at: Optional[datetime] = None
     last_live_check_at: Optional[datetime] = None          # live and shadow react to the same events separately
     private_near: Optional[float] = None                   # NEAR in the near.com (private) balance, read by the owner's loop after a

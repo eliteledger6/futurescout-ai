@@ -153,3 +153,34 @@ def test_without_a_confidence_minimum_the_agent_decides_and_is_told_so():
 def test_shipped_strategy_has_no_confidence_minimum():
     from app.fund import load_fund_config
     assert load_fund_config().live.strategy.min_confidence_pct == 0
+
+
+def test_the_agent_always_knows_the_live_price_of_what_it_holds():
+    """Owner 2026-11-12: every check reads each holding's live price; a sharp move since the agent's last look wakes it."""
+    from datetime import datetime, timedelta, timezone
+    from app.fund.strategy import StrategyConfig, mark_seen, watch_holdings
+    cfg = StrategyConfig(drop_pct=7.0, jump_pct=10.0)
+    t0 = datetime(2026, 11, 12, 9, 0, tzinfo=timezone.utc)
+    held = [{"ticker": "INTC", "symbol": "INTCon", "quantity": 0.73919, "cost_usd": 43.83}]
+    rec: dict = {}
+    assert watch_holdings(held, {"INTCon": 60.87}, rec, t0, cfg, prefix="live:") == []          # first look: recorded, nothing to compare
+    row = rec["live:INTC"]
+    assert row["price"] == 60.87 and row["cost_per_share"] == 59.2946 and row["gain_pct"] == 2.66 and row["seen_price"] == 60.87
+    # a slow slide over several hourly checks: each step is small, but it is measured from the agent's last look
+    assert watch_holdings(held, {"INTCon": 58.9}, rec, t0 + timedelta(hours=1), cfg, prefix="live:") == []
+    assert rec["live:INTC"]["since_seen_pct"] == -3.24 and rec["live:INTC"]["seen_price"] == 60.87
+    got = watch_holdings(held, {"INTCon": 56.4}, rec, t0 + timedelta(hours=2), cfg, prefix="live:")
+    assert [t.kind for t in got] == ["price_drop"] and got[0].ticker == "INTC"
+    assert "$56.40 now, -7.3% since you last looked ($60.87" in got[0].detail and "bought at $59.29, now -4.9%" in got[0].detail
+    mark_seen(rec, prefix="live:")                                                              # the agent looked: count from here
+    assert rec["live:INTC"]["seen_price"] == 56.4 and rec["live:INTC"]["since_seen_pct"] == 0.0
+    assert watch_holdings(held, {"INTCon": 56.0}, rec, t0 + timedelta(hours=3), cfg, prefix="live:") == []
+    up = watch_holdings(held, {"INTCon": 62.5}, rec, t0 + timedelta(hours=4), cfg, prefix="live:")
+    assert [t.kind for t in up] == ["price_jump"]
+    # no price available: the last record stays and its time shows how old it is
+    before = dict(rec["live:INTC"])
+    assert watch_holdings(held, {"INTCon": None}, rec, t0 + timedelta(hours=5), cfg, prefix="live:") == [] and rec["live:INTC"] == before
+    # shadow and live records do not touch each other; a holding that is gone is no longer watched
+    rec["NVDA"] = {"price": 100.0, "seen_price": 100.0}
+    assert watch_holdings([], {}, rec, t0, cfg, prefix="live:") == [] and "live:INTC" not in rec and "NVDA" in rec
+    assert watch_holdings([], {}, rec, t0, cfg, prefix="") == [] and rec == {}

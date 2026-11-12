@@ -72,7 +72,9 @@ export default function TradingPage() {
 
               {(t.live_holdings?.length ?? 0) > 0 && (
                 <div className="notice"><b>Held now (real money, from the fund&apos;s records):</b>{" "}
-                  {t.live_holdings!.map((h) => `${h.quantity.toFixed(5)} ${h.symbol} (cost ${usd(h.cost_usd)})`).join(" · ")}
+                  {t.live_holdings!.map((h) => `${h.quantity.toFixed(5)} ${h.symbol} (cost ${usd(h.cost_usd)})`
+                    + (h.watch ? ` · the agent read its price at ${usd(h.watch.price)} on ${fmtDate(h.watch.at)}`
+                      + (h.watch.gain_pct != null ? ` (${h.watch.gain_pct >= 0 ? "+" : ""}${h.watch.gain_pct.toFixed(1)}% against what it paid)` : "") : "")).join(" · ")}
                   {(t.spent.live_proceeds_usd ?? 0) > 0 && <> · sales so far returned {usd(t.spent.live_proceeds_usd!)}</>}</div>
               )}
 

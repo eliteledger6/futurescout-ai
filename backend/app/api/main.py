@@ -555,7 +555,8 @@ def create_app(
                       "shadow_filled_usd": round(sum(p.usd for p in state.proposals if p.mode == "shadow" and p.status == "shadow_filled" and p.side == "buy"), 2),
                       "live_proceeds_usd": state.proceeds("live"), "live_counted_usd": state.invested("live", lv.budget_mode)},
             "selling": {"enabled": lv.sells_enabled, "budget_mode": lv.budget_mode, "max_sells_per_day": lv.max_sells_per_day},
-            "live_holdings": state.live_holdings(),
+            # each holding with the live price the trading agent read at its last check (owner 2026-11-12)
+            "live_holdings": [{**h, "watch": state.holding_prices.get("live:" + h["ticker"])} for h in state.live_holdings()],
             "balances": balances,
             "shadow_portfolio": shadow_portfolio(state, {f"{t}on": v[0] for t, v in prices.items()}, lv.shadow_budget_usd),
             "performance": performance(state, prices, lv.shadow_budget_usd),

@@ -293,7 +293,8 @@ export interface Trading {
   limits: { max_trade_usd: number; max_day_usd: number; max_total_usd: number; price_band_pct: number; max_cost_pct: number; shadow_budget_usd: number };
   spent: { live_total_usd: number; live_today_usd: number; shadow_filled_usd: number; live_proceeds_usd?: number; live_counted_usd?: number };
   selling?: { enabled: boolean; budget_mode: "spent" | "net"; max_sells_per_day: number };
-  live_holdings?: { ticker: string; symbol: string; topic: string; quantity: number; cost_usd: number; first_bought: string; buys: number }[];
+  live_holdings?: { ticker: string; symbol: string; topic: string; quantity: number; cost_usd: number; first_bought: string; buys: number;
+    watch?: { price: number; at: string; cost_per_share: number | null; gain_pct: number | null; since_seen_pct?: number } | null }[];
   balances: { account: string; near: number | null; usdc: number | null; holdings: { symbol: string; ticker: string; quantity: number; value_usd: number | null }[]; errors: string[] } | null;
   allowlist: { ticker: string; symbol: string; topic: string; band: string | null; score: number | null; price: number | null }[];
   performance?: { live_pct: number | null; shadow_pct: number | null; live_positions: Record<string, number | null>;

@@ -158,6 +158,54 @@ def detect_triggers(*, tokens: list[dict], seen_runs: dict[str, str], closes: di
     return out
 
 
+def watch_holdings(holdings: list[dict], prices: dict[str, Optional[float]], record: dict[str, dict], now: datetime,
+                   cfg: StrategyConfig, prefix: str = "") -> list[Trigger]:
+    """Read the live price of every holding and wake the agent when one moved sharply since the agent last looked at it.
+
+    `holdings`: rows with ticker, symbol, quantity, cost_usd. `prices`: symbol -> live price (None when unavailable).
+    `record` (the saved state, changed in place): prefix + ticker -> {price, at, cost_per_share, gain_pct, seen_price,
+    seen_at, since_seen_pct}. The move is measured against `seen_price`, the price at the agent's last look, so a slow
+    slide over several checks still wakes it once it adds up; the daily-close triggers stay as they are.
+    A holding whose price cannot be read keeps its last record (and says so through its `at`)."""
+    out: list[Trigger] = []
+    held = set()
+    for h in holdings:
+        key = prefix + h["ticker"]
+        held.add(key)
+        px = prices.get(h["symbol"])
+        if not px or px <= 0:
+            continue
+        qty, cost = float(h.get("quantity") or 0), float(h.get("cost_usd") or 0)
+        per = cost / qty if qty > 0 and cost > 0 else None
+        row = dict(record.get(key) or {})
+        row.update({"price": round(px, 4), "at": now.isoformat(), "cost_per_share": round(per, 4) if per else None,
+                    "gain_pct": round((px / per - 1) * 100, 2) if per else None})
+        seen = row.get("seen_price")
+        if not seen:
+            row["seen_price"], row["seen_at"] = row["price"], row["at"]          # first look: nothing to compare with yet
+            row["since_seen_pct"] = 0.0
+        else:
+            move = (px / float(seen) - 1) * 100
+            row["since_seen_pct"] = round(move, 2)
+            gain = f"; bought at ${per:.2f}, now {row['gain_pct']:+.1f}%" if per else ""
+            said = f"{h['ticker']} (held) is at ${px:.2f} now, {move:+.1f}% since you last looked (${float(seen):.2f} on {str(row.get('seen_at'))[:16]} UTC){gain}"
+            if move <= -cfg.drop_pct:
+                out.append(Trigger(kind="price_drop", ticker=h["ticker"], detail=said))
+            elif move >= cfg.jump_pct:
+                out.append(Trigger(kind="price_jump", ticker=h["ticker"], detail=said))
+        record[key] = row
+    for key in [k for k in record if k.startswith(prefix) and (prefix or not k.startswith("live:")) and k not in held]:
+        del record[key]                                                          # sold: no longer watched
+    return out
+
+
+def mark_seen(record: dict[str, dict], prefix: str = "") -> None:
+    """The agent has just looked at its holdings: later moves are measured from the prices it saw now."""
+    for key, row in record.items():
+        if key.startswith(prefix) and (prefix or not key.startswith("live:")) and row.get("price"):
+            row["seen_price"], row["seen_at"], row["since_seen_pct"] = row["price"], row.get("at"), 0.0
+
+
 # ------------------------------------------------------------------ the agent, with the strategy
 def assess(router: ModelRouter, *, triggers: list[Trigger], candidates: list[Candidate], holdings: list[dict], context: dict,
            budget_usd: float, fixed_usd: Optional[float], cfg: StrategyConfig, adds_so_far: dict[str, int],

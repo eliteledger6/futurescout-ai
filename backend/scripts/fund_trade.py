@@ -307,6 +307,19 @@ def run_check(s, cfg, shadow: bool, extra: list | None = None, depth: int = 0) -
     seen_closes = {k[len(kp):]: v for k, v in state.seen_closes.items() if k.startswith(kp) and (shadow and not k.startswith("live:") or not shadow)}
     triggers = detect_triggers(tokens=toks, seen_runs=seen_runs, closes=closes, seen_closes=seen_closes,
                                last_check=state.last_check_at if shadow else state.last_live_check_at, now=now, cfg=st_cfg, held=held)
+    # every check: the live price of each share the agent holds (owner 2026-11-12); a sharp move since its last look wakes it
+    from app.fund.strategy import mark_seen, watch_holdings
+    rows_held = pf["positions"] if shadow else state.live_holdings()
+    live_px = {h["symbol"]: token_price(None, h["symbol"]) for h in rows_held}
+    triggers += watch_holdings(rows_held, live_px, state.holding_prices, now, st_cfg, prefix=kp)
+    for h in rows_held:
+        r = state.holding_prices.get(kp + h["ticker"]) or {}
+        if r.get("at") == now.isoformat():
+            print(f"  holding {h['ticker']}: ${r['price']:.2f} now"
+                  + (f", {r['gain_pct']:+.1f}% against what it cost" if r.get("gain_pct") is not None else "")
+                  + f", {r.get('since_seen_pct', 0):+.1f}% since the agent last looked")
+        else:
+            print(f"  holding {h['ticker']}: live price not readable right now (last read {str(r.get('at') or 'never')[:16]})")
     triggers += list(extra or [])
     check = Check(id=new_id(), at=now, mode=mode, triggers=triggers)
     print(f"[{now:%Y-%m-%d %H:%M} UTC] {mode} check: " + (", ".join(f"{t.kind} {t.ticker or t.topic}".strip() for t in triggers) or "no trigger"))
@@ -315,6 +328,7 @@ def run_check(s, cfg, shadow: bool, extra: list | None = None, depth: int = 0) -
         check.summary = "No trigger: no new report, no sharp move, no review due. The agent was not called."
     else:
         check = _assess(s, cfg, state, toks, triggers, check, shadow, now, pf, closes)
+        mark_seen(state.holding_prices, prefix=kp)             # the agent has seen these prices: later moves count from here
     for t in triggers:                       # remember what was reacted to, so the same event does not wake the agent twice
         if t.kind == "new_report":
             state.seen_runs[kp + t.topic] = next((x.get("run_id") for x in toks if x["topic"] == t.topic), "") or ""
@@ -392,8 +406,11 @@ def _sellable(state, toks, pf, shadow, closes, now, ex):  # noqa: ANN001,ANN201
         if value is None:
             value = holding_value(ex, h)
         day, close, _prev = closes.get(h["ticker"], (None, None, None))
+        px_row = state.holding_prices.get(("" if shadow else "live:") + h["ticker"]) or {}
         out.append({"ticker": h["ticker"], "symbol": h["symbol"], "asset_id": h.get("asset_id"), "topic": h.get("topic"), "quantity": h["quantity"],
                     "cost_usd": h.get("cost_usd"), "value_usd": value, "held_hours": round(hours, 1), "last_close": close, "last_close_date": day,
+                    "price_now": px_row.get("price"), "price_read_at": px_row.get("at"), "cost_per_share": px_row.get("cost_per_share"),
+                    "gain_pct_since_bought": px_row.get("gain_pct"), "move_pct_since_your_last_look": px_row.get("since_seen_pct"),
                     "report_verdict": (tok or {}).get("band") if tok and tok["ticker"] == h["ticker"] else None,
                     "report_confidence_pct": (tok or {}).get("confidence_pct") if tok and tok["ticker"] == h["ticker"] else None,
                     "still_in_a_fund": bool(tok and tok["ticker"] == h["ticker"]),
