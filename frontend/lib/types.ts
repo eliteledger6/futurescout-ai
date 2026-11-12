@@ -290,7 +290,7 @@ export interface TradeProposal { correction?: string | null;
 }
 export interface Trading {
   network: string; account: string | null; key_configured: boolean; trading_enabled: boolean; kill_switch: boolean;
-  limits: { max_trade_usd: number; max_day_usd: number; max_total_usd: number; price_band_pct: number; max_cost_pct: number; shadow_budget_usd: number };
+  limits: { budget_from_balance?: boolean; private_reserve_near?: number; max_trade_usd: number; max_day_usd: number; max_total_usd: number; price_band_pct: number; max_cost_pct: number; shadow_budget_usd: number };
   spent: { live_total_usd: number; live_today_usd: number; shadow_filled_usd: number; live_proceeds_usd?: number; live_counted_usd?: number };
   selling?: { enabled: boolean; budget_mode: "spent" | "net"; max_sells_per_day: number };
   live_holdings?: { ticker: string; symbol: string; topic: string; quantity: number; cost_usd: number; first_bought: string; buys: number;

@@ -39,6 +39,9 @@ Rules that always apply:
   per report by what it cost to make, paid in NEAR, owner 2026-11-10; Agent Market hire $3; at most 30% of the fund); the report agent stakes 70% of each payment (keeps 30%; at $200 the pot funds a second trading agent, planned) via NEAR AI Staking for Inference.
   `economy.enabled` is owner-only (owner set it true 2026-11-10); staking goes to stake.dao (NEAR AI Cloud Credits), copied from the owner's own dashboard stake; payments and stakes sign with keys, so they run in the owner's loop.
   Restart 2026-11-10 (owner): trading/economy records archived, fresh $60 budget approved by the owner in chat.
+  Budget (owner 2026-11-12, "Agent can use whatever money inside his wallet"): `live.budget_from_balance: true`, set at the
+  owner's words. No dollar cap: a buy uses what the near.com balance holds above `private_reserve_near`. Owner-only: Claude never
+  changes it, the reserve or the old caps without the owner's words. Allowlist, minimum trade, cost cap and kill switch stay.
   Holding briefs (owner 2026-11-12, "$0.50 a day"): once a day the trading agent buys a short check-up on each share it holds
   from the report agent (`economy.brief_usd: 0.5`, X signals + a risk note), paid in NEAR in the owner's loop through the same
   checks as a report purchase. Claude never changes `brief_usd` without the owner's words and never runs the paying loop or `fund_trade.py brief` (it pays).

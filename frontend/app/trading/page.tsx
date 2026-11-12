@@ -63,7 +63,7 @@ export default function TradingPage() {
 
               <Reveal>
                 <div className="stats">
-                  <div className="stat"><div className="stat-value"><CountUp value={t.spent.live_counted_usd ?? t.spent.live_total_usd} decimals={2} prefix="$" /><span className="muted" style={{ fontSize: 22 }}> / {usd(t.limits.max_total_usd, 0)}</span></div><div className="stat-label">{t.selling?.budget_mode === "net" ? "real money invested (buys minus sales), of the cap" : "real money used, of the total cap"}</div></div>
+                  <div className="stat"><div className="stat-value"><CountUp value={t.spent.live_counted_usd ?? t.spent.live_total_usd} decimals={2} prefix="$" />{!t.limits.budget_from_balance && <span className="muted" style={{ fontSize: 22 }}> / {usd(t.limits.max_total_usd, 0)}</span>}</div><div className="stat-label">{t.limits.budget_from_balance ? "real money invested (buys minus sales); the limit is what the near.com balance holds" : t.selling?.budget_mode === "net" ? "real money invested (buys minus sales), of the cap" : "real money used, of the total cap"}</div></div>
                   <div className="stat"><div className="stat-value">{t.private_near != null ? <><CountUp value={t.private_near} decimals={2} /> Ⓝ</> : "–"}</div><div className="stat-label">NEAR in the fund&apos;s near.com balance{t.private_checked_at ? ` (as of ${fmtDate(t.private_checked_at)})` : " (not read yet)"}; wallet {t.balances?.near != null ? `${t.balances.near.toFixed(2)} NEAR` : "–"}</div></div>
                   <div className="stat"><div className="stat-value"><CountUp value={t.shadow_portfolio.invested_usd} prefix="$" /><span className="muted" style={{ fontSize: 22 }}> / {usd(t.shadow_portfolio.budget_usd, 0)}</span></div><div className="stat-label">shadow mode: pretend money placed at real quotes</div></div>
                   <div className="stat"><div className="stat-value"><CountUp value={t.allowlist.length} /></div><div className="stat-label">tokenized stocks the agent may choose from</div></div>
@@ -101,7 +101,9 @@ export default function TradingPage() {
                 <summary style={{ cursor: "pointer" }}><b>Rules and allowed tokens</b> <span className="muted small">· limits enforced in code</span></summary>
                 <div className="grid grid-2" style={{ background: "transparent", border: 0, gap: 24, marginTop: 12 }}>
                   <ul className="small" style={{ color: "var(--text-2)", lineHeight: 1.7, background: "transparent", margin: 0 }}>
-                    <li>At most {usd(t.limits.max_trade_usd)} per trade, {usd(t.limits.max_day_usd)} per day, {usd(t.limits.max_total_usd)} in total.</li>
+                    <li>{t.limits.budget_from_balance
+                      ? <>No fixed dollar cap (the owner&apos;s setting): a buy uses what the fund&apos;s near.com balance holds above a reserve of {t.limits.private_reserve_near ?? 0.2} NEAR. The owner decides the budget by what is put into that balance.</>
+                      : <>At most {usd(t.limits.max_trade_usd)} per trade, {usd(t.limits.max_day_usd)} per day, {usd(t.limits.max_total_usd)} in total.</>}</li>
                     <li>{t.selling?.enabled ? `Buys of the tokens listed here; sales only of what the fund holds (at most ${t.selling.max_sells_per_day} a day).` : "Buys only, and only the tokens listed here."}</li>
                     <li>{t.limits.price_band_pct > 0
                       ? <>The quoted price must be within {t.limits.price_band_pct}% of the stock&apos;s last close (a little wider when that close is days old).</>

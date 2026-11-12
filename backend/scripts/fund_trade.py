@@ -451,7 +451,8 @@ def _assess(s, cfg, state, toks, triggers, check, shadow, now, pf, closes=None):
     if shadow:
         budget, fixed = pf["cash_usd"], None
     else:
-        budget = min(lv.max_trade_usd, lv.max_total_usd - state.invested("live", lv.budget_mode), lv.max_day_usd - state.spent("live", day))
+        from app.fund.live import buy_budget
+        budget = buy_budget(lv, state, day, near_price(ex) if lv.budget_from_balance else 0.0)
         fixed = budget if budget >= lv.min_trade_usd else None
     can_buy = budget >= (1 if shadow else lv.min_trade_usd)
     sells_on = True if shadow else lv.sells_enabled

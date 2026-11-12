@@ -634,3 +634,16 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
 - Checked on the server's published data: the 01:00 UTC brief is linked to the 01:14 UTC decision "hold"; the 03:18 UTC
   brief is "not read yet" (the agent on the server still runs the earlier code). Mock-tested (364 tests pass); the site
   builds. Not yet seen in the browser with real data: that needs the push.
+
+## 2026-11-12: no fixed dollar cap; the budget is what the near.com balance holds (owner's decision)
+- Owner, in chat: "Agent can use whatever money inside his wallet". `live.budget_from_balance: true` in `funds.yaml`:
+  the three dollar caps (per trade, per day, in total: all $60) are no longer applied. A real buy is sized by the
+  near.com balance at its last reading, above `private_reserve_near` (0.2 NEAR), less 1% for price moves
+  (`live.buy_budget`); `check_limits` skips the three caps; the balance is still checked again before signing.
+- Unchanged: the allowlist (stocks from reports rated strong or building), the $20 minimum trade, the 2% cost cap, the
+  kill switch, the order check before signing, and the report budget (30% of the fund's value).
+- In real-money mode the trade size is fixed, so one buy uses everything above the reserve. With the 0.2 NEAR reserve
+  a buy can leave too little for the next reports and daily briefs (a brief is about 0.14 NEAR, a report about 0.55):
+  those then stay owed or unbought until NEAR is added. `private_reserve_near` is the owner's setting to raise.
+- Site (Trading, About), README, the trading disclaimer and CLAUDE.md say so. Mock-tested (365 tests pass). Takes
+  effect when the server's trader is restarted on this code; not run by Claude.

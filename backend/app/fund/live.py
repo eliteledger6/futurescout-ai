@@ -39,7 +39,7 @@ from pydantic import BaseModel, Field
 
 from app.fund.strategy import StrategyConfig
 
-DISCLAIMER = ("Real money with a small budget capped by the owner; orders run after the code checks on the agent's own approval "
+DISCLAIMER = ("Real money: only what the owner puts into the agent's balance; orders run after the code checks on the agent's own approval "
               "(the owner's setting live.auto_approve; without it each order waits for the owner). Tokenized stocks are issued by Ondo and are "
               "not the shares themselves. Not investment advice.")
 FINAL = {"success", "refunded", "failed", "rejected", "shadow_filled", "hold"}
@@ -70,6 +70,10 @@ class LiveConfig(BaseModel):
     budget_mode: Literal["spent", "net"] = "spent"   # "spent": the total cap counts every dollar ever spent on buys;
                                          # "net" (OWNER-ONLY): it counts buys minus the proceeds of sales, so sale money can be re-invested
     max_sells_per_day: int = 2
+    # OWNER-ONLY (owner 2026-11-12: "Agent can use whatever money inside his wallet"): true = the three dollar caps
+    # below are not applied; a buy is sized by what the near.com balance holds above private_reserve_near. The allowlist,
+    # the minimum trade, the cost cap, the kill switch and the pre-signing checks all still apply.
+    budget_from_balance: bool = False
     max_trade_usd: float = 5.0
     max_day_usd: float = 5.0
     max_total_usd: float = 5.0
@@ -274,6 +278,8 @@ def check_limits(state: TradingState, p: Proposal, cfg: LiveConfig, *, kill_swit
         return bad
     if p.usd < cfg.min_trade_usd:
         bad.append(f"amount ${p.usd:.2f} is below the minimum ${cfg.min_trade_usd:.2f}")
+    if cfg.budget_from_balance:
+        return bad                                   # no dollar caps: the balance itself is checked again before signing
     if p.usd > cfg.max_trade_usd + 1e-9:
         bad.append(f"amount ${p.usd:.2f} is above the per-trade cap ${cfg.max_trade_usd:.2f}")
     if state.spent("live", day) + p.usd > cfg.max_day_usd + 1e-9:
@@ -721,6 +727,14 @@ def performance(state: TradingState, prices: dict[str, tuple[float, str, str]], 
             "priced_at": max((u[1] for u in used), default=None),
             "basis": "; ".join(sorted({u[2] for u in used})) or "no price",
             "note": "report purchases not included"}
+
+
+def buy_budget(cfg: LiveConfig, state: TradingState, day: str, near_usd: float) -> float:
+    """Dollars a real buy may use right now. With `budget_from_balance` (owner 2026-11-12): what the near.com balance held
+    at its last reading, above the reserve (1% kept for price moves). Otherwise the smallest of the three dollar caps."""
+    if cfg.budget_from_balance:
+        return round(max(0.0, (state.private_near or 0.0) - cfg.private_reserve_near) * max(0.0, near_usd) * 0.99, 2)
+    return min(cfg.max_trade_usd, cfg.max_total_usd - state.invested("live", cfg.budget_mode), cfg.max_day_usd - state.spent("live", day))
 
 
 def shadow_portfolio(state: TradingState, prices: dict[str, float], budget: float) -> dict:

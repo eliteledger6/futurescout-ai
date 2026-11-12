@@ -427,3 +427,26 @@ def test_performance_is_in_percent_at_the_latest_close():
     old = performance(st, {"INTC": (58.13, "2026-11-10", "latest daily close")}, 10_000)
     assert old["live_pct"] < 0 and old["basis"] == "latest daily close"              # only when no live price exists
     assert "amount" not in str(perf).lower() and performance(TradingState(), {}, 10_000)["live_pct"] is None   # nothing held: no number
+
+
+def test_budget_follows_the_near_com_balance_when_the_owner_removed_the_dollar_caps():
+    """Owner 2026-11-12: "Agent can use whatever money inside his wallet"."""
+    from datetime import datetime, timezone
+    from app.fund import load_fund_config
+    from app.fund.live import LiveConfig, Proposal, TradingState, buy_budget, check_limits
+    capped = LiveConfig(max_trade_usd=60, max_day_usd=60, max_total_usd=60, min_trade_usd=20, trading_enabled=True)
+    free = capped.model_copy(update={"budget_from_balance": True, "private_reserve_near": 0.2})
+    st = TradingState(private_near=30.2)
+    assert buy_budget(capped, st, "2026-11-12", 3.6) == 60                       # the old rule: the smallest dollar cap
+    assert buy_budget(free, st, "2026-11-12", 3.6) == 106.92                     # 30 NEAR above the reserve at $3.60, less 1%
+    assert buy_budget(free, TradingState(private_near=None), "2026-11-12", 3.6) == 0.0     # balance never read: nothing to spend
+    assert buy_budget(free, TradingState(private_near=0.1), "2026-11-12", 3.6) == 0.0      # under the reserve
+    p = Proposal(id="p1", created_at=datetime(2026, 11, 12, tzinfo=timezone.utc), mode="live", topic="t", ticker="MSFT", symbol="MSFTon",
+                 asset_id="a", usd=106.92, rationale="r")
+    kw = dict(kill_switch=False, now=datetime(2026, 11, 12, tzinfo=timezone.utc))
+    over, ok = check_limits(st, p, capped, **kw), check_limits(st, p, free, **kw)
+    assert any("cap" in x for x in over), over                                   # $106.92 breaks the $60 caps
+    assert not any("cap" in x for x in ok), ok                                   # no dollar cap when the budget follows the balance
+    assert [x for x in over if "cap" not in x] == [x for x in ok if "cap" not in x]      # every other check is unchanged
+    lv = load_fund_config().live
+    assert lv.budget_from_balance is True and lv.min_trade_usd == 20 and lv.max_cost_pct == 2.0      # the owner's setting; the other limits stay
