@@ -75,91 +75,92 @@ SCENES = [
         ("FUTURESCOUT AI answers that with a small team of AI agents, running on NEAR AI Cloud.",
          "FutureScout AI answers that with a small team of AI agents, running on NEAR AI Cloud."),
     ]),
-    Scene("02_radar", "01", "Hot-topic radar", [
+    # the map first: the whole system once, left to right. Every later scene is one step of it, said once.
+    Scene("02_network", "01", "The agent network", [
+        ("Here's the whole system on one page. Let's follow it, from left to right.", None),
+        ("The radar finds the topics. The report agent takes one, and hands it to its team of nine AI agents.", None),
+        ("All their work comes back to the report agent. It seals the report on NEAR, publishes it, and sells it.", None),
+        ("The trading agent buys the report, and trades on it. Now, let's look at each step.", None),
+    ]),
+    Scene("03_radar", "02", "Hot-topic radar", [
         ("This is the radar. It follows more than fifty topics, across nine sectors.", None),
         ("For each one, we count research papers and patent filings. Last year against this year, so far.", None),
         ("That tells you what's heating up right now. Not what was hot last year.", None),
         ("The report agent recounts it every day. And when its science agent has no job, it reads new papers, and adds topics that are really growing.", None),
+        ("The top five topics always get a fresh report.", None),
     ]),
-    Scene("03_agents", "02", "The agent team", [
-        ("The report agent runs the research. It takes a topic, and hands it to its team of nine AI agents.", None),
+    Scene("04_team", "03", "The research team", [
         ("A chief agent makes the plan. Then the science, patent, risk and X agents run in parallel, on real papers, patents and posts.",
          "A chief agent makes the plan. Then the science, patent, risk and X agents run in parallel... on real papers, real patents, and real posts."),
         ("The market agent follows the evidence to the companies behind it, and reads their SEC filings. Nobody hands it a list.", None),
         ("An AI check keeps the counts on topic. And the risk agent's job is to argue the other side.", None),
-        ("All their work comes back to the report agent. It seals the report on NEAR, publishes it, and sells it.", None),
-        ("Now, here's the part we're proud of: the agents run an economy. The trading agent has to buy each report from the report agent, in NEAR.",
-         "Now, here's the part we're proud of. The agents run an economy. The trading agent has to buy each report from the report agent, in NEAR."),
-        ("The report agent stakes 70% of what it earns with NEAR AI. That earns credits toward the agents' models.",
-         "The report agent stakes seventy percent of what it earns with NEAR AI. That earns credits toward the agents' models."),
-        ("It keeps the other 30%. And once that passes $200, it funds a second trading agent.",
-         "It keeps the other thirty percent. And once that passes two hundred dollars, it funds a second trading agent."),
     ]),
-    Scene("04_report", "03", "A research report", [
+    Scene("05_report", "04", "A research report", [
         ("Let's open one. High bandwidth memory.", None),
         ("The verdict is strong momentum, with a score of 80.", "The verdict is strong momentum, with a score of eighty."),
         ("But look at the confidence: only 50%. Risks lower the confidence, not the score.",
          "But look at the confidence. Only fifty percent. Risks lower the confidence, not the score."),
         ("Research is up 106% this year. Patents, up 81%.", "Research is up a hundred and six percent this year. Patents, up eighty-one."),
     ]),
-    Scene("05_companies", "04", "Companies and price check", [
-        ("It names the companies behind that evidence, including some smaller ones.", None),
+    Scene("06_companies", "05", "Companies and price check", [
+        ("It names the companies behind that evidence.", None),
         ("And it checks how far their share prices have already run. That's a risk check. It's never a buy signal.", None),
     ]),
-    Scene("05b_scout", "05", "Company scout", [
+    Scene("07_scout", "06", "Company scout", [
         ("The company scout goes past the big names, to smaller listed companies behind the patents and papers.", None),
         ("It compares their size, growth and research spending, and ranks the ones to watch.", None),
     ]),
-    Scene("06_evidence", "06", "Evidence you can check", [
+    Scene("08_evidence", "07", "Evidence you can check", [
         ("Open the full report, and everything is there.", None),
         ("Which agents ran, on which model, and what each one cost.", None),
         ("Every finding has a label, and the exact quote from its source.", None),
         ("If a source doesn't back a claim up, a citation guard downgrades it.", None),
     ]),
-    Scene("07_seal", "07", "Sealed on NEAR", [
+    Scene("09_seal", "08", "Sealed on NEAR", [
         ("When a report is done, its fingerprint is sealed on NEAR mainnet. The site checks it again on every page load.", None),
         ("Change a single word, and the seal breaks.", None),
         ("Anyone can check a report against its seal, without asking us.", None),
-    ], tail=2.4),
-    Scene("09_funds", "08", "Funds and trading", [
+    ], tail=2.2),
+    Scene("10_funds", "09", "Paper funds", [
         ("Every topic also gets a paper fund, spread across low, medium and high-risk companies.", None),
         ("Each decision comes with its reasons, and the fund is measured against the S&P 500.",
          "Each decision comes with its reasons, and the fund is measured against the S and P five hundred."),
+    ]),
+    Scene("11_trader", "10", "The trading agent, real money", [
         ("Then there's real money: a trading agent on a strong model trades tokenized stocks through NEAR Intents.",
          "Then there's real money. A trading agent on a strong model trades tokenized stocks through NEAR Intents."),
         ("Code checks every order first: the budget, the allowed stocks and the cost. The agent weighs the price itself, then approves its own trade.",
          "Code checks every order first. The budget, the allowed stocks, and the cost. The agent weighs the price itself, then approves its own trade."),
-        ("In shadow mode, it also trades pretend money at real quotes, and explains every choice.", None),
-    ]),
-    Scene("10_round", "09", "Real money, end to end", [
-        ("Here's a real round. The agent wakes up on its own: a new report, a sharp price move, or its daily review.",
-         "Here's a real round. The agent wakes up on its own. A new report, a sharp price move, or its daily review."),
+        ("It wakes up on its own: a new report, a sharp price move, or its daily review.",
+         "It wakes up on its own. A new report, a sharp price move, or its daily review."),
         ("Before it can use a report, it has to buy it. It bought six, at about $2 each, paid in NEAR straight from its near.com balance.",
          "Before it can use a report, it has to buy it. It bought six, at about two dollars each, paid in NEAR, straight from its near dot com balance."),
         ("After buying the memory report, it bought Intel, and approved the order itself, once every check had passed.", None),
         ("It reads the price of what it holds every hour. And once a day, it buys a short brief on each holding from the report agent, for 50 cents.",
          "It reads the price of what it holds every hour. And once a day, it buys a short brief on each holding from the report agent, for fifty cents."),
+        ("In shadow mode, it also trades pretend money at real quotes, and explains every choice.", None),
+    ]),
+    Scene("12_economy", "11", "The agent economy", [
         ("Every report has a price: $2 to $3, depending on what it cost to make.",
          "Every report has a price. Two to three dollars, depending on what it cost to make."),
         ("The report agent staked 70% of what it earned, 2.5 NEAR, with NEAR AI, and kept the rest toward a second trading agent.",
          "The report agent staked seventy percent of what it earned, two point five NEAR, with NEAR AI, and kept the rest toward a second trading agent."),
         ("And here it is on NEAR AI Cloud: the report agent's account, with 2.52 NEAR staked, farming credits for the models.",
          "And here it is, on NEAR AI Cloud. The report agent's account, with two point five two NEAR staked, farming credits for the models."),
-    ], tail=1.5),
-    Scene("11_market", "10", "Listed on NEAR Agent Market", [
+        ("And every report it sells funds the next one.", None),
+    ], tail=1.2),
+    Scene("13_open", "12", "Open to everyone", [
         ("And it's not just our own agent buying. The report agent is listed on NEAR's Agent Market.", None),
         ("Anyone can hire it for $3: give it a topic, and it delivers a sealed report.",
          "Anyone can hire it for three dollars. Give it a topic, and it delivers a sealed report."),
         ("Other trading bots can buy any report through our API too, paid in NEAR and checked on chain.",
          "Other trading bots can buy any report through our A P I too, paid in NEAR, and checked on chain."),
+        ("You can also propose a topic for free. An AI reviewer screens every proposal.", None),
     ]),
-    Scene("12_auto", "11", "Runs by itself", [
-        ("Anyone can ask for a report: hire the agent on the market, or propose a topic for free. An AI reviewer screens every proposal.",
-         "Anyone can ask for a report. Hire the agent on the market, or propose a topic for free. An AI reviewer screens every proposal."),
+    Scene("14_cloud", "13", "Runs by itself", [
         ("And nobody starts any of this by hand. Both agents run on a cloud server, around the clock.", None),
-        ("The report agent keeps a fresh report on the radar's top five topics. And every report it sells pays for the next one.", None),
-    ]),
-    Scene("10_close", "", "", [
+    ], tail=1.2),
+    Scene("15_close", "", "", [
         ("That's FUTURESCOUT AI: research you can check.", "That's FutureScout AI. Research you can check."),
         ("Models on NEAR AI Cloud. Reports sealed on NEAR.", None),
         ("Built for the NEAR Hackathon.", None),
@@ -247,7 +248,9 @@ def faster(path: Path) -> Path:
 def wav_path(sc: Scene, k: int) -> Path:
     import hashlib
     text = sc.lines[k][1] or sc.lines[k][0]
-    return AUDIO / f"{sc.key}_{k}_{hashlib.sha1(f'{RATE}|{text}'.encode()).hexdigest()[:8]}.wav"
+    tag = hashlib.sha1(f'{RATE}|{text}'.encode()).hexdigest()[:8]
+    have = sorted(q for q in AUDIO.glob(f"*_{tag}.wav"))
+    return have[0] if have else AUDIO / f"{sc.key}_{k}_{tag}.wav"
 
 
 def build_narration(scenes: list[Scene], reuse: bool) -> Path:
@@ -539,39 +542,57 @@ async def rec_radar(k: Take) -> None:
     await b.click("button.tab", text="semiconductors", seconds=0.8)
     await asyncio.sleep(0.9)
     await b.hover("table.radar-table tbody tr", index=1, seconds=0.7)
+    await k.until(k.sent[4] - 1.2)
+    k.cut()
+    try:
+        await b.click("button.tab", text="all sectors", seconds=0.7)
+        await asyncio.sleep(0.6)
+        first, fifth = await b.rect("table.radar-table tbody tr", 0), await b.rect("table.radar-table tbody tr", 4)
+        if first and fifth:
+            await k.hl([first[0], first[1], first[2], fifth[1] + fifth[3] - first[1]], seconds=max(2.0, k.dur - k.sent[4] - 0.4), pad=4)
+        await b.hover("table.radar-table tbody tr", index=0, seconds=0.7)
+    except Exception:  # noqa: BLE001  (the shot still shows the table)
+        pass
 
 
-async def rec_agents(k: Take) -> None:
+async def rec_network(k: Take) -> None:
+    """The whole network once, left to right: radar -> report agent -> team -> report agent -> trading agent."""
     b = k.b
     await b.scroll_to_el(".flow-legend", 1.3, offset=96)
+    await k.hl(await b.rect(".flow-legend-lead"), seconds=max(2.0, k.sent[1] - 1.8), pad=8)
+    await k.until(k.sent[1] + 0.1)
+    await b.hover("g.node", text="hot-topic radar", seconds=0.7)
+    await k.until(k.sent[1] + (k.sent[2] - k.sent[1]) * 0.4)
     await b.hover("g.node", text="report agent", seconds=0.7)
-    await k.until(k.sent[0] + (k.sent[1] - k.sent[0]) * 0.55)
+    await k.until(k.sent[1] + (k.sent[2] - k.sent[1]) * 0.7)
     await b.hover("g.node", text="chief", seconds=0.7)
-    await k.until(k.sent[1])
-    span = max(2.0, k.sent[2] - k.sent[1] - 0.6)
-    names = ["chief", "science", "risk", "patent", "X"]
-    for i, name in enumerate(names):
-        await k.until(k.sent[1] + span * i / len(names))
-        await b.hover("g.node", text=name, seconds=0.55)
-    await k.until(k.sent[2] + 0.3)
-    await b.hover("g.node", text="market", seconds=0.8)
-    await k.until(k.sent[3] - 0.1)
-    await b.hover("g.node", text="science", seconds=0.6)
-    await b.hover("g.node", text="risk", seconds=0.7)
-    await k.until(k.sent[4] + 0.2)
+    await k.until(k.sent[2] + 0.2)
     await b.hover("g.node", text="investment", seconds=0.6)                  # all the work arrives at the report agent
     await b.hover("g.node", text="report agent", seconds=0.8)
-    await k.hl(await b.rect("g.node", text="report agent"), seconds=max(2.0, k.sent[5] - k.sent[4] - 1.8), pad=8)
-    await k.until(k.sent[5] + 0.2)
-    await b.hover("g.node", text="report agent", seconds=0.6)
-    await k.until(k.sent[5] + (k.sent[6] - k.sent[5]) * 0.45)
+    await k.hl(await b.rect("g.node", text="report agent"), seconds=max(2.0, k.sent[3] - k.sent[2] - 1.8), pad=8)
+    await k.until(k.sent[3] + 0.2)
     await b.hover("g.node", text="trading agent", seconds=0.7)
-    await k.until(k.sent[6] + 0.2)
-    await b.hover("g.node", text="near ai staking", seconds=0.7)
-    await k.until(k.sent[7] + 0.2)
-    await b.hover("g.node", text="report agent", seconds=0.6)
-    await k.until(k.sent[7] + (k.dur - k.sent[7]) * 0.4)
-    await b.hover("g.node", text="trading agent 2", seconds=0.8)
+    await k.hl(await b.rect("g.node", text="trading agent"), seconds=2.2, pad=8)
+
+
+async def rec_team(k: Take) -> None:
+    """The report agent's team: plan, parallel research, companies, the other side."""
+    b = k.b
+    await b.scroll_to_el(".flow-legend", 1.0, offset=96)
+    await b.hover("g.node", text="chief", seconds=0.7)
+    span = max(2.0, k.sent[1] - 2.2)
+    names = ["science", "patent", "risk", "X"]
+    for i, name in enumerate(names):
+        await k.until(1.8 + span * i / len(names))
+        await b.hover("g.node", text=name, seconds=0.55)
+    await k.until(k.sent[1] + 0.3)
+    await b.hover("g.node", text="market", seconds=0.8)
+    await k.hl(await b.rect("g.node", text="market"), seconds=max(2.0, k.sent[2] - k.sent[1] - 1.6), pad=8)
+    await k.until(k.sent[2] - 0.1)
+    await b.hover("g.node", text="science", seconds=0.6)
+    await k.until(k.sent[2] + (k.dur - k.sent[2]) * 0.45)
+    await b.hover("g.node", text="risk", seconds=0.7)
+    await k.hl(await b.rect("g.node", text="risk"), seconds=2.0, pad=8)
 
 
 async def rec_report(k: Take) -> None:
@@ -636,41 +657,60 @@ async def rec_scout(k: Take) -> None:
         await asyncio.sleep(0.5)
 
 
-async def rec_round(k: Take) -> None:
+async def rec_trader(k: Take) -> None:
+    """The trading page top to bottom: the pipeline, a wake-up, the report it bought, the Intel buy, the daily brief, shadow mode."""
     b = k.b
-    await b.scroll_to_el(".tr-log", 1.1, offset=260)
-    await asyncio.sleep(0.3)
-    await k.hl(await b.rect(".tr-log"), seconds=max(2.2, k.sent[1] - 1.6), pad=10)
-    await b.hover(".tr-log li", 0, seconds=0.7)
-    await k.until(k.sent[1] - 0.9)
-    k.cut()
-    await b.scroll_to_el(".tr-card", 1.1, offset=90, text="Agent economy")       # the report purchase
-    await k.until(k.sent[1] + 0.2)
-    await k.hl(await b.rect(".tr-card .stat", 0, text="paid to the report agent"), seconds=2.4, pad=8)
-    await b.hover(".tr-mini > div", 0, seconds=0.7)
+    await b.scroll_to_el(".tp-pipe", 0.9, offset=370)
+    await k.hl(await b.rect(".tp-pipe"), seconds=max(2.0, k.sent[1] - 0.8), pad=10)
+    await b.hover(".tp-name", text="trading agent", seconds=0.7)
+    await k.until(k.sent[1] + 0.1)
+    span = k.sent[2] - k.sent[1] - 1.4
+    for i, name in enumerate(["safety checks", "auto-approve", "near intents"]):
+        await k.until(k.sent[1] + 0.1 + span * i / 3)
+        await b.hover(".tp-name", text=name, seconds=0.6)
     await k.until(k.sent[2] - 0.9)
     k.cut()
-    await b.scroll_to_el(".tr-card.live", 1.0, offset=110, index=0)            # the Intel buy, approved by the agent
+    await b.scroll_to_el(".tr-log", 1.0, offset=260)                            # it wakes on its own
     await k.until(k.sent[2] + 0.2)
-    await k.hl(await b.rect(".tr-card.live .tr-head", 0), seconds=2.6, pad=8)
-    await b.hover(".tr-card.live .tr-say", 0, seconds=0.8)
+    await k.hl(await b.rect(".tr-log"), seconds=max(2.2, k.sent[3] - k.sent[2] - 1.4), pad=10)
+    await b.hover(".tr-log li", 0, seconds=0.7)
     await k.until(k.sent[3] - 0.9)
     k.cut()
-    await b.scroll_to_el(".tr-card", 1.0, offset=110, text="Daily holding briefs")   # the daily brief bought from the report agent
+    await b.scroll_to_el(".tr-card", 1.0, offset=90, text="Agent economy")       # the report purchase
     await k.until(k.sent[3] + 0.2)
-    await k.hl(await b.rect(".tr-card .tr-head", 0, text="Daily holding briefs"), seconds=max(2.4, (k.sent[4] - k.sent[3]) * 0.45), pad=8)
-    await k.until(k.sent[3] + (k.sent[4] - k.sent[3]) * 0.5)
-    await k.hl(await b.rect(".pill", 0, text="NEAR · paid"), seconds=max(2.0, (k.sent[4] - k.sent[3]) * 0.4), pad=6)
-    await b.hover(".pill", 0, text="NEAR · paid", seconds=0.7)
+    await k.hl(await b.rect(".tr-card .stat", 0, text="paid to the report agent"), seconds=2.4, pad=8)
+    await b.hover(".tr-mini > div", 0, seconds=0.7)
     await k.until(k.sent[4] - 0.9)
     k.cut()
-    await b.scroll_to_el(".tr-card", 1.0, offset=90, text="Agent economy")       # reports priced in NEAR, then staking and the kept pot
-    await k.until(k.sent[4] + 0.1)
-    await k.hl(await b.rect(".tr-mini"), seconds=max(2.0, k.sent[5] - k.sent[4] - 0.8), pad=8)
-    await b.hover(".tr-mini > div", 1, seconds=0.7)
+    await b.scroll_to_el(".tr-card.live", 1.0, offset=110, index=0)            # the Intel buy, approved by the agent
+    await k.until(k.sent[4] + 0.2)
+    await k.hl(await b.rect(".tr-card.live .tr-head", 0), seconds=2.6, pad=8)
+    await b.hover(".tr-card.live .tr-say", 0, seconds=0.8)
+    await k.until(k.sent[5] - 0.9)
+    k.cut()
+    await b.scroll_to_el(".tr-card", 1.0, offset=110, text="Daily holding briefs")   # the daily brief bought from the report agent
     await k.until(k.sent[5] + 0.2)
-    await k.hl(await b.rect(".tr-card .stat", 0, text="staked for NEAR AI"), seconds=2.2, pad=8)
-    await asyncio.sleep(1.4)
+    await k.hl(await b.rect(".tr-card .tr-head", 0, text="Daily holding briefs"), seconds=max(2.4, (k.sent[6] - k.sent[5]) * 0.45), pad=8)
+    await k.until(k.sent[5] + (k.sent[6] - k.sent[5]) * 0.5)
+    await k.hl(await b.rect(".pill", 0, text="NEAR · paid"), seconds=max(2.0, (k.sent[6] - k.sent[5]) * 0.4), pad=6)
+    await b.hover(".pill", 0, text="NEAR · paid", seconds=0.7)
+    await k.until(k.sent[6] - 1.1)
+    k.cut()
+    await b.scroll_to_el(".sp-grid", 1.0, offset=210)                           # shadow mode
+    await k.until(k.sent[6] + 0.2)
+    await k.hl(await b.rect(".sp-grid"), seconds=max(2.4, k.dur - k.sent[6] - 0.8), pad=12)
+    await b.hover(".sp-row", 0, seconds=0.7)
+
+
+async def rec_economy(k: Take) -> None:
+    """The Agent economy panel: reports priced in NEAR, then the stake and the kept pot (the stake itself follows on NEAR AI Cloud)."""
+    b = k.b
+    await b.scroll_to_el(".tr-card", 1.0, offset=90, text="Agent economy")
+    await k.hl(await b.rect(".tr-mini"), seconds=max(2.0, k.sent[1] - 0.8), pad=8)
+    await b.hover(".tr-mini > div", 1, seconds=0.7)
+    await k.until(k.sent[1] + 0.2)
+    await k.hl(await b.rect(".tr-card .stat", 0, text="staked for NEAR AI"), seconds=max(2.2, (k.dur - k.sent[1]) * 0.45), pad=8)
+    await k.until(k.sent[1] + (k.dur - k.sent[1]) * 0.55)
     await k.hl(await b.rect(".tr-card .stat", 0, text="kept pot"), seconds=2.0, pad=8)
     await k.until(k.dur - 0.2)
 
@@ -689,37 +729,26 @@ async def rec_market(k: Take) -> None:
 
 
 async def rec_request(k: Take) -> None:
-    """The Request a report page: the paid hire and the free proposal, then the proposals list (the reviewer's verdicts)."""
+    """The Request a report page: the free proposal box, then the proposals list (the reviewer's verdicts)."""
     b = k.b
-    await b.scroll_to(250, 1.0)
-    panels = await b.rect(".grid.grid-2")
-    await k.hl(panels, seconds=max(3.0, k.dur * 0.55), pad=10)
-    await b.hover(".panel", 0, seconds=0.8)
-    await k.until(k.dur * 0.38)
+    await b.scroll_to(250, 0.9)
+    await k.hl(await b.rect(".panel", 1), seconds=max(2.2, k.dur * 0.5), pad=10)
     await b.hover(".panel", 1, seconds=0.8)
-    await k.until(k.dur * 0.66)
+    await k.until(k.dur * 0.6)
     k.cut()
-    await b.scroll_to(620, 1.1)
+    await b.scroll_to(620, 1.0)
     await b.hover(".pill", text="report ready", seconds=0.7)
 
 
-async def rec_auto(k: Take) -> None:
-    """The agent network on the home page: the radar feeds the report agent's own reports; a sale pays for the next."""
+async def rec_cloud(k: Take) -> None:
+    """The agent network on the home page, once more as the closing picture: both agents, running by themselves."""
     b = k.b
-    await b.scroll_to_el(".flow-legend", 1.2, offset=96)
-    await k.hl(await b.rect(".flow-legend-lead"), seconds=max(2.4, k.sent[1] - 0.6), pad=8)
+    await b.scroll_to_el(".flow-legend", 1.1, offset=96)
     await b.hover("g.node", text="report agent", seconds=0.7)
-    await asyncio.sleep(0.5)
+    await k.hl(await b.rect("g.node", text="report agent"), seconds=max(1.6, k.dur * 0.4), pad=8)
+    await k.until(k.dur * 0.5)
     await b.hover("g.node", text="trading agent", seconds=0.7)
-    await k.until(k.sent[1] + 0.2)
-    radar = await b.rect("g.node", text="hot-topic radar")
-    if radar:
-        await k.hl([radar[0], radar[1], radar[2], radar[3] + 46], seconds=max(2.6, (k.dur - k.sent[1]) * 0.5), pad=8)
-    await b.hover("g.node", text="hot-topic radar", seconds=0.8)
-    await k.until(k.sent[1] + (k.dur - k.sent[1]) * 0.55)
-    await b.hover("g.node", text="report agent", seconds=0.8)
-    await asyncio.sleep(0.6)
-    await b.hover("g.node", text="trading agent", seconds=0.7)
+    await k.hl(await b.rect("g.node", text="trading agent"), seconds=max(1.6, k.dur * 0.4), pad=8)
 
 
 async def rec_evidence(k: Take) -> None:
@@ -759,33 +788,15 @@ async def rec_seal(k: Take) -> None:
 
 
 async def rec_funds(k: Take) -> None:
+    """The paper funds page only (the trading agent has its own scene)."""
     b = k.b
     await b.scroll_to(430, 1.2)
     await k.hl(await b.rect(".tier-legend"), seconds=2.2, pad=8)
     await b.hover("a.fund-card", 0, seconds=0.7)
-    await asyncio.sleep(0.4)
+    await k.until(k.sent[1] + 0.2)
+    await k.hl(await b.rect("a.fund-card", 0), seconds=max(2.2, k.dur - k.sent[1] - 0.8), pad=6)
+    await asyncio.sleep(1.0)
     await b.hover("a.fund-card", 2, seconds=0.7)
-    await k.until(k.sent[2] - 1.5)
-    k.cut()
-    await b.click("a.tab", text="trading agent", seconds=0.7)       # same area, second sub-tab
-    await asyncio.sleep(1.2)
-    await b.scroll_to_el(".tp-pipe", 0.9, offset=370)
-    await k.until(k.sent[2] + 0.2)
-    await k.hl(await b.rect(".tp-pipe"), seconds=max(2.0, k.sent[3] - k.sent[2] - 0.6), pad=10)
-    await b.hover(".tp-name", text="trading agent", seconds=0.7)
-    await k.until(k.sent[3] + 0.1)
-    span = k.sent[4] - k.sent[3] - 1.4
-    for i, name in enumerate(["safety checks", "auto-approve", "near intents"]):
-        await k.until(k.sent[3] + 0.1 + span * i / 3)
-        await b.hover(".tp-name", text=name, seconds=0.6)
-    await k.until(k.sent[4] - 1.2)
-    k.cut()
-    await b.scroll_to_el(".sp-grid", 1.1, offset=210)
-    await k.until(k.sent[4] + 0.2)
-    await k.hl(await b.rect(".sp-grid"), seconds=3.2, pad=12)
-    await b.hover(".sp-row", 0, seconds=0.7)
-    await k.until(k.sent[4] + (k.dur - k.sent[4]) * 0.6)
-    await b.hover(".tr-agent", 1, seconds=0.8)
 
 
 # ============================================================================= pieces (shots) of the timeline
@@ -836,26 +847,27 @@ def build_pieces(scenes: list[Scene], rid: str, tamper_lines: list[str]) -> list
     card1 = s["01_intro"].sent[0][1] + 0.25
     pieces += [Piece(s["01_intro"], "01_card", "card", dur=card1, card=title_card),
                Piece(s["01_intro"], "01_home", "rec", dur=s["01_intro"].dur - card1, prep=goto(f"{DASH}/", 2.0), action=rec_home)]
-    pieces.append(Piece(s["02_radar"], "02_radar", "rec", dur=s["02_radar"].dur, prep=goto(f"{DASH}/radar", 1.8), action=rec_radar))
-    pieces.append(Piece(s["03_agents"], "03_agents", "rec", dur=s["03_agents"].dur, prep=goto(f"{DASH}/about", 1.5), action=rec_agents))
-    pieces.append(Piece(s["04_report"], "04_report", "rec", dur=s["04_report"].dur, prep=goto(report, 0.15), action=rec_report))
-    pieces.append(Piece(s["05_companies"], "05_companies", "rec", dur=s["05_companies"].dur, prep=nothing, action=rec_companies))
-    pieces.append(Piece(s["05b_scout"], "05b_scout", "rec", dur=s["05b_scout"].dur, prep=nothing, action=rec_scout))
-    pieces.append(Piece(s["06_evidence"], "06_evidence", "rec", dur=s["06_evidence"].dur, prep=nothing, action=rec_evidence))
-    seal_rec = s["07_seal"].sent[1][0] - 0.15
-    pieces += [Piece(s["07_seal"], "07_badge", "rec", dur=seal_rec, prep=nothing, action=rec_seal),
-               Piece(s["07_seal"], "07_tamper", "card", dur=s["07_seal"].dur - seal_rec,
+    pieces.append(Piece(s["02_network"], "02_network", "rec", dur=s["02_network"].dur, prep=goto(f"{DASH}/about", 1.5), action=rec_network))
+    pieces.append(Piece(s["03_radar"], "03_radar", "rec", dur=s["03_radar"].dur, prep=goto(f"{DASH}/radar", 1.8), action=rec_radar))
+    pieces.append(Piece(s["04_team"], "04_team", "rec", dur=s["04_team"].dur, prep=goto(f"{DASH}/about", 1.5), action=rec_team))
+    pieces.append(Piece(s["05_report"], "05_report", "rec", dur=s["05_report"].dur, prep=goto(report, 0.15), action=rec_report))
+    pieces.append(Piece(s["06_companies"], "06_companies", "rec", dur=s["06_companies"].dur, prep=nothing, action=rec_companies))
+    pieces.append(Piece(s["07_scout"], "07_scout", "rec", dur=s["07_scout"].dur, prep=nothing, action=rec_scout))
+    pieces.append(Piece(s["08_evidence"], "08_evidence", "rec", dur=s["08_evidence"].dur, prep=nothing, action=rec_evidence))
+    seal_rec = s["09_seal"].sent[1][0] - 0.15
+    pieces += [Piece(s["09_seal"], "09_badge", "rec", dur=seal_rec, prep=nothing, action=rec_seal),
+               Piece(s["09_seal"], "09_tamper", "card", dur=s["09_seal"].dur - seal_rec,
                      card=terminal_card(tamper_lines, "python scripts\\tamper_demo.py --run " + rid[:8] + "…"))]
-    pieces.append(Piece(s["09_funds"], "09_funds", "rec", dur=s["09_funds"].dur, prep=goto(f"{DASH}/funds", 2.0), action=rec_funds))
-    stake_at = s["10_round"].sent[6][0] - 0.2                               # the last sentence: the stake on NEAR AI Cloud itself
-    pieces += [Piece(s["10_round"], "10_round", "rec", dur=stake_at, prep=goto(f"{DASH}/trading", 2.5), action=rec_round),
-               Piece(s["10_round"], "10_stake", "card", dur=s["10_round"].dur - stake_at, card=stake_card)]
-    pieces.append(Piece(s["11_market"], "11_market", "rec", dur=s["11_market"].dur,
-                        prep=goto("https://market.near.ai/a/futurescout", 5.0), action=rec_market))
-    auto_a = s["12_auto"].sent[1][0] - 0.2                                  # the Request a report page, then the network on the home page
-    pieces += [Piece(s["12_auto"], "12_request", "rec", dur=auto_a, prep=goto(f"{DASH}/research", 2.5), action=rec_request),
-               Piece(s["12_auto"], "12_auto", "rec", dur=s["12_auto"].dur - auto_a, prep=goto(f"{DASH}/", 2.5), action=rec_auto)]
-    pieces.append(Piece(s["10_close"], "10_close", "card", dur=s["10_close"].dur, card=closing_card))
+    pieces.append(Piece(s["10_funds"], "10_funds", "rec", dur=s["10_funds"].dur, prep=goto(f"{DASH}/funds", 2.0), action=rec_funds))
+    pieces.append(Piece(s["11_trader"], "11_trader", "rec", dur=s["11_trader"].dur, prep=goto(f"{DASH}/trading", 2.5), action=rec_trader))
+    stake_at = s["12_economy"].sent[2][0] - 0.2                             # then the stake on NEAR AI Cloud itself
+    pieces += [Piece(s["12_economy"], "12_economy", "rec", dur=stake_at, prep=goto(f"{DASH}/trading", 2.5), action=rec_economy),
+               Piece(s["12_economy"], "12_stake", "card", dur=s["12_economy"].dur - stake_at, card=stake_card)]
+    ask_at = s["13_open"].sent[3][0] - 0.2                                  # the marketplace listing, then the free proposal page
+    pieces += [Piece(s["13_open"], "13_market", "rec", dur=ask_at, prep=goto("https://market.near.ai/a/futurescout", 5.0), action=rec_market),
+               Piece(s["13_open"], "13_request", "rec", dur=s["13_open"].dur - ask_at, prep=goto(f"{DASH}/research", 2.5), action=rec_request)]
+    pieces.append(Piece(s["14_cloud"], "14_cloud", "rec", dur=s["14_cloud"].dur, prep=goto(f"{DASH}/", 2.5), action=rec_cloud))
+    pieces.append(Piece(s["15_close"], "15_close", "card", dur=s["15_close"].dur, card=closing_card))
     pieces = [p for p in pieces if p.scene in scenes]
     t = scenes[0].start
     for p in pieces:
