@@ -426,9 +426,50 @@
       "sha256": "388d8edb695639b22db1705f525f64c3aaf81519d62177b2cf69e6d5f059f922",
       "correction": null,
       "chain": null
+    },
+    {
+      "id": "25dfa737c1",
+      "created_at": "2026-11-12T04:08:01.562256Z",
+      "mode": "live",
+      "side": "hold",
+      "topic": "",
+      "ticker": "",
+      "symbol": "",
+      "asset_id": "",
+      "usd": 0.0,
+      "fraction": null,
+      "quantity": null,
+      "rationale": "The new INTC brief reports unverified posts about product progress (14A PDK 0.9, GPU D-series/Xeon AI support, a Diamond Rapids board) and rising memory costs across the industry. It reports no new problems with the report's named backside-power risks. INTC is at $60.85 (read 2026-11-12 04:08 UTC) against a $59.29 cost per share, +2.62% since bought and -0.1% since the last look, so there is no sharp move to explain. INTC's latest report is still 'strong', but its confidence is 49.6%, which is below the 70% confident level. None of the selling reasons apply: the report has not weakened, no fall needs explaining, and no candidate has both a higher verdict band and higher confidence (MSFT is strong at 35.3%, NVDA strong at 44.4%, AAPL early at 37.7%). INTC also has no NEAR Intents quote right now, so a sale could not be priced. With no cash, holding is the only sound choice; the brief's posts are unverified and are not a reason to trade.",
+      "risks": [
+        "A tokenized stock (INTCon) depends on its issuer, Ondo, and is not the Intel share itself; it currently has no quote, so it may not be sellable when needed.",
+        "INTC's report confidence is only 49.6%, and the unresolved backside-power (BPDN) process risks still stand.",
+        "Posts say rising memory costs for AI servers could change hardware economics for Intel's platforms."
+      ],
+      "confidence": "low",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.048592,
+      "ref_close": null,
+      "ref_close_date": null,
+      "dry_quote": null,
+      "status": "hold",
+      "quote": null,
+      "deposit_address": null,
+      "deposit_tx": null,
+      "result": null,
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-12T04:08:01.562256Z",
+          "status": "hold",
+          "note": "strategy check: holding_brief"
+        }
+      ],
+      "sha256": "6b00b430b347f3351b501f773c148465c12dc7a6b7663099ffde5d1d9bd08ff8",
+      "correction": null,
+      "chain": null
     }
   ],
-  "updated_at": "2026-11-12T03:21:24.814590Z",
+  "updated_at": "2026-11-12T04:08:22.598512Z",
   "checks": [
     {
       "id": "665f6b4d47",
@@ -1666,6 +1707,47 @@
       "notes": [],
       "sha256": "c1a0a558cc2c21ca3ea899ecef18ca165dbaa2d13309a34e4722430e50991578",
       "correction": null
+    },
+    {
+      "id": "448bf5751a",
+      "at": "2026-11-12T04:07:57.946919Z",
+      "mode": "shadow",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "24cff5e866bcf61fd59ab9f9d6f929067563b2c1cfab92091fe834c497fc6903",
+      "correction": null
+    },
+    {
+      "id": "b6b0d0f78f",
+      "at": "2026-11-12T04:08:01.562256Z",
+      "mode": "live",
+      "triggers": [
+        {
+          "kind": "holding_brief",
+          "ticker": "INTC",
+          "topic": "",
+          "detail": "new brief on INTC from the report agent (urgency low): Posts say positive product-progress signals (14A PDK 0.9, GPU D-series/Xeon AI support, Diamond Rapids board sighting) plus an industry backdrop of memory capacity strain and rising memory costs for AI servers; none of the report's named backside-power/BPDN process risks show new developments."
+        }
+      ],
+      "action": "hold",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "INTC's latest report is still 'strong', but its confidence is 49.6%, which is below the 70% confident level. None of the selling reasons apply: the report has not weakened, no fall needs explaining, and no candidate has both a higher verdict band and higher confidence (MSFT is strong at 35.3%, NVDA strong at 44.4%, AAPL early at 37.7%). INTC also has no NEAR Intents quote right now, so a sale could not be priced. With no cash, holding is the only sound choice; the brief's posts are unverified and are not a reason to trade.",
+      "what_changed": "The new INTC brief reports unverified posts about product progress (14A PDK 0.9, GPU D-series/Xeon AI support, a Diamond Rapids board) and rising memory costs across the industry. It reports no new problems with the report's named backside-power risks. INTC is at $60.85 (read 2026-11-12 04:08 UTC) against a $59.29 cost per share, +2.62% since bought and -0.1% since the last look, so there is no sharp move to explain.",
+      "proposal_id": "25dfa737c1",
+      "model": "claude_opus_5_5",
+      "cost_usd": 0.048592,
+      "notes": [],
+      "sha256": "f3b1f0d820c5d6fa071da6d0c943d838b86c0aa9553ec75f324f609f5a86142e",
+      "correction": null
     }
   ],
   "seen_runs": {
@@ -1682,31 +1764,32 @@
     "live:retrieval-augmented generation": "4a2a3eaa-9841-4174-b38d-0a12e7b52623",
     "live:chiplet": "ab3b0896-a403-4181-990f-65bad2f59f13",
     "retrieval-augmented generation": "4a2a3eaa-9841-4174-b38d-0a12e7b52623",
-    "chiplet": "ab3b0896-a403-4181-990f-65bad2f59f13"
+    "chiplet": "ab3b0896-a403-4181-990f-65bad2f59f13",
+    "live:brief:INTC": "1ecfc318ca"
   },
   "seen_closes": {},
   "holding_prices": {
     "INTC": {
-      "price": 61.04,
-      "at": "2026-11-12T03:21:19.592768+00:00",
+      "price": 60.85,
+      "at": "2026-11-12T04:07:57.946919+00:00",
       "cost_per_share": 59.2103,
-      "gain_pct": 3.09,
+      "gain_pct": 2.77,
       "seen_price": 60.91,
       "seen_at": "2026-11-12T01:14:03.842412+00:00",
-      "since_seen_pct": 0.21
+      "since_seen_pct": -0.1
     },
     "live:INTC": {
-      "price": 61.04,
-      "at": "2026-11-12T03:21:23.261844+00:00",
+      "price": 60.85,
+      "at": "2026-11-12T04:08:01.562256+00:00",
       "cost_per_share": 59.2948,
-      "gain_pct": 2.94,
-      "seen_price": 60.91,
-      "seen_at": "2026-11-12T01:14:27.114132+00:00",
-      "since_seen_pct": 0.21
+      "gain_pct": 2.62,
+      "seen_price": 60.85,
+      "seen_at": "2026-11-12T04:08:01.562256+00:00",
+      "since_seen_pct": 0.0
     },
     "MSFT": {
       "price": 520.71,
-      "at": "2026-11-12T03:21:19.592768+00:00",
+      "at": "2026-11-12T04:07:57.946919+00:00",
       "cost_per_share": 526.4959,
       "gain_pct": -1.1,
       "seen_price": 520.65,
@@ -1714,12 +1797,12 @@
       "since_seen_pct": 0.01
     }
   },
-  "last_check_at": "2026-11-12T03:21:19.592768Z",
-  "last_live_check_at": "2026-11-12T03:21:23.261844Z",
+  "last_check_at": "2026-11-12T04:07:57.946919Z",
+  "last_live_check_at": "2026-11-12T04:08:01.562256Z",
   "last_review_at": "2026-11-12T01:14:03.842412Z",
-  "last_live_review_at": "2026-11-12T01:14:27.114132Z",
+  "last_live_review_at": "2026-11-12T04:08:01.562256Z",
   "private_near": 1.445,
-  "private_checked_at": "2026-11-12T03:21:23.259170Z",
+  "private_checked_at": "2026-11-12T04:08:01.558232Z",
   "last_values": {
     "INTCon": {
       "usd": 45.06,
