@@ -611,3 +611,14 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   holds now, whenever the last one was written, pays for it like the daily one (`economy.brief_usd`, in NEAR, same
   checks) and publishes. It pays real NEAR, so only the owner runs it, with the trading service stopped so two
   payments cannot cross. Mock-tested (363 tests pass); not run by Claude.
+
+## 2026-11-12: a brief on request ran live; demo video v12 (4:58), recorded clean
+- Run live by the owner on the server (03:18 UTC): `fund_trade.py brief --publish` wrote a new brief on INTC (10 posts,
+  $0.051 to make), paid 0.1404 NEAR from the near.com balance (arrived after about 15 s) and published. The brief opens
+  with the live price ("Intel trades at $61.04, up 2.94% from the $59.29 cost basis"), which confirms the fix. The
+  trading service was stopped for the payment and started again afterwards.
+- Demo video v12: the same script and narration as v11, recorded again from the hosted site. 4:57.9, 1920x1080, 30 fps,
+  H.264 + AAC 48 kHz, no black scene, no silence over 2.5 s. On screen now: the new brief on top of the brief panel
+  with its "paid" label, and the economy panel with the corrected staking wording. The 01:00 UTC brief (with the
+  "price not provided" sentence) is still listed below the new one. Checked by six still frames and sound level; not
+  listened to. A smaller copy is `demo/futurescout_hackathon_demo_small.mp4`; neither file is in git.
