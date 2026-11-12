@@ -23,7 +23,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-11T10:03:26.503466Z",
+        "checked_at": "2026-11-12T10:04:50.136148Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -34,20 +34,29 @@
       "tier": "medium",
       "shares": 22.2518464146821,
       "cost_usd": 3304.529682490508,
-      "last_close": 165.76,
-      "last_date": "2026-11-11",
+      "last_close": 166.02,
+      "last_date": "2026-11-12",
       "timing_risk": "subdued",
       "why": "Company Scout: 2 patent(s), 1 filing(s); mid by revenue",
       "route": {
-        "available": false,
+        "available": true,
         "symbol": "MRVLon",
         "asset_id": "nep141:bnb-0x1501ec83ffef405b4331cc4f73277a40fb0c627d.omdep.near",
         "blockchain": "BNB Chain",
-        "token_price_usd": null,
-        "checked_at": "2026-11-11T10:03:26.503831Z",
-        "note": "listed by the NEAR Intents bridge, but no quote could be obtained right now"
+        "token_price_usd": 167.2916,
+        "checked_at": "2026-11-12T10:04:50.136596Z",
+        "note": "listed by the NEAR Intents bridge; the price implied by a dry-run quote matches the stock"
       },
-      "quote": null
+      "quote": {
+        "amount_in_usd": 3692.41,
+        "amount_out_usd": 3664.0,
+        "amount_out": "22.069654272510203388",
+        "cost_pct": 0.769,
+        "time_estimate_s": 25.0,
+        "quoted_at": "2026-11-12T10:04:50.979687Z",
+        "correlation_id": "7a1f6fe5-1664-4b83-8b71-9d6ac3b343e0",
+        "error": null
+      }
     },
     {
       "ticker": "INTC",
@@ -55,20 +64,29 @@
       "tier": "low",
       "shares": 58.24058166301724,
       "cost_usd": 3457.7433333333333,
-      "last_close": 58.13,
-      "last_date": "2026-11-10",
+      "last_close": 62.5,
+      "last_date": "2026-11-11",
       "timing_risk": "subdued",
       "why": "Company Scout: 2 patent(s), 1 filing(s); large by revenue",
       "route": {
-        "available": false,
+        "available": true,
         "symbol": "INTCon",
         "asset_id": "nep141:bnb-0xa528caaa2f96090e379d43f90834c75df54d6e74.omdep.near",
         "blockchain": "BNB Chain",
-        "token_price_usd": null,
-        "checked_at": "2026-11-11T10:03:29.910210Z",
-        "note": "listed by the NEAR Intents bridge, but no quote could be obtained right now"
+        "token_price_usd": 61.9892,
+        "checked_at": "2026-11-12T10:04:51.826732Z",
+        "note": "listed by the NEAR Intents bridge; the price implied by a dry-run quote matches the stock"
       },
-      "quote": null
+      "quote": {
+        "amount_in_usd": 3638.23,
+        "amount_out_usd": 3613.56,
+        "amount_out": "58.843244132316775229",
+        "cost_pct": 0.678,
+        "time_estimate_s": 25.0,
+        "quoted_at": "2026-11-12T10:04:52.835387Z",
+        "correlation_id": "97ad99ce-da51-4636-b1b9-c1a863b7872c",
+        "error": null
+      }
     }
   ],
   "decisions": [
@@ -378,6 +396,38 @@
         "tx_hash": "4EYLPJb56vj5mHz1ZX6ssZhhWhfJxoRgXHbW8HmdPgYQ",
         "explorer_url": "https://nearblocks.io/txns/4EYLPJb56vj5mHz1ZX6ssZhhWhfJxoRgXHbW8HmdPgYQ"
       }
+    },
+    {
+      "at": "2026-11-12T10:04:17.659664Z",
+      "run_id": "6777f9ef-2e58-4355-bf72-bd49b0677d89",
+      "report_date": "2026-11-10",
+      "band": "building",
+      "score": 67.8,
+      "previous_score": 67.8,
+      "confidence_pct": 37.9,
+      "target_invested_pct": 100.0,
+      "tier_targets_usd": {
+        "low": 7194.69,
+        "medium": 3597.34
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "MU",
+        "SNDK"
+      ],
+      "trades": [],
+      "reasons": [
+        "Why now: price review: 2 company(ies) were waiting for a daily close.",
+        "Verdict band 'building' (score 67.8), confidence 38%. Owner rule: every paper fund is fully invested, so all of the fund goes into the basket.",
+        "MRVL: no daily close yet, so the NEAR Intents price of MRVLon ($166.02 on 2026-11-12) is used as its price.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): MU, SNDK. Reviewed again after the next price update.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "No trade: the fund is already close to its targets.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-12."
+      ],
+      "value_before_usd": 10792.03,
+      "sha256": "1b578e392388bb174a3bacbf7a25450fabe40bb50a6e9ef61474e4ddd0267e87",
+      "chain": null
     }
   ],
   "history": [
@@ -399,13 +449,18 @@
     {
       "day": "2026-11-11",
       "value_usd": 10531.74,
-      "benchmark_value_usd": 10198.97
+      "benchmark_value_usd": 10333.47
+    },
+    {
+      "day": "2026-11-12",
+      "value_usd": 10792.03,
+      "benchmark_value_usd": 10333.47
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": 735.29,
   "benchmark_start_date": "2026-11-06",
-  "updated_at": "2026-11-11T10:02:46.757533Z",
+  "updated_at": "2026-11-12T10:04:17.659664Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",

@@ -13,20 +13,29 @@
       "tier": "low",
       "shares": 114.06243332771882,
       "cost_usd": 6771.886666666666,
-      "last_close": 58.13,
-      "last_date": "2026-11-10",
+      "last_close": 62.5,
+      "last_date": "2026-11-11",
       "timing_risk": null,
       "why": "Company Scout: 1 patent(s); large by revenue",
       "route": {
-        "available": false,
+        "available": true,
         "symbol": "INTCon",
         "asset_id": "nep141:bnb-0xa528caaa2f96090e379d43f90834c75df54d6e74.omdep.near",
         "blockchain": "BNB Chain",
-        "token_price_usd": null,
-        "checked_at": "2026-11-11T10:03:04.646680Z",
-        "note": "listed by the NEAR Intents bridge, but no quote could be obtained right now"
+        "token_price_usd": 61.9148,
+        "checked_at": "2026-11-12T10:04:40.017898Z",
+        "note": "listed by the NEAR Intents bridge; the price implied by a dry-run quote matches the stock"
       },
-      "quote": null
+      "quote": {
+        "amount_in_usd": 7125.35,
+        "amount_out_usd": 7086.27,
+        "amount_out": "115.392709426330847325",
+        "cost_pct": 0.549,
+        "time_estimate_s": 25.0,
+        "quoted_at": "2026-11-12T10:04:40.854779Z",
+        "correlation_id": "0f775a25-5393-4cdd-816c-d20f1623eba6",
+        "error": null
+      }
     },
     {
       "ticker": "KEYS",
@@ -44,7 +53,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-11T10:03:08.045277Z",
+        "checked_at": "2026-11-12T10:04:41.708844Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -65,7 +74,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-11T10:03:08.045533Z",
+        "checked_at": "2026-11-12T10:04:41.709193Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -501,12 +510,17 @@
       "day": "2026-11-10",
       "value_usd": 10227.31,
       "benchmark_value_usd": 10198.97
+    },
+    {
+      "day": "2026-11-11",
+      "value_usd": 10725.76,
+      "benchmark_value_usd": 10333.47
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": 735.29,
   "benchmark_start_date": "2026-11-06",
-  "updated_at": "2026-11-11T10:02:46.757533Z",
+  "updated_at": "2026-11-12T10:04:17.659664Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",
