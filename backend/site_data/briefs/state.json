@@ -1,0 +1,67 @@
+{
+ "briefs": [
+  {
+   "id": "6cb6fff989",
+   "ticker": "INTC",
+   "symbol": "INTCon",
+   "topic": "high bandwidth memory",
+   "at": "2026-11-12T01:00:06.360536Z",
+   "price_now": null,
+   "gain_pct": null,
+   "posts_read": 10,
+   "signals": [
+    {
+     "claim": "Jon Peddie Research reports that the AI boom is stretching memory manufacturing capacity as chipmakers prioritize high-bandwidth memory for enterprise AI servers, with rising memory costs reshaping enterprise and consumer hardware dynamics.",
+     "label": "unverified_claim",
+     "url": "https://x.com/jonpeddie/status/2118434566667157811",
+     "account": "@jonpeddie",
+     "published_at": "2026-11-05"
+    },
+    {
+     "claim": "Intel says its Intel 14A PDK 0.9 release gives customers greater confidence to advance chip designs and demonstrates continued progress toward high-volume manufacturing readiness.",
+     "label": "unverified_claim",
+     "url": "https://x.com/intel/status/2119882719962226698",
+     "account": "@intel",
+     "published_at": "2026-11-09"
+    },
+    {
+     "claim": "TrendForce published commentary from 'DRAM Godfather' Charles Kau (ex-TSMC, Intel, Nanya Tech, YMTC) arguing China's biggest memory threat may not be a tech breakthrough and that TSMC may have no reason to join the memory race.",
+     "label": "unverified_claim",
+     "url": "https://x.com/trendforce/status/2120355854629343682",
+     "account": "@trendforce",
+     "published_at": "2026-11-11"
+    },
+    {
+     "claim": "Jon Peddie Research reports Intel announced day-zero support for Meta's Muse Spark Open model (816B parameters, 42B activated per token) on its upcoming GPU D-series and current Xeon processors.",
+     "label": "unverified_claim",
+     "url": "https://x.com/jonpeddie/status/2119825166477807988",
+     "account": "@jonpeddie",
+     "published_at": "2026-11-09"
+    },
+    {
+     "claim": "ServeTheHome showed a next-gen Intel Diamond Rapids motherboard at OCP Summit 2026.",
+     "label": "unverified_claim",
+     "url": "https://x.com/ServeTheHome/status/2119256907756282060",
+     "account": "@ServeTheHome",
+     "published_at": "2026-11-08"
+    }
+   ],
+   "note": {
+    "summary": "Live price and gain/loss data were not provided for Intel (INTC), so the position's current P&L cannot be stated. The posts are mostly neutral-to-positive: Intel's 14A PDK 0.9 release, day-zero support for Meta's Muse Spark model, and a Diamond Rapids motherboard showing.",
+    "what_changed": "Nothing new in the posts touching the report's named risks around backside power, buried rails, or failure analysis. New items are product/process progress signals (14A PDK 0.9, GPU D-series/Xeon model support, Diamond Rapids hardware) plus general memory-capacity and China-memory commentary that does not name Intel specifically.",
+    "risks": [
+     "Posts say memory capacity is being stretched by HBM demand with rising memory costs, which could reshape hardware economics Intel depends on.",
+     "Report risks stand: unresolved backside/buried power metal choice (Ru vs Mo) and failure-analysis bottlenecks for backside architectures.",
+     "China memory competition commentary (posts say, unverified) adds an uncertain competitive backdrop."
+    ],
+    "urgency": "low"
+   },
+   "cost_usd": 0.0509,
+   "price_usd": 0.5,
+   "price_near": 0.1385,
+   "status": "paid",
+   "payment_id": "bfd75c35ea",
+   "errors": []
+  }
+ ]
+}

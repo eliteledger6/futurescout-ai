@@ -1,0 +1,19 @@
+{
+ "sales_used": 6,
+ "runs": [
+  {
+   "at": "2026-11-11T13:58:54.717387Z",
+   "topic": "mixture of experts",
+   "reason": "top 5",
+   "run_id": "report_20261111T135836Z",
+   "note": "report written"
+  },
+  {
+   "at": "2026-11-11T14:06:28.177451Z",
+   "topic": "supervised fine-tuning",
+   "reason": "top 5",
+   "run_id": "report_20261111T140613Z",
+   "note": "report written"
+  }
+ ]
+}
