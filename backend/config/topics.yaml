@@ -437,3 +437,11 @@ topics:
   evidence:
   - https://openalex.org/W7171666333
   added_on: '2026-11-13'
+- name: anode-free lithium metal batteries
+  sector: energy
+  terms:
+  - anode-free lithium metal batteries
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7168173223
+  added_on: '2026-11-13'
