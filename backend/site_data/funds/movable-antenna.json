@@ -3,19 +3,19 @@
   "topic": "movable antenna",
   "slug": "movable-antenna",
   "sector": "space_comms",
-  "created_at": "2026-11-12T14:20:27.607644Z",
+  "created_at": "2026-11-13T01:29:18.560018Z",
   "start_cash_usd": 10000.0,
   "cash_usd": 10000.0,
   "holdings": [],
   "decisions": [
     {
-      "at": "2026-11-12T14:20:27.607644Z",
-      "run_id": "report_20261112T142020Z",
-      "report_date": "2026-11-12",
+      "at": "2026-11-13T01:29:18.560018Z",
+      "run_id": "402c5b71-4d48-4675-8641-f4bd2cc4b61c",
+      "report_date": "2026-11-13",
       "band": "insufficient",
       "score": null,
       "previous_score": null,
-      "confidence_pct": 24.1,
+      "confidence_pct": 21.3,
       "target_invested_pct": 100.0,
       "tier_targets_usd": {},
       "staged_tiers": [],
@@ -23,29 +23,29 @@
       "trades": [],
       "reasons": [
         "Why now: first decision for this topic.",
-        "Verdict band 'insufficient', confidence 24%. Owner rule: every paper fund is fully invested, so all of the fund goes into the basket.",
+        "Verdict band 'insufficient', confidence 21%. Owner rule: every paper fund is fully invested, so all of the fund goes into the basket.",
         "No priced company in the low-risk tier; its share goes to the other tiers.",
         "No priced company in the medium-risk tier; its share goes to the other tiers.",
         "No priced company in the high-risk tier; its share goes to the other tiers.",
         "No trade: the fund is already close to its targets.",
-        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-12."
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-13."
       ],
       "value_before_usd": 10000.0,
-      "sha256": "f69ad5f71e72e513310f8f5cdc049bfcacaf0b0b6dd21e91913126ae4bf27dd6",
+      "sha256": "8183d87a41b4c44ba7730c9848080ce63aa9ce496cdb2723cb433dcc47c991ec",
       "chain": null
     }
   ],
   "history": [
     {
-      "day": "2026-11-12",
+      "day": "2026-11-13",
       "value_usd": 10000.0,
       "benchmark_value_usd": 10000.0
     }
   ],
   "benchmark": "SPY",
-  "benchmark_start_close": 759.81,
-  "benchmark_start_date": "2026-11-11",
-  "updated_at": "2026-11-12T14:20:27.607644Z",
+  "benchmark_start_close": 757.12,
+  "benchmark_start_date": "2026-11-12",
+  "updated_at": "2026-11-13T01:29:18.560018Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision carries its own fingerprint (the report it is based on is sealed on NEAR).",

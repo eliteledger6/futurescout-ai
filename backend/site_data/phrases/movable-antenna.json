@@ -1,5 +1,5 @@
 {
- "made_at": "2026-11-12T14:15:42.413267+00:00",
+ "made_at": "2026-11-13T01:25:42.347727+00:00",
  "basis": {
   "phrases": [
    "movable antenna",
@@ -56,9 +56,9 @@
    }
   ],
   "precision_sampled": 20,
-  "precision_relevant": 19,
-  "precision_pct": 95.0,
+  "precision_relevant": 20,
+  "precision_pct": 100.0,
   "llm_alias": "glm_5_3_flash",
-  "note": "Counted: works whose title or abstract contains any of 'movable antenna', 'fluid antenna', 'movable antennas', 'fluid antenna system', 'antenna position optimization' (singular and plural forms match automatically; a work matching several phrases is counted once). An AI check of 20 random counted works found 19 (95%) mainly about the topic."
+  "note": "Counted: works whose title or abstract contains any of 'movable antenna', 'fluid antenna', 'movable antennas', 'fluid antenna system', 'antenna position optimization' (singular and plural forms match automatically; a work matching several phrases is counted once). An AI check of 20 random counted works found 20 (100%) mainly about the topic."
  }
 }
