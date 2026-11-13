@@ -429,3 +429,11 @@ topics:
   evidence:
   - https://openalex.org/W7208807805
   added_on: '2026-11-12'
+- name: automated penetration testing
+  sector: cybersecurity
+  terms:
+  - automated penetration testing
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7171666333
+  added_on: '2026-11-13'
