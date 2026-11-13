@@ -445,3 +445,12 @@ topics:
   evidence:
   - https://openalex.org/W7168173223
   added_on: '2026-11-13'
+- name: through-glass via
+  sector: semiconductors
+  terms:
+  - through-glass via
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7213947971
+  - https://openalex.org/W7212263718
+  added_on: '2026-11-13'
