@@ -33,6 +33,9 @@ from app.sources.base import RateLimiter, SourceError, get_with_retry
 BASE = "https://ops.epo.org/3.2"
 SOURCE = "EPO OPS"
 MAX_RANGE = 100
+REFUSAL_WAIT_S = 60.0        # after a refusal (HTTP 403) wait this long, then ask once more
+MAX_REFUSAL_WAITS = 2        # ...at most this often per client, so a key that is really blocked or wrong cannot stall a run
+REFUSAL_PACE_S = 15.0        # after a refusal: 4 searches a minute (what EPO allowed when busy, 2026-11-13) until it states its allowance again
 
 
 def _list(x: Any) -> list:
@@ -148,6 +151,7 @@ class EpoOpsClient:
         self._token: Optional[str] = None
         self._token_expiry = 0.0
         self.requests = 0
+        self.refusal_waits = 0
 
     def _auth(self) -> str:
         if self._token and self._clock() < self._token_expiry - 60:
@@ -169,6 +173,21 @@ class EpoOpsClient:
         return self._token
 
     def _search(self, cql: str, first: int, last: int) -> dict:
+        """One search. EPO refuses (HTTP 403) for a few minutes when a key went over its searches-per-minute allowance:
+        on 2026-11-12 the radar recount of 58 topics ended minutes before a report run, and that report got no patent
+        counts. So after a refusal: wait a minute, slow down, take a fresh token and ask once more."""
+        try:
+            return self._search_once(cql, first, last)
+        except SourceError as exc:
+            if exc.status != 403 or self.refusal_waits >= MAX_REFUSAL_WAITS:
+                raise
+        self.refusal_waits += 1
+        self._sleep(REFUSAL_WAIT_S)
+        self._limiter.min_interval = max(self._limiter.min_interval, REFUSAL_PACE_S)   # until EPO's next answer states its allowance again
+        self._token = None
+        return self._search_once(cql, first, last)
+
+    def _search_once(self, cql: str, first: int, last: int) -> dict:
         token = self._auth()
         self._http.headers.update({"Authorization": f"Bearer {token}", "Accept": "application/json"})
         r = get_with_retry(

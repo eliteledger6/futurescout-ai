@@ -696,3 +696,15 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   claim would close this; about $2.50 per report at stake). One visitor can use all 5 daily topic proposals. Text from
   X posts reaches the trading agent as evidence: it can at worst sway a buy of an allowlisted stock, never a transfer.
   The server pulls code from GitHub at start, so the GitHub account is the key to guard (two-factor sign-in).
+
+## 2026-11-13: patent counts survive a refusal by the patent office's service
+
+- Seen: the server's "movable antenna" report (12 Nov 14:20 UTC) had no patent counts: EPO answered 403 to the count
+  searches. The radar recount of 58 topics had ended 7 minutes earlier, and EPO blocks a key for a few minutes when it
+  goes over its searches-per-minute allowance. The same question asked from the laptop on 13 Nov was answered, and the
+  owner's new run of the topic (sealed on mainnet) has the counts and no errors. The market and X agents ran in both
+  reports and found nothing on this young topic (shown as "not run").
+- Fixed (`app/sources/epo.py`): after a refusal the client waits 60 s, slows to 4 searches a minute until EPO states its
+  allowance again, takes a fresh token and asks once more; at most twice per client, so a key that is really blocked or
+  wrong costs two minutes and then reports the error as before. Mock-tested (369 pass); not run live, because a
+  refusal cannot be produced on demand.

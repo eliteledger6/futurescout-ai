@@ -72,8 +72,8 @@ def client(year_counts=None, seen=None, status=200):
             return httpx.Response(200, json={"ops:world-patent-data": {"ops:biblio-search": {"@total-result-count": str(year_counts.get(year, 0))}}})
         return httpx.Response(200, json=SEARCH)
 
-    return EpoOpsClient(KEY, SECRET, http=httpx.Client(transport=httpx.MockTransport(handler)), limiter=RateLimiter(0),
-                        sleep=lambda s: None, now=lambda: NOW)
+    return EpoOpsClient(KEY, SECRET, http=httpx.Client(transport=httpx.MockTransport(handler)),
+                        limiter=RateLimiter(0, sleep=lambda s: None), sleep=lambda s: None, now=lambda: NOW)
 
 
 def test_parse_handles_lists_single_objects_languages_and_applicant_formats():
@@ -98,6 +98,31 @@ def test_query_and_counts_and_token_reuse():
     assert counts == {2023: 12, 2024: 20, 2025: 30, 2026: 9}
     assert sum(1 for r in seen if r.url.path.endswith("/auth/accesstoken")) == 1  # token reused
     assert all("Bearer tok-FIXTURE" == r.headers.get("authorization") for r in seen if "search" in r.url.path)
+
+
+def test_a_refusal_is_waited_out_and_asked_again():
+    """EPO blocks a key for a few minutes after too many searches a minute (the radar recount, then a report run)."""
+    slept, calls = [], {"n": 0}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path.endswith("/auth/accesstoken"):
+            return httpx.Response(200, json={"access_token": "tok-FIXTURE", "expires_in": "1199"})
+        calls["n"] += 1
+        if calls["n"] == 1:
+            return httpx.Response(403)                                   # refused once, fine a minute later
+        return httpx.Response(200, json={"ops:world-patent-data": {"ops:biblio-search": {"@total-result-count": "7"}}})
+
+    c = EpoOpsClient(KEY, SECRET, http=httpx.Client(transport=httpx.MockTransport(handler)),
+                     limiter=RateLimiter(0, sleep=lambda s: None), sleep=slept.append, now=lambda: NOW)
+    assert c.count_between(["stacked memory"], NOW.date().replace(month=1, day=1), NOW.date()) == 7
+    assert slept == [60.0] and c.refusal_waits == 1 and c._limiter.min_interval == 15.0  # waited once, then slower
+
+    always, waits = client(status=403), []                               # a key that stays refused: two waits, then the error
+    always._sleep = waits.append
+    for _ in range(3):
+        with pytest.raises(SourceError, match="fair use"):
+            always.search(["stacked memory"])
+    assert waits == [60.0, 60.0]
 
 
 def test_errors_never_leak_credentials():
