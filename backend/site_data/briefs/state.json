@@ -125,6 +125,62 @@
    "status": "paid",
    "payment_id": "75abc308ee",
    "errors": []
+  },
+  {
+   "id": "270abac1e2",
+   "ticker": "INTC",
+   "symbol": "INTCon",
+   "topic": "high bandwidth memory",
+   "at": "2026-11-13T03:46:22.458619Z",
+   "price_now": 60.96,
+   "gain_pct": 2.81,
+   "posts_read": 9,
+   "signals": [
+    {
+     "claim": "TrendForce highlighted commentary from 'DRAM Godfather' Charles Kau — whose résumé spans TSMC, Intel, Nanya Tech and YMTC — arguing China's biggest memory threat may not be a tech breakthrough and that TSMC may have no reason to join the memory race.",
+     "label": "unverified_claim",
+     "url": "https://x.com/trendforce/status/2120355854629343682",
+     "account": "@trendforce",
+     "published_at": "2026-11-11"
+    },
+    {
+     "claim": "Intel's own posts this week emphasize foundry progress (Intel 14A PDK 0.9 toward high-volume manufacturing readiness), edge/physical-AI compute with Altera FPGA, and upstream AI software optimizations with RadixArk — none of which mention high bandwidth memory.",
+     "label": "ai_interpretation",
+     "url": "https://x.com/intel/status/2119882719962226698",
+     "account": "@intel",
+     "published_at": "2026-11-09"
+    },
+    {
+     "claim": "Jon Peddie Research reports that Intel announced day-zero support for Meta's Muse Spark Open model (816B parameters, 42B activated per token) on its upcoming GPU D-series and current Xeon processors.",
+     "label": "unverified_claim",
+     "url": "https://x.com/jonpeddie/status/2119825166477807988",
+     "account": "@jonpeddie",
+     "published_at": "2026-11-09"
+    },
+    {
+     "claim": "ServeTheHome showed a next-gen Intel Diamond Rapids motherboard at OCP Summit 2026.",
+     "label": "unverified_claim",
+     "url": "https://x.com/ServeTheHome/status/2119256907756282060",
+     "account": "@ServeTheHome",
+     "published_at": "2026-11-08"
+    }
+   ],
+   "note": {
+    "summary": "Intel trades at $60.96, up 2.81% from the cost of $59.29 per share. Posts this week focus on foundry, FPGA and GPU/Xeon announcements, with nothing directly touching high bandwidth memory.",
+    "what_changed": "Nothing new in the posts on the report's named risks; Intel's own posts emphasize Intel 14A PDK 0.9, Altera edge AI and RadixArk software, none mentioning high bandwidth memory. Other posts say TrendForce relayed Charles Kau's view that China's memory threat may not be a tech breakthrough, and Jon Peddie reports day-zero Meta Muse Spark support on Intel GPUs and Xeons.",
+    "risks": [
+     "Report risks stand: failure-analysis bottleneck and unresolved BPR/nTSV co-integration for backside architectures.",
+     "No consensus on backside power metal (Ru vs Mo) keeps process-maturity and supply-chain risk open.",
+     "Competitive memory landscape chatter (China, TSMC) is unverified but could shift HBM positioning if it firms up."
+    ],
+    "urgency": "low"
+   },
+   "cost_usd": 0.0459,
+   "price_usd": 0.5,
+   "price_near": 0.1497,
+   "status": "paid",
+   "payment_id": "e18bd634c6",
+   "errors": []
   }
  ]
 }

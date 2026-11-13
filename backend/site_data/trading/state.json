@@ -537,9 +537,50 @@
       "sha256": "8919f39ea22eb40b1ddb9c71db82fa9440b2e53f23d64be800fa349909df9f0b",
       "correction": null,
       "chain": null
+    },
+    {
+      "id": "d4de426dba",
+      "created_at": "2026-11-13T03:47:52.181381Z",
+      "mode": "live",
+      "side": "hold",
+      "topic": "",
+      "ticker": "",
+      "symbol": "",
+      "asset_id": "",
+      "usd": 0.0,
+      "fraction": null,
+      "quantity": null,
+      "rationale": "The trigger is a low-urgency brief on INTC. INTC is at $60.96 (read 2026-11-13 03:47 UTC), up 2.81% from the $59.29 cost per share and up 0.18% since the last look. The brief's posts (unverified) cover Intel foundry, FPGA and GPU/Xeon news, none of it about high bandwidth memory, and nothing new touches the report's named risks. INTC's high bandwidth memory report is still 'strong' (score 80), though confidence is only 49.6%, below the 70% confident level, so the evidence is thin rather than weakened. No sale reason applies: the report has not weakened, there is no fall to explain, and no candidate is clearly better supported. The best alternatives (MRVL and META at 49.6%, NVDA at 44.4%, MSFT at 35.3%) all match or trail INTC's confidence, so rotating would only cost about 0.6-0.8% in quote fees for no gain in evidence. Selling just to lock in the small gain is not allowed, so I hold and keep the single position. There is no cash to diversify further.",
+      "risks": [
+        "INTCon is a tokenized stock that depends on its issuer, Ondo, and is not the Intel share itself.",
+        "The HBM report's confidence is below 50%, and Intel's own posts do not mention HBM, so the link between the company and the topic may be weaker than the verdict suggests.",
+        "The whole fund sits in one holding, so any Intel-specific setback hits it fully."
+      ],
+      "confidence": "medium",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.058412,
+      "ref_close": null,
+      "ref_close_date": null,
+      "dry_quote": null,
+      "status": "hold",
+      "quote": null,
+      "deposit_address": null,
+      "deposit_tx": null,
+      "result": null,
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-13T03:47:52.181381Z",
+          "status": "hold",
+          "note": "strategy check: holding_brief"
+        }
+      ],
+      "sha256": "9ab6d58f86ac21c25921e9f91b36016af647913a1062f8784811501c15f05ba1",
+      "correction": null,
+      "chain": null
     }
   ],
-  "updated_at": "2026-11-13T01:42:04.066154Z",
+  "updated_at": "2026-11-13T03:48:16.991280Z",
   "checks": [
     {
       "id": "665f6b4d47",
@@ -2675,6 +2716,115 @@
       "notes": [],
       "sha256": "81ad5ee294bce62ff2e9aa5a0f9e8c489d5b601f9f0b09c05df72353f4129310",
       "correction": null
+    },
+    {
+      "id": "fe9735615d",
+      "at": "2026-11-13T01:46:15.400497Z",
+      "mode": "shadow",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "ae5b0f04273660dc323438baba0f6c0f350ee0f244f5b35751dabbaaf11361e7",
+      "correction": null
+    },
+    {
+      "id": "f318fc787b",
+      "at": "2026-11-13T01:46:17.697101Z",
+      "mode": "live",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "540d1ead63150cf9ccd8c984879666f8ea6fa859a31992382f7cf5b04129a202",
+      "correction": null
+    },
+    {
+      "id": "c9d5fba48e",
+      "at": "2026-11-13T02:46:19.214495Z",
+      "mode": "shadow",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "f052e0adfd62b425ed36053eb9867fb3c390927be21e036d59f8d4b8507ddf90",
+      "correction": null
+    },
+    {
+      "id": "337295c018",
+      "at": "2026-11-13T02:46:22.050773Z",
+      "mode": "live",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "57176b6169e661d1a47ea12c321dd782feb1fbbbf44fd971d5ec01f7a880a7cf",
+      "correction": null
+    },
+    {
+      "id": "25f72cfa9e",
+      "at": "2026-11-13T03:47:50.537307Z",
+      "mode": "shadow",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "af44a7beddb5d1e820f4b31230531672dadc0abfc15d5585107cc33d5ed0bcbd",
+      "correction": null
+    },
+    {
+      "id": "9f2c8d7ea7",
+      "at": "2026-11-13T03:47:52.181381Z",
+      "mode": "live",
+      "triggers": [
+        {
+          "kind": "holding_brief",
+          "ticker": "INTC",
+          "topic": "",
+          "detail": "new brief on INTC from the report agent (urgency low): Nothing new in the posts on the report's named risks; Intel's own posts emphasize Intel 14A PDK 0.9, Altera edge AI and RadixArk software, none mentioning high bandwidth memory. Other posts say TrendForce relayed Charles Kau's view that China's memory threat may not be a tech breakthrough, and Jon Peddie reports day-zero Meta Muse Spark suppor"
+        }
+      ],
+      "action": "hold",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "INTC's high bandwidth memory report is still 'strong' (score 80), though confidence is only 49.6%, below the 70% confident level, so the evidence is thin rather than weakened. No sale reason applies: the report has not weakened, there is no fall to explain, and no candidate is clearly better supported. The best alternatives (MRVL and META at 49.6%, NVDA at 44.4%, MSFT at 35.3%) all match or trail INTC's confidence, so rotating would only cost about 0.6-0.8% in quote fees for no gain in evidence. Selling just to lock in the small gain is not allowed, so I hold and keep the single position. There is no cash to diversify further.",
+      "what_changed": "The trigger is a low-urgency brief on INTC. INTC is at $60.96 (read 2026-11-13 03:47 UTC), up 2.81% from the $59.29 cost per share and up 0.18% since the last look. The brief's posts (unverified) cover Intel foundry, FPGA and GPU/Xeon news, none of it about high bandwidth memory, and nothing new touches the report's named risks.",
+      "proposal_id": "d4de426dba",
+      "model": "claude_opus_5_5",
+      "cost_usd": 0.058412,
+      "notes": [],
+      "sha256": "91719852d15f53b774e871175934092fc293dfc0acbb674179e1852a49263605",
+      "correction": null
     }
   ],
   "seen_runs": {
@@ -2692,48 +2842,57 @@
     "live:chiplet": "ab3b0896-a403-4181-990f-65bad2f59f13",
     "retrieval-augmented generation": "4a2a3eaa-9841-4174-b38d-0a12e7b52623",
     "chiplet": "ab3b0896-a403-4181-990f-65bad2f59f13",
-    "live:brief:INTC": "1ecfc318ca"
+    "live:brief:INTC": "270abac1e2"
   },
   "seen_closes": {},
   "holding_prices": {
     "INTC": {
-      "price": 62.34,
-      "at": "2026-11-13T01:41:33.483101+00:00",
+      "price": 60.96,
+      "at": "2026-11-13T03:47:50.537307+00:00",
       "cost_per_share": 59.2103,
-      "gain_pct": 5.29,
+      "gain_pct": 2.95,
       "seen_price": 62.34,
       "seen_at": "2026-11-13T01:41:33.483101+00:00",
-      "since_seen_pct": 0.0
+      "since_seen_pct": -2.21
     },
     "live:INTC": {
-      "price": 62.34,
-      "at": "2026-11-13T01:42:03.979800+00:00",
+      "price": 60.96,
+      "at": "2026-11-13T03:47:52.181381+00:00",
       "cost_per_share": 59.2948,
-      "gain_pct": 5.14,
-      "seen_price": 60.85,
-      "seen_at": "2026-11-12T04:08:01.562256+00:00",
-      "since_seen_pct": 2.45
+      "gain_pct": 2.81,
+      "seen_price": 60.96,
+      "seen_at": "2026-11-13T03:47:52.181381+00:00",
+      "since_seen_pct": 0.0
     },
     "MSFT": {
-      "price": 522.54,
-      "at": "2026-11-13T01:41:33.483101+00:00",
+      "price": 522.2,
+      "at": "2026-11-13T03:47:50.537307+00:00",
       "cost_per_share": 526.4959,
-      "gain_pct": -0.75,
+      "gain_pct": -0.82,
       "seen_price": 522.54,
       "seen_at": "2026-11-13T01:41:33.483101+00:00",
-      "since_seen_pct": 0.0
+      "since_seen_pct": -0.07
+    },
+    "META": {
+      "price": 627.03,
+      "at": "2026-11-13T03:47:50.537307+00:00",
+      "cost_per_share": 633.9964,
+      "gain_pct": -1.1,
+      "seen_price": 627.18,
+      "seen_at": "2026-11-13T01:46:15.400497+00:00",
+      "since_seen_pct": -0.02
     }
   },
-  "last_check_at": "2026-11-13T01:41:33.483101Z",
-  "last_live_check_at": "2026-11-13T01:42:03.979800Z",
+  "last_check_at": "2026-11-13T03:47:50.537307Z",
+  "last_live_check_at": "2026-11-13T03:47:52.181381Z",
   "last_review_at": "2026-11-13T01:41:33.483101Z",
-  "last_live_review_at": "2026-11-12T04:08:01.562256Z",
-  "private_near": 4.4442,
-  "private_checked_at": "2026-11-13T01:42:03.975838Z",
+  "last_live_review_at": "2026-11-13T03:47:52.181381Z",
+  "private_near": 4.2945,
+  "private_checked_at": "2026-11-13T03:47:52.178305Z",
   "last_values": {
     "INTCon": {
       "usd": 45.06,
-      "at": "2026-11-12T03:19:55.916088+00:00"
+      "at": "2026-11-13T03:47:35.141551+00:00"
     }
   },
   "hidden": []
