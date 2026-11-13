@@ -578,9 +578,50 @@
       "sha256": "9ab6d58f86ac21c25921e9f91b36016af647913a1062f8784811501c15f05ba1",
       "correction": null,
       "chain": null
+    },
+    {
+      "id": "3e2b52f706",
+      "created_at": "2026-11-13T15:49:22.547790Z",
+      "mode": "shadow",
+      "side": "hold",
+      "topic": "",
+      "ticker": "",
+      "symbol": "",
+      "asset_id": "",
+      "usd": 0.0,
+      "fraction": null,
+      "quantity": null,
+      "rationale": "INTC is at $57.61, down 7.6% since the last look ($62.34) and 2.7% below my cost of $59.21. None of the high bandwidth memory findings (all dated 2026-11-10) explains the fall, and none names Intel. The other chip quotes are also well below their last closes (MRVL -7.5%, NVDA -7.3%), which hints at a broader chip move, but the evidence does not cover it, so I cannot tell why. Holding at the current prices: INTC $57.61, MSFT $524.01, META $627.49. The HBM report still reads 'strong', but its confidence is only 49.6%, below the 70% confident level. Its findings are mostly unverified X posts about Micron, SK hynix and Samsung, not Intel. INTC is already my largest position, and adding on a fall I cannot explain, backed by thin evidence, would deepen that concentration. I am not selling either, because the report has not weakened and nothing shows a real problem at Intel. I keep the cash.",
+      "risks": [
+        "The fall may continue or may reflect Intel-specific news that my evidence does not contain.",
+        "The HBM evidence is under 50% confidence and only loosely tied to Intel, so the case for holding is thin.",
+        "INTCon is a tokenized stock that depends on its issuer Ondo; it is not the Intel share itself."
+      ],
+      "confidence": "low",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.07048,
+      "ref_close": null,
+      "ref_close_date": null,
+      "dry_quote": null,
+      "status": "hold",
+      "quote": null,
+      "deposit_address": null,
+      "deposit_tx": null,
+      "result": null,
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-13T15:49:22.547790Z",
+          "status": "hold",
+          "note": "strategy check: price_drop"
+        }
+      ],
+      "sha256": "138a8fb0c205eac4194f041ff6eb3e0d1c8b1cd896dd8e1079ca2d70fa0edf9e",
+      "correction": null,
+      "chain": null
     }
   ],
-  "updated_at": "2026-11-13T13:49:16.923309Z",
+  "updated_at": "2026-11-13T15:49:50.057343Z",
   "checks": [
     {
       "id": "665f6b4d47",
@@ -3165,6 +3206,81 @@
       "notes": [],
       "sha256": "d9d3f6b51ad48ce511b19c8d9d16263c114c2c66e453380cd1a1f0c1e396113b",
       "correction": null
+    },
+    {
+      "id": "d3caca5bd0",
+      "at": "2026-11-13T14:49:18.446123Z",
+      "mode": "shadow",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "97a6c27ef7e944d9c6d1fafb21597cd81c9f8ba56fc0758d7019683cb3fbdac4",
+      "correction": null
+    },
+    {
+      "id": "3ecc9a8a43",
+      "at": "2026-11-13T14:49:20.969083Z",
+      "mode": "live",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "9e3235a2544a915ea3047c3ca96c101e76a9b2a9f438387c68bfc8ff79dfeaee",
+      "correction": null
+    },
+    {
+      "id": "80530d081f",
+      "at": "2026-11-13T15:49:22.547790Z",
+      "mode": "shadow",
+      "triggers": [
+        {
+          "kind": "price_drop",
+          "ticker": "INTC",
+          "topic": "",
+          "detail": "INTC (held) is at $57.61 now, -7.6% since you last looked ($62.34 on 2026-11-13T01:41 UTC); bought at $59.21, now -2.7%"
+        }
+      ],
+      "action": "hold",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "Holding at the current prices: INTC $57.61, MSFT $524.01, META $627.49. The HBM report still reads 'strong', but its confidence is only 49.6%, below the 70% confident level. Its findings are mostly unverified X posts about Micron, SK hynix and Samsung, not Intel. INTC is already my largest position, and adding on a fall I cannot explain, backed by thin evidence, would deepen that concentration. I am not selling either, because the report has not weakened and nothing shows a real problem at Intel. I keep the cash.",
+      "what_changed": "INTC is at $57.61, down 7.6% since the last look ($62.34) and 2.7% below my cost of $59.21. None of the high bandwidth memory findings (all dated 2026-11-10) explains the fall, and none names Intel. The other chip quotes are also well below their last closes (MRVL -7.5%, NVDA -7.3%), which hints at a broader chip move, but the evidence does not cover it, so I cannot tell why.",
+      "proposal_id": "3e2b52f706",
+      "model": "claude_opus_5_5",
+      "cost_usd": 0.07048,
+      "notes": [],
+      "sha256": "bdb77729ad807bc4e383610415dd7b52ec358d10293c93c300c9e02b6e5da4a6",
+      "correction": null
+    },
+    {
+      "id": "6fcd14656e",
+      "at": "2026-11-13T15:49:49.983172Z",
+      "mode": "live",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "7d492eb38aa3c352637d0d4c1bae67c0c05708f7058bc66ebd3f26414fb9c6b7",
+      "correction": null
     }
   ],
   "seen_runs": {
@@ -3184,51 +3300,53 @@
     "chiplet": "ab3b0896-a403-4181-990f-65bad2f59f13",
     "live:brief:INTC": "270abac1e2"
   },
-  "seen_closes": {},
+  "seen_closes": {
+    "INTC": "2026-11-12"
+  },
   "holding_prices": {
     "INTC": {
-      "price": 61.2,
-      "at": "2026-11-13T13:49:14.616439+00:00",
+      "price": 57.61,
+      "at": "2026-11-13T15:49:22.547790+00:00",
       "cost_per_share": 59.2103,
-      "gain_pct": 3.36,
-      "seen_price": 62.34,
-      "seen_at": "2026-11-13T01:41:33.483101+00:00",
-      "since_seen_pct": -1.83
+      "gain_pct": -2.7,
+      "seen_price": 57.61,
+      "seen_at": "2026-11-13T15:49:22.547790+00:00",
+      "since_seen_pct": 0.0
     },
     "live:INTC": {
-      "price": 61.2,
-      "at": "2026-11-13T13:49:16.858281+00:00",
+      "price": 57.61,
+      "at": "2026-11-13T15:49:49.983172+00:00",
       "cost_per_share": 59.2948,
-      "gain_pct": 3.21,
+      "gain_pct": -2.84,
       "seen_price": 60.96,
       "seen_at": "2026-11-13T03:47:52.181381+00:00",
-      "since_seen_pct": 0.39
+      "since_seen_pct": -5.5
     },
     "MSFT": {
-      "price": 519.06,
-      "at": "2026-11-13T13:49:14.616439+00:00",
+      "price": 524.01,
+      "at": "2026-11-13T15:49:22.547790+00:00",
       "cost_per_share": 526.4959,
-      "gain_pct": -1.41,
-      "seen_price": 522.54,
-      "seen_at": "2026-11-13T01:41:33.483101+00:00",
-      "since_seen_pct": -0.67
+      "gain_pct": -0.47,
+      "seen_price": 524.01,
+      "seen_at": "2026-11-13T15:49:22.547790+00:00",
+      "since_seen_pct": 0.0
     },
     "META": {
-      "price": 625.45,
-      "at": "2026-11-13T13:49:14.616439+00:00",
+      "price": 627.49,
+      "at": "2026-11-13T15:49:22.547790+00:00",
       "cost_per_share": 633.9964,
-      "gain_pct": -1.35,
-      "seen_price": 627.18,
-      "seen_at": "2026-11-13T01:46:15.400497+00:00",
-      "since_seen_pct": -0.28
+      "gain_pct": -1.03,
+      "seen_price": 627.49,
+      "seen_at": "2026-11-13T15:49:22.547790+00:00",
+      "since_seen_pct": 0.0
     }
   },
-  "last_check_at": "2026-11-13T13:49:14.616439Z",
-  "last_live_check_at": "2026-11-13T13:49:16.858281Z",
-  "last_review_at": "2026-11-13T01:41:33.483101Z",
+  "last_check_at": "2026-11-13T15:49:22.547790Z",
+  "last_live_check_at": "2026-11-13T15:49:49.983172Z",
+  "last_review_at": "2026-11-13T15:49:22.547790Z",
   "last_live_review_at": "2026-11-13T03:47:52.181381Z",
   "private_near": 4.2945,
-  "private_checked_at": "2026-11-13T13:49:16.854065Z",
+  "private_checked_at": "2026-11-13T15:49:49.972787Z",
   "last_values": {
     "INTCon": {
       "usd": 45.06,
