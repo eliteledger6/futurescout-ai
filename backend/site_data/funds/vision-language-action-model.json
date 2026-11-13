@@ -22,18 +22,18 @@
         "symbol": "NVDAon",
         "asset_id": "nep141:bnb-0xa9ee28c80f960b889dfbd1902055218cba016f75.omdep.near",
         "blockchain": "BNB Chain",
-        "token_price_usd": 165.0625,
-        "checked_at": "2026-11-12T10:04:44.171103Z",
+        "token_price_usd": 171.1655,
+        "checked_at": "2026-11-13T10:06:15.448687Z",
         "note": "listed by the NEAR Intents bridge; the price implied by a dry-run quote matches the stock"
       },
       "quote": {
-        "amount_in_usd": 9483.65,
-        "amount_out_usd": 9462.45,
-        "amount_out": "57.539975339447175817",
-        "cost_pct": 0.224,
-        "time_estimate_s": 25.0,
-        "quoted_at": "2026-11-12T10:04:44.832675Z",
-        "correlation_id": "0343bf4f-0b0e-4a11-8f24-d801aa651dfd",
+        "amount_in_usd": 9484.09,
+        "amount_out_usd": 9413.59,
+        "amount_out": "55.40991183065478012",
+        "cost_pct": 0.743,
+        "time_estimate_s": 10.0,
+        "quoted_at": "2026-11-13T10:06:16.223730Z",
+        "correlation_id": "a6357945-384b-48ad-b49b-ab6f638f6570",
         "error": null
       }
     }
@@ -242,13 +242,13 @@
     {
       "day": "2026-11-11",
       "value_usd": 9488.38,
-      "benchmark_value_usd": 10018.72
+      "benchmark_value_usd": 9983.25
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": 758.39,
   "benchmark_start_date": "2026-11-10",
-  "updated_at": "2026-11-12T10:04:17.659664Z",
+  "updated_at": "2026-11-13T10:05:49.091971Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",
