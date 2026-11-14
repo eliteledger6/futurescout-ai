@@ -660,9 +660,79 @@
       "sha256": "0321f42d9e6e9a1f2e46a5b1488863895056d7d147ce68dad7cfe407af5728ff",
       "correction": null,
       "chain": null
+    },
+    {
+      "id": "b908d148ee",
+      "created_at": "2026-11-14T16:10:25.481609Z",
+      "mode": "shadow",
+      "side": "buy",
+      "topic": "high bandwidth memory",
+      "ticker": "MRVL",
+      "symbol": "MRVLon",
+      "asset_id": "nep141:bnb-0x1501ec83ffef405b4331cc4f73277a40fb0c627d.omdep.near",
+      "usd": 500.0,
+      "fraction": null,
+      "quantity": null,
+      "rationale": "This is a routine review with no new report and no sharp move. Holdings now: INTC at $57.88 (-2.25% since bought), MSFT at $521.32 (-0.98%) and META at $636.98 (+0.47%). None of these moves calls for action, and all three reports are still 'strong'. MRVL is not yet held. Its report has the highest score (80) and joint-highest confidence (49.6%) among the candidates, but confidence is still below 70%, and none of the findings names MRVL directly. That thin evidence is why the order is a small $500 of the $7,700 budget, with the rest kept as cash. NVDA would add a new topic, but its 44.4% confidence is low, and AAPL's 6G report is only 'early'. The MRVL quote of $154.58 is 1.39% below the last close of $156.76 at about 1.86% cost, which is acceptable, and the HBM topic stays well under the 25% limit.",
+      "risks": [
+        "A tokenized stock depends on its issuer (Ondo) and is not the share itself.",
+        "The evidence for high bandwidth memory is mostly unverified X claims, with 49.6% confidence, and none of it is specific to MRVL. This adds to an existing HBM-topic position (INTC).",
+        "MRVL carries medium company-size risk, and the quote may differ from the next close."
+      ],
+      "confidence": "low",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.069196,
+      "ref_close": 156.76,
+      "ref_close_date": "2026-11-13",
+      "dry_quote": {
+        "amountIn": "313479623824451434857889792",
+        "amountInFormatted": "313.479623824451434857889792",
+        "amountInUsd": "1000.000000000000",
+        "amountOut": "6469091646491500883",
+        "amountOutFormatted": "6.469091646491500883",
+        "amountOutUsd": "981.361202772761",
+        "minAmountOut": "6404400730026585874",
+        "timeEstimate": 35,
+        "correlationId": "64f46378-3de4-48ee-9fd3-029afb0dd172",
+        "quotedAt": "2026-11-14T16:10:30.528293+00:00",
+        "dry": true
+      },
+      "status": "shadow_filled",
+      "quote": {
+        "amountIn": "157728706624605684448100352",
+        "amountInFormatted": "157.728706624605684448100352",
+        "amountInUsd": "500.000000000000",
+        "amountOut": "3257343307430921490",
+        "amountOutFormatted": "3.25734330743092149",
+        "amountOutUsd": "494.432140634940",
+        "minAmountOut": "3224769874356612275",
+        "timeEstimate": 35,
+        "correlationId": "6a05401c-a9f7-4fe8-a10f-911021742ac4",
+        "quotedAt": "2026-11-14T16:10:55.130093+00:00",
+        "dry": true
+      },
+      "deposit_address": null,
+      "deposit_tx": null,
+      "result": null,
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-14T16:10:25.481609Z",
+          "status": "proposed",
+          "note": "strategy check (review): the agent proposed to buy $500.00 of MRVLon"
+        },
+        {
+          "at": "2026-11-14T16:10:55.130192Z",
+          "status": "shadow_filled",
+          "note": "would receive 3.25734330743092149 MRVLon for $500.00 (nothing was sent)"
+        }
+      ],
+      "sha256": "680bee3e88e69dddf48fd879be70fc9c63bf36f68575e5f199a3f9f53c9a33fb",
+      "correction": null,
+      "chain": null
     }
   ],
-  "updated_at": "2026-11-14T14:10:19.870976Z",
+  "updated_at": "2026-11-14T16:10:57.000830Z",
   "checks": [
     {
       "id": "665f6b4d47",
@@ -4117,6 +4187,81 @@
       "notes": [],
       "sha256": "44b0298cea2c13546acd8e084fedf5f31691dd76755fa6d8c8f446996937d319",
       "correction": null
+    },
+    {
+      "id": "c243218033",
+      "at": "2026-11-14T15:10:21.470022Z",
+      "mode": "shadow",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "3648e553bc3fb6b8213e68a501b069736bba47aab79d13019f2a3dd071d5b2cb",
+      "correction": null
+    },
+    {
+      "id": "9ce1e6363c",
+      "at": "2026-11-14T15:10:23.813753Z",
+      "mode": "live",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "e5f0003ae22a7e9e4312a5e500326936be2e571f0ebb8273d5b4ef96a1fd25f2",
+      "correction": null
+    },
+    {
+      "id": "0fb49e6e8c",
+      "at": "2026-11-14T16:10:25.481609Z",
+      "mode": "shadow",
+      "triggers": [
+        {
+          "kind": "review",
+          "ticker": "",
+          "topic": "",
+          "detail": "routine review"
+        }
+      ],
+      "action": "buy",
+      "ticker": "MRVL",
+      "usd": 500.0,
+      "summary": "MRVL is not yet held. Its report has the highest score (80) and joint-highest confidence (49.6%) among the candidates, but confidence is still below 70%, and none of the findings names MRVL directly. That thin evidence is why the order is a small $500 of the $7,700 budget, with the rest kept as cash. NVDA would add a new topic, but its 44.4% confidence is low, and AAPL's 6G report is only 'early'. The MRVL quote of $154.58 is 1.39% below the last close of $156.76 at about 1.86% cost, which is acceptable, and the HBM topic stays well under the 25% limit.",
+      "what_changed": "This is a routine review with no new report and no sharp move. Holdings now: INTC at $57.88 (-2.25% since bought), MSFT at $521.32 (-0.98%) and META at $636.98 (+0.47%). None of these moves calls for action, and all three reports are still 'strong'.",
+      "proposal_id": "b908d148ee",
+      "model": "claude_opus_5_5",
+      "cost_usd": 0.069196,
+      "notes": [],
+      "sha256": "bfafd192e45160631d4b93ef068fe716d240f53aedf3184ca9afd5ac43dcd7b3",
+      "correction": null
+    },
+    {
+      "id": "c306d78fa5",
+      "at": "2026-11-14T16:10:56.927490Z",
+      "mode": "live",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "97ebb9f701f7f852e306bd210830d2db4497a2eb6c706a12196167bc9d060af2",
+      "correction": null
     }
   ],
   "seen_runs": {
@@ -4141,48 +4286,48 @@
   },
   "holding_prices": {
     "INTC": {
-      "price": 58.32,
-      "at": "2026-11-14T14:10:17.064728+00:00",
+      "price": 57.88,
+      "at": "2026-11-14T16:10:25.481609+00:00",
       "cost_per_share": 59.2103,
-      "gain_pct": -1.5,
-      "seen_price": 57.61,
-      "seen_at": "2026-11-13T15:49:22.547790+00:00",
-      "since_seen_pct": 1.23
+      "gain_pct": -2.25,
+      "seen_price": 57.88,
+      "seen_at": "2026-11-14T16:10:25.481609+00:00",
+      "since_seen_pct": 0.0
     },
     "live:INTC": {
-      "price": 58.32,
-      "at": "2026-11-14T14:10:19.789163+00:00",
+      "price": 57.88,
+      "at": "2026-11-14T16:10:56.927490+00:00",
       "cost_per_share": 59.2948,
-      "gain_pct": -1.64,
+      "gain_pct": -2.39,
       "seen_price": 58.4,
       "seen_at": "2026-11-14T03:51:53.961374+00:00",
-      "since_seen_pct": -0.14
+      "since_seen_pct": -0.89
     },
     "MSFT": {
-      "price": 522.53,
-      "at": "2026-11-14T14:10:17.064728+00:00",
+      "price": 521.32,
+      "at": "2026-11-14T16:10:25.481609+00:00",
       "cost_per_share": 526.4959,
-      "gain_pct": -0.75,
-      "seen_price": 524.01,
-      "seen_at": "2026-11-13T15:49:22.547790+00:00",
-      "since_seen_pct": -0.28
+      "gain_pct": -0.98,
+      "seen_price": 521.32,
+      "seen_at": "2026-11-14T16:10:25.481609+00:00",
+      "since_seen_pct": 0.0
     },
     "META": {
-      "price": 639.3,
-      "at": "2026-11-14T14:10:17.064728+00:00",
+      "price": 636.98,
+      "at": "2026-11-14T16:10:25.481609+00:00",
       "cost_per_share": 633.9964,
-      "gain_pct": 0.84,
-      "seen_price": 627.49,
-      "seen_at": "2026-11-13T15:49:22.547790+00:00",
-      "since_seen_pct": 1.88
+      "gain_pct": 0.47,
+      "seen_price": 636.98,
+      "seen_at": "2026-11-14T16:10:25.481609+00:00",
+      "since_seen_pct": 0.0
     }
   },
-  "last_check_at": "2026-11-14T14:10:17.064728Z",
-  "last_live_check_at": "2026-11-14T14:10:19.789163Z",
-  "last_review_at": "2026-11-13T15:49:22.547790Z",
+  "last_check_at": "2026-11-14T16:10:25.481609Z",
+  "last_live_check_at": "2026-11-14T16:10:56.927490Z",
+  "last_review_at": "2026-11-14T16:10:25.481609Z",
   "last_live_review_at": "2026-11-14T03:51:53.961374Z",
   "private_near": 4.1461,
-  "private_checked_at": "2026-11-14T14:10:19.782687Z",
+  "private_checked_at": "2026-11-14T16:10:56.923002Z",
   "last_values": {
     "INTCon": {
       "usd": 43.18,
