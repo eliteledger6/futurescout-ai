@@ -454,3 +454,11 @@ topics:
   - https://openalex.org/W7213947971
   - https://openalex.org/W7212263718
   added_on: '2026-11-13'
+- name: optically pumped magnetometer
+  sector: biotech_tools
+  terms:
+  - optically pumped magnetometer
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7212166012
+  added_on: '2026-11-14'
