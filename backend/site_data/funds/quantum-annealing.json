@@ -1,0 +1,88 @@
+{
+  "kind": "simulation",
+  "topic": "quantum annealing",
+  "slug": "quantum-annealing",
+  "sector": "quantum",
+  "created_at": "2026-11-14T14:07:17.876174Z",
+  "start_cash_usd": 10000.0,
+  "cash_usd": 0.0,
+  "holdings": [
+    {
+      "ticker": "QBTS",
+      "company": "D-Wave Quantum Inc.",
+      "tier": "high",
+      "shares": 1042.8964153564411,
+      "cost_usd": 9970.089730807578,
+      "last_close": 9.56,
+      "last_date": "2026-11-13",
+      "timing_risk": "subdued",
+      "why": "Company Scout: 1 filing(s); micro by revenue; FALLBACK: no company in this report has patents or papers, so its own SEC filings are the evidence",
+      "route": {
+        "available": false,
+        "symbol": null,
+        "asset_id": null,
+        "blockchain": null,
+        "token_price_usd": null,
+        "checked_at": "2026-11-14T14:07:18.468428Z",
+        "note": "no tokenized version in the public NEAR Intents token lists"
+      },
+      "quote": null
+    }
+  ],
+  "decisions": [
+    {
+      "at": "2026-11-14T14:07:17.876174Z",
+      "run_id": "report_20261114T140711Z",
+      "report_date": "2026-11-14",
+      "band": "early",
+      "score": 51.8,
+      "previous_score": null,
+      "confidence_pct": 29.8,
+      "target_invested_pct": 100.0,
+      "tier_targets_usd": {
+        "high": 10000.0
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [],
+      "trades": [
+        {
+          "day": "2026-11-13",
+          "ticker": "QBTS",
+          "tier": "high",
+          "side": "buy",
+          "shares": 1042.896415,
+          "price": 9.56,
+          "usd": 9970.09,
+          "fee_usd": 29.91
+        }
+      ],
+      "reasons": [
+        "Why now: first decision for this topic.",
+        "Verdict band 'early' (score 51.8), confidence 30%. Owner rule: every paper fund is fully invested, so all of the fund goes into the basket.",
+        "No priced company in the low-risk tier; its share goes to the other tiers.",
+        "No priced company in the medium-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-14."
+      ],
+      "value_before_usd": 10000.0,
+      "sha256": "b84ae5bd26f073900c6aa0a0dc5893ac28d87fb89b4c33e78078b36ad84aefbf",
+      "chain": null
+    }
+  ],
+  "history": [
+    {
+      "day": "2026-11-13",
+      "value_usd": 9970.09,
+      "benchmark_value_usd": 10000.0
+    }
+  ],
+  "benchmark": "SPY",
+  "benchmark_start_close": 754.37,
+  "benchmark_start_date": "2026-11-13",
+  "updated_at": "2026-11-14T14:07:17.876174Z",
+  "notes": [
+    "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
+    "Basket and decisions are computed by code from the latest sealed report; each decision carries its own fingerprint (the report it is based on is sealed on NEAR).",
+    "NEAR Intents quotes are dry runs: nothing is reserved or sent.",
+    "Not investment advice."
+  ]
+}

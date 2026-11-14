@@ -1,0 +1,63 @@
+{
+ "made_at": "2026-11-14T14:03:23.565733+00:00",
+ "basis": {
+  "phrases": [
+   "quantum annealing",
+   "adiabatic quantum optimization",
+   "QA hardware",
+   "quantum annealers"
+  ],
+  "checks": [
+   {
+    "phrase": "quantum annealing",
+    "source": "topic",
+    "matches": 2759,
+    "sampled": 8,
+    "relevant": 6,
+    "kept": true,
+    "reason": "the topic name itself (6/8 sampled works on-topic)"
+   },
+   {
+    "phrase": "quantum annealers",
+    "source": "ai_suggested",
+    "matches": 2759,
+    "sampled": 8,
+    "relevant": 6,
+    "kept": true,
+    "reason": "6/8 sampled works on-topic"
+   },
+   {
+    "phrase": "adiabatic quantum computation",
+    "source": "ai_suggested",
+    "matches": 65,
+    "sampled": 8,
+    "relevant": 3,
+    "kept": false,
+    "reason": "only 3/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "adiabatic quantum optimization",
+    "source": "ai_suggested",
+    "matches": 11,
+    "sampled": 8,
+    "relevant": 8,
+    "kept": true,
+    "reason": "8/8 sampled works on-topic"
+   },
+   {
+    "phrase": "QA hardware",
+    "source": "ai_suggested",
+    "matches": 18,
+    "sampled": 8,
+    "relevant": 8,
+    "kept": true,
+    "reason": "8/8 sampled works on-topic"
+   }
+  ],
+  "precision_sampled": 20,
+  "precision_relevant": 11,
+  "precision_pct": 55.0,
+  "llm_alias": "glm_5_3_flash",
+  "note": "Counted: works whose title or abstract contains any of 'quantum annealing', 'adiabatic quantum optimization', 'QA hardware', 'quantum annealers' (singular and plural forms match automatically; a work matching several phrases is counted once). Not counted, because too few sampled works were about this topic: 'adiabatic quantum computation'. An AI check of 20 random counted works found 11 (55%) mainly about the topic."
+ }
+}
