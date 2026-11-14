@@ -732,83 +732,8 @@
       "chain": null
     }
   ],
-  "updated_at": "2026-11-14T18:11:17.146769Z",
+  "updated_at": "2026-11-14T19:11:36.707365Z",
   "checks": [
-    {
-      "id": "7c602fd218",
-      "at": "2026-11-10T10:11:11.914597Z",
-      "mode": "shadow",
-      "triggers": [
-        {
-          "kind": "new_report",
-          "ticker": "INTC",
-          "topic": "high bandwidth memory",
-          "detail": "report e5d41d1f for 'high bandwidth memory' not yet considered (verdict strong, score 80.0, confidence 49.6%)"
-        },
-        {
-          "kind": "new_report",
-          "ticker": "MRVL",
-          "topic": "high bandwidth memory",
-          "detail": "report e5d41d1f for 'high bandwidth memory' not yet considered (verdict strong, score 80.0, confidence 49.6%)"
-        },
-        {
-          "kind": "new_report",
-          "ticker": "META",
-          "topic": "oled displays",
-          "detail": "report 783ab33d for 'oled displays' not yet considered (verdict strong, score 71.0, confidence 49.6%)"
-        },
-        {
-          "kind": "new_report",
-          "ticker": "MSFT",
-          "topic": "AI agents",
-          "detail": "report 71b787db for 'AI agents' not yet considered (verdict strong, score 70.8, confidence 38.6%)"
-        },
-        {
-          "kind": "new_report",
-          "ticker": "AAPL",
-          "topic": "6G",
-          "detail": "report f0934784 for '6G' not yet considered (verdict early, score 47.0, confidence 37.7%)"
-        },
-        {
-          "kind": "new_report",
-          "ticker": "NVDA",
-          "topic": "vision-language-action model",
-          "detail": "report 7a87a2e1 for 'vision-language-action model' not yet considered (verdict insufficient, score None, confidence 29.4%)"
-        },
-        {
-          "kind": "review",
-          "ticker": "",
-          "topic": "",
-          "detail": "first review"
-        }
-      ],
-      "action": "buy",
-      "ticker": "INTC",
-      "usd": 1200.0,
-      "summary": "The fund holds nothing, and the high bandwidth memory report is the best-supported eligible topic. Its findings point to HBM demand from AI, including claims that HBM is sold out through 2027 and FormFactor's verified HBM-driven probe card growth. Intel is chosen over Marvell because its company size risk is low and its price stretch is subdued. Confidence is only just above the minimum and the findings do not name Intel directly, so the order is small, about half the $2,500 per-company cap, and most of the budget stays in cash for later, better-confirmed evidence.",
-      "what_changed": "This is the first review, with new reports arriving. The 'high bandwidth memory' report has the highest score (strong, 80) at 49.6% confidence, just above the 45% minimum. The OLED report is strong but scores lower, and the AI agents, 6G and VLA reports are below the confidence minimum or not strong/building.",
-      "proposal_id": "5a09657207",
-      "model": "claude_opus_5_5",
-      "cost_usd": 0.052248,
-      "notes": [],
-      "sha256": "c03c47d1c97f24c745606006c2ec5c33985d03b4a6e901642a6b6d02d1a3100d"
-    },
-    {
-      "id": "edd398adfb",
-      "at": "2026-11-10T10:11:38.053431Z",
-      "mode": "live",
-      "triggers": [],
-      "action": "none",
-      "ticker": "",
-      "usd": 0.0,
-      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
-      "what_changed": "",
-      "proposal_id": null,
-      "model": null,
-      "cost_usd": 0.0,
-      "notes": [],
-      "sha256": "f10c56ec6e33cb5cea436ed8831ad09cd53e945e2a98bac18d48aa7b330cabf5"
-    },
     {
       "id": "2aa3b762bd",
       "at": "2026-11-10T11:11:42.081124Z",
@@ -4242,6 +4167,40 @@
       "notes": [],
       "sha256": "27cf90c5079dbbe654086a495c4148136ce61ae4edfee44ad4d1582c0b8c1e56",
       "correction": null
+    },
+    {
+      "id": "1bd919fe98",
+      "at": "2026-11-14T19:11:34.381557Z",
+      "mode": "shadow",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "bafb6c86d1926459c4d7bf179637be3e3976e7e9a92202a5b00cf8db75059176",
+      "correction": null
+    },
+    {
+      "id": "af9937baf3",
+      "at": "2026-11-14T19:11:36.645024Z",
+      "mode": "live",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "8cb566cf43a2d7d1de72d9f6a5f15e1680614266598bc052d50d27e5c96f4f60",
+      "correction": null
     }
   ],
   "seen_runs": {
@@ -4266,57 +4225,57 @@
   },
   "holding_prices": {
     "INTC": {
-      "price": 57.28,
-      "at": "2026-11-14T18:11:14.843514+00:00",
+      "price": 57.31,
+      "at": "2026-11-14T19:11:34.381557+00:00",
       "cost_per_share": 59.2103,
-      "gain_pct": -3.26,
+      "gain_pct": -3.21,
       "seen_price": 57.88,
       "seen_at": "2026-11-14T16:10:25.481609+00:00",
-      "since_seen_pct": -1.04
+      "since_seen_pct": -0.98
     },
     "live:INTC": {
-      "price": 57.28,
-      "at": "2026-11-14T18:11:17.069831+00:00",
+      "price": 57.31,
+      "at": "2026-11-14T19:11:36.645024+00:00",
       "cost_per_share": 59.2948,
-      "gain_pct": -3.4,
+      "gain_pct": -3.35,
       "seen_price": 58.4,
       "seen_at": "2026-11-14T03:51:53.961374+00:00",
-      "since_seen_pct": -1.92
+      "since_seen_pct": -1.87
     },
     "MSFT": {
-      "price": 521.25,
-      "at": "2026-11-14T18:11:14.843514+00:00",
+      "price": 520.92,
+      "at": "2026-11-14T19:11:34.381557+00:00",
       "cost_per_share": 526.4959,
-      "gain_pct": -1.0,
+      "gain_pct": -1.06,
       "seen_price": 521.32,
       "seen_at": "2026-11-14T16:10:25.481609+00:00",
-      "since_seen_pct": -0.01
+      "since_seen_pct": -0.08
     },
     "META": {
-      "price": 635.75,
-      "at": "2026-11-14T18:11:14.843514+00:00",
+      "price": 635.28,
+      "at": "2026-11-14T19:11:34.381557+00:00",
       "cost_per_share": 633.9964,
-      "gain_pct": 0.28,
+      "gain_pct": 0.2,
       "seen_price": 636.98,
       "seen_at": "2026-11-14T16:10:25.481609+00:00",
-      "since_seen_pct": -0.19
+      "since_seen_pct": -0.27
     },
     "MRVL": {
-      "price": 150.93,
-      "at": "2026-11-14T18:11:14.843514+00:00",
+      "price": 150.88,
+      "at": "2026-11-14T19:11:34.381557+00:00",
       "cost_per_share": 153.4993,
-      "gain_pct": -1.67,
+      "gain_pct": -1.71,
       "seen_price": 150.76,
       "seen_at": "2026-11-14T17:11:10.900523+00:00",
-      "since_seen_pct": 0.11
+      "since_seen_pct": 0.08
     }
   },
-  "last_check_at": "2026-11-14T18:11:14.843514Z",
-  "last_live_check_at": "2026-11-14T18:11:17.069831Z",
+  "last_check_at": "2026-11-14T19:11:34.381557Z",
+  "last_live_check_at": "2026-11-14T19:11:36.645024Z",
   "last_review_at": "2026-11-14T16:10:25.481609Z",
   "last_live_review_at": "2026-11-14T03:51:53.961374Z",
   "private_near": 4.1461,
-  "private_checked_at": "2026-11-14T18:11:17.062455Z",
+  "private_checked_at": "2026-11-14T19:11:36.639189Z",
   "last_values": {
     "INTCon": {
       "usd": 43.18,
