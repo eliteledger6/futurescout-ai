@@ -462,3 +462,12 @@ topics:
   evidence:
   - https://openalex.org/W7212166012
   added_on: '2026-11-14'
+- name: autonomous mobile robot
+  sector: robotics_autonomy
+  terms:
+  - autonomous mobile robot
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7161700696
+  - https://openalex.org/W7162859028
+  added_on: '2026-11-14'
