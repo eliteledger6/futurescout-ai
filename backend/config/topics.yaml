@@ -471,3 +471,11 @@ topics:
   - https://openalex.org/W7161700696
   - https://openalex.org/W7162859028
   added_on: '2026-11-14'
+- name: multi-modal image fusion
+  sector: biotech_tools
+  terms:
+  - multi-modal image fusion
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7167258202
+  added_on: '2026-11-14'
