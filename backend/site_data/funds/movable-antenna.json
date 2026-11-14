@@ -45,12 +45,17 @@
       "day": "2026-11-13",
       "value_usd": 10000.0,
       "benchmark_value_usd": 9964.6
+    },
+    {
+      "day": "2026-11-14",
+      "value_usd": 10000.0,
+      "benchmark_value_usd": 9928.4
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": 759.81,
   "benchmark_start_date": "2026-11-11",
-  "updated_at": "2026-11-13T10:05:49.091971Z",
+  "updated_at": "2026-11-14T10:06:53.451953Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision carries its own fingerprint (the report it is based on is sealed on NEAR).",
