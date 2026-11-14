@@ -619,9 +619,50 @@
       "sha256": "138a8fb0c205eac4194f041ff6eb3e0d1c8b1cd896dd8e1079ca2d70fa0edf9e",
       "correction": null,
       "chain": null
+    },
+    {
+      "id": "d06ef2e690",
+      "created_at": "2026-11-14T03:51:53.961374Z",
+      "mode": "live",
+      "side": "hold",
+      "topic": "",
+      "ticker": "",
+      "symbol": "",
+      "asset_id": "",
+      "usd": 0.0,
+      "fraction": null,
+      "quantity": null,
+      "rationale": "Routine review: INTC is at $58.40 (read 2026-11-14 03:51 UTC), down 4.2% since my last look and 1.51% below my cost of $59.29 per share. The new brief and the sealed HBM report (2026-11-10) contain nothing that explains this fall, since the brief found no HBM-related posts and Intel's own posts were about foundry, AI software and FPGA. The INTC report still reads 'strong' (score 80) at 49.6% confidence. That confidence is not high, but nothing has weakened, so selling reason (a) does not apply. The evidence does not explain the fall, so reason (b) does not apply, and I do not sell on an unexplained drop. No candidate has both a higher verdict band and higher confidence than INTC (none beats 49.6%), so a rotation sale under (c) is not justified, and holding is the rule-consistent choice.",
+      "risks": [
+        "A tokenized stock (INTCon) depends on its issuer, Ondo, and the NEAR Intents route; it is not the Intel share itself.",
+        "The HBM report's link to Intel is thin: its findings are mostly about memory makers and are largely unverified X claims, at only 49.6% confidence.",
+        "The 4.2% drop is unexplained by my evidence, so a real problem could exist that my sources did not capture."
+      ],
+      "confidence": "low",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.06244,
+      "ref_close": null,
+      "ref_close_date": null,
+      "dry_quote": null,
+      "status": "hold",
+      "quote": null,
+      "deposit_address": null,
+      "deposit_tx": null,
+      "result": null,
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-14T03:51:53.961374Z",
+          "status": "hold",
+          "note": "strategy check: review, holding_brief"
+        }
+      ],
+      "sha256": "0321f42d9e6e9a1f2e46a5b1488863895056d7d147ce68dad7cfe407af5728ff",
+      "correction": null,
+      "chain": null
     }
   ],
-  "updated_at": "2026-11-14T01:50:50.287641Z",
+  "updated_at": "2026-11-14T03:52:20.183935Z",
   "checks": [
     {
       "id": "665f6b4d47",
@@ -3621,6 +3662,87 @@
       "notes": [],
       "sha256": "ec97fe3e9fdad735dd8a90acc3af3bb6d04c618957a7948f871eb9e80cce6946",
       "correction": null
+    },
+    {
+      "id": "b833703a24",
+      "at": "2026-11-14T02:50:51.632181Z",
+      "mode": "shadow",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "c0f7070914b55a419ae376326726e9ad8f9a346cbb3f5a5f586a9dd7a2e2ea51",
+      "correction": null
+    },
+    {
+      "id": "a66eef2007",
+      "at": "2026-11-14T02:50:53.759375Z",
+      "mode": "live",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "96bafe81b965882e7ad4dc8bac3946636f53e0015a647f8e04b598816e31f1a4",
+      "correction": null
+    },
+    {
+      "id": "356f54221a",
+      "at": "2026-11-14T03:51:52.660336Z",
+      "mode": "shadow",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "5bf74ddda9688f65b6717d9b8fa5eff04a3e0af7c092fad5f98247e4631b74a4",
+      "correction": null
+    },
+    {
+      "id": "66b2086a7a",
+      "at": "2026-11-14T03:51:53.961374Z",
+      "mode": "live",
+      "triggers": [
+        {
+          "kind": "review",
+          "ticker": "",
+          "topic": "",
+          "detail": "routine review"
+        },
+        {
+          "kind": "holding_brief",
+          "ticker": "INTC",
+          "topic": "",
+          "detail": "new brief on INTC from the report agent (urgency low): nothing new in the posts: none of the retrieved posts mention HBM; Intel's own posts focus on foundry (Intel 14A PDK 0.9), AI software, and FPGA, not memory."
+        }
+      ],
+      "action": "hold",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "The INTC report still reads 'strong' (score 80) at 49.6% confidence. That confidence is not high, but nothing has weakened, so selling reason (a) does not apply. The evidence does not explain the fall, so reason (b) does not apply, and I do not sell on an unexplained drop. No candidate has both a higher verdict band and higher confidence than INTC (none beats 49.6%), so a rotation sale under (c) is not justified, and holding is the rule-consistent choice.",
+      "what_changed": "Routine review: INTC is at $58.40 (read 2026-11-14 03:51 UTC), down 4.2% since my last look and 1.51% below my cost of $59.29 per share. The new brief and the sealed HBM report (2026-11-10) contain nothing that explains this fall, since the brief found no HBM-related posts and Intel's own posts were about foundry, AI software and FPGA.",
+      "proposal_id": "d06ef2e690",
+      "model": "claude_opus_5_5",
+      "cost_usd": 0.06244,
+      "notes": [],
+      "sha256": "b0485c900a30b6850e21343683fa2f62a70804922ec76c20a6aecbf2e292cae3",
+      "correction": null
     }
   ],
   "seen_runs": {
@@ -3638,59 +3760,59 @@
     "live:chiplet": "ab3b0896-a403-4181-990f-65bad2f59f13",
     "retrieval-augmented generation": "4a2a3eaa-9841-4174-b38d-0a12e7b52623",
     "chiplet": "ab3b0896-a403-4181-990f-65bad2f59f13",
-    "live:brief:INTC": "270abac1e2"
+    "live:brief:INTC": "3e7bbf9e57"
   },
   "seen_closes": {
     "INTC": "2026-11-12"
   },
   "holding_prices": {
     "INTC": {
-      "price": 58.72,
-      "at": "2026-11-14T01:50:48.024504+00:00",
+      "price": 58.4,
+      "at": "2026-11-14T03:51:52.660336+00:00",
       "cost_per_share": 59.2103,
-      "gain_pct": -0.83,
+      "gain_pct": -1.37,
       "seen_price": 57.61,
       "seen_at": "2026-11-13T15:49:22.547790+00:00",
-      "since_seen_pct": 1.93
+      "since_seen_pct": 1.37
     },
     "live:INTC": {
-      "price": 58.72,
-      "at": "2026-11-14T01:50:50.224236+00:00",
+      "price": 58.4,
+      "at": "2026-11-14T03:51:53.961374+00:00",
       "cost_per_share": 59.2948,
-      "gain_pct": -0.97,
-      "seen_price": 60.96,
-      "seen_at": "2026-11-13T03:47:52.181381+00:00",
-      "since_seen_pct": -3.67
+      "gain_pct": -1.51,
+      "seen_price": 58.4,
+      "seen_at": "2026-11-14T03:51:53.961374+00:00",
+      "since_seen_pct": 0.0
     },
     "MSFT": {
-      "price": 524.09,
-      "at": "2026-11-14T01:50:48.024504+00:00",
+      "price": 521.24,
+      "at": "2026-11-14T03:51:52.660336+00:00",
       "cost_per_share": 526.4959,
-      "gain_pct": -0.46,
+      "gain_pct": -1.0,
       "seen_price": 524.01,
       "seen_at": "2026-11-13T15:49:22.547790+00:00",
-      "since_seen_pct": 0.02
+      "since_seen_pct": -0.53
     },
     "META": {
-      "price": 638.51,
-      "at": "2026-11-14T01:50:48.024504+00:00",
+      "price": 637.86,
+      "at": "2026-11-14T03:51:52.660336+00:00",
       "cost_per_share": 633.9964,
-      "gain_pct": 0.71,
+      "gain_pct": 0.61,
       "seen_price": 627.49,
       "seen_at": "2026-11-13T15:49:22.547790+00:00",
-      "since_seen_pct": 1.76
+      "since_seen_pct": 1.65
     }
   },
-  "last_check_at": "2026-11-14T01:50:48.024504Z",
-  "last_live_check_at": "2026-11-14T01:50:50.224236Z",
+  "last_check_at": "2026-11-14T03:51:52.660336Z",
+  "last_live_check_at": "2026-11-14T03:51:53.961374Z",
   "last_review_at": "2026-11-13T15:49:22.547790Z",
-  "last_live_review_at": "2026-11-13T03:47:52.181381Z",
-  "private_near": 4.2945,
-  "private_checked_at": "2026-11-14T01:50:50.219437Z",
+  "last_live_review_at": "2026-11-14T03:51:53.961374Z",
+  "private_near": 4.1461,
+  "private_checked_at": "2026-11-14T03:51:53.957217Z",
   "last_values": {
     "INTCon": {
-      "usd": 45.06,
-      "at": "2026-11-13T03:47:35.141551+00:00"
+      "usd": 43.18,
+      "at": "2026-11-14T03:51:37.290130+00:00"
     }
   },
   "hidden": []

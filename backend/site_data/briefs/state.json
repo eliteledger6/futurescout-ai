@@ -181,6 +181,62 @@
    "status": "paid",
    "payment_id": "e18bd634c6",
    "errors": []
+  },
+  {
+   "id": "3e7bbf9e57",
+   "ticker": "INTC",
+   "symbol": "INTCon",
+   "topic": "high bandwidth memory",
+   "at": "2026-11-14T03:50:54.094931Z",
+   "price_now": 58.4,
+   "gain_pct": -1.51,
+   "posts_read": 10,
+   "signals": [
+    {
+     "claim": "None of the 10 retrieved posts from the searched accounts actually mention high bandwidth memory (HBM); the keyword match appears to have surfaced Intel-related posts instead, so this week's posts provide no direct signal on HBM supply, demand, or products.",
+     "label": "ai_interpretation",
+     "url": "https://x.com/tomshardware/status/2121280061399863662",
+     "account": "@tomshardware",
+     "published_at": "2026-11-13"
+    },
+    {
+     "claim": "TrendForce posted an interview with memory-industry veteran Charles Kau (résumé spanning TSMC, Intel, Nanya Tech and YMTC) arguing China's biggest memory threat may not be a tech breakthrough and that TSMC may have no reason to join the race — contextually adjacent to memory-market dynamics but not HBM-specific.",
+     "label": "unverified_claim",
+     "url": "https://x.com/trendforce/status/2120355854629343682",
+     "account": "@trendforce",
+     "published_at": "2026-11-11"
+    },
+    {
+     "claim": "Intel's own posts this week emphasize foundry progress (Intel 14A PDK 0.9 toward high-volume manufacturing readiness), AI software optimizations with Radix Ark upstreamed to SGL, edge/physical-AI compute with Altera FPGA, and a CEO interview on execution culture — none of which address HBM.",
+     "label": "unverified_claim",
+     "url": "https://x.com/intel/status/2119882719962226698",
+     "account": "@intel",
+     "published_at": "2026-11-09"
+    },
+    {
+     "claim": "Jon Peddie Research posted that Intel announced day-zero support for Meta's Muse Spark Open model on its upcoming GPU D-series and current Xeon processors — an AI-platform claim that, per the post text, does not mention HBM in the accelerators.",
+     "label": "unverified_claim",
+     "url": "https://x.com/jonpeddie/status/2119825166477807988",
+     "account": "@jonpeddie",
+     "published_at": "2026-11-09"
+    }
+   ],
+   "note": {
+    "summary": "Intel trades at $58.40, down 1.51% from the cost basis of $59.29. This week's posts contain no direct signal on high bandwidth memory, so nothing new bears on the HBM thesis. The holding looks unchanged from the report's risk picture.",
+    "what_changed": "nothing new in the posts: none of the retrieved posts mention HBM; Intel's own posts focus on foundry (Intel 14A PDK 0.9), AI software, and FPGA, not memory.",
+    "risks": [
+     "No HBM-specific news flow this week means no confirmation or relief on the report's process and reliability risks (BPDN failure analysis, BPR/nTSV co-integration, wafer thinning).",
+     "Posts say TrendForce interviewed a memory veteran arguing China's memory threat may not be a tech breakthrough and TSMC may skip the race — adjacent memory-market dynamics, unverified and not HBM-specific.",
+     "Continued evidence gap: no quantified thermal or reliability penalties for backside power architectures in available material."
+    ],
+    "urgency": "low"
+   },
+   "cost_usd": 0.0509,
+   "price_usd": 0.5,
+   "price_near": 0.1484,
+   "status": "paid",
+   "payment_id": "63fd220bc1",
+   "errors": []
   }
  ]
 }
