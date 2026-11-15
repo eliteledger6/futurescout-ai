@@ -237,6 +237,69 @@
    "status": "paid",
    "payment_id": "63fd220bc1",
    "errors": []
+  },
+  {
+   "id": "cc0ffe95dd",
+   "ticker": "INTC",
+   "symbol": "INTCon",
+   "topic": "high bandwidth memory",
+   "at": "2026-11-15T04:12:25.395649Z",
+   "price_now": 58.04,
+   "gain_pct": -2.12,
+   "posts_read": 10,
+   "signals": [
+    {
+     "claim": "Intel announced Intel 14A PDK 0.9, which it says gives customers greater confidence to advance chip designs and demonstrates progress toward high-volume manufacturing readiness (per @intel).",
+     "label": "unverified_claim",
+     "url": "https://x.com/intel/status/2119882719962226698",
+     "account": "@intel",
+     "published_at": "2026-11-09"
+    },
+    {
+     "claim": "Intel says it and Radix Ark are bringing performance optimizations to the SGL project upstream, aiming to improve latency, efficiency and deployment of open AI models on Intel platforms (per @intel).",
+     "label": "unverified_claim",
+     "url": "https://x.com/intel/status/2120981047961690426",
+     "account": "@intel",
+     "published_at": "2026-11-12"
+    },
+    {
+     "claim": "Jon Peddie Research reports Intel announced day-zero support for Meta's Muse Spark Open model (816B parameters, 42B activated per token) on its upcoming GPU D-series and current Xeon processors.",
+     "label": "unverified_claim",
+     "url": "https://x.com/jonpeddie/status/2119825166477807988",
+     "account": "@jonpeddie",
+     "published_at": "2026-11-09"
+    },
+    {
+     "claim": "TrendForce highlighted commentary from 'DRAM Godfather' Charles Kau (ex-TSMC, Intel, Nanya, YMTC) suggesting China's biggest memory threat may not be a tech breakthrough and that TSMC may have no reason to join the DRAM race.",
+     "label": "unverified_claim",
+     "url": "https://x.com/trendforce/status/2120355854629343682",
+     "account": "@trendforce",
+     "published_at": "2026-11-11"
+    },
+    {
+     "claim": "Intel's posts this week emphasize corporate transformation, execution culture and customer focus (CEO interview with Yahoo Finance) and edge/physical-AI compute with Altera FPGA technology, rather than memory or HBM products.",
+     "label": "ai_interpretation",
+     "url": "https://x.com/intel/status/2120999735611867203",
+     "account": "@intel",
+     "published_at": "2026-11-12"
+    }
+   ],
+   "note": {
+    "summary": "Intel trades at $58.04, down 2.12% from the cost basis of $59.29. Posts this week are mostly product and messaging updates (Intel 14A PDK 0.9, AI software collaborations, Meta model support) and do not touch the backside-power/HBM process risks named in the report.",
+    "what_changed": "Nothing new in the posts on the report's named risks. New items are Intel 14A PDK 0.9 release, SGL upstream optimizations with Radix Ark, and day-zero support for Meta's Muse Spark model on GPU D-series and Xeon — all unverified claims from vendor-aligned accounts.",
+    "risks": [
+     "14A PDK progress is a self-reported claim; HVM readiness for backside/buried-power architectures remains unproven against the report's failure-analysis and integration risks.",
+     "No consensus on backside power metal (Ru vs Mo) persists, keeping supply-chain and process-maturity risk open.",
+     "Posts emphasize corporate transformation and edge AI rather than memory/HBM, offering no evidence on the report's thermal/reliability evidence gap."
+    ],
+    "urgency": "low"
+   },
+   "cost_usd": 0.0509,
+   "price_usd": 0.5,
+   "price_near": 0.1603,
+   "status": "paid",
+   "payment_id": "068189bd16",
+   "errors": []
   }
  ]
 }
