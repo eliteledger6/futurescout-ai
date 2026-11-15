@@ -495,3 +495,11 @@ topics:
   evidence:
   - https://openalex.org/W7171864345
   added_on: '2026-11-15'
+- name: aqueous zinc-ion battery
+  sector: energy
+  terms:
+  - aqueous zinc-ion battery
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7164846132
+  added_on: '2026-11-15'
