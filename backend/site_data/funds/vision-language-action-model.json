@@ -18,24 +18,15 @@
       "timing_risk": null,
       "why": "Company Scout: 1 patent(s); large by revenue",
       "route": {
-        "available": true,
-        "symbol": "NVDAon",
-        "asset_id": "nep141:bnb-0xa9ee28c80f960b889dfbd1902055218cba016f75.omdep.near",
-        "blockchain": "BNB Chain",
-        "token_price_usd": 163.47,
-        "checked_at": "2026-11-14T10:07:19.481391Z",
-        "note": "listed by the NEAR Intents bridge; the price implied by a dry-run quote matches the stock"
+        "available": false,
+        "symbol": null,
+        "asset_id": null,
+        "blockchain": null,
+        "token_price_usd": null,
+        "checked_at": "2026-11-15T10:08:44.530233Z",
+        "note": "no tokenized version in the public NEAR Intents token lists"
       },
-      "quote": {
-        "amount_in_usd": 8890.87,
-        "amount_out_usd": 8849.26,
-        "amount_out": "54.380008381145902781",
-        "cost_pct": 0.468,
-        "time_estimate_s": 10.0,
-        "quoted_at": "2026-11-14T10:07:20.145499Z",
-        "correlation_id": "992caa7b-efa7-4bdc-8281-5d61b11bbabd",
-        "error": null
-      }
+      "quote": null
     }
   ],
   "decisions": [
@@ -253,7 +244,7 @@
   "benchmark": "SPY",
   "benchmark_start_close": 758.39,
   "benchmark_start_date": "2026-11-10",
-  "updated_at": "2026-11-14T10:06:53.451953Z",
+  "updated_at": "2026-11-15T10:08:30.731969Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",

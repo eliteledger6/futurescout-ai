@@ -23,7 +23,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-14T10:07:22.316228Z",
+        "checked_at": "2026-11-15T10:08:44.536157Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -44,7 +44,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-14T10:07:22.316488Z",
+        "checked_at": "2026-11-15T10:08:44.536348Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -65,7 +65,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-14T10:07:22.316683Z",
+        "checked_at": "2026-11-15T10:08:44.536469Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -353,7 +353,7 @@
   "benchmark": "SPY",
   "benchmark_start_close": 735.29,
   "benchmark_start_date": "2026-11-06",
-  "updated_at": "2026-11-14T10:06:53.451953Z",
+  "updated_at": "2026-11-15T10:08:30.731969Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",

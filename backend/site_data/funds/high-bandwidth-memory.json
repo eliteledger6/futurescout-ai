@@ -23,7 +23,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-14T10:07:36.215659Z",
+        "checked_at": "2026-11-15T10:08:44.567093Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -39,24 +39,15 @@
       "timing_risk": "subdued",
       "why": "Company Scout: 2 patent(s), 1 filing(s); mid by revenue",
       "route": {
-        "available": true,
-        "symbol": "MRVLon",
-        "asset_id": "nep141:bnb-0x1501ec83ffef405b4331cc4f73277a40fb0c627d.omdep.near",
-        "blockchain": "BNB Chain",
-        "token_price_usd": 153.9959,
-        "checked_at": "2026-11-14T10:07:36.216079Z",
-        "note": "listed by the NEAR Intents bridge; the price implied by a dry-run quote matches the stock"
+        "available": false,
+        "symbol": null,
+        "asset_id": null,
+        "blockchain": null,
+        "token_price_usd": null,
+        "checked_at": "2026-11-15T10:08:44.567315Z",
+        "note": "no tokenized version in the public NEAR Intents token lists"
       },
-      "quote": {
-        "amount_in_usd": 3578.23,
-        "amount_out_usd": 3559.34,
-        "amount_out": "23.231740829691517937",
-        "cost_pct": 0.528,
-        "time_estimate_s": 25.0,
-        "quoted_at": "2026-11-14T10:07:36.978546Z",
-        "correlation_id": "8b0bd6a2-e13a-4f92-8798-29490672edb6",
-        "error": null
-      }
+      "quote": null
     },
     {
       "ticker": "INTC",
@@ -69,24 +60,15 @@
       "timing_risk": "subdued",
       "why": "Company Scout: 2 patent(s), 1 filing(s); large by revenue",
       "route": {
-        "available": true,
-        "symbol": "INTCon",
-        "asset_id": "nep141:bnb-0xa528caaa2f96090e379d43f90834c75df54d6e74.omdep.near",
-        "blockchain": "BNB Chain",
-        "token_price_usd": 58.9787,
-        "checked_at": "2026-11-14T10:07:37.762173Z",
-        "note": "listed by the NEAR Intents bridge; the price implied by a dry-run quote matches the stock"
+        "available": false,
+        "symbol": null,
+        "asset_id": null,
+        "blockchain": null,
+        "token_price_usd": null,
+        "checked_at": "2026-11-15T10:08:44.567492Z",
+        "note": "no tokenized version in the public NEAR Intents token lists"
       },
-      "quote": {
-        "amount_in_usd": 3555.41,
-        "amount_out_usd": 3529.9,
-        "amount_out": "60.134652767580900615",
-        "cost_pct": 0.717,
-        "time_estimate_s": 25.0,
-        "quoted_at": "2026-11-14T10:07:38.522668Z",
-        "correlation_id": "7e6d3962-b377-4f26-bb86-3ab763096c7e",
-        "error": null
-      }
+      "quote": null
     }
   ],
   "decisions": [
@@ -599,6 +581,38 @@
       "value_before_usd": 10675.88,
       "sha256": "f746afa82331c982108bc50d466d6ba432c93ff2399c809b906d8cd8b24ef60a",
       "chain": null
+    },
+    {
+      "at": "2026-11-15T10:08:30.731969Z",
+      "run_id": "e5d41d1f-fa56-42ce-bf27-9fccb47298a2",
+      "report_date": "2026-11-10",
+      "band": "strong",
+      "score": 80.0,
+      "previous_score": 80.0,
+      "confidence_pct": 49.6,
+      "target_invested_pct": 100.0,
+      "tier_targets_usd": {
+        "low": 7117.25,
+        "medium": 3558.63
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "MU",
+        "SNDK",
+        "SKHY"
+      ],
+      "trades": [],
+      "reasons": [
+        "Why now: price review: 3 company(ies) were waiting for a daily close.",
+        "Verdict band 'strong' (score 80.0), confidence 50%. Owner rule: every paper fund is fully invested, so all of the fund goes into the basket.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): MU, SNDK, SKHY. Reviewed again after the next price update.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "No trade: the fund is already close to its targets.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-15."
+      ],
+      "value_before_usd": 10675.88,
+      "sha256": "ac849a8d07b9629cdc9efe2f7c503b6f9ebf330a1ca88c11dfc79ed43920392a",
+      "chain": null
     }
   ],
   "history": [
@@ -636,7 +650,7 @@
   "benchmark": "SPY",
   "benchmark_start_close": 735.29,
   "benchmark_start_date": "2026-11-06",
-  "updated_at": "2026-11-14T10:06:53.451953Z",
+  "updated_at": "2026-11-15T10:08:30.731969Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",

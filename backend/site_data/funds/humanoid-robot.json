@@ -23,7 +23,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-14T10:07:20.992992Z",
+        "checked_at": "2026-11-15T10:08:44.533940Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -39,24 +39,15 @@
       "timing_risk": null,
       "why": "Company Scout: 1 patent(s); large by revenue",
       "route": {
-        "available": true,
-        "symbol": "NVDAon",
-        "asset_id": "nep141:bnb-0xa9ee28c80f960b889dfbd1902055218cba016f75.omdep.near",
-        "blockchain": "BNB Chain",
-        "token_price_usd": 163.47,
-        "checked_at": "2026-11-14T10:07:20.993329Z",
-        "note": "listed by the NEAR Intents bridge; the price implied by a dry-run quote matches the stock"
+        "available": false,
+        "symbol": null,
+        "asset_id": null,
+        "blockchain": null,
+        "token_price_usd": null,
+        "checked_at": "2026-11-15T10:08:44.534142Z",
+        "note": "no tokenized version in the public NEAR Intents token lists"
       },
-      "quote": {
-        "amount_in_usd": 4143.87,
-        "amount_out_usd": 4124.48,
-        "amount_out": "25.345522513614307702",
-        "cost_pct": 0.468,
-        "time_estimate_s": 10.0,
-        "quoted_at": "2026-11-14T10:07:21.649580Z",
-        "correlation_id": "a30273dd-0fd0-461c-8550-f6e4aac4f4a6",
-        "error": null
-      }
+      "quote": null
     },
     {
       "ticker": "SFTBF",
@@ -74,7 +65,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-14T10:07:22.313707Z",
+        "checked_at": "2026-11-15T10:08:44.534271Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -375,7 +366,7 @@
   "benchmark": "SPY",
   "benchmark_start_close": 735.29,
   "benchmark_start_date": "2026-11-06",
-  "updated_at": "2026-11-14T10:06:53.451953Z",
+  "updated_at": "2026-11-15T10:08:30.731969Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",

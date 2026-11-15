@@ -18,24 +18,15 @@
       "timing_risk": null,
       "why": "Company Scout: 1 patent(s); large by revenue",
       "route": {
-        "available": true,
-        "symbol": "INTCon",
-        "asset_id": "nep141:bnb-0xa528caaa2f96090e379d43f90834c75df54d6e74.omdep.near",
-        "blockchain": "BNB Chain",
-        "token_price_usd": 58.9998,
-        "checked_at": "2026-11-14T10:07:15.399928Z",
-        "note": "listed by the NEAR Intents bridge; the price implied by a dry-run quote matches the stock"
+        "available": false,
+        "symbol": null,
+        "asset_id": null,
+        "blockchain": null,
+        "token_price_usd": null,
+        "checked_at": "2026-11-15T10:08:43.509671Z",
+        "note": "no tokenized version in the public NEAR Intents token lists"
       },
-      "quote": {
-        "amount_in_usd": 6802.44,
-        "amount_out_usd": 6770.01,
-        "amount_out": "115.352076196924906739",
-        "cost_pct": 0.477,
-        "time_estimate_s": 25.0,
-        "quoted_at": "2026-11-14T10:07:16.128339Z",
-        "correlation_id": "d59bd81d-9002-4cc5-8b1b-fc3e7a72e70e",
-        "error": null
-      }
+      "quote": null
     },
     {
       "ticker": "KEYS",
@@ -53,7 +44,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-14T10:07:17.005611Z",
+        "checked_at": "2026-11-15T10:08:43.509885Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -74,7 +65,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-14T10:07:17.005876Z",
+        "checked_at": "2026-11-15T10:08:43.510052Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -530,7 +521,7 @@
   "benchmark": "SPY",
   "benchmark_start_close": 735.29,
   "benchmark_start_date": "2026-11-06",
-  "updated_at": "2026-11-14T10:06:53.451953Z",
+  "updated_at": "2026-11-15T10:08:30.731969Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",

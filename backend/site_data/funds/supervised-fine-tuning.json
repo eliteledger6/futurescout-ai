@@ -18,24 +18,15 @@
       "timing_risk": "subdued",
       "why": "Company Scout: 2 patent(s), 1 filing(s); large by revenue",
       "route": {
-        "available": true,
-        "symbol": "NVDAon",
-        "asset_id": "nep141:bnb-0xa9ee28c80f960b889dfbd1902055218cba016f75.omdep.near",
-        "blockchain": "BNB Chain",
-        "token_price_usd": 163.5733,
-        "checked_at": "2026-11-14T10:06:59.280387Z",
-        "note": "listed by the NEAR Intents bridge; the price implied by a dry-run quote matches the stock"
+        "available": false,
+        "symbol": null,
+        "asset_id": null,
+        "blockchain": null,
+        "token_price_usd": null,
+        "checked_at": "2026-11-15T10:08:37.506236Z",
+        "note": "no tokenized version in the public NEAR Intents token lists"
       },
-      "quote": {
-        "amount_in_usd": 1606.47,
-        "amount_out_usd": 1598.14,
-        "amount_out": "9.820792230715662874",
-        "cost_pct": 0.518,
-        "time_estimate_s": 10.0,
-        "quoted_at": "2026-11-14T10:07:01.230883Z",
-        "correlation_id": "ca99acc6-ad47-4a24-a675-66bdf7c810eb",
-        "error": null
-      }
+      "quote": null
     },
     {
       "ticker": "CRM",
@@ -53,7 +44,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-14T10:07:01.898037Z",
+        "checked_at": "2026-11-15T10:08:37.506440Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -69,24 +60,15 @@
       "timing_risk": "moderate",
       "why": "Company Scout: 1 patent(s), 2 filing(s); large by revenue",
       "route": {
-        "available": true,
-        "symbol": "MSFTon",
-        "asset_id": "nep141:bnb-0x6bfe75d1ad432050ea973c3a3dcd88f02e2444c3.omdep.near",
-        "blockchain": "BNB Chain",
-        "token_price_usd": 527.2914,
-        "checked_at": "2026-11-14T10:07:01.898432Z",
-        "note": "listed by the NEAR Intents bridge; the price implied by a dry-run quote matches the stock"
+        "available": false,
+        "symbol": null,
+        "asset_id": null,
+        "blockchain": null,
+        "token_price_usd": null,
+        "checked_at": "2026-11-15T10:08:37.506558Z",
+        "note": "no tokenized version in the public NEAR Intents token lists"
       },
-      "quote": {
-        "amount_in_usd": 1637.05,
-        "amount_out_usd": 1626.62,
-        "amount_out": "3.10416973741745943",
-        "cost_pct": 0.638,
-        "time_estimate_s": 25.0,
-        "quoted_at": "2026-11-14T10:07:02.675632Z",
-        "correlation_id": "4ecb4113-c6a6-4d93-9e92-8d9062eb3b0b",
-        "error": null
-      }
+      "quote": null
     },
     {
       "ticker": "ORCL",
@@ -104,7 +86,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-14T10:07:03.482364Z",
+        "checked_at": "2026-11-15T10:08:37.506654Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -125,7 +107,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-14T10:07:03.482853Z",
+        "checked_at": "2026-11-15T10:08:37.506765Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -235,7 +217,7 @@
   "benchmark": "SPY",
   "benchmark_start_close": 749.92,
   "benchmark_start_date": "2026-11-10",
-  "updated_at": "2026-11-14T10:06:53.451953Z",
+  "updated_at": "2026-11-15T10:08:30.731969Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision carries its own fingerprint (the report it is based on is sealed on NEAR).",
