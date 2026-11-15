@@ -479,3 +479,11 @@ topics:
   evidence:
   - https://openalex.org/W7167258202
   added_on: '2026-11-14'
+- name: prompt injection
+  sector: ai_software
+  terms:
+  - prompt injection
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7225126532
+  added_on: '2026-11-15'
