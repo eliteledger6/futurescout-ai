@@ -487,3 +487,11 @@ topics:
   evidence:
   - https://openalex.org/W7225126532
   added_on: '2026-11-15'
+- name: tiny machine learning
+  sector: ai_software
+  terms:
+  - tiny machine learning
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7171864345
+  added_on: '2026-11-15'
