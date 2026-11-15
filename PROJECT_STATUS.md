@@ -708,3 +708,16 @@ Source: `HACKATHON.md` you provided (live copy: https://nearhackathon.com/HACKAT
   allowance again, takes a fresh token and asks once more; at most twice per client, so a key that is really blocked or
   wrong costs two minutes and then reports the error as before. Mock-tested (369 pass); not run live, because a
   refusal cannot be produced on demand.
+
+## 2026-11-15: token routes survive a refused NEAR Intents bridge list (built on the laptop, NOT pushed)
+
+- Found in a status check: since the daily fund refresh at 10:08 UTC every fund holding said "no tokenized version", so
+  the trading agent's allowlist was empty (the /trading page showed 0 stocks). Cause: the bridge RPC
+  (`bridge.chaindefuser.com/rpc`, `supported_tokens`) answers 403 Forbidden, from the laptop and the server alike, and
+  the code treated a refused list as "no tokens". No money moved; the INTCon holding was still tracked and priced.
+- Fixed (`app/fund/intents.py`): when the bridge list gives nothing, the same tokens are read from 1Click's list of
+  tokenized stocks (`GET /v0/tokens?ondoTokens=true`, same token ids). The price check by dry quote is unchanged.
+- Mock-tested (370 pass). Run live from the laptop with dry quotes only, nothing saved: INTC, MRVL, MSFT, META and NVDA
+  all route again and their quoted prices match the last close.
+- Not pushed (development closed 14 Nov; the owner decides). The live funds repair only after a push, a server restart
+  and the next fund refresh.

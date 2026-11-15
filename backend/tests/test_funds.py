@@ -195,6 +195,34 @@ def test_bridge_listed_stock_token_needs_a_matching_quoted_price():
     assert bodies and all('"dry":true' in b.replace(" ", "") for b in bodies)   # only ever dry quotes
 
 
+def test_a_refused_bridge_list_falls_back_to_the_list_of_tokenized_stocks():
+    """2026-11-15: the bridge RPC answered 403 and every fund lost its token routes. The same tokens are then read from
+    1Click's list of tokenized stocks; the price implied by a dry quote must still match the stock."""
+    stocks = [{"symbol": "MIDAon", "assetId": "nep141:bnb-0xmida.omdep.near", "blockchain": "bsc", "price": 20.1},
+              {"symbol": "SMOLon", "assetId": "nep141:bnb-0xsmol.omdep.near", "blockchain": "bsc", "price": 5.0}]
+    bodies = []
+
+    def handler(req):
+        if req.url.host == "bridge.test":
+            return httpx.Response(403, text="<!doctype html><title>403</title>403 Forbidden")
+        if req.url.path == "/v0/tokens":
+            return httpx.Response(200, json=stocks if req.url.params.get("ondoTokens") == "true" else [])
+        body = req.read().decode()
+        bodies.append(body)
+        out = "5.0" if "0xmida" in body else "0.001"          # $100 -> 5 MIDAon ($20, matches) / 0.001 SMOLon (unrelated)
+        return httpx.Response(201, json={"quote": {"amountInUsd": "100.0", "amountOutUsd": "99.0", "amountOutFormatted": out}})
+    client = OneClickClient("https://x.test", http=httpx.Client(transport=httpx.MockTransport(handler)), now=lambda: NOW,
+                            bridge_rpc="https://bridge.test/rpc")
+    client.pay = ("nep141:usdc", 6, "intents.near")
+    ok = client.route_for("MIDA", 20.0, 15)
+    assert ok.available and ok.symbol == "MIDAon" and ok.asset_id == "nep141:bnb-0xmida.omdep.near"
+    assert ok.blockchain == "BNB Chain" and ok.token_price_usd == 20.0 and "tokenized stocks" in ok.note
+    bad = client.route_for("SMOL", 5.0, 15)
+    assert not bad.available and "unrelated" in bad.note             # the list's own price is not trusted: the quote decides
+    assert not client.route_for("BIG2", 50.0, 15).available          # in no list
+    assert bodies and all('"dry":true' in b.replace(" ", "") for b in bodies)   # only ever dry quotes
+
+
 def test_confidence_below_70_shrinks_the_position(verdict):
     verdict.update(band="strong", score=76.0, confidence_pct=56.0)
     f = new_fund("Fixture tech", None, CFG, NOW)

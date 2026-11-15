@@ -88,7 +88,11 @@ class OneClickClient:
         return data
 
     def bridge_tokens(self) -> list[dict]:
-        """Tokens of the NEAR Intents bridge (no prices). Empty on any error: the bridge list is a bonus, not required."""
+        """Tokens of the NEAR Intents bridge (no prices). Empty on any error: the bridge list is a bonus, not required.
+
+        2026-11-15: the bridge RPC began answering 403 Forbidden, which emptied every fund's token routes and with them
+        the trading agent's allowlist. When the bridge gives nothing, the same tokens are read from 1Click's own list of
+        tokenized stocks (GET /v0/tokens?ondoTokens=true, same token ids). The price check by dry quote is unchanged."""
         if self._bridge is None:
             self._bridge = []
             if self.bridge_rpc:
@@ -99,7 +103,23 @@ class OneClickClient:
                     self._bridge = [t for t in toks if isinstance(t, dict) and t.get("asset_name") and t.get("intents_token_id")]
                 except (httpx.HTTPError, ValueError, AttributeError):
                     self._bridge = []
+                if not self._bridge:
+                    self._bridge = self._stock_list_tokens()
         return self._bridge
+
+    def _stock_list_tokens(self) -> list[dict]:
+        """1Click's list including tokenized stocks, in the bridge list's shape. Empty on any error."""
+        chains = {"bsc": "BNB Chain", "eth": "Ethereum", "base": "Base"}
+        try:
+            r = self._http.get(f"{self.api}/v0/tokens", params={"ondoTokens": "true"})
+            self.requests += 1
+            data = r.json() if r.status_code == 200 else []
+        except (httpx.HTTPError, ValueError):
+            return []
+        return [{"asset_name": t["symbol"], "intents_token_id": t["assetId"],
+                 "chain": chains.get(str(t.get("blockchain") or ""), str(t.get("blockchain") or "bridged")),
+                 "listed_in": "listed in the NEAR Intents list of tokenized stocks"}
+                for t in (data if isinstance(data, list) else []) if isinstance(t, dict) and t.get("symbol") and t.get("assetId")]
 
     def _bridge_route(self, ticker: str, last_close: Optional[float], tolerance_pct: float) -> Optional[TokenRoute]:
         now = self._now()
@@ -108,7 +128,8 @@ class OneClickClient:
         if not cands or not self.pay or not last_close:
             return None
         t = cands[0]
-        chain = {"eth:56": "BNB Chain", "eth:1": "Ethereum", "eth:8453": "Base"}.get(str(t.get("defuse_asset_identifier", "")).rsplit(":", 1)[0], "bridged")
+        chain = t.get("chain") or {"eth:56": "BNB Chain", "eth:1": "Ethereum", "eth:8453": "Base"}.get(str(t.get("defuse_asset_identifier", "")).rsplit(":", 1)[0], "bridged")
+        listed = t.get("listed_in") or "listed by the NEAR Intents bridge"
         q = self.dry_quote(self.pay[0], self.pay[1], t["intents_token_id"], 100.0, self.pay[2])
         try:
             implied = q.amount_in_usd / float(q.amount_out) if q.amount_out and not q.error else None
@@ -117,10 +138,10 @@ class OneClickClient:
         if implied and abs(implied / last_close - 1) * 100 <= tolerance_pct:
             return TokenRoute(available=True, symbol=t["asset_name"], asset_id=t["intents_token_id"], blockchain=chain,
                               token_price_usd=round(implied, 4), checked_at=now,
-                              note="listed by the NEAR Intents bridge; the price implied by a dry-run quote matches the stock")
+                              note=f"{listed}; the price implied by a dry-run quote matches the stock")
         return TokenRoute(available=False, symbol=t["asset_name"], asset_id=t["intents_token_id"], blockchain=chain,
                           token_price_usd=round(implied, 4) if implied else None, checked_at=now,
-                          note=("listed by the NEAR Intents bridge, but no quote could be obtained right now" if not implied else
+                          note=(f"{listed}, but no quote could be obtained right now" if not implied else
                                 "a token with this symbol is listed but its quoted price does not match the stock: treated as unrelated"))
 
     def route_for(self, ticker: str, last_close: Optional[float], tolerance_pct: float) -> TokenRoute:
