@@ -773,7 +773,7 @@
       "chain": null
     }
   ],
-  "updated_at": "2026-11-15T12:19:21.781031Z",
+  "updated_at": "2026-11-15T14:19:26.947008Z",
   "checks": [
     {
       "id": "0ba2c35d8b",
@@ -4323,7 +4323,7 @@
   "last_review_at": "2026-11-14T16:10:25.481609Z",
   "last_live_review_at": "2026-11-15T04:13:33.504316Z",
   "private_near": 3.9858,
-  "private_checked_at": "2026-11-15T12:19:21.781000Z",
+  "private_checked_at": "2026-11-15T14:19:26.946946Z",
   "last_values": {
     "INTCon": {
       "usd": 42.9,
