@@ -503,3 +503,11 @@ topics:
   evidence:
   - https://openalex.org/W7164846132
   added_on: '2026-11-15'
+- name: microwave annealing
+  sector: semiconductors
+  terms:
+  - microwave annealing
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7212177620
+  added_on: '2026-11-16'
