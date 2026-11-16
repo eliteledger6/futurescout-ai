@@ -771,44 +771,121 @@
       "sha256": "0afa4b954b02314941aac7c625a5c97deefb744c2d3434ebbc472701a3033cd0",
       "correction": null,
       "chain": null
+    },
+    {
+      "id": "cf1278bcfe",
+      "created_at": "2026-11-16T10:21:37.562279Z",
+      "mode": "shadow",
+      "side": "buy",
+      "topic": "chiplet",
+      "ticker": "NVDA",
+      "symbol": "NVDAon",
+      "asset_id": "nep141:bnb-0xa9ee28c80f960b889dfbd1902055218cba016f75.omdep.near",
+      "usd": 400.0,
+      "fraction": null,
+      "quantity": null,
+      "rationale": "This is a routine review with no new report and no sharp move to explain. Current prices: INTC $56.86 (-3.97% vs cost), MSFT $528.99 (+0.47%), META $637.56 (+0.56%), MRVL $150.30 (-2.08%). None of the findings explains the small INTC and MRVL dips, and no holding's report has weakened, so there is no reason to sell. The fund holds no chiplet stock. The chiplet report is 'strong' (score 72.2) but only 44.4% confident, which is low, so this is a small $400 starter buy rather than a full position. The report's findings include NVIDIA's NVHBM as an example of customer co-designed HBM4 base dies. NVDA's quote of $160.62 is 1.37% below the last close of $162.85, with a 0.88% quote cost, which is acceptable. I am not adding to INTC or MRVL because high bandwidth memory is already the fund's largest topic. I am not adding to MSFT, which has the thinnest report at 35.3% and is quoted at a 2.17% premium. Keeping most of the cash is deliberate, because every report is below 70% confidence.",
+      "risks": [
+        "The chiplet report's confidence is below 45%, and most of its X findings are unverified claims, so the evidence for this buy is thin.",
+        "The last close is from 2026-11-13 and may be stale, and the tokenized price can drift from the underlying share.",
+        "NVDAon is a tokenized stock that depends on its issuer (Ondo) and is not the share itself."
+      ],
+      "confidence": "low",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.072896,
+      "ref_close": 162.85,
+      "ref_close_date": "2026-11-13",
+      "dry_quote": {
+        "amountIn": "314465408805031405770768384",
+        "amountInFormatted": "314.465408805031405770768384",
+        "amountInUsd": "1000.000000000000",
+        "amountOut": "6225871941225574055",
+        "amountOutFormatted": "6.225871941225574055",
+        "amountOutUsd": "991.221071762524",
+        "minAmountOut": "6163613221813318314",
+        "timeEstimate": 22,
+        "correlationId": "c6195131-d470-416f-9d50-66e4261d12c0",
+        "quotedAt": "2026-11-16T10:21:50.839075+00:00",
+        "dry": true
+      },
+      "status": "shadow_filled",
+      "quote": {
+        "amountIn": "125786163522012572616228864",
+        "amountInFormatted": "125.786163522012572616228864",
+        "amountInUsd": "400.000000000000",
+        "amountOut": "2488374433597917484",
+        "amountOutFormatted": "2.488374433597917484",
+        "amountOutUsd": "396.248744806132",
+        "minAmountOut": "2463490689261938309",
+        "timeEstimate": 22,
+        "correlationId": "6bc51382-00ab-4894-a10c-231d91ad1bc1",
+        "quotedAt": "2026-11-16T10:22:09.667198+00:00",
+        "dry": true
+      },
+      "deposit_address": null,
+      "deposit_tx": null,
+      "result": null,
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-16T10:21:37.562279Z",
+          "status": "proposed",
+          "note": "strategy check (review): the agent proposed to buy $400.00 of NVDAon"
+        },
+        {
+          "at": "2026-11-16T10:22:09.667311Z",
+          "status": "shadow_filled",
+          "note": "would receive 2.488374433597917484 NVDAon for $400.00 (nothing was sent)"
+        }
+      ],
+      "sha256": "ed600289f17784bb645afe27211034ede23b5aaf5cd057e3540c856d529c30de",
+      "correction": null,
+      "chain": null
+    },
+    {
+      "id": "80e692e673",
+      "created_at": "2026-11-16T10:22:11.895059Z",
+      "mode": "live",
+      "side": "hold",
+      "topic": "",
+      "ticker": "",
+      "symbol": "",
+      "asset_id": "",
+      "usd": 0.0,
+      "fraction": null,
+      "quantity": null,
+      "rationale": "INTC is at $56.86 (read 2026-11-16 10:22 UTC), down 4.11% from the $59.29 cost per share and 2.03% since the last look. The quote of $57.28 is 3.99% below the last close of $59.66. Today's brief says the posts contain nothing new on high bandwidth memory or the report's named risks, and nothing in the evidence explains the small decline. INTC's high bandwidth memory report is still 'strong' (score 80), though its confidence of 49.6% is below 70, so it is not a confident report. No sale reason applies: the report has not weakened, no finding points to a real problem behind the fall, and no candidate has both a higher verdict band and higher confidence. MRVL and META tie INTC at 'strong' and 49.6%, and the rest are lower. Selling now would also fill at a quote about 4% below the last close, which would lock in a loss the evidence does not explain.",
+      "risks": [
+        "A tokenized stock (INTCon) depends on its issuer, Ondo, and is not the Intel share itself.",
+        "The HBM report's confidence is below 50%, and the brief notes the evidence gaps on process and reliability are still open.",
+        "The whole fund sits in one holding, so Intel-specific moves hit the entire position."
+      ],
+      "confidence": "low",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.060548,
+      "ref_close": null,
+      "ref_close_date": null,
+      "dry_quote": null,
+      "status": "hold",
+      "quote": null,
+      "deposit_address": null,
+      "deposit_tx": null,
+      "result": null,
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-16T10:22:11.895059Z",
+          "status": "hold",
+          "note": "strategy check: review, holding_brief"
+        }
+      ],
+      "sha256": "33fdd91fa74996b9efdfb7597f45054e37ce96a5ada593d3400c8c6a9a5be790",
+      "correction": null,
+      "chain": null
     }
   ],
-  "updated_at": "2026-11-16T09:21:35.955636Z",
+  "updated_at": "2026-11-16T10:22:35.744179Z",
   "checks": [
-    {
-      "id": "0ba2c35d8b",
-      "at": "2026-11-11T13:56:45.344227Z",
-      "mode": "shadow",
-      "triggers": [],
-      "action": "none",
-      "ticker": "",
-      "usd": 0.0,
-      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
-      "what_changed": "",
-      "proposal_id": null,
-      "model": null,
-      "cost_usd": 0.0,
-      "notes": [],
-      "sha256": "55b83a766c296abbfd5f03f266eae2590597782aac0aa39d922f81dd6cefec90",
-      "correction": null
-    },
-    {
-      "id": "ec5030d0bb",
-      "at": "2026-11-11T13:56:48.280233Z",
-      "mode": "live",
-      "triggers": [],
-      "action": "none",
-      "ticker": "",
-      "usd": 0.0,
-      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
-      "what_changed": "",
-      "proposal_id": null,
-      "model": null,
-      "cost_usd": 0.0,
-      "notes": [],
-      "sha256": "d764d24c497f7d3150d112d064e9476bdc19528b380e4123052926f00cf8a1b9",
-      "correction": null
-    },
     {
       "id": "0d1458ce52",
       "at": "2026-11-11T14:56:48.692560Z",
@@ -4249,6 +4326,60 @@
       "notes": [],
       "sha256": "05341a343cb81312e38e853023faf8ada3b7c40e978a040e55edcd2421c250c6",
       "correction": null
+    },
+    {
+      "id": "fbf85d4a9b",
+      "at": "2026-11-16T10:21:37.562279Z",
+      "mode": "shadow",
+      "triggers": [
+        {
+          "kind": "review",
+          "ticker": "",
+          "topic": "",
+          "detail": "routine review"
+        }
+      ],
+      "action": "buy",
+      "ticker": "NVDA",
+      "usd": 400.0,
+      "summary": "The fund holds no chiplet stock. The chiplet report is 'strong' (score 72.2) but only 44.4% confident, which is low, so this is a small $400 starter buy rather than a full position. The report's findings include NVIDIA's NVHBM as an example of customer co-designed HBM4 base dies. NVDA's quote of $160.62 is 1.37% below the last close of $162.85, with a 0.88% quote cost, which is acceptable. I am not adding to INTC or MRVL because high bandwidth memory is already the fund's largest topic. I am not adding to MSFT, which has the thinnest report at 35.3% and is quoted at a 2.17% premium. Keeping most of the cash is deliberate, because every report is below 70% confidence.",
+      "what_changed": "This is a routine review with no new report and no sharp move to explain. Current prices: INTC $56.86 (-3.97% vs cost), MSFT $528.99 (+0.47%), META $637.56 (+0.56%), MRVL $150.30 (-2.08%). None of the findings explains the small INTC and MRVL dips, and no holding's report has weakened, so there is no reason to sell.",
+      "proposal_id": "cf1278bcfe",
+      "model": "claude_opus_5_5",
+      "cost_usd": 0.072896,
+      "notes": [],
+      "sha256": "130206d28c765559218dcaab044aee931f2d6137876ff3269540f4dcd78a0a34",
+      "correction": null
+    },
+    {
+      "id": "a929c39c46",
+      "at": "2026-11-16T10:22:11.895059Z",
+      "mode": "live",
+      "triggers": [
+        {
+          "kind": "review",
+          "ticker": "",
+          "topic": "",
+          "detail": "routine review"
+        },
+        {
+          "kind": "holding_brief",
+          "ticker": "INTC",
+          "topic": "",
+          "detail": "new brief on INTC from the report agent (urgency low): Nothing new in the posts on the HBM topic or the report's named risks. The only Intel datapoints are a claimed CPU market-share recovery and a TrendForce interview on the broader memory competitive landscape, neither HBM-specific."
+        }
+      ],
+      "action": "hold",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "INTC's high bandwidth memory report is still 'strong' (score 80), though its confidence of 49.6% is below 70, so it is not a confident report. No sale reason applies: the report has not weakened, no finding points to a real problem behind the fall, and no candidate has both a higher verdict band and higher confidence. MRVL and META tie INTC at 'strong' and 49.6%, and the rest are lower. Selling now would also fill at a quote about 4% below the last close, which would lock in a loss the evidence does not explain.",
+      "what_changed": "INTC is at $56.86 (read 2026-11-16 10:22 UTC), down 4.11% from the $59.29 cost per share and 2.03% since the last look. The quote of $57.28 is 3.99% below the last close of $59.66. Today's brief says the posts contain nothing new on high bandwidth memory or the report's named risks, and nothing in the evidence explains the small decline.",
+      "proposal_id": "80e692e673",
+      "model": "claude_opus_5_5",
+      "cost_usd": 0.060548,
+      "notes": [],
+      "sha256": "eeda7697d1f43b918c8bd36bdb444a46ac59deb389cf3e83bff4121cef0ad5fe",
+      "correction": null
     }
   ],
   "seen_runs": {
@@ -4266,64 +4397,64 @@
     "live:chiplet": "ab3b0896-a403-4181-990f-65bad2f59f13",
     "retrieval-augmented generation": "4a2a3eaa-9841-4174-b38d-0a12e7b52623",
     "chiplet": "ab3b0896-a403-4181-990f-65bad2f59f13",
-    "live:brief:INTC": "cc0ffe95dd"
+    "live:brief:INTC": "10ff6bff18"
   },
   "seen_closes": {
     "INTC": "2026-11-12"
   },
   "holding_prices": {
     "INTC": {
-      "price": 58.11,
-      "at": "2026-11-15T09:14:46.972940+00:00",
+      "price": 56.86,
+      "at": "2026-11-16T10:21:37.562279+00:00",
       "cost_per_share": 59.2103,
-      "gain_pct": -1.86,
-      "seen_price": 57.88,
-      "seen_at": "2026-11-14T16:10:25.481609+00:00",
-      "since_seen_pct": 0.4
+      "gain_pct": -3.97,
+      "seen_price": 56.86,
+      "seen_at": "2026-11-16T10:21:37.562279+00:00",
+      "since_seen_pct": 0.0
     },
     "live:INTC": {
-      "price": 58.11,
-      "at": "2026-11-15T09:14:49.465120+00:00",
+      "price": 56.86,
+      "at": "2026-11-16T10:22:11.895059+00:00",
       "cost_per_share": 59.2948,
-      "gain_pct": -2.0,
-      "seen_price": 58.04,
-      "seen_at": "2026-11-15T04:13:33.504316+00:00",
-      "since_seen_pct": 0.12
+      "gain_pct": -4.11,
+      "seen_price": 56.86,
+      "seen_at": "2026-11-16T10:22:11.895059+00:00",
+      "since_seen_pct": 0.0
     },
     "MSFT": {
-      "price": 520.37,
-      "at": "2026-11-15T09:14:46.972940+00:00",
+      "price": 528.99,
+      "at": "2026-11-16T10:21:37.562279+00:00",
       "cost_per_share": 526.4959,
-      "gain_pct": -1.16,
-      "seen_price": 521.32,
-      "seen_at": "2026-11-14T16:10:25.481609+00:00",
-      "since_seen_pct": -0.18
+      "gain_pct": 0.47,
+      "seen_price": 528.99,
+      "seen_at": "2026-11-16T10:21:37.562279+00:00",
+      "since_seen_pct": 0.0
     },
     "META": {
-      "price": 637.14,
-      "at": "2026-11-15T09:14:46.972940+00:00",
+      "price": 637.56,
+      "at": "2026-11-16T10:21:37.562279+00:00",
       "cost_per_share": 633.9964,
-      "gain_pct": 0.5,
-      "seen_price": 636.98,
-      "seen_at": "2026-11-14T16:10:25.481609+00:00",
-      "since_seen_pct": 0.03
+      "gain_pct": 0.56,
+      "seen_price": 637.56,
+      "seen_at": "2026-11-16T10:21:37.562279+00:00",
+      "since_seen_pct": 0.0
     },
     "MRVL": {
-      "price": 153.41,
-      "at": "2026-11-15T09:14:46.972940+00:00",
+      "price": 150.3,
+      "at": "2026-11-16T10:21:37.562279+00:00",
       "cost_per_share": 153.4993,
-      "gain_pct": -0.06,
-      "seen_price": 150.76,
-      "seen_at": "2026-11-14T17:11:10.900523+00:00",
-      "since_seen_pct": 1.76
+      "gain_pct": -2.08,
+      "seen_price": 150.3,
+      "seen_at": "2026-11-16T10:21:37.562279+00:00",
+      "since_seen_pct": 0.0
     }
   },
-  "last_check_at": "2026-11-15T09:14:46.972940Z",
-  "last_live_check_at": "2026-11-15T09:14:49.465120Z",
-  "last_review_at": "2026-11-14T16:10:25.481609Z",
-  "last_live_review_at": "2026-11-15T04:13:33.504316Z",
+  "last_check_at": "2026-11-16T10:21:37.562279Z",
+  "last_live_check_at": "2026-11-16T10:22:11.895059Z",
+  "last_review_at": "2026-11-16T10:21:37.562279Z",
+  "last_live_review_at": "2026-11-16T10:22:11.895059Z",
   "private_near": 3.8286,
-  "private_checked_at": "2026-11-16T09:21:35.955595Z",
+  "private_checked_at": "2026-11-16T10:22:11.888467Z",
   "last_values": {
     "INTCon": {
       "usd": 42.9,
