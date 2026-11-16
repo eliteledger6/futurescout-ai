@@ -773,7 +773,7 @@
       "chain": null
     }
   ],
-  "updated_at": "2026-11-15T14:19:26.947008Z",
+  "updated_at": "2026-11-16T04:21:09.121846Z",
   "checks": [
     {
       "id": "0ba2c35d8b",
@@ -4322,12 +4322,12 @@
   "last_live_check_at": "2026-11-15T09:14:49.465120Z",
   "last_review_at": "2026-11-14T16:10:25.481609Z",
   "last_live_review_at": "2026-11-15T04:13:33.504316Z",
-  "private_near": 3.9858,
-  "private_checked_at": "2026-11-15T14:19:26.946946Z",
+  "private_near": 3.8286,
+  "private_checked_at": "2026-11-16T04:21:09.121790Z",
   "last_values": {
     "INTCon": {
       "usd": 42.9,
-      "at": "2026-11-15T04:13:12.172089+00:00"
+      "at": "2026-11-16T04:20:47.503685+00:00"
     }
   },
   "hidden": []

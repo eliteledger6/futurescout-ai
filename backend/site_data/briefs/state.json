@@ -300,6 +300,62 @@
    "status": "paid",
    "payment_id": "068189bd16",
    "errors": []
+  },
+  {
+   "id": "10ff6bff18",
+   "ticker": "INTC",
+   "symbol": "INTCon",
+   "topic": "high bandwidth memory",
+   "at": "2026-11-16T04:20:02.935315Z",
+   "price_now": 58.03,
+   "gain_pct": -2.13,
+   "posts_read": 10,
+   "signals": [
+    {
+     "claim": "None of the 10 posts retrieved this week directly discuss high bandwidth memory (HBM); the keyword match appears driven by Intel-related posts rather than HBM content.",
+     "label": "ai_interpretation",
+     "url": "https://x.com/tomshardware/status/2121997416002179421",
+     "account": "@tomshardware",
+     "published_at": "2026-11-15"
+    },
+    {
+     "claim": "TrendForce posted an interview with Charles Kau, a veteran of TSMC, Intel, Nanya Tech and YMTC, arguing China's biggest memory threat may not be a tech breakthrough and that TSMC may have no reason to join the memory race — context for the memory competitive landscape, though not HBM-specific.",
+     "label": "unverified_claim",
+     "url": "https://x.com/trendforce/status/2120355854629343682",
+     "account": "@trendforce",
+     "published_at": "2026-11-11"
+    },
+    {
+     "claim": "Tom's Hardware reports Intel reclaimed overall CPU market share for the first time since 2025 — an Intel datapoint, but unrelated to high bandwidth memory.",
+     "label": "unverified_claim",
+     "url": "https://x.com/tomshardware/status/2121959539994161304",
+     "account": "@tomshardware",
+     "published_at": "2026-11-15"
+    },
+    {
+     "claim": "Intel's own posts this week emphasize corporate transformation/execution (CEO Lip-Bu Tan interview), AI software optimizations with Radix Ark upstreamed to SGL, and edge/physical-AI compute with Altera FPGA — none mention HBM or memory products.",
+     "label": "ai_interpretation",
+     "url": "https://x.com/intel/status/2120999735611867203",
+     "account": "@intel",
+     "published_at": "2026-11-12"
+    }
+   ],
+   "note": {
+    "summary": "Intel trades at $58.03, down 2.13% from the $59.29 cost basis. Posts this week contain nothing on high bandwidth memory; the keyword match was Intel-related noise, and Intel's own posts focus on corporate transformation and AI software, not memory.",
+    "what_changed": "Nothing new in the posts on the HBM topic or the report's named risks. The only Intel datapoints are a claimed CPU market-share recovery and a TrendForce interview on the broader memory competitive landscape, neither HBM-specific.",
+    "risks": [
+     "No HBM-specific news flow this week, leaving the report's process and reliability evidence gaps unaddressed.",
+     "Broader memory competitive-landscape chatter (China threat, TSMC's stance) could shift sentiment even without HBM specifics.",
+     "Continued small loss suggests no catalyst yet; monitor whether backside-power/HBM process risks surface at the next review."
+    ],
+    "urgency": "low"
+   },
+   "cost_usd": 0.0508,
+   "price_usd": 0.5,
+   "price_near": 0.1572,
+   "status": "paid",
+   "payment_id": "05ec65a21f",
+   "errors": []
   }
  ]
 }

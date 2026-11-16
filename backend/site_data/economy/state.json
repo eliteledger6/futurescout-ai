@@ -196,6 +196,18 @@
       "tx_hash": null,
       "note": "paid 0.1603 NEAR from the near.com balance (intent 6q1iWBS25nFaSbKLwjjA571byfHJ8jPuKyVWPR7DFaYE); seen arriving in grandbread5023.near after about 15s",
       "at": "2026-11-15T04:13:16.547568Z"
+    },
+    {
+      "id": "05ec65a21f",
+      "run_id": "briefs_20261116T042002",
+      "topic": "holding briefs: INTC",
+      "price_near": 0.1572,
+      "buyer": "wrongowl2563.near",
+      "seller": "grandbread5023.near",
+      "status": "paid",
+      "tx_hash": null,
+      "note": "paid 0.1572 NEAR from the near.com balance (intent GubiH2yVqRWwfQJy8Ro9ihNx74fSMrPpW4Y9mX24aZzS); seen arriving in grandbread5023.near after about 15s",
+      "at": "2026-11-16T04:20:52.158447Z"
     }
   ],
   "stakes": [
