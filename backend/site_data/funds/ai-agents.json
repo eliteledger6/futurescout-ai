@@ -18,15 +18,24 @@
       "timing_risk": "moderate",
       "why": "Company Scout: 2 patent(s), 3 filing(s); large by revenue",
       "route": {
-        "available": false,
-        "symbol": null,
-        "asset_id": null,
-        "blockchain": null,
-        "token_price_usd": null,
-        "checked_at": "2026-11-15T10:08:44.563655Z",
-        "note": "no tokenized version in the public NEAR Intents token lists"
+        "available": true,
+        "symbol": "MSFTon",
+        "asset_id": "nep141:bnb-0x6bfe75d1ad432050ea973c3a3dcd88f02e2444c3.omdep.near",
+        "blockchain": "BNB Chain",
+        "token_price_usd": 531.9196,
+        "checked_at": "2026-11-16T10:09:57.355031Z",
+        "note": "listed in the NEAR Intents list of tokenized stocks; the price implied by a dry-run quote matches the stock"
       },
-      "quote": null
+      "quote": {
+        "amount_in_usd": 2146.75,
+        "amount_out_usd": 2124.64,
+        "amount_out": "4.024159900901818365",
+        "cost_pct": 1.03,
+        "time_estimate_s": 25.0,
+        "quoted_at": "2026-11-16T10:09:58.023605Z",
+        "correlation_id": "ef571019-d852-4dac-85d0-cbae8e91c55c",
+        "error": null
+      }
     },
     {
       "ticker": "NOW",
@@ -44,7 +53,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-15T10:08:44.563849Z",
+        "checked_at": "2026-11-16T10:09:58.753531Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -65,7 +74,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-15T10:08:44.563956Z",
+        "checked_at": "2026-11-16T10:09:58.753869Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -86,7 +95,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-15T10:08:44.564033Z",
+        "checked_at": "2026-11-16T10:09:58.754077Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -675,6 +684,39 @@
       "value_before_usd": 9955.68,
       "sha256": "770b9a97e93efb29372360ddc1ad05e23ba52c4cb32f937e65bc92ee7d9a632f",
       "chain": null
+    },
+    {
+      "at": "2026-11-16T10:09:16.620788Z",
+      "run_id": "71b787db-4595-4cab-8ae0-9aa6971d2a4b",
+      "report_date": "2026-11-10",
+      "band": "strong",
+      "score": 70.8,
+      "previous_score": 70.8,
+      "confidence_pct": 38.6,
+      "target_invested_pct": 100.0,
+      "tier_targets_usd": {
+        "low": 9955.68
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "NOW",
+        "PANW",
+        "NTNX",
+        "FICO"
+      ],
+      "trades": [],
+      "reasons": [
+        "Why now: price review: 4 company(ies) were waiting for a daily close.",
+        "Verdict band 'strong' (score 70.8), confidence 39%. Owner rule: every paper fund is fully invested, so all of the fund goes into the basket.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): NOW, PANW, NTNX, FICO. Reviewed again after the next price update.",
+        "No priced company in the medium-risk tier; its share goes to the other tiers.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "No trade: the fund is already close to its targets.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-16."
+      ],
+      "value_before_usd": 9955.68,
+      "sha256": "f15dada9db1f06ad9ff70f0122723980a2d977b3f36ff5cca98c61820e31ac65",
+      "chain": null
     }
   ],
   "history": [
@@ -712,7 +754,7 @@
   "benchmark": "SPY",
   "benchmark_start_close": 735.29,
   "benchmark_start_date": "2026-11-06",
-  "updated_at": "2026-11-15T10:08:30.731969Z",
+  "updated_at": "2026-11-16T10:09:16.620788Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",
