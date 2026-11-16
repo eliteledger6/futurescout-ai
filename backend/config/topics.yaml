@@ -519,3 +519,11 @@ topics:
   evidence:
   - https://openalex.org/W7204589703
   added_on: '2026-11-16'
+- name: handover management
+  sector: space_comms
+  terms:
+  - handover management
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7168301119
+  added_on: '2026-11-16'
