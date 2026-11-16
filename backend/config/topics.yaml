@@ -511,3 +511,11 @@ topics:
   evidence:
   - https://openalex.org/W7212177620
   added_on: '2026-11-16'
+- name: quantum neural networks
+  sector: quantum
+  terms:
+  - quantum neural networks
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7204589703
+  added_on: '2026-11-16'
