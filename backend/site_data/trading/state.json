@@ -966,56 +966,8 @@
       "chain": null
     }
   ],
-  "updated_at": "2026-11-16T22:24:43.916093Z",
+  "updated_at": "2026-11-16T23:24:59.303514Z",
   "checks": [
-    {
-      "id": "1735a9cfb7",
-      "at": "2026-11-12T01:14:03.842412Z",
-      "mode": "shadow",
-      "triggers": [
-        {
-          "kind": "review",
-          "ticker": "",
-          "topic": "",
-          "detail": "first review"
-        }
-      ],
-      "action": "buy",
-      "ticker": "MSFT",
-      "usd": 600.0,
-      "summary": "MSFT's retrieval-augmented generation report is 'strong' (score 75.4), and a verified filing finding ties Azure's GPU and Foundry infrastructure, the layer RAG apps are built on, to $677 billion in commercial remaining performance obligations. The report's confidence is low at 35.3%, so this is a small $600 starter position, well under the $2,200 per-company cap. The quote of $526.43 is 1.26% below the last close of $533.16, plus about 1.03% in quote cost, which looks acceptable. I passed on NVDA because its quote sits 8.49% below its last close with nothing in the evidence explaining the gap, and on AAPL because its 6G report is only 'early'. Most of the budget stays in cash because every report's confidence is under 70%, and the buy adds a second company beside INTC.",
-      "what_changed": "This is the first routine review, not a reaction to news or a price move. The fund holds only INTC, now priced at $60.91 against a cost of $59.21 per share (+2.87%). Its report still reads 'strong', though confidence is only 49.6%, and NEAR Intents cannot quote it right now. None of the evidence points to a problem with INTC.",
-      "proposal_id": "ade49cfffd",
-      "model": "claude_opus_5_5",
-      "cost_usd": 0.049528,
-      "notes": [],
-      "sha256": "f993c1972fa10e1a5fdc8a1ff976bd7d01f7b8891b0b9f51af53abf0a1cb9ba5",
-      "correction": null
-    },
-    {
-      "id": "18636bb674",
-      "at": "2026-11-12T01:14:27.114132Z",
-      "mode": "live",
-      "triggers": [
-        {
-          "kind": "review",
-          "ticker": "",
-          "topic": "",
-          "detail": "first review"
-        }
-      ],
-      "action": "hold",
-      "ticker": "",
-      "usd": 0.0,
-      "summary": "INTC's high bandwidth memory report is still 'strong', with 49.6% confidence. That is below the 70% confident level, but it is the best-supported evidence on hand. No reason to sell applies: the report has not weakened, no finding explains a problem, and the small gain is not a reason to sell. Rotation would need a candidate with a higher verdict band and higher confidence. MSFT (strong, 35.3%) and NVDA (strong, 44.4%) both have lower confidence, and AAPL is only 'early', so none qualifies. NVDA's quote is also 8.25% below its last close, a gap the evidence does not explain, and AAPL's quote is 3.72% above its close, so neither price is attractive without better evidence.",
-      "what_changed": "This is a routine first review, not a price shock. INTC is at $60.91 (read 2026-11-12 01:14 UTC), against a cost of $59.29 per share and a last close of $62.50. That is up 2.72% since buying and up 0.35% since the last look. The daily brief has only neutral-to-positive unverified posts (14A PDK 0.9, Diamond Rapids board, Meta model support) and nothing that touches the report's named risks.",
-      "proposal_id": "dae85db1fd",
-      "model": "claude_opus_5_5",
-      "cost_usd": 0.049716,
-      "notes": [],
-      "sha256": "b671caebdb91c05e59fde01fb1286226de5ac4211b8d7ccc8be1b6d34ee9dcdb",
-      "correction": null
-    },
     {
       "id": "1213a2aaa4",
       "at": "2026-11-12T01:52:53.595090Z",
@@ -4488,6 +4440,40 @@
       "notes": [],
       "sha256": "84bd96f8101e007cdc51bc616693e877b62736fd450bb2a8d2e168debb0c28d4",
       "correction": null
+    },
+    {
+      "id": "510bd39b76",
+      "at": "2026-11-16T23:24:57.127743Z",
+      "mode": "shadow",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "dd22f2e03a4560359cf4d300746df7c3390283a3570b6d99c78e758f93ff1a1f",
+      "correction": null
+    },
+    {
+      "id": "bd6145ebb9",
+      "at": "2026-11-16T23:24:59.232497Z",
+      "mode": "live",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "dfbfdc4d391e9b6b07eaf1d0a6efd85bac2aa760c791ecdef420a9e0d9734cc6",
+      "correction": null
     }
   ],
   "seen_runs": {
@@ -4515,66 +4501,66 @@
   },
   "holding_prices": {
     "INTC": {
-      "price": 53.74,
-      "at": "2026-11-16T22:23:39.138749+00:00",
+      "price": 53.39,
+      "at": "2026-11-16T23:24:57.127743+00:00",
       "cost_per_share": 59.2103,
-      "gain_pct": -9.24,
+      "gain_pct": -9.83,
       "seen_price": 53.74,
       "seen_at": "2026-11-16T22:23:39.138749+00:00",
-      "since_seen_pct": 0.0
+      "since_seen_pct": -0.65
     },
     "live:INTC": {
-      "price": 53.74,
-      "at": "2026-11-16T22:24:15.728642+00:00",
+      "price": 53.39,
+      "at": "2026-11-16T23:24:59.232497+00:00",
       "cost_per_share": 59.2948,
-      "gain_pct": -9.37,
+      "gain_pct": -9.96,
       "seen_price": 53.74,
       "seen_at": "2026-11-16T22:24:15.728642+00:00",
-      "since_seen_pct": 0.0
+      "since_seen_pct": -0.65
     },
     "MSFT": {
-      "price": 519.0,
-      "at": "2026-11-16T22:23:39.138749+00:00",
+      "price": 520.25,
+      "at": "2026-11-16T23:24:57.127743+00:00",
       "cost_per_share": 526.4959,
-      "gain_pct": -1.42,
+      "gain_pct": -1.19,
       "seen_price": 519.0,
       "seen_at": "2026-11-16T22:23:39.138749+00:00",
-      "since_seen_pct": 0.0
+      "since_seen_pct": 0.24
     },
     "META": {
-      "price": 626.39,
-      "at": "2026-11-16T22:23:39.138749+00:00",
+      "price": 626.15,
+      "at": "2026-11-16T23:24:57.127743+00:00",
       "cost_per_share": 633.9964,
-      "gain_pct": -1.2,
+      "gain_pct": -1.24,
       "seen_price": 626.39,
       "seen_at": "2026-11-16T22:23:39.138749+00:00",
-      "since_seen_pct": 0.0
+      "since_seen_pct": -0.04
     },
     "MRVL": {
-      "price": 146.07,
-      "at": "2026-11-16T22:23:39.138749+00:00",
+      "price": 144.85,
+      "at": "2026-11-16T23:24:57.127743+00:00",
       "cost_per_share": 153.4993,
-      "gain_pct": -4.84,
+      "gain_pct": -5.63,
       "seen_price": 146.07,
       "seen_at": "2026-11-16T22:23:39.138749+00:00",
-      "since_seen_pct": 0.0
+      "since_seen_pct": -0.84
     },
     "NVDA": {
-      "price": 156.35,
-      "at": "2026-11-16T22:23:39.138749+00:00",
+      "price": 155.96,
+      "at": "2026-11-16T23:24:57.127743+00:00",
       "cost_per_share": 160.7475,
-      "gain_pct": -2.74,
+      "gain_pct": -2.98,
       "seen_price": 156.35,
       "seen_at": "2026-11-16T22:23:39.138749+00:00",
-      "since_seen_pct": 0.0
+      "since_seen_pct": -0.25
     }
   },
-  "last_check_at": "2026-11-16T22:23:39.138749Z",
-  "last_live_check_at": "2026-11-16T22:24:15.728642Z",
+  "last_check_at": "2026-11-16T23:24:57.127743Z",
+  "last_live_check_at": "2026-11-16T23:24:59.232497Z",
   "last_review_at": "2026-11-16T22:23:39.138749Z",
   "last_live_review_at": "2026-11-16T22:24:15.728642Z",
   "private_near": 3.8286,
-  "private_checked_at": "2026-11-16T22:24:15.722397Z",
+  "private_checked_at": "2026-11-16T23:24:59.225561Z",
   "last_values": {
     "INTCon": {
       "usd": 42.9,
