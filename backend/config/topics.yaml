@@ -527,3 +527,11 @@ topics:
   evidence:
   - https://openalex.org/W7168301119
   added_on: '2026-11-16'
+- name: model merging
+  sector: ai_software
+  terms:
+  - model merging
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7204120018
+  added_on: '2026-11-17'
