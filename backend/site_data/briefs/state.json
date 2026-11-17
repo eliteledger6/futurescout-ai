@@ -356,6 +356,55 @@
    "status": "paid",
    "payment_id": "05ec65a21f",
    "errors": []
+  },
+  {
+   "id": "3856919643",
+   "ticker": "INTC",
+   "symbol": "INTCon",
+   "topic": "high bandwidth memory",
+   "at": "2026-11-17T04:25:43.561013Z",
+   "price_now": 54.78,
+   "gain_pct": -7.61,
+   "posts_read": 10,
+   "signals": [
+    {
+     "claim": "None of the 10 posts retrieved this week actually discuss high bandwidth memory; the keyword match appears to have been driven by Intel-related posts rather than HBM content.",
+     "label": "ai_interpretation",
+     "url": "https://x.com/intel/status/2122507201923457474",
+     "account": "@intel",
+     "published_at": "2026-11-17"
+    },
+    {
+     "claim": "Intel-related coverage this week focuses on non-HBM topics: a shareholder lawsuit alleging the company downplayed PC market headwinds after a 29% stock plunge (per Tom's Hardware), and a reported reclaiming of overall CPU market share for the first time since 2025.",
+     "label": "unverified_claim",
+     "url": "https://x.com/tomshardware/status/2122312832901620144",
+     "account": "@tomshardware",
+     "published_at": "2026-11-16"
+    },
+    {
+     "claim": "Intel's own posts this week promote event presence (Microsoft Ignite, Supercomputing 2026) and a McLaren F1/Sphere Las Vegas marketing activation, with no memory or HBM messaging.",
+     "label": "unverified_claim",
+     "url": "https://x.com/intel/status/2122356279259627728",
+     "account": "@intel",
+     "published_at": "2026-11-16"
+    }
+   ],
+   "note": {
+    "summary": "Intel trades at $54.78, down 7.61% from the $59.29 cost per share. Posts this week contain no HBM-related news; coverage centers on a shareholder lawsuit and CPU market share claims.",
+    "what_changed": "Posts say a shareholder lawsuit alleges Intel downplayed PC market headwinds after a 29% stock plunge, and that Intel reportedly reclaimed overall CPU market share for the first time since 2025. Neither touches the HBM/backside-power risks named in the report, so nothing new on the holding's core thesis.",
+    "risks": [
+     "Posts say a shareholder lawsuit over downplayed PC market headwinds adds legal and sentiment overhang.",
+     "No HBM or memory messaging from Intel this week, leaving the report's process and reliability evidence gaps unaddressed.",
+     "Unresolved backside power metal choice (Ru vs Mo) still implies supply-chain and process-maturity risk."
+    ],
+    "urgency": "medium"
+   },
+   "cost_usd": 0.0507,
+   "price_usd": 0.5,
+   "price_near": 0.1538,
+   "status": "paid",
+   "payment_id": "7597f14c1b",
+   "errors": []
   }
  ]
 }
