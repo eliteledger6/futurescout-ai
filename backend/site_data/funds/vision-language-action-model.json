@@ -13,8 +13,8 @@
       "tier": "low",
       "shares": 54.61566546594126,
       "cost_usd": 9970.089730807578,
-      "last_close": 162.85,
-      "last_date": "2026-11-13",
+      "last_close": 156.14,
+      "last_date": "2026-11-16",
       "timing_risk": null,
       "why": "Company Scout: 1 patent(s); large by revenue",
       "route": {
@@ -22,18 +22,18 @@
         "symbol": "NVDAon",
         "asset_id": "nep141:bnb-0xa9ee28c80f960b889dfbd1902055218cba016f75.omdep.near",
         "blockchain": "BNB Chain",
-        "token_price_usd": 160.5546,
-        "checked_at": "2026-11-16T10:09:42.261776Z",
+        "token_price_usd": 156.3396,
+        "checked_at": "2026-11-17T10:11:02.347886Z",
         "note": "listed in the NEAR Intents list of tokenized stocks; the price implied by a dry-run quote matches the stock"
       },
       "quote": {
-        "amount_in_usd": 8891.29,
-        "amount_out_usd": 8839.73,
-        "amount_out": "55.379861286956382509",
-        "cost_pct": 0.58,
-        "time_estimate_s": 12.0,
-        "quoted_at": "2026-11-16T10:09:42.944147Z",
-        "correlation_id": "f1924c65-6952-482c-9370-86d27adb6e4c",
+        "amount_in_usd": 8524.53,
+        "amount_out_usd": 8486.35,
+        "amount_out": "54.529014765616218597",
+        "cost_pct": 0.448,
+        "time_estimate_s": 10.0,
+        "quoted_at": "2026-11-17T10:11:03.199931Z",
+        "correlation_id": "39656049-e7df-43a3-b563-4915ccd9ad7b",
         "error": null
       }
     }
@@ -248,12 +248,17 @@
       "day": "2026-11-13",
       "value_usd": 8894.16,
       "benchmark_value_usd": 9946.99
+    },
+    {
+      "day": "2026-11-16",
+      "value_usd": 8527.69,
+      "benchmark_value_usd": 9756.85
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": 758.39,
   "benchmark_start_date": "2026-11-10",
-  "updated_at": "2026-11-16T10:09:16.620788Z",
+  "updated_at": "2026-11-17T10:10:36.118458Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",
