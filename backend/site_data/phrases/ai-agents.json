@@ -1,16 +1,16 @@
 {
- "made_at": "2026-11-09T09:05:28.093499+00:00",
+ "made_at": "2026-11-17T03:24:01.300871+00:00",
  "basis": {
   "phrases": [
    "AI agents",
-   "LLM agents",
-   "agentic AI"
+   "agentic AI",
+   "LLM agents"
   ],
   "checks": [
    {
     "phrase": "AI agents",
     "source": "topic",
-    "matches": 21232,
+    "matches": 21887,
     "sampled": 8,
     "relevant": 5,
     "kept": true,
@@ -19,25 +19,25 @@
    {
     "phrase": "LLM agents",
     "source": "config",
-    "matches": 10550,
-    "sampled": 8,
-    "relevant": 8,
-    "kept": true,
-    "reason": "8/8 sampled works on-topic"
-   },
-   {
-    "phrase": "agentic AI",
-    "source": "config",
-    "matches": 13569,
+    "matches": 10873,
     "sampled": 8,
     "relevant": 6,
     "kept": true,
     "reason": "6/8 sampled works on-topic"
    },
    {
+    "phrase": "agentic AI",
+    "source": "config",
+    "matches": 13921,
+    "sampled": 8,
+    "relevant": 7,
+    "kept": true,
+    "reason": "7/8 sampled works on-topic"
+   },
+   {
     "phrase": "autonomous agents",
     "source": "ai_suggested",
-    "matches": 8577,
+    "matches": 8764,
     "sampled": 8,
     "relevant": 5,
     "kept": false,
@@ -46,35 +46,35 @@
    {
     "phrase": "intelligent agents",
     "source": "ai_suggested",
-    "matches": 5541,
+    "matches": 5596,
     "sampled": 8,
-    "relevant": 5,
+    "relevant": 2,
     "kept": false,
-    "reason": "only 5/8 sampled works on-topic (needs 75%)"
+    "reason": "only 2/8 sampled works on-topic (needs 75%)"
    },
    {
     "phrase": "software agents",
     "source": "ai_suggested",
-    "matches": 999,
-    "sampled": 8,
-    "relevant": 4,
-    "kept": false,
-    "reason": "only 4/8 sampled works on-topic (needs 75%)"
-   },
-   {
-    "phrase": "agent-based systems",
-    "source": "ai_suggested",
-    "matches": 584,
+    "matches": 1022,
     "sampled": 8,
     "relevant": 3,
     "kept": false,
     "reason": "only 3/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "agent-based systems",
+    "source": "ai_suggested",
+    "matches": 589,
+    "sampled": 8,
+    "relevant": 5,
+    "kept": false,
+    "reason": "only 5/8 sampled works on-topic (needs 75%)"
    }
   ],
   "precision_sampled": 20,
   "precision_relevant": 13,
   "precision_pct": 65.0,
   "llm_alias": "glm_5_3_flash",
-  "note": "Counted: works whose title or abstract contains any of 'AI agents', 'LLM agents', 'agentic AI' (singular and plural forms match automatically; a work matching several phrases is counted once). Not counted, because too few sampled works were about this topic: 'autonomous agents', 'intelligent agents', 'software agents', 'agent-based systems'. An AI check of 20 random counted works found 13 (65%) mainly about the topic."
+  "note": "Counted: works whose title or abstract contains any of 'AI agents', 'agentic AI', 'LLM agents' (singular and plural forms match automatically; a work matching several phrases is counted once). Not counted, because too few sampled works were about this topic: 'autonomous agents', 'intelligent agents', 'software agents', 'agent-based systems'. An AI check of 20 random counted works found 13 (65%) mainly about the topic."
  }
 }
