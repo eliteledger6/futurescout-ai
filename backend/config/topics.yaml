@@ -535,3 +535,12 @@ topics:
   evidence:
   - https://openalex.org/W7204120018
   added_on: '2026-11-17'
+- name: reusable launch vehicle
+  sector: space_comms
+  terms:
+  - reusable launch vehicle
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7164008853
+  - https://openalex.org/W7225633016
+  added_on: '2026-11-17'
