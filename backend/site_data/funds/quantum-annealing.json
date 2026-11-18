@@ -13,8 +13,8 @@
       "tier": "high",
       "shares": 1042.8964153564411,
       "cost_usd": 9970.089730807578,
-      "last_close": 8.67,
-      "last_date": "2026-11-16",
+      "last_close": 8.08,
+      "last_date": "2026-11-17",
       "timing_risk": "subdued",
       "why": "Company Scout: 1 filing(s); micro by revenue; FALLBACK: no company in this report has patents or papers, so its own SEC filings are the evidence",
       "route": {
@@ -23,7 +23,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-17T10:10:44.116499Z",
+        "checked_at": "2026-11-18T10:11:49.537541Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -78,12 +78,17 @@
       "day": "2026-11-16",
       "value_usd": 9041.91,
       "benchmark_value_usd": 9808.85
+    },
+    {
+      "day": "2026-11-17",
+      "value_usd": 8426.6,
+      "benchmark_value_usd": 9709.29
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": 754.37,
   "benchmark_start_date": "2026-11-13",
-  "updated_at": "2026-11-17T10:10:36.118458Z",
+  "updated_at": "2026-11-18T10:11:34.019940Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision carries its own fingerprint (the report it is based on is sealed on NEAR).",

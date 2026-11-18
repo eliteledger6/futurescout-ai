@@ -8,76 +8,13 @@
   "cash_usd": 0.0,
   "holdings": [
     {
-      "ticker": "NOW",
-      "company": "SERVICENOW INC",
-      "tier": "low",
-      "shares": 21.747264391678563,
-      "cost_usd": 2234.7488888888893,
-      "last_close": 99.37,
-      "last_date": "2026-11-16",
-      "timing_risk": "subdued",
-      "why": "Company Scout: 2 patent(s), 2 filing(s); large by revenue",
-      "route": {
-        "available": false,
-        "symbol": null,
-        "asset_id": null,
-        "blockchain": null,
-        "token_price_usd": null,
-        "checked_at": "2026-11-17T10:10:40.972713Z",
-        "note": "no tokenized version in the public NEAR Intents token lists"
-      },
-      "quote": null
-    },
-    {
-      "ticker": "PANW",
-      "company": "PALO ALTO NETWORKS INC",
-      "tier": "low",
-      "shares": 6.753751666381243,
-      "cost_usd": 2234.7488888888893,
-      "last_close": 316.09,
-      "last_date": "2026-11-16",
-      "timing_risk": "subdued",
-      "why": "Company Scout: 1 patent(s), 3 filing(s); large by revenue",
-      "route": {
-        "available": false,
-        "symbol": null,
-        "asset_id": null,
-        "blockchain": null,
-        "token_price_usd": null,
-        "checked_at": "2026-11-17T10:10:43.401064Z",
-        "note": "no tokenized version in the public NEAR Intents token lists"
-      },
-      "quote": null
-    },
-    {
-      "ticker": "NTNX",
-      "company": "NUTANIX INC",
-      "tier": "medium",
-      "shares": 56.12270638747455,
-      "cost_usd": 3338.739802990862,
-      "last_close": 58.94,
-      "last_date": "2026-11-16",
-      "timing_risk": "subdued",
-      "why": "Company Scout: 1 patent(s), 2 filing(s); mid by revenue",
-      "route": {
-        "available": false,
-        "symbol": null,
-        "asset_id": null,
-        "blockchain": null,
-        "token_price_usd": null,
-        "checked_at": "2026-11-17T10:10:43.401384Z",
-        "note": "no tokenized version in the public NEAR Intents token lists"
-      },
-      "quote": null
-    },
-    {
       "ticker": "PYPL",
       "company": "PAYPAL INC",
       "tier": "low",
-      "shares": 35.87612819696798,
-      "cost_usd": 2110.5926218276263,
-      "last_close": 58.83,
-      "last_date": "2026-11-16",
+      "shares": 48.353175012906554,
+      "cost_usd": 2835.6338123018168,
+      "last_close": 58.11,
+      "last_date": "2026-11-17",
       "timing_risk": "moderate",
       "why": "Company Scout: 2 patent(s), 2 filing(s); large by revenue",
       "route": {
@@ -86,7 +23,70 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-17T10:10:43.401548Z",
+        "checked_at": "2026-11-18T10:11:48.345877Z",
+        "note": "no tokenized version in the public NEAR Intents token lists"
+      },
+      "quote": null
+    },
+    {
+      "ticker": "V",
+      "company": "Visa Inc.",
+      "tier": "low",
+      "shares": 6.741855219905464,
+      "cost_usd": 2809.803,
+      "last_close": 416.77,
+      "last_date": "2026-11-17",
+      "timing_risk": "moderate",
+      "why": "Company Scout: 1 patent(s), 1 filing(s); large by revenue",
+      "route": {
+        "available": false,
+        "symbol": null,
+        "asset_id": null,
+        "blockchain": null,
+        "token_price_usd": null,
+        "checked_at": "2026-11-18T10:11:48.346223Z",
+        "note": "no tokenized version in the public NEAR Intents token lists"
+      },
+      "quote": null
+    },
+    {
+      "ticker": "MNDY",
+      "company": "MONDAY COM LTD",
+      "tier": "medium",
+      "shares": 37.71547651006711,
+      "cost_usd": 2809.803,
+      "last_close": 74.5,
+      "last_date": "2026-11-17",
+      "timing_risk": "moderate",
+      "why": "Company Scout: 2 patent(s), 1 filing(s); mid by revenue",
+      "route": {
+        "available": false,
+        "symbol": null,
+        "asset_id": null,
+        "blockchain": null,
+        "token_price_usd": null,
+        "checked_at": "2026-11-18T10:11:48.346419Z",
+        "note": "no tokenized version in the public NEAR Intents token lists"
+      },
+      "quote": null
+    },
+    {
+      "ticker": "NOK",
+      "company": "Nokia Corp",
+      "tier": "high",
+      "shares": 117.6600916114288,
+      "cost_usd": 893.0400953307445,
+      "last_close": 7.59,
+      "last_date": "2026-11-17",
+      "timing_risk": null,
+      "why": "Company Scout: 1 patent(s); size unknown (no revenue data), counted as high risk",
+      "route": {
+        "available": false,
+        "symbol": null,
+        "asset_id": null,
+        "blockchain": null,
+        "token_price_usd": null,
+        "checked_at": "2026-11-18T10:11:48.346656Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -758,6 +758,103 @@
       "value_before_usd": 9931.53,
       "sha256": "b20a48442318fdb341661890dd95aaa4153c762b8782c0c5c88dfbf91fee284a",
       "chain": null
+    },
+    {
+      "at": "2026-11-18T10:11:34.019940Z",
+      "run_id": "report_20261117T032931Z",
+      "report_date": "2026-11-17",
+      "band": "strong",
+      "score": 73.3,
+      "previous_score": 73.3,
+      "confidence_pct": 36.5,
+      "target_invested_pct": 100.0,
+      "tier_targets_usd": {
+        "low": 5619.61,
+        "medium": 2809.8,
+        "high": 936.6
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [],
+      "trades": [
+        {
+          "day": "2026-11-17",
+          "ticker": "NOW",
+          "tier": "low",
+          "side": "sell",
+          "shares": 21.747264,
+          "price": 92.9,
+          "usd": 2020.32,
+          "fee_usd": 6.06
+        },
+        {
+          "day": "2026-11-17",
+          "ticker": "PANW",
+          "tier": "low",
+          "side": "sell",
+          "shares": 6.753752,
+          "price": 309.29,
+          "usd": 2088.87,
+          "fee_usd": 6.27
+        },
+        {
+          "day": "2026-11-17",
+          "ticker": "NTNX",
+          "tier": "medium",
+          "side": "sell",
+          "shares": 56.122706,
+          "price": 56.52,
+          "usd": 3172.06,
+          "fee_usd": 9.52
+        },
+        {
+          "day": "2026-11-17",
+          "ticker": "PYPL",
+          "tier": "low",
+          "side": "buy",
+          "shares": 12.477047,
+          "price": 58.11,
+          "usd": 725.04,
+          "fee_usd": 2.18
+        },
+        {
+          "day": "2026-11-17",
+          "ticker": "V",
+          "tier": "low",
+          "side": "buy",
+          "shares": 6.741855,
+          "price": 416.77,
+          "usd": 2809.8,
+          "fee_usd": 8.43
+        },
+        {
+          "day": "2026-11-17",
+          "ticker": "MNDY",
+          "tier": "medium",
+          "side": "buy",
+          "shares": 37.715477,
+          "price": 74.5,
+          "usd": 2809.8,
+          "fee_usd": 8.43
+        },
+        {
+          "day": "2026-11-17",
+          "ticker": "NOK",
+          "tier": "high",
+          "side": "buy",
+          "shares": 117.660092,
+          "price": 7.59,
+          "usd": 893.04,
+          "fee_usd": 2.68
+        }
+      ],
+      "reasons": [
+        "Why now: price review: 1 company(ies) were waiting for a daily close.",
+        "Verdict band 'strong' (score 73.3), confidence 36%. Owner rule: every paper fund is fully invested, so all of the fund goes into the basket.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-18."
+      ],
+      "value_before_usd": 9366.01,
+      "sha256": "ee02085a73b99c1c418cd4da90000347ace771f7a79d6374d3cd9659cabd2c4c",
+      "chain": null
     }
   ],
   "history": [
@@ -795,12 +892,17 @@
       "day": "2026-11-16",
       "value_usd": 9714.28,
       "benchmark_value_usd": 10063.38
+    },
+    {
+      "day": "2026-11-17",
+      "value_usd": 9322.44,
+      "benchmark_value_usd": 9961.24
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": 735.29,
   "benchmark_start_date": "2026-11-06",
-  "updated_at": "2026-11-17T10:10:36.118458Z",
+  "updated_at": "2026-11-18T10:11:34.019940Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",
