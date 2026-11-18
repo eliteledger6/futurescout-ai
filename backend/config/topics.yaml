@@ -552,3 +552,11 @@ topics:
   evidence:
   - https://openalex.org/W7204935822
   added_on: '2026-11-18'
+- name: stretchable displays
+  sector: xr_devices
+  terms:
+  - stretchable displays
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7226040557
+  added_on: '2026-11-18'
