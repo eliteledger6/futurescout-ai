@@ -560,3 +560,11 @@ topics:
   evidence:
   - https://openalex.org/W7226040557
   added_on: '2026-11-18'
+- name: diffusion policy
+  sector: robotics_autonomy
+  terms:
+  - diffusion policy
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7221777692
+  added_on: '2026-11-18'
