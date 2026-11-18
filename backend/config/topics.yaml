@@ -544,3 +544,11 @@ topics:
   - https://openalex.org/W7164008853
   - https://openalex.org/W7225633016
   added_on: '2026-11-17'
+- name: driver monitoring system
+  sector: robotics_autonomy
+  terms:
+  - driver monitoring system
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7204935822
+  added_on: '2026-11-18'

@@ -1130,42 +1130,8 @@
       "chain": null
     }
   ],
-  "updated_at": "2026-11-18T01:30:33.494284Z",
+  "updated_at": "2026-11-18T02:30:50.206711Z",
   "checks": [
-    {
-      "id": "43a1796f63",
-      "at": "2026-11-12T23:41:23.456776Z",
-      "mode": "shadow",
-      "triggers": [],
-      "action": "none",
-      "ticker": "",
-      "usd": 0.0,
-      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
-      "what_changed": "",
-      "proposal_id": null,
-      "model": null,
-      "cost_usd": 0.0,
-      "notes": [],
-      "sha256": "a564b309840db9dcbfde3a46bd3503b1062774ff80cb5bd728f0430d6d3e17ea",
-      "correction": null
-    },
-    {
-      "id": "b6d09786eb",
-      "at": "2026-11-12T23:41:27.307461Z",
-      "mode": "live",
-      "triggers": [],
-      "action": "none",
-      "ticker": "",
-      "usd": 0.0,
-      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
-      "what_changed": "",
-      "proposal_id": null,
-      "model": null,
-      "cost_usd": 0.0,
-      "notes": [],
-      "sha256": "cf7c48c5bffcce3aeb321f85dfac3de8a1eb02c815deda8d8a53633e26e72a70",
-      "correction": null
-    },
     {
       "id": "a4beff03d6",
       "at": "2026-11-13T00:41:28.736164Z",
@@ -4659,6 +4625,40 @@
       "notes": [],
       "sha256": "e305cd52aa87da6ecba94ea1367e80472a6a27264f6fb86998160955a6a9c457",
       "correction": null
+    },
+    {
+      "id": "8ff16d69a8",
+      "at": "2026-11-18T02:30:47.789949Z",
+      "mode": "shadow",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "cd9d4f11cc96586007b0d6222d4cc3b425241837307dd6e500d0918cee2c0442",
+      "correction": null
+    },
+    {
+      "id": "fccc0dc9f6",
+      "at": "2026-11-18T02:30:50.124144Z",
+      "mode": "live",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "92fed9da4dc211163adcec859110df41ba25f1940893e61d176b403b1329396e",
+      "correction": null
     }
   ],
   "seen_runs": {
@@ -4688,66 +4688,66 @@
   },
   "holding_prices": {
     "INTC": {
-      "price": 56.01,
-      "at": "2026-11-18T01:29:41.348001+00:00",
+      "price": 55.51,
+      "at": "2026-11-18T02:30:47.789949+00:00",
       "cost_per_share": 59.2103,
-      "gain_pct": -5.41,
+      "gain_pct": -6.25,
       "seen_price": 56.01,
       "seen_at": "2026-11-18T01:29:41.348001+00:00",
-      "since_seen_pct": 0.0
+      "since_seen_pct": -0.89
     },
     "live:INTC": {
-      "price": 56.01,
-      "at": "2026-11-18T01:30:05.446066+00:00",
+      "price": 55.51,
+      "at": "2026-11-18T02:30:50.124144+00:00",
       "cost_per_share": 59.2948,
-      "gain_pct": -5.54,
+      "gain_pct": -6.38,
       "seen_price": 56.01,
       "seen_at": "2026-11-18T01:30:05.446066+00:00",
-      "since_seen_pct": 0.0
+      "since_seen_pct": -0.89
     },
     "MSFT": {
-      "price": 508.74,
-      "at": "2026-11-18T01:29:41.348001+00:00",
+      "price": 509.61,
+      "at": "2026-11-18T02:30:47.789949+00:00",
       "cost_per_share": 526.4959,
-      "gain_pct": -3.37,
+      "gain_pct": -3.21,
       "seen_price": 508.74,
       "seen_at": "2026-11-18T01:29:41.348001+00:00",
-      "since_seen_pct": 0.0
+      "since_seen_pct": 0.17
     },
     "META": {
-      "price": 620.43,
-      "at": "2026-11-18T01:29:41.348001+00:00",
+      "price": 619.57,
+      "at": "2026-11-18T02:30:47.789949+00:00",
       "cost_per_share": 633.9964,
-      "gain_pct": -2.14,
+      "gain_pct": -2.28,
       "seen_price": 620.43,
       "seen_at": "2026-11-18T01:29:41.348001+00:00",
-      "since_seen_pct": 0.0
+      "since_seen_pct": -0.14
     },
     "MRVL": {
-      "price": 153.59,
-      "at": "2026-11-18T01:29:41.348001+00:00",
+      "price": 152.93,
+      "at": "2026-11-18T02:30:47.789949+00:00",
       "cost_per_share": 153.4993,
-      "gain_pct": 0.06,
+      "gain_pct": -0.37,
       "seen_price": 153.59,
       "seen_at": "2026-11-18T01:29:41.348001+00:00",
-      "since_seen_pct": 0.0
+      "since_seen_pct": -0.43
     },
     "NVDA": {
-      "price": 160.92,
-      "at": "2026-11-18T01:29:41.348001+00:00",
+      "price": 157.04,
+      "at": "2026-11-18T02:30:47.789949+00:00",
       "cost_per_share": 160.7475,
-      "gain_pct": 0.11,
+      "gain_pct": -2.31,
       "seen_price": 160.92,
       "seen_at": "2026-11-18T01:29:41.348001+00:00",
-      "since_seen_pct": 0.0
+      "since_seen_pct": -2.41
     }
   },
-  "last_check_at": "2026-11-18T01:29:41.348001Z",
-  "last_live_check_at": "2026-11-18T01:30:05.446066Z",
+  "last_check_at": "2026-11-18T02:30:47.789949Z",
+  "last_live_check_at": "2026-11-18T02:30:50.124144Z",
   "last_review_at": "2026-11-18T01:29:41.348001Z",
   "last_live_review_at": "2026-11-18T01:30:05.446066Z",
   "private_near": 3.6748,
-  "private_checked_at": "2026-11-18T01:30:05.432463Z",
+  "private_checked_at": "2026-11-18T02:30:50.115462Z",
   "last_values": {
     "INTCon": {
       "usd": 40.49,
