@@ -405,6 +405,62 @@
    "status": "paid",
    "payment_id": "7597f14c1b",
    "errors": []
+  },
+  {
+   "id": "22899a885c",
+   "ticker": "INTC",
+   "symbol": "INTCon",
+   "topic": "high bandwidth memory",
+   "at": "2026-11-18T04:30:54.800546Z",
+   "price_now": 55.96,
+   "gain_pct": -5.62,
+   "posts_read": 10,
+   "signals": [
+    {
+     "claim": "Jon Peddie Research reports that Intel and SambaNova demonstrated an AI inference system splitting workloads: Intel D-Series GPUs handle prefill while SambaNova SN50 processors handle decode.",
+     "label": "unverified_claim",
+     "url": "https://x.com/jonpeddie/status/2122758690562281648",
+     "account": "@jonpeddie",
+     "published_at": "2026-11-17"
+    },
+    {
+     "claim": "Tom's Hardware reports Intel is being sued by shareholders in a class action alleging the company downplayed PC market headwinds after a 29% stock plunge.",
+     "label": "unverified_claim",
+     "url": "https://x.com/tomshardware/status/2122312832901620144",
+     "account": "@tomshardware",
+     "published_at": "2026-11-16"
+    },
+    {
+     "claim": "Tom's Hardware reports Intel's acquisition of Classiq, positioning it as a leading vendor of qubit chips, with the deal expected to close by the first half of 2027.",
+     "label": "unverified_claim",
+     "url": "https://x.com/tomshardware/status/2122367094687953217",
+     "account": "@tomshardware",
+     "published_at": "2026-11-16"
+    },
+    {
+     "claim": "Intel's posts this week emphasize brand/anniversary marketing and event presence (Microsoft Ignite, Supercomputing 2026, McLaren F1 at Sphere Vegas) rather than memory or product-roadmap specifics.",
+     "label": "ai_interpretation",
+     "url": "https://x.com/intel/status/2122730066593423756",
+     "account": "@intel",
+     "published_at": "2026-11-17"
+    }
+   ],
+   "note": {
+    "summary": "Intel trades at $55.96, down 5.62% from the cost basis of $59.29. Posts say a shareholder class action was filed alleging the company downplayed PC market headwinds, while other posts describe a GPU/SambaNova inference demo and a pending Classiq acquisition.",
+    "what_changed": "Posts say a shareholder class action lawsuit has been filed against Intel — litigation risk was not named in the latest report. Also new: posts say Intel is acquiring Classiq (expected to close by H1 2027) and demonstrated a split AI inference system with SambaNova.",
+    "risks": [
+     "Posts say a shareholder class action alleges Intel downplayed PC market headwinds after a 29% stock plunge; litigation costs and disclosures could weigh on the holding.",
+     "The pending Classiq acquisition adds integration and closing risk through 2027.",
+     "Existing report risks on backside power/failure-analysis bottlenecks and unresolved buried-power metal choice remain unaddressed; Intel's own posts this week emphasize marketing, not roadmap specifics."
+    ],
+    "urgency": "medium"
+   },
+   "cost_usd": 0.0507,
+   "price_usd": 0.5,
+   "price_near": 0.1475,
+   "status": "paid",
+   "payment_id": "442ff3f025",
+   "errors": []
   }
  ]
 }

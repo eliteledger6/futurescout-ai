@@ -66,11 +66,11 @@
     "report_20261111T135836Z": {
       "run_id": "report_20261111T135836Z",
       "topic": "mixture of experts",
-      "price_near": 0.642,
-      "price_usd": 2.17,
+      "price_near": 0.64,
+      "price_usd": 2.1696,
       "cost_usd": 0.6748,
-      "basis": "cost to make $0.67 (models and X $0.42, 8 patent searches, NEAR seal) + $1.50 margin, kept in the $2-$3 band = $2.17 = 0.642 NEAR at $3.38",
-      "at": "2026-11-18T01:30:05.446066Z"
+      "basis": "cost to make $0.67 (models and X $0.42, 8 patent searches, NEAR seal) + $1.50 margin, kept in the $2-$3 band = $2.17 = 0.64 NEAR at $3.39",
+      "at": "2026-11-18T04:32:34.256992Z"
     }
   },
   "purchases": [
@@ -229,6 +229,18 @@
       "tx_hash": null,
       "note": "paid 0.1538 NEAR from the near.com balance (intent 7BxNbs8DytSkPNRiuPUgGEFrMXCyy3CLz2XNYbawE4wR); seen arriving in grandbread5023.near after about 10s",
       "at": "2026-11-17T04:26:32.758763Z"
+    },
+    {
+      "id": "442ff3f025",
+      "run_id": "briefs_20261118T043054",
+      "topic": "holding briefs: INTC",
+      "price_near": 0.1475,
+      "buyer": "wrongowl2563.near",
+      "seller": "grandbread5023.near",
+      "status": "paid",
+      "tx_hash": null,
+      "note": "paid 0.1475 NEAR from the near.com balance (intent FT81k6Ptf7vhiRxTWACRTPWei21upUrwFgvKjVdbUPdU); seen arriving in grandbread5023.near after about 15s",
+      "at": "2026-11-18T04:32:17.388568Z"
     }
   ],
   "stakes": [

@@ -1128,85 +1128,51 @@
       "sha256": "119298a7195307d73225c4f9ee6db4bf050802a3a3f3e7fff1de9a98722c6a65",
       "correction": null,
       "chain": null
-    }
-  ],
-  "updated_at": "2026-11-18T02:30:50.206711Z",
-  "checks": [
-    {
-      "id": "a4beff03d6",
-      "at": "2026-11-13T00:41:28.736164Z",
-      "mode": "shadow",
-      "triggers": [],
-      "action": "none",
-      "ticker": "",
-      "usd": 0.0,
-      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
-      "what_changed": "",
-      "proposal_id": null,
-      "model": null,
-      "cost_usd": 0.0,
-      "notes": [],
-      "sha256": "d325d180f60ab5147068e6ee67c778860ef5fda16e7aba8a9374751add324925",
-      "correction": null
     },
     {
-      "id": "287b100018",
-      "at": "2026-11-13T00:41:31.987429Z",
+      "id": "7ccbbab9bc",
+      "created_at": "2026-11-18T04:32:34.256992Z",
       "mode": "live",
-      "triggers": [],
-      "action": "none",
+      "side": "hold",
+      "topic": "",
       "ticker": "",
+      "symbol": "",
+      "asset_id": "",
       "usd": 0.0,
-      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
-      "what_changed": "",
-      "proposal_id": null,
-      "model": null,
-      "cost_usd": 0.0,
-      "notes": [],
-      "sha256": "da0c6ffb5d9befc1813615de02a13f84f25179a3d2b49c37143e6fa405ebcbec",
-      "correction": null
-    },
-    {
-      "id": "3fe03d361b",
-      "at": "2026-11-13T01:41:33.483101Z",
-      "mode": "shadow",
-      "triggers": [
+      "fraction": null,
+      "quantity": null,
+      "rationale": "The new INTC brief relays unverified X posts about a shareholder class action, plus a pending Classiq acquisition and an inference demo with SambaNova. None of these is a verified fact, and INTC barely moved: it is at $55.96 (read 2026-11-18 04:32 UTC), -0.09% since the last look and -5.62% versus the $59.29 cost per share. The latest high-bandwidth-memory report (2026-11-10) does not mention litigation, so the evidence cannot confirm the lawsuit or show that it is a real problem for the company. No sell reason applies. The INTC report is still 'strong' (score 80), though at 49.6% confidence it is not confident, which is why I would not add even with cash. The lawsuit comes only from unverified posts, and there is no sharp fall to explain, so it is a reason to watch, not to sell. Rotation is not justified: no candidate has both a higher verdict band and higher confidence than INTC, since MRVL ties it at strong/49.6% and also quotes 6.66% above its last close.",
+      "risks": [
+        "Tokenized INTCon depends on its issuer (Ondo) and is not the Intel share itself.",
+        "Posts claim a shareholder class action over PC-market disclosures; if confirmed, legal costs or new disclosures could weigh on the holding.",
+        "The supporting report has below-70% confidence and rests mostly on unverified X claims about memory demand, not on Intel-specific findings."
+      ],
+      "confidence": "medium",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.057356,
+      "ref_close": null,
+      "ref_close_date": null,
+      "dry_quote": null,
+      "status": "hold",
+      "quote": null,
+      "deposit_address": null,
+      "deposit_tx": null,
+      "result": null,
+      "error": null,
+      "history": [
         {
-          "kind": "review",
-          "ticker": "",
-          "topic": "",
-          "detail": "routine review"
+          "at": "2026-11-18T04:32:34.256992Z",
+          "status": "hold",
+          "note": "strategy check: holding_brief"
         }
       ],
-      "action": "buy",
-      "ticker": "META",
-      "usd": 500.0,
-      "summary": "There is plenty of cash, and both holdings sit in two topics, so a small first buy in a third topic spreads the risk. META's OLED report is 'strong' at 49.6% confidence, tied for the highest available, and its quote of $633.65 is only 0.83% above the $628.41 close, which is acceptable. Confidence is below 70% and the findings do not name Meta directly; one finding even says OLED smartphone shipments may fall about 3%. So the order is kept small, well under the $2,050 per-company cap. I skipped adding to INTC because it is rising and I do not chase, skipped MRVL because of its 2.89% premium, and skipped NVDA because its 2.31% gap below an older close is unexplained.",
-      "what_changed": "Routine review with no new report or sharp move. INTC is at $62.34 (up 5.29% since bought) and MSFT is at $522.54 (down 0.75%). Both reports are unchanged, still 'strong' but low-confidence (49.6% and 35.3%), so neither holding needs action.",
-      "proposal_id": "2e15b73b5a",
-      "model": "claude_opus_5_5",
-      "cost_usd": 0.06898,
-      "notes": [],
-      "sha256": "02f7a4615e047242362f2852fc01ca5f658943e736397c17a63be358a8c5c699",
-      "correction": null
-    },
-    {
-      "id": "b36f0b466c",
-      "at": "2026-11-13T01:42:03.979800Z",
-      "mode": "live",
-      "triggers": [],
-      "action": "none",
-      "ticker": "",
-      "usd": 0.0,
-      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
-      "what_changed": "",
-      "proposal_id": null,
-      "model": null,
-      "cost_usd": 0.0,
-      "notes": [],
-      "sha256": "81ad5ee294bce62ff2e9aa5a0f9e8c489d5b601f9f0b09c05df72353f4129310",
-      "correction": null
-    },
+      "sha256": "4aeb20de8121707314a1abfccf8a8684b337408919b3c053c262b0622e748cb0",
+      "correction": null,
+      "chain": null
+    }
+  ],
+  "updated_at": "2026-11-18T04:33:04.511110Z",
+  "checks": [
     {
       "id": "fe9735615d",
       "at": "2026-11-13T01:46:15.400497Z",
@@ -4659,6 +4625,81 @@
       "notes": [],
       "sha256": "92fed9da4dc211163adcec859110df41ba25f1940893e61d176b403b1329396e",
       "correction": null
+    },
+    {
+      "id": "5d02d43a8d",
+      "at": "2026-11-18T03:30:51.739344Z",
+      "mode": "shadow",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "099174a96669ec9d6141664faccbaaaecf4b1e7a09e751bdbaa83e6d97d7d7de",
+      "correction": null
+    },
+    {
+      "id": "13bc565f57",
+      "at": "2026-11-18T03:30:54.344867Z",
+      "mode": "live",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "275c61142366efc104edd32228c6ed2b8037bd40f66a51267984af90c575e7c8",
+      "correction": null
+    },
+    {
+      "id": "89d749e5e8",
+      "at": "2026-11-18T04:32:33.036086Z",
+      "mode": "shadow",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "9c3ef3de638f9f6270c8dd011846b6dea8b0c7e7cbbc48ba0a2c38e9850ed933",
+      "correction": null
+    },
+    {
+      "id": "fe878d13fd",
+      "at": "2026-11-18T04:32:34.256992Z",
+      "mode": "live",
+      "triggers": [
+        {
+          "kind": "holding_brief",
+          "ticker": "INTC",
+          "topic": "",
+          "detail": "new brief on INTC from the report agent (urgency medium): Posts say a shareholder class action lawsuit has been filed against Intel — litigation risk was not named in the latest report. Also new: posts say Intel is acquiring Classiq (expected to close by H1 2027) and demonstrated a split AI inference system with SambaNova."
+        }
+      ],
+      "action": "hold",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No sell reason applies. The INTC report is still 'strong' (score 80), though at 49.6% confidence it is not confident, which is why I would not add even with cash. The lawsuit comes only from unverified posts, and there is no sharp fall to explain, so it is a reason to watch, not to sell. Rotation is not justified: no candidate has both a higher verdict band and higher confidence than INTC, since MRVL ties it at strong/49.6% and also quotes 6.66% above its last close.",
+      "what_changed": "The new INTC brief relays unverified X posts about a shareholder class action, plus a pending Classiq acquisition and an inference demo with SambaNova. None of these is a verified fact, and INTC barely moved: it is at $55.96 (read 2026-11-18 04:32 UTC), -0.09% since the last look and -5.62% versus the $59.29 cost per share. The latest high-bandwidth-memory report (2026-11-10) does not mention litigation, so the evidence cannot confirm the lawsuit or show that it is a real problem for the company.",
+      "proposal_id": "7ccbbab9bc",
+      "model": "claude_opus_5_5",
+      "cost_usd": 0.057356,
+      "notes": [],
+      "sha256": "7bca09e72cd8c0d734ac579c4b7b97d4c8d6692ce1271a47f0b015920af310f4",
+      "correction": null
     }
   ],
   "seen_runs": {
@@ -4676,7 +4717,7 @@
     "live:chiplet": "ab3b0896-a403-4181-990f-65bad2f59f13",
     "retrieval-augmented generation": "4a2a3eaa-9841-4174-b38d-0a12e7b52623",
     "chiplet": "ab3b0896-a403-4181-990f-65bad2f59f13",
-    "live:brief:INTC": "3856919643",
+    "live:brief:INTC": "22899a885c",
     "mixture of experts": "report_20261111T135836Z",
     "live:mixture of experts": "report_20261111T135836Z"
   },
@@ -4688,70 +4729,70 @@
   },
   "holding_prices": {
     "INTC": {
-      "price": 55.51,
-      "at": "2026-11-18T02:30:47.789949+00:00",
+      "price": 55.96,
+      "at": "2026-11-18T04:32:33.036086+00:00",
       "cost_per_share": 59.2103,
-      "gain_pct": -6.25,
+      "gain_pct": -5.49,
       "seen_price": 56.01,
       "seen_at": "2026-11-18T01:29:41.348001+00:00",
-      "since_seen_pct": -0.89
+      "since_seen_pct": -0.09
     },
     "live:INTC": {
-      "price": 55.51,
-      "at": "2026-11-18T02:30:50.124144+00:00",
+      "price": 55.96,
+      "at": "2026-11-18T04:32:34.256992+00:00",
       "cost_per_share": 59.2948,
-      "gain_pct": -6.38,
-      "seen_price": 56.01,
-      "seen_at": "2026-11-18T01:30:05.446066+00:00",
-      "since_seen_pct": -0.89
+      "gain_pct": -5.62,
+      "seen_price": 55.96,
+      "seen_at": "2026-11-18T04:32:34.256992+00:00",
+      "since_seen_pct": 0.0
     },
     "MSFT": {
-      "price": 509.61,
-      "at": "2026-11-18T02:30:47.789949+00:00",
+      "price": 508.24,
+      "at": "2026-11-18T04:32:33.036086+00:00",
       "cost_per_share": 526.4959,
-      "gain_pct": -3.21,
+      "gain_pct": -3.47,
       "seen_price": 508.74,
       "seen_at": "2026-11-18T01:29:41.348001+00:00",
-      "since_seen_pct": 0.17
+      "since_seen_pct": -0.1
     },
     "META": {
-      "price": 619.57,
-      "at": "2026-11-18T02:30:47.789949+00:00",
+      "price": 620.89,
+      "at": "2026-11-18T04:32:33.036086+00:00",
       "cost_per_share": 633.9964,
-      "gain_pct": -2.28,
+      "gain_pct": -2.07,
       "seen_price": 620.43,
       "seen_at": "2026-11-18T01:29:41.348001+00:00",
-      "since_seen_pct": -0.14
+      "since_seen_pct": 0.07
     },
     "MRVL": {
-      "price": 152.93,
-      "at": "2026-11-18T02:30:47.789949+00:00",
+      "price": 153.99,
+      "at": "2026-11-18T04:32:33.036086+00:00",
       "cost_per_share": 153.4993,
-      "gain_pct": -0.37,
+      "gain_pct": 0.32,
       "seen_price": 153.59,
       "seen_at": "2026-11-18T01:29:41.348001+00:00",
-      "since_seen_pct": -0.43
+      "since_seen_pct": 0.26
     },
     "NVDA": {
-      "price": 157.04,
-      "at": "2026-11-18T02:30:47.789949+00:00",
+      "price": 157.84,
+      "at": "2026-11-18T04:32:33.036086+00:00",
       "cost_per_share": 160.7475,
-      "gain_pct": -2.31,
+      "gain_pct": -1.81,
       "seen_price": 160.92,
       "seen_at": "2026-11-18T01:29:41.348001+00:00",
-      "since_seen_pct": -2.41
+      "since_seen_pct": -1.91
     }
   },
-  "last_check_at": "2026-11-18T02:30:47.789949Z",
-  "last_live_check_at": "2026-11-18T02:30:50.124144Z",
+  "last_check_at": "2026-11-18T04:32:33.036086Z",
+  "last_live_check_at": "2026-11-18T04:32:34.256992Z",
   "last_review_at": "2026-11-18T01:29:41.348001Z",
-  "last_live_review_at": "2026-11-18T01:30:05.446066Z",
-  "private_near": 3.6748,
-  "private_checked_at": "2026-11-18T02:30:50.115462Z",
+  "last_live_review_at": "2026-11-18T04:32:34.256992Z",
+  "private_near": 3.5273,
+  "private_checked_at": "2026-11-18T04:32:34.246980Z",
   "last_values": {
     "INTCon": {
-      "usd": 40.49,
-      "at": "2026-11-17T04:26:27.967580+00:00"
+      "usd": 41.42,
+      "at": "2026-11-18T04:32:12.791313+00:00"
     }
   },
   "hidden": []
