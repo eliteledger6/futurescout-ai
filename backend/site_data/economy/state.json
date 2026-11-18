@@ -71,6 +71,15 @@
       "cost_usd": 0.6748,
       "basis": "cost to make $0.67 (models and X $0.42, 8 patent searches, NEAR seal) + $1.50 margin, kept in the $2-$3 band = $2.17 = 0.64 NEAR at $3.39",
       "at": "2026-11-18T04:32:34.256992Z"
+    },
+    "report_20261118T141031Z": {
+      "run_id": "report_20261118T141031Z",
+      "topic": "mixture of experts",
+      "price_near": 0.632,
+      "price_usd": 2.1109,
+      "cost_usd": 0.6056,
+      "basis": "cost to make $0.61 (models and X $0.36, 8 patent searches, NEAR seal) + $1.50 margin, kept in the $2-$3 band = $2.11 = 0.632 NEAR at $3.34",
+      "at": "2026-11-18T14:34:53.393462Z"
     }
   },
   "purchases": [
