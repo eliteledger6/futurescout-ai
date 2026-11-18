@@ -11,61 +11,19 @@
       "ticker": "CSCO",
       "company": "CISCO TECH INC",
       "tier": "low",
-      "shares": 15.282730514518596,
-      "cost_usd": 1500.0000000000002,
-      "last_close": 95.64,
-      "last_date": "2026-11-13",
-      "timing_risk": "moderate",
-      "why": "Company Scout: 1 patent(s), 2 filing(s); large by revenue",
-      "route": {
-        "available": false,
-        "symbol": null,
-        "asset_id": null,
-        "blockchain": null,
-        "token_price_usd": null,
-        "checked_at": "2026-11-17T10:10:56.957202Z",
-        "note": "no tokenized version in the public NEAR Intents token lists"
-      },
-      "quote": null
-    },
-    {
-      "ticker": "INTU",
-      "company": "INTUIT INC",
-      "tier": "low",
-      "shares": 4.406062742333452,
-      "cost_usd": 1500.0000000000002,
-      "last_close": 341.7,
-      "last_date": "2026-11-13",
-      "timing_risk": null,
-      "why": "Company Scout: 1 patent(s), 2 filing(s); large by revenue",
-      "route": {
-        "available": false,
-        "symbol": null,
-        "asset_id": null,
-        "blockchain": null,
-        "token_price_usd": null,
-        "checked_at": "2026-11-17T10:10:56.957478Z",
-        "note": "no tokenized version in the public NEAR Intents token lists"
-      },
-      "quote": null
-    },
-    {
-      "ticker": "DELL",
-      "company": "Dell Technologies Inc.",
-      "tier": "low",
-      "shares": 4.4859142293199366,
-      "cost_usd": 1500.0000000000002,
-      "last_close": 344.53,
-      "last_date": "2026-11-13",
+      "shares": 23.040596268648002,
+      "cost_usd": 2237.8506118752484,
+      "last_close": 95.11,
+      "last_date": "2026-11-17",
       "timing_risk": "subdued",
-      "why": "Company Scout: 3 patent(s), 2 filing(s); large by revenue",
+      "why": "Company Scout: 1 patent(s), 2 filing(s); large by revenue",
       "route": {
         "available": false,
         "symbol": null,
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-17T10:10:56.957646Z",
+        "checked_at": "2026-11-18T01:11:40.543463Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -74,10 +32,10 @@
       "ticker": "MSFT",
       "company": "Microsoft Corp",
       "tier": "low",
-      "shares": 2.813414359666892,
-      "cost_usd": 1500.0000000000002,
-      "last_close": 517.99,
-      "last_date": "2026-11-16",
+      "shares": 4.328759306082316,
+      "cost_usd": 2267.1282256733443,
+      "last_close": 506.24,
+      "last_date": "2026-11-17",
       "timing_risk": "moderate",
       "why": "Company Scout: 1 patent(s), 4 filing(s); large by revenue",
       "route": {
@@ -85,18 +43,18 @@
         "symbol": "MSFTon",
         "asset_id": "nep141:bnb-0x6bfe75d1ad432050ea973c3a3dcd88f02e2444c3.omdep.near",
         "blockchain": "BNB Chain",
-        "token_price_usd": 520.6025,
-        "checked_at": "2026-11-17T10:10:56.957859Z",
+        "token_price_usd": 513.0727,
+        "checked_at": "2026-11-18T01:11:42.981820Z",
         "note": "listed in the NEAR Intents list of tokenized stocks; the price implied by a dry-run quote matches the stock"
       },
       "quote": {
-        "amount_in_usd": 1456.78,
-        "amount_out_usd": 1443.19,
-        "amount_out": "2.790934648079991513",
-        "cost_pct": 0.933,
+        "amount_in_usd": 2190.42,
+        "amount_out_usd": 2175.96,
+        "amount_out": "4.268773709784099824",
+        "cost_pct": 0.66,
         "time_estimate_s": 25.0,
-        "quoted_at": "2026-11-17T10:10:57.627394Z",
-        "correlation_id": "9e3e781e-0c66-408e-9f3c-09baff02ab3f",
+        "quoted_at": "2026-11-18T01:11:43.731897Z",
+        "correlation_id": "aecca698-afa8-4df0-b4c1-42e954a3ec28",
         "error": null
       }
     },
@@ -104,40 +62,61 @@
       "ticker": "ZS",
       "company": "ZSCALER INC",
       "tier": "medium",
-      "shares": 15.390929612148577,
-      "cost_usd": 3000.0000000000005,
+      "shares": 8.53921823314456,
+      "cost_usd": 1681.2511108830972,
       "last_close": 192.47,
       "last_date": "2026-11-13",
-      "timing_risk": "moderate",
-      "why": "Company Scout: 2 patent(s), 2 filing(s); mid by revenue",
+      "timing_risk": null,
+      "why": "Company Scout: 1 patent(s), 2 filing(s); mid by revenue",
       "route": {
         "available": false,
         "symbol": null,
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-17T10:10:58.354864Z",
+        "checked_at": "2026-11-18T01:11:44.405369Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
     },
     {
-      "ticker": "CRWD",
-      "company": "CROWDSTRIKE INC",
-      "tier": "high",
-      "shares": 4.29699561838934,
-      "cost_usd": 970.0897308075773,
-      "last_close": 225.76,
-      "last_date": "2026-11-10",
-      "timing_risk": "moderate",
-      "why": "Company Scout: 1 patent(s), 3 filing(s); size unknown (no revenue data), counted as high risk",
+      "ticker": "V",
+      "company": "Visa Inc.",
+      "tier": "low",
+      "shares": 5.138561907590657,
+      "cost_usd": 2191.3911111111115,
+      "last_close": 426.46,
+      "last_date": "2026-11-16",
+      "timing_risk": null,
+      "why": "Company Scout: 1 patent(s), 2 filing(s); large by revenue",
       "route": {
         "available": false,
         "symbol": null,
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-17T10:10:58.355195Z",
+        "checked_at": "2026-11-18T01:11:44.405629Z",
+        "note": "no tokenized version in the public NEAR Intents token lists"
+      },
+      "quote": null
+    },
+    {
+      "ticker": "G",
+      "company": "GENPACT USA INC",
+      "tier": "medium",
+      "shares": 37.79569974496104,
+      "cost_usd": 1611.6086371251388,
+      "last_close": 42.64,
+      "last_date": "2026-11-17",
+      "timing_risk": "moderate",
+      "why": "Company Scout: 1 patent(s), 2 filing(s); mid by revenue",
+      "route": {
+        "available": false,
+        "symbol": null,
+        "asset_id": null,
+        "blockchain": null,
+        "token_price_usd": null,
+        "checked_at": "2026-11-18T01:11:44.405829Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -238,6 +217,113 @@
         "tx_hash": "78BFvBaeKMc1XdX3v8uDWC4BuDyifsWhnRbfpkYyGuqh",
         "explorer_url": "https://nearblocks.io/txns/78BFvBaeKMc1XdX3v8uDWC4BuDyifsWhnRbfpkYyGuqh"
       }
+    },
+    {
+      "at": "2026-11-18T01:11:33.753048Z",
+      "run_id": "report_20261118T011126Z",
+      "report_date": "2026-11-18",
+      "band": "building",
+      "score": 64.7,
+      "previous_score": 75.4,
+      "confidence_pct": 36.5,
+      "target_invested_pct": 100.0,
+      "tier_targets_usd": {
+        "low": 6574.17,
+        "medium": 3287.09
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [],
+      "trades": [
+        {
+          "day": "2026-11-13",
+          "ticker": "INTU",
+          "tier": "low",
+          "side": "sell",
+          "shares": 4.406063,
+          "price": 341.7,
+          "usd": 1505.55,
+          "fee_usd": 4.52
+        },
+        {
+          "day": "2026-11-13",
+          "ticker": "DELL",
+          "tier": "low",
+          "side": "sell",
+          "shares": 4.485914,
+          "price": 344.53,
+          "usd": 1545.53,
+          "fee_usd": 4.64
+        },
+        {
+          "day": "2026-11-13",
+          "ticker": "ZS",
+          "tier": "medium",
+          "side": "sell",
+          "shares": 6.851711,
+          "price": 192.47,
+          "usd": 1318.75,
+          "fee_usd": 3.96
+        },
+        {
+          "day": "2026-11-10",
+          "ticker": "CRWD",
+          "tier": "high",
+          "side": "sell",
+          "shares": 4.296996,
+          "price": 225.76,
+          "usd": 970.09,
+          "fee_usd": 2.91
+        },
+        {
+          "day": "2026-11-17",
+          "ticker": "CSCO",
+          "tier": "low",
+          "side": "buy",
+          "shares": 7.757866,
+          "price": 95.11,
+          "usd": 737.85,
+          "fee_usd": 2.21
+        },
+        {
+          "day": "2026-11-17",
+          "ticker": "MSFT",
+          "tier": "low",
+          "side": "buy",
+          "shares": 1.515345,
+          "price": 506.24,
+          "usd": 767.13,
+          "fee_usd": 2.3
+        },
+        {
+          "day": "2026-11-16",
+          "ticker": "V",
+          "tier": "low",
+          "side": "buy",
+          "shares": 5.138562,
+          "price": 426.46,
+          "usd": 2191.39,
+          "fee_usd": 6.57
+        },
+        {
+          "day": "2026-11-17",
+          "ticker": "G",
+          "tier": "medium",
+          "side": "buy",
+          "shares": 37.7957,
+          "price": 42.64,
+          "usd": 1611.61,
+          "fee_usd": 4.83
+        }
+      ],
+      "reasons": [
+        "Why now: a newer report is available.",
+        "Verdict band 'building' (score 64.7), confidence 36%. Owner rule: every paper fund is fully invested, so all of the fund goes into the basket.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-18."
+      ],
+      "value_before_usd": 9861.26,
+      "sha256": "a2801dbe4cd58bf39c85b0db1a5c954f8fb5e4c824a04b87e809f259db0dc7ce",
+      "chain": null
     }
   ],
   "history": [
@@ -265,12 +351,17 @@
       "day": "2026-11-16",
       "value_usd": 9902.42,
       "benchmark_value_usd": 9867.05
+    },
+    {
+      "day": "2026-11-17",
+      "value_usd": 9829.32,
+      "benchmark_value_usd": 9867.05
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": 749.92,
   "benchmark_start_date": "2026-11-10",
-  "updated_at": "2026-11-17T10:10:36.118458Z",
+  "updated_at": "2026-11-18T01:11:33.753048Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",

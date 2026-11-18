@@ -1,17 +1,16 @@
 {
- "made_at": "2026-11-11T00:55:30.461835+00:00",
+ "made_at": "2026-11-18T01:04:58.186879+00:00",
  "basis": {
   "phrases": [
    "retrieval-augmented generation",
-   "retrieval-augmented LMs",
    "retrieval augmented language models",
-   "RAG"
+   "retrieval-augmented LMs"
   ],
   "checks": [
    {
     "phrase": "retrieval-augmented generation",
     "source": "topic",
-    "matches": 26344,
+    "matches": 26961,
     "sampled": 8,
     "relevant": 5,
     "kept": true,
@@ -20,7 +19,7 @@
    {
     "phrase": "retrieval augmented generation",
     "source": "config",
-    "matches": 26344,
+    "matches": 26961,
     "sampled": 8,
     "relevant": 5,
     "kept": false,
@@ -29,11 +28,11 @@
    {
     "phrase": "RAG",
     "source": "config",
-    "matches": 30794,
+    "matches": 31399,
     "sampled": 8,
-    "relevant": 6,
-    "kept": true,
-    "reason": "6/8 sampled works on-topic"
+    "relevant": 3,
+    "kept": false,
+    "reason": "only 3/8 sampled works on-topic (needs 75%)"
    },
    {
     "phrase": "retrieval-augmented LMs",
@@ -47,11 +46,20 @@
    {
     "phrase": "retrieval augmented language models",
     "source": "ai_suggested",
-    "matches": 245,
+    "matches": 253,
     "sampled": 8,
-    "relevant": 7,
+    "relevant": 8,
     "kept": true,
-    "reason": "7/8 sampled works on-topic"
+    "reason": "8/8 sampled works on-topic"
+   },
+   {
+    "phrase": "RAG models",
+    "source": "ai_suggested",
+    "matches": 705,
+    "sampled": 8,
+    "relevant": 5,
+    "kept": false,
+    "reason": "only 5/8 sampled works on-topic (needs 75%)"
    },
    {
     "phrase": "augmented generation with retrieval",
@@ -61,21 +69,12 @@
     "relevant": 0,
     "kept": false,
     "reason": "only 2 matching works"
-   },
-   {
-    "phrase": "retrieval-enhanced generation",
-    "source": "ai_suggested",
-    "matches": 120,
-    "sampled": 8,
-    "relevant": 4,
-    "kept": false,
-    "reason": "only 4/8 sampled works on-topic (needs 75%)"
    }
   ],
   "precision_sampled": 20,
-  "precision_relevant": 12,
-  "precision_pct": 60.0,
+  "precision_relevant": 13,
+  "precision_pct": 65.0,
   "llm_alias": "glm_5_3_flash",
-  "note": "Counted: works whose title or abstract contains any of 'retrieval-augmented generation', 'retrieval-augmented LMs', 'retrieval augmented language models', 'RAG' (singular and plural forms match automatically; a work matching several phrases is counted once). Not counted, because too few sampled works were about this topic: 'retrieval augmented generation', 'augmented generation with retrieval', 'retrieval-enhanced generation'. An AI check of 20 random counted works found 12 (60%) mainly about the topic."
+  "note": "Counted: works whose title or abstract contains any of 'retrieval-augmented generation', 'retrieval augmented language models', 'retrieval-augmented LMs' (singular and plural forms match automatically; a work matching several phrases is counted once). Not counted, because too few sampled works were about this topic: 'retrieval augmented generation', 'RAG', 'RAG models', 'augmented generation with retrieval'. An AI check of 20 random counted works found 13 (65%) mainly about the topic."
  }
 }
