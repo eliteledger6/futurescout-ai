@@ -568,3 +568,11 @@ topics:
   evidence:
   - https://openalex.org/W7221777692
   added_on: '2026-11-18'
+- name: metalens array
+  sector: xr_devices
+  terms:
+  - metalens array
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7212236252
+  added_on: '2026-11-19'
