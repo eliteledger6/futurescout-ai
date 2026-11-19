@@ -521,8 +521,8 @@
    "cost_usd": 0.0509,
    "price_usd": 0.5,
    "price_near": 0.1471,
-   "status": "owed",
-   "payment_id": null,
+   "status": "paid",
+   "payment_id": "e99e8149a0",
    "errors": []
   }
  ]
