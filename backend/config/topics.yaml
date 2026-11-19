@@ -584,3 +584,11 @@ topics:
   evidence:
   - https://openalex.org/W7127342254
   added_on: '2026-11-19'
+- name: 4d radar
+  sector: robotics_autonomy
+  terms:
+  - 4d radar
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7225848853
+  added_on: '2026-11-19'
