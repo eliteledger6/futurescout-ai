@@ -1,33 +1,34 @@
 {
- "made_at": "2026-11-09T09:16:42.837616+00:00",
+ "made_at": "2026-11-19T00:19:34.580816+00:00",
  "basis": {
   "phrases": [
    "post-quantum cryptography",
-   "post-quantum crypto"
+   "post quantum cryptography",
+   "post-quantum cryptographic"
   ],
   "checks": [
    {
     "phrase": "post-quantum cryptography",
     "source": "topic",
-    "matches": 6440,
+    "matches": 6575,
     "sampled": 8,
-    "relevant": 5,
+    "relevant": 7,
     "kept": true,
-    "reason": "the topic name itself (5/8 sampled works on-topic)"
+    "reason": "the topic name itself (7/8 sampled works on-topic)"
    },
    {
     "phrase": "post quantum cryptography",
     "source": "config",
-    "matches": 6440,
+    "matches": 6575,
     "sampled": 8,
-    "relevant": 5,
-    "kept": false,
-    "reason": "only 5/8 sampled works on-topic (needs 75%)"
+    "relevant": 7,
+    "kept": true,
+    "reason": "7/8 sampled works on-topic"
    },
    {
     "phrase": "PQC",
     "source": "config",
-    "matches": 4178,
+    "matches": 4263,
     "sampled": 8,
     "relevant": 5,
     "kept": false,
@@ -36,20 +37,29 @@
    {
     "phrase": "quantum-resistant cryptography",
     "source": "ai_suggested",
-    "matches": 915,
+    "matches": 914,
     "sampled": 8,
-    "relevant": 5,
+    "relevant": 4,
     "kept": false,
-    "reason": "only 5/8 sampled works on-topic (needs 75%)"
+    "reason": "only 4/8 sampled works on-topic (needs 75%)"
    },
    {
     "phrase": "quantum-safe cryptography",
     "source": "ai_suggested",
-    "matches": 340,
+    "matches": 344,
     "sampled": 8,
-    "relevant": 5,
+    "relevant": 4,
     "kept": false,
-    "reason": "only 5/8 sampled works on-topic (needs 75%)"
+    "reason": "only 4/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "post-quantum cryptographic",
+    "source": "ai_suggested",
+    "matches": 6575,
+    "sampled": 8,
+    "relevant": 7,
+    "kept": true,
+    "reason": "7/8 sampled works on-topic"
    },
    {
     "phrase": "quantum-proof cryptography",
@@ -59,21 +69,12 @@
     "relevant": 4,
     "kept": false,
     "reason": "only 4/8 sampled works on-topic (needs 75%)"
-   },
-   {
-    "phrase": "post-quantum crypto",
-    "source": "ai_suggested",
-    "matches": 47,
-    "sampled": 8,
-    "relevant": 8,
-    "kept": true,
-    "reason": "8/8 sampled works on-topic"
    }
   ],
   "precision_sampled": 20,
-  "precision_relevant": 15,
-  "precision_pct": 75.0,
+  "precision_relevant": 18,
+  "precision_pct": 90.0,
   "llm_alias": "glm_5_3_flash",
-  "note": "Counted: works whose title or abstract contains any of 'post-quantum cryptography', 'post-quantum crypto' (singular and plural forms match automatically; a work matching several phrases is counted once). Not counted, because too few sampled works were about this topic: 'post quantum cryptography', 'PQC', 'quantum-resistant cryptography', 'quantum-safe cryptography', 'quantum-proof cryptography'. An AI check of 20 random counted works found 15 (75%) mainly about the topic."
+  "note": "Counted: works whose title or abstract contains any of 'post-quantum cryptography', 'post quantum cryptography', 'post-quantum cryptographic' (singular and plural forms match automatically; a work matching several phrases is counted once). Not counted, because too few sampled works were about this topic: 'PQC', 'quantum-resistant cryptography', 'quantum-safe cryptography', 'quantum-proof cryptography'. An AI check of 20 random counted works found 18 (90%) mainly about the topic."
  }
 }

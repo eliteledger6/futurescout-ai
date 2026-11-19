@@ -22,18 +22,18 @@
         "symbol": "MSFTon",
         "asset_id": "nep141:bnb-0x6bfe75d1ad432050ea973c3a3dcd88f02e2444c3.omdep.near",
         "blockchain": "BNB Chain",
-        "token_price_usd": 511.5804,
-        "checked_at": "2026-11-18T10:12:11.384536Z",
+        "token_price_usd": 517.0131,
+        "checked_at": "2026-11-19T00:31:08.434894Z",
         "note": "listed in the NEAR Intents list of tokenized stocks; the price implied by a dry-run quote matches the stock"
       },
       "quote": {
-        "amount_in_usd": 9211.79,
-        "amount_out_usd": 9141.51,
-        "amount_out": "17.984821688736725273",
-        "cost_pct": 0.763,
+        "amount_in_usd": 9212.38,
+        "amount_out_usd": 9166.98,
+        "amount_out": "17.793715713678296915",
+        "cost_pct": 0.493,
         "time_estimate_s": 25.0,
-        "quoted_at": "2026-11-18T10:12:12.236891Z",
-        "correlation_id": "335430b2-5281-4cdd-bbfd-0f10f2a79a46",
+        "quoted_at": "2026-11-19T00:31:11.364129Z",
+        "correlation_id": "dda35020-f637-408b-82e2-09b665ed56fe",
         "error": null
       }
     }
@@ -356,6 +356,33 @@
         "tx_hash": "FeWEPPD5bvPtyfhT6WpAvc26bm1VAXzpktZPQcHQEAVX",
         "explorer_url": "https://testnet.nearblocks.io/txns/FeWEPPD5bvPtyfhT6WpAvc26bm1VAXzpktZPQcHQEAVX"
       }
+    },
+    {
+      "at": "2026-11-19T00:31:04.505875Z",
+      "run_id": "report_20261119T003057Z",
+      "report_date": "2026-11-19",
+      "band": "strong",
+      "score": 72.0,
+      "previous_score": 68.0,
+      "confidence_pct": 35.0,
+      "target_invested_pct": 100.0,
+      "tier_targets_usd": {
+        "low": 9216.31
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [],
+      "trades": [],
+      "reasons": [
+        "Why now: a newer report is available.",
+        "Verdict band 'strong' (score 72.0), confidence 35%. Owner rule: every paper fund is fully invested, so all of the fund goes into the basket.",
+        "No priced company in the medium-risk tier; its share goes to the other tiers.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "No trade: the fund is already close to its targets.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-19."
+      ],
+      "value_before_usd": 9216.31,
+      "sha256": "23f76d4ca226c320314423601f12ad7dfc8689be83353aa70d02d41fb2073112",
+      "chain": null
     }
   ],
   "history": [
@@ -403,7 +430,7 @@
   "benchmark": "SPY",
   "benchmark_start_close": 735.29,
   "benchmark_start_date": "2026-11-06",
-  "updated_at": "2026-11-18T10:11:34.019940Z",
+  "updated_at": "2026-11-19T00:31:04.505875Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",
