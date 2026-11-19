@@ -1333,78 +1333,51 @@
       "sha256": "b0b782e1b840868afeef3d648af40e2d6446ce0b7f607de7cb1c24c5547198fc",
       "correction": null,
       "chain": null
+    },
+    {
+      "id": "f3248e442a",
+      "created_at": "2026-11-19T04:39:34.266268Z",
+      "mode": "live",
+      "side": "hold",
+      "topic": "",
+      "ticker": "",
+      "symbol": "",
+      "asset_id": "",
+      "usd": 0.0,
+      "fraction": null,
+      "quantity": null,
+      "rationale": "The new INTC brief has no high bandwidth memory news. The posts are unverified claims about Microsoft planning to use Intel Foundry's EMIB packaging for Azure, plus a SemiAnalysis teardown of Intel 18A 'Wildcat Lake'. INTC is at $55.66 (read 2026-11-19 04:39 UTC), down 6.12% from its $59.29 cost per share and down 0.39% since the last look, and nothing in the evidence calls for action. INTC's latest high bandwidth memory report (2026-11-10) is still 'strong' (score 80), so it has not weakened. Its 49.6% confidence is low, but it is the same report the holding was bought on, and the small fall is not explained by any finding as a real problem. Rotation is not justified: MRVL and META have the same 'strong' band and the same 49.6% confidence, and AAPL is weaker ('early', 37.7%), so no candidate is clearly better supported. A sale would also fill at a token quote of about $56.02, 1.55% above the 2026-11-17 close, and selling just to reshuffle between equally supported names adds cost without a reason under the rules.",
+      "risks": [
+        "A tokenized stock depends on its issuer (Ondo) and is not the share itself; the token price can drift from the real share price.",
+        "The HBM report's confidence is low (49.6%), mostly built on unverified X claims, and the brief notes process and reliability gaps for Intel that nothing yet addresses.",
+        "The fund is fully in one holding with no cash, so it is concentrated in INTC until a better-supported candidate or new evidence appears."
+      ],
+      "confidence": "medium",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.051272,
+      "ref_close": null,
+      "ref_close_date": null,
+      "dry_quote": null,
+      "status": "hold",
+      "quote": null,
+      "deposit_address": null,
+      "deposit_tx": null,
+      "result": null,
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-19T04:39:34.266268Z",
+          "status": "hold",
+          "note": "strategy check: holding_brief"
+        }
+      ],
+      "sha256": "2391745aa486151c3570ede89a90aedce14dba2f713a268420c5e646287f11ee",
+      "correction": null,
+      "chain": null
     }
   ],
-  "updated_at": "2026-11-19T02:38:12.461025Z",
+  "updated_at": "2026-11-19T04:40:06.849770Z",
   "checks": [
-    {
-      "id": "60827ee131",
-      "at": "2026-11-13T23:50:37.918117Z",
-      "mode": "shadow",
-      "triggers": [],
-      "action": "none",
-      "ticker": "",
-      "usd": 0.0,
-      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
-      "what_changed": "",
-      "proposal_id": null,
-      "model": null,
-      "cost_usd": 0.0,
-      "notes": [],
-      "sha256": "5bdd686656389017e27df82a7a0dfdc425a96d382727dfb3368310be6484290d",
-      "correction": null
-    },
-    {
-      "id": "496ebf26e8",
-      "at": "2026-11-13T23:50:42.885738Z",
-      "mode": "live",
-      "triggers": [],
-      "action": "none",
-      "ticker": "",
-      "usd": 0.0,
-      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
-      "what_changed": "",
-      "proposal_id": null,
-      "model": null,
-      "cost_usd": 0.0,
-      "notes": [],
-      "sha256": "5d93d6ed9a09ea1a4b42cd570edb9d3d875df23fd395d646c0e17b0b370b93ff",
-      "correction": null
-    },
-    {
-      "id": "8a769b2435",
-      "at": "2026-11-14T00:50:44.318054Z",
-      "mode": "shadow",
-      "triggers": [],
-      "action": "none",
-      "ticker": "",
-      "usd": 0.0,
-      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
-      "what_changed": "",
-      "proposal_id": null,
-      "model": null,
-      "cost_usd": 0.0,
-      "notes": [],
-      "sha256": "f549681bf8a8d532737e68eea79942154e32ebbc31f8ecefdfff54c99436b57c",
-      "correction": null
-    },
-    {
-      "id": "fed4d480be",
-      "at": "2026-11-14T00:50:46.526126Z",
-      "mode": "live",
-      "triggers": [],
-      "action": "none",
-      "ticker": "",
-      "usd": 0.0,
-      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
-      "what_changed": "",
-      "proposal_id": null,
-      "model": null,
-      "cost_usd": 0.0,
-      "notes": [],
-      "sha256": "909c0e58e81c449fa973f7cb3d90165f18225e80de60c96226f832fa7e55f56c",
-      "correction": null
-    },
     {
       "id": "2ec164474c",
       "at": "2026-11-14T01:50:48.024504Z",
@@ -4890,6 +4863,81 @@
       "notes": [],
       "sha256": "d075e2f2fbc9db3f411b2d544aafaa6c081e233819ff540124eeb3921e29214b",
       "correction": null
+    },
+    {
+      "id": "0aab06da44",
+      "at": "2026-11-19T03:38:14.238566Z",
+      "mode": "shadow",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "26f13a05ebd28590f2a23c46a3a32961cdee2fd2b8ba5a89b7aaa96ed1bec759",
+      "correction": null
+    },
+    {
+      "id": "b05ed9e875",
+      "at": "2026-11-19T03:38:16.749672Z",
+      "mode": "live",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "b16efc0cb455704a8fc4fc9074ea43c023d2fffaa781f44b11befcda90d2960f",
+      "correction": null
+    },
+    {
+      "id": "ee13ace7a9",
+      "at": "2026-11-19T04:39:32.973101Z",
+      "mode": "shadow",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "2bc701b274e4933edefad2961fccb06a7c67aa70951a49e867c7b15a464dbec8",
+      "correction": null
+    },
+    {
+      "id": "1fe411675e",
+      "at": "2026-11-19T04:39:34.266268Z",
+      "mode": "live",
+      "triggers": [
+        {
+          "kind": "holding_brief",
+          "ticker": "INTC",
+          "topic": "",
+          "detail": "new brief on INTC from the report agent (urgency low): Nothing new on HBM itself. Posts say Intel announced Microsoft as the first planned user of Intel Foundry's EMIB advanced packaging for Azure, and SemiAnalysis says it mapped Intel 18A 'Wildcat Lake' — packaging and node news, not memory-type news."
+        }
+      ],
+      "action": "hold",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "INTC's latest high bandwidth memory report (2026-11-10) is still 'strong' (score 80), so it has not weakened. Its 49.6% confidence is low, but it is the same report the holding was bought on, and the small fall is not explained by any finding as a real problem. Rotation is not justified: MRVL and META have the same 'strong' band and the same 49.6% confidence, and AAPL is weaker ('early', 37.7%), so no candidate is clearly better supported. A sale would also fill at a token quote of about $56.02, 1.55% above the 2026-11-17 close, and selling just to reshuffle between equally supported names adds cost without a reason under the rules.",
+      "what_changed": "The new INTC brief has no high bandwidth memory news. The posts are unverified claims about Microsoft planning to use Intel Foundry's EMIB packaging for Azure, plus a SemiAnalysis teardown of Intel 18A 'Wildcat Lake'. INTC is at $55.66 (read 2026-11-19 04:39 UTC), down 6.12% from its $59.29 cost per share and down 0.39% since the last look, and nothing in the evidence calls for action.",
+      "proposal_id": "f3248e442a",
+      "model": "claude_opus_5_5",
+      "cost_usd": 0.051272,
+      "notes": [],
+      "sha256": "b704f32b150b2304b2e5b3629e4978b5577b5bff6a064006a333e74bc5308960",
+      "correction": null
     }
   ],
   "seen_runs": {
@@ -4907,7 +4955,7 @@
     "live:chiplet": "ab3b0896-a403-4181-990f-65bad2f59f13",
     "retrieval-augmented generation": "4a2a3eaa-9841-4174-b38d-0a12e7b52623",
     "chiplet": "ab3b0896-a403-4181-990f-65bad2f59f13",
-    "live:brief:INTC": "22899a885c",
+    "live:brief:INTC": "cf60d5f8a8",
     "mixture of experts": "report_20261118T141031Z",
     "live:mixture of experts": "report_20261118T141031Z",
     "supervised fine-tuning": "report_20261119T001520Z",
@@ -4923,70 +4971,70 @@
   },
   "holding_prices": {
     "INTC": {
-      "price": 55.3876,
-      "at": "2026-11-19T02:38:07.391197+00:00",
+      "price": 55.6645,
+      "at": "2026-11-19T04:39:32.973101+00:00",
       "cost_per_share": 59.2103,
-      "gain_pct": -6.46,
+      "gain_pct": -5.99,
       "seen_price": 55.88,
       "seen_at": "2026-11-19T00:36:54.961864+00:00",
-      "since_seen_pct": -0.88
+      "since_seen_pct": -0.39
     },
     "live:INTC": {
-      "price": 55.3876,
-      "at": "2026-11-19T02:38:12.127077+00:00",
+      "price": 55.6645,
+      "at": "2026-11-19T04:39:34.266268+00:00",
       "cost_per_share": 59.2948,
-      "gain_pct": -6.59,
-      "seen_price": 55.88,
-      "seen_at": "2026-11-19T00:37:17.400317+00:00",
-      "since_seen_pct": -0.88
+      "gain_pct": -6.12,
+      "seen_price": 55.6645,
+      "seen_at": "2026-11-19T04:39:34.266268+00:00",
+      "since_seen_pct": 0.0
     },
     "MSFT": {
-      "price": 514.1559,
-      "at": "2026-11-19T02:38:07.391197+00:00",
+      "price": 515.4452,
+      "at": "2026-11-19T04:39:32.973101+00:00",
       "cost_per_share": 526.4959,
-      "gain_pct": -2.34,
+      "gain_pct": -2.1,
       "seen_price": 515.7086,
       "seen_at": "2026-11-19T00:36:54.961864+00:00",
-      "since_seen_pct": -0.3
+      "since_seen_pct": -0.05
     },
     "META": {
-      "price": 619.794,
-      "at": "2026-11-19T02:38:07.391197+00:00",
+      "price": 620.6323,
+      "at": "2026-11-19T04:39:32.973101+00:00",
       "cost_per_share": 633.9964,
-      "gain_pct": -2.24,
+      "gain_pct": -2.11,
       "seen_price": 622.575,
       "seen_at": "2026-11-19T00:36:54.961864+00:00",
-      "since_seen_pct": -0.45
+      "since_seen_pct": -0.31
     },
     "MRVL": {
-      "price": 147.2125,
-      "at": "2026-11-19T02:38:07.391197+00:00",
+      "price": 147.7291,
+      "at": "2026-11-19T04:39:32.973101+00:00",
       "cost_per_share": 153.4993,
-      "gain_pct": -4.1,
+      "gain_pct": -3.76,
       "seen_price": 147.8725,
       "seen_at": "2026-11-19T00:36:54.961864+00:00",
-      "since_seen_pct": -0.45
+      "since_seen_pct": -0.1
     },
     "NVDA": {
-      "price": 151.6112,
-      "at": "2026-11-19T02:38:07.391197+00:00",
+      "price": 152.3676,
+      "at": "2026-11-19T04:39:32.973101+00:00",
       "cost_per_share": 160.7475,
-      "gain_pct": -5.68,
+      "gain_pct": -5.21,
       "seen_price": 152.5989,
       "seen_at": "2026-11-19T00:36:54.961864+00:00",
-      "since_seen_pct": -0.65
+      "since_seen_pct": -0.15
     }
   },
-  "last_check_at": "2026-11-19T02:38:07.391197Z",
-  "last_live_check_at": "2026-11-19T02:38:12.127077Z",
+  "last_check_at": "2026-11-19T04:39:32.973101Z",
+  "last_live_check_at": "2026-11-19T04:39:34.266268Z",
   "last_review_at": "2026-11-19T00:36:54.961864Z",
-  "last_live_review_at": "2026-11-19T00:37:17.400317Z",
+  "last_live_review_at": "2026-11-19T04:39:34.266268Z",
   "private_near": 3.5273,
-  "private_checked_at": "2026-11-19T02:38:12.118180Z",
+  "private_checked_at": "2026-11-19T04:39:34.258243Z",
   "last_values": {
     "INTCon": {
-      "usd": 41.42,
-      "at": "2026-11-18T04:32:12.791313+00:00"
+      "usd": 41.15,
+      "at": "2026-11-19T04:39:30.891849+00:00"
     }
   },
   "hidden": []

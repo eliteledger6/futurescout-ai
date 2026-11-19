@@ -461,6 +461,69 @@
    "status": "paid",
    "payment_id": "442ff3f025",
    "errors": []
+  },
+  {
+   "id": "cf60d5f8a8",
+   "ticker": "INTC",
+   "symbol": "INTCon",
+   "topic": "high bandwidth memory",
+   "at": "2026-11-19T04:38:17.419493Z",
+   "price_now": 55.6645,
+   "gain_pct": -6.12,
+   "posts_read": 10,
+   "signals": [
+    {
+     "claim": "None of the 10 posts retrieved in this 7-day window from the 12 monitored accounts mention high bandwidth memory (HBM) explicitly; the keyword match appears driven by Intel-related posts rather than HBM content.",
+     "label": "ai_interpretation",
+     "url": "https://x.com/intel/status/2123144297188909188",
+     "account": "@intel",
+     "published_at": "2026-11-18"
+    },
+    {
+     "claim": "Intel (@intel) says Microsoft is the first company to announce plans to use Intel Foundry's EMIB advanced packaging, as part of an expanded Intel-Microsoft collaboration supporting Azure (posted 2026-11-18).",
+     "label": "unverified_claim",
+     "url": "https://x.com/intel/status/2123097143917396281",
+     "account": "@intel",
+     "published_at": "2026-11-18"
+    },
+    {
+     "claim": "SemiAnalysis reports its Teardown Lab has mapped Intel 18A 'Wildcat Lake' (posted 2026-11-18); the post text does not mention memory type.",
+     "label": "unverified_claim",
+     "url": "https://x.com/SemiAnalysis_/status/2123114257910738963",
+     "account": "@SemiAnalysis_",
+     "published_at": "2026-11-18"
+    },
+    {
+     "claim": "Counterpoint Research frames AMD vs Intel as two different plays in the data center CPU boom, saying AMD's data center business is growing rapidly (posted 2026-11-18).",
+     "label": "unverified_claim",
+     "url": "https://x.com/CounterPointTR/status/2122952843867070793",
+     "account": "@CounterPointTR",
+     "published_at": "2026-11-18"
+    },
+    {
+     "claim": "Jon Peddie Research reports Intel and SambaNova demonstrated an AI inference system splitting workloads: Intel D-Series GPUs handle prefill and SambaNova SN50 processors handle decode (posted 2026-11-17).",
+     "label": "unverified_claim",
+     "url": "https://x.com/jonpeddie/status/2122758690562281648",
+     "account": "@jonpeddie",
+     "published_at": "2026-11-17"
+    }
+   ],
+   "note": {
+    "summary": "Intel trades at $55.66, down 6.12% from the $59.29 cost per share. Posts in the last 7 days contain no HBM-specific news; the keyword match came from general Intel posts.",
+    "what_changed": "Nothing new on HBM itself. Posts say Intel announced Microsoft as the first planned user of Intel Foundry's EMIB advanced packaging for Azure, and SemiAnalysis says it mapped Intel 18A 'Wildcat Lake' — packaging and node news, not memory-type news.",
+    "risks": [
+     "No HBM-specific progress or setbacks surfaced in posts, leaving the report's process and reliability evidence gaps unaddressed.",
+     "Posts say AMD's data center business is growing rapidly, a competitive backdrop for Intel's data center push.",
+     "Packaging wins like EMIB/Microsoft are unverified claims and do not resolve the backside/BPDN process risks named in the report."
+    ],
+    "urgency": "low"
+   },
+   "cost_usd": 0.0509,
+   "price_usd": 0.5,
+   "price_near": 0.1471,
+   "status": "owed",
+   "payment_id": null,
+   "errors": []
   }
  ]
 }
