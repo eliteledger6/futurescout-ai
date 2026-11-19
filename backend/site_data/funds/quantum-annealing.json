@@ -23,7 +23,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-18T10:11:49.537541Z",
+        "checked_at": "2026-11-19T10:13:01.022463Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -82,13 +82,13 @@
     {
       "day": "2026-11-17",
       "value_usd": 8426.6,
-      "benchmark_value_usd": 9709.29
+      "benchmark_value_usd": 9679.6
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": 754.37,
   "benchmark_start_date": "2026-11-13",
-  "updated_at": "2026-11-18T10:11:34.019940Z",
+  "updated_at": "2026-11-19T10:12:39.750686Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision carries its own fingerprint (the report it is based on is sealed on NEAR).",

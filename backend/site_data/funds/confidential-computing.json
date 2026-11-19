@@ -22,18 +22,18 @@
         "symbol": "MSFTon",
         "asset_id": "nep141:bnb-0x6bfe75d1ad432050ea973c3a3dcd88f02e2444c3.omdep.near",
         "blockchain": "BNB Chain",
-        "token_price_usd": 511.5225,
-        "checked_at": "2026-11-18T10:11:56.039588Z",
+        "token_price_usd": 518.8708,
+        "checked_at": "2026-11-19T10:13:01.026350Z",
         "note": "listed in the NEAR Intents list of tokenized stocks; the price implied by a dry-run quote matches the stock"
       },
       "quote": {
-        "amount_in_usd": 9462.05,
-        "amount_out_usd": 9390.8,
-        "amount_out": "18.475282534821859296",
-        "cost_pct": 0.753,
+        "amount_in_usd": 9462.87,
+        "amount_out_usd": 9423.71,
+        "amount_out": "18.199823285240107802",
+        "cost_pct": 0.414,
         "time_estimate_s": 25.0,
-        "quoted_at": "2026-11-18T10:11:56.728022Z",
-        "correlation_id": "62031d82-87f5-4aeb-aa69-8e823e71c0c6",
+        "quoted_at": "2026-11-19T10:13:01.921943Z",
+        "correlation_id": "677b49d6-fd17-4600-93be-c65a4368369b",
         "error": null
       }
     }
@@ -114,13 +114,13 @@
     {
       "day": "2026-11-17",
       "value_usd": 9466.69,
-      "benchmark_value_usd": 9766.91
+      "benchmark_value_usd": 9737.04
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": 749.92,
   "benchmark_start_date": "2026-11-10",
-  "updated_at": "2026-11-18T10:11:34.019940Z",
+  "updated_at": "2026-11-19T10:12:39.750686Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",
