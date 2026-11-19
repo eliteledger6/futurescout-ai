@@ -576,3 +576,11 @@ topics:
   evidence:
   - https://openalex.org/W7212236252
   added_on: '2026-11-19'
+- name: deep joint source-channel coding
+  sector: space_comms
+  terms:
+  - deep joint source-channel coding
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7127342254
+  added_on: '2026-11-19'
