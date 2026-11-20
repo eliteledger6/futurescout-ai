@@ -1487,62 +1487,8 @@
       "chain": null
     }
   ],
-  "updated_at": "2026-11-20T13:48:00.406811Z",
+  "updated_at": "2026-11-20T14:48:32.087859Z",
   "checks": [
-    {
-      "id": "fbf85d4a9b",
-      "at": "2026-11-16T10:21:37.562279Z",
-      "mode": "shadow",
-      "triggers": [
-        {
-          "kind": "review",
-          "ticker": "",
-          "topic": "",
-          "detail": "routine review"
-        }
-      ],
-      "action": "buy",
-      "ticker": "NVDA",
-      "usd": 400.0,
-      "summary": "The fund holds no chiplet stock. The chiplet report is 'strong' (score 72.2) but only 44.4% confident, which is low, so this is a small $400 starter buy rather than a full position. The report's findings include NVIDIA's NVHBM as an example of customer co-designed HBM4 base dies. NVDA's quote of $160.62 is 1.37% below the last close of $162.85, with a 0.88% quote cost, which is acceptable. I am not adding to INTC or MRVL because high bandwidth memory is already the fund's largest topic. I am not adding to MSFT, which has the thinnest report at 35.3% and is quoted at a 2.17% premium. Keeping most of the cash is deliberate, because every report is below 70% confidence.",
-      "what_changed": "This is a routine review with no new report and no sharp move to explain. Current prices: INTC $56.86 (-3.97% vs cost), MSFT $528.99 (+0.47%), META $637.56 (+0.56%), MRVL $150.30 (-2.08%). None of the findings explains the small INTC and MRVL dips, and no holding's report has weakened, so there is no reason to sell.",
-      "proposal_id": "cf1278bcfe",
-      "model": "claude_opus_5_5",
-      "cost_usd": 0.072896,
-      "notes": [],
-      "sha256": "130206d28c765559218dcaab044aee931f2d6137876ff3269540f4dcd78a0a34",
-      "correction": null
-    },
-    {
-      "id": "a929c39c46",
-      "at": "2026-11-16T10:22:11.895059Z",
-      "mode": "live",
-      "triggers": [
-        {
-          "kind": "review",
-          "ticker": "",
-          "topic": "",
-          "detail": "routine review"
-        },
-        {
-          "kind": "holding_brief",
-          "ticker": "INTC",
-          "topic": "",
-          "detail": "new brief on INTC from the report agent (urgency low): Nothing new in the posts on the HBM topic or the report's named risks. The only Intel datapoints are a claimed CPU market-share recovery and a TrendForce interview on the broader memory competitive landscape, neither HBM-specific."
-        }
-      ],
-      "action": "hold",
-      "ticker": "",
-      "usd": 0.0,
-      "summary": "INTC's high bandwidth memory report is still 'strong' (score 80), though its confidence of 49.6% is below 70, so it is not a confident report. No sale reason applies: the report has not weakened, no finding points to a real problem behind the fall, and no candidate has both a higher verdict band and higher confidence. MRVL and META tie INTC at 'strong' and 49.6%, and the rest are lower. Selling now would also fill at a quote about 4% below the last close, which would lock in a loss the evidence does not explain.",
-      "what_changed": "INTC is at $56.86 (read 2026-11-16 10:22 UTC), down 4.11% from the $59.29 cost per share and 2.03% since the last look. The quote of $57.28 is 3.99% below the last close of $59.66. Today's brief says the posts contain nothing new on high bandwidth memory or the report's named risks, and nothing in the evidence explains the small decline.",
-      "proposal_id": "80e692e673",
-      "model": "claude_opus_5_5",
-      "cost_usd": 0.060548,
-      "notes": [],
-      "sha256": "eeda7697d1f43b918c8bd36bdb444a46ac59deb389cf3e83bff4121cef0ad5fe",
-      "correction": null
-    },
     {
       "id": "dab84c64f1",
       "at": "2026-11-16T11:22:51.612360Z",
@@ -5036,6 +4982,40 @@
       "notes": [],
       "sha256": "d542224685de24188822e8d1b7ebbc55a851da8685560d43b63e4d2da0801b22",
       "correction": null
+    },
+    {
+      "id": "9406252e7a",
+      "at": "2026-11-20T14:48:28.811104Z",
+      "mode": "shadow",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "a0f0bcf1d56ebdc6220017d11f84d2072fd2dd6cc48f6f28556a9149ee359f23",
+      "correction": null
+    },
+    {
+      "id": "85fa509cae",
+      "at": "2026-11-20T14:48:32.007020Z",
+      "mode": "live",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "3763c9452a6351041a963c9f7c61c8af711f99e560afba824df88f6dfdbb6d44",
+      "correction": null
     }
   ],
   "seen_runs": {
@@ -5069,70 +5049,70 @@
   },
   "holding_prices": {
     "INTC": {
-      "price": 52.92,
-      "at": "2026-11-20T13:47:57.494486+00:00",
+      "price": 54.662,
+      "at": "2026-11-20T14:48:28.811104+00:00",
       "cost_per_share": 59.2103,
-      "gain_pct": -10.62,
+      "gain_pct": -7.68,
       "seen_price": 54.8243,
       "seen_at": "2026-11-19T23:43:55.961631+00:00",
-      "since_seen_pct": -3.47
+      "since_seen_pct": -0.3
     },
     "live:INTC": {
-      "price": 52.92,
-      "at": "2026-11-20T13:48:00.026528+00:00",
+      "price": 54.662,
+      "at": "2026-11-20T14:48:32.007020+00:00",
       "cost_per_share": 59.2948,
-      "gain_pct": -10.75,
+      "gain_pct": -7.81,
       "seen_price": 54.5337,
       "seen_at": "2026-11-20T04:45:42.420006+00:00",
-      "since_seen_pct": -2.96
+      "since_seen_pct": 0.24
     },
     "MSFT": {
-      "price": 489.0193,
-      "at": "2026-11-20T13:47:57.494486+00:00",
+      "price": 501.6824,
+      "at": "2026-11-20T14:48:28.811104+00:00",
       "cost_per_share": 526.4959,
-      "gain_pct": -7.12,
+      "gain_pct": -4.71,
       "seen_price": 499.7614,
       "seen_at": "2026-11-19T23:43:55.961631+00:00",
-      "since_seen_pct": -2.15
+      "since_seen_pct": 0.38
     },
     "META": {
-      "price": 573.8025,
-      "at": "2026-11-20T13:47:57.494486+00:00",
+      "price": 581.5456,
+      "at": "2026-11-20T14:48:28.811104+00:00",
       "cost_per_share": 633.9964,
-      "gain_pct": -9.49,
+      "gain_pct": -8.27,
       "seen_price": 589.9004,
       "seen_at": "2026-11-19T23:43:55.961631+00:00",
-      "since_seen_pct": -2.73
+      "since_seen_pct": -1.42
     },
     "MRVL": {
-      "price": 131.8104,
-      "at": "2026-11-20T13:47:57.494486+00:00",
+      "price": 130.6803,
+      "at": "2026-11-20T14:48:28.811104+00:00",
       "cost_per_share": 148.1438,
-      "gain_pct": -11.03,
+      "gain_pct": -11.79,
       "seen_price": 137.2243,
       "seen_at": "2026-11-19T23:43:55.961631+00:00",
-      "since_seen_pct": -3.95
+      "since_seen_pct": -4.77
     },
     "NVDA": {
-      "price": 141.3771,
-      "at": "2026-11-20T13:47:57.494486+00:00",
+      "price": 140.2762,
+      "at": "2026-11-20T14:48:28.811104+00:00",
       "cost_per_share": 160.7475,
-      "gain_pct": -12.05,
+      "gain_pct": -12.74,
       "seen_price": 145.9199,
       "seen_at": "2026-11-19T23:43:55.961631+00:00",
-      "since_seen_pct": -3.11
+      "since_seen_pct": -3.87
     }
   },
-  "last_check_at": "2026-11-20T13:47:57.494486Z",
-  "last_live_check_at": "2026-11-20T13:48:00.026528Z",
+  "last_check_at": "2026-11-20T14:48:28.811104Z",
+  "last_live_check_at": "2026-11-20T14:48:32.007020Z",
   "last_review_at": "2026-11-19T23:43:55.961631Z",
   "last_live_review_at": "2026-11-20T04:45:42.420006Z",
-  "private_near": 3.3802,
-  "private_checked_at": "2026-11-20T13:48:00.015798Z",
+  "private_near": 3.2146,
+  "private_checked_at": "2026-11-20T14:48:31.998224Z",
   "last_values": {
     "INTCon": {
-      "usd": 39.12,
-      "at": "2026-11-20T13:47:55.920817+00:00"
+      "usd": 40.41,
+      "at": "2026-11-20T14:48:04.217387+00:00"
     }
   },
   "hidden": []

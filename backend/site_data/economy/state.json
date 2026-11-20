@@ -280,6 +280,18 @@
       "tx_hash": null,
       "note": "paid 0.1471 NEAR from the near.com balance (intent 5sdydKb543GTWY8HBnsJd8CdV3nfoF7gaYod1m4wqora); seen arriving in grandbread5023.near after about 15s",
       "at": "2026-11-19T16:42:41.282475Z"
+    },
+    {
+      "id": "efed8822f4",
+      "run_id": "briefs_20261120T144800",
+      "topic": "holding briefs: INTC",
+      "price_near": 0.1656,
+      "buyer": "wrongowl2563.near",
+      "seller": "grandbread5023.near",
+      "status": "paid",
+      "tx_hash": null,
+      "note": "paid 0.1656 NEAR from the near.com balance (intent ETV8QwaypNEGYPpdJ3iFKB3dwGgvanj4tRnpN7fuzfag); seen arriving in grandbread5023.near after about 15s",
+      "at": "2026-11-20T14:48:13.110325Z"
     }
   ],
   "stakes": [
@@ -348,7 +360,18 @@
       "tx_hash": "4BTMiZFUYcQ6AhkCKXDCKfYGYQdvJ7zZXe3MAFdh4NwJ",
       "note": "staked 1.2138 NEAR (70% of 3.599 NEAR received for reports, minus earlier stakes); kept pot now 1.0797 NEAR",
       "at": "2026-11-11T08:40:01.764585Z"
+    },
+    {
+      "id": "1fc4c9ae5e",
+      "account": "grandbread5023.near",
+      "contract": "stake.dao",
+      "amount_near": 1.05595,
+      "balance_before_near": 14.369937,
+      "status": "staked",
+      "tx_hash": "FanVWs3rSwsq7dQJNGTiicwyaJkKB6EoqPm6xEom6g5H",
+      "note": "staked 1.05595 NEAR (70% of 5.1075 NEAR received for reports, minus earlier stakes); kept pot now 1.53225 NEAR",
+      "at": "2026-11-20T14:48:32.215153Z"
     }
   ],
-  "kept_near": 1.0797
+  "kept_near": 1.53225
 }
