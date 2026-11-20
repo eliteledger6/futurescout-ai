@@ -601,3 +601,11 @@ topics:
   - https://openalex.org/W7226034093
   - https://openalex.org/W7166563917
   added_on: '2026-11-20'
+- name: elastic weight consolidation
+  sector: biotech_tools
+  terms:
+  - elastic weight consolidation
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7163575339
+  added_on: '2026-11-20'
