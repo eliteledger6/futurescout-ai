@@ -13,8 +13,8 @@
       "tier": "low",
       "shares": 54.61566546594126,
       "cost_usd": 9970.089730807578,
-      "last_close": 150.96,
-      "last_date": "2026-11-18",
+      "last_close": 145.98,
+      "last_date": "2026-11-19",
       "timing_risk": null,
       "why": "Company Scout: 1 patent(s); large by revenue",
       "route": {
@@ -22,18 +22,18 @@
         "symbol": "NVDAon",
         "asset_id": "nep141:bnb-0xa9ee28c80f960b889dfbd1902055218cba016f75.omdep.near",
         "blockchain": "BNB Chain",
-        "token_price_usd": 154.573,
-        "checked_at": "2026-11-19T10:13:06.759184Z",
+        "token_price_usd": 143.2522,
+        "checked_at": "2026-11-20T10:14:51.766232Z",
         "note": "listed in the NEAR Intents list of tokenized stocks; the price implied by a dry-run quote matches the stock"
       },
       "quote": {
-        "amount_in_usd": 8241.46,
-        "amount_out_usd": 8196.89,
-        "amount_out": "53.31772958376132148",
-        "cost_pct": 0.541,
-        "time_estimate_s": 12.0,
-        "quoted_at": "2026-11-19T10:13:07.675988Z",
-        "correlation_id": "9ace0c5e-ec16-4063-8b1d-a2d7762c3cc6",
+        "amount_in_usd": 7969.79,
+        "amount_out_usd": 7929.72,
+        "amount_out": "55.635046981828244079",
+        "cost_pct": 0.503,
+        "time_estimate_s": 10.0,
+        "quoted_at": "2026-11-20T10:14:52.478278Z",
+        "correlation_id": "93b10d81-8285-41a5-b408-4d22628d4220",
         "error": null
       }
     }
@@ -263,12 +263,17 @@
       "day": "2026-11-18",
       "value_usd": 8244.78,
       "benchmark_value_usd": 9628.29
+    },
+    {
+      "day": "2026-11-19",
+      "value_usd": 7972.79,
+      "benchmark_value_usd": 9439.34
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": 758.39,
   "benchmark_start_date": "2026-11-10",
-  "updated_at": "2026-11-19T10:12:39.750686Z",
+  "updated_at": "2026-11-20T10:14:27.251644Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",

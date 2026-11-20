@@ -23,7 +23,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-19T10:13:13.681329Z",
+        "checked_at": "2026-11-20T10:14:59.560847Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -34,8 +34,8 @@
       "tier": "medium",
       "shares": 22.2518464146821,
       "cost_usd": 3304.529682490508,
-      "last_close": 145.54,
-      "last_date": "2026-11-18",
+      "last_close": 138.47,
+      "last_date": "2026-11-19",
       "timing_risk": "subdued",
       "why": "Company Scout: 2 patent(s), 1 filing(s); mid by revenue",
       "route": {
@@ -43,18 +43,18 @@
         "symbol": "MRVLon",
         "asset_id": "nep141:bnb-0x1501ec83ffef405b4331cc4f73277a40fb0c627d.omdep.near",
         "blockchain": "BNB Chain",
-        "token_price_usd": 151.8264,
-        "checked_at": "2026-11-19T10:13:13.681742Z",
+        "token_price_usd": 133.9056,
+        "checked_at": "2026-11-20T10:14:59.561266Z",
         "note": "listed in the NEAR Intents list of tokenized stocks; the price implied by a dry-run quote matches the stock"
       },
       "quote": {
-        "amount_in_usd": 3237.22,
-        "amount_out_usd": 3220.05,
-        "amount_out": "21.317523565209197814",
-        "cost_pct": 0.53,
+        "amount_in_usd": 3080.05,
+        "amount_out_usd": 3059.79,
+        "amount_out": "22.999489994008809728",
+        "cost_pct": 0.658,
         "time_estimate_s": 12.0,
-        "quoted_at": "2026-11-19T10:13:14.349163Z",
-        "correlation_id": "c75fa294-8ea8-45db-8cf4-0fc9ef87d040",
+        "quoted_at": "2026-11-20T10:15:00.247193Z",
+        "correlation_id": "02fa1b2c-436e-4d7e-ae50-7342a8d71a9a",
         "error": null
       }
     },
@@ -64,8 +64,8 @@
       "tier": "low",
       "shares": 58.24058166301724,
       "cost_usd": 3457.7433333333333,
-      "last_close": 54.67,
-      "last_date": "2026-11-18",
+      "last_close": 55.72,
+      "last_date": "2026-11-19",
       "timing_risk": "subdued",
       "why": "Company Scout: 2 patent(s), 1 filing(s); large by revenue",
       "route": {
@@ -73,18 +73,18 @@
         "symbol": "INTCon",
         "asset_id": "nep141:bnb-0xa528caaa2f96090e379d43f90834c75df54d6e74.omdep.near",
         "blockchain": "BNB Chain",
-        "token_price_usd": 57.3096,
-        "checked_at": "2026-11-19T10:13:15.013077Z",
+        "token_price_usd": 53.4806,
+        "checked_at": "2026-11-20T10:15:01.168481Z",
         "note": "listed in the NEAR Intents list of tokenized stocks; the price implied by a dry-run quote matches the stock"
       },
       "quote": {
-        "amount_in_usd": 3182.73,
-        "amount_out_usd": 3153.31,
-        "amount_out": "55.533629409587347449",
-        "cost_pct": 0.924,
+        "amount_in_usd": 3243.95,
+        "amount_out_usd": 3223.52,
+        "amount_out": "60.651687394324472688",
+        "cost_pct": 0.63,
         "time_estimate_s": 10.0,
-        "quoted_at": "2026-11-19T10:13:15.675507Z",
-        "correlation_id": "17a5f145-75a5-4277-b6b5-a22ef2b7d384",
+        "quoted_at": "2026-11-20T10:15:01.838051Z",
+        "correlation_id": "46678219-1a74-4701-8fa4-c36734f396e8",
         "error": null
       }
     }
@@ -645,6 +645,37 @@
       "value_before_usd": 9880.28,
       "sha256": "9fa28c0e04404bb5e7886cb9c8bb016f2d55a68630bc2a5c5e323cf463d52aac",
       "chain": null
+    },
+    {
+      "at": "2026-11-20T10:14:27.251644Z",
+      "run_id": "6777f9ef-2e58-4355-bf72-bd49b0677d89",
+      "report_date": "2026-11-10",
+      "band": "building",
+      "score": 67.8,
+      "previous_score": 67.8,
+      "confidence_pct": 37.9,
+      "target_invested_pct": 100.0,
+      "tier_targets_usd": {
+        "low": 6522.75,
+        "medium": 3261.37
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "MU",
+        "SNDK"
+      ],
+      "trades": [],
+      "reasons": [
+        "Why now: price review: 2 company(ies) were waiting for a daily close.",
+        "Verdict band 'building' (score 67.8), confidence 38%. Owner rule: every paper fund is fully invested, so all of the fund goes into the basket.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): MU, SNDK. Reviewed again after the next price update.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "No trade: the fund is already close to its targets.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-20."
+      ],
+      "value_before_usd": 9784.12,
+      "sha256": "25e6fc8171cb0e160e231b37b486e8d9ac5d9587415a8de058bd95fb95953746",
+      "chain": null
     }
   ],
   "history": [
@@ -692,12 +723,17 @@
       "day": "2026-11-18",
       "value_usd": 9880.28,
       "benchmark_value_usd": 9930.78
+    },
+    {
+      "day": "2026-11-19",
+      "value_usd": 9784.12,
+      "benchmark_value_usd": 9735.89
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": 735.29,
   "benchmark_start_date": "2026-11-06",
-  "updated_at": "2026-11-19T10:12:39.750686Z",
+  "updated_at": "2026-11-20T10:14:27.251644Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",

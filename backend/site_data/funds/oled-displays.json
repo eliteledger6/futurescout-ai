@@ -13,8 +13,8 @@
       "tier": "low",
       "shares": 5.617210034769322,
       "cost_usd": 3602.7099999999996,
-      "last_close": 616.38,
-      "last_date": "2026-11-18",
+      "last_close": 596.22,
+      "last_date": "2026-11-19",
       "timing_risk": null,
       "why": "Company Scout: 1 patent(s); large by revenue",
       "route": {
@@ -22,18 +22,18 @@
         "symbol": "METAon",
         "asset_id": "nep141:bnb-0xd7df5863a3e742f0c767768cdfcb63f09e0422f6.omdep.near",
         "blockchain": "BNB Chain",
-        "token_price_usd": 628.5668,
-        "checked_at": "2026-11-19T10:13:16.370998Z",
+        "token_price_usd": 588.3697,
+        "checked_at": "2026-11-20T10:15:02.529669Z",
         "note": "listed in the NEAR Intents list of tokenized stocks; the price implied by a dry-run quote matches the stock"
       },
       "quote": {
-        "amount_in_usd": 3460.94,
-        "amount_out_usd": 3446.79,
-        "amount_out": "5.507513477158503636",
-        "cost_pct": 0.409,
+        "amount_in_usd": 3347.83,
+        "amount_out_usd": 3333.71,
+        "amount_out": "5.684589677239970722",
+        "cost_pct": 0.422,
         "time_estimate_s": 25.0,
-        "quoted_at": "2026-11-19T10:13:17.058683Z",
-        "correlation_id": "bddc5a81-7c91-4ac0-bb10-db172f7386de",
+        "quoted_at": "2026-11-20T10:15:03.223071Z",
+        "correlation_id": "3755080f-9e61-4dad-9d40-6570462aa535",
         "error": null
       }
     },
@@ -43,8 +43,8 @@
       "tier": "low",
       "shares": 60.68233114367525,
       "cost_usd": 3602.709999999999,
-      "last_close": 54.67,
-      "last_date": "2026-11-18",
+      "last_close": 55.72,
+      "last_date": "2026-11-19",
       "timing_risk": null,
       "why": "Company Scout: 1 patent(s); large by revenue",
       "route": {
@@ -52,18 +52,18 @@
         "symbol": "INTCon",
         "asset_id": "nep141:bnb-0xa528caaa2f96090e379d43f90834c75df54d6e74.omdep.near",
         "blockchain": "BNB Chain",
-        "token_price_usd": 57.3159,
-        "checked_at": "2026-11-19T10:13:17.718531Z",
+        "token_price_usd": 53.4789,
+        "checked_at": "2026-11-20T10:15:03.955070Z",
         "note": "listed in the NEAR Intents list of tokenized stocks; the price implied by a dry-run quote matches the stock"
       },
       "quote": {
-        "amount_in_usd": 3316.16,
-        "amount_out_usd": 3286.16,
-        "amount_out": "57.873316557437590854",
-        "cost_pct": 0.905,
+        "amount_in_usd": 3379.95,
+        "amount_out_usd": 3359.09,
+        "amount_out": "63.202657689431232646",
+        "cost_pct": 0.617,
         "time_estimate_s": 10.0,
-        "quoted_at": "2026-11-19T10:13:18.386601Z",
-        "correlation_id": "8fad305e-1262-4a5f-993a-507c3a855410",
+        "quoted_at": "2026-11-20T10:15:04.634642Z",
+        "correlation_id": "769976fa-b49d-45fb-a488-43c6a05f1778",
         "error": null
       }
     },
@@ -83,7 +83,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-19T10:13:19.083738Z",
+        "checked_at": "2026-11-20T10:15:05.316556Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -623,6 +623,37 @@
       "value_before_usd": 10370.32,
       "sha256": "30c27b84ed421d5d74c22d16e7fe8d6f24d899cad566a5c8ac18e811daf2937b",
       "chain": null
+    },
+    {
+      "at": "2026-11-20T10:14:27.251644Z",
+      "run_id": "783ab33d-be9b-4dd2-b9db-6e5e48e71b15",
+      "report_date": "2026-11-10",
+      "band": "strong",
+      "score": 71.0,
+      "previous_score": 71.0,
+      "confidence_pct": 49.6,
+      "target_invested_pct": 100.0,
+      "tier_targets_usd": {
+        "low": 10320.79
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "MRK",
+        "AMAT"
+      ],
+      "trades": [],
+      "reasons": [
+        "Why now: price review: 2 company(ies) were waiting for a daily close.",
+        "Verdict band 'strong' (score 71.0), confidence 50%. Owner rule: every paper fund is fully invested, so all of the fund goes into the basket.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): MRK, AMAT. Reviewed again after the next price update.",
+        "No priced company in the medium-risk tier; its share goes to the other tiers.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "No trade: the fund is already close to its targets.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-20."
+      ],
+      "value_before_usd": 10320.79,
+      "sha256": "971d939a6b56f6921345871791374c108201794f6f8f65d63bf30943c3586a67",
+      "chain": null
     }
   ],
   "history": [
@@ -670,12 +701,17 @@
       "day": "2026-11-18",
       "value_usd": 10370.32,
       "benchmark_value_usd": 9930.78
+    },
+    {
+      "day": "2026-11-19",
+      "value_usd": 10320.79,
+      "benchmark_value_usd": 9735.89
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": 735.29,
   "benchmark_start_date": "2026-11-06",
-  "updated_at": "2026-11-19T10:12:39.750686Z",
+  "updated_at": "2026-11-20T10:14:27.251644Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",
