@@ -592,3 +592,12 @@ topics:
   evidence:
   - https://openalex.org/W7225848853
   added_on: '2026-11-19'
+- name: terahertz communication
+  sector: space_comms
+  terms:
+  - terahertz communication
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7226034093
+  - https://openalex.org/W7166563917
+  added_on: '2026-11-20'
