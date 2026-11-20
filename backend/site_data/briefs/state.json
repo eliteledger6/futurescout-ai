@@ -524,6 +524,55 @@
    "status": "paid",
    "payment_id": "e99e8149a0",
    "errors": []
+  },
+  {
+   "id": "dc4baa98f3",
+   "ticker": "INTC",
+   "symbol": "INTCon",
+   "topic": "high bandwidth memory",
+   "at": "2026-11-20T04:44:56.470775Z",
+   "price_now": 54.5337,
+   "gain_pct": -8.03,
+   "posts_read": 10,
+   "signals": [
+    {
+     "claim": "No post in this week's retrieved set from the 12 monitored accounts mentions high bandwidth memory (HBM); the Intel-related posts instead cover Intel Foundry EMIB packaging, 18A yields, layoffs, F1 marketing and a quantum explainer series.",
+     "label": "ai_interpretation",
+     "url": "https://x.com/intel/status/2123097143917396281",
+     "account": "@intel",
+     "published_at": "2026-11-18"
+    },
+    {
+     "claim": "Intel says Microsoft is the first company to announce plans to use Intel Foundry's EMIB advanced packaging technology, per Intel's own post; Tom's Hardware reports the same and adds that Intel 18A yields reportedly hit 70%.",
+     "label": "unverified_claim",
+     "url": "https://x.com/intel/status/2123097143917396281",
+     "account": "@intel",
+     "published_at": "2026-11-18"
+    },
+    {
+     "claim": "Tom's Hardware reports Intel's workforce has been reduced by 27,800 under Lip-Bu Tan, with new cuts to its IT department reportedly affecting hundreds of employees.",
+     "label": "unverified_claim",
+     "url": "https://x.com/tomshardware/status/2123432157507137591",
+     "account": "@tomshardware",
+     "published_at": "2026-11-19"
+    }
+   ],
+   "note": {
+    "summary": "Intel trades at $54.53, down 8.03% from the $59.29 cost basis. Posts this week focus on Intel Foundry EMIB packaging, 18A yields, layoffs and marketing, with no mention of high bandwidth memory.",
+    "what_changed": "Posts say Microsoft is the first announced customer for Intel Foundry's EMIB packaging and that 18A yields reportedly hit 70% (unverified). Posts also say Intel's workforce has been cut by 27,800 with further IT-department reductions. Nothing new on HBM or the report's backside-power risks.",
+    "risks": [
+     "Continued workforce cuts could affect engineering capacity for advanced packaging and process development.",
+     "Reported 18A yield and EMIB momentum remain unverified claims; execution risk persists.",
+     "The report's named risks on backside power, wafer thinning and failure-analysis bottlenecks remain unaddressed by this week's posts."
+    ],
+    "urgency": "low"
+   },
+   "cost_usd": 0.0507,
+   "price_usd": 0.5,
+   "price_near": 0.1656,
+   "status": "owed",
+   "payment_id": null,
+   "errors": []
   }
  ]
 }
