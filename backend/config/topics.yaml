@@ -617,3 +617,11 @@ topics:
   evidence:
   - https://openalex.org/W7163749483
   added_on: '2026-11-21'
+- name: monocular depth estimation
+  sector: robotics_autonomy
+  terms:
+  - monocular depth estimation
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7214742890
+  added_on: '2026-11-21'
