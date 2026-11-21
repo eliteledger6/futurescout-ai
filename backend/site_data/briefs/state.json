@@ -573,6 +573,69 @@
    "status": "paid",
    "payment_id": "efed8822f4",
    "errors": []
+  },
+  {
+   "id": "2e00fe1fd3",
+   "ticker": "INTC",
+   "symbol": "INTCon",
+   "topic": "high bandwidth memory",
+   "at": "2026-11-21T04:51:42.519586Z",
+   "price_now": 51.655,
+   "gain_pct": -12.88,
+   "posts_read": 10,
+   "signals": [
+    {
+     "claim": "No post in this week's retrieved set from the 12 monitored accounts mentions high bandwidth memory (HBM) directly; the Intel-related posts instead cover Intel Foundry's EMIB advanced packaging, 18A yields, layoffs, McLaren F1 marketing, and a quantum explainer series.",
+     "label": "ai_interpretation",
+     "url": "https://x.com/intel/status/2123097143917396281",
+     "account": "@intel",
+     "published_at": "2026-11-18"
+    },
+    {
+     "claim": "Intel (@intel) says Microsoft is the first company to announce plans to use Intel Foundry's EMIB advanced packaging, expanding their collaboration to support Azure innovation.",
+     "label": "unverified_claim",
+     "url": "https://x.com/intel/status/2123097143917396281",
+     "account": "@intel",
+     "published_at": "2026-11-18"
+    },
+    {
+     "claim": "Tom's Hardware reports Intel 18A yields hit 70% alongside the Microsoft EMIB packaging commitment.",
+     "label": "unverified_claim",
+     "url": "https://x.com/tomshardware/status/2123402010510929951",
+     "account": "@tomshardware",
+     "published_at": "2026-11-19"
+    },
+    {
+     "claim": "SemiAnalysis says its Teardown Lab has mapped Intel 18A 'Wildcat Lake' silicon, indicating active third-party teardown analysis of Intel's 18A technology.",
+     "label": "unverified_claim",
+     "url": "https://x.com/SemiAnalysis_/status/2123114257910738963",
+     "account": "@SemiAnalysis_",
+     "published_at": "2026-11-18"
+    },
+    {
+     "claim": "Tom's Hardware reports Intel is continuing layoffs (IT department cuts, workforce reportedly reduced by 27,800 under Lip-Bu Tan) and that Diamond Rapids showed live-server demo activity at SC26.",
+     "label": "unverified_claim",
+     "url": "https://x.com/tomshardware/status/2123432157507137591",
+     "account": "@tomshardware",
+     "published_at": "2026-11-19"
+    }
+   ],
+   "note": {
+    "summary": "Intel trades at $51.655, down 12.88% from the cost of $59.2948. No posts this week mention high bandwidth memory directly; coverage instead centers on Intel Foundry EMIB packaging, 18A yields, and layoffs.",
+    "what_changed": "Posts say Microsoft is the first announced customer for Intel Foundry's EMIB advanced packaging, and Tom's Hardware reports 18A yields at 70%. Posts also say layoffs continue (IT cuts, workforce reportedly down 27,800). None of this touches the report's HBM/backside-power risks directly, but the EMIB win and yield figure are positive packaging-process signals; the layoffs are a new execution conce",
+    "risks": [
+     "Continued layoffs reported by posts could affect engineering capacity for advanced packaging and backside-power programs.",
+     "Report risks stand: unresolved backside/buried power metal choice (Ru vs Mo) and failure-analysis bottlenecks for BPDN architectures.",
+     "Evidence gap remains: no quantified thermal or reliability penalties for BPDN in the report's sources."
+    ],
+    "urgency": "low"
+   },
+   "cost_usd": 0.0509,
+   "price_usd": 0.5,
+   "price_near": 0.188,
+   "status": "owed",
+   "payment_id": null,
+   "errors": []
   }
  ]
 }
