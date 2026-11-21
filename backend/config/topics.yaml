@@ -625,3 +625,11 @@ topics:
   evidence:
   - https://openalex.org/W7214742890
   added_on: '2026-11-21'
+- name: time series foundation model
+  sector: ai_software
+  terms:
+  - time series foundation model
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7213652955
+  added_on: '2026-11-21'
