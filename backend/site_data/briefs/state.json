@@ -633,8 +633,8 @@
    "cost_usd": 0.0509,
    "price_usd": 0.5,
    "price_near": 0.188,
-   "status": "owed",
-   "payment_id": null,
+   "status": "paid",
+   "payment_id": "fdf4420f3d",
    "errors": []
   }
  ]
