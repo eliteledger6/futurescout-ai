@@ -609,3 +609,11 @@ topics:
   evidence:
   - https://openalex.org/W7163575339
   added_on: '2026-11-20'
+- name: agentic memory
+  sector: ai_software
+  terms:
+  - agentic memory
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7163749483
+  added_on: '2026-11-21'
