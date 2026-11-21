@@ -13,8 +13,8 @@
       "tier": "low",
       "shares": 18.20540914434457,
       "cost_usd": 9925.224957313774,
-      "last_close": 498.3,
-      "last_date": "2026-11-19",
+      "last_close": 484.52,
+      "last_date": "2026-11-20",
       "timing_risk": null,
       "why": "Company Scout: 2 patent(s); large by revenue",
       "route": {
@@ -22,18 +22,18 @@
         "symbol": "MSFTon",
         "asset_id": "nep141:bnb-0x6bfe75d1ad432050ea973c3a3dcd88f02e2444c3.omdep.near",
         "blockchain": "BNB Chain",
-        "token_price_usd": 495.6739,
-        "checked_at": "2026-11-20T10:14:29.692402Z",
+        "token_price_usd": 490.8128,
+        "checked_at": "2026-11-21T10:15:25.590944Z",
         "note": "listed in the NEAR Intents list of tokenized stocks; the price implied by a dry-run quote matches the stock"
       },
       "quote": {
-        "amount_in_usd": 9068.35,
-        "amount_out_usd": 9026.19,
-        "amount_out": "18.242433562372628771",
-        "cost_pct": 0.465,
+        "amount_in_usd": 8815.54,
+        "amount_out_usd": 8786.15,
+        "amount_out": "17.914802237143240468",
+        "cost_pct": 0.333,
         "time_estimate_s": 25.0,
-        "quoted_at": "2026-11-20T10:14:31.827275Z",
-        "correlation_id": "bd17359c-448f-4060-94ac-9374c98ade5f",
+        "quoted_at": "2026-11-21T10:15:27.764086Z",
+        "correlation_id": "3bddce69-3520-4390-8a11-e632b398b5ae",
         "error": null
       }
     }
@@ -430,12 +430,17 @@
       "day": "2026-11-19",
       "value_usd": 9071.76,
       "benchmark_value_usd": 9735.89
+    },
+    {
+      "day": "2026-11-20",
+      "value_usd": 8820.88,
+      "benchmark_value_usd": 9381.47
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": 735.29,
   "benchmark_start_date": "2026-11-06",
-  "updated_at": "2026-11-20T10:14:27.251644Z",
+  "updated_at": "2026-11-21T10:15:23.199156Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",
