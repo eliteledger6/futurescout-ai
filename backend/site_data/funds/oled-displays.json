@@ -22,18 +22,18 @@
         "symbol": "METAon",
         "asset_id": "nep141:bnb-0xd7df5863a3e742f0c767768cdfcb63f09e0422f6.omdep.near",
         "blockchain": "BNB Chain",
-        "token_price_usd": 569.18,
-        "checked_at": "2026-11-21T10:15:57.378014Z",
+        "token_price_usd": 577.9543,
+        "checked_at": "2026-11-22T10:17:20.979960Z",
         "note": "listed in the NEAR Intents list of tokenized stocks; the price implied by a dry-run quote matches the stock"
       },
       "quote": {
-        "amount_in_usd": 3148.45,
-        "amount_out_usd": 3136.44,
-        "amount_out": "5.530821080825469123",
-        "cost_pct": 0.382,
+        "amount_in_usd": 3148.34,
+        "amount_out_usd": 3137.63,
+        "amount_out": "5.447193830966091885",
+        "cost_pct": 0.34,
         "time_estimate_s": 25.0,
-        "quoted_at": "2026-11-21T10:15:58.077782Z",
-        "correlation_id": "977090ef-e810-4198-ae19-47ec3109dd9c",
+        "quoted_at": "2026-11-22T10:17:21.680974Z",
+        "correlation_id": "841730ec-4d9b-44c9-b457-bcd3b093c31a",
         "error": null
       }
     },
@@ -52,18 +52,18 @@
         "symbol": "INTCon",
         "asset_id": "nep141:bnb-0xa528caaa2f96090e379d43f90834c75df54d6e74.omdep.near",
         "blockchain": "BNB Chain",
-        "token_price_usd": 52.4713,
-        "checked_at": "2026-11-21T10:15:58.908509Z",
+        "token_price_usd": 54.2754,
+        "checked_at": "2026-11-22T10:17:22.322386Z",
         "note": "listed in the NEAR Intents list of tokenized stocks; the price implied by a dry-run quote matches the stock"
       },
       "quote": {
-        "amount_in_usd": 3109.91,
-        "amount_out_usd": 3097.29,
-        "amount_out": "59.261254130407643053",
-        "cost_pct": 0.406,
+        "amount_in_usd": 3109.8,
+        "amount_out_usd": 3094.26,
+        "amount_out": "57.285129502752740301",
+        "cost_pct": 0.5,
         "time_estimate_s": 12.0,
-        "quoted_at": "2026-11-21T10:15:59.601454Z",
-        "correlation_id": "62e887a4-2110-4eb0-9c72-b933b29f262e",
+        "quoted_at": "2026-11-22T10:17:23.003996Z",
+        "correlation_id": "bac641b3-4b5e-4ea6-8d36-f711f97ae92e",
         "error": null
       }
     },
@@ -83,7 +83,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-21T10:16:00.521420Z",
+        "checked_at": "2026-11-22T10:17:23.908496Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -685,6 +685,37 @@
       "value_before_usd": 9852.63,
       "sha256": "a5378eabffd089632ca1b940fdbffbe237a6a36bd109e984a734b8273a975234",
       "chain": null
+    },
+    {
+      "at": "2026-11-22T10:16:47.263478Z",
+      "run_id": "783ab33d-be9b-4dd2-b9db-6e5e48e71b15",
+      "report_date": "2026-11-10",
+      "band": "strong",
+      "score": 71.0,
+      "previous_score": 71.0,
+      "confidence_pct": 49.6,
+      "target_invested_pct": 100.0,
+      "tier_targets_usd": {
+        "low": 9852.63
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "MRK",
+        "AMAT"
+      ],
+      "trades": [],
+      "reasons": [
+        "Why now: price review: 2 company(ies) were waiting for a daily close.",
+        "Verdict band 'strong' (score 71.0), confidence 50%. Owner rule: every paper fund is fully invested, so all of the fund goes into the basket.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): MRK, AMAT. Reviewed again after the next price update.",
+        "No priced company in the medium-risk tier; its share goes to the other tiers.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "No trade: the fund is already close to its targets.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-22."
+      ],
+      "value_before_usd": 9852.63,
+      "sha256": "83efd06d3c0da4e5aafdb3aa01c2902ff70c8cf8b66286474bf7e15fdaf6f8c6",
+      "chain": null
     }
   ],
   "history": [
@@ -747,7 +778,7 @@
   "benchmark": "SPY",
   "benchmark_start_close": 735.29,
   "benchmark_start_date": "2026-11-06",
-  "updated_at": "2026-11-21T10:15:23.199156Z",
+  "updated_at": "2026-11-22T10:16:47.263478Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",
