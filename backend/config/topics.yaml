@@ -649,3 +649,11 @@ topics:
   evidence:
   - https://openalex.org/W7168278834
   added_on: '2026-11-22'
+- name: panel-level packaging
+  sector: semiconductors
+  terms:
+  - panel-level packaging
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7165017223
+  added_on: '2026-11-22'
