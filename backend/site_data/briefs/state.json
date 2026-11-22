@@ -636,6 +636,55 @@
    "status": "paid",
    "payment_id": "fdf4420f3d",
    "errors": []
+  },
+  {
+   "id": "3bdad0de7f",
+   "ticker": "INTC",
+   "symbol": "INTCon",
+   "topic": "high bandwidth memory",
+   "at": "2026-11-22T04:56:36.348259Z",
+   "price_now": 53.155,
+   "gain_pct": -10.35,
+   "posts_read": 10,
+   "signals": [
+    {
+     "claim": "None of the 10 posts retrieved this week mention high bandwidth memory directly; the closest tangentially related item is Tom's Hardware reporting that Intel 18A yields hit 70% and that Microsoft signed on as the first public EMIB packaging customer (@tomshardware, 2026-11-19).",
+     "label": "ai_interpretation",
+     "url": "https://x.com/tomshardware/status/2123402010510929951",
+     "account": "@tomshardware",
+     "published_at": "2026-11-19"
+    },
+    {
+     "claim": "SemiAnalysis posted that it has mapped Intel 18A 'Wildcat Lake' in its Teardown Lab (@SemiAnalysis_, 2026-11-18); the post does not mention HBM.",
+     "label": "unverified_claim",
+     "url": "https://x.com/SemiAnalysis_/status/2123114257910738963",
+     "account": "@SemiAnalysis_",
+     "published_at": "2026-11-18"
+    },
+    {
+     "claim": "Other Intel-related posts this week cover non-HBM topics: Diamond Rapids live server demo at SC26 (@tomshardware, 2026-11-19), continued IT-department layoffs with a reported 27,800 workforce reduction under Lip-Bu Tan (@tomshardware, 2026-11-19), and McLaren F1/quantum-explainer marketing from @intel.",
+     "label": "ai_interpretation",
+     "url": "https://x.com/tomshardware/status/2123379109913059539",
+     "account": "@tomshardware",
+     "published_at": "2026-11-19"
+    }
+   ],
+   "note": {
+    "summary": "Intel trades at $53.155, down 10.35% from the $59.2948 cost per share. No posts this week mention high bandwidth memory directly; coverage is mostly 18A yields, packaging, and workforce news.",
+    "what_changed": "Posts say Intel 18A yields hit 70% and Microsoft signed as the first public EMIB packaging customer (@tomshardware, 2026-11-19), plus continued layoffs reported at 27,800 under Lip-Bu Tan. Nothing new on HBM or the report's backside/BPDN risks.",
+    "risks": [
+     "No HBM-specific news flow this week, so the report's evidence gaps on BPDN reliability and thermal penalties remain unaddressed.",
+     "Reported workforce reductions could affect process-development and failure-analysis capacity, already flagged as a bottleneck.",
+     "Backside/buried power metal choice (Ru vs Mo) still unresolved per the report, keeping process-maturity and supply-chain risk open."
+    ],
+    "urgency": "low"
+   },
+   "cost_usd": 0.0507,
+   "price_usd": 0.5,
+   "price_near": 0.1742,
+   "status": "owed",
+   "payment_id": null,
+   "errors": []
   }
  ]
 }

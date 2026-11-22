@@ -1690,78 +1690,51 @@
       "sha256": "3a5e550c79cdca2b002bb17ff32a6129c5f694d925ba91c5a6747cac8603424b",
       "correction": null,
       "chain": null
+    },
+    {
+      "id": "2f3ce377c9",
+      "created_at": "2026-11-22T04:57:00.482523Z",
+      "mode": "live",
+      "side": "hold",
+      "topic": "",
+      "ticker": "",
+      "symbol": "",
+      "asset_id": "",
+      "usd": 0.0,
+      "fraction": null,
+      "quantity": null,
+      "rationale": "This is a routine review plus a low-urgency brief on INTC, now at $53.155, up 2.9% since the last look and down 10.35% from the $59.29 cost per share. The brief cites unverified posts on 18A yields at 70%, Microsoft as the first public EMIB packaging customer, and a reported 27,800 workforce reduction. None of them touch high bandwidth memory or the report's open backside-power risks, so the INTC evidence is unchanged. There is no cash, so the only choices are to sell INTC or hold. INTC's high bandwidth memory report is still 'strong' at 49.6% confidence. That is below 70% and not confident, but it has not weakened, and no finding points to a real problem. A switch would only be justified by a candidate with a higher verdict band and higher confidence. MRVL and META match INTC's 'strong' band and 49.6% confidence, AAPL is weaker, and all three quotes sit 2.5% to 3.4% above their last close, so swapping would mostly add costs. Selling just because INTC is below cost is not an allowed reason, so I hold.",
+      "risks": [
+        "INTCon is a tokenized stock: its value depends on the issuer Ondo and it is not the Intel share itself.",
+        "The report's 49.6% confidence is thin, and the brief leaves its high bandwidth memory gaps (backside power reliability, metal choice) unaddressed.",
+        "Reported layoffs could slow Intel's process development, and that cost is not yet reflected in the evidence."
+      ],
+      "confidence": "low",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.0501,
+      "ref_close": null,
+      "ref_close_date": null,
+      "dry_quote": null,
+      "status": "hold",
+      "quote": null,
+      "deposit_address": null,
+      "deposit_tx": null,
+      "result": null,
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-22T04:57:00.482523Z",
+          "status": "hold",
+          "note": "strategy check: review, holding_brief"
+        }
+      ],
+      "sha256": "8bfac9ead1a1a1ce1eac2d5d2820b5ef35dfdb477ff4458263d2ea26537db1ea",
+      "correction": null,
+      "chain": null
     }
   ],
-  "updated_at": "2026-11-22T02:56:19.668303Z",
+  "updated_at": "2026-11-22T04:57:32.005021Z",
   "checks": [
-    {
-      "id": "e3b1b9a2c6",
-      "at": "2026-11-17T23:29:33.437819Z",
-      "mode": "shadow",
-      "triggers": [],
-      "action": "none",
-      "ticker": "",
-      "usd": 0.0,
-      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
-      "what_changed": "",
-      "proposal_id": null,
-      "model": null,
-      "cost_usd": 0.0,
-      "notes": [],
-      "sha256": "8a9e909fdc1f3abbf40f7f575d8d7cef9a96a38d6dd42f5665745a1f342fb7d7",
-      "correction": null
-    },
-    {
-      "id": "59c35964e9",
-      "at": "2026-11-17T23:29:35.884469Z",
-      "mode": "live",
-      "triggers": [],
-      "action": "none",
-      "ticker": "",
-      "usd": 0.0,
-      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
-      "what_changed": "",
-      "proposal_id": null,
-      "model": null,
-      "cost_usd": 0.0,
-      "notes": [],
-      "sha256": "4610c80806fa3ecd5c3c2dcd0fcb9e1809dfa8b4c951660ebfedcc181492c114",
-      "correction": null
-    },
-    {
-      "id": "5879e1d803",
-      "at": "2026-11-18T00:29:37.427873Z",
-      "mode": "shadow",
-      "triggers": [],
-      "action": "none",
-      "ticker": "",
-      "usd": 0.0,
-      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
-      "what_changed": "",
-      "proposal_id": null,
-      "model": null,
-      "cost_usd": 0.0,
-      "notes": [],
-      "sha256": "d86fd006fb707743685ac90d225f2b9b2f5e6570663d850b5dfcb0ed3bcb67a7",
-      "correction": null
-    },
-    {
-      "id": "d9d229d0c7",
-      "at": "2026-11-18T00:29:39.813090Z",
-      "mode": "live",
-      "triggers": [],
-      "action": "none",
-      "ticker": "",
-      "usd": 0.0,
-      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
-      "what_changed": "",
-      "proposal_id": null,
-      "model": null,
-      "cost_usd": 0.0,
-      "notes": [],
-      "sha256": "8d0d2d1b7e5a079621ce093c517e7ed279ff18666afca98d674e02ec5c534906",
-      "correction": null
-    },
     {
       "id": "b3787e6e05",
       "at": "2026-11-18T01:29:41.348001Z",
@@ -5240,6 +5213,87 @@
       "notes": [],
       "sha256": "c06cd2f7fc795260416f19f36345785e4887c863f16c7a15bedc32658cb23358",
       "correction": null
+    },
+    {
+      "id": "f6b4948fcd",
+      "at": "2026-11-22T03:56:33.832884Z",
+      "mode": "shadow",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "a29666b245153f200257254ddf4c8a0611c7b842ea00494ebdad2b128af26de4",
+      "correction": null
+    },
+    {
+      "id": "3b4454aab0",
+      "at": "2026-11-22T03:56:35.950526Z",
+      "mode": "live",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "edb2c92a130f761ef17f37751f9ad11e8eaa66bc40416f404f529c4c9d9dc0bd",
+      "correction": null
+    },
+    {
+      "id": "2d7700f0fa",
+      "at": "2026-11-22T04:56:59.436718Z",
+      "mode": "shadow",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "64e2aec54a75ecb85c5c8300e49a59c9e2e02e56939e11c1d6777b8b10e23d81",
+      "correction": null
+    },
+    {
+      "id": "228472d3c4",
+      "at": "2026-11-22T04:57:00.482523Z",
+      "mode": "live",
+      "triggers": [
+        {
+          "kind": "review",
+          "ticker": "",
+          "topic": "",
+          "detail": "routine review"
+        },
+        {
+          "kind": "holding_brief",
+          "ticker": "INTC",
+          "topic": "",
+          "detail": "new brief on INTC from the report agent (urgency low): Posts say Intel 18A yields hit 70% and Microsoft signed as the first public EMIB packaging customer (@tomshardware, 2026-11-19), plus continued layoffs reported at 27,800 under Lip-Bu Tan. Nothing new on HBM or the report's backside/BPDN risks."
+        }
+      ],
+      "action": "hold",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "There is no cash, so the only choices are to sell INTC or hold. INTC's high bandwidth memory report is still 'strong' at 49.6% confidence. That is below 70% and not confident, but it has not weakened, and no finding points to a real problem. A switch would only be justified by a candidate with a higher verdict band and higher confidence. MRVL and META match INTC's 'strong' band and 49.6% confidence, AAPL is weaker, and all three quotes sit 2.5% to 3.4% above their last close, so swapping would mostly add costs. Selling just because INTC is below cost is not an allowed reason, so I hold.",
+      "what_changed": "This is a routine review plus a low-urgency brief on INTC, now at $53.155, up 2.9% since the last look and down 10.35% from the $59.29 cost per share. The brief cites unverified posts on 18A yields at 70%, Microsoft as the first public EMIB packaging customer, and a reported 27,800 workforce reduction. None of them touch high bandwidth memory or the report's open backside-power risks, so the INTC evidence is unchanged.",
+      "proposal_id": "2f3ce377c9",
+      "model": "claude_opus_5_5",
+      "cost_usd": 0.0501,
+      "notes": [],
+      "sha256": "4619c575277bd759b52a4499bb37b57d6bd88b405d126e54318d1ac05cd24265",
+      "correction": null
     }
   ],
   "seen_runs": {
@@ -5257,7 +5311,7 @@
     "live:chiplet": "ab3b0896-a403-4181-990f-65bad2f59f13",
     "retrieval-augmented generation": "4a2a3eaa-9841-4174-b38d-0a12e7b52623",
     "chiplet": "ab3b0896-a403-4181-990f-65bad2f59f13",
-    "live:brief:INTC": "2e00fe1fd3",
+    "live:brief:INTC": "3bdad0de7f",
     "mixture of experts": "report_20261118T141031Z",
     "live:mixture of experts": "report_20261118T141031Z",
     "supervised fine-tuning": "report_20261119T001520Z",
@@ -5275,70 +5329,70 @@
   },
   "holding_prices": {
     "INTC": {
-      "price": 53.295,
-      "at": "2026-11-22T02:56:17.415216+00:00",
+      "price": 53.155,
+      "at": "2026-11-22T04:56:59.436718+00:00",
       "cost_per_share": 59.2103,
-      "gain_pct": -9.99,
+      "gain_pct": -10.23,
       "seen_price": 53.47,
       "seen_at": "2026-11-21T22:55:20.786336+00:00",
-      "since_seen_pct": -0.33
+      "since_seen_pct": -0.59
     },
     "live:INTC": {
-      "price": 53.295,
-      "at": "2026-11-22T02:56:19.594058+00:00",
+      "price": 53.155,
+      "at": "2026-11-22T04:57:00.482523+00:00",
       "cost_per_share": 59.2948,
-      "gain_pct": -10.12,
-      "seen_price": 51.655,
-      "seen_at": "2026-11-21T04:52:28.797237+00:00",
-      "since_seen_pct": 3.17
+      "gain_pct": -10.35,
+      "seen_price": 53.155,
+      "seen_at": "2026-11-22T04:57:00.482523+00:00",
+      "since_seen_pct": 0.0
     },
     "MSFT": {
-      "price": 499.2528,
-      "at": "2026-11-22T02:56:17.415216+00:00",
+      "price": 497.5307,
+      "at": "2026-11-22T04:56:59.436718+00:00",
       "cost_per_share": 526.4959,
-      "gain_pct": -5.17,
+      "gain_pct": -5.5,
       "seen_price": 499.6456,
       "seen_at": "2026-11-21T22:55:20.786336+00:00",
-      "since_seen_pct": -0.08
+      "since_seen_pct": -0.42
     },
     "META": {
-      "price": 571.5612,
-      "at": "2026-11-22T02:56:17.415216+00:00",
+      "price": 570.769,
+      "at": "2026-11-22T04:56:59.436718+00:00",
       "cost_per_share": 633.9964,
-      "gain_pct": -9.85,
+      "gain_pct": -9.97,
       "seen_price": 572.4086,
       "seen_at": "2026-11-21T22:55:20.786336+00:00",
-      "since_seen_pct": -0.15
+      "since_seen_pct": -0.29
     },
     "MRVL": {
-      "price": 126.051,
-      "at": "2026-11-22T02:56:17.415216+00:00",
+      "price": 125.6904,
+      "at": "2026-11-22T04:56:59.436718+00:00",
       "cost_per_share": 148.1438,
-      "gain_pct": -14.91,
+      "gain_pct": -15.16,
       "seen_price": 126.3115,
       "seen_at": "2026-11-21T22:55:20.786336+00:00",
-      "since_seen_pct": -0.21
+      "since_seen_pct": -0.49
     },
     "NVDA": {
-      "price": 130.1579,
-      "at": "2026-11-22T02:56:17.415216+00:00",
+      "price": 130.208,
+      "at": "2026-11-22T04:56:59.436718+00:00",
       "cost_per_share": 160.7475,
-      "gain_pct": -19.03,
+      "gain_pct": -19.0,
       "seen_price": 131.0995,
       "seen_at": "2026-11-21T22:55:20.786336+00:00",
-      "since_seen_pct": -0.72
+      "since_seen_pct": -0.68
     }
   },
-  "last_check_at": "2026-11-22T02:56:17.415216Z",
-  "last_live_check_at": "2026-11-22T02:56:19.594058Z",
+  "last_check_at": "2026-11-22T04:56:59.436718Z",
+  "last_live_check_at": "2026-11-22T04:57:00.482523Z",
   "last_review_at": "2026-11-21T22:55:20.786336Z",
-  "last_live_review_at": "2026-11-21T04:52:28.797237Z",
+  "last_live_review_at": "2026-11-22T04:57:00.482523Z",
   "private_near": 3.0266,
-  "private_checked_at": "2026-11-22T02:56:19.584416Z",
+  "private_checked_at": "2026-11-22T04:57:00.470453Z",
   "last_values": {
     "INTCon": {
-      "usd": 38.35,
-      "at": "2026-11-21T05:53:18.488380+00:00"
+      "usd": 39.29,
+      "at": "2026-11-22T04:56:57.965954+00:00"
     }
   },
   "hidden": []
