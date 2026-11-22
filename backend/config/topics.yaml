@@ -633,3 +633,11 @@ topics:
   evidence:
   - https://openalex.org/W7213652955
   added_on: '2026-11-21'
+- name: neuromorphic device
+  sector: robotics_autonomy
+  terms:
+  - neuromorphic device
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7212435132
+  added_on: '2026-11-22'
