@@ -685,6 +685,62 @@
    "status": "owed",
    "payment_id": null,
    "errors": []
+  },
+  {
+   "id": "5d7da86cf7",
+   "ticker": "INTC",
+   "symbol": "INTCon",
+   "topic": "high bandwidth memory",
+   "at": "2026-11-23T05:02:25.867056Z",
+   "price_now": 53.8671,
+   "gain_pct": -9.15,
+   "posts_read": 10,
+   "signals": [
+    {
+     "claim": "No post in this week's retrieved set mentions high bandwidth memory (HBM); the keyword match appears driven by Intel-related posts rather than HBM content.",
+     "label": "ai_interpretation",
+     "url": "https://x.com/tomshardware/status/2124595388837773502",
+     "account": "@tomshardware",
+     "published_at": "2026-11-22"
+    },
+    {
+     "claim": "Tom's Hardware reports Intel 18A yields hit 70% and that Microsoft signed as the first public EMIB packaging customer, per the post text.",
+     "label": "unverified_claim",
+     "url": "https://x.com/tomshardware/status/2123402010510929951",
+     "account": "@tomshardware",
+     "published_at": "2026-11-19"
+    },
+    {
+     "claim": "Tom's Hardware reports Intel Diamond Rapids showed 'signs of life' in an SC26 demo running a live server.",
+     "label": "unverified_claim",
+     "url": "https://x.com/tomshardware/status/2123379109913059539",
+     "account": "@tomshardware",
+     "published_at": "2026-11-19"
+    },
+    {
+     "claim": "Tom's Hardware reports Intel continued layoffs, cutting its IT department, with workforce reportedly reduced by 27,800 under Lip-Bu Tan.",
+     "label": "unverified_claim",
+     "url": "https://x.com/tomshardware/status/2123432157507137591",
+     "account": "@tomshardware",
+     "published_at": "2026-11-19"
+    }
+   ],
+   "note": {
+    "summary": "Intel trades at $53.87, down 9.15% from the $59.29 cost per share. Posts say 18A yields hit 70% and Microsoft signed as first EMIB packaging customer, while layoffs continue.",
+    "what_changed": "Posts say positive process news (18A yield, EMIB customer, Diamond Rapids demo) but also continued layoffs including IT cuts; no HBM-specific content appeared in the posts.",
+    "risks": [
+     "Continued workforce reductions could affect execution on advanced packaging and process programs.",
+     "Report-named risks on backside power, buried rails and failure analysis remain unresolved evidence gaps.",
+     "Key positive claims (yields, EMIB customer) are unverified posts, not confirmed facts."
+    ],
+    "urgency": "low"
+   },
+   "cost_usd": 0.0507,
+   "price_usd": 0.5,
+   "price_near": 0.1667,
+   "status": "owed",
+   "payment_id": null,
+   "errors": []
   }
  ]
 }
