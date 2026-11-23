@@ -84,20 +84,20 @@
     "report_20261119T001520Z": {
       "run_id": "report_20261119T001520Z",
       "topic": "supervised fine-tuning",
-      "price_near": 0.696,
-      "price_usd": 2.081,
+      "price_near": 0.703,
+      "price_usd": 2.0809,
       "cost_usd": 0.5844,
-      "basis": "cost to make $0.58 (models and X $0.33, 8 patent searches, NEAR seal) + $1.50 margin, kept in the $2-$3 band = $2.08 = 0.696 NEAR at $2.99",
-      "at": "2026-11-23T21:12:48.922282Z"
+      "basis": "cost to make $0.58 (models and X $0.33, 8 patent searches, NEAR seal) + $1.50 margin, kept in the $2-$3 band = $2.08 = 0.703 NEAR at $2.96",
+      "at": "2026-11-23T23:14:16.413434Z"
     },
     "report_20261119T003057Z": {
       "run_id": "report_20261119T003057Z",
       "topic": "post-quantum cryptography",
-      "price_near": 0.742,
-      "price_usd": 2.2186,
+      "price_near": 0.75,
+      "price_usd": 2.22,
       "cost_usd": 0.7163,
-      "basis": "cost to make $0.72 (models and X $0.47, 8 patent searches, NEAR seal) + $1.50 margin, kept in the $2-$3 band = $2.22 = 0.742 NEAR at $2.99",
-      "at": "2026-11-23T21:12:48.922282Z"
+      "basis": "cost to make $0.72 (models and X $0.47, 8 patent searches, NEAR seal) + $1.50 margin, kept in the $2-$3 band = $2.22 = 0.75 NEAR at $2.96",
+      "at": "2026-11-23T23:14:16.413434Z"
     }
   },
   "purchases": [

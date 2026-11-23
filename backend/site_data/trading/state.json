@@ -1895,78 +1895,92 @@
       "sha256": "943a19d1248248c266fff158a860f31d37494537f9764942915f63d54cfe28f5",
       "correction": null,
       "chain": null
+    },
+    {
+      "id": "84572c2b88",
+      "created_at": "2026-11-23T23:13:48.233680Z",
+      "mode": "shadow",
+      "side": "hold",
+      "topic": "",
+      "ticker": "",
+      "symbol": "",
+      "asset_id": "",
+      "usd": 0.0,
+      "fraction": null,
+      "quantity": null,
+      "rationale": "INTC rose 16.3% to $59.66, MRVL 18.4% to $144.74 and NVDA 31.5% to $165.05 on 2026-11-23. None of the findings in the reports (dated 2026-11-10 for high bandwidth memory, 2026-11-19 for supervised fine-tuning) explains a one-day jump of this size, so the evidence does not cover these moves. The rule is never to chase a sharp rise, and the quotes confirm the chase risk: they sit 16% (INTC), 20% (MRVL) and 33% (NVDA) above the older 2026-11-20 closes. The candidates without that gap (MSFT, META) rest on thin reports, at 35% and 49.6% confidence, and AAPL's 6G report is only 'early', so there is no buy worth making. None of the selling reasons applies either: every holding's report is still 'strong' with no weakening, we have cash so rotation does not apply, and we never sell just to lock in a gain. Current prices are INTC $58.97, MRVL $145.63, NVDA $165.55, MSFT $495.50 and META $601.92, and keeping the $6,550 in cash is deliberate while the evidence is low-confidence (all reports below 50%).",
+      "risks": [
+        "A tokenized stock depends on its issuer (Ondo) and is not the share itself.",
+        "The reports behind our holdings are below 50% confidence and mostly unverified X claims, so the case for them is thin.",
+        "INTC and MRVL share one topic (high bandwidth memory), which concentrates the evidence risk."
+      ],
+      "confidence": "medium",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.063656,
+      "ref_close": null,
+      "ref_close_date": null,
+      "dry_quote": null,
+      "status": "hold",
+      "quote": null,
+      "deposit_address": null,
+      "deposit_tx": null,
+      "result": null,
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-23T23:13:48.233680Z",
+          "status": "hold",
+          "note": "strategy check: price_jump, price_jump, price_jump"
+        }
+      ],
+      "sha256": "dca5e4d0de5d190fcc7a352fe3f69e95412f48bee7f7648f25d10279bc2709ef",
+      "correction": null,
+      "chain": null
+    },
+    {
+      "id": "dce856fc34",
+      "created_at": "2026-11-23T23:14:16.413434Z",
+      "mode": "live",
+      "side": "hold",
+      "topic": "",
+      "ticker": "",
+      "symbol": "",
+      "asset_id": "",
+      "usd": 0.0,
+      "fraction": null,
+      "quantity": null,
+      "rationale": "INTC (held) rose 16.3% to close at $59.66 on 2026-11-23, MRVL rose 18.4% to $144.74 and NVDA rose 31.5% to $165.05. The sealed reports, dated 2026-11-10, do not explain these jumps. Today's INTC brief mentions unverified posts about 18A yields of 70% and Microsoft as an EMIB packaging customer, but it was written before the move and does not say what caused it. INTC is now about $58.97 (read 2026-11-23 23:14 UTC), against a cost of $59.29 per share, so it is down 0.55%. Its high bandwidth memory report is still 'strong' (score 80), but confidence is 49.6%, below the 70% level for a confident report, so no sell reason (a) or (b) applies. Rotation (c) is not justified either: MRVL and META have the same 'strong' band and the same 49.6% confidence as INTC, AAPL is weaker ('early', 37.7%), and NVDA is not a candidate. The rule is never to chase a sharp rise, and MRVL's quote of $146.63 is already about 1.3% above Monday's close, so with no cash the fund holds.",
+      "risks": [
+        "A tokenized stock (INTCon) depends on its issuer, Ondo, and is not the share itself; quotes can trade at a premium or discount to the real share.",
+        "The evidence behind INTC is thin: confidence is below 50%, the HBM findings are mostly unverified posts that do not name Intel, and the brief notes continued layoffs.",
+        "After a sharp one-day rise, the price may pull back for reasons the evidence does not cover."
+      ],
+      "confidence": "low",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.051212,
+      "ref_close": null,
+      "ref_close_date": null,
+      "dry_quote": null,
+      "status": "hold",
+      "quote": null,
+      "deposit_address": null,
+      "deposit_tx": null,
+      "result": null,
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-23T23:14:16.413434Z",
+          "status": "hold",
+          "note": "strategy check: price_jump, price_jump, price_jump"
+        }
+      ],
+      "sha256": "20ad5f6704edb7a80a4faf34a18671cf71709cd87749d85c82cf504b7528946e",
+      "correction": null,
+      "chain": null
     }
   ],
-  "updated_at": "2026-11-23T21:13:24.407490Z",
+  "updated_at": "2026-11-23T23:14:50.436857Z",
   "checks": [
-    {
-      "id": "ffa60561d4",
-      "at": "2026-11-19T17:43:14.427855Z",
-      "mode": "shadow",
-      "triggers": [],
-      "action": "none",
-      "ticker": "",
-      "usd": 0.0,
-      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
-      "what_changed": "",
-      "proposal_id": null,
-      "model": null,
-      "cost_usd": 0.0,
-      "notes": [],
-      "sha256": "bacbb4f077f637b4dc30b2690c21be2959ca8ce5bf068c4053dfe9366ac1be42",
-      "correction": null
-    },
-    {
-      "id": "144d390ebf",
-      "at": "2026-11-19T17:43:17.012769Z",
-      "mode": "live",
-      "triggers": [],
-      "action": "none",
-      "ticker": "",
-      "usd": 0.0,
-      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
-      "what_changed": "",
-      "proposal_id": null,
-      "model": null,
-      "cost_usd": 0.0,
-      "notes": [],
-      "sha256": "c4b9b9516aad54975bc577d03c5e6a59940b022f9f5b33d12521566c456d4aa5",
-      "correction": null
-    },
-    {
-      "id": "86b9630c29",
-      "at": "2026-11-19T18:43:18.541040Z",
-      "mode": "shadow",
-      "triggers": [],
-      "action": "none",
-      "ticker": "",
-      "usd": 0.0,
-      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
-      "what_changed": "",
-      "proposal_id": null,
-      "model": null,
-      "cost_usd": 0.0,
-      "notes": [],
-      "sha256": "50b6ecfde23ecf6dc989140a92df89c1518c5a93eb3c0edcef6daba23b481981",
-      "correction": null
-    },
-    {
-      "id": "cd4d31dea0",
-      "at": "2026-11-19T18:43:21.290608Z",
-      "mode": "live",
-      "triggers": [],
-      "action": "none",
-      "ticker": "",
-      "usd": 0.0,
-      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
-      "what_changed": "",
-      "proposal_id": null,
-      "model": null,
-      "cost_usd": 0.0,
-      "notes": [],
-      "sha256": "df8843f88f05e176c822d3a0461118b0c09e62bbdb85d3b4c46ef77333d0ed35",
-      "correction": null
-    },
     {
       "id": "4a31b3b831",
       "at": "2026-11-19T19:43:22.807366Z",
@@ -5430,6 +5444,112 @@
       "notes": [],
       "sha256": "5a5ede5e29e09dba89152f71211ea9acb20d48866557eebbbdeaea62b4fb588c",
       "correction": null
+    },
+    {
+      "id": "dbf8ee14fa",
+      "at": "2026-11-23T22:13:40.772602Z",
+      "mode": "shadow",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "e31e96dd9fd199772ec0fa826bcf364ac75e2b9f0dc7986bb5e59442c4e7b72c",
+      "correction": null
+    },
+    {
+      "id": "9f5488a888",
+      "at": "2026-11-23T22:13:42.973575Z",
+      "mode": "live",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "bcd5e1d7717350c64a00a12c2564a3f0d1aa7ad4c1091a9eaa25273028c4bd00",
+      "correction": null
+    },
+    {
+      "id": "1605ffe741",
+      "at": "2026-11-23T23:13:48.233680Z",
+      "mode": "shadow",
+      "triggers": [
+        {
+          "kind": "price_jump",
+          "ticker": "INTC",
+          "topic": "",
+          "detail": "INTC (held) closed +16.3% on 2026-11-23 at $59.66 (previous $51.28)"
+        },
+        {
+          "kind": "price_jump",
+          "ticker": "MRVL",
+          "topic": "",
+          "detail": "MRVL (held) closed +18.4% on 2026-11-23 at $144.74 (previous $122.28)"
+        },
+        {
+          "kind": "price_jump",
+          "ticker": "NVDA",
+          "topic": "",
+          "detail": "NVDA (held) closed +31.5% on 2026-11-23 at $165.05 (previous $125.53)"
+        }
+      ],
+      "action": "hold",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "The rule is never to chase a sharp rise, and the quotes confirm the chase risk: they sit 16% (INTC), 20% (MRVL) and 33% (NVDA) above the older 2026-11-20 closes. The candidates without that gap (MSFT, META) rest on thin reports, at 35% and 49.6% confidence, and AAPL's 6G report is only 'early', so there is no buy worth making. None of the selling reasons applies either: every holding's report is still 'strong' with no weakening, we have cash so rotation does not apply, and we never sell just to lock in a gain. Current prices are INTC $58.97, MRVL $145.63, NVDA $165.55, MSFT $495.50 and META $601.92, and keeping the $6,550 in cash is deliberate while the evidence is low-confidence (all reports below 50%).",
+      "what_changed": "INTC rose 16.3% to $59.66, MRVL 18.4% to $144.74 and NVDA 31.5% to $165.05 on 2026-11-23. None of the findings in the reports (dated 2026-11-10 for high bandwidth memory, 2026-11-19 for supervised fine-tuning) explains a one-day jump of this size, so the evidence does not cover these moves.",
+      "proposal_id": "84572c2b88",
+      "model": "claude_opus_5_5",
+      "cost_usd": 0.063656,
+      "notes": [],
+      "sha256": "d15b66ac6d5d0eebba4a32aa63510958f5563e51f82554ce691bc55abb83633d",
+      "correction": null
+    },
+    {
+      "id": "bd65eb38a3",
+      "at": "2026-11-23T23:14:16.413434Z",
+      "mode": "live",
+      "triggers": [
+        {
+          "kind": "price_jump",
+          "ticker": "INTC",
+          "topic": "",
+          "detail": "INTC (held) closed +16.3% on 2026-11-23 at $59.66 (previous $51.28)"
+        },
+        {
+          "kind": "price_jump",
+          "ticker": "MRVL",
+          "topic": "",
+          "detail": "MRVL (allowed) closed +18.4% on 2026-11-23 at $144.74 (previous $122.28)"
+        },
+        {
+          "kind": "price_jump",
+          "ticker": "NVDA",
+          "topic": "",
+          "detail": "NVDA (allowed) closed +31.5% on 2026-11-23 at $165.05 (previous $125.53)"
+        }
+      ],
+      "action": "hold",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "INTC is now about $58.97 (read 2026-11-23 23:14 UTC), against a cost of $59.29 per share, so it is down 0.55%. Its high bandwidth memory report is still 'strong' (score 80), but confidence is 49.6%, below the 70% level for a confident report, so no sell reason (a) or (b) applies. Rotation (c) is not justified either: MRVL and META have the same 'strong' band and the same 49.6% confidence as INTC, AAPL is weaker ('early', 37.7%), and NVDA is not a candidate. The rule is never to chase a sharp rise, and MRVL's quote of $146.63 is already about 1.3% above Monday's close, so with no cash the fund holds.",
+      "what_changed": "INTC (held) rose 16.3% to close at $59.66 on 2026-11-23, MRVL rose 18.4% to $144.74 and NVDA rose 31.5% to $165.05. The sealed reports, dated 2026-11-10, do not explain these jumps. Today's INTC brief mentions unverified posts about 18A yields of 70% and Microsoft as an EMIB packaging customer, but it was written before the move and does not say what caused it.",
+      "proposal_id": "dce856fc34",
+      "model": "claude_opus_5_5",
+      "cost_usd": 0.051212,
+      "notes": [],
+      "sha256": "071a211c120b4b11155bb0c40788639f1a610da187940106ab64bb8148eb1735",
+      "correction": null
     }
   ],
   "seen_runs": {
@@ -5456,79 +5576,79 @@
     "live:post-quantum cryptography": "report_20261119T003057Z"
   },
   "seen_closes": {
-    "INTC": "2026-11-20",
-    "MRVL": "2026-11-20",
-    "live:INTC": "2026-11-20",
-    "live:MRVL": "2026-11-20",
-    "NVDA": "2026-11-20",
-    "live:NVDA": "2026-11-20"
+    "INTC": "2026-11-23",
+    "MRVL": "2026-11-23",
+    "live:INTC": "2026-11-23",
+    "live:MRVL": "2026-11-23",
+    "NVDA": "2026-11-23",
+    "live:NVDA": "2026-11-23"
   },
   "holding_prices": {
     "INTC": {
-      "price": 59.676,
-      "at": "2026-11-23T21:12:46.605103+00:00",
+      "price": 58.9691,
+      "at": "2026-11-23T23:13:48.233680+00:00",
       "cost_per_share": 59.2103,
-      "gain_pct": 0.79,
-      "seen_price": 57.7427,
-      "seen_at": "2026-11-23T14:11:05.730225+00:00",
-      "since_seen_pct": 3.35
+      "gain_pct": -0.41,
+      "seen_price": 58.9691,
+      "seen_at": "2026-11-23T23:13:48.233680+00:00",
+      "since_seen_pct": 0.0
     },
     "live:INTC": {
-      "price": 59.676,
-      "at": "2026-11-23T21:12:48.922282+00:00",
+      "price": 58.9691,
+      "at": "2026-11-23T23:14:16.413434+00:00",
       "cost_per_share": 59.2948,
-      "gain_pct": 0.64,
-      "seen_price": 59.676,
-      "seen_at": "2026-11-23T21:12:48.922282+00:00",
+      "gain_pct": -0.55,
+      "seen_price": 58.9691,
+      "seen_at": "2026-11-23T23:14:16.413434+00:00",
       "since_seen_pct": 0.0
     },
     "MSFT": {
-      "price": 496.5337,
-      "at": "2026-11-23T21:12:46.605103+00:00",
+      "price": 495.4964,
+      "at": "2026-11-23T23:13:48.233680+00:00",
       "cost_per_share": 526.4959,
-      "gain_pct": -5.69,
-      "seen_price": 508.1441,
-      "seen_at": "2026-11-23T14:11:05.730225+00:00",
-      "since_seen_pct": -2.28
+      "gain_pct": -5.89,
+      "seen_price": 495.4964,
+      "seen_at": "2026-11-23T23:13:48.233680+00:00",
+      "since_seen_pct": 0.0
     },
     "META": {
-      "price": 599.6404,
-      "at": "2026-11-23T21:12:46.605103+00:00",
+      "price": 601.9157,
+      "at": "2026-11-23T23:13:48.233680+00:00",
       "cost_per_share": 633.9964,
-      "gain_pct": -5.42,
-      "seen_price": 596.2057,
-      "seen_at": "2026-11-23T14:11:05.730225+00:00",
-      "since_seen_pct": 0.58
+      "gain_pct": -5.06,
+      "seen_price": 601.9157,
+      "seen_at": "2026-11-23T23:13:48.233680+00:00",
+      "since_seen_pct": 0.0
     },
     "MRVL": {
-      "price": 145.0671,
-      "at": "2026-11-23T21:12:46.605103+00:00",
+      "price": 145.628,
+      "at": "2026-11-23T23:13:48.233680+00:00",
       "cost_per_share": 148.1438,
-      "gain_pct": -2.08,
-      "seen_price": 143.0666,
-      "seen_at": "2026-11-23T14:11:05.730225+00:00",
-      "since_seen_pct": 1.4
+      "gain_pct": -1.7,
+      "seen_price": 145.628,
+      "seen_at": "2026-11-23T23:13:48.233680+00:00",
+      "since_seen_pct": 0.0
     },
     "NVDA": {
-      "price": 165.3331,
-      "at": "2026-11-23T21:12:46.605103+00:00",
+      "price": 165.546,
+      "at": "2026-11-23T23:13:48.233680+00:00",
       "cost_per_share": 160.7475,
-      "gain_pct": 2.85,
-      "seen_price": 162.0542,
-      "seen_at": "2026-11-23T14:11:05.730225+00:00",
-      "since_seen_pct": 2.02
+      "gain_pct": 2.99,
+      "seen_price": 165.546,
+      "seen_at": "2026-11-23T23:13:48.233680+00:00",
+      "since_seen_pct": 0.0
     }
   },
-  "last_check_at": "2026-11-23T21:12:46.605103Z",
-  "last_live_check_at": "2026-11-23T21:12:48.922282Z",
-  "last_review_at": "2026-11-23T14:11:05.730225Z",
-  "last_live_review_at": "2026-11-23T21:12:48.922282Z",
+  "last_check_at": "2026-11-23T23:13:48.233680Z",
+  "last_live_check_at": "2026-11-23T23:14:16.413434Z",
+  "last_review_at": "2026-11-23T23:13:48.233680Z",
+  "last_live_review_at": "2026-11-23T23:14:16.413434Z",
   "private_near": 3.0266,
-  "private_checked_at": "2026-11-23T21:12:48.912608Z",
+  "private_checked_at": "2026-11-23T23:14:16.405796Z",
   "last_values": {
     "INTCon": {
-      "usd": 44.11,
-      "at": "2026-11-23T21:12:44.498360+00:00"
+      "usd": 43.59,
+      "at": "2026-11-23T23:13:46.178833+00:00"
     }
   },
   "hidden": []
