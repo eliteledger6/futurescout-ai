@@ -665,3 +665,11 @@ topics:
   evidence:
   - https://openalex.org/W7223055239
   added_on: '2026-11-23'
+- name: molecular qubits
+  sector: quantum
+  terms:
+  - molecular qubits
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7162302330
+  added_on: '2026-11-23'
