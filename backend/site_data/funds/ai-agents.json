@@ -5,7 +5,7 @@
   "sector": "ai_software",
   "created_at": "2026-11-09T11:14:10.603393Z",
   "start_cash_usd": 10000.0,
-  "cash_usd": 0.0,
+  "cash_usd": 43.79,
   "holdings": [
     {
       "ticker": "PYPL",
@@ -13,38 +13,17 @@
       "tier": "low",
       "shares": 48.353175012906554,
       "cost_usd": 2835.6338123018168,
-      "last_close": 58.11,
-      "last_date": "2026-11-17",
+      "last_close": 55.24,
+      "last_date": "2026-11-23",
       "timing_risk": "moderate",
-      "why": "Company Scout: 2 patent(s), 2 filing(s); large by revenue",
+      "why": "Company Scout: 1 patent(s), 2 filing(s); large by revenue",
       "route": {
         "available": false,
         "symbol": null,
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-23T10:18:31.433368Z",
-        "note": "no tokenized version in the public NEAR Intents token lists"
-      },
-      "quote": null
-    },
-    {
-      "ticker": "V",
-      "company": "Visa Inc.",
-      "tier": "low",
-      "shares": 6.741855219905464,
-      "cost_usd": 2809.803,
-      "last_close": 416.77,
-      "last_date": "2026-11-17",
-      "timing_risk": "moderate",
-      "why": "Company Scout: 1 patent(s), 1 filing(s); large by revenue",
-      "route": {
-        "available": false,
-        "symbol": null,
-        "asset_id": null,
-        "blockchain": null,
-        "token_price_usd": null,
-        "checked_at": "2026-11-23T10:18:31.433691Z",
+        "checked_at": "2026-11-24T03:40:58.815380Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -55,9 +34,9 @@
       "tier": "medium",
       "shares": 37.71547651006711,
       "cost_usd": 2809.803,
-      "last_close": 74.5,
-      "last_date": "2026-11-17",
-      "timing_risk": "moderate",
+      "last_close": 73.99,
+      "last_date": "2026-11-23",
+      "timing_risk": "subdued",
       "why": "Company Scout: 2 patent(s), 1 filing(s); mid by revenue",
       "route": {
         "available": false,
@@ -65,7 +44,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-23T10:18:31.433903Z",
+        "checked_at": "2026-11-24T03:41:01.266048Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -86,10 +65,40 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-23T10:18:31.434094Z",
+        "checked_at": "2026-11-24T03:41:01.266281Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
+    },
+    {
+      "ticker": "MSFT",
+      "company": "Microsoft Corp",
+      "tier": "low",
+      "shares": 5.5824,
+      "cost_usd": 2749.332,
+      "last_close": 492.5,
+      "last_date": "2026-11-23",
+      "timing_risk": "moderate",
+      "why": "Company Scout: 1 patent(s), 3 filing(s); large by revenue",
+      "route": {
+        "available": true,
+        "symbol": "MSFTon",
+        "asset_id": "nep141:bnb-0x6bfe75d1ad432050ea973c3a3dcd88f02e2444c3.omdep.near",
+        "blockchain": "BNB Chain",
+        "token_price_usd": 498.281,
+        "checked_at": "2026-11-24T03:41:01.266518Z",
+        "note": "listed in the NEAR Intents list of tokenized stocks; the price implied by a dry-run quote matches the stock"
+      },
+      "quote": {
+        "amount_in_usd": 2748.26,
+        "amount_out_usd": 2733.74,
+        "amount_out": "5.493965823004642622",
+        "cost_pct": 0.528,
+        "time_estimate_s": 25.0,
+        "quoted_at": "2026-11-24T03:41:01.923113Z",
+        "correlation_id": "97154d57-ffe1-4970-8966-034867d6f716",
+        "error": null
+      }
     }
   ],
   "decisions": [
@@ -855,6 +864,56 @@
       "value_before_usd": 9366.01,
       "sha256": "ee02085a73b99c1c418cd4da90000347ace771f7a79d6374d3cd9659cabd2c4c",
       "chain": null
+    },
+    {
+      "at": "2026-11-24T03:40:54.216490Z",
+      "run_id": "report_20261124T034047Z",
+      "report_date": "2026-11-24",
+      "band": "strong",
+      "score": 70.7,
+      "previous_score": 73.3,
+      "confidence_pct": 38.1,
+      "target_invested_pct": 100.0,
+      "tier_targets_usd": {
+        "low": 5498.66,
+        "medium": 2749.33,
+        "high": 916.44
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [
+        "TMUS"
+      ],
+      "trades": [
+        {
+          "day": "2026-11-17",
+          "ticker": "V",
+          "tier": "low",
+          "side": "sell",
+          "shares": 6.741855,
+          "price": 416.77,
+          "usd": 2809.8,
+          "fee_usd": 8.43
+        },
+        {
+          "day": "2026-11-23",
+          "ticker": "MSFT",
+          "tier": "low",
+          "side": "buy",
+          "shares": 5.5824,
+          "price": 492.5,
+          "usd": 2749.33,
+          "fee_usd": 8.25
+        }
+      ],
+      "reasons": [
+        "Why now: a newer report is available.",
+        "Verdict band 'strong' (score 70.7), confidence 38%. Owner rule: every paper fund is fully invested, so all of the fund goes into the basket.",
+        "Left out for now, no daily close yet (free price plan: 25 lookups a day): TMUS. Reviewed again after the next price update.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-24."
+      ],
+      "value_before_usd": 9164.44,
+      "sha256": "3b967a232bfb2ef7a67020565d01569688e26406c933fcd6c32fa205cdb81dec",
+      "chain": null
     }
   ],
   "history": [
@@ -897,12 +956,17 @@
       "day": "2026-11-17",
       "value_usd": 9322.44,
       "benchmark_value_usd": 9381.47
+    },
+    {
+      "day": "2026-11-23",
+      "value_usd": 9147.76,
+      "benchmark_value_usd": 9381.47
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": 735.29,
   "benchmark_start_date": "2026-11-06",
-  "updated_at": "2026-11-23T10:17:41.202583Z",
+  "updated_at": "2026-11-24T03:40:54.216490Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",
