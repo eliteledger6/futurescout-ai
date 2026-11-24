@@ -741,6 +741,55 @@
    "status": "owed",
    "payment_id": null,
    "errors": []
+  },
+  {
+   "id": "17250aa048",
+   "ticker": "INTC",
+   "symbol": "INTCon",
+   "topic": "high bandwidth memory",
+   "at": "2026-11-24T05:15:56.614892Z",
+   "price_now": 57.9307,
+   "gain_pct": -2.3,
+   "posts_read": 10,
+   "signals": [
+    {
+     "claim": "None of the 10 retrieved posts from the searched accounts mention high bandwidth memory; the keyword match appears driven by Intel-related posts rather than HBM content.",
+     "label": "ai_interpretation",
+     "url": "https://x.com/tomshardware/status/2124948277137420451",
+     "account": "@tomshardware",
+     "published_at": "2026-11-23"
+    },
+    {
+     "claim": "Tom's Hardware reports Intel 18A yields at 70% and Microsoft signing as the first public EMIB packaging customer — adjacent advanced packaging news, but not an HBM claim.",
+     "label": "unverified_claim",
+     "url": "https://x.com/tomshardware/status/2123402010510929951",
+     "account": "@tomshardware",
+     "published_at": "2026-11-19"
+    },
+    {
+     "claim": "Intel's own posts this week emphasize Xeon-based AWS EC2 instances ahead of AWS re:Invent, a McLaren F1 marketing campaign, and a quantum computing explainer series — none referencing memory products.",
+     "label": "unverified_claim",
+     "url": "https://x.com/intel/status/2124910852461490297",
+     "account": "@intel",
+     "published_at": "2026-11-23"
+    }
+   ],
+   "note": {
+    "summary": "Intel trades at $57.93, down 2.3% from the $59.29 cost basis. Posts contain no HBM-specific news; the keyword match was Intel-related posts rather than memory content.",
+    "what_changed": "Posts say Intel 18A yields are at 70% and Microsoft signed as the first public EMIB packaging customer — adjacent advanced-packaging news, not an HBM claim. Intel's own posts this week cover AWS Xeon instances, McLaren F1 marketing and a quantum explainer series, with no memory product references.",
+    "risks": [
+     "No HBM progress signals in posts; the report's evidence gaps on backside/BPDN reliability and thermal penalties remain unaddressed.",
+     "Packaging momentum (EMIB customer, 18A yields per posts) is unverified and does not confirm HBM readiness.",
+     "Report's process risks on BPR/nTSV co-integration and backside metal choice (Ru vs Mo) still stand with no new data."
+    ],
+    "urgency": "low"
+   },
+   "cost_usd": 0.0507,
+   "price_usd": 0.5,
+   "price_near": 0.1667,
+   "status": "owed",
+   "payment_id": null,
+   "errors": []
   }
  ]
 }
