@@ -13,8 +13,8 @@
       "tier": "low",
       "shares": 12.819540166510448,
       "cost_usd": 2333.722344383072,
-      "last_close": 125.53,
-      "last_date": "2026-11-20",
+      "last_close": 165.05,
+      "last_date": "2026-11-23",
       "timing_risk": null,
       "why": "Company Scout: 2 patent(s); large by revenue",
       "route": {
@@ -22,18 +22,18 @@
         "symbol": "NVDAon",
         "asset_id": "nep141:bnb-0xa9ee28c80f960b889dfbd1902055218cba016f75.omdep.near",
         "blockchain": "BNB Chain",
-        "token_price_usd": 137.5974,
-        "checked_at": "2026-11-23T10:18:26.192954Z",
+        "token_price_usd": 158.8337,
+        "checked_at": "2026-11-24T10:19:52.272724Z",
         "note": "listed in the NEAR Intents list of tokenized stocks; the price implied by a dry-run quote matches the stock"
       },
       "quote": {
-        "amount_in_usd": 1608.47,
-        "amount_out_usd": 1602.41,
-        "amount_out": "11.702248531443545095",
-        "cost_pct": 0.377,
+        "amount_in_usd": 2115.04,
+        "amount_out_usd": 2098.01,
+        "amount_out": "13.288408489282153673",
+        "cost_pct": 0.805,
         "time_estimate_s": 25.0,
-        "quoted_at": "2026-11-23T10:18:26.907151Z",
-        "correlation_id": "7e539f12-d709-4bfd-937b-7e31794d2d72",
+        "quoted_at": "2026-11-24T10:19:52.942672Z",
+        "correlation_id": "31ebf106-26f4-402c-961c-f0d4eb8253b7",
         "error": null
       }
     },
@@ -43,8 +43,8 @@
       "tier": "low",
       "shares": 3.9367211486364466,
       "cost_usd": 2209.317470177808,
-      "last_close": 484.52,
-      "last_date": "2026-11-20",
+      "last_close": 492.5,
+      "last_date": "2026-11-23",
       "timing_risk": null,
       "why": "Company Scout: 1 patent(s); large by revenue",
       "route": {
@@ -52,18 +52,18 @@
         "symbol": "MSFTon",
         "asset_id": "nep141:bnb-0x6bfe75d1ad432050ea973c3a3dcd88f02e2444c3.omdep.near",
         "blockchain": "BNB Chain",
-        "token_price_usd": 504.0159,
-        "checked_at": "2026-11-23T10:18:27.666569Z",
+        "token_price_usd": 498.8565,
+        "checked_at": "2026-11-24T10:19:53.614051Z",
         "note": "listed in the NEAR Intents list of tokenized stocks; the price implied by a dry-run quote matches the stock"
       },
       "quote": {
-        "amount_in_usd": 1906.51,
-        "amount_out_usd": 1894.75,
-        "amount_out": "3.76383906315049052",
-        "cost_pct": 0.617,
+        "amount_in_usd": 1938.08,
+        "amount_out_usd": 1928.61,
+        "amount_out": "3.870266677369751463",
+        "cost_pct": 0.488,
         "time_estimate_s": 25.0,
-        "quoted_at": "2026-11-23T10:18:28.376045Z",
-        "correlation_id": "0e471477-f5b2-4283-86cb-9facd85eb20e",
+        "quoted_at": "2026-11-24T10:19:54.286802Z",
+        "correlation_id": "f01a6045-a0b0-4417-bc5d-011b712a6b19",
         "error": null
       }
     },
@@ -73,8 +73,8 @@
       "tier": "high",
       "shares": 15.006036526876821,
       "cost_usd": 1407.3399790204771,
-      "last_close": 81.08,
-      "last_date": "2026-11-20",
+      "last_close": 86.04,
+      "last_date": "2026-11-23",
       "timing_risk": null,
       "why": "Company Scout: 1 patent(s); size unknown (no revenue data), counted as high risk",
       "route": {
@@ -83,7 +83,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-23T10:18:29.063649Z",
+        "checked_at": "2026-11-24T10:19:54.962045Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -94,8 +94,8 @@
       "tier": "low",
       "shares": 6.443550435790728,
       "cost_usd": 1992.9257142857143,
-      "last_close": 343.32,
-      "last_date": "2026-11-20",
+      "last_close": 353.43,
+      "last_date": "2026-11-23",
       "timing_risk": null,
       "why": "Company Scout: 1 patent(s); large by revenue",
       "route": {
@@ -104,7 +104,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-23T10:18:29.063951Z",
+        "checked_at": "2026-11-24T10:19:54.962346Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -115,8 +115,8 @@
       "tier": "low",
       "shares": 6.212555610479486,
       "cost_usd": 1992.9257142857143,
-      "last_close": 270.44,
-      "last_date": "2026-11-20",
+      "last_close": 275.46,
+      "last_date": "2026-11-23",
       "timing_risk": null,
       "why": "Company Scout: 1 patent(s); large by revenue",
       "route": {
@@ -125,7 +125,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-23T10:18:29.064199Z",
+        "checked_at": "2026-11-24T10:19:54.962550Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -332,12 +332,17 @@
       "day": "2026-11-20",
       "value_usd": 8625.67,
       "benchmark_value_usd": 9198.45
+    },
+    {
+      "day": "2026-11-23",
+      "value_usd": 9334.48,
+      "benchmark_value_usd": 9631.56
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": 749.92,
   "benchmark_start_date": "2026-11-10",
-  "updated_at": "2026-11-23T10:17:41.202583Z",
+  "updated_at": "2026-11-24T10:19:26.217413Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision carries its own fingerprint (the report it is based on is sealed on NEAR).",
