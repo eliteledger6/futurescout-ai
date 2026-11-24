@@ -673,3 +673,12 @@ topics:
   evidence:
   - https://openalex.org/W7162302330
   added_on: '2026-11-23'
+- name: bosonic code
+  sector: quantum
+  terms:
+  - bosonic code
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7221086815
+  - https://openalex.org/W7164178523
+  added_on: '2026-11-24'
