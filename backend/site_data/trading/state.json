@@ -2141,78 +2141,92 @@
       "sha256": "c120d11a75ba7f2e90462a1212756f946ce2ed31c3fdf245d1a3df985acd0a88",
       "correction": null,
       "chain": null
+    },
+    {
+      "id": "51476b8b6b",
+      "created_at": "2026-11-25T15:25:04.500653Z",
+      "mode": "shadow",
+      "side": "hold",
+      "topic": "",
+      "ticker": "",
+      "symbol": "",
+      "asset_id": "",
+      "usd": 0.0,
+      "fraction": null,
+      "quantity": null,
+      "rationale": "INTC fell 8.8% to $50.09 and MRVL fell 8.5% to $121.19 since the last look. Neither the high bandwidth memory report (dated 2026-11-10, 15 days old) nor any other evidence I have explains these falls, so I cannot tell whether they reflect a real company problem. The other holdings also fell: MSFT $482.70 (-3.4%), META $577.32 (-2.5%) and NVDA $144.61 (-6.0%). That suggests a broad decline, but nothing in my evidence confirms it. The HBM report is still 'strong' (score 80), so there is no rule-based reason to sell, and a fall the evidence does not explain is not grounds to sell. MRVL has already used its 2 allowed adds. Adding to INTC is allowed, and its quote of $50.66 is 7.55% below the last close of $54.80, in line with the fall. Even so, I am holding for three reasons: the report's confidence is only 49.6%, which is below the 70% confident level; none of its findings names Intel or Marvell directly; and about $1,710 of the roughly $3,100 portfolio is already in this one topic. Keeping cash for now preserves diversification while the evidence is thin.",
+      "risks": [
+        "The falls may reflect a real problem that the 15-day-old HBM report does not cover, and INTC and MRVL are concentrated in the same topic.",
+        "Report confidence across all holdings is below 50%, so the 'strong' verdicts rest on thin, partly unverified evidence.",
+        "A tokenized stock depends on its issuer (Ondo) and is not the share itself; quotes can differ from the real share price."
+      ],
+      "confidence": "low",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.074148,
+      "ref_close": null,
+      "ref_close_date": null,
+      "dry_quote": null,
+      "status": "hold",
+      "quote": null,
+      "deposit_address": null,
+      "deposit_tx": null,
+      "result": null,
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-25T15:25:04.500653Z",
+          "status": "hold",
+          "note": "strategy check: price_drop, price_drop"
+        }
+      ],
+      "sha256": "dea45d42aa68b9f86acfef683b13889192a7ecae666c18111f807e242134f742",
+      "correction": null,
+      "chain": null
+    },
+    {
+      "id": "9154320f0c",
+      "created_at": "2026-11-25T15:25:30.394312Z",
+      "mode": "live",
+      "side": "hold",
+      "topic": "",
+      "ticker": "",
+      "symbol": "",
+      "asset_id": "",
+      "usd": 0.0,
+      "fraction": null,
+      "quantity": null,
+      "rationale": "INTC is now $50.085 (read 2026-11-25 15:25 UTC), down 8.8% since the last look at $54.93 and 15.5% below the $59.29 cost per share. Nothing in the evidence explains the fall: the HBM report (2026-11-10) still reads 'strong' and none of its findings points to an Intel-specific problem. The 2026-11-24 daily brief carried only unverified positive Intel posts (18A yields at 70%, Microsoft as an EMIB packaging customer) and no negative news. There is no cash, so the only choices are to sell or hold. None of the sale reasons applies. The report has not weakened (still 'strong', score 80, 49.6% confidence), and the evidence does not explain the fall. No candidate beats INTC on both verdict band and confidence: MRVL and META match it, and AAPL is weaker. Selling into an unexplained drop is against the rules, so I hold. I also note that 49.6% confidence is below the confident level, and the brief found no HBM-specific Intel news, so INTC's link to the topic rests on thin evidence.",
+      "risks": [
+        "A tokenized stock (INTCon) depends on its issuer, Ondo, and is not the Intel share itself.",
+        "The cause of the 8.8% fall is unknown from the evidence given; it could reflect a real problem the reports did not capture.",
+        "The HBM report's confidence is only 49.6%, and the brief found no HBM-specific Intel progress, so the thesis for holding INTC is thinly supported."
+      ],
+      "confidence": "low",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.050236,
+      "ref_close": null,
+      "ref_close_date": null,
+      "dry_quote": null,
+      "status": "hold",
+      "quote": null,
+      "deposit_address": null,
+      "deposit_tx": null,
+      "result": null,
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-25T15:25:30.394312Z",
+          "status": "hold",
+          "note": "strategy check: price_drop"
+        }
+      ],
+      "sha256": "03a4b2c04a649859d95403c36c14685e4597fbb1bbcc5e1ae22806917265172f",
+      "correction": null,
+      "chain": null
     }
   ],
-  "updated_at": "2026-11-25T13:24:49.821223Z",
+  "updated_at": "2026-11-25T15:26:00.895996Z",
   "checks": [
-    {
-      "id": "c46aceac29",
-      "at": "2026-11-21T09:54:21.286023Z",
-      "mode": "shadow",
-      "triggers": [],
-      "action": "none",
-      "ticker": "",
-      "usd": 0.0,
-      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
-      "what_changed": "",
-      "proposal_id": null,
-      "model": null,
-      "cost_usd": 0.0,
-      "notes": [],
-      "sha256": "05382063d69bd2ef701acd441994d4e28b6ab654ecd02559d076cf193da5fed2",
-      "correction": null
-    },
-    {
-      "id": "0e8cd78f34",
-      "at": "2026-11-21T09:54:23.639328Z",
-      "mode": "live",
-      "triggers": [],
-      "action": "none",
-      "ticker": "",
-      "usd": 0.0,
-      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
-      "what_changed": "",
-      "proposal_id": null,
-      "model": null,
-      "cost_usd": 0.0,
-      "notes": [],
-      "sha256": "4129173a5b8bbfbaa09c2e830788aa67251848d5a33a2e2ef4b983251da9f4a9",
-      "correction": null
-    },
-    {
-      "id": "17dc69406a",
-      "at": "2026-11-21T10:54:25.251445Z",
-      "mode": "shadow",
-      "triggers": [],
-      "action": "none",
-      "ticker": "",
-      "usd": 0.0,
-      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
-      "what_changed": "",
-      "proposal_id": null,
-      "model": null,
-      "cost_usd": 0.0,
-      "notes": [],
-      "sha256": "545900ff8b81b1d901fd540c7232385d7a9685f1429433412b5768b2e22091cb",
-      "correction": null
-    },
-    {
-      "id": "e7ad54fd13",
-      "at": "2026-11-21T10:54:33.930809Z",
-      "mode": "live",
-      "triggers": [],
-      "action": "none",
-      "ticker": "",
-      "usd": 0.0,
-      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
-      "what_changed": "",
-      "proposal_id": null,
-      "model": null,
-      "cost_usd": 0.0,
-      "notes": [],
-      "sha256": "7194e603dfb8cea1a1be2df2c0f4284e31a57bd12627a2d6d07d060e07092826",
-      "correction": null
-    },
     {
       "id": "2e3bc51703",
       "at": "2026-11-21T11:54:35.496515Z",
@@ -5682,6 +5696,94 @@
       "notes": [],
       "sha256": "1261eff0b20cb73f4bad1c3a3cb96ec97cb95ef894f3a292c9043114faeb6884",
       "correction": null
+    },
+    {
+      "id": "aebe55bb8c",
+      "at": "2026-11-25T14:24:55.610659Z",
+      "mode": "shadow",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "2332110224af56036415a2a977ee2b74f297b67abaa26c273f413ed64a314a15",
+      "correction": null
+    },
+    {
+      "id": "b5e64e6366",
+      "at": "2026-11-25T14:24:57.807284Z",
+      "mode": "live",
+      "triggers": [],
+      "action": "none",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
+      "what_changed": "",
+      "proposal_id": null,
+      "model": null,
+      "cost_usd": 0.0,
+      "notes": [],
+      "sha256": "b084ce6082fd9efbe6c302011797688baec5d465da2f8f9e5515e15c7e7c1aca",
+      "correction": null
+    },
+    {
+      "id": "59badd0e2f",
+      "at": "2026-11-25T15:25:04.500653Z",
+      "mode": "shadow",
+      "triggers": [
+        {
+          "kind": "price_drop",
+          "ticker": "INTC",
+          "topic": "",
+          "detail": "INTC (held) is at $50.09 now, -8.8% since you last looked ($54.93 on 2026-11-24T23:20 UTC); bought at $59.21, now -15.4%"
+        },
+        {
+          "kind": "price_drop",
+          "ticker": "MRVL",
+          "topic": "",
+          "detail": "MRVL (held) is at $121.19 now, -8.5% since you last looked ($132.49 on 2026-11-24T23:20 UTC); bought at $148.14, now -18.2%"
+        }
+      ],
+      "action": "hold",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "The HBM report is still 'strong' (score 80), so there is no rule-based reason to sell, and a fall the evidence does not explain is not grounds to sell. MRVL has already used its 2 allowed adds. Adding to INTC is allowed, and its quote of $50.66 is 7.55% below the last close of $54.80, in line with the fall. Even so, I am holding for three reasons: the report's confidence is only 49.6%, which is below the 70% confident level; none of its findings names Intel or Marvell directly; and about $1,710 of the roughly $3,100 portfolio is already in this one topic. Keeping cash for now preserves diversification while the evidence is thin.",
+      "what_changed": "INTC fell 8.8% to $50.09 and MRVL fell 8.5% to $121.19 since the last look. Neither the high bandwidth memory report (dated 2026-11-10, 15 days old) nor any other evidence I have explains these falls, so I cannot tell whether they reflect a real company problem. The other holdings also fell: MSFT $482.70 (-3.4%), META $577.32 (-2.5%) and NVDA $144.61 (-6.0%). That suggests a broad decline, but nothing in my evidence confirms it.",
+      "proposal_id": "51476b8b6b",
+      "model": "claude_opus_5_5",
+      "cost_usd": 0.074148,
+      "notes": [],
+      "sha256": "2f17bd760828f80bb0294315c37c889efdf1ae66c08f523145a98f2960481a2a",
+      "correction": null
+    },
+    {
+      "id": "27270e090f",
+      "at": "2026-11-25T15:25:30.394312Z",
+      "mode": "live",
+      "triggers": [
+        {
+          "kind": "price_drop",
+          "ticker": "INTC",
+          "topic": "",
+          "detail": "INTC (held) is at $50.09 now, -8.8% since you last looked ($54.93 on 2026-11-24T23:21 UTC); bought at $59.29, now -15.5%"
+        }
+      ],
+      "action": "hold",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "There is no cash, so the only choices are to sell or hold. None of the sale reasons applies. The report has not weakened (still 'strong', score 80, 49.6% confidence), and the evidence does not explain the fall. No candidate beats INTC on both verdict band and confidence: MRVL and META match it, and AAPL is weaker. Selling into an unexplained drop is against the rules, so I hold. I also note that 49.6% confidence is below the confident level, and the brief found no HBM-specific Intel news, so INTC's link to the topic rests on thin evidence.",
+      "what_changed": "INTC is now $50.085 (read 2026-11-25 15:25 UTC), down 8.8% since the last look at $54.93 and 15.5% below the $59.29 cost per share. Nothing in the evidence explains the fall: the HBM report (2026-11-10) still reads 'strong' and none of its findings points to an Intel-specific problem. The 2026-11-24 daily brief carried only unverified positive Intel posts (18A yields at 70%, Microsoft as an EMIB packaging customer) and no negative news.",
+      "proposal_id": "9154320f0c",
+      "model": "claude_opus_5_5",
+      "cost_usd": 0.050236,
+      "notes": [],
+      "sha256": "a2f36aadc643e4d279367b26f4665a6f9b3931a3f8df45e33d39cc4a9f562364",
+      "correction": null
     }
   ],
   "seen_runs": {
@@ -5717,70 +5819,70 @@
   },
   "holding_prices": {
     "INTC": {
-      "price": 52.2929,
-      "at": "2026-11-25T13:24:47.484635+00:00",
+      "price": 50.085,
+      "at": "2026-11-25T15:25:04.500653+00:00",
       "cost_per_share": 59.2103,
-      "gain_pct": -11.68,
-      "seen_price": 54.9306,
-      "seen_at": "2026-11-24T23:20:42.702146+00:00",
-      "since_seen_pct": -4.8
+      "gain_pct": -15.41,
+      "seen_price": 50.085,
+      "seen_at": "2026-11-25T15:25:04.500653+00:00",
+      "since_seen_pct": 0.0
     },
     "live:INTC": {
-      "price": 52.2929,
-      "at": "2026-11-25T13:24:49.729080+00:00",
+      "price": 50.085,
+      "at": "2026-11-25T15:25:30.394312+00:00",
       "cost_per_share": 59.2948,
-      "gain_pct": -11.81,
-      "seen_price": 54.9306,
-      "seen_at": "2026-11-24T23:21:21.729588+00:00",
-      "since_seen_pct": -4.8
+      "gain_pct": -15.53,
+      "seen_price": 50.085,
+      "seen_at": "2026-11-25T15:25:30.394312+00:00",
+      "since_seen_pct": 0.0
     },
     "MSFT": {
-      "price": 483.7801,
-      "at": "2026-11-25T13:24:47.484635+00:00",
+      "price": 482.7036,
+      "at": "2026-11-25T15:25:04.500653+00:00",
       "cost_per_share": 526.4959,
-      "gain_pct": -8.11,
-      "seen_price": 499.7488,
-      "seen_at": "2026-11-24T23:20:42.702146+00:00",
-      "since_seen_pct": -3.2
+      "gain_pct": -8.32,
+      "seen_price": 482.7036,
+      "seen_at": "2026-11-25T15:25:04.500653+00:00",
+      "since_seen_pct": 0.0
     },
     "META": {
-      "price": 580.0351,
-      "at": "2026-11-25T13:24:47.484635+00:00",
+      "price": 577.3208,
+      "at": "2026-11-25T15:25:04.500653+00:00",
       "cost_per_share": 633.9964,
-      "gain_pct": -8.51,
-      "seen_price": 591.7932,
-      "seen_at": "2026-11-24T23:20:42.702146+00:00",
-      "since_seen_pct": -1.99
+      "gain_pct": -8.94,
+      "seen_price": 577.3208,
+      "seen_at": "2026-11-25T15:25:04.500653+00:00",
+      "since_seen_pct": 0.0
     },
     "MRVL": {
-      "price": 124.0361,
-      "at": "2026-11-25T13:24:47.484635+00:00",
+      "price": 121.1931,
+      "at": "2026-11-25T15:25:04.500653+00:00",
       "cost_per_share": 148.1438,
-      "gain_pct": -16.27,
-      "seen_price": 132.4916,
-      "seen_at": "2026-11-24T23:20:42.702146+00:00",
-      "since_seen_pct": -6.38
+      "gain_pct": -18.19,
+      "seen_price": 121.1931,
+      "seen_at": "2026-11-25T15:25:04.500653+00:00",
+      "since_seen_pct": 0.0
     },
     "NVDA": {
-      "price": 147.5877,
-      "at": "2026-11-25T13:24:47.484635+00:00",
+      "price": 144.6101,
+      "at": "2026-11-25T15:25:04.500653+00:00",
       "cost_per_share": 160.7475,
-      "gain_pct": -8.19,
-      "seen_price": 153.8885,
-      "seen_at": "2026-11-24T23:20:42.702146+00:00",
-      "since_seen_pct": -4.09
+      "gain_pct": -10.04,
+      "seen_price": 144.6101,
+      "seen_at": "2026-11-25T15:25:04.500653+00:00",
+      "since_seen_pct": 0.0
     }
   },
-  "last_check_at": "2026-11-25T13:24:47.484635Z",
-  "last_live_check_at": "2026-11-25T13:24:49.729080Z",
-  "last_review_at": "2026-11-24T23:20:42.702146Z",
-  "last_live_review_at": "2026-11-24T23:21:21.729588Z",
+  "last_check_at": "2026-11-25T15:25:04.500653Z",
+  "last_live_check_at": "2026-11-25T15:25:30.394312Z",
+  "last_review_at": "2026-11-25T15:25:04.500653Z",
+  "last_live_review_at": "2026-11-25T15:25:30.394312Z",
   "private_near": 3.0266,
-  "private_checked_at": "2026-11-25T13:24:49.718370Z",
+  "private_checked_at": "2026-11-25T15:25:30.383309Z",
   "last_values": {
     "INTCon": {
-      "usd": 38.65,
-      "at": "2026-11-25T13:24:45.410734+00:00"
+      "usd": 37.02,
+      "at": "2026-11-25T15:25:01.979356+00:00"
     }
   },
   "hidden": []
