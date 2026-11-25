@@ -698,3 +698,12 @@ topics:
   evidence:
   - https://openalex.org/W7225611699
   added_on: '2026-11-25'
+- name: car-t cell therapy
+  sector: biotech_tools
+  terms:
+  - car-t cell therapy
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7225178710
+  - https://openalex.org/W7221119744
+  added_on: '2026-11-25'
