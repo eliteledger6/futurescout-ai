@@ -682,3 +682,11 @@ topics:
   - https://openalex.org/W7221086815
   - https://openalex.org/W7164178523
   added_on: '2026-11-24'
+- name: collaborative robot
+  sector: robotics_autonomy
+  terms:
+  - collaborative robot
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7169608452
+  added_on: '2026-11-25'
