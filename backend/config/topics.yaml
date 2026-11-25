@@ -690,3 +690,11 @@ topics:
   evidence:
   - https://openalex.org/W7169608452
   added_on: '2026-11-25'
+- name: affective feedback
+  sector: robotics_autonomy
+  terms:
+  - affective feedback
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7225611699
+  added_on: '2026-11-25'
