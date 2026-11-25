@@ -8,34 +8,13 @@
   "cash_usd": 0.0,
   "holdings": [
     {
-      "ticker": "CSCO",
-      "company": "CISCO TECH INC",
-      "tier": "low",
-      "shares": 23.040596268648002,
-      "cost_usd": 2237.8506118752484,
-      "last_close": 90.64,
-      "last_date": "2026-11-20",
-      "timing_risk": "subdued",
-      "why": "Company Scout: 1 patent(s), 2 filing(s); large by revenue",
-      "route": {
-        "available": false,
-        "symbol": null,
-        "asset_id": null,
-        "blockchain": null,
-        "token_price_usd": null,
-        "checked_at": "2026-11-24T10:19:54.968220Z",
-        "note": "no tokenized version in the public NEAR Intents token lists"
-      },
-      "quote": null
-    },
-    {
       "ticker": "MSFT",
       "company": "Microsoft Corp",
       "tier": "low",
       "shares": 4.328759306082316,
       "cost_usd": 2267.1282256733443,
-      "last_close": 492.5,
-      "last_date": "2026-11-23",
+      "last_close": 496.13,
+      "last_date": "2026-11-24",
       "timing_risk": "moderate",
       "why": "Company Scout: 1 patent(s), 4 filing(s); large by revenue",
       "route": {
@@ -43,41 +22,20 @@
         "symbol": "MSFTon",
         "asset_id": "nep141:bnb-0x6bfe75d1ad432050ea973c3a3dcd88f02e2444c3.omdep.near",
         "blockchain": "BNB Chain",
-        "token_price_usd": 498.8468,
-        "checked_at": "2026-11-24T10:19:54.968643Z",
+        "token_price_usd": 501.3927,
+        "checked_at": "2026-11-25T01:30:55.574419Z",
         "note": "listed in the NEAR Intents list of tokenized stocks; the price implied by a dry-run quote matches the stock"
       },
       "quote": {
-        "amount_in_usd": 2131.07,
-        "amount_out_usd": 2123.09,
-        "amount_out": "4.26054381775860603",
-        "cost_pct": 0.374,
+        "amount_in_usd": 2146.61,
+        "amount_out_usd": 2138.7,
+        "amount_out": "4.287285031523800006",
+        "cost_pct": 0.368,
         "time_estimate_s": 25.0,
-        "quoted_at": "2026-11-24T10:19:55.798331Z",
-        "correlation_id": "f8131189-7134-4905-a292-8bdfc1be032d",
+        "quoted_at": "2026-11-25T01:30:57.846565Z",
+        "correlation_id": "11b21650-3017-4546-8cb5-bf9f5067025f",
         "error": null
       }
-    },
-    {
-      "ticker": "ZS",
-      "company": "ZSCALER INC",
-      "tier": "medium",
-      "shares": 8.53921823314456,
-      "cost_usd": 1681.2511108830972,
-      "last_close": 197.83,
-      "last_date": "2026-11-18",
-      "timing_risk": null,
-      "why": "Company Scout: 1 patent(s), 2 filing(s); mid by revenue",
-      "route": {
-        "available": false,
-        "symbol": null,
-        "asset_id": null,
-        "blockchain": null,
-        "token_price_usd": null,
-        "checked_at": "2026-11-24T10:19:56.489109Z",
-        "note": "no tokenized version in the public NEAR Intents token lists"
-      },
-      "quote": null
     },
     {
       "ticker": "V",
@@ -85,17 +43,17 @@
       "tier": "low",
       "shares": 5.138561907590657,
       "cost_usd": 2191.3911111111115,
-      "last_close": 416.77,
-      "last_date": "2026-11-17",
-      "timing_risk": null,
-      "why": "Company Scout: 1 patent(s), 2 filing(s); large by revenue",
+      "last_close": 416.78,
+      "last_date": "2026-11-24",
+      "timing_risk": "moderate",
+      "why": "Company Scout: 2 patent(s), 2 filing(s); large by revenue",
       "route": {
         "available": false,
         "symbol": null,
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-24T10:19:56.489525Z",
+        "checked_at": "2026-11-25T01:30:58.510703Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -104,10 +62,10 @@
       "ticker": "G",
       "company": "GENPACT USA INC",
       "tier": "medium",
-      "shares": 37.79569974496104,
-      "cost_usd": 1611.6086371251388,
-      "last_close": 42.64,
-      "last_date": "2026-11-17",
+      "shares": 75.12010780787016,
+      "cost_usd": 3213.572231185198,
+      "last_close": 42.92,
+      "last_date": "2026-11-24",
       "timing_risk": "moderate",
       "why": "Company Scout: 1 patent(s), 2 filing(s); mid by revenue",
       "route": {
@@ -116,7 +74,28 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-24T10:19:56.489686Z",
+        "checked_at": "2026-11-25T01:30:58.511353Z",
+        "note": "no tokenized version in the public NEAR Intents token lists"
+      },
+      "quote": null
+    },
+    {
+      "ticker": "HON",
+      "company": "Honeywell International Inc",
+      "tier": "low",
+      "shares": 9.577222271644477,
+      "cost_usd": 2153.1511111111113,
+      "last_close": 224.82,
+      "last_date": "2026-11-24",
+      "timing_risk": "moderate",
+      "why": "Company Scout: 1 patent(s), 2 filing(s); large by revenue",
+      "route": {
+        "available": false,
+        "symbol": null,
+        "asset_id": null,
+        "blockchain": null,
+        "token_price_usd": null,
+        "checked_at": "2026-11-25T01:30:58.511624Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -324,6 +303,73 @@
       "value_before_usd": 9861.26,
       "sha256": "a2801dbe4cd58bf39c85b0db1a5c954f8fb5e4c824a04b87e809f259db0dc7ce",
       "chain": null
+    },
+    {
+      "at": "2026-11-25T01:30:51.106090Z",
+      "run_id": "report_20261125T013044Z",
+      "report_date": "2026-11-25",
+      "band": "strong",
+      "score": 70.7,
+      "previous_score": 64.7,
+      "confidence_pct": 37.0,
+      "target_invested_pct": 100.0,
+      "tier_targets_usd": {
+        "low": 6459.45,
+        "medium": 3229.73
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [],
+      "trades": [
+        {
+          "day": "2026-11-20",
+          "ticker": "CSCO",
+          "tier": "low",
+          "side": "sell",
+          "shares": 23.040596,
+          "price": 90.64,
+          "usd": 2088.4,
+          "fee_usd": 6.27
+        },
+        {
+          "day": "2026-11-18",
+          "ticker": "ZS",
+          "tier": "medium",
+          "side": "sell",
+          "shares": 8.539218,
+          "price": 197.83,
+          "usd": 1689.31,
+          "fee_usd": 5.07
+        },
+        {
+          "day": "2026-11-24",
+          "ticker": "HON",
+          "tier": "low",
+          "side": "buy",
+          "shares": 9.577222,
+          "price": 224.82,
+          "usd": 2153.15,
+          "fee_usd": 6.46
+        },
+        {
+          "day": "2026-11-24",
+          "ticker": "G",
+          "tier": "medium",
+          "side": "buy",
+          "shares": 37.324408,
+          "price": 42.92,
+          "usd": 1601.96,
+          "fee_usd": 4.81
+        }
+      ],
+      "reasons": [
+        "Why now: a newer report is available.",
+        "Verdict band 'strong' (score 70.7), confidence 37%. Owner rule: every paper fund is fully invested, so all of the fund goes into the basket.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-25."
+      ],
+      "value_before_usd": 9689.18,
+      "sha256": "f1e1c0c9d1d8e65394af2c798643ea689efb06a402cb56e777d22d11eb5e0f94",
+      "chain": null
     }
   ],
   "history": [
@@ -376,12 +422,17 @@
       "day": "2026-11-23",
       "value_usd": 9662.83,
       "benchmark_value_usd": 9631.56
+    },
+    {
+      "day": "2026-11-24",
+      "value_usd": 9666.59,
+      "benchmark_value_usd": 9631.56
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": 749.92,
   "benchmark_start_date": "2026-11-10",
-  "updated_at": "2026-11-24T10:19:26.217413Z",
+  "updated_at": "2026-11-25T01:30:51.106090Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",
