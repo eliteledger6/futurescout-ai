@@ -5,16 +5,16 @@
   "sector": "ai_software",
   "created_at": "2026-11-09T11:14:10.603393Z",
   "start_cash_usd": 10000.0,
-  "cash_usd": 43.79,
+  "cash_usd": 0.0,
   "holdings": [
     {
       "ticker": "PYPL",
       "company": "PAYPAL INC",
       "tier": "low",
-      "shares": 48.353175012906554,
-      "cost_usd": 2835.6338123018168,
-      "last_close": 55.24,
-      "last_date": "2026-11-23",
+      "shares": 32.84411607619725,
+      "cost_usd": 1964.4899718268555,
+      "last_close": 56.17,
+      "last_date": "2026-11-24",
       "timing_risk": "moderate",
       "why": "Company Scout: 1 patent(s), 2 filing(s); large by revenue",
       "route": {
@@ -23,7 +23,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-24T10:19:28.683634Z",
+        "checked_at": "2026-11-25T10:21:43.160327Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -34,8 +34,8 @@
       "tier": "medium",
       "shares": 37.71547651006711,
       "cost_usd": 2809.803,
-      "last_close": 73.99,
-      "last_date": "2026-11-23",
+      "last_close": 75.1,
+      "last_date": "2026-11-24",
       "timing_risk": "subdued",
       "why": "Company Scout: 2 patent(s), 1 filing(s); mid by revenue",
       "route": {
@@ -44,7 +44,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-24T10:19:30.828197Z",
+        "checked_at": "2026-11-25T10:21:43.160496Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -55,8 +55,8 @@
       "tier": "high",
       "shares": 117.6600916114288,
       "cost_usd": 893.0400953307445,
-      "last_close": 7.55,
-      "last_date": "2026-11-23",
+      "last_close": 7.33,
+      "last_date": "2026-11-24",
       "timing_risk": null,
       "why": "Company Scout: 1 patent(s); size unknown (no revenue data), counted as high risk",
       "route": {
@@ -65,7 +65,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-24T10:19:30.828504Z",
+        "checked_at": "2026-11-25T10:21:43.160611Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -74,10 +74,10 @@
       "ticker": "MSFT",
       "company": "Microsoft Corp",
       "tier": "low",
-      "shares": 5.5824,
-      "cost_usd": 2749.332,
-      "last_close": 492.5,
-      "last_date": "2026-11-23",
+      "shares": 3.7184891056779477,
+      "cost_usd": 1824.5898880000002,
+      "last_close": 496.13,
+      "last_date": "2026-11-24",
       "timing_risk": "moderate",
       "why": "Company Scout: 1 patent(s), 3 filing(s); large by revenue",
       "route": {
@@ -85,20 +85,41 @@
         "symbol": "MSFTon",
         "asset_id": "nep141:bnb-0x6bfe75d1ad432050ea973c3a3dcd88f02e2444c3.omdep.near",
         "blockchain": "BNB Chain",
-        "token_price_usd": 498.8349,
-        "checked_at": "2026-11-24T10:19:30.828887Z",
+        "token_price_usd": 492.2843,
+        "checked_at": "2026-11-25T10:21:43.160720Z",
         "note": "listed in the NEAR Intents list of tokenized stocks; the price implied by a dry-run quote matches the stock"
       },
       "quote": {
-        "amount_in_usd": 2748.25,
-        "amount_out_usd": 2737.96,
-        "amount_out": "5.494435006767046021",
-        "cost_pct": 0.374,
+        "amount_in_usd": 1844.03,
+        "amount_out_usd": 1826.06,
+        "amount_out": "3.724032529168093319",
+        "cost_pct": 0.974,
         "time_estimate_s": 25.0,
-        "quoted_at": "2026-11-24T10:19:38.424639Z",
-        "correlation_id": "e0d1ab31-b234-48af-9c58-d64288bb260e",
+        "quoted_at": "2026-11-25T10:21:43.843428Z",
+        "correlation_id": "e12eb34e-8a25-4a30-bbb4-9ddb71dc41f8",
         "error": null
       }
+    },
+    {
+      "ticker": "TMUS",
+      "company": "T-Mobile US, Inc.",
+      "tier": "low",
+      "shares": 10.931272498210902,
+      "cost_usd": 1828.801888950684,
+      "last_close": 167.3,
+      "last_date": "2026-11-24",
+      "timing_risk": null,
+      "why": "Company Scout: 1 patent(s); large by revenue",
+      "route": {
+        "available": false,
+        "symbol": null,
+        "asset_id": null,
+        "blockchain": null,
+        "token_price_usd": null,
+        "checked_at": "2026-11-25T10:21:44.674852Z",
+        "note": "no tokenized version in the public NEAR Intents token lists"
+      },
+      "quote": null
     }
   ],
   "decisions": [
@@ -914,6 +935,63 @@
       "value_before_usd": 9164.44,
       "sha256": "3b967a232bfb2ef7a67020565d01569688e26406c933fcd6c32fa205cdb81dec",
       "chain": null
+    },
+    {
+      "at": "2026-11-25T10:21:33.957218Z",
+      "run_id": "report_20261124T034047Z",
+      "report_date": "2026-11-24",
+      "band": "strong",
+      "score": 70.7,
+      "previous_score": 70.7,
+      "confidence_pct": 38.1,
+      "target_invested_pct": 100.0,
+      "tier_targets_usd": {
+        "low": 5534.56,
+        "medium": 2767.28,
+        "high": 922.43
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [],
+      "trades": [
+        {
+          "day": "2026-11-24",
+          "ticker": "PYPL",
+          "tier": "low",
+          "side": "sell",
+          "shares": 15.509059,
+          "price": 56.17,
+          "usd": 871.14,
+          "fee_usd": 2.61
+        },
+        {
+          "day": "2026-11-24",
+          "ticker": "MSFT",
+          "tier": "low",
+          "side": "sell",
+          "shares": 1.863911,
+          "price": 496.13,
+          "usd": 924.74,
+          "fee_usd": 2.77
+        },
+        {
+          "day": "2026-11-24",
+          "ticker": "TMUS",
+          "tier": "low",
+          "side": "buy",
+          "shares": 10.931272,
+          "price": 167.3,
+          "usd": 1828.8,
+          "fee_usd": 5.49
+        }
+      ],
+      "reasons": [
+        "Why now: price review: 1 company(ies) were waiting for a daily close.",
+        "Verdict band 'strong' (score 70.7), confidence 38%. Owner rule: every paper fund is fully invested, so all of the fund goes into the basket.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-25."
+      ],
+      "value_before_usd": 9224.27,
+      "sha256": "4b105b1f0f13beac1dd70d1b376d6441a50f76c0449fbd7d94b84de16e378b9a",
+      "chain": null
     }
   ],
   "history": [
@@ -961,12 +1039,17 @@
       "day": "2026-11-23",
       "value_usd": 9143.05,
       "benchmark_value_usd": 9823.2
+    },
+    {
+      "day": "2026-11-24",
+      "value_usd": 9213.38,
+      "benchmark_value_usd": 9775.46
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": 735.29,
   "benchmark_start_date": "2026-11-06",
-  "updated_at": "2026-11-24T10:19:26.217413Z",
+  "updated_at": "2026-11-25T10:21:33.957218Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",

@@ -22,18 +22,18 @@
         "symbol": "MSFTon",
         "asset_id": "nep141:bnb-0x6bfe75d1ad432050ea973c3a3dcd88f02e2444c3.omdep.near",
         "blockchain": "BNB Chain",
-        "token_price_usd": 501.3927,
-        "checked_at": "2026-11-25T01:30:55.574419Z",
+        "token_price_usd": 491.0862,
+        "checked_at": "2026-11-25T10:21:36.285033Z",
         "note": "listed in the NEAR Intents list of tokenized stocks; the price implied by a dry-run quote matches the stock"
       },
       "quote": {
-        "amount_in_usd": 2146.61,
-        "amount_out_usd": 2138.7,
-        "amount_out": "4.287285031523800006",
-        "cost_pct": 0.368,
+        "amount_in_usd": 2146.68,
+        "amount_out_usd": 2136.09,
+        "amount_out": "4.356297539565596285",
+        "cost_pct": 0.493,
         "time_estimate_s": 25.0,
-        "quoted_at": "2026-11-25T01:30:57.846565Z",
-        "correlation_id": "11b21650-3017-4546-8cb5-bf9f5067025f",
+        "quoted_at": "2026-11-25T10:21:38.394024Z",
+        "correlation_id": "5fc67616-7ff0-42e8-9297-ab1d43437eed",
         "error": null
       }
     },
@@ -53,7 +53,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-25T01:30:58.510703Z",
+        "checked_at": "2026-11-25T10:21:39.051506Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -74,7 +74,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-25T01:30:58.511353Z",
+        "checked_at": "2026-11-25T10:21:39.051780Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -95,7 +95,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-25T01:30:58.511624Z",
+        "checked_at": "2026-11-25T10:21:39.052098Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -426,13 +426,13 @@
     {
       "day": "2026-11-24",
       "value_usd": 9666.59,
-      "benchmark_value_usd": 9631.56
+      "benchmark_value_usd": 9584.76
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": 749.92,
   "benchmark_start_date": "2026-11-10",
-  "updated_at": "2026-11-25T01:30:51.106090Z",
+  "updated_at": "2026-11-25T10:21:33.957218Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",
