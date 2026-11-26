@@ -1,5 +1,5 @@
 {
- "made_at": "2026-11-19T00:05:05.926521+00:00",
+ "made_at": "2026-11-26T00:18:15.021067+00:00",
  "basis": {
   "phrases": [
    "supervised fine-tuning"
@@ -8,25 +8,25 @@
    {
     "phrase": "supervised fine-tuning",
     "source": "topic",
-    "matches": 7184,
+    "matches": 7628,
     "sampled": 8,
-    "relevant": 1,
+    "relevant": 4,
     "kept": true,
-    "reason": "the topic name itself (1/8 sampled works on-topic)"
+    "reason": "the topic name itself (4/8 sampled works on-topic)"
    },
    {
     "phrase": "SFT",
     "source": "ai_suggested",
-    "matches": 7995,
+    "matches": 8317,
     "sampled": 8,
-    "relevant": 1,
+    "relevant": 2,
     "kept": false,
-    "reason": "only 1/8 sampled works on-topic (needs 75%)"
+    "reason": "only 2/8 sampled works on-topic (needs 75%)"
    },
    {
     "phrase": "instruction tuning",
     "source": "ai_suggested",
-    "matches": 5902,
+    "matches": 6269,
     "sampled": 8,
     "relevant": 1,
     "kept": false,
@@ -35,7 +35,7 @@
    {
     "phrase": "fine-tuning on labeled data",
     "source": "ai_suggested",
-    "matches": 13,
+    "matches": 14,
     "sampled": 8,
     "relevant": 0,
     "kept": false,
@@ -46,9 +46,9 @@
     "source": "ai_suggested",
     "matches": 36,
     "sampled": 8,
-    "relevant": 0,
+    "relevant": 1,
     "kept": false,
-    "reason": "only 0/8 sampled works on-topic (needs 75%)"
+    "reason": "only 1/8 sampled works on-topic (needs 75%)"
    }
   ],
   "precision_sampled": 20,
