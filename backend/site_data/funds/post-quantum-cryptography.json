@@ -13,28 +13,28 @@
       "tier": "low",
       "shares": 18.20540914434457,
       "cost_usd": 9925.224957313774,
-      "last_close": 496.13,
-      "last_date": "2026-11-24",
+      "last_close": 489.93,
+      "last_date": "2026-11-25",
       "timing_risk": null,
-      "why": "Company Scout: 2 patent(s); large by revenue",
+      "why": "Company Scout: 1 patent(s); large by revenue",
       "route": {
         "available": true,
         "symbol": "MSFTon",
         "asset_id": "nep141:bnb-0x6bfe75d1ad432050ea973c3a3dcd88f02e2444c3.omdep.near",
         "blockchain": "BNB Chain",
-        "token_price_usd": 491.8432,
-        "checked_at": "2026-11-25T10:21:44.677653Z",
+        "token_price_usd": 495.5425,
+        "checked_at": "2026-11-26T00:59:19.028271Z",
         "note": "listed in the NEAR Intents list of tokenized stocks; the price implied by a dry-run quote matches the stock"
       },
       "quote": {
-        "amount_in_usd": 9028.24,
-        "amount_out_usd": 8973.02,
-        "amount_out": "18.299396720635923836",
-        "cost_pct": 0.612,
-        "time_estimate_s": 25.0,
-        "quoted_at": "2026-11-25T10:21:45.337878Z",
-        "correlation_id": "77f2975e-1766-4aeb-95c6-b5d7a4eb804c",
-        "error": null
+        "amount_in_usd": 8919.38,
+        "amount_out_usd": null,
+        "amount_out": null,
+        "cost_pct": null,
+        "time_estimate_s": null,
+        "quoted_at": "2026-11-26T00:59:21.112301Z",
+        "correlation_id": null,
+        "error": "No liquidity available"
       }
     }
   ],
@@ -383,6 +383,33 @@
       "value_before_usd": 9216.31,
       "sha256": "23f76d4ca226c320314423601f12ad7dfc8689be83353aa70d02d41fb2073112",
       "chain": null
+    },
+    {
+      "at": "2026-11-26T00:59:16.091023Z",
+      "run_id": "report_20261126T005910Z",
+      "report_date": "2026-11-26",
+      "band": "building",
+      "score": 68.0,
+      "previous_score": 72.0,
+      "confidence_pct": 32.2,
+      "target_invested_pct": 100.0,
+      "tier_targets_usd": {
+        "low": 8919.38
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [],
+      "trades": [],
+      "reasons": [
+        "Why now: a newer report is available.",
+        "Verdict band 'building' (score 68.0), confidence 32%. Owner rule: every paper fund is fully invested, so all of the fund goes into the basket.",
+        "No priced company in the medium-risk tier; its share goes to the other tiers.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "No trade: the fund is already close to its targets.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-26."
+      ],
+      "value_before_usd": 8919.38,
+      "sha256": "bcc7bc2c2c81e7ffdda11d1c061072e87892e70908d9f28f57c7bfca0be427e3",
+      "chain": null
     }
   ],
   "history": [
@@ -445,12 +472,17 @@
       "day": "2026-11-24",
       "value_usd": 9032.25,
       "benchmark_value_usd": 9775.46
+    },
+    {
+      "day": "2026-11-25",
+      "value_usd": 8919.38,
+      "benchmark_value_usd": 9775.46
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": 735.29,
   "benchmark_start_date": "2026-11-06",
-  "updated_at": "2026-11-25T10:21:33.957218Z",
+  "updated_at": "2026-11-26T00:59:16.091023Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",
