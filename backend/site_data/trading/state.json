@@ -2264,44 +2264,92 @@
       "sha256": "79e71a3bfd73de2d71943709fb149926d1868746f84a84915f070077775c77a2",
       "correction": null,
       "chain": null
+    },
+    {
+      "id": "2af0e85b0a",
+      "created_at": "2026-11-26T01:28:11.356764Z",
+      "mode": "shadow",
+      "side": "hold",
+      "topic": "",
+      "ticker": "",
+      "symbol": "",
+      "asset_id": "",
+      "usd": 0.0,
+      "fraction": null,
+      "quantity": null,
+      "rationale": "Two new reports arrived: 'mixture of experts' (strong, score 74.7, confidence 35.9%), which backs NVDA, and 'AI agents' (strong, score 70.7, confidence 38.1%), which backs MSFT. Both are below the 45% low-confidence line. The findings link to the companies only thinly: an unverified claim that Nvidia holds MoE-related patents, and an Arm claim about Microsoft's Azure Cobalt 200. No price move triggered this wake-up. Current prices: INTC $55.03 (-7.07% vs cost), MRVL $134.44 (-9.25%), MSFT $496.54 (-5.69%), META $615.92 (-2.85%), NVDA $152.70 (-5.01%). Both new reports say 'strong', but their confidence (35.9% and 38.1%) is low and weaker than the 49.6% behind my high bandwidth memory and OLED holdings. The links from the findings to Nvidia and Microsoft are mostly unverified claims. I already hold NVDA and MSFT, so adding on such thin evidence is not justified, and the other candidates offer nothing new: MRVL has used its 2 adds, META's quote is 5.3% above its last close, and AAPL's 6G report is only 'early'. No holding's report weakened and no finding points to a real problem, so there is no reason to sell. Keeping the $6,550 of cash is deliberate while I wait for better-supported evidence.",
+      "risks": [
+        "A tokenized stock depends on its issuer (Ondo) and is not the share itself.",
+        "All reports, including those behind current holdings, are below 50% confidence and rely mostly on unverified X posts.",
+        "Holding cash means the fund may miss gains if the themes turn out stronger than the evidence shows."
+      ],
+      "confidence": "medium",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.07216,
+      "ref_close": null,
+      "ref_close_date": null,
+      "dry_quote": null,
+      "status": "hold",
+      "quote": null,
+      "deposit_address": null,
+      "deposit_tx": null,
+      "result": null,
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-26T01:28:11.356764Z",
+          "status": "hold",
+          "note": "strategy check: new_report, new_report"
+        }
+      ],
+      "sha256": "6671fbb245825b3e717b57cbf6e7495a5ffa0c6e2af8d89ac8bc47373fbac6d8",
+      "correction": null,
+      "chain": null
+    },
+    {
+      "id": "108a81ceb0",
+      "created_at": "2026-11-26T01:28:38.035688Z",
+      "mode": "live",
+      "side": "hold",
+      "topic": "",
+      "ticker": "",
+      "symbol": "",
+      "asset_id": "",
+      "usd": 0.0,
+      "fraction": null,
+      "quantity": null,
+      "rationale": "New reports rate 'mixture of experts' and 'AI agents' as strong, but with low confidence (35.9% and 38.1%), and no candidate from either topic is on today's list. My only holding, INTC, is at $55.025 (cost $59.29 per share, -7.2%). It rose 9.86% since my last look, and the evidence given does not explain that rise. With no cash, I could only sell to rotate, and rotation needs a candidate with a higher verdict band and higher confidence than INTC (strong, 49.6%). MRVL and META match INTC at strong, 49.6%, and AAPL is weaker (early, 37.7%), so none is clearly better. The two new reports carry less confidence than INTC's and offer nothing to buy. INTC's report has not weakened, and the daily brief flags only low-urgency gaps in HBM-specific news, so I see no valid reason to sell and I keep the position.",
+      "risks": [
+        "INTC's high-bandwidth-memory report is below 70% confidence and rests largely on unverified X claims; the brief found no HBM-specific progress for Intel.",
+        "The whole fund sits in one holding, so it is concentrated until cash is available.",
+        "INTCon is a tokenized stock that depends on its issuer (Ondo) and is not the Intel share itself."
+      ],
+      "confidence": "low",
+      "model": "claude_opus_5_5",
+      "model_cost_usd": 0.048404,
+      "ref_close": null,
+      "ref_close_date": null,
+      "dry_quote": null,
+      "status": "hold",
+      "quote": null,
+      "deposit_address": null,
+      "deposit_tx": null,
+      "result": null,
+      "error": null,
+      "history": [
+        {
+          "at": "2026-11-26T01:28:38.035688Z",
+          "status": "hold",
+          "note": "strategy check: new_report, new_report"
+        }
+      ],
+      "sha256": "0df707f82c9981f0be51cf211eda0c4f7d823406b0504a822f3b29a6af6275a8",
+      "correction": null,
+      "chain": null
     }
   ],
-  "updated_at": "2026-11-26T00:27:54.055396Z",
+  "updated_at": "2026-11-26T01:29:09.569768Z",
   "checks": [
-    {
-      "id": "cf5e24dba5",
-      "at": "2026-11-21T20:55:13.106698Z",
-      "mode": "shadow",
-      "triggers": [],
-      "action": "none",
-      "ticker": "",
-      "usd": 0.0,
-      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
-      "what_changed": "",
-      "proposal_id": null,
-      "model": null,
-      "cost_usd": 0.0,
-      "notes": [],
-      "sha256": "0aca4c771c0d29bcbb21bb44a53da77ef5c42c72a0640389cb66dbf708542b92",
-      "correction": null
-    },
-    {
-      "id": "9f984ee260",
-      "at": "2026-11-21T20:55:15.386781Z",
-      "mode": "live",
-      "triggers": [],
-      "action": "none",
-      "ticker": "",
-      "usd": 0.0,
-      "summary": "No trigger: no new report, no sharp move, no review due. The agent was not called.",
-      "what_changed": "",
-      "proposal_id": null,
-      "model": null,
-      "cost_usd": 0.0,
-      "notes": [],
-      "sha256": "c3bb54ab7d640a217033558f1c8a7eb2c715e9243b9c1a3302a36622b887d637",
-      "correction": null
-    },
     {
       "id": "e28f5153e2",
       "at": "2026-11-21T21:55:16.938506Z",
@@ -5832,17 +5880,77 @@
       "notes": [],
       "sha256": "fbdd11dc4ba16e3847ed12a89260093f2dc9871a4a090bd9ec8a7497d237487e",
       "correction": null
+    },
+    {
+      "id": "313b281935",
+      "at": "2026-11-26T01:28:11.356764Z",
+      "mode": "shadow",
+      "triggers": [
+        {
+          "kind": "new_report",
+          "ticker": "NVDA",
+          "topic": "mixture of experts",
+          "detail": "report report_2 for 'mixture of experts' not yet considered (verdict strong, score 74.7, confidence 35.9%)"
+        },
+        {
+          "kind": "new_report",
+          "ticker": "MSFT",
+          "topic": "AI agents",
+          "detail": "report report_2 for 'AI agents' not yet considered (verdict strong, score 70.7, confidence 38.1%)"
+        }
+      ],
+      "action": "hold",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "Both new reports say 'strong', but their confidence (35.9% and 38.1%) is low and weaker than the 49.6% behind my high bandwidth memory and OLED holdings. The links from the findings to Nvidia and Microsoft are mostly unverified claims. I already hold NVDA and MSFT, so adding on such thin evidence is not justified, and the other candidates offer nothing new: MRVL has used its 2 adds, META's quote is 5.3% above its last close, and AAPL's 6G report is only 'early'. No holding's report weakened and no finding points to a real problem, so there is no reason to sell. Keeping the $6,550 of cash is deliberate while I wait for better-supported evidence.",
+      "what_changed": "Two new reports arrived: 'mixture of experts' (strong, score 74.7, confidence 35.9%), which backs NVDA, and 'AI agents' (strong, score 70.7, confidence 38.1%), which backs MSFT. Both are below the 45% low-confidence line. The findings link to the companies only thinly: an unverified claim that Nvidia holds MoE-related patents, and an Arm claim about Microsoft's Azure Cobalt 200. No price move triggered this wake-up. Current prices: INTC $55.03 (-7.07% vs cost), MRVL $134.44 (-9.25%), MSFT $496.54 (-5.69%), META $615.92 (-2.85%), NVDA $152.70 (-5.01%).",
+      "proposal_id": "2af0e85b0a",
+      "model": "claude_opus_5_5",
+      "cost_usd": 0.07216,
+      "notes": [],
+      "sha256": "f337bded6f24b57750d3b369a12fd3e66d33a6e5c3fa56644e3517e61d5d4ce9",
+      "correction": null
+    },
+    {
+      "id": "30a6da490f",
+      "at": "2026-11-26T01:28:38.035688Z",
+      "mode": "live",
+      "triggers": [
+        {
+          "kind": "new_report",
+          "ticker": "NVDA",
+          "topic": "mixture of experts",
+          "detail": "report report_2 for 'mixture of experts' not yet considered (verdict strong, score 74.7, confidence 35.9%)"
+        },
+        {
+          "kind": "new_report",
+          "ticker": "MSFT",
+          "topic": "AI agents",
+          "detail": "report report_2 for 'AI agents' not yet considered (verdict strong, score 70.7, confidence 38.1%)"
+        }
+      ],
+      "action": "hold",
+      "ticker": "",
+      "usd": 0.0,
+      "summary": "With no cash, I could only sell to rotate, and rotation needs a candidate with a higher verdict band and higher confidence than INTC (strong, 49.6%). MRVL and META match INTC at strong, 49.6%, and AAPL is weaker (early, 37.7%), so none is clearly better. The two new reports carry less confidence than INTC's and offer nothing to buy. INTC's report has not weakened, and the daily brief flags only low-urgency gaps in HBM-specific news, so I see no valid reason to sell and I keep the position.",
+      "what_changed": "New reports rate 'mixture of experts' and 'AI agents' as strong, but with low confidence (35.9% and 38.1%), and no candidate from either topic is on today's list. My only holding, INTC, is at $55.025 (cost $59.29 per share, -7.2%). It rose 9.86% since my last look, and the evidence given does not explain that rise.",
+      "proposal_id": "108a81ceb0",
+      "model": "claude_opus_5_5",
+      "cost_usd": 0.048404,
+      "notes": [],
+      "sha256": "21e7dbed658d22c5791a726718cf2c2ca9fa2da74db437882810c7329d88401d",
+      "correction": null
     }
   ],
   "seen_runs": {
     "live:high bandwidth memory": "e5d41d1f-fa56-42ce-bf27-9fccb47298a2",
     "live:oled displays": "783ab33d-be9b-4dd2-b9db-6e5e48e71b15",
-    "live:AI agents": "71b787db-4595-4cab-8ae0-9aa6971d2a4b",
+    "live:AI agents": "report_20261124T034047Z",
     "live:6G": "f0934784-6b57-49fd-a4dc-09d320bbd16e",
     "live:vision-language-action model": "7a87a2e1-5e88-4679-b03f-a20e042c6497",
     "high bandwidth memory": "e5d41d1f-fa56-42ce-bf27-9fccb47298a2",
     "oled displays": "783ab33d-be9b-4dd2-b9db-6e5e48e71b15",
-    "AI agents": "71b787db-4595-4cab-8ae0-9aa6971d2a4b",
+    "AI agents": "report_20261124T034047Z",
     "6G": "f0934784-6b57-49fd-a4dc-09d320bbd16e",
     "vision-language-action model": "7a87a2e1-5e88-4679-b03f-a20e042c6497",
     "live:retrieval-augmented generation": "4a2a3eaa-9841-4174-b38d-0a12e7b52623",
@@ -5850,8 +5958,8 @@
     "retrieval-augmented generation": "4a2a3eaa-9841-4174-b38d-0a12e7b52623",
     "chiplet": "ab3b0896-a403-4181-990f-65bad2f59f13",
     "live:brief:INTC": "17250aa048",
-    "mixture of experts": "report_20261118T141031Z",
-    "live:mixture of experts": "report_20261118T141031Z",
+    "mixture of experts": "report_20261125T141903Z",
+    "live:mixture of experts": "report_20261125T141903Z",
     "supervised fine-tuning": "report_20261119T001520Z",
     "post-quantum cryptography": "report_20261119T003057Z",
     "live:supervised fine-tuning": "report_20261119T001520Z",
@@ -5867,70 +5975,70 @@
   },
   "holding_prices": {
     "INTC": {
-      "price": 55.0488,
-      "at": "2026-11-26T00:27:27.573118+00:00",
+      "price": 55.025,
+      "at": "2026-11-26T01:28:11.356764+00:00",
       "cost_per_share": 59.2103,
-      "gain_pct": -7.03,
-      "seen_price": 55.0488,
-      "seen_at": "2026-11-26T00:27:27.573118+00:00",
+      "gain_pct": -7.07,
+      "seen_price": 55.025,
+      "seen_at": "2026-11-26T01:28:11.356764+00:00",
       "since_seen_pct": 0.0
     },
     "live:INTC": {
-      "price": 55.0488,
-      "at": "2026-11-26T00:27:50.978619+00:00",
+      "price": 55.025,
+      "at": "2026-11-26T01:28:38.035688+00:00",
       "cost_per_share": 59.2948,
-      "gain_pct": -7.16,
-      "seen_price": 50.085,
-      "seen_at": "2026-11-25T15:25:30.394312+00:00",
-      "since_seen_pct": 9.91
+      "gain_pct": -7.2,
+      "seen_price": 55.025,
+      "seen_at": "2026-11-26T01:28:38.035688+00:00",
+      "since_seen_pct": 0.0
     },
     "MSFT": {
-      "price": 495.4964,
-      "at": "2026-11-26T00:27:27.573118+00:00",
+      "price": 496.5438,
+      "at": "2026-11-26T01:28:11.356764+00:00",
       "cost_per_share": 526.4959,
-      "gain_pct": -5.89,
-      "seen_price": 495.4964,
-      "seen_at": "2026-11-26T00:27:27.573118+00:00",
+      "gain_pct": -5.69,
+      "seen_price": 496.5438,
+      "seen_at": "2026-11-26T01:28:11.356764+00:00",
       "since_seen_pct": 0.0
     },
     "META": {
-      "price": 613.2645,
-      "at": "2026-11-26T00:27:27.573118+00:00",
+      "price": 615.9162,
+      "at": "2026-11-26T01:28:11.356764+00:00",
       "cost_per_share": 633.9964,
-      "gain_pct": -3.27,
-      "seen_price": 613.2645,
-      "seen_at": "2026-11-26T00:27:27.573118+00:00",
+      "gain_pct": -2.85,
+      "seen_price": 615.9162,
+      "seen_at": "2026-11-26T01:28:11.356764+00:00",
       "since_seen_pct": 0.0
     },
     "MRVL": {
-      "price": 133.5032,
-      "at": "2026-11-26T00:27:27.573118+00:00",
+      "price": 134.4447,
+      "at": "2026-11-26T01:28:11.356764+00:00",
       "cost_per_share": 148.1438,
-      "gain_pct": -9.88,
-      "seen_price": 133.5032,
-      "seen_at": "2026-11-26T00:27:27.573118+00:00",
+      "gain_pct": -9.25,
+      "seen_price": 134.4447,
+      "seen_at": "2026-11-26T01:28:11.356764+00:00",
       "since_seen_pct": 0.0
     },
     "NVDA": {
-      "price": 152.2229,
-      "at": "2026-11-26T00:27:27.573118+00:00",
+      "price": 152.6965,
+      "at": "2026-11-26T01:28:11.356764+00:00",
       "cost_per_share": 160.7475,
-      "gain_pct": -5.3,
-      "seen_price": 152.2229,
-      "seen_at": "2026-11-26T00:27:27.573118+00:00",
+      "gain_pct": -5.01,
+      "seen_price": 152.6965,
+      "seen_at": "2026-11-26T01:28:11.356764+00:00",
       "since_seen_pct": 0.0
     }
   },
-  "last_check_at": "2026-11-26T00:27:27.573118Z",
-  "last_live_check_at": "2026-11-26T00:27:50.978619Z",
-  "last_review_at": "2026-11-26T00:27:27.573118Z",
-  "last_live_review_at": "2026-11-25T15:25:30.394312Z",
+  "last_check_at": "2026-11-26T01:28:11.356764Z",
+  "last_live_check_at": "2026-11-26T01:28:38.035688Z",
+  "last_review_at": "2026-11-26T01:28:11.356764Z",
+  "last_live_review_at": "2026-11-26T01:28:38.035688Z",
   "private_near": 3.0266,
-  "private_checked_at": "2026-11-26T00:27:50.969054Z",
+  "private_checked_at": "2026-11-26T01:28:38.027610Z",
   "last_values": {
     "INTCon": {
-      "usd": 40.65,
-      "at": "2026-11-26T00:27:25.444081+00:00"
+      "usd": 40.67,
+      "at": "2026-11-26T01:28:09.900376+00:00"
     }
   },
   "hidden": []
