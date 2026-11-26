@@ -723,3 +723,11 @@ topics:
   evidence:
   - https://openalex.org/W7167279122
   added_on: '2026-11-26'
+- name: flow matching
+  sector: ai_software
+  terms:
+  - flow matching
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7117239410
+  added_on: '2026-11-26'
