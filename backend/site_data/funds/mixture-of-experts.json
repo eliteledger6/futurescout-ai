@@ -13,8 +13,8 @@
       "tier": "low",
       "shares": 16.97011933876395,
       "cost_usd": 2978.6393361678215,
-      "last_close": 155.38,
-      "last_date": "2026-11-24",
+      "last_close": 149.3,
+      "last_date": "2026-11-25",
       "timing_risk": null,
       "why": "Company Scout: 1 patent(s); large by revenue",
       "route": {
@@ -22,18 +22,18 @@
         "symbol": "NVDAon",
         "asset_id": "nep141:bnb-0xa9ee28c80f960b889dfbd1902055218cba016f75.omdep.near",
         "blockchain": "BNB Chain",
-        "token_price_usd": 147.2602,
-        "checked_at": "2026-11-25T14:19:14.227462Z",
+        "token_price_usd": 150.7847,
+        "checked_at": "2026-11-26T10:22:53.848703Z",
         "note": "listed in the NEAR Intents list of tokenized stocks; the price implied by a dry-run quote matches the stock"
       },
       "quote": {
-        "amount_in_usd": 2635.58,
-        "amount_out_usd": 2622.95,
-        "amount_out": "17.900231078645642119",
-        "cost_pct": 0.479,
+        "amount_in_usd": 2532.34,
+        "amount_out_usd": 2525.99,
+        "amount_out": "16.794886866996209043",
+        "cost_pct": 0.251,
         "time_estimate_s": 10.0,
-        "quoted_at": "2026-11-25T14:19:16.308111Z",
-        "correlation_id": "df3b03a6-de60-41d3-8dd7-b1d514c1ed1d",
+        "quoted_at": "2026-11-26T10:22:54.530793Z",
+        "correlation_id": "91e67a94-5a62-45e7-a283-0ae624c3ccc2",
         "error": null
       }
     },
@@ -43,8 +43,8 @@
       "tier": "high",
       "shares": 15.006036526876821,
       "cost_usd": 1407.3399790204771,
-      "last_close": 84.86,
-      "last_date": "2026-11-24",
+      "last_close": 86.26,
+      "last_date": "2026-11-25",
       "timing_risk": null,
       "why": "Company Scout: 1 patent(s); size unknown (no revenue data), counted as high risk",
       "route": {
@@ -53,7 +53,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-25T14:19:17.037056Z",
+        "checked_at": "2026-11-26T10:22:55.191336Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -64,8 +64,8 @@
       "tier": "low",
       "shares": 7.469948561877511,
       "cost_usd": 2355.233988813088,
-      "last_close": 352.99,
-      "last_date": "2026-11-24",
+      "last_close": 356.14,
+      "last_date": "2026-11-25",
       "timing_risk": null,
       "why": "Company Scout: 1 patent(s); large by revenue",
       "route": {
@@ -74,7 +74,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-25T14:19:17.037333Z",
+        "checked_at": "2026-11-26T10:22:55.191718Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -85,8 +85,8 @@
       "tier": "low",
       "shares": 9.43675163859832,
       "cost_usd": 2893.8305684626794,
-      "last_close": 279.42,
-      "last_date": "2026-11-24",
+      "last_close": 271.72,
+      "last_date": "2026-11-25",
       "timing_risk": null,
       "why": "Company Scout: 1 patent(s); large by revenue",
       "route": {
@@ -95,7 +95,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-25T14:19:17.037543Z",
+        "checked_at": "2026-11-26T10:22:55.191965Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -379,12 +379,17 @@
       "day": "2026-11-24",
       "value_usd": 9217.28,
       "benchmark_value_usd": 9584.76
+    },
+    {
+      "day": "2026-11-25",
+      "value_usd": 9085.97,
+      "benchmark_value_usd": 9557.02
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": 749.92,
   "benchmark_start_date": "2026-11-10",
-  "updated_at": "2026-11-25T14:19:09.676961Z",
+  "updated_at": "2026-11-26T10:22:41.251129Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision carries its own fingerprint (the report it is based on is sealed on NEAR).",
