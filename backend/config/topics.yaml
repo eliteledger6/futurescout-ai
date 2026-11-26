@@ -715,3 +715,11 @@ topics:
   evidence:
   - https://openalex.org/W7214272238
   added_on: '2026-11-26'
+- name: deterministic networking
+  sector: space_comms
+  terms:
+  - deterministic networking
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7167279122
+  added_on: '2026-11-26'
