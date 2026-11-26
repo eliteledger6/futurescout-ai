@@ -707,3 +707,11 @@ topics:
   - https://openalex.org/W7225178710
   - https://openalex.org/W7221119744
   added_on: '2026-11-25'
+- name: adaptive sparsity
+  sector: ai_software
+  terms:
+  - adaptive sparsity
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7214272238
+  added_on: '2026-11-26'
