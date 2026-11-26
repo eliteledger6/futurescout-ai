@@ -5,44 +5,14 @@
   "sector": "ai_software",
   "created_at": "2026-11-11T14:06:19.263759Z",
   "start_cash_usd": 10000.0,
-  "cash_usd": 8.53,
+  "cash_usd": 0.0,
   "holdings": [
-    {
-      "ticker": "NVDA",
-      "company": "NVIDIA CORP",
-      "tier": "low",
-      "shares": 9.95803534730785,
-      "cost_usd": 1694.8273209456909,
-      "last_close": 155.38,
-      "last_date": "2026-11-24",
-      "timing_risk": "subdued",
-      "why": "Company Scout: 1 patent(s), 1 filing(s); large by revenue",
-      "route": {
-        "available": true,
-        "symbol": "NVDAon",
-        "asset_id": "nep141:bnb-0xa9ee28c80f960b889dfbd1902055218cba016f75.omdep.near",
-        "blockchain": "BNB Chain",
-        "token_price_usd": 148.3331,
-        "checked_at": "2026-11-25T10:21:51.062260Z",
-        "note": "listed in the NEAR Intents list of tokenized stocks; the price implied by a dry-run quote matches the stock"
-      },
-      "quote": {
-        "amount_in_usd": 1546.59,
-        "amount_out_usd": 1540.31,
-        "amount_out": "10.427388434726827231",
-        "cost_pct": 0.406,
-        "time_estimate_s": 12.0,
-        "quoted_at": "2026-11-25T10:21:51.743372Z",
-        "correlation_id": "ed24adb2-c422-4022-9ea1-a925ed972e22",
-        "error": null
-      }
-    },
     {
       "ticker": "CRM",
       "company": "SALESFORCE INC",
       "tier": "low",
-      "shares": 7.930140199661775,
-      "cost_usd": 1728.7299559691064,
+      "shares": 14.310152126668736,
+      "cost_usd": 2961.7310609824717,
       "last_close": 193.26,
       "last_date": "2026-11-24",
       "timing_risk": null,
@@ -53,7 +23,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-25T10:21:52.380376Z",
+        "checked_at": "2026-11-26T00:31:09.679540Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -62,40 +32,19 @@
       "ticker": "ORCL",
       "company": "Oracle Corp",
       "tier": "low",
-      "shares": 13.147092339694312,
-      "cost_usd": 1577.2527725883253,
+      "shares": 25.25643835616438,
+      "cost_usd": 2903.226161391798,
       "last_close": 109.5,
       "last_date": "2026-11-24",
       "timing_risk": null,
-      "why": "Company Scout: 1 patent(s); large by revenue",
+      "why": "Company Scout: 3 patent(s); large by revenue",
       "route": {
         "available": false,
         "symbol": null,
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-25T10:21:52.380732Z",
-        "note": "no tokenized version in the public NEAR Intents token lists"
-      },
-      "quote": null
-    },
-    {
-      "ticker": "OKTA",
-      "company": "Okta, Inc.",
-      "tier": "medium",
-      "shares": 14.055344452501814,
-      "cost_usd": 2440.8939384213686,
-      "last_close": 198.12,
-      "last_date": "2026-11-24",
-      "timing_risk": null,
-      "why": "Company Scout: 1 patent(s); mid by revenue",
-      "route": {
-        "available": false,
-        "symbol": null,
-        "asset_id": null,
-        "blockchain": null,
-        "token_price_usd": null,
-        "checked_at": "2026-11-25T10:21:52.380958Z",
+        "checked_at": "2026-11-26T00:31:12.088251Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -104,11 +53,11 @@
       "ticker": "TM",
       "company": "TOYOTA MOTOR CO LTD",
       "tier": "high",
-      "shares": 4.511598914763519,
-      "cost_usd": 961.5119607144013,
+      "shares": 3.2928275467923993,
+      "cost_usd": 705.6065365815052,
       "last_close": 209.97,
       "last_date": "2026-11-24",
-      "timing_risk": "moderate",
+      "timing_risk": null,
       "why": "Company Scout: 1 patent(s), 1 filing(s); size unknown (no revenue data), counted as high risk",
       "route": {
         "available": false,
@@ -116,7 +65,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-25T10:21:52.381205Z",
+        "checked_at": "2026-11-26T00:31:12.088534Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -125,8 +74,8 @@
       "ticker": "QCOM",
       "company": "Qualcomm Inc/De",
       "tier": "low",
-      "shares": 8.972742423307203,
-      "cost_usd": 1453.674,
+      "shares": 16.76515518913676,
+      "cost_usd": 2739.1104098512437,
       "last_close": 164.96,
       "last_date": "2026-11-24",
       "timing_risk": null,
@@ -137,7 +86,28 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-25T10:21:52.381379Z",
+        "checked_at": "2026-11-26T00:31:12.088742Z",
+        "note": "no tokenized version in the public NEAR Intents token lists"
+      },
+      "quote": null
+    },
+    {
+      "ticker": "BABA",
+      "company": "Alibaba Group (China)",
+      "tier": "high",
+      "shares": 7.828141232715771,
+      "cost_usd": 664.2960650082603,
+      "last_close": 84.86,
+      "last_date": "2026-11-24",
+      "timing_risk": "subdued",
+      "why": "Company Scout: 1 paper(s), 1 filing(s); size unknown (no revenue data), counted as high risk",
+      "route": {
+        "available": false,
+        "symbol": null,
+        "asset_id": null,
+        "blockchain": null,
+        "token_price_usd": null,
+        "checked_at": "2026-11-26T00:31:12.089000Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -387,6 +357,103 @@
       "value_before_usd": 9691.16,
       "sha256": "a1e3c9ee2d0be5d4118def17ebb38392d93e8705ece4804a3ae49bf75d23cd0b",
       "chain": null
+    },
+    {
+      "at": "2026-11-26T00:31:01.817286Z",
+      "run_id": "report_20261126T003055Z",
+      "report_date": "2026-11-26",
+      "band": "building",
+      "score": 68.2,
+      "previous_score": 76.9,
+      "confidence_pct": 39.8,
+      "target_invested_pct": 100.0,
+      "tier_targets_usd": {
+        "low": 8296.74,
+        "high": 1382.79
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [],
+      "trades": [
+        {
+          "day": "2026-11-25",
+          "ticker": "NVDA",
+          "tier": "low",
+          "side": "sell",
+          "shares": 9.958035,
+          "price": 149.3,
+          "usd": 1486.73,
+          "fee_usd": 4.46
+        },
+        {
+          "day": "2026-11-24",
+          "ticker": "OKTA",
+          "tier": "medium",
+          "side": "sell",
+          "shares": 14.055344,
+          "price": 198.12,
+          "usd": 2784.64,
+          "fee_usd": 8.35
+        },
+        {
+          "day": "2026-11-24",
+          "ticker": "TM",
+          "tier": "high",
+          "side": "sell",
+          "shares": 1.218771,
+          "price": 209.97,
+          "usd": 255.91,
+          "fee_usd": 0.77
+        },
+        {
+          "day": "2026-11-24",
+          "ticker": "CRM",
+          "tier": "low",
+          "side": "buy",
+          "shares": 6.380012,
+          "price": 193.26,
+          "usd": 1233.0,
+          "fee_usd": 3.7
+        },
+        {
+          "day": "2026-11-24",
+          "ticker": "ORCL",
+          "tier": "low",
+          "side": "buy",
+          "shares": 12.109346,
+          "price": 109.5,
+          "usd": 1325.97,
+          "fee_usd": 3.98
+        },
+        {
+          "day": "2026-11-24",
+          "ticker": "QCOM",
+          "tier": "low",
+          "side": "buy",
+          "shares": 7.792413,
+          "price": 164.96,
+          "usd": 1285.44,
+          "fee_usd": 3.86
+        },
+        {
+          "day": "2026-11-24",
+          "ticker": "BABA",
+          "tier": "high",
+          "side": "buy",
+          "shares": 7.828141,
+          "price": 84.86,
+          "usd": 664.3,
+          "fee_usd": 1.99
+        }
+      ],
+      "reasons": [
+        "Why now: a newer report is available.",
+        "Verdict band 'building' (score 68.2), confidence 40%. Owner rule: every paper fund is fully invested, so all of the fund goes into the basket.",
+        "No priced company in the medium-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-26."
+      ],
+      "value_before_usd": 9679.53,
+      "sha256": "c54e4fe480fc8dfbcd85c656bcc360964a8221c1996e5da377d7bf8aaac2f5df",
+      "chain": null
     }
   ],
   "history": [
@@ -442,14 +509,14 @@
     },
     {
       "day": "2026-11-24",
-      "value_usd": 9740.08,
+      "value_usd": 9652.44,
       "benchmark_value_usd": 9584.76
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": 749.92,
   "benchmark_start_date": "2026-11-10",
-  "updated_at": "2026-11-25T10:21:33.957218Z",
+  "updated_at": "2026-11-26T00:31:01.817286Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision carries its own fingerprint (the report it is based on is sealed on NEAR).",
