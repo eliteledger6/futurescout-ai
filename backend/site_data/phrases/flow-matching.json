@@ -1,0 +1,60 @@
+{
+ "made_at": "2026-11-27T00:03:59.605610+00:00",
+ "basis": {
+  "phrases": [
+   "flow matching"
+  ],
+  "checks": [
+   {
+    "phrase": "flow matching",
+    "source": "topic",
+    "matches": 4895,
+    "sampled": 8,
+    "relevant": 5,
+    "kept": true,
+    "reason": "the topic name itself (5/8 sampled works on-topic)"
+   },
+   {
+    "phrase": "flow-based generative models",
+    "source": "ai_suggested",
+    "matches": 266,
+    "sampled": 8,
+    "relevant": 3,
+    "kept": false,
+    "reason": "only 3/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "continuous normalizing flows",
+    "source": "ai_suggested",
+    "matches": 219,
+    "sampled": 8,
+    "relevant": 1,
+    "kept": false,
+    "reason": "only 1/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "rectified flow",
+    "source": "ai_suggested",
+    "matches": 681,
+    "sampled": 8,
+    "relevant": 5,
+    "kept": false,
+    "reason": "only 5/8 sampled works on-topic (needs 75%)"
+   },
+   {
+    "phrase": "stochastic interpolants",
+    "source": "ai_suggested",
+    "matches": 118,
+    "sampled": 8,
+    "relevant": 1,
+    "kept": false,
+    "reason": "only 1/8 sampled works on-topic (needs 75%)"
+   }
+  ],
+  "precision_sampled": 20,
+  "precision_relevant": 15,
+  "precision_pct": 75.0,
+  "llm_alias": "glm_5_3_flash",
+  "note": "Counted: works whose title or abstract contains any of 'flow matching' (singular and plural forms match automatically; a work matching several phrases is counted once). Not counted, because too few sampled works were about this topic: 'flow-based generative models', 'continuous normalizing flows', 'rectified flow', 'stochastic interpolants'. An AI check of 20 random counted works found 15 (75%) mainly about the topic."
+ }
+}
