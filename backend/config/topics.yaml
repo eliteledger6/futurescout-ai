@@ -731,3 +731,11 @@ topics:
   evidence:
   - https://openalex.org/W7117239410
   added_on: '2026-11-26'
+- name: nk cell therapy
+  sector: biotech_tools
+  terms:
+  - nk cell therapy
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7215123543
+  added_on: '2026-11-27'
