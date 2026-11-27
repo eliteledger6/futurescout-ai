@@ -23,7 +23,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-26T10:22:51.446419Z",
+        "checked_at": "2026-11-27T10:24:31.268310Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -44,7 +44,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-26T10:22:51.446722Z",
+        "checked_at": "2026-11-27T10:24:31.268610Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -65,7 +65,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-26T10:22:51.446868Z",
+        "checked_at": "2026-11-27T10:24:31.268819Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -86,7 +86,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-26T10:22:51.447149Z",
+        "checked_at": "2026-11-27T10:24:31.269064Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -107,7 +107,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-26T10:22:51.447367Z",
+        "checked_at": "2026-11-27T10:24:31.269255Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -521,7 +521,7 @@
   "benchmark": "SPY",
   "benchmark_start_close": 749.92,
   "benchmark_start_date": "2026-11-10",
-  "updated_at": "2026-11-26T10:22:41.251129Z",
+  "updated_at": "2026-11-27T10:24:20.804386Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision carries its own fingerprint (the report it is based on is sealed on NEAR).",

@@ -49,7 +49,7 @@
   "benchmark": "SPY",
   "benchmark_start_close": 716.7,
   "benchmark_start_date": "2026-11-25",
-  "updated_at": "2026-11-27T00:14:59.402201Z",
+  "updated_at": "2026-11-27T10:24:20.804386Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision carries its own fingerprint (the report it is based on is sealed on NEAR).",

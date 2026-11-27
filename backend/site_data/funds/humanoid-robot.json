@@ -23,7 +23,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-26T10:23:05.976395Z",
+        "checked_at": "2026-11-27T10:24:45.709706Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -43,18 +43,18 @@
         "symbol": "NVDAon",
         "asset_id": "nep141:bnb-0xa9ee28c80f960b889dfbd1902055218cba016f75.omdep.near",
         "blockchain": "BNB Chain",
-        "token_price_usd": 150.7455,
-        "checked_at": "2026-11-26T10:23:05.976730Z",
+        "token_price_usd": 156.7711,
+        "checked_at": "2026-11-27T10:24:45.710157Z",
         "note": "listed in the NEAR Intents list of tokenized stocks; the price implied by a dry-run quote matches the stock"
       },
       "quote": {
-        "amount_in_usd": 3798.53,
-        "amount_out_usd": 3788.09,
-        "amount_out": "25.198063302703125773",
-        "cost_pct": 0.275,
+        "amount_in_usd": 3799.04,
+        "amount_out_usd": 3778.7,
+        "amount_out": "24.230646448790812011",
+        "cost_pct": 0.535,
         "time_estimate_s": 10.0,
-        "quoted_at": "2026-11-26T10:23:06.647053Z",
-        "correlation_id": "4c96270a-6791-4878-9dd4-fe1c90f36ca3",
+        "quoted_at": "2026-11-27T10:24:46.374884Z",
+        "correlation_id": "8a56a40a-05a4-4802-8888-aeccf321e7e4",
         "error": null
       }
     },
@@ -74,7 +74,7 @@
         "asset_id": null,
         "blockchain": null,
         "token_price_usd": null,
-        "checked_at": "2026-11-26T10:23:07.306289Z",
+        "checked_at": "2026-11-27T10:24:47.034888Z",
         "note": "no tokenized version in the public NEAR Intents token lists"
       },
       "quote": null
@@ -415,7 +415,7 @@
   "benchmark": "SPY",
   "benchmark_start_close": 735.29,
   "benchmark_start_date": "2026-11-06",
-  "updated_at": "2026-11-26T10:22:41.251129Z",
+  "updated_at": "2026-11-27T10:24:20.804386Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision is fingerprinted on NEAR testnet so it cannot be changed afterwards.",
