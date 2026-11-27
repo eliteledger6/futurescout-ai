@@ -739,3 +739,13 @@ topics:
   evidence:
   - https://openalex.org/W7215123543
   added_on: '2026-11-27'
+- name: spatial computing
+  sector: xr_devices
+  terms:
+  - spatial computing
+  found_by: science agent
+  evidence:
+  - https://openalex.org/W7225131287
+  - https://openalex.org/W7236689101
+  - https://openalex.org/W7170189779
+  added_on: '2026-11-27'
