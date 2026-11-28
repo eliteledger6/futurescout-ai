@@ -102,20 +102,20 @@
     "report_20261125T141903Z": {
       "run_id": "report_20261125T141903Z",
       "topic": "mixture of experts",
-      "price_near": 0.666,
-      "price_usd": 2.0513,
+      "price_near": 0.674,
+      "price_usd": 2.049,
       "cost_usd": 0.5547,
-      "basis": "cost to make $0.55 (models and X $0.30, 8 patent searches, NEAR seal) + $1.50 margin, kept in the $2-$3 band = $2.05 = 0.666 NEAR at $3.08",
-      "at": "2026-11-27T02:04:25.408160Z"
+      "basis": "cost to make $0.55 (models and X $0.30, 8 patent searches, NEAR seal) + $1.50 margin, kept in the $2-$3 band = $2.05 = 0.674 NEAR at $3.04",
+      "at": "2026-11-28T03:04:14.070634Z"
     },
     "report_20261124T034047Z": {
       "run_id": "report_20261124T034047Z",
       "topic": "AI agents",
-      "price_near": 0.75,
-      "price_usd": 2.31,
+      "price_near": 0.76,
+      "price_usd": 2.3104,
       "cost_usd": 0.809,
-      "basis": "cost to make $0.81 (models and X $0.56, 8 patent searches, NEAR seal) + $1.50 margin, kept in the $2-$3 band = $2.31 = 0.75 NEAR at $3.08",
-      "at": "2026-11-27T02:04:25.408160Z"
+      "basis": "cost to make $0.81 (models and X $0.56, 8 patent searches, NEAR seal) + $1.50 margin, kept in the $2-$3 band = $2.31 = 0.76 NEAR at $3.04",
+      "at": "2026-11-28T03:04:14.070634Z"
     }
   },
   "purchases": [
