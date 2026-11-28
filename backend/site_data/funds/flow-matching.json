@@ -5,8 +5,51 @@
   "sector": "ai_software",
   "created_at": "2026-11-27T00:14:59.402201Z",
   "start_cash_usd": 10000.0,
-  "cash_usd": 10000.0,
-  "holdings": [],
+  "cash_usd": 0.0,
+  "holdings": [
+    {
+      "ticker": "CAT",
+      "company": "Caterpillar Inc",
+      "tier": "low",
+      "shares": 8.900915014063445,
+      "cost_usd": 5000.0,
+      "last_close": 561.74,
+      "last_date": "2026-11-27",
+      "timing_risk": null,
+      "why": "Company Scout: 1 filing(s); large by revenue; FALLBACK: no company in this report has patents or papers, so its own SEC filings are the evidence",
+      "route": {
+        "available": false,
+        "symbol": null,
+        "asset_id": null,
+        "blockchain": null,
+        "token_price_usd": null,
+        "checked_at": "2026-11-28T10:25:18.752797Z",
+        "note": "no tokenized version in the public NEAR Intents token lists"
+      },
+      "quote": null
+    },
+    {
+      "ticker": "CNH",
+      "company": "CNH Industrial N.V.",
+      "tier": "low",
+      "shares": 401.4612060426154,
+      "cost_usd": 4970.089730807579,
+      "last_close": 12.38,
+      "last_date": "2026-11-27",
+      "timing_risk": null,
+      "why": "Company Scout: 1 filing(s); large by revenue; FALLBACK: no company in this report has patents or papers, so its own SEC filings are the evidence",
+      "route": {
+        "available": false,
+        "symbol": null,
+        "asset_id": null,
+        "blockchain": null,
+        "token_price_usd": null,
+        "checked_at": "2026-11-28T10:25:21.175178Z",
+        "note": "no tokenized version in the public NEAR Intents token lists"
+      },
+      "quote": null
+    }
+  ],
   "decisions": [
     {
       "at": "2026-11-27T00:14:59.402201Z",
@@ -37,19 +80,66 @@
       "value_before_usd": 10000.0,
       "sha256": "3fa2264ab8bb61ae5474d252272a1e2f9f86f71430a326c94ed525d2337378bc",
       "chain": null
+    },
+    {
+      "at": "2026-11-28T10:25:14.947094Z",
+      "run_id": "report_20261127T001453Z",
+      "report_date": "2026-11-27",
+      "band": "insufficient",
+      "score": null,
+      "previous_score": null,
+      "confidence_pct": 30.6,
+      "target_invested_pct": 100.0,
+      "tier_targets_usd": {
+        "low": 10000.0
+      },
+      "staged_tiers": [],
+      "waiting_for_price": [],
+      "trades": [
+        {
+          "day": "2026-11-27",
+          "ticker": "CAT",
+          "tier": "low",
+          "side": "buy",
+          "shares": 8.900915,
+          "price": 561.74,
+          "usd": 5000.0,
+          "fee_usd": 15.0
+        },
+        {
+          "day": "2026-11-27",
+          "ticker": "CNH",
+          "tier": "low",
+          "side": "buy",
+          "shares": 401.461206,
+          "price": 12.38,
+          "usd": 4970.09,
+          "fee_usd": 14.91
+        }
+      ],
+      "reasons": [
+        "Why now: price review: 2 company(ies) were waiting for a daily close.",
+        "Verdict band 'insufficient', confidence 31%. Owner rule: every paper fund is fully invested, so all of the fund goes into the basket.",
+        "No priced company in the medium-risk tier; its share goes to the other tiers.",
+        "No priced company in the high-risk tier; its share goes to the other tiers.",
+        "Each trade pays an assumed 0.3% cost; fills at the latest daily close on or before 2026-11-28."
+      ],
+      "value_before_usd": 10000.0,
+      "sha256": "ba3ebbddbf94284e122e1e5145cdcb97aed9c6e413e4ca2a7566bebbd8e24761",
+      "chain": null
     }
   ],
   "history": [
     {
       "day": "2026-11-27",
-      "value_usd": 10000.0,
-      "benchmark_value_usd": 10000.0
+      "value_usd": 9970.09,
+      "benchmark_value_usd": 10162.13
     }
   ],
   "benchmark": "SPY",
   "benchmark_start_close": 716.7,
   "benchmark_start_date": "2026-11-25",
-  "updated_at": "2026-11-27T10:24:20.804386Z",
+  "updated_at": "2026-11-28T10:25:14.947094Z",
   "notes": [
     "Simulation: pretend money, real closing prices. No money moves; nothing is traded.",
     "Basket and decisions are computed by code from the latest sealed report; each decision carries its own fingerprint (the report it is based on is sealed on NEAR).",
